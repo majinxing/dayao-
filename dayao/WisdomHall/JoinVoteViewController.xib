@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="12118" systemVersion="16E195" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12086"/>
+        <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="JoinVoteViewController">
+            <connections>
+                <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT">
+            <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="e2O-iP-4Sz">
+                    <rect key="frame" x="0.0" y="617" width="187.5" height="50"/>
+                    <color key="backgroundColor" red="0.33094505608176111" green="0.95747652202072542" blue="0.94936582622061882" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="50" id="YIX-cB-Dod"/>
+                    </constraints>
+                    <state key="normal" title="已/未投票"/>
+                </button>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zqU-Zn-WfY">
+                    <rect key="frame" x="187.5" y="617" width="187.5" height="50"/>
+                    <color key="backgroundColor" red="0.33977119598751132" green="0.95747652202072542" blue="0.95107732792634492" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="50" id="cvs-kJ-VoM"/>
+                    </constraints>
+                    <state key="normal" title="查看结果"/>
+                    <connections>
+                        <action selector="seeVoteResult:" destination="-1" eventType="touchUpInside" id="XRs-SZ-PwE"/>
+                    </connections>
+                </button>
+            </subviews>
+            <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <constraints>
+                <constraint firstItem="e2O-iP-4Sz" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="0Jx-Nf-7lp"/>
+                <constraint firstAttribute="trailing" secondItem="zqU-Zn-WfY" secondAttribute="trailing" id="29B-aG-5eq"/>
+                <constraint firstAttribute="bottom" secondItem="zqU-Zn-WfY" secondAttribute="bottom" id="6jS-oW-vsv"/>
+                <constraint firstItem="zqU-Zn-WfY" firstAttribute="leading" secondItem="e2O-iP-4Sz" secondAttribute="trailing" id="M4z-Xa-nt4"/>
+                <constraint firstAttribute="bottom" secondItem="e2O-iP-4Sz" secondAttribute="bottom" id="nOo-Nm-aKL"/>
+                <constraint firstItem="e2O-iP-4Sz" firstAttribute="width" secondItem="i5M-Pr-FkT" secondAttribute="width" multiplier="1/2" id="s9w-lZ-jqw"/>
+            </constraints>
+        </view>
+    </objects>
+</document>

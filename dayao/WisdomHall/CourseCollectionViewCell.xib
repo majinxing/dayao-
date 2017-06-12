@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="12118" systemVersion="16E195" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12086"/>
+        <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="CourseCollectionViewCell" id="gTV-IL-0wX" customClass="CourseCollectionViewCell">
+            <rect key="frame" x="0.0" y="0.0" width="533" height="598"/>
+            <autoresizingMask key="autoresizingMask"/>
+            <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                <rect key="frame" x="0.0" y="0.0" width="533" height="598"/>
+                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                <subviews>
+                    <imageView clearsContextBeforeDrawing="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="course" translatesAutoresizingMaskIntoConstraints="NO" id="UGM-Om-yLr">
+                        <rect key="frame" x="10" y="10" width="513" height="299"/>
+                    </imageView>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="班        级：  计算机1班" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bqc-cC-k9c">
+                        <rect key="frame" x="5" y="364" width="523" height="25"/>
+                        <color key="backgroundColor" red="0.79674219739583196" green="0.9578604819779073" blue="1" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="25" id="TZI-PJ-DDr"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" type="system" pointSize="10"/>
+                        <nil key="textColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="线性代数 ：  冷小凡" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RVQ-Ru-ehT">
+                        <rect key="frame" x="5" y="324" width="523" height="25"/>
+                        <color key="backgroundColor" red="0.78839352023528986" green="0.9594342064904422" blue="1" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="25" id="6Mw-G5-eyS"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" type="system" pointSize="10"/>
+                        <nil key="textColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                </subviews>
+            </view>
+            <constraints>
+                <constraint firstAttribute="trailing" secondItem="UGM-Om-yLr" secondAttribute="trailing" constant="10" id="37n-F0-7iH"/>
+                <constraint firstItem="RVQ-Ru-ehT" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" constant="5" id="7C0-Mh-pK4"/>
+                <constraint firstItem="bqc-cC-k9c" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" constant="5" id="9Ss-HK-t8b"/>
+                <constraint firstItem="bqc-cC-k9c" firstAttribute="top" secondItem="RVQ-Ru-ehT" secondAttribute="bottom" constant="15" id="Be3-LS-7ef"/>
+                <constraint firstItem="UGM-Om-yLr" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" constant="10" id="HNV-Ws-tk0"/>
+                <constraint firstItem="RVQ-Ru-ehT" firstAttribute="top" secondItem="UGM-Om-yLr" secondAttribute="bottom" constant="15" id="MEG-OE-k1k"/>
+                <constraint firstAttribute="trailing" secondItem="RVQ-Ru-ehT" secondAttribute="trailing" constant="5" id="RfF-9n-v6q"/>
+                <constraint firstItem="UGM-Om-yLr" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" constant="10" id="hvx-MA-qGV"/>
+                <constraint firstItem="UGM-Om-yLr" firstAttribute="height" secondItem="gTV-IL-0wX" secondAttribute="height" multiplier="1:2" id="upa-Nn-RL1"/>
+                <constraint firstAttribute="trailing" secondItem="bqc-cC-k9c" secondAttribute="trailing" constant="5" id="w7B-dr-CO3"/>
+            </constraints>
+            <size key="customSize" width="533" height="598"/>
+            <connections>
+                <outlet property="courseImage" destination="UGM-Om-yLr" id="Qb0-d6-BHG"/>
+            </connections>
+            <point key="canvasLocation" x="-80.5" y="103"/>
+        </collectionViewCell>
+    </objects>
+    <resources>
+        <image name="course" width="424" height="300"/>
+    </resources>
+</document>
