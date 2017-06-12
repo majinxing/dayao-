@@ -16,6 +16,9 @@
 
 @implementation SignListViewController
 
+-(void)dealloc{
+    NSLog(@"%s",__func__);
+}
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self setNavigationTitle];

@@ -19,39 +19,42 @@
 #import "ImportTextViewController.h"
 
 @interface TextListViewController ()<UITableViewDelegate,UITableViewDataSource,QuestionsTableViewCellDelegate,UIGestureRecognizerDelegate,UIAlertViewDelegate>
-@property (nonatomic,strong)UITableView * tableView;
-@property (nonatomic,strong)UILabel * qNumLabel;
-@property (nonatomic,strong)UILabel * time;
-@property (nonatomic,strong)UIButton * allBtn;
-@property (nonatomic,strong)UIView * bottom;
-@property (nonatomic,strong)NSMutableArray * questionsAry;
-@property (nonatomic,strong)NSMutableArray * answerAry;
-@property (nonatomic,strong)FMDatabase * db;
-@property (nonatomic,strong)Questions * q;//问题
-@property (nonatomic,assign)int temp;//标志位
+@property (nonatomic,strong) UITableView * tableView;
+@property (nonatomic,strong) UILabel * qNumLabel;
+@property (nonatomic,strong) UILabel * time;
+@property (nonatomic,strong) UIButton * allBtn;
+@property (nonatomic,strong) UIView * bottom;
+@property (nonatomic,strong) NSMutableArray * questionsAry;
+@property (nonatomic,strong) NSMutableArray * answerAry;
+@property (nonatomic,strong) FMDatabase * db;
+@property (nonatomic,strong) Questions * q;//问题
+@property (nonatomic,assign) int temp;//标志位
 @property (nonatomic,assign) int tempSecond;//标志位 表明不是第一次加载数据
 @property (nonatomic,assign) BOOL teacherOrStudent;
+@property (nonatomic,strong) NSArray * op;
 @end
 
 @implementation TextListViewController
 
+-(void)dealloc{
+}
 - (void)viewDidLoad {
     [super viewDidLoad];
     
     _teacherOrStudent = YES;
-    
+
     if (!_teacherOrStudent) {
         [self timeLimit];
     }
-    
+
     [self addQuestions];
-    
+
     _tempSecond = 0;
-    
+
     [self setNavigationTitle];
-    
+
     [self addTableView];
-    
+
     [self addNextBtnOrOnBtnView];
     
     // Do any additional setup after loading the view from its nib.
@@ -64,6 +67,13 @@
         _qNumLabel.text = [NSString stringWithFormat:@"%d/%lu",_temp+1,(unsigned long)_questionsAry.count];
         [_tableView reloadData];
     }
+}
+-(void)viewDidAppear:(BOOL)animated{
+
+}
+
+-(void)viewDidDisappear:(BOOL)animated{
+
 }
 -(void)addQuestions{
     _db = [FMDBTool createDBWithName:SQLITE_NAME];
@@ -85,13 +95,15 @@
     
 }
 -(void)addTableView{
+    _op =[NSArray arrayWithObjects:@"A",@"B",@"C",@"D", nil];
+
     _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 64, APPLICATION_WIDTH, APPLICATION_HEIGHT-64-50) style:UITableViewStylePlain];
     _tableView.delegate = self;
     _tableView.dataSource = self;
     _tableView.backgroundColor = [UIColor clearColor];
     _tableView.estimatedRowHeight = 50;
     _tableView.rowHeight = UITableViewAutomaticDimension;
-    _tableView.separatorStyle = NO;
+    _tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     
     [self.view addSubview:_tableView];
     
@@ -101,8 +113,7 @@
     UISwipeGestureRecognizer * recognizer = [[UISwipeGestureRecognizer alloc]initWithTarget:self action:@selector(nextBtn:)];
     [recognizer setDirection:(UISwipeGestureRecognizerDirectionLeft)];
     [_tableView addGestureRecognizer:recognizer];
-    
-    
+
 }
 /**
  *  显示navigation的标题
@@ -275,16 +286,15 @@
 }
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
-    QuestionsTableViewCell * cell = [QuestionsTableViewCell tempTableViewCellWith:_tableView indexPath:indexPath];
+    QuestionsTableViewCell * cell = [QuestionsTableViewCell tempTableViewCellWith:tableView indexPath:indexPath];
     cell.delegate = self;
     NSArray * qusetions = [NSArray arrayWithObjects:_q.optionsA,_q.optionsB,_q.optionsC,_q.optionsD, nil];
-    NSArray * op =[NSArray arrayWithObjects:@"A",@"B",@"C",@"D", nil];
     AnswerModel * a = _answerAry[_temp];
     
     if (indexPath.row == 0) {
         [cell settitleTextViewText:_q.title withAllQuestionNumber:[NSString stringWithFormat:@"%ld",(unsigned long)_questionsAry.count] withquestionNumber:[NSString stringWithFormat:@"%d",_temp+1]];
     }else{
-        [cell setOptionsText:op[indexPath.row-1] WithOptionsText:qusetions[indexPath.row-1] WithSelectState:a.answerAry[indexPath.row-1] indexRow:(int)indexPath.row];
+        [cell setOptionsText:_op[indexPath.row-1] WithOptionsText:qusetions[indexPath.row-1] WithSelectState:a.answerAry[indexPath.row-1] indexRow:(int)indexPath.row];
     }
     
     return cell;

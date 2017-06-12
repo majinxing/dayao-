@@ -32,7 +32,7 @@
     }
     QuestionsTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:identifier];
     if (!cell) {
-        cell = [[[NSBundle mainBundle] loadNibNamed:@"QuestionsTableViewCell" owner:self options:nil] objectAtIndex:index];
+        cell = [[[NSBundle mainBundle] loadNibNamed:@"QuestionsTableViewCell" owner:nil options:nil] objectAtIndex:index];
     }
     return cell;
 }

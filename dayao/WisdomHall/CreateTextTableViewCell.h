@@ -15,7 +15,7 @@
 @end
 @interface CreateTextTableViewCell : UITableViewCell
 
-@property (nonatomic,strong) id<CreateTextTableViewCellDelegate>delegate;
+@property (nonatomic,weak) id<CreateTextTableViewCellDelegate>delegate;
 -(void)textLabelText:(NSString *)textStr;
 -(void)textViewText:(NSString *)text;
 @end

@@ -15,7 +15,7 @@
 
 @end
 @interface CreateVoteTableViewCell : UITableViewCell
-@property (nonatomic,strong)id<CreateVoteTableViewCellDelegate>delegate;
+@property (nonatomic,weak)id<CreateVoteTableViewCellDelegate>delegate;
 -(void)addTableTextWithTextFile:(NSString *)labelText with:(NSString *)textFile withTag:(int)tag;
 -(void)addSelectNumeberWithNumer:(NSString *)number withTag:(int)tag;
 @end

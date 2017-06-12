@@ -23,6 +23,9 @@
 
 @implementation TextViewController
 
+-(void)dealloc{
+    NSLog(@"%s",__func__);
+}
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor whiteColor];

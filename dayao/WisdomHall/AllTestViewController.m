@@ -131,10 +131,12 @@
 }
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    
     TextListViewController * listVC = [[TextListViewController alloc] init];
     listVC.t = _textArray[indexPath.row];
     self.hidesBottomBarWhenPushed = YES;
     [self.navigationController pushViewController:listVC animated:YES];
+    
 }
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
     return 65;

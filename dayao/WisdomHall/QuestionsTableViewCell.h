@@ -19,7 +19,7 @@
 @property (strong, nonatomic) IBOutlet UILabel *optionsLabel;
 @property (strong, nonatomic) IBOutlet UITextView *optionsTextView;
 @property (strong, nonatomic) IBOutlet UIButton *selectBtn;
-@property (strong, nonatomic) id<QuestionsTableViewCellDelegate> delegate;
+@property (weak, nonatomic) id<QuestionsTableViewCellDelegate> delegate;
 
 + (instancetype)tempTableViewCellWith:(UITableView *)tableView indexPath:(NSIndexPath *)indexPath;
 -(void)settitleTextViewText:(NSString *)text withAllQuestionNumber:(NSString *)allNum withquestionNumber:(NSString *)qNum;
