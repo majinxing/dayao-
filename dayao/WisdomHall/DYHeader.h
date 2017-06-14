@@ -23,6 +23,8 @@
 #endif /* DYHeader_h */
 #import "UIColor+HexString.h"
 #import "UIUtils.h"
+#import "UIViewController+HUD.h"
+
 
 #define ShareType_Weixin_Friend     @"微信好友"
 #define ShareType_Weixin_Circle     @"朋友圈"

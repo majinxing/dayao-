@@ -14,7 +14,7 @@
 
 @end
 @interface ShareView : UIView
-@property (nonatomic, assign) id<ShareViewDelegate> delegate;
+@property (nonatomic, weak) id<ShareViewDelegate> delegate;
 - (instancetype)initWithFrame:(CGRect)frame withType:(NSString *)type;
 - (void)hide;
 /**

@@ -140,6 +140,11 @@
 		8BE877861EBC2E0C00866A34 /* EndTheTestViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8BE877841EBC2E0C00866A34 /* EndTheTestViewController.xib */; };
 		8BE877901EBD69C000866A34 /* CreateTestViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BE8778E1EBD69C000866A34 /* CreateTestViewController.m */; };
 		8BE877911EBD69C000866A34 /* CreateTestViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8BE8778F1EBD69C000866A34 /* CreateTestViewController.xib */; };
+		8BE913991EEF7EF000000282 /* DiscussListTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BE913971EEF7EF000000282 /* DiscussListTableViewCell.m */; };
+		8BE9139A1EEF7EF000000282 /* DiscussListTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8BE913981EEF7EF000000282 /* DiscussListTableViewCell.xib */; };
+		8BE9139D1EEFB7C500000282 /* UIViewController+HUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BE9139C1EEFB7C500000282 /* UIViewController+HUD.m */; };
+		8BE913A31EEFB80000000282 /* MBProgressHUD+Add.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BE913A01EEFB80000000282 /* MBProgressHUD+Add.m */; };
+		8BE913A41EEFB80000000282 /* MBProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BE913A21EEFB80000000282 /* MBProgressHUD.m */; };
 		8BF82D721EDEC50E00D33473 /* DiscussViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BF82D701EDEC50E00D33473 /* DiscussViewController.m */; };
 		8BF82D731EDEC50E00D33473 /* DiscussViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8BF82D711EDEC50E00D33473 /* DiscussViewController.xib */; };
 		8BF82D771EDFB32500D33473 /* CollectionHeadView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BF82D761EDFB32500D33473 /* CollectionHeadView.m */; };
@@ -625,6 +630,15 @@
 		8BE8778D1EBD69C000866A34 /* CreateTestViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CreateTestViewController.h; sourceTree = "<group>"; };
 		8BE8778E1EBD69C000866A34 /* CreateTestViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CreateTestViewController.m; sourceTree = "<group>"; };
 		8BE8778F1EBD69C000866A34 /* CreateTestViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CreateTestViewController.xib; sourceTree = "<group>"; };
+		8BE913961EEF7EF000000282 /* DiscussListTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DiscussListTableViewCell.h; sourceTree = "<group>"; };
+		8BE913971EEF7EF000000282 /* DiscussListTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DiscussListTableViewCell.m; sourceTree = "<group>"; };
+		8BE913981EEF7EF000000282 /* DiscussListTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DiscussListTableViewCell.xib; sourceTree = "<group>"; };
+		8BE9139B1EEFB7C500000282 /* UIViewController+HUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIViewController+HUD.h"; sourceTree = "<group>"; };
+		8BE9139C1EEFB7C500000282 /* UIViewController+HUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIViewController+HUD.m"; sourceTree = "<group>"; };
+		8BE9139F1EEFB80000000282 /* MBProgressHUD+Add.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "MBProgressHUD+Add.h"; sourceTree = "<group>"; };
+		8BE913A01EEFB80000000282 /* MBProgressHUD+Add.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "MBProgressHUD+Add.m"; sourceTree = "<group>"; };
+		8BE913A11EEFB80000000282 /* MBProgressHUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MBProgressHUD.h; sourceTree = "<group>"; };
+		8BE913A21EEFB80000000282 /* MBProgressHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MBProgressHUD.m; sourceTree = "<group>"; };
 		8BF82D6F1EDEC50E00D33473 /* DiscussViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DiscussViewController.h; sourceTree = "<group>"; };
 		8BF82D701EDEC50E00D33473 /* DiscussViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DiscussViewController.m; sourceTree = "<group>"; };
 		8BF82D711EDEC50E00D33473 /* DiscussViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DiscussViewController.xib; sourceTree = "<group>"; };
@@ -1066,6 +1080,7 @@
 		8BA224961EADFF2700627A1B /* FrameWork */ = {
 			isa = PBXGroup;
 			children = (
+				8BE9139E1EEFB80000000282 /* MBProgressHUD */,
 				8BF8649A1ECAD97300B7EED4 /* SDWebImage */,
 				8BF864761ECAD21200B7EED4 /* MJRefresh */,
 				8BF864621ECACAE800B7EED4 /* FMDB */,
@@ -1128,6 +1143,8 @@
 				8BE877631EBAF73700866A34 /* ShareView */,
 				8BA224B61EAED53D00627A1B /* UIColor+HexString.h */,
 				8BA224B71EAED53D00627A1B /* UIColor+HexString.m */,
+				8BE9139B1EEFB7C500000282 /* UIViewController+HUD.h */,
+				8BE9139C1EEFB7C500000282 /* UIViewController+HUD.m */,
 				8BB56D621EAF38CA0023DAFF /* AppSetingPersongInfo.h */,
 				8BB56D631EAF38CA0023DAFF /* AppSetingPersongInfo.m */,
 				8BB56D681EB037410023DAFF /* UIUtils.h */,
@@ -1248,9 +1265,31 @@
 			name = TextVCCell;
 			sourceTree = "<group>";
 		};
+		8BE913951EEF7EC200000282 /* DiscussTableViewCell */ = {
+			isa = PBXGroup;
+			children = (
+				8BE913961EEF7EF000000282 /* DiscussListTableViewCell.h */,
+				8BE913971EEF7EF000000282 /* DiscussListTableViewCell.m */,
+				8BE913981EEF7EF000000282 /* DiscussListTableViewCell.xib */,
+			);
+			name = DiscussTableViewCell;
+			sourceTree = "<group>";
+		};
+		8BE9139E1EEFB80000000282 /* MBProgressHUD */ = {
+			isa = PBXGroup;
+			children = (
+				8BE9139F1EEFB80000000282 /* MBProgressHUD+Add.h */,
+				8BE913A01EEFB80000000282 /* MBProgressHUD+Add.m */,
+				8BE913A11EEFB80000000282 /* MBProgressHUD.h */,
+				8BE913A21EEFB80000000282 /* MBProgressHUD.m */,
+			);
+			path = MBProgressHUD;
+			sourceTree = "<group>";
+		};
 		8BF82D6E1EDEC4E800D33473 /* Discuss */ = {
 			isa = PBXGroup;
 			children = (
+				8BE913951EEF7EC200000282 /* DiscussTableViewCell */,
 				8BF82D6F1EDEC50E00D33473 /* DiscussViewController.h */,
 				8BF82D701EDEC50E00D33473 /* DiscussViewController.m */,
 				8BF82D711EDEC50E00D33473 /* DiscussViewController.xib */,
@@ -1561,6 +1600,7 @@
 				8B17374A1EC58BE400BE3C8F /* TestQuestionsViewController.xib in Resources */,
 				8BB56D8D1EB31C110023DAFF /* SystemSettingsViewController.xib in Resources */,
 				8BA224A31EADFFE500627A1B /* InteractiveViewController.xib in Resources */,
+				8BE9139A1EEF7EF000000282 /* DiscussListTableViewCell.xib in Resources */,
 				8B1737141EC2F6A700BE3C8F /* NoticeViewController.xib in Resources */,
 				8BA224D01EAF258B00627A1B /* ForgotPasswordViewController.xib in Resources */,
 				8BB56D6F1EB05C760023DAFF /* DefineThePasswordViewController.xib in Resources */,
@@ -1718,6 +1758,7 @@
 				8BA224A71EAE000000627A1B /* PersonalCenterViewController.m in Sources */,
 				8B1737131EC2F6A700BE3C8F /* NoticeViewController.m in Sources */,
 				8BB56D7F1EB177DC0023DAFF /* AFNetworkReachabilityManager.m in Sources */,
+				8BE913991EEF7EF000000282 /* DiscussListTableViewCell.m in Sources */,
 				8BF8648A1ECAD21200B7EED4 /* MJRefreshFooterView.m in Sources */,
 				8BF82D811EE001D600D33473 /* VoteTableViewCell.m in Sources */,
 				8BF8646E1ECACAE800B7EED4 /* FMDatabase.m in Sources */,
@@ -1742,11 +1783,13 @@
 				8B4D91141EBDAB1000A4BE34 /* SignListViewController.m in Sources */,
 				8BE8777B1EBC2D8E00866A34 /* NotStartTestingViewController.m in Sources */,
 				8BF864C61ECAD97300B7EED4 /* UIImage+GIF.m in Sources */,
+				8BE9139D1EEFB7C500000282 /* UIViewController+HUD.m in Sources */,
 				8B1737491EC58BE400BE3C8F /* TestQuestionsViewController.m in Sources */,
 				8BF864BC1ECAD97300B7EED4 /* README.md in Sources */,
 				8B7D5D8C1EB96C430068058E /* CollectionFlowLayout.m in Sources */,
 				8BF82D721EDEC50E00D33473 /* DiscussViewController.m in Sources */,
 				8BF864BE1ECAD97300B7EED4 /* SDImageCache.m in Sources */,
+				8BE913A41EEFB80000000282 /* MBProgressHUD.m in Sources */,
 				8BF864711ECACAE800B7EED4 /* FMDatabaseQueue.m in Sources */,
 				8BE877691EBAF7A800866A34 /* ShareView.m in Sources */,
 				8B9B584F1EC998080010A1F1 /* TextListViewController.m in Sources */,
@@ -1759,6 +1802,7 @@
 				8BB56D7E1EB177DC0023DAFF /* AFHTTPSessionManager.m in Sources */,
 				8BB56D821EB177DC0023DAFF /* AFURLResponseSerialization.m in Sources */,
 				8BF864721ECACAE800B7EED4 /* FMResultSet.m in Sources */,
+				8BE913A31EEFB80000000282 /* MBProgressHUD+Add.m in Sources */,
 				8B7D5D901EB9782C0068058E /* CourseCollectionViewCell.m in Sources */,
 				8BF8646F1ECACAE800B7EED4 /* FMDatabaseAdditions.m in Sources */,
 				8B8C3D141ECD300C00E9FB56 /* ChatHelper.m in Sources */,
@@ -2027,6 +2071,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEVELOPMENT_TEAM = AM9UTP2CL3;
+				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/WisdomHall/HyphenateSDK",
@@ -2057,6 +2102,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEVELOPMENT_TEAM = AM9UTP2CL3;
+				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/WisdomHall/HyphenateSDK",
