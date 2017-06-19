@@ -7,6 +7,7 @@
 //
 
 #import "CourseCollectionViewCell.h"
+#import "DYHeader.h"
 
 @implementation CourseCollectionViewCell
 
@@ -20,6 +21,11 @@
     if (self) {
         self = [[NSBundle mainBundle]loadNibNamed:@"CourseCollectionViewCell" owner:self options:nil].lastObject;
         self.backgroundColor = [UIColor clearColor];
+        
+        self.layer.masksToBounds = YES;
+        self.layer.cornerRadius = 5.f;
+        self.layer.borderWidth = 1;
+        self.layer.borderColor = [UIColor colorWithHexString:@"#29a7e1"].CGColor;
     }
     return self;
     

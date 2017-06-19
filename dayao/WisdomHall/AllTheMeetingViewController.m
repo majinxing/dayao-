@@ -84,7 +84,7 @@ static NSString * cellIdentifier = @"cellIdentifier";
 }
 #pragma mark UICollectionViewDelegateFlowLayout
 - (CGSize)collectionView:(nonnull UICollectionView *)collectionView layout:(nonnull UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(nonnull NSIndexPath *)indexPath {
-    return CGSizeMake(APPLICATION_WIDTH/2-20, 209);
+    return CGSizeMake(APPLICATION_WIDTH/2-20, Collection_height);
 }
 
 /*

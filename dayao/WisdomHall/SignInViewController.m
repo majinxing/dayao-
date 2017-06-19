@@ -29,14 +29,17 @@ static NSString *cellIdentifier = @"cellIdentifier";
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.view.backgroundColor = [UIColor whiteColor];
+    
     [self setNavigationTitle];
+    
     [self addCollection];
     
     // Do any additional setup after loading the view from its nib.
 }
 -(void)addCollection{
     CollectionFlowLayout * flowLayout = [[CollectionFlowLayout alloc] init];
-    _collection = [[UICollectionView alloc] initWithFrame:CGRectMake(0, 64,APPLICATION_WIDTH,APPLICATION_HEIGHT-64-48) collectionViewLayout:flowLayout];
+    _collection = [[UICollectionView alloc] initWithFrame:CGRectMake(0, 0,APPLICATION_WIDTH,APPLICATION_HEIGHT-48) collectionViewLayout:flowLayout];
     flowLayout.headerReferenceSize = CGSizeMake(0, APPLICATION_HEIGHT/4);
     
     //注册
@@ -146,8 +149,8 @@ static NSString *cellIdentifier = @"cellIdentifier";
     self.hidesBottomBarWhenPushed=NO;
 }
 #pragma mark UICollectionViewDelegateFlowLayout
-- (CGSize)collectionView:(nonnull UICollectionView *)collectionView layout:(nonnull UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(nonnull NSIndexPath *)indexPath {
-    return CGSizeMake(APPLICATION_WIDTH/2-20, 209);
+- (CGSize)collectionView:(nonnull UICollectionView *)collectionView layout:(nonnull UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(nonnull NSIndexPath *)indexPath{
+    return CGSizeMake(APPLICATION_WIDTH/2-20, Collection_height);
 }
 
 /*

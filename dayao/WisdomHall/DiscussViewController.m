@@ -12,6 +12,7 @@
 #import <Hyphenate/EMCursorResult.h>
 #import <Hyphenate/Hyphenate.h>
 #import "MJRefresh.h"
+#import "MJXChatViewController.h"
 #define FetchChatroomPageSize   20
 
 @interface DiscussViewController ()<UITableViewDelegate,UITableViewDataSource,EMChatroomManagerDelegate>
@@ -144,6 +145,9 @@
 }
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    MJXChatViewController *chat = [[MJXChatViewController alloc] init];
+    self.hidesBottomBarWhenPushed = YES;
+    [self.navigationController pushViewController:chat animated:YES];
 }
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
     return 50;

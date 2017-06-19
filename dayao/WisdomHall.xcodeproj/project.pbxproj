@@ -19,6 +19,8 @@
 		8B0DB1361ED561B80042DF0D /* AnswerModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B0DB1351ED561B80042DF0D /* AnswerModel.m */; };
 		8B0DB13B1ED6CA4E0042DF0D /* ImportTextViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B0DB1391ED6CA4E0042DF0D /* ImportTextViewController.m */; };
 		8B0DB13C1ED6CA4E0042DF0D /* ImportTextViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8B0DB13A1ED6CA4E0042DF0D /* ImportTextViewController.xib */; };
+		8B0F41301EF522CF001AF4DF /* MJXChatViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B0F412E1EF522CF001AF4DF /* MJXChatViewController.m */; };
+		8B0F41311EF522CF001AF4DF /* MJXChatViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8B0F412F1EF522CF001AF4DF /* MJXChatViewController.xib */; };
 		8B1737091EC2BE2B00BE3C8F /* PersonalDataTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B1737071EC2BE2B00BE3C8F /* PersonalDataTableViewCell.m */; };
 		8B17370A1EC2BE2B00BE3C8F /* PersonalDataTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8B1737081EC2BE2B00BE3C8F /* PersonalDataTableViewCell.xib */; };
 		8B17370E1EC2EDE400BE3C8F /* MeetingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B17370C1EC2EDE400BE3C8F /* MeetingViewController.m */; };
@@ -446,6 +448,9 @@
 		8B0DB1381ED6CA4E0042DF0D /* ImportTextViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ImportTextViewController.h; sourceTree = "<group>"; };
 		8B0DB1391ED6CA4E0042DF0D /* ImportTextViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ImportTextViewController.m; sourceTree = "<group>"; };
 		8B0DB13A1ED6CA4E0042DF0D /* ImportTextViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ImportTextViewController.xib; sourceTree = "<group>"; };
+		8B0F412D1EF522CF001AF4DF /* MJXChatViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MJXChatViewController.h; sourceTree = "<group>"; };
+		8B0F412E1EF522CF001AF4DF /* MJXChatViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MJXChatViewController.m; sourceTree = "<group>"; };
+		8B0F412F1EF522CF001AF4DF /* MJXChatViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MJXChatViewController.xib; sourceTree = "<group>"; };
 		8B1737061EC2BE2B00BE3C8F /* PersonalDataTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PersonalDataTableViewCell.h; sourceTree = "<group>"; };
 		8B1737071EC2BE2B00BE3C8F /* PersonalDataTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PersonalDataTableViewCell.m; sourceTree = "<group>"; };
 		8B1737081EC2BE2B00BE3C8F /* PersonalDataTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PersonalDataTableViewCell.xib; sourceTree = "<group>"; };
@@ -850,6 +855,16 @@
 			name = Cell;
 			sourceTree = "<group>";
 		};
+		8B0F412C1EF51EF9001AF4DF /* Chat */ = {
+			isa = PBXGroup;
+			children = (
+				8B0F412D1EF522CF001AF4DF /* MJXChatViewController.h */,
+				8B0F412E1EF522CF001AF4DF /* MJXChatViewController.m */,
+				8B0F412F1EF522CF001AF4DF /* MJXChatViewController.xib */,
+			);
+			name = Chat;
+			sourceTree = "<group>";
+		};
 		8B2E16E41EBAD95A008B7C57 /* TheMeetingType */ = {
 			isa = PBXGroup;
 			children = (
@@ -998,6 +1013,7 @@
 		8BA224921EADFE9500627A1B /* SignIn */ = {
 			isa = PBXGroup;
 			children = (
+				8B0F412C1EF51EF9001AF4DF /* Chat */,
 				8BF82D741EDFA04A00D33473 /* Vote */,
 				8BF82D6E1EDEC4E800D33473 /* Discuss */,
 				8BE877721EBC1CB200866A34 /* TextViewController */,
@@ -1611,6 +1627,7 @@
 				8B4D91151EBDAB1000A4BE34 /* SignListViewController.xib in Resources */,
 				8BA224A81EAE000000627A1B /* PersonalCenterViewController.xib in Resources */,
 				8B2E16DB1EBAB968008B7C57 /* ClassManagementViewController.xib in Resources */,
+				8B0F41311EF522CF001AF4DF /* MJXChatViewController.xib in Resources */,
 				8BF864871ECAD21200B7EED4 /* MJRefresh.bundle in Resources */,
 				8B17374F1EC5AC3600BE3C8F /* CreateTextTableViewCell.xib in Resources */,
 				8BE8777C1EBC2D8E00866A34 /* NotStartTestingViewController.xib in Resources */,
@@ -1728,6 +1745,7 @@
 				8BB56D671EAF3C620023DAFF /* UserModel.m in Sources */,
 				8BF8648B1ECAD21200B7EED4 /* MJRefreshHeaderView.m in Sources */,
 				8BA224641EADF68500627A1B /* ViewController.m in Sources */,
+				8B0F41301EF522CF001AF4DF /* MJXChatViewController.m in Sources */,
 				8BF864C01ECAD97300B7EED4 /* SDWebImageDecoder.m in Sources */,
 				8BA224BC1EAEE36800627A1B /* SignPromptView.m in Sources */,
 				8BF864C91ECAD97300B7EED4 /* UIImageView+WebCache.m in Sources */,
