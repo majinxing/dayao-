@@ -252,7 +252,7 @@
     }else{
         [_q insertedIntoTextTable];
         
-        [self insertedIntoTextTable:_t.textId questionsID:_q.questionsID qid:[NSString stringWithFormat:@"%ld",[_t.totalNumber integerValue]+1]];
+        [self insertedIntoTextTable:_t.textId questionsID:_q.questionsID qid:[NSString stringWithFormat:@"%d",[_t.totalNumber integerValue]+1]];
         
         [_t changeTotalNumberWithTitle:_q.score];
         

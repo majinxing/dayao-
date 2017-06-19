@@ -165,7 +165,7 @@
 }
 #pragma mark textFileTextChangeDelegate
 -(void)textFileTextChangeDelegate:(UITextView *)textFile{
-    NSLog(@"%ld",textFile.tag);
+    NSLog(@"%ld",(long)textFile.tag);
     [_voteModel changeText:textFile];
 }
 /*

@@ -103,10 +103,10 @@
     for (int i = 0; i<_selected.count; i++) {
         if ([_selected[i] isEqualToString:@"选中"]) {
             Questions * q = _questionsAry[i];
-            [self insertedIntoTextTable:_t.textId questionsID:q.questionsID qid:[NSString stringWithFormat:@"%ld",[_t.totalNumber integerValue]+1]];
+            [self insertedIntoTextTable:_t.textId questionsID:q.questionsID qid:[NSString stringWithFormat:@"%d",[_t.totalNumber integerValue]+1]];
             [_t changeTotalNumberWithTitle:q.score];
-            _t.totalNumber = [NSString stringWithFormat:@"%ld",[_t.totalNumber integerValue]+1];
-            _t.totalScore = [NSString stringWithFormat:@"%ld",[_t.totalScore integerValue]+[q.score integerValue]];
+            _t.totalNumber = [NSString stringWithFormat:@"%d",[_t.totalNumber integerValue]+1];
+            _t.totalScore = [NSString stringWithFormat:@"%d",[_t.totalScore integerValue]+[q.score integerValue]];
         }
     }
     [self back];
