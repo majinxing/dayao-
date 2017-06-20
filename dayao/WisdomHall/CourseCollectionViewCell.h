@@ -7,7 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "MeetingModel.h"
 
 @interface CourseCollectionViewCell : UICollectionViewCell
 @property (strong, nonatomic) IBOutlet UIImageView *courseImage;
+-(void)setInfoForContentView:(MeetingModel *)meetingModel;
 @end

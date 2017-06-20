@@ -10,16 +10,25 @@
 #import "CourseCollectionViewCell.h"
 #import "CollectionFlowLayout.h"
 #import "DYHeader.h"
+#import "TheMeetingInfoViewController.h"
+#import "MeetingModel.h"
+
 static NSString * cellIdentifier = @"cellIdentifier";
 
 @interface AllTheMeetingViewController ()<UICollectionViewDelegate,UICollectionViewDataSource>
 @property (nonatomic,strong) UICollectionView * collection;
+@property (nonatomic,strong) NSMutableArray * meetingModelAry;
 @end
 
 @implementation AllTheMeetingViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    _meetingModelAry = [NSMutableArray arrayWithCapacity:12];
+    for (int i = 0; i<10; i++) {
+        MeetingModel * m = [[MeetingModel alloc] init];
+        [_meetingModelAry addObject:m];
+    }
     [self addCollection];
     // Do any additional setup after loading the view from its nib.
 }
@@ -62,25 +71,31 @@ static NSString * cellIdentifier = @"cellIdentifier";
 {
     CourseCollectionViewCell * cell = [collectionView dequeueReusableCellWithReuseIdentifier:cellIdentifier forIndexPath:indexPath];
     cell.backgroundColor = [UIColor whiteColor];
-    //[cell addCourseInfo];
+    [cell setInfoForContentView:_meetingModelAry[indexPath.row]];
     return cell;
-    //    CourseCollectionViewCell *cell1 = [collectionView dequeueReusableCellWithReuseIdentifier:cellIdentifier forIndexPath:indexPath];
-    //    return cell1;
-    
-    
 }
 #pragma mark UICollectionViewDelegate
 //初次点击走
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    NSLog(@"%s",__func__);
-    
+   
+    TheMeetingInfoViewController * mInfo = [[TheMeetingInfoViewController alloc] init];
+    mInfo.hidesBottomBarWhenPushed = YES;
+    mInfo.meetingModel = _meetingModelAry[indexPath.row];
+    [self.navigationController pushViewController:mInfo animated:YES];
+   // self.hidesBottomBarWhenPushed=NO;
+
 }
 //有了初次点击再走这个
 - (void)collectionView:(UICollectionView *)collectionView didDeselectItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    NSLog(@"%s",__func__);
-    
+
+    TheMeetingInfoViewController * mInfo = [[TheMeetingInfoViewController alloc] init];
+    mInfo.hidesBottomBarWhenPushed = YES;
+    mInfo.meetingModel = _meetingModelAry[indexPath.row];
+    [self.navigationController pushViewController:mInfo animated:YES];
+   // self.hidesBottomBarWhenPushed=NO;
+
 }
 #pragma mark UICollectionViewDelegateFlowLayout
 - (CGSize)collectionView:(nonnull UICollectionView *)collectionView layout:(nonnull UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(nonnull NSIndexPath *)indexPath {

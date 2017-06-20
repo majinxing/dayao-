@@ -8,7 +8,16 @@
 
 #import "CourseCollectionViewCell.h"
 #import "DYHeader.h"
+#import "MeetingModel.h"
 
+@interface CourseCollectionViewCell ()
+@property (strong, nonatomic) IBOutlet UIImageView *cellImage;
+@property (strong, nonatomic) IBOutlet UILabel *classOrMeetingName;
+@property (strong, nonatomic) IBOutlet UILabel *hostName;
+@property (strong, nonatomic) IBOutlet UILabel *place;
+
+
+@end
 @implementation CourseCollectionViewCell
 
 - (void)awakeFromNib {
@@ -30,5 +39,13 @@
     return self;
     
 }
+-(void)setInfoForContentView:(MeetingModel *)meetingModel{
+    _classOrMeetingName.text = [NSString stringWithFormat:@"会议名：%@",meetingModel.meetingName];
+    
+    _hostName.text = [NSString stringWithFormat:@"主持人：%@",meetingModel.meetingHost];
+    
+    _place.text = [NSString stringWithFormat:@"会议地点：%@",meetingModel.meetingPlace];
+}
+
 
 @end

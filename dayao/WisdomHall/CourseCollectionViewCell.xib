@@ -71,7 +71,11 @@
             </constraints>
             <size key="customSize" width="533" height="598"/>
             <connections>
+                <outlet property="cellImage" destination="UGM-Om-yLr" id="zfx-1F-tIm"/>
+                <outlet property="classOrMeetingName" destination="RVQ-Ru-ehT" id="BxK-eb-FTf"/>
                 <outlet property="courseImage" destination="UGM-Om-yLr" id="Qb0-d6-BHG"/>
+                <outlet property="hostName" destination="0gh-lH-mpH" id="YAW-Ao-3oo"/>
+                <outlet property="place" destination="bqc-cC-k9c" id="3WA-YO-Yj3"/>
             </connections>
             <point key="canvasLocation" x="-80.5" y="103"/>
         </collectionViewCell>

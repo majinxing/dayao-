@@ -54,11 +54,43 @@
     }else if ([type isEqualToString:@"interaction"]){
         //添加互动按钮
         [self addInteractionButton];
+    }else if ([type isEqualToString:@"meetingInteraction"]){
+        [self addMeeting];
     }
-    
     
     //添加取消按钮
     [self addCancleButton];
+}
+-(void)addMeeting{
+    _interactionTypeArray = @[
+                              InteractionType_Discuss,
+                              InteractionType_Vote,
+                              InteractionType_Responder,
+                              InteractionType_Data,
+                              InteractionType_Add
+                              ];
+    
+    //水平间距
+    int marginWidth = (APPLICATION_WIDTH - buttonWH * columns) / (columns + 1);
+    //起始XY坐标
+    int oneX = marginWidth;
+    int oneY = marginHeight;
+    
+    for (int i = 0; i < _interactionTypeArray.count; i++)
+    {
+        //行
+        int row = i / columns;
+        //列
+        int column = i % columns;
+        
+        int x = oneX + (buttonWH + marginWidth) * column;
+        int y = oneY + (buttonWH + marginWidth) * row;
+        
+        ShareButton * button = [[ShareButton alloc] initWithFrame:CGRectMake(x, y, buttonWH, buttonWH) andType:_interactionTypeArray[i]];
+        [button addTarget:self action:@selector(shareButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
+        [_contentView addSubview:button];
+    }
+
 }
 //添加分享按钮
 - (void)addShareButton
@@ -99,6 +131,7 @@
                               InteractionType_Discuss,
                               InteractionType_Vote,
                               InteractionType_Responder,
+                              InteractionType_Data,
                               InteractionType_Add
                               ];
     

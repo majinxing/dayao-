@@ -41,7 +41,9 @@
 #define InteractionType_Discuss     @"讨论"
 #define InteractionType_Vote        @"投票"
 #define InteractionType_Responder   @"抢答"
+#define InteractionType_Data        @"资料"
 #define InteractionType_Add         @"更多"
+
 
 //数据库的名字
 #define SQLITE_NAME        @"Dayao"

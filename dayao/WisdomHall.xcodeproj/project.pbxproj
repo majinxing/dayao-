@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		8B027A141EF8F30100600E18 /* TheMeetingInfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B027A121EF8F30100600E18 /* TheMeetingInfoViewController.m */; };
+		8B027A151EF8F30100600E18 /* TheMeetingInfoViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8B027A131EF8F30100600E18 /* TheMeetingInfoViewController.xib */; };
+		8B027A181EF8F48800600E18 /* MeetingModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B027A171EF8F48800600E18 /* MeetingModel.m */; };
 		8B05CB6B1EC0056B0063EC20 /* TextsTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B05CB691EC0056B0063EC20 /* TextsTableViewCell.m */; };
 		8B05CB6C1EC0056B0063EC20 /* TextsTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8B05CB6A1EC0056B0063EC20 /* TextsTableViewCell.xib */; };
 		8B05CB701EC015DB0063EC20 /* PersonalInfoTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B05CB6E1EC015DB0063EC20 /* PersonalInfoTableViewCell.m */; };
@@ -429,6 +432,11 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		8B027A111EF8F30100600E18 /* TheMeetingInfoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TheMeetingInfoViewController.h; sourceTree = "<group>"; };
+		8B027A121EF8F30100600E18 /* TheMeetingInfoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TheMeetingInfoViewController.m; sourceTree = "<group>"; };
+		8B027A131EF8F30100600E18 /* TheMeetingInfoViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TheMeetingInfoViewController.xib; sourceTree = "<group>"; };
+		8B027A161EF8F48800600E18 /* MeetingModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MeetingModel.h; sourceTree = "<group>"; };
+		8B027A171EF8F48800600E18 /* MeetingModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MeetingModel.m; sourceTree = "<group>"; };
 		8B05CB681EC0056B0063EC20 /* TextsTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TextsTableViewCell.h; sourceTree = "<group>"; };
 		8B05CB691EC0056B0063EC20 /* TextsTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TextsTableViewCell.m; sourceTree = "<group>"; };
 		8B05CB6A1EC0056B0063EC20 /* TextsTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TextsTableViewCell.xib; sourceTree = "<group>"; };
@@ -879,6 +887,9 @@
 				8B2E16F41EBADA5D008B7C57 /* TheMeetingEndedViewController.h */,
 				8B2E16F51EBADA5D008B7C57 /* TheMeetingEndedViewController.m */,
 				8B2E16F61EBADA5D008B7C57 /* TheMeetingEndedViewController.xib */,
+				8B027A111EF8F30100600E18 /* TheMeetingInfoViewController.h */,
+				8B027A121EF8F30100600E18 /* TheMeetingInfoViewController.m */,
+				8B027A131EF8F30100600E18 /* TheMeetingInfoViewController.xib */,
 			);
 			name = TheMeetingType;
 			sourceTree = "<group>";
@@ -1087,6 +1098,8 @@
 				8B0DB1351ED561B80042DF0D /* AnswerModel.m */,
 				8BFB945B1EE53B2D004BB963 /* VoteModel.h */,
 				8BFB945C1EE53B2D004BB963 /* VoteModel.m */,
+				8B027A161EF8F48800600E18 /* MeetingModel.h */,
+				8B027A171EF8F48800600E18 /* MeetingModel.m */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -1590,6 +1603,7 @@
 				8BF82D7C1EDFFC6200D33473 /* VoteViewController.xib in Resources */,
 				8BF864BB1ECAD97300B7EED4 /* LICENSE in Resources */,
 				8B05CB771EC070060063EC20 /* SystemSetingTableViewCell.xib in Resources */,
+				8B027A151EF8F30100600E18 /* TheMeetingInfoViewController.xib in Resources */,
 				8B05CB7C1EC2ABFD0063EC20 /* PersonalInfoViewController.xib in Resources */,
 				8B2E16E31EBACAD7008B7C57 /* PersonalCollectionViewCell.xib in Resources */,
 				8B9B58501EC998080010A1F1 /* TextListViewController.xib in Resources */,
@@ -1723,6 +1737,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8B027A141EF8F30100600E18 /* TheMeetingInfoViewController.m in Sources */,
 				8B0DB13B1ED6CA4E0042DF0D /* ImportTextViewController.m in Sources */,
 				8B2E16DA1EBAB968008B7C57 /* ClassManagementViewController.m in Sources */,
 				8BF864C31ECAD97300B7EED4 /* SDWebImageManager.m in Sources */,
@@ -1735,6 +1750,7 @@
 				8B2E16DE1EBABBC0008B7C57 /* InteractiveView.m in Sources */,
 				8BF864C71ECAD97300B7EED4 /* UIImage+MultiFormat.m in Sources */,
 				8B2E16D51EB9C1EA008B7C57 /* CourseDetailsViewController.m in Sources */,
+				8B027A181EF8F48800600E18 /* MeetingModel.m in Sources */,
 				8B05CB7B1EC2ABFD0063EC20 /* PersonalInfoViewController.m in Sources */,
 				8BE877851EBC2E0C00866A34 /* EndTheTestViewController.m in Sources */,
 				8B2E16F71EBADA5D008B7C57 /* TheMeetingEndedViewController.m in Sources */,

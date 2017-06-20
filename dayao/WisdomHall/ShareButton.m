@@ -62,19 +62,27 @@
         [self setImage:[UIImage imageNamed:@"SocialSharePlatformIcon_weixin"] forState:UIControlStateNormal];
     }
     if ([type isEqualToString:InteractionType_Test]) {
+        
         [self setImage:[UIImage imageNamed:@"text"] forState:UIControlStateNormal];
     }
     if ([type isEqualToString:InteractionType_Vote]) {
+        
         [self setImage:[UIImage imageNamed:@"Vote"] forState:UIControlStateNormal];
     }
     if ([type isEqualToString:InteractionType_Discuss]) {
+        
         [self setImage:[UIImage imageNamed:@"discussed"] forState:UIControlStateNormal];
     }
     if ([type isEqualToString:InteractionType_Responder]) {
+        
         [self setImage:[UIImage imageNamed:@"answer"] forState:UIControlStateNormal];
     }
     if ([type isEqualToString:InteractionType_Add]) {
+        
         [self setImage:[UIImage imageNamed:@"add"] forState:UIControlStateNormal];
+    }
+    if ([type isEqualToString:InteractionType_Data]) {
+        [self setImage:[UIImage imageNamed:@"form"] forState:UIControlStateNormal];
     }
     [self setTitle:type forState:UIControlStateNormal];
 }
