@@ -8,8 +8,18 @@
 
 #import "RegisterViewController.h"
 #import "DefineThePasswordViewController.h"
-@interface RegisterViewController ()
+
+
+#import <SMS_SDK/SMSSDK.h>
+
+
+@interface RegisterViewController ()<UITextFieldDelegate>
 @property (strong, nonatomic) IBOutlet UIButton *getVerificationCodeBtn;
+@property (nonatomic,copy)NSString * phoneNumber;
+@property (nonatomic,copy)NSString * Verification;
+@property (strong, nonatomic) IBOutlet UITextField *phoneTextFile;
+@property (strong, nonatomic) IBOutlet UITextField *vTextFile;
+
 
 @end
 
@@ -18,6 +28,9 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor whiteColor];
+    
+    [self.phoneTextFile addTarget:self action:@selector(passConTextChange:) forControlEvents:UIControlEventEditingChanged];
+    [self.vTextFile addTarget:self action:@selector(passConTextChange:) forControlEvents:UIControlEventEditingChanged];
     [self setNavigationTitle];
     // Do any additional setup after loading the view from its nib.
 }
@@ -40,17 +53,47 @@
     self.title = @"注册";
 }
 - (IBAction)getVerificationCodeButtonPressed:(id)sender {
+    [SMSSDK getVerificationCodeByMethod:SMSGetCodeMethodSMS phoneNumber:_phoneNumber zone:@"86" result:^(NSError *error) {
+        
+        if (!error)
+        {
+            NSLog(@"成功");
+        }
+        else
+        {
+            NSLog(@"失败");
+        }
+    }];
 }
 - (IBAction)registerButtonPressed:(id)sender {
-    DefineThePasswordViewController * definePWVC = [[DefineThePasswordViewController alloc] init];
-    [self.navigationController pushViewController:definePWVC animated:YES];
+    [SMSSDK commitVerificationCode:_Verification phoneNumber:_phoneNumber zone:@"86" result:^(NSError *error) {
+        
+        if (!error)
+        {
+            // 验证成功
+            DefineThePasswordViewController * definePWVC = [[DefineThePasswordViewController alloc] init];
+            [self.navigationController pushViewController:definePWVC animated:YES];
+        }
+        else
+        {
+            NSLog(@"失败");
+        }
+    }];
+  
 }
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
-
+#pragma mark UITextFile
+- (void)passConTextChange:(UITextField *)textField{
+    if (textField.tag == 1) {
+        _phoneNumber = textField.text;
+    }else{
+        _Verification = textField.text;
+    }
+}
 /*
 #pragma mark - Navigation
 
