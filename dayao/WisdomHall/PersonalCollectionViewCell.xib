@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="12118" systemVersion="16E195" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="12121" systemVersion="16E195" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12086"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12089"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -18,23 +18,35 @@
                 <rect key="frame" x="0.0" y="0.0" width="340" height="304"/>
                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                 <subviews>
-                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="headImage" translatesAutoresizingMaskIntoConstraints="NO" id="vav-eX-VKs">
-                        <rect key="frame" x="10" y="5" width="320" height="289"/>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="h" translatesAutoresizingMaskIntoConstraints="NO" id="vav-eX-VKs">
+                        <rect key="frame" x="10" y="5" width="320" height="269"/>
                     </imageView>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="张三" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="L7M-In-qda">
+                        <rect key="frame" x="10" y="279" width="320" height="20"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="20" id="uQw-OC-nPY"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                        <nil key="textColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
                 </subviews>
             </view>
-            <color key="backgroundColor" red="0.98861485211843758" green="1" blue="0.97271674657144758" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
             <constraints>
-                <constraint firstItem="vav-eX-VKs" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" constant="5" id="sgb-te-FUd"/>
-                <constraint firstItem="vav-eX-VKs" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" constant="10" id="slG-St-kyF"/>
-                <constraint firstAttribute="trailing" secondItem="vav-eX-VKs" secondAttribute="trailing" constant="10" id="udN-LB-8MM"/>
-                <constraint firstAttribute="bottom" secondItem="vav-eX-VKs" secondAttribute="bottom" constant="10" id="ylx-EX-nSO"/>
+                <constraint firstItem="L7M-In-qda" firstAttribute="top" secondItem="vav-eX-VKs" secondAttribute="bottom" constant="5" id="8m5-75-Ev4"/>
+                <constraint firstAttribute="bottom" secondItem="vav-eX-VKs" secondAttribute="bottom" constant="30" id="JA6-2i-onh"/>
+                <constraint firstAttribute="trailing" secondItem="L7M-In-qda" secondAttribute="trailing" constant="10" id="X5k-2A-E9r"/>
+                <constraint firstItem="vav-eX-VKs" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" constant="10" id="b1s-ck-ivI"/>
+                <constraint firstAttribute="trailing" secondItem="vav-eX-VKs" secondAttribute="trailing" constant="10" id="gjt-M7-8vd"/>
+                <constraint firstItem="L7M-In-qda" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" constant="10" id="hxq-dP-ntq"/>
+                <constraint firstItem="vav-eX-VKs" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" constant="5" id="reV-zj-k75"/>
             </constraints>
             <size key="customSize" width="340" height="304"/>
             <point key="canvasLocation" x="-29" y="34"/>
         </collectionViewCell>
     </objects>
     <resources>
-        <image name="headImage" width="352" height="220"/>
+        <image name="h" width="650" height="464"/>
     </resources>
 </document>

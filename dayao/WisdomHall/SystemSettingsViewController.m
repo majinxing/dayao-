@@ -8,6 +8,7 @@
 
 #import "SystemSettingsViewController.h"
 #import "TheLoginViewController.h"
+#import "DYTabBarViewController.h"
 @interface SystemSettingsViewController ()
 
 @end
@@ -20,6 +21,8 @@
     // Do any additional setup after loading the view from its nib.
 }
 - (IBAction)logoutButtonPressed:(id)sender {
+    DYTabBarViewController *rootVC = [DYTabBarViewController sharedInstance];
+    rootVC = nil;
     TheLoginViewController * userLogin = [[TheLoginViewController alloc] init];
     [UIApplication sharedApplication].keyWindow.rootViewController =[[UINavigationController alloc] initWithRootViewController:userLogin];
 }
@@ -30,13 +33,13 @@
 }
 
 /*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
+ #pragma mark - Navigation
+ 
+ // In a storyboard-based application, you will often want to do a little preparation before navigation
+ - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+ // Get the new view controller using [segue destinationViewController].
+ // Pass the selected object to the new view controller.
+ }
+ */
 
 @end

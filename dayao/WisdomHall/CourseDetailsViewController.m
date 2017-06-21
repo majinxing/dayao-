@@ -17,6 +17,7 @@
 #import "ConversationVC.h"
 #import "DiscussViewController.h"
 #import "VoteViewController.h"
+#import "DataDownloadViewController.h"
 
 @interface CourseDetailsViewController ()<InteractiveViewdDelegate,UIActionSheetDelegate,ShareViewDelegate>
 @property (strong, nonatomic) IBOutlet UIButton *interactive;
@@ -182,6 +183,11 @@
     }
     else if ([platform isEqualToString:InteractionType_Add]){
         NSLog(@"更多");
+    }else if ([platform isEqualToString:InteractionType_Data]){
+        NSLog(@"资料");
+        DataDownloadViewController * d = [[DataDownloadViewController alloc] init];
+        self.hidesBottomBarWhenPushed = YES;
+        [self.navigationController pushViewController: d animated:YES];
     }
 }
 

@@ -19,7 +19,7 @@
     self = [super initWithFrame:frame];
     if (self) {
         self = [[NSBundle mainBundle]loadNibNamed:@"PersonalCollectionViewCell" owner:self options:nil].lastObject;
-        //self.backgroundColor = [UIColor clearColor];
+        self.backgroundColor = [UIColor clearColor];
     }
     return self;
     

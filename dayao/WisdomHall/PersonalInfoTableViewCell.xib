@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="12118" systemVersion="16E195" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="12121" systemVersion="16E195" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12086"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12089"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -20,26 +20,26 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="address" translatesAutoresizingMaskIntoConstraints="NO" id="YlM-Qr-ICZ">
-                        <rect key="frame" x="5" y="5" width="30" height="29.5"/>
+                        <rect key="frame" x="7.5" y="7.5" width="25" height="24.5"/>
                         <constraints>
-                            <constraint firstAttribute="width" constant="30" id="r9l-Uu-DsR"/>
+                            <constraint firstAttribute="width" constant="25" id="r9l-Uu-DsR"/>
                         </constraints>
                     </imageView>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="签到方式" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ocv-iU-t8V">
-                        <rect key="frame" x="45" y="13" width="100" height="13.5"/>
+                        <rect key="frame" x="42.5" y="13" width="100" height="13.5"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="100" id="9gc-Di-c8d"/>
                         </constraints>
-                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="12"/>
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
                     </label>
                 </subviews>
                 <constraints>
-                    <constraint firstItem="YlM-Qr-ICZ" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="5" id="12t-KB-2ME"/>
-                    <constraint firstItem="YlM-Qr-ICZ" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="5" id="7bc-5h-iTR"/>
+                    <constraint firstItem="YlM-Qr-ICZ" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="7.5" id="12t-KB-2ME"/>
+                    <constraint firstItem="YlM-Qr-ICZ" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="7.5" id="7bc-5h-iTR"/>
                     <constraint firstItem="ocv-iU-t8V" firstAttribute="leading" secondItem="YlM-Qr-ICZ" secondAttribute="trailing" constant="10" id="JjI-JE-HcD"/>
-                    <constraint firstAttribute="bottom" secondItem="YlM-Qr-ICZ" secondAttribute="bottom" constant="5" id="VaM-9Y-pwU"/>
+                    <constraint firstAttribute="bottom" secondItem="YlM-Qr-ICZ" secondAttribute="bottom" constant="7.5" id="VaM-9Y-pwU"/>
                     <constraint firstItem="ocv-iU-t8V" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" constant="5" id="dyY-V9-Wrl"/>
                     <constraint firstAttribute="bottomMargin" secondItem="ocv-iU-t8V" secondAttribute="bottom" constant="5" id="m0B-Y6-kDn"/>
                 </constraints>
@@ -53,18 +53,9 @@
                 <rect key="frame" x="0.0" y="0.0" width="395" height="49.5"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="khz-Lf-MSc">
-                        <rect key="frame" x="147.5" y="10" width="100" height="29.5"/>
-                        <constraints>
-                            <constraint firstAttribute="width" constant="100" id="Qlx-AL-kvx"/>
-                        </constraints>
-                        <state key="normal" title="指纹签到"/>
-                    </button>
-                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cCN-pA-TVd">
+                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cCN-pA-TVd">
                         <rect key="frame" x="47.5" y="10" width="100" height="29.5"/>
-                        <constraints>
-                            <constraint firstAttribute="width" constant="100" id="pHO-gc-NXd"/>
-                        </constraints>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <state key="normal" title="点击签到"/>
                         <userDefinedRuntimeAttributes>
                             <userDefinedRuntimeAttribute type="boolean" keyPath="layer.masksToBounds" value="YES"/>
@@ -77,21 +68,15 @@
                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="oHx-sZ-hlF">
                         <rect key="frame" x="247.5" y="10" width="100" height="29.5"/>
                         <constraints>
-                            <constraint firstAttribute="width" constant="100" id="eUD-Ai-9a1"/>
+                            <constraint firstAttribute="width" constant="100" id="yQj-Cx-9Ul"/>
                         </constraints>
                         <state key="normal" title="照片签到"/>
                     </button>
                 </subviews>
                 <constraints>
-                    <constraint firstItem="khz-Lf-MSc" firstAttribute="leading" secondItem="cCN-pA-TVd" secondAttribute="trailing" id="58I-70-qgA"/>
-                    <constraint firstItem="cCN-pA-TVd" firstAttribute="top" secondItem="Yao-Sw-shc" secondAttribute="topMargin" constant="2" id="6oM-6y-XcH"/>
-                    <constraint firstAttribute="bottomMargin" secondItem="cCN-pA-TVd" secondAttribute="bottom" constant="2" id="9iU-aI-1oG"/>
-                    <constraint firstItem="oHx-sZ-hlF" firstAttribute="leading" secondItem="khz-Lf-MSc" secondAttribute="trailing" id="Bf6-bJ-IMO"/>
-                    <constraint firstItem="oHx-sZ-hlF" firstAttribute="top" secondItem="Yao-Sw-shc" secondAttribute="topMargin" constant="2" id="K0j-je-8Ch"/>
-                    <constraint firstAttribute="bottomMargin" secondItem="oHx-sZ-hlF" secondAttribute="bottom" constant="2" id="czd-JY-U6M"/>
-                    <constraint firstItem="khz-Lf-MSc" firstAttribute="centerX" secondItem="Yao-Sw-shc" secondAttribute="centerX" id="eJU-sy-Hih"/>
-                    <constraint firstItem="khz-Lf-MSc" firstAttribute="top" secondItem="Yao-Sw-shc" secondAttribute="topMargin" constant="2" id="vTU-Bt-FBO"/>
-                    <constraint firstAttribute="bottomMargin" secondItem="khz-Lf-MSc" secondAttribute="bottom" constant="2" id="yYg-An-HHH"/>
+                    <constraint firstItem="oHx-sZ-hlF" firstAttribute="leading" secondItem="Yao-Sw-shc" secondAttribute="leadingMargin" constant="239.5" id="0mx-4x-xpq"/>
+                    <constraint firstAttribute="bottomMargin" secondItem="oHx-sZ-hlF" secondAttribute="bottom" constant="2" id="Su1-Fk-YCe"/>
+                    <constraint firstItem="oHx-sZ-hlF" firstAttribute="top" secondItem="Yao-Sw-shc" secondAttribute="topMargin" constant="2" id="XvV-3I-nR5"/>
                 </constraints>
             </tableViewCellContentView>
             <point key="canvasLocation" x="28.5" y="199"/>

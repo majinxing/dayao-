@@ -12,6 +12,8 @@
 		8B027A181EF8F48800600E18 /* MeetingModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B027A171EF8F48800600E18 /* MeetingModel.m */; };
 		8B027A1E1EF9230600600E18 /* MOBFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8B027A1B1EF9230600600E18 /* MOBFoundation.framework */; };
 		8B027A1F1EF9230600600E18 /* SMS_SDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8B027A1D1EF9230600600E18 /* SMS_SDK.framework */; };
+		8B027A241EFA5FF200600E18 /* DataDownloadViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B027A221EFA5FF200600E18 /* DataDownloadViewController.m */; };
+		8B027A251EFA5FF200600E18 /* DataDownloadViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8B027A231EFA5FF200600E18 /* DataDownloadViewController.xib */; };
 		8B05CB6B1EC0056B0063EC20 /* TextsTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B05CB691EC0056B0063EC20 /* TextsTableViewCell.m */; };
 		8B05CB6C1EC0056B0063EC20 /* TextsTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8B05CB6A1EC0056B0063EC20 /* TextsTableViewCell.xib */; };
 		8B05CB701EC015DB0063EC20 /* PersonalInfoTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B05CB6E1EC015DB0063EC20 /* PersonalInfoTableViewCell.m */; };
@@ -441,6 +443,9 @@
 		8B027A171EF8F48800600E18 /* MeetingModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MeetingModel.m; sourceTree = "<group>"; };
 		8B027A1B1EF9230600600E18 /* MOBFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = MOBFoundation.framework; sourceTree = "<group>"; };
 		8B027A1D1EF9230600600E18 /* SMS_SDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = SMS_SDK.framework; sourceTree = "<group>"; };
+		8B027A211EFA5FF200600E18 /* DataDownloadViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DataDownloadViewController.h; sourceTree = "<group>"; };
+		8B027A221EFA5FF200600E18 /* DataDownloadViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DataDownloadViewController.m; sourceTree = "<group>"; };
+		8B027A231EFA5FF200600E18 /* DataDownloadViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DataDownloadViewController.xib; sourceTree = "<group>"; };
 		8B05CB681EC0056B0063EC20 /* TextsTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TextsTableViewCell.h; sourceTree = "<group>"; };
 		8B05CB691EC0056B0063EC20 /* TextsTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TextsTableViewCell.m; sourceTree = "<group>"; };
 		8B05CB6A1EC0056B0063EC20 /* TextsTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TextsTableViewCell.xib; sourceTree = "<group>"; };
@@ -877,6 +882,16 @@
 			path = SMSSDK;
 			sourceTree = "<group>";
 		};
+		8B027A201EFA5FB600600E18 /* DataDownload */ = {
+			isa = PBXGroup;
+			children = (
+				8B027A211EFA5FF200600E18 /* DataDownloadViewController.h */,
+				8B027A221EFA5FF200600E18 /* DataDownloadViewController.m */,
+				8B027A231EFA5FF200600E18 /* DataDownloadViewController.xib */,
+			);
+			name = DataDownload;
+			sourceTree = "<group>";
+		};
 		8B05CB721EC06FD60063EC20 /* Cell */ = {
 			isa = PBXGroup;
 			children = (
@@ -974,6 +989,7 @@
 				8BA224921EADFE9500627A1B /* SignIn */,
 				8BA224931EADFEB500627A1B /* Interactive */,
 				8BA224941EADFED000627A1B /* PersonalCenter */,
+				8B027A201EFA5FB600600E18 /* DataDownload */,
 				8BA224A91EAE001D00627A1B /* BaseClass */,
 				8BA2245F1EADF68500627A1B /* AppDelegate.h */,
 				8BA224601EADF68500627A1B /* AppDelegate.m */,
@@ -1650,6 +1666,7 @@
 				8B9171CC1ED41BC7009686FD /* QuestionsTableViewCell.xib in Resources */,
 				8B7D5D831EB961260068058E /* CreateCourseViewController.xib in Resources */,
 				8B7D5D911EB9782C0068058E /* CourseCollectionViewCell.xib in Resources */,
+				8B027A251EFA5FF200600E18 /* DataDownloadViewController.xib in Resources */,
 				8BB56D881EB2E2820023DAFF /* RedefineThePasswordViewController.xib in Resources */,
 				8BFB94671EE79745004BB963 /* JoinVoteTableViewCell.xib in Resources */,
 				8B2E16EE1EBAD9F3008B7C57 /* InTheMeetingViewController.xib in Resources */,
@@ -1868,6 +1885,7 @@
 				8BF864721ECACAE800B7EED4 /* FMResultSet.m in Sources */,
 				8BE913A31EEFB80000000282 /* MBProgressHUD+Add.m in Sources */,
 				8B7D5D901EB9782C0068058E /* CourseCollectionViewCell.m in Sources */,
+				8B027A241EFA5FF200600E18 /* DataDownloadViewController.m in Sources */,
 				8BF8646F1ECACAE800B7EED4 /* FMDatabaseAdditions.m in Sources */,
 				8B8C3D141ECD300C00E9FB56 /* ChatHelper.m in Sources */,
 				8BF864891ECAD21200B7EED4 /* MJRefreshConst.m in Sources */,

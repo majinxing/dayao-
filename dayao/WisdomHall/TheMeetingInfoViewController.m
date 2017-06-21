@@ -13,6 +13,9 @@
 #import "VoteViewController.h"
 #import "ConversationVC.h"
 #import "DiscussViewController.h"
+#import "ClassManagementViewController.h"
+#import "SignListViewController.h"
+#import "DataDownloadViewController.h"
 
 @interface TheMeetingInfoViewController ()<ShareViewDelegate>
 
@@ -79,9 +82,16 @@
     [_interaction showInView:self.view];
 }
 - (IBAction)signBtnPressed:(id)sender {
-    
+    SignListViewController * signListVC = [[SignListViewController alloc] init];
+    self.hidesBottomBarWhenPushed = YES;
+    [self.navigationController pushViewController:signListVC animated:YES];
+
 }
 - (IBAction)personnelManagement:(id)sender {
+    ClassManagementViewController * classManegeVC = [[ClassManagementViewController alloc] init];
+    self.hidesBottomBarWhenPushed = YES;
+    
+    [self.navigationController pushViewController:classManegeVC animated:YES];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -150,6 +160,11 @@
     }
     else if ([platform isEqualToString:InteractionType_Add]){
         NSLog(@"更多");
+    }else if ([platform isEqualToString:InteractionType_Data]){
+        NSLog(@"资料");
+        DataDownloadViewController * d = [[DataDownloadViewController alloc] init];
+        self.hidesBottomBarWhenPushed = YES;
+        [self.navigationController pushViewController: d animated:YES];
     }
 }
 

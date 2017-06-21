@@ -27,14 +27,10 @@
     NSInteger index = 0; //xib中第几个Cell
     switch (indexPath.section) {
         case 0:
-            identifier = @"SystemSetingTableViewCellFirst";
-            index = 0;
-            break;
-        case 1:
             identifier = @"SystemSetingTableViewCellSecond";
             index = 1;
             break;
-        case 2:
+        case 1:
             identifier = @"SystemSetingTableViewCellThird";
             index = 2;
         default:
@@ -44,10 +40,8 @@
     if (!cell) {
         cell = [[[NSBundle mainBundle] loadNibNamed:@"SystemSetingTableViewCell" owner:self options:nil] objectAtIndex:index];
     }
-    if (indexPath.section == 0) {
-        cell.timeLabel.text = [UIUtils getCurrentDate];
-    }
-    if (indexPath.section == 2) {
+  
+    if (indexPath.section == 1) {
         cell.setingLabel.text = cell.textAry[indexPath.row];
     }
     return cell;

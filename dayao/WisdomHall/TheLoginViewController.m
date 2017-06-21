@@ -37,7 +37,7 @@
 }
 - (IBAction)LoginButtonPressed:(id)sender {
     NSLog(@"点击");
-    DYTabBarViewController *rootVC = [DYTabBarViewController sharedInstance];
+    DYTabBarViewController *rootVC = [[DYTabBarViewController alloc] init];
     [UIApplication sharedApplication].keyWindow.rootViewController = rootVC;
 }
 /**
