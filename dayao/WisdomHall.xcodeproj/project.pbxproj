@@ -14,6 +14,8 @@
 		8B027A1F1EF9230600600E18 /* SMS_SDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8B027A1D1EF9230600600E18 /* SMS_SDK.framework */; };
 		8B027A241EFA5FF200600E18 /* DataDownloadViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B027A221EFA5FF200600E18 /* DataDownloadViewController.m */; };
 		8B027A251EFA5FF200600E18 /* DataDownloadViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8B027A231EFA5FF200600E18 /* DataDownloadViewController.xib */; };
+		8B027A291EFB4E0000600E18 /* DataDownloadTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B027A271EFB4E0000600E18 /* DataDownloadTableViewCell.m */; };
+		8B027A2A1EFB4E0000600E18 /* DataDownloadTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8B027A281EFB4E0000600E18 /* DataDownloadTableViewCell.xib */; };
 		8B05CB6B1EC0056B0063EC20 /* TextsTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B05CB691EC0056B0063EC20 /* TextsTableViewCell.m */; };
 		8B05CB6C1EC0056B0063EC20 /* TextsTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8B05CB6A1EC0056B0063EC20 /* TextsTableViewCell.xib */; };
 		8B05CB701EC015DB0063EC20 /* PersonalInfoTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B05CB6E1EC015DB0063EC20 /* PersonalInfoTableViewCell.m */; };
@@ -446,6 +448,9 @@
 		8B027A211EFA5FF200600E18 /* DataDownloadViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DataDownloadViewController.h; sourceTree = "<group>"; };
 		8B027A221EFA5FF200600E18 /* DataDownloadViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DataDownloadViewController.m; sourceTree = "<group>"; };
 		8B027A231EFA5FF200600E18 /* DataDownloadViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DataDownloadViewController.xib; sourceTree = "<group>"; };
+		8B027A261EFB4E0000600E18 /* DataDownloadTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DataDownloadTableViewCell.h; sourceTree = "<group>"; };
+		8B027A271EFB4E0000600E18 /* DataDownloadTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DataDownloadTableViewCell.m; sourceTree = "<group>"; };
+		8B027A281EFB4E0000600E18 /* DataDownloadTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DataDownloadTableViewCell.xib; sourceTree = "<group>"; };
 		8B05CB681EC0056B0063EC20 /* TextsTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TextsTableViewCell.h; sourceTree = "<group>"; };
 		8B05CB691EC0056B0063EC20 /* TextsTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TextsTableViewCell.m; sourceTree = "<group>"; };
 		8B05CB6A1EC0056B0063EC20 /* TextsTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TextsTableViewCell.xib; sourceTree = "<group>"; };
@@ -888,6 +893,9 @@
 				8B027A211EFA5FF200600E18 /* DataDownloadViewController.h */,
 				8B027A221EFA5FF200600E18 /* DataDownloadViewController.m */,
 				8B027A231EFA5FF200600E18 /* DataDownloadViewController.xib */,
+				8B027A261EFB4E0000600E18 /* DataDownloadTableViewCell.h */,
+				8B027A271EFB4E0000600E18 /* DataDownloadTableViewCell.m */,
+				8B027A281EFB4E0000600E18 /* DataDownloadTableViewCell.xib */,
 			);
 			name = DataDownload;
 			sourceTree = "<group>";
@@ -1694,6 +1702,7 @@
 				8BE8777C1EBC2D8E00866A34 /* NotStartTestingViewController.xib in Resources */,
 				8BA224C21EAEF5CB00627A1B /* TheLoginViewController.xib in Resources */,
 				8BE877911EBD69C000866A34 /* CreateTestViewController.xib in Resources */,
+				8B027A2A1EFB4E0000600E18 /* DataDownloadTableViewCell.xib in Resources */,
 				8BF82D821EE001D600D33473 /* VoteTableViewCell.xib in Resources */,
 				8BA2246C1EADF68500627A1B /* LaunchScreen.storyboard in Resources */,
 				8B05CB6C1EC0056B0063EC20 /* TextsTableViewCell.xib in Resources */,
@@ -1845,6 +1854,7 @@
 				8BF8646E1ECACAE800B7EED4 /* FMDatabase.m in Sources */,
 				8BA224A21EADFFE500627A1B /* InteractiveViewController.m in Sources */,
 				8BF864701ECACAE800B7EED4 /* FMDatabasePool.m in Sources */,
+				8B027A291EFB4E0000600E18 /* DataDownloadTableViewCell.m in Sources */,
 				8BF8648D1ECAD21200B7EED4 /* UIScrollView+MJRefresh.m in Sources */,
 				8BA2245E1EADF68500627A1B /* main.m in Sources */,
 				8BB56D831EB177DC0023DAFF /* AFURLSessionManager.m in Sources */,
