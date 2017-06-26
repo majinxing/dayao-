@@ -24,6 +24,9 @@
 		8B05CB771EC070060063EC20 /* SystemSetingTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8B05CB751EC070060063EC20 /* SystemSetingTableViewCell.xib */; };
 		8B05CB7B1EC2ABFD0063EC20 /* PersonalInfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B05CB791EC2ABFD0063EC20 /* PersonalInfoViewController.m */; };
 		8B05CB7C1EC2ABFD0063EC20 /* PersonalInfoViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8B05CB7A1EC2ABFD0063EC20 /* PersonalInfoViewController.xib */; };
+		8B064E541F00D8D80004C3D4 /* MJXChatCellTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B064E521F00D8D80004C3D4 /* MJXChatCellTableViewCell.m */; };
+		8B064E551F00D8D80004C3D4 /* MJXChatCellTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8B064E531F00D8D80004C3D4 /* MJXChatCellTableViewCell.xib */; };
+		8B064E581F00F53F0004C3D4 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8B064E571F00F53F0004C3D4 /* Assets.xcassets */; };
 		8B0DB1331ED5188C0042DF0D /* ContactModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B0DB1321ED5188C0042DF0D /* ContactModel.m */; };
 		8B0DB1361ED561B80042DF0D /* AnswerModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B0DB1351ED561B80042DF0D /* AnswerModel.m */; };
 		8B0DB13B1ED6CA4E0042DF0D /* ImportTextViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B0DB1391ED6CA4E0042DF0D /* ImportTextViewController.m */; };
@@ -117,7 +120,6 @@
 		8BA224BC1EAEE36800627A1B /* SignPromptView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BA224BB1EAEE36800627A1B /* SignPromptView.m */; };
 		8BA224C11EAEF5CB00627A1B /* TheLoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BA224BF1EAEF5CB00627A1B /* TheLoginViewController.m */; };
 		8BA224C21EAEF5CB00627A1B /* TheLoginViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8BA224C01EAEF5CB00627A1B /* TheLoginViewController.xib */; };
-		8BA224C41EAEFAB200627A1B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8BA224C31EAEFAB200627A1B /* Assets.xcassets */; };
 		8BA224CF1EAF258B00627A1B /* ForgotPasswordViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BA224CD1EAF258B00627A1B /* ForgotPasswordViewController.m */; };
 		8BA224D01EAF258B00627A1B /* ForgotPasswordViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8BA224CE1EAF258B00627A1B /* ForgotPasswordViewController.xib */; };
 		8BA224D41EAF25DC00627A1B /* RegisterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BA224D21EAF25DC00627A1B /* RegisterViewController.m */; };
@@ -336,7 +338,6 @@
 		8BF82E341EE167C300D33473 /* VoteTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8BF82D801EE001D600D33473 /* VoteTableViewCell.xib */; };
 		8BF82E351EE167C300D33473 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8BA2246A1EADF68500627A1B /* LaunchScreen.storyboard */; };
 		8BF82E361EE167C300D33473 /* TextsTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8B05CB6A1EC0056B0063EC20 /* TextsTableViewCell.xib */; };
-		8BF82E371EE167C300D33473 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8BA224C31EAEFAB200627A1B /* Assets.xcassets */; };
 		8BF82E381EE167C300D33473 /* NoticeTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8B1737171EC2F84900BE3C8F /* NoticeTableViewCell.xib */; };
 		8BF82E391EE167C300D33473 /* MeetingViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8B17370D1EC2EDE400BE3C8F /* MeetingViewController.xib */; };
 		8BF82E3A1EE167C300D33473 /* EndTheTestViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8BE877841EBC2E0C00866A34 /* EndTheTestViewController.xib */; };
@@ -463,6 +464,10 @@
 		8B05CB781EC2ABFD0063EC20 /* PersonalInfoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PersonalInfoViewController.h; sourceTree = "<group>"; };
 		8B05CB791EC2ABFD0063EC20 /* PersonalInfoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PersonalInfoViewController.m; sourceTree = "<group>"; };
 		8B05CB7A1EC2ABFD0063EC20 /* PersonalInfoViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PersonalInfoViewController.xib; sourceTree = "<group>"; };
+		8B064E511F00D8D80004C3D4 /* MJXChatCellTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MJXChatCellTableViewCell.h; sourceTree = "<group>"; };
+		8B064E521F00D8D80004C3D4 /* MJXChatCellTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MJXChatCellTableViewCell.m; sourceTree = "<group>"; };
+		8B064E531F00D8D80004C3D4 /* MJXChatCellTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MJXChatCellTableViewCell.xib; sourceTree = "<group>"; };
+		8B064E571F00F53F0004C3D4 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		8B0DB1311ED5188C0042DF0D /* ContactModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ContactModel.h; sourceTree = "<group>"; };
 		8B0DB1321ED5188C0042DF0D /* ContactModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ContactModel.m; sourceTree = "<group>"; };
 		8B0DB1341ED561B80042DF0D /* AnswerModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AnswerModel.h; sourceTree = "<group>"; };
@@ -600,7 +605,6 @@
 		8BA224BE1EAEF5CB00627A1B /* TheLoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TheLoginViewController.h; sourceTree = "<group>"; };
 		8BA224BF1EAEF5CB00627A1B /* TheLoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TheLoginViewController.m; sourceTree = "<group>"; };
 		8BA224C01EAEF5CB00627A1B /* TheLoginViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TheLoginViewController.xib; sourceTree = "<group>"; };
-		8BA224C31EAEFAB200627A1B /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		8BA224CC1EAF258B00627A1B /* ForgotPasswordViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ForgotPasswordViewController.h; sourceTree = "<group>"; };
 		8BA224CD1EAF258B00627A1B /* ForgotPasswordViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ForgotPasswordViewController.m; sourceTree = "<group>"; };
 		8BA224CE1EAF258B00627A1B /* ForgotPasswordViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ForgotPasswordViewController.xib; sourceTree = "<group>"; };
@@ -916,9 +920,20 @@
 			name = Cell;
 			sourceTree = "<group>";
 		};
+		8B064E501F00D8B90004C3D4 /* ChatCell */ = {
+			isa = PBXGroup;
+			children = (
+				8B064E511F00D8D80004C3D4 /* MJXChatCellTableViewCell.h */,
+				8B064E521F00D8D80004C3D4 /* MJXChatCellTableViewCell.m */,
+				8B064E531F00D8D80004C3D4 /* MJXChatCellTableViewCell.xib */,
+			);
+			name = ChatCell;
+			sourceTree = "<group>";
+		};
 		8B0F412C1EF51EF9001AF4DF /* Chat */ = {
 			isa = PBXGroup;
 			children = (
+				8B064E501F00D8B90004C3D4 /* ChatCell */,
 				8B0F412D1EF522CF001AF4DF /* MJXChatViewController.h */,
 				8B0F412E1EF522CF001AF4DF /* MJXChatViewController.m */,
 				8B0F412F1EF522CF001AF4DF /* MJXChatViewController.xib */,
@@ -1003,9 +1018,9 @@
 				8BA224601EADF68500627A1B /* AppDelegate.m */,
 				8BA224621EADF68500627A1B /* ViewController.h */,
 				8BA224631EADF68500627A1B /* ViewController.m */,
-				8BA224C31EAEFAB200627A1B /* Assets.xcassets */,
 				8BA224651EADF68500627A1B /* Main.storyboard */,
 				8BA2246A1EADF68500627A1B /* LaunchScreen.storyboard */,
+				8B064E571F00F53F0004C3D4 /* Assets.xcassets */,
 				8BA2246D1EADF68500627A1B /* Info.plist */,
 				8BA2245C1EADF68500627A1B /* Supporting Files */,
 			);
@@ -1693,6 +1708,8 @@
 				8B2E16E91EBAD9AF008B7C57 /* AllTheMeetingViewController.xib in Resources */,
 				8B6E61CC1EE292B10040FDC1 /* CreateVoteTableViewCell.xib in Resources */,
 				8BE877711EBC1CA800866A34 /* TextViewController.xib in Resources */,
+				8B064E581F00F53F0004C3D4 /* Assets.xcassets in Resources */,
+				8B064E551F00D8D80004C3D4 /* MJXChatCellTableViewCell.xib in Resources */,
 				8B4D91151EBDAB1000A4BE34 /* SignListViewController.xib in Resources */,
 				8BA224A81EAE000000627A1B /* PersonalCenterViewController.xib in Resources */,
 				8B2E16DB1EBAB968008B7C57 /* ClassManagementViewController.xib in Resources */,
@@ -1707,7 +1724,6 @@
 				8BA2246C1EADF68500627A1B /* LaunchScreen.storyboard in Resources */,
 				8B05CB6C1EC0056B0063EC20 /* TextsTableViewCell.xib in Resources */,
 				8BFB946C1EE7F7F1004BB963 /* ResultsOfVoteViewController.xib in Resources */,
-				8BA224C41EAEFAB200627A1B /* Assets.xcassets in Resources */,
 				8B1737191EC2F84900BE3C8F /* NoticeTableViewCell.xib in Resources */,
 				8B17370F1EC2EDE400BE3C8F /* MeetingViewController.xib in Resources */,
 				8BE877861EBC2E0C00866A34 /* EndTheTestViewController.xib in Resources */,
@@ -1779,7 +1795,6 @@
 				8BF82E341EE167C300D33473 /* VoteTableViewCell.xib in Resources */,
 				8BF82E351EE167C300D33473 /* LaunchScreen.storyboard in Resources */,
 				8BF82E361EE167C300D33473 /* TextsTableViewCell.xib in Resources */,
-				8BF82E371EE167C300D33473 /* Assets.xcassets in Resources */,
 				8BF82E381EE167C300D33473 /* NoticeTableViewCell.xib in Resources */,
 				8BF82E391EE167C300D33473 /* MeetingViewController.xib in Resources */,
 				8BF82E3A1EE167C300D33473 /* EndTheTestViewController.xib in Resources */,
@@ -1840,6 +1855,7 @@
 				8BE877901EBD69C000866A34 /* CreateTestViewController.m in Sources */,
 				8BFB947A1EE94948004BB963 /* VoteDrawView.m in Sources */,
 				8BB56D801EB177DC0023DAFF /* AFSecurityPolicy.m in Sources */,
+				8B064E541F00D8D80004C3D4 /* MJXChatCellTableViewCell.m in Sources */,
 				8B2E16ED1EBAD9F3008B7C57 /* InTheMeetingViewController.m in Sources */,
 				8BA224D41EAF25DC00627A1B /* RegisterViewController.m in Sources */,
 				8B17370E1EC2EDE400BE3C8F /* MeetingViewController.m in Sources */,

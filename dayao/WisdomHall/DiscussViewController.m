@@ -55,6 +55,9 @@
     _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 64,APPLICATION_WIDTH, APPLICATION_HEIGHT-64) style:UITableViewStylePlain];
     _tableView.delegate = self;
     _tableView.dataSource = self;
+    
+//    _tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+    
     __weak DiscussViewController * weakSelf = self;
     [self.tableView addHeaderWithCallback:^{
         [weakSelf headerRereshing];
@@ -138,16 +141,17 @@
         [cell setImage:_imageAry[2] withLableTitle:chatroom.subject];
     }else{
         [cell setImage:_imageAry[indexPath.row] withLableTitle:_labelAry[indexPath.row]];
-;
     }
     
     return cell;
 }
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    
     MJXChatViewController *chat = [[MJXChatViewController alloc] init];
     self.hidesBottomBarWhenPushed = YES;
     [self.navigationController pushViewController:chat animated:YES];
+    
 }
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
     return 50;

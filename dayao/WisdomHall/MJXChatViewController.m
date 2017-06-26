@@ -7,7 +7,9 @@
 //
 
 #import "MJXChatViewController.h"
+#import "MJXChatCellTableViewCell.h"
 #import "DYHeader.h"
+
 #define RGBA_COLOR(R, G, B, A) [UIColor colorWithRed:((R) / 255.0f) green:((G) / 255.0f) blue:((B) / 255.0f) alpha:A]
 #define  MaxTextViewHeight 80 //限制文字输入的高度
 
@@ -23,13 +25,25 @@
 @property (nonatomic,assign)CGFloat keyH;
 
 @property (nonatomic,strong) UITextView * textView;
+
+@property (nonatomic,strong) UIButton * sendVoice;
+
+@property (nonatomic,assign)CGRect rect;
+
 @end
 
 @implementation MJXChatViewController
 
+-(void)dealloc{
+//        NSLog(@"%s",__func__);
+}
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
     self.view.backgroundColor = RGBA_COLOR(241, 241, 241, 1);
+    
+    [self setNavigationTitle];
+    
     [self keyboardNotification];
     
     [self addTableView];
@@ -45,12 +59,27 @@
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(keyboardWillHide:) name:UIKeyboardWillHideNotification object:nil];
     
 }
+/**
+ *  显示navigation的标题
+ **/
+-(void)setNavigationTitle{
+    [UIApplication sharedApplication].statusBarStyle = UIStatusBarStyleLightContent;
+    //[self.navigationController.navigationBar setBarTintColor:[UIColor blackColor]];
+    [self.navigationController.navigationBar setTitleTextAttributes:@{
+                                                                      NSFontAttributeName:[UIFont systemFontOfSize:17],
+                                                                      NSForegroundColorAttributeName:[UIColor blackColor]}];
+    self.title = @"聊天室";
+    UIBarButtonItem *myButton = [[UIBarButtonItem alloc] initWithTitle:@"保存" style:UIBarButtonItemStylePlain target:self action:@selector(createAcourse)];
+    self.navigationItem.rightBarButtonItem = myButton;
+}
 -(void)addTableView{
     self.automaticallyAdjustsScrollViewInsets=NO;
     _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0,64, APPLICATION_WIDTH, APPLICATION_HEIGHT-64-40) style:UITableViewStylePlain];
     _tableView.delegate = self;
     _tableView.dataSource = self;
     _tableView.backgroundColor = RGBA_COLOR(241, 241, 241, 1);
+    _tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+    
     [self.view addSubview:_tableView];
     
     _btoView = [[UIView alloc] initWithFrame:CGRectMake(0, APPLICATION_HEIGHT-40, APPLICATION_WIDTH, 40)];
@@ -58,20 +87,18 @@
     _tableView.backgroundColor = RGBA_COLOR(241, 241, 241, 1);
     _btoView.layer.masksToBounds = YES;
     _btoView.layer.borderWidth = 1.f;
-    _btoView.layer.borderColor = [UIColor grayColor].CGColor;
+    _btoView.layer.borderColor = RGBA_COLOR(214, 214, 214, 1).CGColor;
     [self.view addSubview:_btoView];
     
     UIButton * voice = [UIButton buttonWithType:UIButtonTypeCustom];
     voice.frame = CGRectMake(2.5, 0, 40, 40);
     [voice setImage:[UIImage imageNamed:@"chat_bar_voice_normal"] forState:UIControlStateNormal];
-    
+    [voice addTarget:self action:@selector(sendVoice:) forControlEvents:UIControlEventTouchUpInside];
     [_btoView addSubview:voice];
     
     _textView = [[UITextView alloc] initWithFrame:CGRectMake(45, 2, APPLICATION_WIDTH-45-80, 34)];
     _textView.font = [UIFont systemFontOfSize:16];
     _textView.delegate = self;
-//    _textView.scrollEnabled = NO;
-//    _textView.font = [UIFont systemFontOfSize:13];
     [_btoView addSubview:_textView];
     
     UIButton * expression = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -85,6 +112,33 @@
     [more setImage:[UIImage imageNamed:@"chat_bar_more_normal"] forState:UIControlStateNormal];
     [_btoView addSubview:more];
     
+    _sendVoice = [UIButton buttonWithType:UIButtonTypeCustom];
+    _sendVoice.frame = CGRectMake(0, 0, 0, 0);
+    _sendVoice.backgroundColor = RGBA_COLOR(241, 241, 241, 1);;
+    [_sendVoice setTitle:@"按住说话" forState:UIControlStateNormal];
+    
+    _sendVoice.layer.masksToBounds = YES;
+    _sendVoice.layer.borderWidth = 1;
+    _sendVoice.layer.borderColor = RGBA_COLOR(214, 214, 214, 1).CGColor;
+    [_sendVoice setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+    [_btoView addSubview:_sendVoice];
+}
+-(void)sendVoice:(UIButton *)btn{
+    if (_sendVoice.frame.size.height == 0) {
+        _rect = _btoView.frame;
+        _btoView.frame = CGRectMake(0, APPLICATION_HEIGHT-40, APPLICATION_WIDTH, 40);
+        _sendVoice.frame = CGRectMake(45, 2, APPLICATION_WIDTH-45-80, 34);
+        [btn setImage:[UIImage imageNamed:@"chat_bar_input_normal"] forState:UIControlStateNormal];
+
+        [self.view endEditing:YES];
+    }else{
+        _sendVoice.frame = CGRectMake(0, 0, 0, 0);
+        _btoView.frame = _rect;
+        [btn setImage:[UIImage imageNamed:@"chat_bar_voice_normal"] forState:UIControlStateNormal];
+        [_textView becomeFirstResponder];
+    }
+    
+    
 }
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
@@ -95,13 +149,17 @@
     return 1;
 }
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
-    return 10;
+    return 20.;
 }
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
-    UITableViewCell * cell = [[UITableViewCell alloc] init];
-    cell.textLabel.text = [NSString stringWithFormat:@"%ld",indexPath.row];
-    cell.backgroundColor = RGBA_COLOR(241, 241, 241, 1);
+    MJXChatCellTableViewCell * cell = [tableView dequeueReusableCellWithIdentifier:@"MJXChatCellTableViewCellFirst"];
+    if (!cell) {
+//        MJXChatCellTableViewCellFirst
+        cell = [[[NSBundle mainBundle] loadNibNamed:@"MJXChatCellTableViewCell" owner:nil options:nil] objectAtIndex:1];
+    }
+    cell.selectionStyle = UITableViewCellSelectionStyleNone;
+
     return cell;
 }
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
@@ -109,7 +167,7 @@
     [self.view endEditing: YES];
 }
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
-    return 60;
+    return 100;
 }
 -(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
     return 10;
@@ -127,7 +185,7 @@
 -(void)keyboardWillHide:(NSNotification *)note
 {
     self.tableView.contentInset = UIEdgeInsetsZero;
-//    _btoView.frame = CGRectMake(0, APPLICATION_HEIGHT-40, APPLICATION_WIDTH, 40);
+    //    _btoView.frame = CGRectMake(0, APPLICATION_HEIGHT-40, APPLICATION_WIDTH, 40);
     CGRect rect = _btoView.frame;
     _btoView.frame = CGRectMake(0, APPLICATION_HEIGHT-rect.size.height, APPLICATION_WIDTH, rect.size.height);
     _keyH = 0;
@@ -140,7 +198,7 @@
                                                     options:NSStringDrawingUsesLineFragmentOrigin | NSStringDrawingUsesFontLeading
                                                  attributes:dic
                                                     context:nil].size.height;
-//    CGFloat y = CGRectGetMaxY(self.btoView.frame);
+    //    CGFloat y = CGRectGetMaxY(self.btoView.frame);
     if (curheight<19.093) {
         statusTextView = NO;
         _btoView.frame = CGRectMake(0, APPLICATION_HEIGHT-_keyH-40, APPLICATION_WIDTH, 40);
@@ -149,27 +207,31 @@
         statusTextView = NO;
         self.btoView.frame = CGRectMake(0, APPLICATION_HEIGHT-textView.contentSize.height-4-_keyH, APPLICATION_WIDTH, textView.contentSize.height+4);
         _textView.frame = CGRectMake(45, 2, APPLICATION_WIDTH-45-80, textView.contentSize.height);
-
+        
     }else{
         statusTextView = YES;
     }
 }
 #pragma mark --- UIScrollViewDelegate
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView{
-    if (statusTextView == NO) {
-        scrollView.contentOffset = CGPointMake(0, 0);
+    if ([scrollView isKindOfClass:[UITableView class]]) {
+        return;
     }else{
-        
+        if (statusTextView == NO) {
+            scrollView.contentOffset = CGPointMake(0, 0);
+        }else{
+            
+        }
     }
 }
 /*
-#pragma mark - Navigation3
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
+ #pragma mark - Navigation3
+ 
+ // In a storyboard-based application, you will often want to do a little preparation before navigation
+ - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+ // Get the new view controller using [segue destinationViewController].
+ // Pass the selected object to the new view controller.
+ }
+ */
 
 @end

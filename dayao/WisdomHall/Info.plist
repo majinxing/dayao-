@@ -34,7 +34,7 @@
 	<key>NSCameraUsageDescription</key>
 	<string>是否允许使用相机</string>
 	<key>NSContactsUsageDescription</key>
-	<string>是否允许访问通讯录</string>
+	<string>是否允许使用通讯录</string>
 	<key>NSLocationAlwaysUsageDescription</key>
 	<string>是否允许访问您的地理位置</string>
 	<key>NSMicrophoneUsageDescription</key>
