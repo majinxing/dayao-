@@ -22,8 +22,21 @@
     NSString * identifier;
     NSInteger index = 0;
     switch (message.body.type) {
-        case EMMessageBodyTypeText:
-            
+        case EMMessageBodyTypeText://文字
+            identifier = @"MJXChatCellTableViewCellFirst";
+            index = 0;
+            break;
+        case EMMessageBodyTypeImage://图片
+            identifier = @"MJXChatCellTableViewCellSecond";
+            index = 1;
+            break;
+        case EMMessageBodyTypeVideo://视频
+            identifier = @"MJXChatCellTableViewCellThird";
+            index = 2;
+            break;
+        case EMMessageBodyTypeVoice://语音
+            identifier = @"MJXChatCellTableViewCellForth";
+            index = 3;
             break;
             
         default:

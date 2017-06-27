@@ -14,13 +14,16 @@
 #import "ConversationVC.h"
 #import <SystemConfiguration/CaptiveNetwork.h>
 
-@interface AppDelegate ()<EMCallManagerDelegate>
+@interface AppDelegate ()<EMCallManagerDelegate,EMChatManagerDelegate,EMChatroomManagerDelegate>
 @property(nonatomic,strong)ChatHelper * chat;
 @end
 
 @implementation AppDelegate
 
-
+-(void)dealloc{
+    //移除消息回调
+    [[EMClient sharedClient].chatManager removeDelegate:self];
+}
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     
     
@@ -45,15 +48,37 @@
     if (error==nil) {
         NSLog(@"注册成功");
     }
-    EMError *error2 = [[EMClient sharedClient] loginWithUsername:@"8001" password:@"111111"];
+    EMError *error2 = [[EMClient sharedClient] loginWithUsername:@"8002" password:@"111111"];
     if (!error2) {
         NSLog(@"登录成功");
     }
     
-    [[EMClient sharedClient].callManager addDelegate:self delegateQueue:nil];
+    //注册消息回调
+    [[EMClient sharedClient].chatManager addDelegate:self delegateQueue:nil];
     
     [self getWifiName];
+    
     return YES;
+}
+/*!
+ @method
+ @brief 接收到一条及以上非cmd消息
+ */
+- (void)messagesDidReceive:(NSArray *)aMessages{
+    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"新信息" message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: nil];
+    [alertView show];
+
+    NSLog(@"%s",__func__);
+}
+/*!
+ @method
+ @brief 接收到一条及以上cmd消息
+ */
+- (void)cmdMessagesDidReceive:(NSArray *)aCmdMessages{
+    NSLog(@"%s",__func__);
+    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"新信息" message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: nil];
+    [alertView show];
+
 }
 -(NSString *)getWifiName
 

@@ -8,7 +8,9 @@
 
 #import "MJXChatViewController.h"
 #import "MJXChatCellTableViewCell.h"
+#import <Hyphenate/Hyphenate.h>
 #import "DYHeader.h"
+
 
 #define RGBA_COLOR(R, G, B, A) [UIColor colorWithRed:((R) / 255.0f) green:((G) / 255.0f) blue:((B) / 255.0f) alpha:A]
 #define  MaxTextViewHeight 80 //限制文字输入的高度
@@ -36,10 +38,12 @@
 
 -(void)dealloc{
 //        NSLog(@"%s",__func__);
+    //移除；聊天室回调
 }
 - (void)viewDidLoad {
-    [super viewDidLoad];
     
+    [super viewDidLoad];
+        
     self.view.backgroundColor = RGBA_COLOR(241, 241, 241, 1);
     
     [self setNavigationTitle];
@@ -99,6 +103,7 @@
     _textView = [[UITextView alloc] initWithFrame:CGRectMake(45, 2, APPLICATION_WIDTH-45-80, 34)];
     _textView.font = [UIFont systemFontOfSize:16];
     _textView.delegate = self;
+    _textView.returnKeyType = UIReturnKeySend;
     [_btoView addSubview:_textView];
     
     UIButton * expression = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -155,7 +160,6 @@
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     MJXChatCellTableViewCell * cell = [tableView dequeueReusableCellWithIdentifier:@"MJXChatCellTableViewCellFirst"];
     if (!cell) {
-//        MJXChatCellTableViewCellFirst
         cell = [[[NSBundle mainBundle] loadNibNamed:@"MJXChatCellTableViewCell" owner:nil options:nil] objectAtIndex:1];
     }
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
@@ -223,6 +227,36 @@
             
         }
     }
+}
+#pragma mark ---- UITextViewDelegate
+- (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text{
+    if ([text isEqualToString:@"\n"]){ //判断输入的字是否是回车，即按下return
+        //在这里做你响应return键的代码
+        [self.view endEditing: YES];
+        
+        EMTextMessageBody *body = [[EMTextMessageBody alloc] initWithText:_textView.text];
+        
+        NSString * from = [[EMClient sharedClient] currentUsername];
+        
+        EMMessage * message = [[EMMessage alloc] initWithConversationID:_chatroom.groupId from:from to:_chatroom.groupId body:body ext:@{@"em_apns_ext":@{@"em_push_title":_textView.text}}];
+        
+        message.chatType =  EMChatTypeGroupChat;
+        
+        [[EMClient sharedClient].chatManager sendMessage:message progress:^(int progress) {
+            
+        } completion:^(EMMessage *message, EMError *error) {
+            if (!error) {
+                NSLog(@"成功");
+            }else{
+                NSLog(@"失败");
+            }
+        }];
+       
+        _textView.text = @"";
+
+        return NO;
+    }
+    return YES;
 }
 /*
  #pragma mark - Navigation3

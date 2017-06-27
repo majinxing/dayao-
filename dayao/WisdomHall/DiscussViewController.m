@@ -15,7 +15,7 @@
 #import "MJXChatViewController.h"
 #define FetchChatroomPageSize   20
 
-@interface DiscussViewController ()<UITableViewDelegate,UITableViewDataSource,EMChatroomManagerDelegate>
+@interface DiscussViewController ()<UITableViewDelegate,UITableViewDataSource,EMChatManagerDelegate,EMGroupManagerDelegate>
 @property (nonatomic,strong)UITableView * tableView;
 @property (nonatomic,strong)NSMutableArray * imageAry;
 @property (nonatomic,strong)NSMutableArray * labelAry;
@@ -29,14 +29,13 @@
 @implementation DiscussViewController
 
 -(void)dealloc{
-    [[EMClient sharedClient].roomManager removeDelegate:self];
+ [[EMClient sharedClient].groupManager removeDelegate:self];
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
     _dataArray = [NSMutableArray arrayWithCapacity:4];
     
-    [[EMClient sharedClient].roomManager addDelegate:self delegateQueue:nil];
-
+    [[EMClient sharedClient].groupManager addDelegate:self delegateQueue:nil];
     
     [self addTableView];
     // Do any additional setup after loading the view from its nib.
@@ -92,7 +91,8 @@
     __weak typeof(self)weakSelf = self;
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         EMError * error = nil;
-        EMPageResult * result = [[EMClient sharedClient].roomManager getChatroomsFromServerWithPage:aPage pageSize:FetchChatroomPageSize error:&error];
+        NSArray *  result = [[EMClient sharedClient].groupManager getJoinedGroupsFromServerWithPage:aPage pageSize:FetchChatroomPageSize error:&error];
+        
         if (weakSelf) {
             DiscussViewController * strongDelf = weakSelf;
             dispatch_async(dispatch_get_main_queue(), ^{
@@ -105,7 +105,7 @@
                             [oldChatrooms removeAllObjects];
                         });
                     }
-                    [strongDelf.dataArray addObjectsFromArray:result.list];
+                    [strongDelf.dataArray addObjectsFromArray:result];
                     [strongDelf.tableView reloadData];
                     if (aIsHeader) {
                         [strongDelf.tableView headerEndRefreshing];
@@ -137,7 +137,8 @@
         cell = [[[NSBundle mainBundle] loadNibNamed:@"DiscussListTableViewCell" owner:nil options:nil] objectAtIndex:0];
     }
     if (indexPath.row>1) {
-        EMChatroom *chatroom = [self.dataArray objectAtIndex:indexPath.row-2];
+//        EMChatroom *chatroom = [self.dataArray objectAtIndex:indexPath.row-2];
+        EMGroup * chatroom = [self.dataArray objectAtIndex:indexPath.row-2];
         [cell setImage:_imageAry[2] withLableTitle:chatroom.subject];
     }else{
         [cell setImage:_imageAry[indexPath.row] withLableTitle:_labelAry[indexPath.row]];
@@ -150,6 +151,7 @@
     
     MJXChatViewController *chat = [[MJXChatViewController alloc] init];
     self.hidesBottomBarWhenPushed = YES;
+    chat.chatroom = _dataArray[0];
     [self.navigationController pushViewController:chat animated:YES];
     
 }
