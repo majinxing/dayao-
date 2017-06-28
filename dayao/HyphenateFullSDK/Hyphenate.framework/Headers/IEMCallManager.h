@@ -74,7 +74,7 @@
  *
  *  @param aDelegate  Delegate
  */
-- (void)setBuilderDelegate:(id<EMCallBuilderDelegate>)aDelegate;
+- (void)setBuilderDelegate:(__weak id<EMCallBuilderDelegate>)aDelegate;
 
 #pragma mark - Options
 

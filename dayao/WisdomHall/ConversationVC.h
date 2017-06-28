@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import <Hyphenate/Hyphenate.h>
+#import "EMCallOptions+NSCoding.h"
 @interface ConversationVC : UIViewController
 
 

@@ -32,19 +32,26 @@
 
 @property (nonatomic,assign)CGRect rect;
 
+@property (nonatomic,strong)NSMutableArray * dataChat;
+
 @end
 
 @implementation MJXChatViewController
 
 -(void)dealloc{
-//        NSLog(@"%s",__func__);
-    //移除；聊天室回调
+    [[NSNotificationCenter defaultCenter] removeObserver:@"InfoNotification" name:nil object:self];
 }
 - (void)viewDidLoad {
     
     [super viewDidLoad];
         
     self.view.backgroundColor = RGBA_COLOR(241, 241, 241, 1);
+    _dataChat = [NSMutableArray arrayWithCapacity:10];
+    // 1.注册通知
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(InfoNotificationAction:) name:@"InfoNotification" object:nil];
+    
+    [self getHistoryMessage];
     
     [self setNavigationTitle];
     
@@ -154,14 +161,17 @@
     return 1;
 }
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
-    return 20.;
+    if (_dataChat.count>0) {
+        return _dataChat.count;
+    }
+    return 0;
 }
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
-    MJXChatCellTableViewCell * cell = [tableView dequeueReusableCellWithIdentifier:@"MJXChatCellTableViewCellFirst"];
-    if (!cell) {
-        cell = [[[NSBundle mainBundle] loadNibNamed:@"MJXChatCellTableViewCell" owner:nil options:nil] objectAtIndex:1];
-    }
+    MJXChatCellTableViewCell * cell = [MJXChatCellTableViewCell tempTableViewCellWith:tableView EMMessage:_dataChat[indexPath.row]];
+//    if (!cell) {
+//        cell = [[[NSBundle mainBundle] loadNibNamed:@"MJXChatCellTableViewCell" owner:nil options:nil] objectAtIndex:1];
+//    }
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
 
     return cell;
@@ -257,6 +267,22 @@
         return NO;
     }
     return YES;
+}
+#pragma mark Message
+// 2.实现收到通知触发的方法
+
+- (void)InfoNotificationAction:(NSNotification *)notification{
+    [_dataChat addObjectsFromArray:[notification.userInfo objectForKey:@"messageAry"]];
+    [_tableView reloadData];
+}
+
+-(void)getHistoryMessage{
+    EMConversation * c = [[EMClient sharedClient].chatManager getConversation:_chatroom.groupId type:EMConversationTypeGroupChat createIfNotExist:YES];
+    [c loadMessagesWithKeyword:nil timestamp:-1 count:10000 fromUser:nil searchDirection:EMMessageSearchDirectionUp completion:^(NSArray *aMessages, EMError *aError) {
+//        NSLog(@"%ld",aMessages.count);
+        [_dataChat addObjectsFromArray:aMessages];
+        [_tableView reloadData];
+    }];
 }
 /*
  #pragma mark - Navigation3

@@ -19,6 +19,7 @@
 #import "EMGroup.h"
 #import "EMGroupOptions.h"
 #import "EMCursorResult.h"
+#import "EMGroupSharedFile.h"
 
 /*!
  *  \~chinese
@@ -489,6 +490,92 @@
                               pageNumber:(NSInteger)aPageNum
                                 pageSize:(NSInteger)aPageSize
                               completion:(void (^)(NSArray *aList, EMError *aError))aCompletionBlock;
+
+/*!
+ *  \~chinese
+ *  获取群共享文件列表
+ *
+ *  @param aGroupId         群组ID
+ *  @param aPageNum         获取第几页
+ *  @param aPageSize        获取多少条
+ *  @param pError           错误信息
+ *
+ *  @result     群共享文件列表
+ *
+ *  \~english
+ *  Get the share files of group from the server
+ *
+ *  @param aGroupId         Group id
+ *  @param aPageNum         Page number
+ *  @param aPageSize        Page size
+ *  @param pError           error
+ *
+ *  @result    The share files of group
+ */
+- (NSArray *)getGroupFileListWithId:(NSString *)aGroupId
+                         pageNumber:(NSInteger)aPageNum
+                           pageSize:(NSInteger)aPageSize
+                              error:(EMError **)pError;
+
+/*!
+ *  \~chinese
+ *  获取群共享文件列表
+ *
+ *  @param aGroupId         群组ID
+ *  @param aPageNum         获取第几页
+ *  @param aPageSize        获取多少条
+ *  @param aCompletionBlock 完成的回调
+ *
+ *  \~english
+ *  Get the share files of group from the server
+ *
+ *  @param aGroupId         Group id
+ *  @param aPageNum         Page number
+ *  @param aPageSize        Page size
+ *  @param aCompletionBlock The callback block of completion
+ */
+- (void)getGroupFileListWithId:(NSString *)aGroupId
+                    pageNumber:(NSInteger)aPageNum
+                      pageSize:(NSInteger)aPageSize
+                    completion:(void (^)(NSArray *aList, EMError *aError))aCompletionBlock;
+
+/*!
+ *  \~chinese
+ *  获取群公告
+ *
+ *  @param aGroupId         群组ID
+ *  @param pError           错误信息
+ *
+ *  @result     群声明, 失败返回nil
+ *
+ *  \~english
+ *  Get the announcement of group from the server
+ *
+ *  @param aGroupId         Group id
+ *  @param pError           error
+ *
+ *  @result    Group Announcement, return nil if fail
+ */
+- (NSString *)getGroupAnnouncementWithId:(NSString *)aGroupId
+                                   error:(EMError **)pError;
+
+/*!
+ *  \~chinese
+ *  获取群公告
+ *
+ *  @param aGroupId         群组ID
+ *  @param aCompletionBlock 完成的回调
+ *
+ *
+ *  \~english
+ *  Get the announcement of group from the server
+ *
+ *  @param aGroupId         Group id
+ *  @param aCompletionBlock The callback block of completion
+ *
+ */
+- (void)getGroupAnnouncementWithId:(NSString *)aGroupId
+                        completion:(void (^)(NSString *aAnnouncement, EMError *aError))aCompletionBlock;
 
 #pragma mark - Edit Group
 
@@ -1198,6 +1285,189 @@
             fromGroup:(NSString *)aGroupId
            completion:(void (^)(EMGroup *aGroup, EMError *aError))aCompletionBlock;
 
+/*!
+ *  \~chinese
+ *  上传群共享文件
+ *
+ *  @param aGroupId         群ID
+ *  @param aFilePath        文件路径
+ *  @param pError           错误信息
+ *
+ *  @result    群实例
+ *
+ *  \~english
+ *  Upload the share file of group
+ *
+ *  @param aGroupId         Group id
+ *  @param aFilePath        Path of file
+ *  @param pError           error
+ *
+ *  @result    Group instance
+ */
+- (void)uploadGroupSharedFileWithId:(NSString *)aGroupId
+                           filePath:(NSString*)aFilePath
+                           progress:(void (^)(int progress))aProgressBlock
+                         completion:(void (^)(EMGroupSharedFile *aSharedFile, EMError *aError))aCompletionBlock;
+
+/*!
+ *  \~chinese
+ *  下载群共享文件
+ *
+ *  @param aGroupId         群ID
+ *  @param aFilePath        文件路径
+ *  @param aSharedFileId    共享文件ID
+ *  @param aProgressBlock   文件下载进度回调block
+ *  @param aCompletionBlock 完成回调block
+ *
+ *  \~english
+ *  Download the share file of group
+ *
+ *  @param aGroupId         Group id
+ *  @param aFilePath        Path of file
+ *  @param aSharedFileId    share file id
+ *  @param aProgressBlock   The block of attachment upload progress
+ *  @param aCompletionBlock The callback block of completion
+ */
+- (void)downloadGroupSharedFileWithId:(NSString *)aGroupId
+                             filePath:(NSString *)aFilePat
+                         sharedFileId:(NSString *)aSharedFileId
+                             progress:(void (^)(int progress))aProgressBlock
+                           completion:(void (^)(EMGroup *aGroup, EMError *aError))aCompletionBlock;
+
+/*!
+ *  \~chinese
+ *  删除群共享文件
+ *
+ *  @param aGroupId         群ID
+ *  @param aSharedFileId    共享文件ID
+ *  @param pError           错误信息
+ *
+ *  @result    群实例
+ *
+ *  \~english
+ *  Remove the share file of group
+ *
+ *  Synchronization method will block the current thread
+ *
+ *  @param aGroupId         Group id
+ *  @param aSharedFileId    share file Id
+ *  @param pError           error
+ *
+ *  @result    Group instance
+ */
+- (EMGroup *)removeGroupSharedFileWithId:(NSString *)aGroupId
+                            sharedFileId:(NSString *)aSharedFileId
+                                   error:(EMError **)pError;
+
+/*!
+ *  \~chinese
+ *  删除群共享文件
+ *
+ *  @param aGroupId         群ID
+ *  @param aSharedFileId    共享文件ID
+ *  @param aCompletionBlock 完成的回调
+ *
+ *  \~english
+ *  Remove the share file of group
+ *
+ *  @param aGroupId         Group id
+ *  @param aSharedFileId    share file Id
+ *  @param aCompletionBlock The callback block of completion
+ */
+- (void)removeGroupSharedFileWithId:(NSString *)aGroupId
+                       sharedFileId:(NSString *)aSharedFileId
+                         completion:(void (^)(EMGroup *aGroup, EMError *aError))aCompletionBlock;
+
+/*!
+ *  \~chinese
+ *  修改群公告，需要Owner / Admin权限
+ *
+ *  @param aGroupId         群ID
+ *  @param aAnnouncement    群公告
+ *  @param pError           错误信息
+ *
+ *  @result    群实例
+ *
+ *  \~english
+ *  Update the announcement of group, need Owner / Admin permissions
+ *
+ *  Synchronization method will block the current thread
+ *
+ *  @param aGroupId         Group id
+ *  @param aAnnouncement    announcement of group
+ *  @param pError           error
+ *
+ *  @result    Group instance
+ */
+- (EMGroup *)updateGroupAnnouncementWithId:(NSString *)aGroupId
+                              announcement:(NSString *)aAnnouncement
+                                     error:(EMError **)pError;
+
+/*!
+ *  \~chinese
+ *  修改群公告，需要Owner / Admin权限
+ *
+ *  @param aGroupId         群ID
+ *  @param aAnnouncement    群公告
+ *  @param aCompletionBlock 完成的回调
+ *
+ *  \~english
+ *  Update the announcement of group, need Owner / Admin permissions
+ *
+ *  @param aGroupId         Group id
+ *  @param aAnnouncement    announcement of group
+ *  @param aCompletionBlock The callback block of completion
+ *
+ */
+- (void)updateGroupAnnouncementWithId:(NSString *)aGroupId
+                         announcement:(NSString *)aAnnouncement
+                           completion:(void (^)(EMGroup *aGroup, EMError *aError))aCompletionBlock;
+
+/*!
+ *  \~chinese
+ *  修改群扩展信息，需要Owner权限
+ *
+ *  @param aGroupId         群ID
+ *  @param aExt             扩展信息
+ *  @param pError           错误信息
+ *
+ *  @result    群实例
+ *
+ *  \~english
+ *  Update the extended of the group, need Owner
+ *
+ *  Synchronization method will block the current thread
+ *
+ *  @param aGroupId         Group id
+ *  @param aExt             Extended of the group
+ *  @param pError           error
+ *
+ *  @result    Group instance
+ */
+- (EMGroup *)updateGroupExtWithId:(NSString *)aGroupId
+                              ext:(NSString *)aExt
+                            error:(EMError **)pError;
+
+/*!
+ *  \~chinese
+ *  修改群扩展信息，需要Owner权限
+ *
+ *  @param aGroupId         群ID
+ *  @param aExt             扩展信息
+ *  @param aCompletionBlock 完成的回调
+ *
+ *  \~english
+ *  Update the extended of the group, need Owner
+ *
+ *  @param aGroupId         Group id
+ *  @param aExt             Extended of the group
+ *  @param aCompletionBlock The callback block of completion
+ *
+ */
+- (void)updateGroupExtWithId:(NSString *)aGroupId
+                         ext:(NSString *)aExt
+                  completion:(void (^)(EMGroup *aGroup, EMError *aError))aCompletionBlock;
+
 #pragma mark - Edit Public Group
 
 /*!
@@ -1513,6 +1783,31 @@
 - (EMError *)ignoreGroupPush:(NSString *)aGroupId
                       ignore:(BOOL)aIsIgnore;
 
+
+/*!
+ *  \~chinese
+ *  屏蔽/取消屏蔽群组消息的推送
+ *
+ *  同步方法，会阻塞当前线程
+ *
+ *  @param aGroupIDs   群组ID列表
+ *  @param aIgnore     是否屏蔽
+ *
+ *  @result 错误信息
+ *
+ *  \~english
+ *  Block / unblock group message‘s push notification
+ *
+ *  Synchronization method will block the current thread
+ *
+ *  @param aGroupIDs   Group ids list
+ *  @param aIgnore     Whether block
+ *
+ *  @result Error
+ */
+- (EMError *)ignoreGroupsPush:(NSArray *)aGroupIDs
+                       ignore:(BOOL)aIsIgnore;
+
 /*!
  *  \~chinese
  *  屏蔽/取消屏蔽群组消息的推送
@@ -1533,6 +1828,27 @@
 - (void)updatePushServiceForGroup:(NSString *)aGroupID
                     isPushEnabled:(BOOL)aIsEnable
                        completion:(void (^)(EMGroup *aGroup, EMError *aError))aCompletionBlock;
+
+/*!
+ *  \~chinese
+ *  屏蔽/取消屏蔽群组消息的推送
+ *
+ *  @param aGroupIDs         群组ID列表
+ *  @param aIsEnable         是否允许推送
+ *  @param aCompletionBlock  完成的回调
+ *
+ *
+ *  \~english
+ *  Block / unblock group message‘s push notification
+ *
+ *  @param aGroupIDs         Group ids list
+ *  @param aIsEnable         Whether enable
+ *  @param aCompletionBlock  The callback block of completion
+ *
+ */
+- (void)updatePushServiceForGroups:(NSArray *)aGroupIDs
+                     isPushEnabled:(BOOL)aIsEnable
+                        completion:(void (^)(NSArray *groups, EMError *aError))aCompletionBlock;
 
 #pragma mark - EM_DEPRECATED_IOS 3.3.0
 

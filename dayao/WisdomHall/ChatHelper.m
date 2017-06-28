@@ -12,7 +12,7 @@
 
 static ChatHelper *helper = nil;
 
-@interface ChatHelper ()<EMClientDelegate,EMChatManagerDelegate,EMContactManagerDelegate,EMGroupManagerDelegate,EMChatroomManagerDelegate>
+@interface ChatHelper ()<EMClientDelegate,EMChatManagerDelegate,EMContactManagerDelegate,EMGroupManagerDelegate,EMChatroomManagerDelegate,EMCallManagerDelegate>
 
 @end
 @implementation ChatHelper
@@ -24,15 +24,15 @@ static ChatHelper *helper = nil;
     });
     return helper;
 }
-
-//- (void)dealloc
-//{
-//    [[EMClient sharedClient] removeDelegate:self];
-//    [[EMClient sharedClient].groupManager removeDelegate:self];
-//    [[EMClient sharedClient].contactManager removeDelegate:self];
-//    [[EMClient sharedClient].roomManager removeDelegate:self];
-//    [[EMClient sharedClient].chatManager removeDelegate:self];
-//}
+- (void)dealloc
+{
+    [[EMClient sharedClient] removeDelegate:self];
+    [[EMClient sharedClient].groupManager removeDelegate:self];
+    [[EMClient sharedClient].contactManager removeDelegate:self];
+    [[EMClient sharedClient].roomManager removeDelegate:self];
+    [[EMClient sharedClient].chatManager removeDelegate:self];
+    [[EMClient sharedClient].callManager removeDelegate:self];
+}
 
 - (id)init
 {
@@ -49,6 +49,7 @@ static ChatHelper *helper = nil;
     //注册代理
     [[EMClient sharedClient] addDelegate:self delegateQueue:nil];
     [[EMClient sharedClient].groupManager addDelegate:self delegateQueue:nil];
+    [[EMClient sharedClient].callManager addDelegate:self delegateQueue:nil];
     [[EMClient sharedClient].contactManager addDelegate:self delegateQueue:nil];
     [[EMClient sharedClient].roomManager addDelegate:self delegateQueue:nil];
     [[EMClient sharedClient].chatManager addDelegate:self delegateQueue:nil];
@@ -62,7 +63,7 @@ static ChatHelper *helper = nil;
     if (error==nil) {
         NSLog(@"注册成功");
     }
-    EMError *error2 = [[EMClient sharedClient] loginWithUsername:@"8001" password:@"111111"];
+    EMError *error2 = [[EMClient sharedClient] loginWithUsername:@"8002" password:@"111111"];
     if (!error2) {
         NSLog(@"登录成功");
     }
@@ -72,20 +73,22 @@ static ChatHelper *helper = nil;
  @brief 接收到一条及以上非cmd消息
  */
 - (void)messagesDidReceive:(NSArray *)aMessages{
-    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"新信息" message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: nil];
-    [alertView show];
+    NSMutableDictionary * dict = [[NSMutableDictionary alloc] initWithObjectsAndKeys:aMessages,@"messageAry", nil];
+    // 2.创建通知
+    NSNotification *notification =[NSNotification notificationWithName:@"InfoNotification" object:nil userInfo:dict];
+    // 3.通过 通知中心 发送 通知
     
-    NSLog(@"%s",__func__);
+    [[NSNotificationCenter defaultCenter] postNotification:notification];
 }
 /*!
  @method
  @brief 接收到一条及以上cmd消息
  */
 - (void)cmdMessagesDidReceive:(NSArray *)aCmdMessages{
-    NSLog(@"%s",__func__);
-    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"新信息" message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: nil];
-    [alertView show];
-    
+//    NSLog(@"%s",__func__);
+//    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"新信息" message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: nil];
+//    [alertView show];
+//    
 }
 
 -(void)callDidReceive:(EMCallSession *)aSession{

@@ -30,12 +30,21 @@
 -(void)viewWillAppear:(BOOL)animated{
     
     if (!_callSession) {
+//        视频之前，设置全局的音视频属性，具体属性有哪些请查看头文件 *EMCallOptions*
         
+        EMCallOptions *options = [[EMClient sharedClient].callManager getCallOptions];
+        //当对方不在线时，是否给对方发送离线消息和推送，并等待对方回应
+        
+        options.isSendPushIfOffline = YES;
+        
+        [[EMClient sharedClient].callManager setCallOptions:options];
+        
+
         NSString * string = ([[[EMClient sharedClient] currentUsername] isEqualToString:@"aaaaa111"])?@"aaaaa1111":@"aaaaa111";
         
         NSLog(@"currentUsername = %@  ,  string = %@",[[EMClient sharedClient] currentUsername],string);
-        
-        [[EMClient sharedClient].callManager startCall:(_type == 1)?EMCallTypeVideo:EMCallTypeVoice remoteName:@"8001" ext:nil completion:^(EMCallSession *aCallSession, EMError *aError) {
+        //15243670131"
+        [[EMClient sharedClient].callManager startCall:EMCallTypeVoice remoteName:@"8001" ext:nil completion:^(EMCallSession *aCallSession, EMError *aError) {
             
             NSLog(@"startCall : errorDescription = %@",aError.errorDescription);
             
@@ -239,7 +248,7 @@
 
 -(void)dealloc{
     [[UIApplication sharedApplication] setIdleTimerDisabled:NO];//休眠关闭
-    
+    [self hangupBtnClick];
     if (_callSession) {
         [[EMClient sharedClient].callManager endCall:_callSession.callId reason:EMCallEndReasonHangup];
     }

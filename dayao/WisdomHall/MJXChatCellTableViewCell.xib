@@ -12,11 +12,11 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
-        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="MJXChatCellTableViewCellFirst" rowHeight="206" id="KGk-i7-Jjw" customClass="MJXChatCellTableViewCell">
-            <rect key="frame" x="0.0" y="0.0" width="394" height="206"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="MJXChatCellTableViewCellFirst" rowHeight="197" id="KGk-i7-Jjw" customClass="MJXChatCellTableViewCell">
+            <rect key="frame" x="0.0" y="0.0" width="395" height="197"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
-                <rect key="frame" x="0.0" y="0.0" width="394" height="206"/>
+                <rect key="frame" x="0.0" y="0.0" width="395" height="196.5"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="h1W-Do-SWh">
@@ -35,7 +35,7 @@
                         </constraints>
                     </imageView>
                     <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="26o-Dg-AOm">
-                        <rect key="frame" x="61" y="16" width="200" height="182"/>
+                        <rect key="frame" x="61" y="16" width="200" height="172.5"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="200" id="O6M-9p-MU3"/>
@@ -55,13 +55,13 @@
                     <constraint firstItem="h1W-Do-SWh" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="8" id="vcN-Th-UVp"/>
                 </constraints>
             </tableViewCellContentView>
-            <point key="canvasLocation" x="-1" y="-48"/>
+            <point key="canvasLocation" x="-0.5" y="-52.5"/>
         </tableViewCell>
         <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="MJXChatCellTableViewCellSecond" rowHeight="181" id="aB0-Rd-uYh" customClass="MJXChatCellTableViewCell">
             <rect key="frame" x="0.0" y="0.0" width="393" height="181"/>
             <autoresizingMask key="autoresizingMask"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="aB0-Rd-uYh" id="Cj2-Cs-UcB">
-                <rect key="frame" x="0.0" y="0.0" width="393" height="181"/>
+                <rect key="frame" x="0.0" y="0.0" width="393" height="180.5"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="UIL-3o-gxq">
@@ -102,7 +102,7 @@
             <rect key="frame" x="0.0" y="0.0" width="398" height="175"/>
             <autoresizingMask key="autoresizingMask"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="wDx-OC-pmn" id="vEb-QD-4LP">
-                <rect key="frame" x="0.0" y="0.0" width="398" height="175"/>
+                <rect key="frame" x="0.0" y="0.0" width="398" height="174.5"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="OLS-fD-TXn">
@@ -204,9 +204,89 @@
             </tableViewCellContentView>
             <point key="canvasLocation" x="10.5" y="872.5"/>
         </tableViewCell>
+        <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="194" id="9Z9-fJ-Fb4">
+            <rect key="frame" x="0.0" y="0.0" width="400" height="194"/>
+            <autoresizingMask key="autoresizingMask"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="9Z9-fJ-Fb4" id="6FL-Bh-4Nn">
+                <rect key="frame" x="0.0" y="0.0" width="400" height="193.5"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="oVf-3t-Qma">
+                        <rect key="frame" x="347" y="8" width="45" height="45"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="45" id="0Go-o0-AaC"/>
+                            <constraint firstAttribute="height" constant="45" id="1XM-O7-4RI"/>
+                        </constraints>
+                        <state key="normal" title="Button" image="h"/>
+                    </button>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="chat_sender_bg" translatesAutoresizingMaskIntoConstraints="NO" id="AdQ-T1-qAK">
+                        <rect key="frame" x="310" y="16" width="35" height="29"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="29" id="PwP-ef-Q03"/>
+                            <constraint firstAttribute="width" constant="35" id="v3T-4S-JTf"/>
+                        </constraints>
+                    </imageView>
+                    <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="8AX-Yq-2Be">
+                        <rect key="frame" x="139" y="16" width="200" height="169.5"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="200" id="JXj-OR-9aK"/>
+                        </constraints>
+                        <string key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</string>
+                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                        <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                    </textView>
+                </subviews>
+                <constraints>
+                    <constraint firstItem="AdQ-T1-qAK" firstAttribute="top" secondItem="6FL-Bh-4Nn" secondAttribute="topMargin" constant="8" id="1u2-4h-rnJ"/>
+                    <constraint firstItem="oVf-3t-Qma" firstAttribute="leading" secondItem="8AX-Yq-2Be" secondAttribute="trailing" constant="8" id="4c9-cK-Yyz"/>
+                    <constraint firstAttribute="bottom" secondItem="8AX-Yq-2Be" secondAttribute="bottom" constant="8" id="9LS-bF-90d"/>
+                    <constraint firstAttribute="trailing" secondItem="oVf-3t-Qma" secondAttribute="trailing" constant="8" id="FlD-g7-bia"/>
+                    <constraint firstItem="oVf-3t-Qma" firstAttribute="leading" secondItem="AdQ-T1-qAK" secondAttribute="trailing" constant="2" id="fKn-3A-o8v"/>
+                    <constraint firstItem="oVf-3t-Qma" firstAttribute="top" secondItem="6FL-Bh-4Nn" secondAttribute="top" constant="8" id="nyS-iF-FpC"/>
+                    <constraint firstItem="8AX-Yq-2Be" firstAttribute="top" secondItem="6FL-Bh-4Nn" secondAttribute="top" constant="16" id="vXa-vR-O0I"/>
+                </constraints>
+            </tableViewCellContentView>
+            <point key="canvasLocation" x="446" y="-51"/>
+        </tableViewCell>
+        <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="181" id="hA2-91-RwH">
+            <rect key="frame" x="0.0" y="0.0" width="414" height="181"/>
+            <autoresizingMask key="autoresizingMask"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="hA2-91-RwH" id="Lqp-Ri-SxH">
+                <rect key="frame" x="0.0" y="0.0" width="414" height="180.5"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="m8g-7E-cUA">
+                        <rect key="frame" x="352" y="16" width="46" height="30"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <state key="normal" title="Button"/>
+                    </button>
+                </subviews>
+            </tableViewCellContentView>
+            <point key="canvasLocation" x="453" y="279.5"/>
+        </tableViewCell>
+        <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="jZR-QZ-0gr">
+            <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+            <autoresizingMask key="autoresizingMask"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="jZR-QZ-0gr" id="YfZ-Jd-NgV">
+                <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
+                <autoresizingMask key="autoresizingMask"/>
+            </tableViewCellContentView>
+            <point key="canvasLocation" x="446" y="543"/>
+        </tableViewCell>
+        <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="M0Y-47-Seb">
+            <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+            <autoresizingMask key="autoresizingMask"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="M0Y-47-Seb" id="fFF-VL-egH">
+                <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
+                <autoresizingMask key="autoresizingMask"/>
+            </tableViewCellContentView>
+            <point key="canvasLocation" x="459" y="806"/>
+        </tableViewCell>
     </objects>
     <resources>
         <image name="chat_receiver_bg" width="40" height="40"/>
+        <image name="chat_sender_bg" width="40" height="40"/>
         <image name="h" width="650" height="464"/>
         <image name="headImage" width="352" height="220"/>
         <image name="message_voice_receive" width="20" height="20"/>

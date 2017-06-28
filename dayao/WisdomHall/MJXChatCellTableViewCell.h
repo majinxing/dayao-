@@ -7,7 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <Hyphenate/Hyphenate.h>
 
 @interface MJXChatCellTableViewCell : UITableViewCell
-
++ (instancetype)tempTableViewCellWith:(UITableView *)tableView EMMessage:(EMMessage *)message;
 @end

@@ -35,6 +35,11 @@ typedef enum{
     EMErrorUserRegisterFailed,               /*! \~chinese 用户注册失败 \~english Registration failed */
     EMErrorUpdateApnsConfigsFailed,          /*! \~chinese 更新推送设置失败 \~english Update Apple Push Notification configurations failed */
     EMErrorUserPermissionDenied,             /*! \~chinese 用户没有权限做该操作 \~english User has no access for this operation. */
+    EMErrorUserBindDeviceTokenFailed,       /*! \~chinese 用户绑定设备token失败 \~english Bind device token failed. */
+    EMErrorUserUnbindDeviceTokenFailed,     /*! \~chinese 用户解除设备token失败 \~english Unbind device token failed. */
+    EMErrorUserBindAnotherDevice,           /*! \~chinese 用户绑定了另一个设备token \~english Bind another device and do not allow auto. */
+    EMErrorUserloginTooManyDevices,         /*! \~chinese 用户登录了太多设备 \~english User login on too many devices. */
+    EMErrorUserMuted,                       /*! \~chinese 用户在群组或聊天室中被禁言 \~english User mutes in groups or chatrooms. */
     
     EMErrorServerNotReachable = 300,         /*! \~chinese 服务器未连接 \~english Server is not reachable */
     EMErrorServerTimeout,                    /*! \~chinese 服务器超时 \~english Server response timeout */
@@ -48,6 +53,7 @@ typedef enum{
     EMErrorFileUploadFailed,                 /*! \~chinese 上传文件失败 \~english Upload file failed */
     EMErrorFileDownloadFailed,               /*! \~chinese 下载文件失败 \~english Download file failed */
     EMErrorFileDeleteFailed,                 /*! \~chinese 删除文件失败 \~english Delete file failed */
+    EMErrorFileTooLarge,                     /*! \~chinese 文件体积过大 \~english File too large */
     
     EMErrorMessageInvalid = 500,             /*! \~chinese 消息无效 \~english Message is invalid */
     EMErrorMessageIncludeIllegalContent,      /*! \~chinese 消息内容包含不合法信息 \~english Message contains invalid content */
@@ -60,6 +66,7 @@ typedef enum{
     EMErrorGroupPermissionDenied,            /*! \~chinese 没有权限进行该操作 \~english User does not have permission to access the operation */
     EMErrorGroupMembersFull,                 /*! \~chinese 群成员个数已达到上限 \~english Group's max member reached */
     EMErrorGroupNotExist,                    /*! \~chinese 群组不存在 \~english Group does not exist */
+    EMErrorGroupSharedFileInvalidId,         /*! \~chinese 共享文件ID无效 \~english Share file Id is invalid */
     
     EMErrorChatroomInvalidId = 700,          /*! \~chinese 聊天室ID无效 \~english Chatroom id is invalid */
     EMErrorChatroomAlreadyJoined,            /*! \~chinese 已加入聊天室 \~english User already joined the chatroom */

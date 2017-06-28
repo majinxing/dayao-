@@ -183,6 +183,25 @@
  */
 - (EMError *)initializeSDKWithOptions:(EMOptions *)aOptions;
 
+#pragma mark - Change AppKey
+
+/*!
+ *  \~chinese
+ *  修改appkey，注意只有在未登录状态才能修改appkey
+ *
+ *  @param aAppkey  appkey
+ *
+ *  @result 错误信息
+ *
+ *  \~english
+ *  Change appkey,just logged out could change appkey
+ *
+ *  @param aAppkey  appkey
+ *
+ *  @result Error
+ */
+- (EMError *)changeAppkey:(NSString *)aAppkey;
+
 #pragma mark - Register
 
 /*!

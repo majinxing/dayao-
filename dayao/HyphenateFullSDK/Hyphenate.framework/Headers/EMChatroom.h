@@ -80,6 +80,15 @@ typedef enum{
 
 /*!
  *  \~chinese
+ *  聊天室的公告，需要获取聊天室公告
+ *
+ *  \~english
+ *  Announcement of chat room
+ */
+@property (nonatomic, copy, readonly) NSString *announcement;
+
+/*!
+ *  \~chinese
  *  聊天室的管理者，拥有群的最高权限，需要获取群详情
  *
  *

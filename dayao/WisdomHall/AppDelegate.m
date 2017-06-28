@@ -49,7 +49,7 @@
 //    if (error==nil) {
 //        NSLog(@"注册成功");
 //    }
-//    EMError *error2 = [[EMClient sharedClient] loginWithUsername:@"8001" password:@"111111"];
+//    EMError *error2 = [[EMClient sharedClient] loginWithUsername:@"8002" password:@"111111"];
 //    if (!error2) {
 //        NSLog(@"登录成功");
 //    }

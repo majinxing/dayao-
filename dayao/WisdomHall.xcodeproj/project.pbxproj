@@ -140,6 +140,11 @@
 		8BB56D8C1EB31C110023DAFF /* SystemSettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BB56D8A1EB31C110023DAFF /* SystemSettingsViewController.m */; };
 		8BB56D8D1EB31C110023DAFF /* SystemSettingsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8BB56D8B1EB31C110023DAFF /* SystemSettingsViewController.xib */; };
 		8BCE7CAD1F033AE100FE261B /* HYDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BCE7CAC1F033AE100FE261B /* HYDelegate.m */; };
+		8BCE7CB01F03888D00FE261B /* EMCallOptions+NSCoding.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BCE7CAF1F03888D00FE261B /* EMCallOptions+NSCoding.m */; };
+		8BCE7CB41F039C9B00FE261B /* Hyphenate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8BCE7CB21F039C9B00FE261B /* Hyphenate.framework */; };
+		8BCE7CB51F039C9B00FE261B /* Hyphenate.podspec in Resources */ = {isa = PBXBuildFile; fileRef = 8BCE7CB31F039C9B00FE261B /* Hyphenate.podspec */; };
+		8BCE7CB61F039CB600FE261B /* Hyphenate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8BCE7CB21F039C9B00FE261B /* Hyphenate.framework */; };
+		8BCE7CB71F039CB600FE261B /* Hyphenate.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 8BCE7CB21F039C9B00FE261B /* Hyphenate.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		8BE877691EBAF7A800866A34 /* ShareView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BE877681EBAF7A800866A34 /* ShareView.m */; };
 		8BE8776C1EBAF82E00866A34 /* ShareButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BE8776B1EBAF82E00866A34 /* ShareButton.m */; };
 		8BE877701EBC1CA800866A34 /* TextViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BE8776E1EBC1CA800866A34 /* TextViewController.m */; };
@@ -286,7 +291,6 @@
 		8BF82DFE1EE167C300D33473 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8B17372E1EC55ADD00BE3C8F /* MapKit.framework */; };
 		8BF82DFF1EE167C300D33473 /* CoreText.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8B17372A1EC55AA600BE3C8F /* CoreText.framework */; };
 		8BF82E001EE167C300D33473 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8B1737281EC55A8A00BE3C8F /* QuartzCore.framework */; };
-		8BF82E011EE167C300D33473 /* Hyphenate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8BF865471ECAE63A00B7EED4 /* Hyphenate.framework */; };
 		8BF82E021EE167C300D33473 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8B1737261EC55A7F00BE3C8F /* CoreData.framework */; };
 		8BF82E031EE167C300D33473 /* Accounts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8B1737221EC55A6700BE3C8F /* Accounts.framework */; };
 		8BF82E041EE167C300D33473 /* AssetsLibrary.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8B1737201EC55A5A00BE3C8F /* AssetsLibrary.framework */; };
@@ -294,9 +298,7 @@
 		8BF82E061EE167C300D33473 /* CoreMotion.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8B17371C1EC55A3E00BE3C8F /* CoreMotion.framework */; };
 		8BF82E071EE167C300D33473 /* CoreTelephony.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8B17371A1EC55A3200BE3C8F /* CoreTelephony.framework */; };
 		8BF82E081EE167C300D33473 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8BA224B21EAED26200627A1B /* UIKit.framework */; };
-		8BF82E091EE167C300D33473 /* Hyphenate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8BF865471ECAE63A00B7EED4 /* Hyphenate.framework */; };
 		8BF82E0A1EE167C300D33473 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8BA224B01EAED25400627A1B /* Foundation.framework */; };
-		8BF82E0C1EE167C300D33473 /* Hyphenate.podspec in Resources */ = {isa = PBXBuildFile; fileRef = 8BF865481ECAE63A00B7EED4 /* Hyphenate.podspec */; };
 		8BF82E0D1EE167C300D33473 /* VoteViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8BF82D7A1EDFFC6200D33473 /* VoteViewController.xib */; };
 		8BF82E0E1EE167C300D33473 /* LICENSE in Resources */ = {isa = PBXBuildFile; fileRef = 8BF8649B1ECAD97300B7EED4 /* LICENSE */; };
 		8BF82E0F1EE167C300D33473 /* SystemSetingTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8B05CB751EC070060063EC20 /* SystemSetingTableViewCell.xib */; };
@@ -344,7 +346,6 @@
 		8BF82E3A1EE167C300D33473 /* EndTheTestViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8BE877841EBC2E0C00866A34 /* EndTheTestViewController.xib */; };
 		8BF82E3B1EE167C300D33473 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8BA224651EADF68500627A1B /* Main.storyboard */; };
 		8BF82E3C1EE167C300D33473 /* TheMeetingNotStartViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8B2E16F11EBADA2F008B7C57 /* TheMeetingNotStartViewController.xib */; };
-		8BF82E3E1EE167C300D33473 /* Hyphenate.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 8BF865471ECAE63A00B7EED4 /* Hyphenate.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		8BF8646E1ECACAE800B7EED4 /* FMDatabase.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BF864641ECACAE800B7EED4 /* FMDatabase.m */; };
 		8BF8646F1ECACAE800B7EED4 /* FMDatabaseAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BF864661ECACAE800B7EED4 /* FMDatabaseAdditions.m */; };
 		8BF864701ECACAE800B7EED4 /* FMDatabasePool.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BF864681ECACAE800B7EED4 /* FMDatabasePool.m */; };
@@ -376,10 +377,6 @@
 		8BF864C91ECAD97300B7EED4 /* UIImageView+WebCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BF864B81ECAD97300B7EED4 /* UIImageView+WebCache.m */; };
 		8BF864CA1ECAD97300B7EED4 /* UIView+WebCacheOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BF864BA1ECAD97300B7EED4 /* UIView+WebCacheOperation.m */; };
 		8BF865391ECADB9F00B7EED4 /* libsqlite3.0.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 8BF865381ECADB9F00B7EED4 /* libsqlite3.0.tbd */; };
-		8BF865491ECAE63A00B7EED4 /* Hyphenate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8BF865471ECAE63A00B7EED4 /* Hyphenate.framework */; };
-		8BF8654A1ECAE63A00B7EED4 /* Hyphenate.podspec in Resources */ = {isa = PBXBuildFile; fileRef = 8BF865481ECAE63A00B7EED4 /* Hyphenate.podspec */; };
-		8BF8654B1ECAE64400B7EED4 /* Hyphenate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8BF865471ECAE63A00B7EED4 /* Hyphenate.framework */; };
-		8BF8654C1ECAE64400B7EED4 /* Hyphenate.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 8BF865471ECAE63A00B7EED4 /* Hyphenate.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		8BF867B21ECC26C300B7EED4 /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8BF867B11ECC26C300B7EED4 /* CoreMedia.framework */; };
 		8BF867B41ECC26CE00B7EED4 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8BF867B31ECC26CE00B7EED4 /* AudioToolbox.framework */; };
 		8BF867B61ECC270C00B7EED4 /* libc++.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 8BF867B51ECC270C00B7EED4 /* libc++.tbd */; };
@@ -421,7 +418,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				8BF8654C1ECAE64400B7EED4 /* Hyphenate.framework in Embed Frameworks */,
+				8BCE7CB71F039CB600FE261B /* Hyphenate.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -432,7 +429,6 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				8BF82E3E1EE167C300D33473 /* Hyphenate.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -642,6 +638,10 @@
 		8BB56D8B1EB31C110023DAFF /* SystemSettingsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SystemSettingsViewController.xib; sourceTree = "<group>"; };
 		8BCE7CAB1F033AE100FE261B /* HYDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HYDelegate.h; sourceTree = "<group>"; };
 		8BCE7CAC1F033AE100FE261B /* HYDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HYDelegate.m; sourceTree = "<group>"; };
+		8BCE7CAE1F03888D00FE261B /* EMCallOptions+NSCoding.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "EMCallOptions+NSCoding.h"; sourceTree = "<group>"; };
+		8BCE7CAF1F03888D00FE261B /* EMCallOptions+NSCoding.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "EMCallOptions+NSCoding.m"; sourceTree = "<group>"; };
+		8BCE7CB21F039C9B00FE261B /* Hyphenate.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Hyphenate.framework; sourceTree = "<group>"; };
+		8BCE7CB31F039C9B00FE261B /* Hyphenate.podspec */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Hyphenate.podspec; sourceTree = "<group>"; };
 		8BE877671EBAF7A800866A34 /* ShareView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShareView.h; sourceTree = "<group>"; };
 		8BE877681EBAF7A800866A34 /* ShareView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShareView.m; sourceTree = "<group>"; };
 		8BE8776A1EBAF82E00866A34 /* ShareButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShareButton.h; sourceTree = "<group>"; };
@@ -749,8 +749,6 @@
 		8BF864B91ECAD97300B7EED4 /* UIView+WebCacheOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+WebCacheOperation.h"; sourceTree = "<group>"; };
 		8BF864BA1ECAD97300B7EED4 /* UIView+WebCacheOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+WebCacheOperation.m"; sourceTree = "<group>"; };
 		8BF865381ECADB9F00B7EED4 /* libsqlite3.0.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.0.tbd; path = usr/lib/libsqlite3.0.tbd; sourceTree = SDKROOT; };
-		8BF865471ECAE63A00B7EED4 /* Hyphenate.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Hyphenate.framework; sourceTree = "<group>"; };
-		8BF865481ECAE63A00B7EED4 /* Hyphenate.podspec */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Hyphenate.podspec; sourceTree = "<group>"; };
 		8BF867B11ECC26C300B7EED4 /* CoreMedia.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMedia.framework; path = System/Library/Frameworks/CoreMedia.framework; sourceTree = SDKROOT; };
 		8BF867B31ECC26CE00B7EED4 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 		8BF867B51ECC270C00B7EED4 /* libc++.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = "libc++.tbd"; path = "usr/lib/libc++.tbd"; sourceTree = SDKROOT; };
@@ -799,17 +797,17 @@
 				8B1737331EC55AFA00BE3C8F /* SystemConfiguration.framework in Frameworks */,
 				8B1737311EC55AEA00BE3C8F /* CoreLocation.framework in Frameworks */,
 				8B17372F1EC55ADD00BE3C8F /* MapKit.framework in Frameworks */,
+				8BCE7CB41F039C9B00FE261B /* Hyphenate.framework in Frameworks */,
 				8B17372B1EC55AA600BE3C8F /* CoreText.framework in Frameworks */,
 				8B1737291EC55A8A00BE3C8F /* QuartzCore.framework in Frameworks */,
-				8BF8654B1ECAE64400B7EED4 /* Hyphenate.framework in Frameworks */,
 				8B1737271EC55A7F00BE3C8F /* CoreData.framework in Frameworks */,
 				8B1737231EC55A6700BE3C8F /* Accounts.framework in Frameworks */,
 				8B1737211EC55A5A00BE3C8F /* AssetsLibrary.framework in Frameworks */,
 				8B17371F1EC55A4E00BE3C8F /* MessageUI.framework in Frameworks */,
+				8BCE7CB61F039CB600FE261B /* Hyphenate.framework in Frameworks */,
 				8B17371D1EC55A3E00BE3C8F /* CoreMotion.framework in Frameworks */,
 				8B17371B1EC55A3200BE3C8F /* CoreTelephony.framework in Frameworks */,
 				8BA224B31EAED26200627A1B /* UIKit.framework in Frameworks */,
-				8BF865491ECAE63A00B7EED4 /* Hyphenate.framework in Frameworks */,
 				8BA224B11EAED25400627A1B /* Foundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -853,7 +851,6 @@
 				8BF82DFE1EE167C300D33473 /* MapKit.framework in Frameworks */,
 				8BF82DFF1EE167C300D33473 /* CoreText.framework in Frameworks */,
 				8BF82E001EE167C300D33473 /* QuartzCore.framework in Frameworks */,
-				8BF82E011EE167C300D33473 /* Hyphenate.framework in Frameworks */,
 				8BF82E021EE167C300D33473 /* CoreData.framework in Frameworks */,
 				8BF82E031EE167C300D33473 /* Accounts.framework in Frameworks */,
 				8BF82E041EE167C300D33473 /* AssetsLibrary.framework in Frameworks */,
@@ -861,7 +858,6 @@
 				8BF82E061EE167C300D33473 /* CoreMotion.framework in Frameworks */,
 				8BF82E071EE167C300D33473 /* CoreTelephony.framework in Frameworks */,
 				8BF82E081EE167C300D33473 /* UIKit.framework in Frameworks */,
-				8BF82E091EE167C300D33473 /* Hyphenate.framework in Frameworks */,
 				8BF82E0A1EE167C300D33473 /* Foundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1119,6 +1115,8 @@
 				8B4D91131EBDAB1000A4BE34 /* SignListViewController.xib */,
 				8B8C3D0F1ECC336500E9FB56 /* ConversationVC.h */,
 				8B8C3D101ECC336500E9FB56 /* ConversationVC.m */,
+				8BCE7CAE1F03888D00FE261B /* EMCallOptions+NSCoding.h */,
+				8BCE7CAF1F03888D00FE261B /* EMCallOptions+NSCoding.m */,
 				8BA224B91EAEE2E400627A1B /* View */,
 			);
 			name = SignIn;
@@ -1205,6 +1203,7 @@
 		8BA224AF1EAED25400627A1B /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				8BCE7CB11F039C9B00FE261B /* HyphenateFullSDK */,
 				8B027A191EF9230600600E18 /* SDK */,
 				8BF867BD1ECC275200B7EED4 /* libiconv.tbd */,
 				8BF867BB1ECC274100B7EED4 /* libsqlite3.tbd */,
@@ -1213,7 +1212,6 @@
 				8BF867B51ECC270C00B7EED4 /* libc++.tbd */,
 				8BF867B31ECC26CE00B7EED4 /* AudioToolbox.framework */,
 				8BF867B11ECC26C300B7EED4 /* CoreMedia.framework */,
-				8BF865461ECAE63A00B7EED4 /* HyphenateFullSDK */,
 				8BF865381ECADB9F00B7EED4 /* libsqlite3.0.tbd */,
 				8B17373E1EC55B9800BE3C8F /* CoreGraphics.framework */,
 				8B17373C1EC55B8500BE3C8F /* CFNetwork.framework */,
@@ -1304,6 +1302,15 @@
 				8BB56D7D1EB177DC0023DAFF /* AFURLSessionManager.m */,
 			);
 			path = AFNetworking;
+			sourceTree = "<group>";
+		};
+		8BCE7CB11F039C9B00FE261B /* HyphenateFullSDK */ = {
+			isa = PBXGroup;
+			children = (
+				8BCE7CB21F039C9B00FE261B /* Hyphenate.framework */,
+				8BCE7CB31F039C9B00FE261B /* Hyphenate.podspec */,
+			);
+			path = HyphenateFullSDK;
 			sourceTree = "<group>";
 		};
 		8BE877631EBAF73700866A34 /* ShareView */ = {
@@ -1524,15 +1531,6 @@
 			path = SDWebImage;
 			sourceTree = "<group>";
 		};
-		8BF865461ECAE63A00B7EED4 /* HyphenateFullSDK */ = {
-			isa = PBXGroup;
-			children = (
-				8BF865471ECAE63A00B7EED4 /* Hyphenate.framework */,
-				8BF865481ECAE63A00B7EED4 /* Hyphenate.podspec */,
-			);
-			path = HyphenateFullSDK;
-			sourceTree = "<group>";
-		};
 		8BFB94771EE94922004BB963 /* VoteView */ = {
 			isa = PBXGroup;
 			children = (
@@ -1675,7 +1673,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				8BF8654A1ECAE63A00B7EED4 /* Hyphenate.podspec in Resources */,
 				8BF82D7C1EDFFC6200D33473 /* VoteViewController.xib in Resources */,
 				8BF864BB1ECAD97300B7EED4 /* LICENSE in Resources */,
 				8B05CB771EC070060063EC20 /* SystemSetingTableViewCell.xib in Resources */,
@@ -1733,6 +1730,7 @@
 				8B17370F1EC2EDE400BE3C8F /* MeetingViewController.xib in Resources */,
 				8BE877861EBC2E0C00866A34 /* EndTheTestViewController.xib in Resources */,
 				8BA224671EADF68500627A1B /* Main.storyboard in Resources */,
+				8BCE7CB51F039C9B00FE261B /* Hyphenate.podspec in Resources */,
 				8B2E16F31EBADA2F008B7C57 /* TheMeetingNotStartViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1757,7 +1755,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				8BF82E0C1EE167C300D33473 /* Hyphenate.podspec in Resources */,
 				8BF82E0D1EE167C300D33473 /* VoteViewController.xib in Resources */,
 				8BF82E0E1EE167C300D33473 /* LICENSE in Resources */,
 				8BF82E0F1EE167C300D33473 /* SystemSetingTableViewCell.xib in Resources */,
@@ -1839,6 +1836,7 @@
 				8BA224641EADF68500627A1B /* ViewController.m in Sources */,
 				8B0F41301EF522CF001AF4DF /* MJXChatViewController.m in Sources */,
 				8BF864C01ECAD97300B7EED4 /* SDWebImageDecoder.m in Sources */,
+				8BCE7CB01F03888D00FE261B /* EMCallOptions+NSCoding.m in Sources */,
 				8BA224BC1EAEE36800627A1B /* SignPromptView.m in Sources */,
 				8BF864C91ECAD97300B7EED4 /* UIImageView+WebCache.m in Sources */,
 				8BA224B81EAED53D00627A1B /* UIColor+HexString.m in Sources */,
