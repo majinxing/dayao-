@@ -169,9 +169,7 @@
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     MJXChatCellTableViewCell * cell = [MJXChatCellTableViewCell tempTableViewCellWith:tableView EMMessage:_dataChat[indexPath.row]];
-//    if (!cell) {
-//        cell = [[[NSBundle mainBundle] loadNibNamed:@"MJXChatCellTableViewCell" owner:nil options:nil] objectAtIndex:1];
-//    }
+    
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
 
     return cell;
@@ -272,7 +270,13 @@
 // 2.实现收到通知触发的方法
 
 - (void)InfoNotificationAction:(NSNotification *)notification{
-    [_dataChat addObjectsFromArray:[notification.userInfo objectForKey:@"messageAry"]];
+    NSMutableArray * ary = [notification.userInfo objectForKey:@"messageAry"];
+    for (int i = 0; i<ary.count; i++) {
+        EMMessage * m = ary[i];
+        if ([m.conversationId isEqualToString:_chatroom.groupId]) {
+            [_dataChat addObject:m];
+        }
+    }
     [_tableView reloadData];
 }
 

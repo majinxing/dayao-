@@ -15,32 +15,57 @@
 - (void)awakeFromNib {
     [super awakeFromNib];
     self.backgroundColor =  RGBA_COLOR(241, 241, 241, 1);
-
+    
     // Initialization code
 }
 + (instancetype)tempTableViewCellWith:(UITableView *)tableView EMMessage:(EMMessage *)message {
     NSString * identifier;
     NSInteger index = 0;
-    switch (message.body.type) {
-        case EMMessageBodyTypeText://文字
-            identifier = @"MJXChatCellTableViewCellFirst";
-            index = 0;
-            break;
-        case EMMessageBodyTypeImage://图片
-            identifier = @"MJXChatCellTableViewCellSecond";
-            index = 1;
-            break;
-        case EMMessageBodyTypeVideo://视频
-            identifier = @"MJXChatCellTableViewCellThird";
-            index = 2;
-            break;
-        case EMMessageBodyTypeVoice://语音
-            identifier = @"MJXChatCellTableViewCellForth";
-            index = 3;
-            break;
-            
-        default:
-            break;
+    if (message.direction == EMMessageDirectionReceive) {
+        switch (message.body.type) {
+            case EMMessageBodyTypeText://文字
+                identifier = @"MJXChatCellTableViewCellFirst";
+                index = 0;
+                break;
+            case EMMessageBodyTypeImage://图片
+                identifier = @"MJXChatCellTableViewCellSecond";
+                index = 1;
+                break;
+            case EMMessageBodyTypeVideo://视频
+                identifier = @"MJXChatCellTableViewCellThird";
+                index = 2;
+                break;
+            case EMMessageBodyTypeVoice://语音
+                identifier = @"MJXChatCellTableViewCellForth";
+                index = 3;
+                break;
+                
+            default:
+                break;
+        }
+    }else{
+        switch (message.body.type) {
+            case EMMessageBodyTypeText://文字
+                identifier = @"MJXChatCellTableViewCellFifth";
+                index = 4;
+                break;
+            case EMMessageBodyTypeImage://图片
+                identifier = @"MJXChatCellTableViewCellSixth";
+                index = 5;
+                break;
+            case EMMessageBodyTypeVideo://视频
+                identifier = @"MJXChatCellTableViewCellSeventh";
+                index = 6;
+                break;
+            case EMMessageBodyTypeVoice://语音
+                identifier = @"MJXChatCellTableViewCellEighth";
+                index = 7;
+                break;
+                
+            default:
+                break;
+        }
+        
     }
     MJXChatCellTableViewCell * cell = [tableView dequeueReusableCellWithIdentifier:identifier];
     if (!cell) {
@@ -51,7 +76,7 @@
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
     [super setSelected:selected animated:animated];
-
+    
     // Configure the view for the selected state
 }
 

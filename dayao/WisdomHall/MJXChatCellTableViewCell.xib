@@ -204,7 +204,7 @@
             </tableViewCellContentView>
             <point key="canvasLocation" x="10.5" y="872.5"/>
         </tableViewCell>
-        <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="194" id="9Z9-fJ-Fb4">
+        <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="MJXChatCellTableViewCellFifth" rowHeight="194" id="9Z9-fJ-Fb4" customClass="MJXChatCellTableViewCell">
             <rect key="frame" x="0.0" y="0.0" width="400" height="194"/>
             <autoresizingMask key="autoresizingMask"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="9Z9-fJ-Fb4" id="6FL-Bh-4Nn">
@@ -228,7 +228,7 @@
                     </imageView>
                     <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="8AX-Yq-2Be">
                         <rect key="frame" x="139" y="16" width="200" height="169.5"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" red="0.78274197048611116" green="0.84605577256944442" blue="0.84963650173611116" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="200" id="JXj-OR-9aK"/>
                         </constraints>
@@ -249,43 +249,158 @@
             </tableViewCellContentView>
             <point key="canvasLocation" x="446" y="-51"/>
         </tableViewCell>
-        <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="181" id="hA2-91-RwH">
+        <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="MJXChatCellTableViewCellSixth" rowHeight="181" id="hA2-91-RwH" customClass="MJXChatCellTableViewCell">
             <rect key="frame" x="0.0" y="0.0" width="414" height="181"/>
             <autoresizingMask key="autoresizingMask"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="hA2-91-RwH" id="Lqp-Ri-SxH">
                 <rect key="frame" x="0.0" y="0.0" width="414" height="180.5"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="m8g-7E-cUA">
-                        <rect key="frame" x="352" y="16" width="46" height="30"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                        <state key="normal" title="Button"/>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="m8g-7E-cUA">
+                        <rect key="frame" x="361" y="8" width="45" height="45"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="45" id="Ykd-ps-8u8"/>
+                            <constraint firstAttribute="height" constant="45" id="vzx-Th-GWg"/>
+                        </constraints>
+                        <state key="normal" title="Button" image="h"/>
                     </button>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="chat_sender_bg" translatesAutoresizingMaskIntoConstraints="NO" id="aYm-wz-10a">
+                        <rect key="frame" x="324" y="16" width="35" height="29"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="35" id="OSU-Bl-5jf"/>
+                            <constraint firstAttribute="height" constant="29" id="bq6-4R-UAa"/>
+                        </constraints>
+                    </imageView>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="headImage" translatesAutoresizingMaskIntoConstraints="NO" id="8BG-ym-YQs">
+                        <rect key="frame" x="153" y="16" width="200" height="164.5"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="200" id="uvq-Z0-Wsg"/>
+                        </constraints>
+                    </imageView>
                 </subviews>
+                <constraints>
+                    <constraint firstItem="aYm-wz-10a" firstAttribute="top" secondItem="Lqp-Ri-SxH" secondAttribute="topMargin" constant="8" id="HUT-Sa-ZV5"/>
+                    <constraint firstItem="m8g-7E-cUA" firstAttribute="top" secondItem="Lqp-Ri-SxH" secondAttribute="top" constant="8" id="XqO-Tu-y9i"/>
+                    <constraint firstItem="m8g-7E-cUA" firstAttribute="leading" secondItem="aYm-wz-10a" secondAttribute="trailing" constant="2" id="hoZ-ON-frb"/>
+                    <constraint firstAttribute="trailing" secondItem="m8g-7E-cUA" secondAttribute="trailing" constant="8" id="mqH-6Y-2Lh"/>
+                    <constraint firstItem="8BG-ym-YQs" firstAttribute="bottom" secondItem="Lqp-Ri-SxH" secondAttribute="bottomMargin" constant="8" id="rA7-wx-QGF"/>
+                    <constraint firstItem="m8g-7E-cUA" firstAttribute="leading" secondItem="8BG-ym-YQs" secondAttribute="trailing" constant="8" id="sAb-Nk-UJB"/>
+                    <constraint firstItem="8BG-ym-YQs" firstAttribute="top" secondItem="Lqp-Ri-SxH" secondAttribute="topMargin" constant="8" id="z5S-GG-m7w"/>
+                </constraints>
             </tableViewCellContentView>
             <point key="canvasLocation" x="453" y="279.5"/>
         </tableViewCell>
-        <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="jZR-QZ-0gr">
-            <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+        <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="MJXChatCellTableViewCellSeventh" rowHeight="175" id="jZR-QZ-0gr" customClass="MJXChatCellTableViewCell">
+            <rect key="frame" x="0.0" y="0.0" width="411" height="175"/>
             <autoresizingMask key="autoresizingMask"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="jZR-QZ-0gr" id="YfZ-Jd-NgV">
-                <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
+                <rect key="frame" x="0.0" y="0.0" width="411" height="174.5"/>
                 <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4dx-U8-FsI">
+                        <rect key="frame" x="358" y="8" width="45" height="45"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="45" id="01X-Yw-aiZ"/>
+                            <constraint firstAttribute="height" constant="45" id="gl6-Mk-www"/>
+                        </constraints>
+                        <state key="normal" title="Button" image="h"/>
+                    </button>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="chat_sender_bg" translatesAutoresizingMaskIntoConstraints="NO" id="9Yr-6r-2dR">
+                        <rect key="frame" x="321" y="16" width="35" height="29"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="29" id="TyP-ed-opG"/>
+                            <constraint firstAttribute="width" constant="35" id="UPm-CA-SnS"/>
+                        </constraints>
+                    </imageView>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Rgu-Nb-Dkt">
+                        <rect key="frame" x="150" y="16" width="200" height="142.5"/>
+                        <color key="backgroundColor" red="0.78274197048611116" green="0.84605577256944442" blue="0.84963650173611116" alpha="1" colorSpace="calibratedRGB"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="200" id="UC8-a0-jbW"/>
+                        </constraints>
+                        <state key="normal" title="视频播放"/>
+                    </button>
+                </subviews>
+                <constraints>
+                    <constraint firstItem="Rgu-Nb-Dkt" firstAttribute="top" secondItem="YfZ-Jd-NgV" secondAttribute="topMargin" constant="8" id="8qG-6f-eDv"/>
+                    <constraint firstAttribute="trailing" secondItem="4dx-U8-FsI" secondAttribute="trailing" constant="8" id="Hhg-1D-dc7"/>
+                    <constraint firstItem="4dx-U8-FsI" firstAttribute="top" secondItem="YfZ-Jd-NgV" secondAttribute="top" constant="8" id="JHb-Pp-57w"/>
+                    <constraint firstItem="4dx-U8-FsI" firstAttribute="leading" secondItem="Rgu-Nb-Dkt" secondAttribute="trailing" constant="8" id="QNG-JY-S94"/>
+                    <constraint firstAttribute="bottomMargin" secondItem="Rgu-Nb-Dkt" secondAttribute="bottom" constant="8" id="fV2-JP-CQJ"/>
+                    <constraint firstItem="4dx-U8-FsI" firstAttribute="leading" secondItem="9Yr-6r-2dR" secondAttribute="trailing" constant="2" id="pqp-Ez-FwY"/>
+                    <constraint firstItem="9Yr-6r-2dR" firstAttribute="top" secondItem="YfZ-Jd-NgV" secondAttribute="topMargin" constant="8" id="pux-hx-erf"/>
+                </constraints>
             </tableViewCellContentView>
-            <point key="canvasLocation" x="446" y="543"/>
+            <point key="canvasLocation" x="464.5" y="577.5"/>
         </tableViewCell>
-        <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="M0Y-47-Seb">
-            <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+        <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="MJXChatCellTableViewCellEighth" rowHeight="180" id="M0Y-47-Seb" customClass="MJXChatCellTableViewCell">
+            <rect key="frame" x="0.0" y="0.0" width="411" height="180"/>
             <autoresizingMask key="autoresizingMask"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="M0Y-47-Seb" id="fFF-VL-egH">
-                <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
+                <rect key="frame" x="0.0" y="0.0" width="411" height="179.5"/>
                 <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Emm-q6-lHB">
+                        <rect key="frame" x="358" y="8" width="45" height="45"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="45" id="6ta-od-9oh"/>
+                            <constraint firstAttribute="height" constant="45" id="IrN-1C-YKF"/>
+                        </constraints>
+                        <state key="normal" title="Button" image="h"/>
+                    </button>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="chat_sender_bg" translatesAutoresizingMaskIntoConstraints="NO" id="mzm-Bq-q0O">
+                        <rect key="frame" x="315" y="16" width="35" height="29"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="29" id="6vd-1V-zIm"/>
+                            <constraint firstAttribute="width" constant="35" id="bEg-dI-dkX"/>
+                        </constraints>
+                    </imageView>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="chat_sender_audio_playing_003" translatesAutoresizingMaskIntoConstraints="NO" id="AFp-hV-OHI">
+                        <rect key="frame" x="315" y="16" width="29" height="29"/>
+                        <color key="backgroundColor" red="0.78274197048611116" green="0.84605577256944442" blue="0.84963650173611116" alpha="1" colorSpace="calibratedRGB"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="29" id="G6G-0i-eFS"/>
+                            <constraint firstAttribute="width" constant="29" id="MFQ-ai-Mf6"/>
+                        </constraints>
+                    </imageView>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="3s" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eMl-D4-zVb">
+                        <rect key="frame" x="265" y="16" width="50" height="29"/>
+                        <color key="backgroundColor" red="0.78274197048611116" green="0.84605577256944442" blue="0.84963650173611116" alpha="1" colorSpace="calibratedRGB"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="50" id="EGb-Pn-cyc"/>
+                            <constraint firstAttribute="height" constant="29" id="bJP-Gt-bmt"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                        <nil key="textColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2lO-S5-uub">
+                        <rect key="frame" x="265" y="16" width="79" height="29"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="79" id="JAA-fj-qzG"/>
+                            <constraint firstAttribute="height" constant="29" id="wXg-z7-sCn"/>
+                        </constraints>
+                    </button>
+                </subviews>
+                <constraints>
+                    <constraint firstItem="Emm-q6-lHB" firstAttribute="leading" secondItem="AFp-hV-OHI" secondAttribute="trailing" constant="14" id="3hB-WI-cQU"/>
+                    <constraint firstItem="Emm-q6-lHB" firstAttribute="leading" secondItem="mzm-Bq-q0O" secondAttribute="trailing" constant="8" id="5Q1-hN-kHL"/>
+                    <constraint firstAttribute="trailing" secondItem="Emm-q6-lHB" secondAttribute="trailing" constant="8" id="C4K-2f-TPC"/>
+                    <constraint firstItem="Emm-q6-lHB" firstAttribute="leading" secondItem="2lO-S5-uub" secondAttribute="trailing" constant="14" id="FSc-ns-9Vm"/>
+                    <constraint firstItem="eMl-D4-zVb" firstAttribute="top" secondItem="fFF-VL-egH" secondAttribute="topMargin" constant="8" id="IKu-83-pjQ"/>
+                    <constraint firstItem="mzm-Bq-q0O" firstAttribute="top" secondItem="fFF-VL-egH" secondAttribute="topMargin" constant="8" id="Kaz-j0-uTN"/>
+                    <constraint firstItem="Emm-q6-lHB" firstAttribute="top" secondItem="fFF-VL-egH" secondAttribute="top" constant="8" id="NVi-HP-1bg"/>
+                    <constraint firstItem="AFp-hV-OHI" firstAttribute="top" secondItem="fFF-VL-egH" secondAttribute="topMargin" constant="8" id="UNc-9m-uoe"/>
+                    <constraint firstItem="2lO-S5-uub" firstAttribute="top" secondItem="fFF-VL-egH" secondAttribute="topMargin" constant="8" id="Xix-9o-0QX"/>
+                    <constraint firstItem="AFp-hV-OHI" firstAttribute="leading" secondItem="eMl-D4-zVb" secondAttribute="trailing" id="a6s-Td-lHj"/>
+                </constraints>
             </tableViewCellContentView>
-            <point key="canvasLocation" x="459" y="806"/>
+            <point key="canvasLocation" x="464.5" y="874"/>
         </tableViewCell>
     </objects>
     <resources>
         <image name="chat_receiver_bg" width="40" height="40"/>
+        <image name="chat_sender_audio_playing_003" width="20" height="20"/>
         <image name="chat_sender_bg" width="40" height="40"/>
         <image name="h" width="650" height="464"/>
         <image name="headImage" width="352" height="220"/>
