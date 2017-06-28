@@ -9,7 +9,7 @@
 #import <Foundation/Foundation.h>
 #import <Hyphenate/Hyphenate.h>
 
-@interface ChatHelper : NSObject<EMClientDelegate,EMChatManagerDelegate,EMContactManagerDelegate,EMGroupManagerDelegate,EMChatroomManagerDelegate>
+@interface ChatHelper : NSObject
 + (instancetype)shareHelper;
 
 @end

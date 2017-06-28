@@ -139,6 +139,7 @@
 		8BB56D881EB2E2820023DAFF /* RedefineThePasswordViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8BB56D861EB2E2820023DAFF /* RedefineThePasswordViewController.xib */; };
 		8BB56D8C1EB31C110023DAFF /* SystemSettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BB56D8A1EB31C110023DAFF /* SystemSettingsViewController.m */; };
 		8BB56D8D1EB31C110023DAFF /* SystemSettingsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8BB56D8B1EB31C110023DAFF /* SystemSettingsViewController.xib */; };
+		8BCE7CAD1F033AE100FE261B /* HYDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BCE7CAC1F033AE100FE261B /* HYDelegate.m */; };
 		8BE877691EBAF7A800866A34 /* ShareView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BE877681EBAF7A800866A34 /* ShareView.m */; };
 		8BE8776C1EBAF82E00866A34 /* ShareButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BE8776B1EBAF82E00866A34 /* ShareButton.m */; };
 		8BE877701EBC1CA800866A34 /* TextViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BE8776E1EBC1CA800866A34 /* TextViewController.m */; };
@@ -639,6 +640,8 @@
 		8BB56D891EB31C110023DAFF /* SystemSettingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SystemSettingsViewController.h; sourceTree = "<group>"; };
 		8BB56D8A1EB31C110023DAFF /* SystemSettingsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SystemSettingsViewController.m; sourceTree = "<group>"; };
 		8BB56D8B1EB31C110023DAFF /* SystemSettingsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SystemSettingsViewController.xib; sourceTree = "<group>"; };
+		8BCE7CAB1F033AE100FE261B /* HYDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HYDelegate.h; sourceTree = "<group>"; };
+		8BCE7CAC1F033AE100FE261B /* HYDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HYDelegate.m; sourceTree = "<group>"; };
 		8BE877671EBAF7A800866A34 /* ShareView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShareView.h; sourceTree = "<group>"; };
 		8BE877681EBAF7A800866A34 /* ShareView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShareView.m; sourceTree = "<group>"; };
 		8BE8776A1EBAF82E00866A34 /* ShareButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShareButton.h; sourceTree = "<group>"; };
@@ -1018,6 +1021,8 @@
 				8BA224601EADF68500627A1B /* AppDelegate.m */,
 				8BA224621EADF68500627A1B /* ViewController.h */,
 				8BA224631EADF68500627A1B /* ViewController.m */,
+				8BCE7CAB1F033AE100FE261B /* HYDelegate.h */,
+				8BCE7CAC1F033AE100FE261B /* HYDelegate.m */,
 				8BA224651EADF68500627A1B /* Main.storyboard */,
 				8BA2246A1EADF68500627A1B /* LaunchScreen.storyboard */,
 				8B064E571F00F53F0004C3D4 /* Assets.xcassets */,
@@ -1919,6 +1924,7 @@
 				8B0DB1331ED5188C0042DF0D /* ContactModel.m in Sources */,
 				8B1737181EC2F84900BE3C8F /* NoticeTableViewCell.m in Sources */,
 				8BB56D8C1EB31C110023DAFF /* SystemSettingsViewController.m in Sources */,
+				8BCE7CAD1F033AE100FE261B /* HYDelegate.m in Sources */,
 				8BB56D6A1EB037410023DAFF /* UIUtils.m in Sources */,
 				8B8C3D171ECD7A6700E9FB56 /* TextModel.m in Sources */,
 				8B8C3D111ECC336500E9FB56 /* ConversationVC.m in Sources */,

@@ -8,9 +8,13 @@
 
 #import "ChatHelper.h"
 #import <Hyphenate/Hyphenate.h>
+#import "ConversationVC.h"
 
 static ChatHelper *helper = nil;
 
+@interface ChatHelper ()<EMClientDelegate,EMChatManagerDelegate,EMContactManagerDelegate,EMGroupManagerDelegate,EMChatroomManagerDelegate>
+
+@end
 @implementation ChatHelper
 + (instancetype)shareHelper
 {
@@ -40,12 +44,57 @@ static ChatHelper *helper = nil;
 }
 - (void)initHelper
 {
+    [self Hyregistered];
+
     //注册代理
     [[EMClient sharedClient] addDelegate:self delegateQueue:nil];
     [[EMClient sharedClient].groupManager addDelegate:self delegateQueue:nil];
     [[EMClient sharedClient].contactManager addDelegate:self delegateQueue:nil];
     [[EMClient sharedClient].roomManager addDelegate:self delegateQueue:nil];
     [[EMClient sharedClient].chatManager addDelegate:self delegateQueue:nil];
+    
+}
+-(void)Hyregistered{
+    //环信注册
+    EMOptions  * options = [EMOptions optionsWithAppkey:@"1161170505178076#college-sign"];
+    [[EMClient sharedClient] initializeSDKWithOptions:options];
+    EMError *error = [[EMClient sharedClient] registerWithUsername:@"8004" password:@"111111"];
+    if (error==nil) {
+        NSLog(@"注册成功");
+    }
+    EMError *error2 = [[EMClient sharedClient] loginWithUsername:@"8001" password:@"111111"];
+    if (!error2) {
+        NSLog(@"登录成功");
+    }
+}
+/*!
+ @method
+ @brief 接收到一条及以上非cmd消息
+ */
+- (void)messagesDidReceive:(NSArray *)aMessages{
+    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"新信息" message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: nil];
+    [alertView show];
+    
+    NSLog(@"%s",__func__);
+}
+/*!
+ @method
+ @brief 接收到一条及以上cmd消息
+ */
+- (void)cmdMessagesDidReceive:(NSArray *)aCmdMessages{
+    NSLog(@"%s",__func__);
+    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"新信息" message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: nil];
+    [alertView show];
+    
 }
 
+-(void)callDidReceive:(EMCallSession *)aSession{
+    
+    NSLog(@"%s",__func__);
+    ConversationVC * c  = [[ConversationVC alloc] init];
+    c.callSession = aSession;
+    [UIApplication sharedApplication].keyWindow.rootViewController = [[UINavigationController alloc]initWithRootViewController:c];
+    //    调用:
+    EMError *error = nil;
+}
 @end

@@ -29,7 +29,7 @@
 @implementation DiscussViewController
 
 -(void)dealloc{
- [[EMClient sharedClient].groupManager removeDelegate:self];
+    [[EMClient sharedClient].groupManager removeDelegate:self];
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -55,7 +55,7 @@
     _tableView.delegate = self;
     _tableView.dataSource = self;
     
-//    _tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+    //    _tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     
     __weak DiscussViewController * weakSelf = self;
     [self.tableView addHeaderWithCallback:^{
@@ -90,6 +90,7 @@
     
     __weak typeof(self)weakSelf = self;
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        
         EMError * error = nil;
         NSArray *  result = [[EMClient sharedClient].groupManager getJoinedGroupsFromServerWithPage:aPage pageSize:FetchChatroomPageSize error:&error];
         
@@ -113,11 +114,18 @@
                     else{
                         [strongDelf.tableView footerEndRefreshing];
                     }
+                }else{
+                    if (aIsHeader) {
+                        [strongDelf.tableView headerEndRefreshing];
+                    }
+                    else{
+                        [strongDelf.tableView footerEndRefreshing];
+                    }
                 }
             });
         }
     });
-
+    
 }
 
 #pragma mark UITableViewdelegate
@@ -137,7 +145,7 @@
         cell = [[[NSBundle mainBundle] loadNibNamed:@"DiscussListTableViewCell" owner:nil options:nil] objectAtIndex:0];
     }
     if (indexPath.row>1) {
-//        EMChatroom *chatroom = [self.dataArray objectAtIndex:indexPath.row-2];
+        //        EMChatroom *chatroom = [self.dataArray objectAtIndex:indexPath.row-2];
         EMGroup * chatroom = [self.dataArray objectAtIndex:indexPath.row-2];
         [cell setImage:_imageAry[2] withLableTitle:chatroom.subject];
     }else{
@@ -162,13 +170,13 @@
     return 10;
 }
 /*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
+ #pragma mark - Navigation
+ 
+ // In a storyboard-based application, you will often want to do a little preparation before navigation
+ - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+ // Get the new view controller using [segue destinationViewController].
+ // Pass the selected object to the new view controller.
+ }
+ */
 
 @end

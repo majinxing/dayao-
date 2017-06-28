@@ -21,6 +21,7 @@
 @implementation AppDelegate
 
 -(void)dealloc{
+    
     //移除消息回调
     [[EMClient sharedClient].chatManager removeDelegate:self];
 }
@@ -34,52 +35,54 @@
     
   
     
-    //    _chat = [ChatHelper shareHelper];
+    _chat = [ChatHelper shareHelper];
     
     TheLoginViewController * loginVC = [[TheLoginViewController alloc] init];
     self.window.rootViewController = [[UINavigationController alloc]initWithRootViewController:loginVC];
     
     
     
-    //环信注册
-    EMOptions  * options = [EMOptions optionsWithAppkey:@"1161170505178076#college-sign"];
-    [[EMClient sharedClient] initializeSDKWithOptions:options];
-    EMError *error = [[EMClient sharedClient] registerWithUsername:@"8004" password:@"111111"];
-    if (error==nil) {
-        NSLog(@"注册成功");
-    }
-    EMError *error2 = [[EMClient sharedClient] loginWithUsername:@"8002" password:@"111111"];
-    if (!error2) {
-        NSLog(@"登录成功");
-    }
-    
-    //注册消息回调
-    [[EMClient sharedClient].chatManager addDelegate:self delegateQueue:nil];
+//    //环信注册
+//    EMOptions  * options = [EMOptions optionsWithAppkey:@"1161170505178076#college-sign"];
+//    [[EMClient sharedClient] initializeSDKWithOptions:options];
+//    EMError *error = [[EMClient sharedClient] registerWithUsername:@"8004" password:@"111111"];
+//    if (error==nil) {
+//        NSLog(@"注册成功");
+//    }
+//    EMError *error2 = [[EMClient sharedClient] loginWithUsername:@"8001" password:@"111111"];
+//    if (!error2) {
+//        NSLog(@"登录成功");
+//    }
+//    
+//    //注册消息回调
+//    [[EMClient sharedClient].chatManager addDelegate:self delegateQueue:nil];
+//    
+//    [[EMClient sharedClient].roomManager addDelegate:self delegateQueue:nil];
     
     [self getWifiName];
     
     return YES;
 }
-/*!
- @method
- @brief 接收到一条及以上非cmd消息
- */
-- (void)messagesDidReceive:(NSArray *)aMessages{
-    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"新信息" message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: nil];
-    [alertView show];
-
-    NSLog(@"%s",__func__);
-}
-/*!
- @method
- @brief 接收到一条及以上cmd消息
- */
-- (void)cmdMessagesDidReceive:(NSArray *)aCmdMessages{
-    NSLog(@"%s",__func__);
-    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"新信息" message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: nil];
-    [alertView show];
-
-}
+///*!
+// @method
+// @brief 接收到一条及以上非cmd消息
+// */
+//- (void)messagesDidReceive:(NSArray *)aMessages{
+//    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"新信息" message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: nil];
+//    [alertView show];
+//
+//    NSLog(@"%s",__func__);
+//}
+///*!
+// @method
+// @brief 接收到一条及以上cmd消息
+// */
+//- (void)cmdMessagesDidReceive:(NSArray *)aCmdMessages{
+//    NSLog(@"%s",__func__);
+//    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"新信息" message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: nil];
+//    [alertView show];
+//
+//}
 -(NSString *)getWifiName
 
 {
@@ -129,15 +132,15 @@
     return wifiName;
     
 }
--(void)callDidReceive:(EMCallSession *)aSession{
-    
-    NSLog(@"%s",__func__);
-    ConversationVC * c  = [[ConversationVC alloc] init];
-    c.callSession = aSession;
-    self.window.rootViewController = [[UINavigationController alloc]initWithRootViewController:c];
-    //    调用:
-    EMError *error = nil;
-}
+//-(void)callDidReceive:(EMCallSession *)aSession{
+//    
+//    NSLog(@"%s",__func__);
+//    ConversationVC * c  = [[ConversationVC alloc] init];
+//    c.callSession = aSession;
+//    self.window.rootViewController = [[UINavigationController alloc]initWithRootViewController:c];
+//    //    调用:
+//    EMError *error = nil;
+//}
 - (void)applicationWillResignActive:(UIApplication *)application {
     // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
     // Use this method to pause ongoing tasks, disable timers, and invalidate graphics rendering callbacks. Games should use this method to pause the game.
