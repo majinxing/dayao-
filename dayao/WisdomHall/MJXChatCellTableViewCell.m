@@ -8,6 +8,7 @@
 
 #import "MJXChatCellTableViewCell.h"
 #import <Hyphenate/Hyphenate.h>
+#import "DYHeader.h"
 
 #define RGBA_COLOR(R, G, B, A) [UIColor colorWithRed:((R) / 255.0f) green:((G) / 255.0f) blue:((B) / 255.0f) alpha:A]
 
@@ -30,7 +31,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *sixthNameLabel;
 @property (weak, nonatomic) IBOutlet UILabel *seventhNameLabel;
 @property (weak, nonatomic) IBOutlet UILabel *eigthNameLabel;
-
+@property (strong, nonatomic) UIView * bView;
 
 @end
 
@@ -40,6 +41,9 @@
     [super awakeFromNib];
     self.backgroundColor =  RGBA_COLOR(241, 241, 241, 1);
     
+    _bView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 0, 0)];
+    _bView.backgroundColor = RGBA_COLOR(241, 241, 241, 1);
+    [self.contentView addSubview:_bView];
     // Initialization code
 }
 + (instancetype)tempTableViewCellWith:(UITableView *)tableView EMMessage:(EMMessage *)message {
@@ -104,6 +108,15 @@
         EMTextMessageBody *textBody = (EMTextMessageBody *)message.body;
         _firstTextView.text = textBody.text;
         _firstNameLabel.text = [NSString stringWithFormat:@"%@",message.from];
+        float f = [self measureSinglelineStringWidth:textBody.text andFont:[UIFont systemFontOfSize:13]];
+        if (f<30) {
+            _bView.frame = CGRectMake(61+30,CGRectGetMaxY(_firstNameLabel.frame), 200, 35.5);
+        }else if(f>=35&&f<200){
+            _bView.frame = CGRectMake(61+f+15, CGRectGetMaxY(_firstNameLabel.frame), 200, 35.5);
+        }else{
+            _bView.frame = CGRectMake(0, 0, 0, 0);
+        }
+        
     }else if (n==1){
         
     }else if (n==2){
@@ -114,6 +127,15 @@
         EMTextMessageBody *textBody = (EMTextMessageBody *)message.body;
         _fifthTextView.text = textBody.text;
         _fifthNameLabel.text = message.from;
+        float f = [self measureSinglelineStringWidth:textBody.text andFont:[UIFont systemFontOfSize:13]];
+        if (f<30) {
+            _bView.frame = CGRectMake(0,CGRectGetMaxY(_fifthNameLabel.frame), APPLICATION_WIDTH-30-45-16, 43);
+        }else if(f>=30&&f<200){
+            _bView.frame = CGRectMake(0, CGRectGetMaxY(_fifthNameLabel.frame),APPLICATION_WIDTH-f-10-45-16, 43);
+        }else{
+            _bView.frame = CGRectMake(0, 0, 0, 0);
+        }
+        
     }else if (n==5){
         
     }else if (n==6){
@@ -124,7 +146,28 @@
         
     }
 }
+// 传一个字符串和字体大小来返回一个字符串所占的宽度
 
+-(float)measureSinglelineStringWidth:(NSString*)str andFont:(UIFont*)wordFont{
+    
+    if (str == nil) return 0;
+    
+    CGSize measureSize;
+    
+    if([[UIDevice currentDevice].systemVersion floatValue] < 7.0){
+        
+        measureSize = [str sizeWithFont:wordFont constrainedToSize:CGSizeMake(MAXFLOAT, 200) lineBreakMode:NSLineBreakByWordWrapping];
+        
+        
+    }else{
+        
+        measureSize = [str boundingRectWithSize:CGSizeMake(0, 0) options:NSStringDrawingUsesFontLeading attributes:[NSDictionary dictionaryWithObjectsAndKeys:wordFont, NSFontAttributeName, nil] context:nil].size;
+        
+    }
+    
+    return ceil(measureSize.width);
+    
+}
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
     [super setSelected:selected animated:animated];
     

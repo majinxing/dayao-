@@ -60,8 +60,10 @@
     textView.bounds = bounds;
     // 让 table view 重新计算高度
     UITableView *tableView = [self tableView];
+    
     [tableView beginUpdates];
-    [tableView endUpdates]; 
+    [tableView endUpdates];
+    
     if (textView.text.length>0) {
         _titleLabel.text = @"";
     }else if (textView.text.length == 0){

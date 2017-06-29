@@ -11,6 +11,7 @@
 #import "DYTabBarViewController.h"
 #import "RegisterViewController.h"
 #import "ForgotPasswordViewController.h"
+#import "NetworkRequest.h"
 
 @interface TheLoginViewController ()
 @property (strong, nonatomic) IBOutlet UITextField *personalAccount;
@@ -36,9 +37,11 @@
     [self.view endEditing:YES];
 }
 - (IBAction)LoginButtonPressed:(id)sender {
-    NSLog(@"点击");
-    DYTabBarViewController *rootVC = [[DYTabBarViewController alloc] init];
-    [UIApplication sharedApplication].keyWindow.rootViewController = rootVC;
+//    NSLog(@"点击");
+//    DYTabBarViewController *rootVC = [[DYTabBarViewController alloc] init];
+//    [UIApplication sharedApplication].keyWindow.rootViewController = rootVC;
+  NetworkRequest *n =  [[NetworkRequest alloc] init];
+    [n afnetwroingpost];
 }
 /**
  * 注册

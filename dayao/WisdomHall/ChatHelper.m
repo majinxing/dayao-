@@ -9,6 +9,7 @@
 #import "ChatHelper.h"
 #import <Hyphenate/Hyphenate.h>
 #import "ConversationVC.h"
+#import "DYHeader.h"
 
 static ChatHelper *helper = nil;
 
@@ -63,7 +64,7 @@ static ChatHelper *helper = nil;
     if (error==nil) {
         NSLog(@"注册成功");
     }
-    EMError *error2 = [[EMClient sharedClient] loginWithUsername:@"8002" password:@"111111"];
+    EMError *error2 = [[EMClient sharedClient] loginWithUsername:@"8001" password:@"111111"];
     if (!error2) {
         NSLog(@"登录成功");
     }
@@ -90,7 +91,7 @@ static ChatHelper *helper = nil;
 //    [alertView show];
 //    
 }
-
+//接收语音聊天
 -(void)callDidReceive:(EMCallSession *)aSession{
     
     NSLog(@"%s",__func__);
@@ -100,4 +101,59 @@ static ChatHelper *helper = nil;
     //    调用:
     EMError *error = nil;
 }
+-(EMMessage *)sendTextMessage:(NSString *)text withReceiver:(NSString *)receiver{
+    EMTextMessageBody *body = [[EMTextMessageBody alloc] initWithText:text];
+    
+    NSString * from = [[EMClient sharedClient] currentUsername];
+    
+    EMMessage * message = [[EMMessage alloc] initWithConversationID:receiver from:from to:receiver body:body ext:@{@"em_apns_ext":@{@"em_push_title":text}}];
+    
+    message.chatType =  EMChatTypeGroupChat;
+    
+    [[EMClient sharedClient].chatManager sendMessage:message progress:^(int progress) {
+        
+    } completion:^(EMMessage *message, EMError *error) {
+        if (!error) {
+            NSLog(@"成功");
+        }else{
+            NSLog(@"失败");
+        }
+    }];
+    return message;
+}
+-(float)returnMessageInfoHeight:(EMMessage *)message{
+    switch (message.body.type) {
+        case EMMessageBodyTypeText: //文字
+        {
+            EMTextMessageBody *textBody = (EMTextMessageBody *)message.body;
+            float h = [self computingTextHeight:textBody.text];
+            return h;
+        }
+            break;
+        case EMMessageBodyTypeImage://图片
+         
+            break;
+        case EMMessageBodyTypeVideo://视频
+         
+            break;
+        case EMMessageBodyTypeVoice://语音
+            break;
+            
+        default:
+            break;
+    }
+    
+    return 0;
+}
+-(float)computingTextHeight:(NSString *)text{
+    //---- 计算高度 ---- //
+    CGSize size = CGSizeMake( 200, CGFLOAT_MAX);
+    NSDictionary *dic = [NSDictionary dictionaryWithObjectsAndKeys:[UIFont systemFontOfSize:13],NSFontAttributeName, nil];
+    CGFloat curheight = [text boundingRectWithSize:size
+                                                    options:NSStringDrawingUsesLineFragmentOrigin | NSStringDrawingUsesFontLeading
+                                                 attributes:dic
+                                                    context:nil].size.height;
+    return curheight;
+}
+
 @end

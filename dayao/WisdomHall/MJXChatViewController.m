@@ -9,6 +9,7 @@
 #import "MJXChatViewController.h"
 #import "MJXChatCellTableViewCell.h"
 #import <Hyphenate/Hyphenate.h>
+#import "ChatHelper.h"
 #import "DYHeader.h"
 
 
@@ -34,6 +35,7 @@
 
 @property (nonatomic,strong)NSMutableArray * dataChat;
 
+@property (nonatomic,assign)BOOL currentIsInBottom;
 @end
 
 @implementation MJXChatViewController
@@ -179,7 +181,8 @@
     [self.view endEditing: YES];
 }
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
-    return 100;
+   return  [[ChatHelper shareHelper] returnMessageInfoHeight:_dataChat[indexPath.row]]+55;
+//    return 100;
 }
 -(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
     return 10;
@@ -197,11 +200,11 @@
 -(void)keyboardWillHide:(NSNotification *)note
 {
     self.tableView.contentInset = UIEdgeInsetsZero;
-    //    _btoView.frame = CGRectMake(0, APPLICATION_HEIGHT-40, APPLICATION_WIDTH, 40);
     CGRect rect = _btoView.frame;
     _btoView.frame = CGRectMake(0, APPLICATION_HEIGHT-rect.size.height, APPLICATION_WIDTH, rect.size.height);
     _keyH = 0;
 }
+
 - (void)textViewDidChange:(UITextView *)textView{
     //---- 计算高度 ---- //
     CGSize size = CGSizeMake( APPLICATION_WIDTH-45-80, CGFLOAT_MAX);
@@ -210,7 +213,7 @@
                                                     options:NSStringDrawingUsesLineFragmentOrigin | NSStringDrawingUsesFontLeading
                                                  attributes:dic
                                                     context:nil].size.height;
-    //    CGFloat y = CGRectGetMaxY(self.btoView.frame);
+
     if (curheight<19.093) {
         statusTextView = NO;
         _btoView.frame = CGRectMake(0, APPLICATION_HEIGHT-_keyH-40, APPLICATION_WIDTH, 40);
@@ -227,7 +230,19 @@
 #pragma mark --- UIScrollViewDelegate
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView{
     if ([scrollView isKindOfClass:[UITableView class]]) {
-        return;
+        
+        CGFloat height = scrollView.frame.size.height;
+        CGFloat contentOffsetY = scrollView.contentOffset.y;
+        CGFloat bottomOffset = scrollView.contentSize.height - contentOffsetY;
+        if (bottomOffset <= height)
+        {
+            //在最底部
+            self.currentIsInBottom = YES;
+        }
+        else
+        {
+            self.currentIsInBottom = NO;
+        }
     }else{
         if (statusTextView == NO) {
             scrollView.contentOffset = CGPointMake(0, 0);
@@ -236,32 +251,36 @@
         }
     }
 }
+
+/*!
+ @method
+ @brief tableView滑动到底部
+
+ */
+- (void)_scrollViewToBottom:(BOOL)animated
+{
+    if (self.tableView.contentSize.height>self.tableView.frame.size.height) {
+        CGPoint offset = CGPointMake(0, self.tableView.contentSize.height - self.tableView.frame.size.height);
+        [self.tableView setContentOffset:offset animated:animated];
+    }
+}
+
 #pragma mark ---- UITextViewDelegate
 - (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text{
     if ([text isEqualToString:@"\n"]){ //判断输入的字是否是回车，即按下return
         //在这里做你响应return键的代码
         [self.view endEditing: YES];
+       EMMessage * message = [[ChatHelper shareHelper] sendTextMessage:_textView.text withReceiver:_chatroom.groupId];
         
-        EMTextMessageBody *body = [[EMTextMessageBody alloc] initWithText:_textView.text];
-        
-        NSString * from = [[EMClient sharedClient] currentUsername];
-        
-        EMMessage * message = [[EMMessage alloc] initWithConversationID:_chatroom.groupId from:from to:_chatroom.groupId body:body ext:@{@"em_apns_ext":@{@"em_push_title":_textView.text}}];
-        
-        message.chatType =  EMChatTypeGroupChat;
-        
-        [[EMClient sharedClient].chatManager sendMessage:message progress:^(int progress) {
-            
-        } completion:^(EMMessage *message, EMError *error) {
-            if (!error) {
-                NSLog(@"成功");
-            }else{
-                NSLog(@"失败");
-            }
-        }];
-       
         _textView.text = @"";
-
+        [self textViewDidChange:_textView];
+        
+        [_dataChat addObject:message];
+        
+        [_tableView reloadData];
+        
+        [self _scrollViewToBottom:NO];
+        
         return NO;
     }
     return YES;
@@ -277,16 +296,24 @@
             [_dataChat addObject:m];
         }
     }
+    
     [_tableView reloadData];
+    
+    if (_currentIsInBottom) {
+        [self _scrollViewToBottom:NO];
+    }else{
+        
+    }
 }
 
 -(void)getHistoryMessage{
     EMConversation * c = [[EMClient sharedClient].chatManager getConversation:_chatroom.groupId type:EMConversationTypeGroupChat createIfNotExist:YES];
     [c loadMessagesWithKeyword:nil timestamp:-1 count:10000 fromUser:nil searchDirection:EMMessageSearchDirectionUp completion:^(NSArray *aMessages, EMError *aError) {
-//        NSLog(@"%ld",aMessages.count);
         [_dataChat addObjectsFromArray:aMessages];
         [_tableView reloadData];
+        [self _scrollViewToBottom:NO];
     }];
+    
 }
 /*
  #pragma mark - Navigation3

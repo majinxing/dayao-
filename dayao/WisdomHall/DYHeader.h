@@ -54,6 +54,8 @@
 
 #define CONTACT_TABLE_NAME     @"contactTable"//试卷和题目联系的表格
 
+//接口
+#define BaseURL @"http://192.168.1.114:8080/"
 
 
 
