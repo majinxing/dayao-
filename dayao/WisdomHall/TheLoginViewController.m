@@ -13,7 +13,7 @@
 #import "ForgotPasswordViewController.h"
 #import "NetworkRequest.h"
 
-@interface TheLoginViewController ()
+@interface TheLoginViewController ()<UITextFieldDelegate>
 @property (strong, nonatomic) IBOutlet UITextField *personalAccount;
 @property (strong, nonatomic) IBOutlet UITextField *personalPassword;
 @property (strong, nonatomic) IBOutlet UIButton *LoginButton;
@@ -27,6 +27,8 @@
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor whiteColor];//secureTextEntry
     _personalPassword.secureTextEntry = YES;
+    [_personalAccount addTarget:self action:@selector(textFieldDidChange:) forControlEvents:UIControlEventEditingChanged];
+    [_personalPassword addTarget:self action:@selector(textFieldDidChange:) forControlEvents:UIControlEventEditingChanged];
     // Do any additional setup after loading the view from its nib.
 }
 -(void)viewWillAppear:(BOOL)animated{
@@ -37,11 +39,29 @@
     [self.view endEditing:YES];
 }
 - (IBAction)LoginButtonPressed:(id)sender {
-//    NSLog(@"点击");
-//    DYTabBarViewController *rootVC = [[DYTabBarViewController alloc] init];
-//    [UIApplication sharedApplication].keyWindow.rootViewController = rootVC;
-  NetworkRequest *n =  [[NetworkRequest alloc] init];
-    [n afnetwroingpost];
+    //    NSLog(@"点击");
+    //
+    //15243670131
+    if ([UIUtils isSimplePhone:_personalAccount.text]) {
+        
+        NSDictionary * dict = [[NSDictionary alloc] initWithObjectsAndKeys:@"phone",_personalAccount,@"password",_personalPassword, nil];
+        
+        [[NetworkRequest sharedInstance] POST:Login dict:dict succeed:^(id data) {
+            
+            NSLog(@"%@",data);
+            DYTabBarViewController *rootVC = [[DYTabBarViewController alloc] init];
+            [UIApplication sharedApplication].keyWindow.rootViewController = rootVC;
+
+        } failure:^(NSError *error) {
+            
+            NSLog(@"%@",error);
+            
+        }];
+    }else{
+        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"请输入正确的手机号" message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: nil];
+            [alertView show];
+    }
+  
 }
 /**
  * 注册
@@ -52,14 +72,14 @@
     backButtonItem.title = @"取消";
     self.navigationItem.backBarButtonItem = backButtonItem;
     [self.navigationController pushViewController:registerVC animated:YES];
-
+    
 }
 /**
  * 忘记密码
  **/
 - (IBAction)forgotPasswordPressed:(id)sender {
     ForgotPasswordViewController * forgetVC = [[ForgotPasswordViewController alloc] init];
-   // self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"返回" style:UIBarButtonItemStylePlain target:nil action:nil];
+    // self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"返回" style:UIBarButtonItemStylePlain target:nil action:nil];
     // 方式二
     UIBarButtonItem * backButtonItem = [[UIBarButtonItem alloc] init];
     backButtonItem.title = @"返回";
@@ -70,15 +90,18 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
-
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
+#pragma mark UITextFileDelegate
+-(void)textFieldDidChange:(UITextField *)textFile{
+    
 }
-*/
+/*
+ #pragma mark - Navigation
+ 
+ // In a storyboard-based application, you will often want to do a little preparation before navigation
+ - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+ // Get the new view controller using [segue destinationViewController].
+ // Pass the selected object to the new view controller.
+ }
+ */
 
 @end

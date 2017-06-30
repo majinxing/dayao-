@@ -12,5 +12,5 @@
 
 @interface NetworkRequest : AFHTTPSessionManager
 + (instancetype)sharedInstance;
--(void)afnetwroingPostWithUrl:(NSString *)url withDict:(NSDictionary *)dict;
+- (void)POST:(NSString *)URLString dict:(id)dict succeed:(void (^)(id data))succeed failure:(void (^)(NSError *error))failure;
 @end

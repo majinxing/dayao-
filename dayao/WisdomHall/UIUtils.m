@@ -101,6 +101,11 @@
     }
     return NO;
 }
-
+//电话正则表达式
++(BOOL)isSimplePhone:(NSString *)phone{
+    NSString *phoneRegex = @"^1[0-9]\\d{9}$";
+    NSPredicate *phoneTest = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", phoneRegex];
+    return [phoneTest evaluateWithObject:phone];
+}
 
 @end

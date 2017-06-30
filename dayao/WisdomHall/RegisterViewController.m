@@ -8,10 +8,9 @@
 
 #import "RegisterViewController.h"
 #import "DefineThePasswordViewController.h"
-
-
+#import "DYHeader.h"
+#import "UIUtils.h"
 #import <SMS_SDK/SMSSDK.h>
-
 
 @interface RegisterViewController ()<UITextFieldDelegate>
 @property (strong, nonatomic) IBOutlet UIButton *getVerificationCodeBtn;
@@ -53,19 +52,32 @@
     self.title = @"注册";
 }
 - (IBAction)getVerificationCodeButtonPressed:(id)sender {
-    [SMSSDK getVerificationCodeByMethod:SMSGetCodeMethodSMS phoneNumber:_phoneNumber zone:@"86" result:^(NSError *error) {
+    
+    if ([UIUtils isSimplePhone:_phoneNumber]) {
+        [SMSSDK getVerificationCodeByMethod:SMSGetCodeMethodSMS phoneNumber:_phoneNumber zone:@"86" result:^(NSError *error) {
+            
+            if (!error)
+            {
+                NSLog(@"成功");
+            }
+            else
+            {
+                NSLog(@"失败");
+            }
+        }];
         
-        if (!error)
-        {
-            NSLog(@"成功");
-        }
-        else
-        {
-            NSLog(@"失败");
-        }
-    }];
+    }else{
+        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"请输入正确的手机号" message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: nil];
+        [alertView show];
+    }
+    
+    
+    
 }
 - (IBAction)registerButtonPressed:(id)sender {
+    DefineThePasswordViewController * definePWVC = [[DefineThePasswordViewController alloc] init];
+    [self.navigationController pushViewController:definePWVC animated:YES];
+    
     [SMSSDK commitVerificationCode:_Verification phoneNumber:_phoneNumber zone:@"86" result:^(NSError *error) {
         
         if (!error)

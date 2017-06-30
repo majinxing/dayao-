@@ -20,5 +20,9 @@
  * 判断字符串是否为空
  **/
 +(BOOL)isBlankString:(NSString *)string;
+/**
+*  判断电话是否是11位数字
+**/
 
++(BOOL)isSimplePhone:(NSString *)phone;
 @end

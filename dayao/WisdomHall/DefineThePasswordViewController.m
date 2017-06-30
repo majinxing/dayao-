@@ -10,9 +10,20 @@
 #import "DYTabBarViewController.h"
 #import <AVFoundation/AVFoundation.h>
 #import <LocalAuthentication/LocalAuthentication.h>
+#import "DefinitionPersonalTableViewCell.h"
+#import "SelectSchoolViewController.h"
+#import "SchoolModel.h"
 #import "DYHeader.h"
-@interface DefineThePasswordViewController ()<UIImagePickerControllerDelegate,UINavigationControllerDelegate>
+@interface DefineThePasswordViewController ()<UIImagePickerControllerDelegate,UINavigationControllerDelegate,UITableViewDelegate,UITableViewDataSource,DefinitionPersonalTableViewCellDelegate,UIPickerViewDelegate,UIPickerViewDataSource,UITextFieldDelegate>
 @property (strong, nonatomic) IBOutlet UIButton *uploadImageButton;
+@property (nonatomic,strong)UITableView * tableView;
+@property (nonatomic,strong)NSMutableArray * labelAry;
+@property (nonatomic,strong)NSMutableArray * textFileAry;
+@property (nonatomic,strong)SchoolModel * s;
+@property (nonatomic,strong)UIButton * bView;//滚轮的背景
+@property (nonatomic,strong)UIView * pickerView;
+@property (nonatomic,assign)int temp;//标志位判断选择的是哪一个滚轮
+@property (nonatomic,assign) int n;
 
 @end
 
@@ -20,150 +31,223 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    _n = 0;
     self.view.backgroundColor = [UIColor whiteColor];
     
+    [self setNavigationTitle];
+    
+    [self addTableView];
+    
+    [self keyboardNotification];
     // Do any additional setup after loading the view from its nib.
+}
+/**
+ *  显示navigation的标题
+ **/
+-(void)setNavigationTitle{
+    [UIApplication sharedApplication].statusBarStyle = UIStatusBarStyleLightContent;
+    //[self.navigationController.navigationBar setBarTintColor:[UIColor blackColor]];
+    [self.navigationController.navigationBar setTitleTextAttributes:@{
+                                                                      NSFontAttributeName:[UIFont systemFontOfSize:17],
+                                                                      NSForegroundColorAttributeName:[UIColor blackColor]}];
+    self.title = @"创建用户";
+    UIBarButtonItem * selection = [[UIBarButtonItem alloc] initWithTitle:@"提交" style:UIBarButtonItemStylePlain target:self action:@selector(saveBtnPressed)];
+    self.navigationItem.rightBarButtonItem = selection;
+}
+-(void)saveBtnPressed{
+    
 }
 -(void)viewWillAppear:(BOOL)animated{
     [self.navigationController setNavigationBarHidden:NO animated:YES];
 }
-- (IBAction)completeButtonPressed:(id)sender {
-    DYTabBarViewController *rootVC = [[DYTabBarViewController alloc] init];
-    [UIApplication sharedApplication].keyWindow.rootViewController = rootVC;
+-(void)addTableView{
+    _labelAry = [[NSMutableArray alloc] initWithObjects:@"用  户  名",@"密      码",@"确认密码",@"学      校",@"身      份",@"工号/学号",@"院      系",@"专      业",@"班      级", nil];
+    _textFileAry = [NSMutableArray arrayWithCapacity:4];
+    for (int i = 0 ; i<10; i++) {
+        [_textFileAry addObject:@""];
+    }
+    _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 64, APPLICATION_WIDTH, APPLICATION_HEIGHT-64) style:UITableViewStylePlain];
+    _tableView.dataSource = self;
+    _tableView.delegate = self;
+    [_tableView setSeparatorColor:[UIColor colorWithHexString:@"#bfbfbf"]];
+    self.automaticallyAdjustsScrollViewInsets=NO;
+    [self.view addSubview:_tableView];
 }
-- (IBAction)fingerprintEntryButtonPressed:(id)sender {
-    //1. 判断系统版本
-    if ([UIDevice currentDevice].systemVersion.floatValue >= 8.0) {
-        
-        //2. LAContext : 本地验证对象上下文
-        LAContext *context = [LAContext new];
-        
-        //3. 判断是否可用
-        //Evaluate: 评估  Policy: 策略,方针
-        //LAPolicyDeviceOwnerAuthenticationWithBiometrics: 允许设备拥有者使用生物识别技术
-        if (![context canEvaluatePolicy:LAPolicyDeviceOwnerAuthenticationWithBiometrics error:nil]) {
-            NSLog(@"对不起, 指纹识别技术暂时不可用");
-        }else{
-            
-            //4. 开始使用指纹识别
-            //localizedReason: 指纹识别出现时的提示文字, 一般填写为什么使用指纹识别
-            [context evaluatePolicy:LAPolicyDeviceOwnerAuthenticationWithBiometrics localizedReason:@"开启了指纹识别, 将打开隐藏功能" reply:^(BOOL success, NSError * _Nullable error) {
-                
-                if (success) {
-                    NSLog(@"指纹识别成功");
-                    // 指纹识别成功，回主线程更新UI,弹出提示框
-                    dispatch_async(dispatch_get_main_queue(), ^{
-                        
-                        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"指纹识别成功" message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: nil];
-                        [alertView show];
-                    });
-                    
-                }
-                
-                if (error) {
-                    
-                    // 错误的判断chuli
-                    
-                    if (error.code == -2) {
-                        NSLog(@"用户取消了操作");
-                        
-                        // 取消操作，回主线程更新UI,弹出提示框
-                        dispatch_async(dispatch_get_main_queue(), ^{
-                            
-                            UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"用户取消了操作" message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: nil];
-                            [alertView show];
-                            
-                        });
-                        
-                    } else {
-                        NSLog(@"错误: %@",error);
-                        // 指纹识别出现错误，回主线程更新UI,弹出提示框
-                        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:nil message:error delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: nil];
-                        [alertView show];
-                    }
-                    
-                }
-                
-            }];
-        }
-        
-    } else {
-        
-        NSLog(@"对不起, 该手机不支持指纹识别");
-        
-    }
-    
-}
-- (IBAction)uploadThePictureButtonPressed:(id)sender {
-    
-    
-    //  NSLog(@"%s",__func__);
-    if ([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera])
-    {
-        AVAuthorizationStatus author = [AVCaptureDevice authorizationStatusForMediaType:AVMediaTypeVideo];
-        if (author == AVAuthorizationStatusRestricted || author == AVAuthorizationStatusDenied)
-        {
-            //[self showLibraryOrCameraAuthorAlert:@"相机"];
-        }
-        else
-        {
-            //[self showLibraryOrCamera:UIImagePickerControllerSourceTypeCamera];
-        }        
-        UIImagePickerController *imagePicker = [[UIImagePickerController alloc] init];
-        imagePicker.sourceType = UIImagePickerControllerSourceTypeCamera;
-        imagePicker.cameraDevice = UIImagePickerControllerCameraDeviceRear;
-        //imagePicker.allowsEditing = YES;
-        imagePicker.showsCameraControls = YES;
-        imagePicker.delegate = self;
-        
-        if ([UIImagePickerController isCameraDeviceAvailable:UIImagePickerControllerCameraDeviceFront]) {
-            //正面  这里是正面
-            imagePicker.cameraDevice = UIImagePickerControllerCameraDeviceFront;
-        } else if ([UIImagePickerController isCameraDeviceAvailable:UIImagePickerControllerCameraDeviceRear]) {
-            //后面 这里是反面
-            imagePicker.cameraDevice = UIImagePickerControllerCameraDeviceRear;
-        }
-        
-        
-        [self presentViewController:imagePicker animated:YES completion:nil];
-    }
-    else
-    {
-        UIAlertView *alertView = [[UIAlertView alloc]
-                                  initWithTitle:@"您的设备没有相机功能"
-                                  message:nil
-                                  delegate:self
-                                  cancelButtonTitle:nil
-                                  otherButtonTitles:@"我知道了", nil];
-        [alertView show];
-    }
-    
+/**
+ * 键盘监听
+ **/
+-(void)keyboardNotification{
+    //监听键盘出现和消失
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(keyboardWillShow:) name:UIKeyboardWillShowNotification object:nil];
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(keyboardWillHide:) name:UIKeyboardWillHideNotification object:nil];
     
 }
 
+-(void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event{
+    [self.view endEditing:YES];
+}
+-(void)addPickView{
+    [self.view endEditing: YES];
+    if (!self.pickerView) {
+        self.bView = [UIButton buttonWithType:UIButtonTypeCustom];
+        self.bView.frame = CGRectMake(0, 0, APPLICATION_WIDTH, APPLICATION_HEIGHT);
+        self.bView.backgroundColor = [UIColor blackColor];
+        [self.bView addTarget:self action:@selector(outView) forControlEvents:UIControlEventTouchUpInside];
+        self.bView.alpha = 0.5;
+        self.pickerView = [[UIView alloc] initWithFrame:CGRectMake(0, APPLICATION_HEIGHT - 150 - 30, APPLICATION_WIDTH, 150 + 30)];
+        
+        UIPickerView * pickerViewD = [[UIPickerView alloc] initWithFrame:CGRectMake(0.0,30,APPLICATION_WIDTH,150)];
+        pickerViewD.backgroundColor=[UIColor whiteColor];
+        pickerViewD.delegate = self;
+        pickerViewD.dataSource =  self;
+        pickerViewD.showsSelectionIndicator = YES;
+        self.pickerView.backgroundColor=[UIColor whiteColor];
+     
+        
+        UIButton *leftButton = [UIButton buttonWithType:UIButtonTypeCustom];
+        leftButton.frame = CGRectMake(0, 0, 50, 30);
+        [leftButton setTitle:@"取消" forState:UIControlStateNormal];
+        [leftButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+        [leftButton addTarget:self action:@selector(leftButton) forControlEvents:UIControlEventTouchUpInside];
+        [self.pickerView addSubview:leftButton];
+        
+        UIButton *rightButton = [UIButton buttonWithType:UIButtonTypeCustom];
+        rightButton.frame = CGRectMake(APPLICATION_WIDTH - 50, 0, 50, 30);
+        [rightButton setTitle:@"确认" forState:UIControlStateNormal];
+        [rightButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+        [rightButton addTarget:self action:@selector(rightButton) forControlEvents:UIControlEventTouchUpInside];
+        [self.pickerView addSubview:rightButton];
+        [self.pickerView addSubview:pickerViewD];
+    }
+    [self.view addSubview:_bView];
+    [self.view addSubview:self.pickerView];
+}
+-(void)outView{
+    [self.bView removeFromSuperview];
+    [self.pickerView removeFromSuperview];
+}
+-(void)leftButton{
+    [self.bView removeFromSuperview];
+    [self.pickerView removeFromSuperview];
+}
+-(void)rightButton{
+    [self.bView removeFromSuperview];
+    [self.pickerView removeFromSuperview];
+    if (_n==0) {
+        [_textFileAry setObject:@"老师" atIndexedSubscript:4];
+    }else if(_n==1){
+        [_textFileAry setObject:@"学生" atIndexedSubscript:4];
+    }
+    [_tableView reloadData];
+}
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
-#pragma  UIImagePickerControllerDelegate
-- (void)imagePickerController:(UIImagePickerController *)picker
-didFinishPickingMediaWithInfo:(NSDictionary *)info
+#pragma mark 键盘出现
+-(void)keyboardWillShow:(NSNotification *)note
 {
-    //    if ([self.sign isEqualToString:@"1"]) {
-    //        UIImage * image = [info objectForKey:UIImagePickerControllerEditedImage];
-    //        //_headImage.image = image;
-    //    }//相机拍照 de
-    //    else if([self.sign isEqualToString:@"0"]){
-    UIImage *image=info[@"UIImagePickerControllerOriginalImage"];
-    [_uploadImageButton setBackgroundImage:image forState:UIControlStateNormal];
-    [_uploadImageButton setTitle:@"" forState:UIControlStateNormal];
-    // _headImage.image = image;
-    //    }
-    [self dismissViewControllerAnimated:YES completion:NULL];
+    CGRect keyBoardRect=[note.userInfo[UIKeyboardFrameEndUserInfoKey] CGRectValue];
+    self.tableView.contentInset = UIEdgeInsetsMake(0, 0, keyBoardRect.size.height, 0);
+}
+#pragma mark 键盘消失
+-(void)keyboardWillHide:(NSNotification *)note
+{
+    self.tableView.contentInset = UIEdgeInsetsZero;
+}
+#pragma mark pick
+
+-(NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView{
+    if (_temp==4) {
+        return 1;
+    }
+    return 0;
+}
+- (NSInteger)pickerView:(UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component
+{
+    if (_temp == 4) {
+        return 2;
+    }
+    return 0;
+}
+- (NSString *)pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component
+{
+    if (_temp == 4) {
+        
+        if (row==0) {
+            return @"老师";
+        }else if(row==1){
+            return @"学生";
+        }
+    }
+    return @"2016";
+}
+- (void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component
+{
+    if (_temp == 4) {
+        if (row == 1) {
+            _n = 1;
+        }else{
+            _n = 0;
+        }
+    }
     
 }
 
+#pragma mark UITextFileDelegae DefinitionPersonalTableViewCellDelegate
+-(void)gggDelegate:(UIButton *)btn{
+    _temp = 4;
+    [self addPickView];
+    [self.view endEditing:YES];
+}
+-(void)textFileDidChangeForDPTableViewCellDelegate:(UITextField *)textFile{
+    NSLog(@"%ld",(long)textFile.tag);
+    [_textFileAry setObject:textFile.text atIndexedSubscript:textFile.tag];
+}
+-(void)textFieldDidBeginEditingDPTableViewCellDelegate:(UITextField *)textFile{
+    if (textFile.tag == 3) {
+        [textFile endEditing:YES];
+        SelectSchoolViewController * s = [[SelectSchoolViewController alloc] init];
+        self.hidesBottomBarWhenPushed = YES;
+        [self.navigationController pushViewController:s animated:YES];
+        [s returnText:^(SchoolModel *returnText) {
+            if (returnText) {
+                [self.view endEditing:YES];
+                _s = returnText;
+                [_textFileAry setObject:_s.schoolName atIndexedSubscript:textFile.tag];
+                [_tableView reloadData];
+            }
+        }];
+    }
+}
+#pragma mark UITableViewdelegate
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
+    return 1;
+}
+-(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
+    return 9;
+}
 
+-(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
+    DefinitionPersonalTableViewCell * cell = [tableView dequeueReusableCellWithIdentifier:@"DefinitionPersonalTableViewCellFirst"];
+    if (!cell) {
+        cell = [[[NSBundle mainBundle] loadNibNamed:@"DefinitionPersonalTableViewCell" owner:self options:nil] objectAtIndex:0];
+    }
+    [cell addContentView:_labelAry[indexPath.row] withTextFileText:_textFileAry[indexPath.row] withIndex:(int)indexPath.row];
+    cell.selectionStyle = UITableViewCellSelectionStyleNone;
+    cell.delegate = self;
+    return cell;
+}
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    [self.view endEditing:YES];
+}
+-(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
+    return 50;
+}
+-(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
+    return 10;
+}
 /*
  #pragma mark - Navigation
  
