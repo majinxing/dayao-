@@ -8,7 +8,13 @@
 
 #import "ForgotPasswordViewController.h"
 #import "RedefineThePasswordViewController.h"
+#import "DYHeader.h"
+#import <SMS_SDK/SMSSDK.h>
 @interface ForgotPasswordViewController ()
+@property (strong, nonatomic) IBOutlet UITextField *phoneNumber;
+
+@property (strong, nonatomic) IBOutlet UITextField *Verification;
+@property (strong, nonatomic) IBOutlet UIButton *sendVerification;
 
 @end
 
@@ -42,9 +48,46 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
+- (IBAction)sendVerificationBtnPressed:(id)sender {
+    if ([UIUtils isSimplePhone:_phoneNumber.text]) {
+        [SMSSDK getVerificationCodeByMethod:SMSGetCodeMethodSMS phoneNumber:_phoneNumber.text zone:@"86" result:^(NSError *error) {
+            
+            if (!error)
+            {
+                NSLog(@"成功");
+            }
+            else
+            {
+                NSLog(@"失败");
+            }
+        }];
+        
+    }else{
+        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"请输入正确的手机号" message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: nil];
+        [alertView show];
+    }
+
+}
 - (IBAction)nextButtonPressed:(id)sender {
+    
     RedefineThePasswordViewController * redeFineVC = [[RedefineThePasswordViewController alloc] init];
+    redeFineVC.phoneNumber = _phoneNumber.text;
     [self.navigationController pushViewController:redeFineVC animated:YES];
+    
+    [SMSSDK commitVerificationCode:_Verification phoneNumber:_phoneNumber.text zone:@"86" result:^(NSError *error) {
+        
+        if (!error)
+        {
+            // 验证成功
+            RedefineThePasswordViewController * redeFineVC = [[RedefineThePasswordViewController alloc] init];
+            redeFineVC.phoneNumber = _phoneNumber.text;
+            [self.navigationController pushViewController:redeFineVC animated:YES];
+        }else
+        {
+            NSLog(@"失败");
+        }
+    }];
+   
 }
 
 /*

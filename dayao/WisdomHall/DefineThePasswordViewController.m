@@ -55,7 +55,33 @@
     self.navigationItem.rightBarButtonItem = selection;
 }
 -(void)saveBtnPressed{
+    NSMutableDictionary * dict = [[NSMutableDictionary alloc] init];
+    NSArray * ary = [[NSArray alloc] initWithObjects:@"name",@"password",@"p",@"universityCode",@"type",@"workNo",@"facultyCode",@"majorCode",@"classId", nil];
+    for (int i = 0 ; i<ary.count; i++) {
+        if ([_textFileAry[i] isEqualToString:@""]) {
+            UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"请填写完整" message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: nil];
+            [alertView show];
+            return;
+        }else if (i == 2){
+            [dict setObject:_phoneNumber forKey:@"phone"];
+        }else if(i == 3){
+            [dict setObject:_s.schoolId forKey:@"universityCode"];
+        }else if (i == 4){
+            [dict setObject:[NSString stringWithFormat:@"%d",_n] forKey:@"type"];
+        }else{
+            [dict setObject:_textFileAry[i] forKey:ary[i]];
+        }
+    }
     
+    [[NetworkRequest sharedInstance] POST:Register dict:dict succeed:^(id data) {
+        NSLog(@"succeed:%@",data);
+        //登录
+        DYTabBarViewController *rootVC = [[DYTabBarViewController alloc] init];
+        [UIApplication sharedApplication].keyWindow.rootViewController = rootVC;
+        
+    } failure:^(NSError *error) {
+        NSLog(@"失败：%@",error);
+    }];
 }
 -(void)viewWillAppear:(BOOL)animated{
     [self.navigationController setNavigationBarHidden:NO animated:YES];

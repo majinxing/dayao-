@@ -7,8 +7,14 @@
 //
 
 #import "RedefineThePasswordViewController.h"
+#import "DYTabBarViewController.h"
+#import "DYHeader.h"
 
 @interface RedefineThePasswordViewController ()
+
+@property (strong, nonatomic) IBOutlet UITextField *confirmPassword;
+
+@property (strong, nonatomic) IBOutlet UITextField *password;
 
 @end
 
@@ -21,6 +27,29 @@
 -(void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event{
     //点击屏幕 回收键盘
     [self.view endEditing:YES];
+}
+- (IBAction)submit:(id)sender {
+    if ([_password.text isEqualToString:_confirmPassword.text]) {
+        if ([UIUtils isBlankString:_password.text]) {
+            UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"密码不能为空" message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: nil];
+            [alertView show];
+        }else{
+            NSDictionary * dict = [[NSDictionary alloc] initWithObjectsAndKeys:_phoneNumber,@"id",_password.text,@"password",nil];
+            
+            [[NetworkRequest sharedInstance] POST:ResetPassword dict:dict succeed:^(id data) {
+                
+                DYTabBarViewController *rootVC = [[DYTabBarViewController alloc] init];
+                [UIApplication sharedApplication].keyWindow.rootViewController = rootVC;
+                
+            } failure:^(NSError *error) {
+                
+            }];
+        }
+    }else{
+        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"两次输入密码不一致" message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: nil];
+        [alertView show];
+    }
+    
 }
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

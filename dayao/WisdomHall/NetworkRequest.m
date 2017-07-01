@@ -59,12 +59,17 @@
 {
     //创建网络请求管理对象
     AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
-//    //申明返回的结果是json类型
-//    manager.responseSerializer = [AFJSONResponseSerializer serializer];
-//    //申明请求的数据是json类型
-//    manager.requestSerializer = [AFJSONRequestSerializer serializer];
-//    //如果报接受类型不一致请替换一致text/html或别的
-//    manager.responseSerializer.acceptableContentTypes = [NSSet setWithObjects:@"text/html",nil];
+//    manager.responseSerializer.acceptableContentTypes = [NSSet setWithObject:@"text/html"];
+//    manager.responseSerializer.acceptableContentTypes = [NSSet setWithObjects:@"text/html",@"application/json", @"text/json", nil];
+    manager.requestSerializer = [AFJSONRequestSerializer serializer];
+    manager.responseSerializer = [AFJSONResponseSerializer serializer];
+    [ manager.requestSerializer setValue:@"application/json"forHTTPHeaderField:@"Content-Type"];
+    manager.responseSerializer.acceptableContentTypes = [NSSet setWithObject:@"application/json"]; // 设置content-Type为text/html
+//    [manager.requestSerializer setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
+    
+    
+//    [manager.requestSerializer setValue:@"application/json; charset=utf-8" forHTTPHeaderField:@"Content-Type"];
+    
     //发送网络请求(请求方式为POST)
     URLString = [NSString stringWithFormat:@"%@%@",BaseURL,URLString];
     
@@ -75,6 +80,7 @@
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
         failure(error);
     }];
+    
 }
 /**
  *  封装AFN的GET请求

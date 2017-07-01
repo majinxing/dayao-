@@ -39,17 +39,20 @@
     [self.view endEditing:YES];
 }
 - (IBAction)LoginButtonPressed:(id)sender {
-    //    NSLog(@"点击");
-    //
     //15243670131
     if ([UIUtils isSimplePhone:_personalAccount.text]) {
         
-        NSDictionary * dict = [[NSDictionary alloc] initWithObjectsAndKeys:@"phone",_personalAccount,@"password",_personalPassword, nil];
+        NSDictionary * dict = [[NSDictionary alloc] initWithObjectsAndKeys:_personalAccount.text,@"phone",_personalPassword.text,@"password", nil];
         
         [[NetworkRequest sharedInstance] POST:Login dict:dict succeed:^(id data) {
             
             NSLog(@"%@",data);
+            
+            NSDictionary * dict = [data objectForKey:@"body"];
+            [[Appsetting sharedInstance] sevaUserInfoWithDict:dict];
+            
             DYTabBarViewController *rootVC = [[DYTabBarViewController alloc] init];
+            
             [UIApplication sharedApplication].keyWindow.rootViewController = rootVC;
 
         } failure:^(NSError *error) {

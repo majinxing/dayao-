@@ -24,6 +24,9 @@
 #import "UIColor+HexString.h"
 #import "UIUtils.h"
 #import "UIViewController+HUD.h"
+#import "NetworkRequest.h"
+#import "Appsetting.h"
+
 
 
 #define Collection_height 195
@@ -57,8 +60,9 @@
 //接口
 #define BaseURL @"http://192.168.1.114:8080/"
 
-#define Login @"course/user/login" //登录
-
+#define Login          @"course/user/login"     //登录
+#define Register       @"course/user/register"  //注册
+#define ResetPassword  @"course/user/modify"    //重置密码
 
 
 

@@ -9,5 +9,5 @@
 #import <UIKit/UIKit.h>
 
 @interface DefineThePasswordViewController : UIViewController
-
+@property (nonatomic,copy)NSString * phoneNumber;
 @end

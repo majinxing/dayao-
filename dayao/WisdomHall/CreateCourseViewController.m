@@ -7,9 +7,12 @@
 //
 
 #import "CreateCourseViewController.h"
+#import "DYHeader.h"
 
-@interface CreateCourseViewController ()
-
+@interface CreateCourseViewController ()<UITableViewDelegate,UITableViewDataSource>
+@property (nonatomic,strong)UITableView * tabelView;
+@property (nonatomic,strong)NSMutableArray * labelAry;
+@property (nonatomic,strong)NSMutableArray * textFileAry;
 @end
 
 @implementation CreateCourseViewController
@@ -17,7 +20,20 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self setNavigationTitle];
+    [self addTabelView];
     // Do any additional setup after loading the view from its nib.
+}
+-(void)addTabelView{
+    _labelAry = [[NSMutableArray alloc] initWithObjects:@"课程名",@"上课地址",@"时间",@"签到方式",@"老师",@"课堂总人数", nil];
+    for (int i = 0; i<6; i++) {
+        
+    }
+    
+    _tabelView = [[UITableView alloc] initWithFrame:CGRectMake(0, 64, APPLICATION_WIDTH, APPLICATION_HEIGHT-64) style:UITableViewStylePlain];
+    self.automaticallyAdjustsScrollViewInsets = NO;
+    _tabelView.dataSource = self;
+    _tabelView.delegate = self;
+    [self.view addSubview:_tabelView];
 }
 -(void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event{
     //点击屏幕 回收键盘
