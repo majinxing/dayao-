@@ -41,6 +41,8 @@
 		8B081DFF1F06524000493B81 /* PinyinHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B081DF81F06524000493B81 /* PinyinHelper.m */; };
 		8B081E001F06524000493B81 /* unicode_to_hanyu_pinyin.txt in Resources */ = {isa = PBXBuildFile; fileRef = 8B081DF91F06524000493B81 /* unicode_to_hanyu_pinyin.txt */; };
 		8B081E031F078B8C00493B81 /* Appsetting.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B081E021F078B8C00493B81 /* Appsetting.m */; };
+		8B081E051F09DC2F00493B81 /* Foundation+Log.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B081E041F09DC2F00493B81 /* Foundation+Log.m */; };
+		8B081E081F0A4AEC00493B81 /* ClassModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B081E071F0A4AEC00493B81 /* ClassModel.m */; };
 		8B0DB1331ED5188C0042DF0D /* ContactModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B0DB1321ED5188C0042DF0D /* ContactModel.m */; };
 		8B0DB1361ED561B80042DF0D /* AnswerModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B0DB1351ED561B80042DF0D /* AnswerModel.m */; };
 		8B0DB13B1ED6CA4E0042DF0D /* ImportTextViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B0DB1391ED6CA4E0042DF0D /* ImportTextViewController.m */; };
@@ -494,6 +496,9 @@
 		8B081DF91F06524000493B81 /* unicode_to_hanyu_pinyin.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = unicode_to_hanyu_pinyin.txt; sourceTree = "<group>"; };
 		8B081E011F078B8C00493B81 /* Appsetting.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Appsetting.h; sourceTree = "<group>"; };
 		8B081E021F078B8C00493B81 /* Appsetting.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Appsetting.m; sourceTree = "<group>"; };
+		8B081E041F09DC2F00493B81 /* Foundation+Log.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Foundation+Log.m"; sourceTree = "<group>"; };
+		8B081E061F0A4AEC00493B81 /* ClassModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ClassModel.h; sourceTree = "<group>"; };
+		8B081E071F0A4AEC00493B81 /* ClassModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ClassModel.m; sourceTree = "<group>"; };
 		8B0DB1311ED5188C0042DF0D /* ContactModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ContactModel.h; sourceTree = "<group>"; };
 		8B0DB1321ED5188C0042DF0D /* ContactModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ContactModel.m; sourceTree = "<group>"; };
 		8B0DB1341ED561B80042DF0D /* AnswerModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AnswerModel.h; sourceTree = "<group>"; };
@@ -1237,6 +1242,8 @@
 				8B027A171EF8F48800600E18 /* MeetingModel.m */,
 				8B081DE91F0645E600493B81 /* SchoolModel.h */,
 				8B081DEA1F0645E600493B81 /* SchoolModel.m */,
+				8B081E061F0A4AEC00493B81 /* ClassModel.h */,
+				8B081E071F0A4AEC00493B81 /* ClassModel.m */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -1308,6 +1315,7 @@
 		8BA224B51EAED4DB00627A1B /* Utils */ = {
 			isa = PBXGroup;
 			children = (
+				8B081E041F09DC2F00493B81 /* Foundation+Log.m */,
 				8BE877631EBAF73700866A34 /* ShareView */,
 				8BA224B61EAED53D00627A1B /* UIColor+HexString.h */,
 				8BA224B71EAED53D00627A1B /* UIColor+HexString.m */,
@@ -1899,6 +1907,7 @@
 				8B081DFD1F06524000493B81 /* PinyinFormatter.m in Sources */,
 				8BA224CF1EAF258B00627A1B /* ForgotPasswordViewController.m in Sources */,
 				8BF82D7B1EDFFC6200D33473 /* VoteViewController.m in Sources */,
+				8B081E081F0A4AEC00493B81 /* ClassModel.m in Sources */,
 				8B2E16E21EBACAD7008B7C57 /* PersonalCollectionViewCell.m in Sources */,
 				8B081DFC1F06524000493B81 /* NSString+PinYin4Cocoa.m in Sources */,
 				8B2E16DE1EBABBC0008B7C57 /* InteractiveView.m in Sources */,
@@ -1994,6 +2003,7 @@
 				8BF864721ECACAE800B7EED4 /* FMResultSet.m in Sources */,
 				8BE913A31EEFB80000000282 /* MBProgressHUD+Add.m in Sources */,
 				8B7D5D901EB9782C0068058E /* CourseCollectionViewCell.m in Sources */,
+				8B081E051F09DC2F00493B81 /* Foundation+Log.m in Sources */,
 				8B027A241EFA5FF200600E18 /* DataDownloadViewController.m in Sources */,
 				8BF8646F1ECACAE800B7EED4 /* FMDatabaseAdditions.m in Sources */,
 				8B8C3D141ECD300C00E9FB56 /* ChatHelper.m in Sources */,

@@ -11,4 +11,12 @@
 @interface SchoolModel : NSObject
 @property (nonatomic,copy) NSString * schoolName;
 @property (nonatomic,copy) NSString * schoolId;
+@property (nonatomic,copy) NSString * code;
+@property (nonatomic,copy) NSString * parentCode;
+@property (nonatomic,copy) NSString * department;//院系
+@property (nonatomic,copy) NSString * departmentId;//院系id
+@property (nonatomic,copy) NSString * major;//专业
+@property (nonatomic,copy) NSString * majorId;//专业id
+@property (nonatomic,copy) NSString * sclass;//班级
+@property (nonatomic,copy) NSString * sclassId;//班级id
 @end

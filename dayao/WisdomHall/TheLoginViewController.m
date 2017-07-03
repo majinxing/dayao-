@@ -47,13 +47,19 @@
         [[NetworkRequest sharedInstance] POST:Login dict:dict succeed:^(id data) {
             
             NSLog(@"%@",data);
-            
+            NSDictionary * d = [data objectForKey:@"header"];
+            if ([[d objectForKey:@"code"] isEqualToString:@"0000"]) {
             NSDictionary * dict = [data objectForKey:@"body"];
+            
             [[Appsetting sharedInstance] sevaUserInfoWithDict:dict];
             
             DYTabBarViewController *rootVC = [[DYTabBarViewController alloc] init];
             
-            [UIApplication sharedApplication].keyWindow.rootViewController = rootVC;
+                [UIApplication sharedApplication].keyWindow.rootViewController = rootVC;
+            }else{
+                UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"密码错误" message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: nil];
+                [alertView show];
+            }
 
         } failure:^(NSError *error) {
             

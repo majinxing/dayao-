@@ -11,6 +11,7 @@
 #import "SchoolModel.h"
 #import "PinyinHelper.h"
 #import "PinYinForObjc.h"
+#import "NetworkRequest.h"
 
 @interface SelectSchoolViewController ()<UITableViewDelegate,UITableViewDataSource,UISearchBarDelegate>
 @property (nonatomic,strong)UITableView * tableView;
@@ -18,7 +19,6 @@
 @property (nonatomic,strong)NSMutableArray * allSchoolAry;
 @property (nonatomic,strong)NSMutableArray * selectSchoolAry;
 @property (nonatomic,strong)NSMutableArray * allSchoolNameAry;
-@property (nonatomic,strong)SchoolModel * s;
 @end
 
 @implementation SelectSchoolViewController
@@ -34,13 +34,86 @@
     
     [self addSeachBar];
     
-    [self addAllSchool];
+   // [self addAllSchool];
+    
+    [self addData];
     // Do any additional setup after loading the view from its nib.
 }
 - (void)returnText:(ReturnTextBlock)block {
     self.returnTextBlock = block;
 }
 
+-(void)addData{
+    if (_selectType == SelectSchool) {
+        NSDictionary * dict = [[NSDictionary alloc] initWithObjectsAndKeys:@"1",@"level",@"",@"parentId",@"",@"name", nil];
+        
+        [[NetworkRequest sharedInstance] GET:SchoolDepartMent dict:dict succeed:^(id data) {
+            NSArray * ary = [data objectForKey:@"body"];
+            for (int i = 0; i<ary.count; i++) {
+                NSDictionary * d = ary[i];
+                SchoolModel * s = [[SchoolModel alloc] init];
+                s.schoolName = [d objectForKey:@"name"];
+                s.schoolId = [d objectForKey:@"id"];
+                [_allSchoolAry addObject:s];
+                [_allSchoolNameAry addObject:s.schoolName];
+            }
+        } failure:^(NSError *error) {
+            NSLog(@"失败 %@",error);
+            
+        }];
+    }else if (_selectType == SelectDepartment){
+        NSDictionary * dict = [[NSDictionary alloc] initWithObjectsAndKeys:@"",@"level",_s.schoolId,@"parentId",@"",@"name", nil];
+        [[NetworkRequest sharedInstance] GET:SchoolDepartMent dict:dict succeed:^(id data) {
+            NSLog(@"succeed %@",data);
+            NSArray * ary = [data objectForKey:@"body"];
+            for (int i = 0; i<ary.count; i++ ) {
+                SchoolModel * s = [[SchoolModel alloc] init];
+                s.department = [ary[i] objectForKey:@"name"];
+                s.departmentId = [ary[i] objectForKey:@"id"];
+                [_allSchoolAry addObject:s];
+                [_allSchoolNameAry addObject:s.department];
+            }
+            
+        } failure:^(NSError *error) {
+            NSLog(@"失败 %@",error);
+        }];
+    }else if (_selectType == SelectMajor){
+        NSDictionary * dict = [[NSDictionary alloc] initWithObjectsAndKeys:@"",@"level",_s.departmentId,@"parentId",@"",@"name", nil];
+        [[NetworkRequest sharedInstance] GET:SchoolDepartMent dict:dict succeed:^(id data) {
+            NSLog(@"succeed %@",data);
+            NSArray * ary = [data objectForKey:@"body"];
+            for (int i = 0; i<ary.count; i++ ) {
+                SchoolModel * s = [[SchoolModel alloc] init];
+                s.major = [ary[i] objectForKey:@"name"];
+                s.majorId = [ary[i] objectForKey:@"id"];
+                [_allSchoolAry addObject:s];
+                [_allSchoolNameAry addObject:s.major];
+            }
+            
+        } failure:^(NSError *error) {
+            NSLog(@"失败 %@",error);
+        }];
+
+    }else if (_selectType == SelectClass){
+        NSDictionary * dict = [[NSDictionary alloc] initWithObjectsAndKeys:@"",@"level",_s.majorId,@"parentId",@"",@"name", nil];
+        [[NetworkRequest sharedInstance] GET:SchoolDepartMent dict:dict succeed:^(id data) {
+            NSLog(@"succeed %@",data);
+            NSArray * ary = [data objectForKey:@"body"];
+            for (int i = 0; i<ary.count; i++ ) {
+                SchoolModel * s = [[SchoolModel alloc] init];
+                s.sclass = [ary[i] objectForKey:@"name"];
+                s.sclassId = [ary[i] objectForKey:@"id"];
+                [_allSchoolAry addObject:s];
+                [_allSchoolNameAry addObject:s.sclass];
+            }
+            
+        } failure:^(NSError *error) {
+            NSLog(@"失败 %@",error);
+        }];
+
+    }
+
+}
 - (void)viewWillDisappear:(BOOL)animated {
     
     if (self.returnTextBlock != nil) {

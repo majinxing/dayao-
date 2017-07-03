@@ -14,6 +14,7 @@
 #import "SelectSchoolViewController.h"
 #import "SchoolModel.h"
 #import "DYHeader.h"
+#import "TheLoginViewController.h"
 @interface DefineThePasswordViewController ()<UIImagePickerControllerDelegate,UINavigationControllerDelegate,UITableViewDelegate,UITableViewDataSource,DefinitionPersonalTableViewCellDelegate,UIPickerViewDelegate,UIPickerViewDataSource,UITextFieldDelegate>
 @property (strong, nonatomic) IBOutlet UIButton *uploadImageButton;
 @property (nonatomic,strong)UITableView * tableView;
@@ -56,7 +57,7 @@
 }
 -(void)saveBtnPressed{
     NSMutableDictionary * dict = [[NSMutableDictionary alloc] init];
-    NSArray * ary = [[NSArray alloc] initWithObjects:@"name",@"password",@"p",@"universityCode",@"type",@"workNo",@"facultyCode",@"majorCode",@"classId", nil];
+    NSArray * ary = [[NSArray alloc] initWithObjects:@"name",@"password",@"p",@"universityId",@"type",@"workNo",@"facultyId",@"majorId",@"classId", nil];
     for (int i = 0 ; i<ary.count; i++) {
         if ([_textFileAry[i] isEqualToString:@""]) {
             UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"请填写完整" message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: nil];
@@ -65,19 +66,34 @@
         }else if (i == 2){
             [dict setObject:_phoneNumber forKey:@"phone"];
         }else if(i == 3){
-            [dict setObject:_s.schoolId forKey:@"universityCode"];
+            [dict setObject:_s.schoolId forKey:@"universityId"];
         }else if (i == 4){
             [dict setObject:[NSString stringWithFormat:@"%d",_n] forKey:@"type"];
-        }else{
+        }else if(i == 6){
+            [dict setObject:[NSString stringWithFormat:@"%@",_s.departmentId] forKey:@"facultyId"];
+        }else if (i == 7){
+            [dict setObject:[NSString stringWithFormat:@"%@",_s.majorId] forKey:@"majorId"];
+        }else if (i == 8){
+            [dict setObject:[NSString stringWithFormat:@"%@",_s.sclassId] forKey:@"classId"];
+        } else{
             [dict setObject:_textFileAry[i] forKey:ary[i]];
         }
     }
     
     [[NetworkRequest sharedInstance] POST:Register dict:dict succeed:^(id data) {
         NSLog(@"succeed:%@",data);
-        //登录
-        DYTabBarViewController *rootVC = [[DYTabBarViewController alloc] init];
-        [UIApplication sharedApplication].keyWindow.rootViewController = rootVC;
+        if ([[[data objectForKey:@"header"] objectForKey:@"code"] isEqualToString:@"0000"]) {
+            for (UIViewController *controller in self.navigationController.viewControllers) {
+                if ([controller isKindOfClass:[TheLoginViewController class]]) {
+                    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"注册成功请登录" message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: nil];
+                    [alertView show];
+                    [self.navigationController popToViewController:controller animated:YES];
+                }
+            }
+        }else{
+            UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"注册失败" message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: nil];
+            [alertView show];
+        }
         
     } failure:^(NSError *error) {
         NSLog(@"失败：%@",error);
@@ -128,7 +144,7 @@
         pickerViewD.dataSource =  self;
         pickerViewD.showsSelectionIndicator = YES;
         self.pickerView.backgroundColor=[UIColor whiteColor];
-     
+        
         
         UIButton *leftButton = [UIButton buttonWithType:UIButtonTypeCustom];
         leftButton.frame = CGRectMake(0, 0, 50, 30);
@@ -227,23 +243,100 @@
     [self.view endEditing:YES];
 }
 -(void)textFileDidChangeForDPTableViewCellDelegate:(UITextField *)textFile{
-    NSLog(@"%ld",(long)textFile.tag);
     [_textFileAry setObject:textFile.text atIndexedSubscript:textFile.tag];
 }
 -(void)textFieldDidBeginEditingDPTableViewCellDelegate:(UITextField *)textFile{
     if (textFile.tag == 3) {
         [textFile endEditing:YES];
         SelectSchoolViewController * s = [[SelectSchoolViewController alloc] init];
+        s.selectType = SelectSchool;
         self.hidesBottomBarWhenPushed = YES;
         [self.navigationController pushViewController:s animated:YES];
         [s returnText:^(SchoolModel *returnText) {
             if (returnText) {
                 [self.view endEditing:YES];
-                _s = returnText;
-                [_textFileAry setObject:_s.schoolName atIndexedSubscript:textFile.tag];
-                [_tableView reloadData];
+                if (![UIUtils isBlankString:returnText.schoolId]) {
+                    _s = returnText;
+                    [_textFileAry setObject:_s.schoolName atIndexedSubscript:textFile.tag];
+                    [_tableView reloadData];
+                }
+                
             }
         }];
+    }else if (textFile.tag == 6){
+        if ([UIUtils isBlankString:_s.schoolId]) {
+            UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"请先选择学校" message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: nil];
+            [alertView show];
+        }else{
+            [textFile endEditing:YES];
+            SelectSchoolViewController * s = [[SelectSchoolViewController alloc] init];
+            s.selectType = SelectDepartment;
+            s.s = [[SchoolModel alloc] init];
+            s.s.schoolId = _s.schoolId;
+            self.hidesBottomBarWhenPushed = YES;
+            [self.navigationController pushViewController:s animated:YES];
+            [s returnText:^(SchoolModel *returnText) {
+                if (returnText) {
+                    [self.view endEditing:YES];
+                    if (![UIUtils isBlankString:returnText.departmentId]) {
+                        _s.department = returnText.department;
+                        _s.departmentId = returnText.departmentId;
+                        [_textFileAry setObject:_s.department atIndexedSubscript:textFile.tag];
+                        [_tableView reloadData];
+                    }
+                }
+            }];
+        }
+    }else if (textFile.tag == 7){
+        if ([UIUtils isBlankString:_s.departmentId]) {
+            UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"请先选择院系" message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: nil];
+            [alertView show];
+        }else{
+            [textFile endEditing:YES];
+            SelectSchoolViewController * s = [[SelectSchoolViewController alloc] init];
+            s.selectType = SelectMajor;
+            s.s = [[SchoolModel alloc] init];
+            s.s.departmentId = _s.departmentId;
+            self.hidesBottomBarWhenPushed = YES;
+            [self.navigationController pushViewController:s animated:YES];
+            [s returnText:^(SchoolModel *returnText) {
+                if (returnText) {
+                    [self.view endEditing:YES];
+                    if (![UIUtils isBlankString:returnText.major]) {
+                        _s.major = returnText.major;
+                        _s.majorId = returnText.majorId;
+                        [_textFileAry setObject:_s.major atIndexedSubscript:textFile.tag];
+                        [_tableView reloadData];
+                    }
+                }
+            }];
+        }
+        
+    }else if (textFile.tag == 8){
+        if ([UIUtils isBlankString:_s.departmentId]) {
+            UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"请先选择专业" message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: nil];
+            [alertView show];
+        }else{
+            [textFile endEditing:YES];
+            SelectSchoolViewController * s = [[SelectSchoolViewController alloc] init];
+            s.selectType = SelectClass;
+            s.s = [[SchoolModel alloc] init];
+            s.s.majorId = _s.majorId;
+            self.hidesBottomBarWhenPushed = YES;
+            [self.navigationController pushViewController:s animated:YES];
+            [s returnText:^(SchoolModel *returnText) {
+                if (returnText) {
+                    [self.view endEditing:YES];
+                    if (![UIUtils isBlankString:returnText.sclassId]) {
+                        _s.sclass = returnText.sclass;
+                        _s.sclassId = returnText.sclassId;
+                        [_textFileAry setObject:_s.sclass atIndexedSubscript:textFile.tag];
+                        [_tableView reloadData];
+                    }
+                }
+            }];
+        }
+        
     }
 }
 #pragma mark UITableViewdelegate

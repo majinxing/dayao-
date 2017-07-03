@@ -8,8 +8,9 @@
 
 #import <UIKit/UIKit.h>
 #import "MeetingModel.h"
-
+#import "ClassModel.h"
 @interface CourseCollectionViewCell : UICollectionViewCell
 @property (strong, nonatomic) IBOutlet UIImageView *courseImage;
 -(void)setInfoForContentView:(MeetingModel *)meetingModel;
+-(void)setClassInfoForContentView:(ClassModel *)classModel;
 @end

@@ -13,4 +13,5 @@
 @interface NetworkRequest : AFHTTPSessionManager
 + (instancetype)sharedInstance;
 - (void)POST:(NSString *)URLString dict:(id)dict succeed:(void (^)(id data))succeed failure:(void (^)(NSError *error))failure;
+- (void)GET:(NSString *)URLString dict:(id)dict succeed:(void (^)(id data))succeed failure:(void (^)(NSError *error))failure;
 @end

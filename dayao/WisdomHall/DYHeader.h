@@ -58,12 +58,12 @@
 #define CONTACT_TABLE_NAME     @"contactTable"//试卷和题目联系的表格
 
 //接口
-#define BaseURL @"http://192.168.1.114:8080/"
+#define BaseURL @"http://192.168.1.107:8080/"
 
 #define Login          @"course/user/login"     //登录
 #define Register       @"course/user/register"  //注册
 #define ResetPassword  @"course/user/modify"    //重置密码
-
-
-
+#define SchoolDepartMent @"course/department/list" // 院系列表
+#define QueryClassRoom   @"course/classroom/query" //查询教室
+#define QueryCourse      @"course/course/search"//查询课堂
 

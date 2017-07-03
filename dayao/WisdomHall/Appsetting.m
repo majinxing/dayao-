@@ -47,9 +47,9 @@
     userInfo.professional = [_mySettingData objectForKey:@"user_majorCode"];
     userInfo.classNumber = [_mySettingData objectForKey:@"user_classCode"];
     userInfo.studentId = [_mySettingData objectForKey:@"user_workNo"];
+    userInfo.peopleId = [_mySettingData objectForKey:@"user_id"];
     return userInfo;
 }
-
 
 
 

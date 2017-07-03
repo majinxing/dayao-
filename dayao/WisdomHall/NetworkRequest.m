@@ -26,12 +26,12 @@
         tools = [[self alloc] initWithBaseURL:baseURL sessionConfiguration:config];
         
         // 修改 解析数据格式 能够接受的内容类型 － 官方推荐的做法，民间做法：直接修改 AFN 的源代码
-        tools.responseSerializer.acceptableContentTypes = [NSSet setWithObjects:@"application/json",
-                                                           @"text/json",
-                                                           @"text/javascript",
-                                                           @"text/html",
-                                                           @"application/xml",
-                                                           nil];
+//        tools.responseSerializer.acceptableContentTypes = [NSSet setWithObjects:@"application/json",
+//                                                           @"text/json",
+//                                                           @"text/javascript",
+//                                                           @"text/html",
+//                                                           @"application/xml",
+//                                                           nil];
     });
     return tools;
 }
@@ -59,17 +59,11 @@
 {
     //创建网络请求管理对象
     AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
-//    manager.responseSerializer.acceptableContentTypes = [NSSet setWithObject:@"text/html"];
-//    manager.responseSerializer.acceptableContentTypes = [NSSet setWithObjects:@"text/html",@"application/json", @"text/json", nil];
+    manager.responseSerializer.acceptableContentTypes = [NSSet setWithObject:@"text/html"];
+    manager.responseSerializer.acceptableContentTypes = [NSSet setWithObjects:@"text/html",@"application/json", @"text/json", nil];
     manager.requestSerializer = [AFJSONRequestSerializer serializer];
-    manager.responseSerializer = [AFJSONResponseSerializer serializer];
-    [ manager.requestSerializer setValue:@"application/json"forHTTPHeaderField:@"Content-Type"];
-    manager.responseSerializer.acceptableContentTypes = [NSSet setWithObject:@"application/json"]; // 设置content-Type为text/html
-//    [manager.requestSerializer setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
-    
-    
-//    [manager.requestSerializer setValue:@"application/json; charset=utf-8" forHTTPHeaderField:@"Content-Type"];
-    
+    [manager.requestSerializer setValue:@"application/json"forHTTPHeaderField:@"Content-Type"];
+//    manager.responseSerializer.acceptableContentTypes = [NSSet setWithObject:@"application/json"];
     //发送网络请求(请求方式为POST)
     URLString = [NSString stringWithFormat:@"%@%@",BaseURL,URLString];
     
@@ -94,13 +88,18 @@
 {
     //创建网络请求管理对象
     AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
-    //申明返回的结果是json类型
-    manager.responseSerializer = [AFJSONResponseSerializer serializer];
-    //申明请求的数据是json类型
-    manager.requestSerializer = [AFJSONRequestSerializer serializer];
+//    //申明返回的结果是json类型
+//    manager.responseSerializer = [AFJSONResponseSerializer serializer];
+//    //申明请求的数据是json类型
+//    manager.requestSerializer = [AFJSONRequestSerializer serializer];
     //如果报接受类型不一致请替换一致text/html或别的
-    manager.responseSerializer.acceptableContentTypes = [NSSet setWithObjects:@"text/html",nil];
+//    manager.responseSerializer.acceptableContentTypes = [NSSet setWithObjects:@"text/html",nil];
+    [ manager.requestSerializer setValue:@"application/json"forHTTPHeaderField:@"Content-Type"];
+    
+//    manager.responseSerializer.acceptableContentTypes = [NSSet setWithObject:@"application/json"];
     //发送网络请求(请求方式为GET)
+    URLString = [NSString stringWithFormat:@"%@%@",BaseURL,URLString];
+
     [manager GET:URLString parameters:dict progress:^(NSProgress * _Nonnull downloadProgress) {
         
     } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
@@ -109,60 +108,4 @@
         failure(error);
     }];
 }
-//-(void)post{
-//    NSURL * url = [NSURL URLWithString:@"http://192.168.1.114:8080/course/user/login"];
-//    NSMutableURLRequest * request = [NSMutableURLRequest requestWithURL:url];
-//    //配置请求超时
-//    [request setTimeoutInterval:10.0];
-//    //配置请求方法
-//    [request setHTTPMethod:@"POST"];
-//    //设置头部参数
-//    [request addValue:@"gzip" forHTTPHeaderField:@"Content-Encoding"];
-//    // 4、构造请求参数
-//    // 4.1、创建字典参数，将参数放入字典中，可防止程序员在主观意识上犯错误，即参数写错。
-//    NSDictionary *parametersDict = @{@"phone":@"15243670131",@"password":@"123456"};
-//    // 4.2、遍历字典，以“key=value&”的方式创建参数字符串。
-//    NSMutableString *parameterString = [[NSMutableString alloc]init];
-//    int pos =0;
-//    for (NSString *key in parametersDict.allKeys) {
-//        // 拼接字符串
-//        [parameterString appendFormat:@"%@=%@", key, parametersDict[key]];
-//        if(pos<parametersDict.allKeys.count-1){
-//            [parameterString appendString:@"&"];
-//        }
-//        pos++;
-//    }
-//    // 4.3、NSString转成NSData数据类型。
-//    NSData *parametersData = [parameterString dataUsingEncoding:NSUTF8StringEncoding];
-//    // 5、设置请求报文
-//    [request setHTTPBody:parametersData];
-//    // 6、构造NSURLSessionConfiguration
-//    NSURLSessionConfiguration *configuration = [NSURLSessionConfiguration defaultSessionConfiguration];
-//    // 7、创建网络会话
-//    NSURLSession *session = [NSURLSession sessionWithConfiguration:configuration];
-//    // 8、创建会话任务
-//    NSURLSessionDataTask *task = [session dataTaskWithRequest:request completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
-//        // 10、判断是否请求成功
-//        if (error) {
-//            NSLog(@"post error :%@",error.localizedDescription);
-//        }else {
-//            // 如果请求成功，则解析数据。
-//            id object = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableLeaves error:&error];
-//            // 11、判断是否解析成功
-//            if (error) {
-//                NSLog(@"post error :%@",error.localizedDescription);
-//            }else {
-//                // 解析成功，处理数据，通过GCD获取主队列，在主线程中刷新界面。
-//                NSLog(@"post success :%@",object);
-//                dispatch_async(dispatch_get_main_queue(), ^{
-//                    // 刷新界面...
-//                });
-//            }
-//        }
-//        
-//    }];
-//    // 9、执行任务
-//    [task resume];
-//}
-
 @end

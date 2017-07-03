@@ -75,8 +75,9 @@
     
 }
 - (IBAction)registerButtonPressed:(id)sender {
-//    DefineThePasswordViewController * definePWVC = [[DefineThePasswordViewController alloc] init];
-//    [self.navigationController pushViewController:definePWVC animated:YES];
+    DefineThePasswordViewController * definePWVC = [[DefineThePasswordViewController alloc] init];
+    definePWVC.phoneNumber = _phoneNumber;
+    [self.navigationController pushViewController:definePWVC animated:YES];
     
     [SMSSDK commitVerificationCode:_Verification phoneNumber:_phoneNumber zone:@"86" result:^(NSError *error) {
         

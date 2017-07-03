@@ -95,10 +95,10 @@
     {
         return YES;
     }
-    if ([string stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]].length == 0)
-    {
-        return YES;
-    }
+//    if (string.length == 0)
+//    {
+//        return YES;
+//    }
     return NO;
 }
 //电话正则表达式
@@ -107,5 +107,13 @@
     NSPredicate *phoneTest = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", phoneRegex];
     return [phoneTest evaluateWithObject:phone];
 }
-
++(NSString *)getTime{
+    NSCalendar *calendar = [NSCalendar currentCalendar];
+    int unit = NSCalendarUnitDay | NSCalendarUnitMonth | NSCalendarUnitYear | NSCalendarUnitHour | NSCalendarUnitMinute | NSCalendarUnitSecond;
+    
+    //获得当前时间的年月日时分
+    NSDateComponents *nowCmps = [calendar components:unit fromDate:[NSDate date]];
+    NSString *nowDate = [NSString stringWithFormat:@"%ld-%ld-%ld",nowCmps.year,nowCmps.month,nowCmps.day];
+    return nowDate;
+}
 @end

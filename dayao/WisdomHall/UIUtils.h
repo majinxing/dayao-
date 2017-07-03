@@ -25,4 +25,8 @@
 **/
 
 +(BOOL)isSimplePhone:(NSString *)phone;
+/**
+ * 获取当前时间
+ **/
++(NSString *)getTime;
 @end

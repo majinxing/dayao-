@@ -18,11 +18,15 @@
 #import <Hyphenate/Hyphenate.h>
 
 #import "CollectionHeadView.h"
+#import "UserModel.h"
+#import "ClassModel.h"
 
 static NSString *cellIdentifier = @"cellIdentifier";
 
 @interface SignInViewController ()<UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout>
 @property (nonatomic,strong) UICollectionView * collection;
+@property (nonatomic,strong) UserModel * userModel;
+@property (nonatomic,strong)NSMutableArray * classAry;
 @end
 
 @implementation SignInViewController
@@ -30,8 +34,11 @@ static NSString *cellIdentifier = @"cellIdentifier";
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor whiteColor];
+    _classAry = [NSMutableArray arrayWithCapacity:4];
     
     [self setNavigationTitle];
+    
+    [self getData];
     
     [self addCollection];
     
@@ -54,8 +61,24 @@ static NSString *cellIdentifier = @"cellIdentifier";
     _collection.decelerationRate = UIScrollViewDecelerationRateNormal;
     _collection.backgroundColor = [UIColor clearColor];
     [self.view addSubview:_collection];
+}
+-(void)getData{
+    _userModel = [[Appsetting sharedInstance] getUsetInfo];
     
-    
+    NSDictionary * dict = [[NSDictionary alloc] initWithObjectsAndKeys:_userModel.peopleId,@"teacherId",[UIUtils getTime],@"startTime",[UIUtils getTime],@"endTime",@"10000",@"page",nil];
+    [[NetworkRequest sharedInstance] POST:QueryCourse dict:dict succeed:^(id data) {
+        NSLog(@"succeed %@",data);
+        NSDictionary * dict = [data objectForKey:@"body"];
+        NSArray * ary = [dict objectForKey:@"list"];
+        for (int i = 0; i<ary.count; i++) {
+            ClassModel * classRoom = [[ClassModel alloc] init];
+            [classRoom setInfoWithDict:ary[i]];
+            [_classAry addObject:classRoom];
+        }
+        [_collection reloadData];
+    } failure:^(NSError *error) {
+        NSLog(@"失败%@",error);
+    }];
 }
 -(void)viewWillAppear:(BOOL)animated{
     // [self.navigationController setNavigationBarHidden:YES animated:NO];
@@ -104,18 +127,18 @@ static NSString *cellIdentifier = @"cellIdentifier";
 }
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
 {
-    
-    return 4;
+    if (_classAry.count>0) {
+        return _classAry.count;
+    }
+    return 0;
 }
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
 {
     CourseCollectionViewCell * cell = [collectionView dequeueReusableCellWithReuseIdentifier:cellIdentifier forIndexPath:indexPath];
     cell.backgroundColor = [UIColor whiteColor];
-    //[cell addCourseInfo];
+    [cell setClassInfoForContentView:_classAry[indexPath.row]];
     return cell;
-//    CourseCollectionViewCell *cell1 = [collectionView dequeueReusableCellWithReuseIdentifier:cellIdentifier forIndexPath:indexPath];
-//    return cell1;
 }
 //创建头视图
 - (UICollectionReusableView *)collectionView:(UICollectionView *)collectionView

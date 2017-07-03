@@ -9,6 +9,7 @@
 #import "CourseCollectionViewCell.h"
 #import "DYHeader.h"
 #import "MeetingModel.h"
+#import "ClassModel.h"
 
 @interface CourseCollectionViewCell ()
 @property (strong, nonatomic) IBOutlet UIImageView *cellImage;
@@ -47,5 +48,11 @@
     _place.text = [NSString stringWithFormat:@"会议地点：%@",meetingModel.meetingPlace];
 }
 
-
+-(void)setClassInfoForContentView:(ClassModel *)classModel{
+    _classOrMeetingName.text = [NSString stringWithFormat:@"课程名：%@",classModel.name];
+    
+    _hostName.text = [NSString stringWithFormat:@"老师：%@",classModel.teacherId];
+    
+    _place.text = [NSString stringWithFormat:@"上课地点：%@",classModel.address];
+}
 @end

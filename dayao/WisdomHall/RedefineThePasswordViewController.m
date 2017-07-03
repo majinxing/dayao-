@@ -37,7 +37,7 @@
             NSDictionary * dict = [[NSDictionary alloc] initWithObjectsAndKeys:_phoneNumber,@"id",_password.text,@"password",nil];
             
             [[NetworkRequest sharedInstance] POST:ResetPassword dict:dict succeed:^(id data) {
-                
+                NSLog(@"succeed%@",data);
                 DYTabBarViewController *rootVC = [[DYTabBarViewController alloc] init];
                 [UIApplication sharedApplication].keyWindow.rootViewController = rootVC;
                 
