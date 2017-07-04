@@ -50,6 +50,11 @@
     [super awakeFromNib];
     // Initialization code
 }
+- (IBAction)signBtnPressed:(id)sender {
+    if (self.delegate&&[self.delegate respondsToSelector:@selector(signBtnPressedPInfoDelegate)]) {
+        [self.delegate signBtnPressedPInfoDelegate];
+    }
+}
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
     [super setSelected:selected animated:animated];

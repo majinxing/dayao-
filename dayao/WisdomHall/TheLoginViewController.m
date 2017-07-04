@@ -12,6 +12,7 @@
 #import "RegisterViewController.h"
 #import "ForgotPasswordViewController.h"
 #import "NetworkRequest.h"
+#import "ChatHelper.h"
 
 @interface TheLoginViewController ()<UITextFieldDelegate>
 @property (strong, nonatomic) IBOutlet UITextField *personalAccount;
@@ -49,28 +50,34 @@
             NSLog(@"%@",data);
             NSDictionary * d = [data objectForKey:@"header"];
             if ([[d objectForKey:@"code"] isEqualToString:@"0000"]) {
-            NSDictionary * dict = [data objectForKey:@"body"];
-            
-            [[Appsetting sharedInstance] sevaUserInfoWithDict:dict];
-            
-            DYTabBarViewController *rootVC = [[DYTabBarViewController alloc] init];
-            
+                NSDictionary * dict = [data objectForKey:@"body"];
+                
+                [[Appsetting sharedInstance] sevaUserInfoWithDict:dict];
+                
+                ChatHelper * c =[ChatHelper shareHelper];
+
+                DYTabBarViewController *rootVC = [[DYTabBarViewController alloc] init];
+                
                 [UIApplication sharedApplication].keyWindow.rootViewController = rootVC;
+                
+                
             }else{
                 UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"密码错误" message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: nil];
                 [alertView show];
             }
-
+            
         } failure:^(NSError *error) {
             
             NSLog(@"%@",error);
+            UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"服务器连接失败" message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: nil];
+            [alertView show];
             
         }];
     }else{
         UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"请输入正确的手机号" message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: nil];
-            [alertView show];
+        [alertView show];
     }
-  
+    
 }
 /**
  * 注册

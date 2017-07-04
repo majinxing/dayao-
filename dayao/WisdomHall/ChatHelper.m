@@ -60,11 +60,11 @@ static ChatHelper *helper = nil;
     //环信注册
     EMOptions  * options = [EMOptions optionsWithAppkey:@"1161170505178076#college-sign"];
     [[EMClient sharedClient] initializeSDKWithOptions:options];
-    EMError *error = [[EMClient sharedClient] registerWithUsername:@"8004" password:@"111111"];
+    EMError *error = [[EMClient sharedClient] registerWithUsername:[[Appsetting sharedInstance] getUserPhone] password:@"111111"];
     if (error==nil) {
         NSLog(@"注册成功");
     }
-    EMError *error2 = [[EMClient sharedClient] loginWithUsername:@"8001" password:@"111111"];
+    EMError *error2 = [[EMClient sharedClient] loginWithUsername:[[Appsetting sharedInstance] getUserPhone] password:@"111111"];
     if (!error2) {
         NSLog(@"登录成功");
     }

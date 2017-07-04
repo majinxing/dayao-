@@ -9,6 +9,7 @@
 #import "SystemSettingsViewController.h"
 #import "TheLoginViewController.h"
 #import "DYTabBarViewController.h"
+#import "DYHeader.h"
 @interface SystemSettingsViewController ()
 
 @end
@@ -21,6 +22,7 @@
     // Do any additional setup after loading the view from its nib.
 }
 - (IBAction)logoutButtonPressed:(id)sender {
+    [[Appsetting sharedInstance] getOut];
     DYTabBarViewController *rootVC = [DYTabBarViewController sharedInstance];
     rootVC = nil;
     TheLoginViewController * userLogin = [[TheLoginViewController alloc] init];

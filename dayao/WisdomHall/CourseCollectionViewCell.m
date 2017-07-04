@@ -16,6 +16,7 @@
 @property (strong, nonatomic) IBOutlet UILabel *classOrMeetingName;
 @property (strong, nonatomic) IBOutlet UILabel *hostName;
 @property (strong, nonatomic) IBOutlet UILabel *place;
+@property (strong, nonatomic) IBOutlet UILabel *time;
 
 
 @end
@@ -46,6 +47,7 @@
     _hostName.text = [NSString stringWithFormat:@"主持人：%@",meetingModel.meetingHost];
     
     _place.text = [NSString stringWithFormat:@"会议地点：%@",meetingModel.meetingPlace];
+    _time.text = [NSString stringWithFormat:@"时  间：%@",meetingModel.meetingTime];
 }
 
 -(void)setClassInfoForContentView:(ClassModel *)classModel{
@@ -54,5 +56,6 @@
     _hostName.text = [NSString stringWithFormat:@"老师：%@",classModel.teacherId];
     
     _place.text = [NSString stringWithFormat:@"上课地点：%@",classModel.address];
+    _time.text = [NSString stringWithFormat:@"时  间：%@",classModel.time];
 }
 @end

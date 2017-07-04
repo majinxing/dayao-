@@ -19,5 +19,6 @@
 @property (nonatomic,copy) NSString * departments;
 @property (nonatomic,copy) NSString * professional;
 @property (nonatomic,copy) NSString * classNumber;
-@property (nonatomic,copy) NSString * peopleId;
+@property (nonatomic,copy) NSString * peopleId; //id
+
 @end

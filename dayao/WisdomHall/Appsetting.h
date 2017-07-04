@@ -14,4 +14,7 @@
 +(Appsetting *)sharedInstance;
 -(void)sevaUserInfoWithDict:(NSDictionary *)dict;
 -(UserModel *)getUsetInfo;
+-(BOOL)isLogin;
+-(NSString *)getUserPhone;
+-(void)getOut;
 @end

@@ -67,7 +67,7 @@ static NSString *cellIdentifier = @"cellIdentifier";
     
     NSDictionary * dict = [[NSDictionary alloc] initWithObjectsAndKeys:_userModel.peopleId,@"teacherId",[UIUtils getTime],@"startTime",[UIUtils getTime],@"endTime",@"10000",@"page",nil];
     [[NetworkRequest sharedInstance] POST:QueryCourse dict:dict succeed:^(id data) {
-        NSLog(@"succeed %@",data);
+//        NSLog(@"succeed %@",data);
         NSDictionary * dict = [data objectForKey:@"body"];
         NSArray * ary = [dict objectForKey:@"list"];
         for (int i = 0; i<ary.count; i++) {

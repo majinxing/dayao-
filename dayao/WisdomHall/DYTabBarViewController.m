@@ -10,7 +10,7 @@
 #import "SignInViewController.h"
 #import "MeetingViewController.h"
 #import "PersonalCenterViewController.h"
-
+#import "AllTheMeetingViewController.h"
 #import "DYHeader.h"
 @interface DYTabBarViewController ()
 
@@ -32,8 +32,11 @@
     [super viewDidLoad];
     
     [self addChildViewControllerWithClassname:[SignInViewController description] imagename:@"qiandaoIcon" title:@"签到" withSelectImageName:@"qiandaoIcon"];
-    [self addChildViewControllerWithClassname:[MeetingViewController description] imagename:@"hudongIcon" title:@"会场" withSelectImageName:@"hudongIcon"];
+    
+    [self addChildViewControllerWithClassname:[AllTheMeetingViewController description] imagename:@"hudongIcon" title:@"会场" withSelectImageName:@"hudongIcon"];
+    
     [self addChildViewControllerWithClassname:[PersonalCenterViewController description] imagename:@"yonghuIcon" title:@"我" withSelectImageName:@"yonghuIcon"];
+    
     // Do any additional setup after loading the view from its nib.
 }
 /**

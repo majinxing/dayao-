@@ -12,13 +12,21 @@
 -(instancetype)init{
     self = [super init];
     if (self) {
-        _meetingName = @"总结大会";
-        _meetingHost = @"李老师";
-        _meetingPlace = @"图书馆";
-        _meetingTime = @"9-1 3:00 pm";
-        _meetingImage = @"";
-        _peopleNumber = @"25";
+        
     }
     return self;
+}
+-(void)setMeetingInfoWithDict:(NSDictionary *)dict{
+    self.meetingId = [dict objectForKey:@"id"];
+    self.mac = [dict objectForKey:@"mac"];
+    self.meetingHost = [dict objectForKey:@"teacherId"];
+    self.meetingTime = [dict objectForKey:@"time"];
+    self.meetingPlace = [dict objectForKey:@"roomName"];
+    self.meetingTotal = [dict objectForKey:@"total"];
+    self.signWay = [dict objectForKey:@"signWay"];
+    self.imageUrl = [dict objectForKey:@"url"];
+    self.meetingStatus = [dict objectForKey:@"status"];
+    self.meetingName = [dict objectForKey:@"name"];
+    
 }
 @end

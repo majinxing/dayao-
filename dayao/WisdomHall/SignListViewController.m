@@ -9,7 +9,7 @@
 #import "SignListViewController.h"
 #import "PersonalInfoTableViewCell.h"
 #import "DYHeader.h"
-@interface SignListViewController ()<UITableViewDelegate,UITableViewDataSource>
+@interface SignListViewController ()<UITableViewDelegate,UITableViewDataSource,PersonalInfoTableViewCellDelegate>
 @property (nonatomic,strong)UITableView * tableView;
 @property (nonatomic,strong)NSMutableArray * ary;
 @end
@@ -48,7 +48,45 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
-#pragma mark UITableViewdelegate
+#pragma mark  PersonalInfoTableViewCellDelegate
+-(void)signBtnPressedPInfoDelegate{
+    UserModel * userModel = [[Appsetting sharedInstance] getUsetInfo];
+    if (_signType == SignMeeting) {
+        NSDictionary * dict = [[NSDictionary alloc] initWithObjectsAndKeys:_meetingModel.meetingId,@"meetingId",userModel.peopleId,@"userId" ,nil];
+        [[NetworkRequest sharedInstance] POST:MeetingSign dict:dict succeed:^(id data) {
+            NSLog(@"succedd:%@",data);
+            [self alter:[[data objectForKey:@"header"] objectForKey:@"code"]];
+        } failure:^(NSError *error) {
+            NSLog(@"失败：%@",error);
+        }];
+    }else if(_signType == SignClassRoom){
+        NSDictionary * dict = [[NSDictionary alloc] initWithObjectsAndKeys:_classModel.sclassId,@"courseId",userModel.peopleId,@"userId" ,nil];
+        [[NetworkRequest sharedInstance] POST:ClassSign dict:dict succeed:^(id data) {
+            NSLog(@"succedd:%@",data);
+        } failure:^(NSError *error) {
+            NSLog(@"失败：%@",error);
+        }];
+    }
+}
+-(void)alter:(NSString *) str{
+    if ([str isEqualToString:@"1002"]) {
+        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"现在还不能签到" message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: nil];
+        [alertView show];
+    }else if ([str isEqualToString:@"1003"]){
+        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"已经签到" message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: nil];
+        [alertView show];
+    }else if ([str isEqualToString:@"1004"]){
+        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"没有参加课程" message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: nil];
+        [alertView show];
+    }else if ([str isEqualToString:@"0000"]){
+        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"签到成功" message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: nil];
+        [alertView show];
+    }else if ([str isEqualToString:@"5000"]){
+//        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"" message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: nil];
+//        [alertView show];
+    }
+}
+#pragma mark  UITableViewdelegate
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
     return 4;
 }
@@ -65,6 +103,7 @@
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     PersonalInfoTableViewCell * cell = [PersonalInfoTableViewCell tempTableViewCellWith:tableView indexPath:indexPath array:_ary];
+    cell.delegate = self;
     return cell;
 }
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{

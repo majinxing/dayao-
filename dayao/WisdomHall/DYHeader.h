@@ -26,10 +26,10 @@
 #import "UIViewController+HUD.h"
 #import "NetworkRequest.h"
 #import "Appsetting.h"
+#import "UserModel.h"
 
 
-
-#define Collection_height 195
+#define Collection_height 225
 
 #define ShareType_Weixin_Friend     @"微信好友"
 #define ShareType_Weixin_Circle     @"朋友圈"
@@ -58,12 +58,19 @@
 #define CONTACT_TABLE_NAME     @"contactTable"//试卷和题目联系的表格
 
 //接口
-#define BaseURL @"http://192.168.1.107:8080/"
+#define BaseURL @"http://192.168.1.109:8080/"
 
-#define Login          @"course/user/login"     //登录
-#define Register       @"course/user/register"  //注册
-#define ResetPassword  @"course/user/modify"    //重置密码
+#define Login            @"course/user/login"      //登录
+#define Register         @"course/user/register"   //注册
+#define ResetPassword    @"course/user/modify"     //重置密码
 #define SchoolDepartMent @"course/department/list" // 院系列表
 #define QueryClassRoom   @"course/classroom/query" //查询教室
-#define QueryCourse      @"course/course/search"//查询课堂
+#define QueryCourse      @"course/course/search"   //查询课堂
+#define QueryMeeting     @"course/meeting/select"  //查询会议
+#define MeetingSign      @"course/meeting/sign"    //会议签到
+#define ClassSign        @"course/course/sign"     //课程签到
+
+
+
+
 

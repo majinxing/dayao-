@@ -4,7 +4,6 @@
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
-        <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12089"/>
         <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -52,11 +51,21 @@
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
                     </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jmv-bb-u3y">
+                        <rect key="frame" x="10" y="389" width="513" height="20"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="20" id="94t-32-ZPi"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" type="system" pointSize="10"/>
+                        <nil key="textColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
                 </subviews>
             </view>
             <constraints>
                 <constraint firstItem="bqc-cC-k9c" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" constant="10" id="0a7-Wh-jb8"/>
                 <constraint firstAttribute="trailing" secondItem="UGM-Om-yLr" secondAttribute="trailing" constant="10" id="37n-F0-7iH"/>
+                <constraint firstItem="jmv-bb-u3y" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" constant="10" id="4Jy-6z-adl"/>
                 <constraint firstAttribute="trailing" secondItem="bqc-cC-k9c" secondAttribute="trailing" constant="5" id="67h-FW-K0Q"/>
                 <constraint firstItem="RVQ-Ru-ehT" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" constant="10" id="7C0-Mh-pK4"/>
                 <constraint firstItem="UGM-Om-yLr" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" constant="10" id="HNV-Ws-tk0"/>
@@ -64,8 +73,10 @@
                 <constraint firstAttribute="trailing" secondItem="0gh-lH-mpH" secondAttribute="trailing" constant="5" id="R1s-Lo-J9x"/>
                 <constraint firstAttribute="trailing" secondItem="RVQ-Ru-ehT" secondAttribute="trailing" constant="5" id="RfF-9n-v6q"/>
                 <constraint firstItem="0gh-lH-mpH" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" constant="10" id="W2M-Jy-SN3"/>
+                <constraint firstItem="jmv-bb-u3y" firstAttribute="top" secondItem="bqc-cC-k9c" secondAttribute="bottom" constant="5" id="XfV-JY-BaW"/>
                 <constraint firstItem="bqc-cC-k9c" firstAttribute="top" secondItem="0gh-lH-mpH" secondAttribute="bottom" constant="5" id="Yx2-He-caw"/>
                 <constraint firstItem="UGM-Om-yLr" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" constant="10" id="hvx-MA-qGV"/>
+                <constraint firstAttribute="trailing" secondItem="jmv-bb-u3y" secondAttribute="trailing" constant="10" id="mNP-ta-JAR"/>
                 <constraint firstItem="0gh-lH-mpH" firstAttribute="top" secondItem="RVQ-Ru-ehT" secondAttribute="bottom" constant="5" id="qNw-hb-gYM"/>
                 <constraint firstItem="UGM-Om-yLr" firstAttribute="height" secondItem="gTV-IL-0wX" secondAttribute="height" multiplier="1:2" id="upa-Nn-RL1"/>
             </constraints>
@@ -76,6 +87,7 @@
                 <outlet property="courseImage" destination="UGM-Om-yLr" id="Qb0-d6-BHG"/>
                 <outlet property="hostName" destination="0gh-lH-mpH" id="YAW-Ao-3oo"/>
                 <outlet property="place" destination="bqc-cC-k9c" id="3WA-YO-Yj3"/>
+                <outlet property="time" destination="jmv-bb-u3y" id="UfB-2f-2Ij"/>
             </connections>
             <point key="canvasLocation" x="-80.5" y="103"/>
         </collectionViewCell>

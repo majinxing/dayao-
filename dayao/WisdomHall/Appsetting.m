@@ -29,11 +29,12 @@
     [_mySettingData setValue:[dict objectForKey:@"name"] forKey:@"user_name"];
     [_mySettingData setValue:[dict objectForKey:@"phone"] forKey:@"user_phone"];
     [_mySettingData setValue:[dict objectForKey:@"type"] forKey:@"user_type"];
-    [_mySettingData setValue:[dict objectForKey:@"universityCode"] forKey:@"user_universityCode"];
+    [_mySettingData setValue:[dict objectForKey:@"universityId"] forKey:@"user_universityCode"];
     [_mySettingData setValue:[dict objectForKey:@"workNo"] forKey:@"user_workNo"];
-    [_mySettingData setValue:[dict objectForKey:@"majorCode"] forKey:@"user_majorCode"];
-    [_mySettingData setValue:[dict objectForKey:@"facultyCode"] forKey:@"user_facultyCode"];
-    [_mySettingData setValue:[dict objectForKey:@"classCode"] forKey:@"user_classCode"];
+    [_mySettingData setValue:[dict objectForKey:@"majorId"] forKey:@"user_majorCode"];
+    [_mySettingData setValue:[dict objectForKey:@"facultyId"] forKey:@"user_facultyCode"];
+    [_mySettingData setValue:[dict objectForKey:@"classId"] forKey:@"user_classCode"];
+    [_mySettingData setValue:@"1" forKey:@"is_Login"];
     [_mySettingData synchronize];
     
 }
@@ -50,9 +51,22 @@
     userInfo.peopleId = [_mySettingData objectForKey:@"user_id"];
     return userInfo;
 }
+-(BOOL)isLogin{
+    NSString * isLogin = [_mySettingData objectForKey:@"is_Login"];
+    if ([isLogin isEqualToString:@"1"]) {
+        return YES;
+    }
+    return NO;
+}
+-(NSString *)getUserPhone{
+    NSString * phone = [_mySettingData objectForKey:@"user_phone"];
+    return phone;
+}
+-(void)getOut{
+    [_mySettingData setValue:@"0" forKey:@"is_Login"];
+    [_mySettingData synchronize];
 
-
-
+}
 
 
 

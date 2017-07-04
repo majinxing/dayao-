@@ -8,8 +8,14 @@
 
 #import <UIKit/UIKit.h>
 
+
+@protocol PersonalInfoTableViewCellDelegate <NSObject>
+-(void)signBtnPressedPInfoDelegate;
+
+
+@end
 @interface PersonalInfoTableViewCell : UITableViewCell
 @property (weak, nonatomic) IBOutlet UILabel *personalNameLabel;
-
+@property (nonatomic,weak)id<PersonalInfoTableViewCellDelegate>delegate;
 + (instancetype)tempTableViewCellWith:(UITableView *)tableView indexPath:(NSIndexPath *)indexPath array:(NSMutableArray *)ary;
 @end

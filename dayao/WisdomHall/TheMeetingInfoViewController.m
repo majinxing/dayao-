@@ -52,6 +52,10 @@
                                                                       NSFontAttributeName:[UIFont systemFontOfSize:17],
                                                                       NSForegroundColorAttributeName:[UIColor blackColor]}];
     self.title = @"会议详情";
+    
+}
+-(void)back{
+    [self.navigationController popViewControllerAnimated:YES];
 }
 -(void)addContentView{
     _meetingName.text = [NSString stringWithFormat:@"会议名称：%@",_meetingModel.meetingName];
@@ -60,7 +64,7 @@
     
     _meetingPlace.text = [NSString stringWithFormat:@"会议地点：%@",_meetingModel.meetingPlace];
     
-    _signNumber.text = [NSString stringWithFormat:@"签到人数：%@/30",_meetingModel.peopleNumber];
+    _signNumber.text = [NSString stringWithFormat:@"签到人数：%@/%@",_meetingModel.peopleNumber,_meetingModel.meetingTotal];
     
     _meetingTime.text = [NSString stringWithFormat:@"会议时间：%@",_meetingModel.meetingTime];
     
@@ -83,6 +87,8 @@
 }
 - (IBAction)signBtnPressed:(id)sender {
     SignListViewController * signListVC = [[SignListViewController alloc] init];
+    signListVC.signType = SignMeeting;//签到类型
+    signListVC.meetingModel = _meetingModel;
     self.hidesBottomBarWhenPushed = YES;
     [self.navigationController pushViewController:signListVC animated:YES];
 

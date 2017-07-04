@@ -146,7 +146,7 @@
     //这个可以加方法 取消的方法
     //_mySearchBar.showsCancelButton = YES;
     _mySearchBar.tintColor = [UIColor blackColor];
-    [_mySearchBar setPlaceholder:@"搜索学校"];
+    [_mySearchBar setPlaceholder:@"搜索"];
     //[_mySearchBar setBackgroundImage:[UIImage imageNamed:@"search-1"]];
     _mySearchBar.showsScopeBar = YES;
     //    [_mySearchBar sizeToFit];

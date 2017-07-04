@@ -13,6 +13,7 @@
 #import "ChatHelper.h"
 #import "ConversationVC.h"
 #import <SystemConfiguration/CaptiveNetwork.h>
+#import "DYHeader.h"
 
 @interface AppDelegate ()<EMCallManagerDelegate,EMChatManagerDelegate,EMChatroomManagerDelegate>
 @property(nonatomic,strong)ChatHelper * chat;
@@ -33,14 +34,15 @@
     [self.window makeKeyAndVisible];
     
     
-  
-    
-    _chat = [ChatHelper shareHelper];
-    
-    TheLoginViewController * loginVC = [[TheLoginViewController alloc] init];
-    self.window.rootViewController = [[UINavigationController alloc]initWithRootViewController:loginVC];
-    
-    
+    if ([[Appsetting sharedInstance] isLogin]) {
+        _chat = [ChatHelper shareHelper];
+        DYTabBarViewController * tab = [[DYTabBarViewController alloc] init];
+        self.window.rootViewController = tab;
+    }else{
+        TheLoginViewController * loginVC = [[TheLoginViewController alloc] init];
+        self.window.rootViewController = [[UINavigationController alloc]initWithRootViewController:loginVC];
+    }
+
     
 //    //环信注册
 //    EMOptions  * options = [EMOptions optionsWithAppkey:@"1161170505178076#college-sign"];

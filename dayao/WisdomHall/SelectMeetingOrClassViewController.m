@@ -1,66 +1,101 @@
 //
-//  AllTheMeetingViewController.m
+//  SelectMeetingOrClassViewController.m
 //  WisdomHall
 //
-//  Created by XTU-TI on 2017/5/4.
+//  Created by XTU-TI on 2017/7/4.
 //  Copyright © 2017年 majinxing. All rights reserved.
 //
 
-#import "AllTheMeetingViewController.h"
+#import "SelectMeetingOrClassViewController.h"
 #import "CourseCollectionViewCell.h"
 #import "CollectionFlowLayout.h"
 #import "DYHeader.h"
 #import "TheMeetingInfoViewController.h"
 #import "MeetingModel.h"
 #import "MJRefresh.h"
-#import "SelectMeetingOrClassViewController.h"
 
 static NSString * cellIdentifier = @"cellIdentifier";
 
-@interface AllTheMeetingViewController ()<UICollectionViewDelegate,UICollectionViewDataSource>
+@interface SelectMeetingOrClassViewController ()<UICollectionViewDelegate,UICollectionViewDataSource,UISearchBarDelegate>
+
 @property (nonatomic,strong) UICollectionView * collection;
 @property (nonatomic,strong) NSMutableArray * meetingModelAry;
 @property (nonatomic,strong) UserModel * userModel;
+@property (nonatomic,strong)UISearchBar * mySearchBar;
+@property (nonatomic,copy) NSString * selectStr;
 /** @brief 当前加载的页数 */
 @property (nonatomic) int page;
 @end
 
-@implementation AllTheMeetingViewController
+@implementation SelectMeetingOrClassViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    [super viewDidLoad];
     _meetingModelAry = [NSMutableArray arrayWithCapacity:12];
+    
+    [self addSeachBar];
     
     [self setNavigationTitle];
     
     [self addCollection];
+    
     // Do any additional setup after loading the view from its nib.
 }
+-(void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event{
+    [self.view endEditing:YES];
+}
+-(void)addSeachBar{
+    _mySearchBar = [[UISearchBar alloc] initWithFrame:CGRectMake(0, 64, APPLICATION_WIDTH, 54)];
+    _mySearchBar.backgroundColor = [UIColor clearColor];
+    //去掉搜索框背景
+    
+    //1.
+    for (UIView *subview in _mySearchBar.subviews)
+        
+    {
+        
+        if ([subview isKindOfClass:NSClassFromString(@"UISearchBarBackground")])
+            
+        {
+            
+            [subview removeFromSuperview];
+            
+            break;
+            
+        }
+        
+    }
+    _mySearchBar.delegate = self;
+    _mySearchBar.searchBarStyle = UISearchBarStyleDefault;
+    //这个可以加方法 取消的方法
+    //_mySearchBar.showsCancelButton = YES;
+    _mySearchBar.tintColor = [UIColor blackColor];
+    [_mySearchBar setPlaceholder:@"搜索"];
+    //[_mySearchBar setBackgroundImage:[UIImage imageNamed:@"search-1"]];
+    _mySearchBar.showsScopeBar = YES;
+    //    [_mySearchBar sizeToFit];
+    //_mySearchBar.hidden = YES;  ///隐藏搜索框
+    [self.view addSubview:self.mySearchBar];
+//    [self.mySearchBar becomeFirstResponder];
+}
 /**
- *  显示navigation的标题
- **/
+  *  显示navigation的标题
+  **/
 -(void)setNavigationTitle{
     [UIApplication sharedApplication].statusBarStyle = UIStatusBarStyleLightContent;
     //[self.navigationController.navigationBar setBarTintColor:[UIColor blackColor]];
     [self.navigationController.navigationBar setTitleTextAttributes:@{
                                                                       NSFontAttributeName:[UIFont systemFontOfSize:17],
                                                                       NSForegroundColorAttributeName:[UIColor blackColor]}];
-    self.title = @"会议";
-    
-    UIBarButtonItem * selection = [[UIBarButtonItem alloc] initWithTitle:@"搜索" style:UIBarButtonItemStylePlain target:self action:@selector(selectionBtnPressed)];
-    self.navigationItem.leftBarButtonItem = selection;
+    self.title = @"搜索";
     
 };
--(void)selectionBtnPressed{
-    SelectMeetingOrClassViewController * s = [[SelectMeetingOrClassViewController alloc] init];
-    self.hidesBottomBarWhenPushed = YES;
-    [self.navigationController pushViewController:s animated:YES];
-}
 /**
  * 添加collection
  **/
 -(void)addCollection{
-    _collection = [[UICollectionView alloc] initWithFrame:CGRectMake(0,64,APPLICATION_WIDTH,APPLICATION_HEIGHT-64-48) collectionViewLayout:[[CollectionFlowLayout alloc] init]];
+    _collection = [[UICollectionView alloc] initWithFrame:CGRectMake(0,64+54,APPLICATION_WIDTH,APPLICATION_HEIGHT-64-54) collectionViewLayout:[[CollectionFlowLayout alloc] init]];
     //注册
     [_collection registerClass:[CourseCollectionViewCell class] forCellWithReuseIdentifier:cellIdentifier];
     
@@ -72,7 +107,7 @@ static NSString * cellIdentifier = @"cellIdentifier";
     //取消滑动的滚动条
     _collection.decelerationRate = UIScrollViewDecelerationRateNormal;
     _collection.backgroundColor = [UIColor clearColor];
-    __weak AllTheMeetingViewController * weakSelf = self;
+    __weak SelectMeetingOrClassViewController * weakSelf = self;
     [self.collection addHeaderWithCallback:^{
         [weakSelf headerRereshing];
     }];
@@ -80,7 +115,7 @@ static NSString * cellIdentifier = @"cellIdentifier";
         [weakSelf footerRereshing];
     }];
     
-    [self headerRereshing];
+//    [self headerRereshing];
     [self.view addSubview:_collection];
 }
 #pragma mrak MJR
@@ -99,7 +134,7 @@ static NSString * cellIdentifier = @"cellIdentifier";
     __weak typeof(self)weakSelf = self;
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         if (weakSelf) {
-            AllTheMeetingViewController * strongSelf = weakSelf;
+            SelectMeetingOrClassViewController * strongSelf = weakSelf;
             dispatch_async(dispatch_get_main_queue(), ^{
                 [strongSelf hideHud];
                 [strongSelf getDataWithPage:aPage];
@@ -114,11 +149,12 @@ static NSString * cellIdentifier = @"cellIdentifier";
 }
 -(void)getDataWithPage:(NSInteger)page{
     _userModel = [[Appsetting sharedInstance] getUsetInfo];
-    NSDictionary * dict = [[NSDictionary alloc] initWithObjectsAndKeys:@"1",@"teacherId",@"1990-01-01",@"startTime",@"3000-01-01",@"endTime",[NSString stringWithFormat:@"%ld",(long)page],@"pageNo",nil];
+    NSDictionary * dict = [[NSDictionary alloc] initWithObjectsAndKeys:@"1",@"teacherId",[NSString stringWithFormat:@"%ld",(long)page],@"pageNo",_selectStr,@"keywords",nil];
     
     [[NetworkRequest sharedInstance] GET:QueryMeeting dict:dict succeed:^(id data) {
         NSDictionary * dict = [data objectForKey:@"header"];
         if ([[dict objectForKey:@"code"] isEqualToString:@"0000"]) {
+            
             [_meetingModelAry removeAllObjects];
             NSArray * d = [[data objectForKey:@"body"] objectForKey:@"list"];
             for (int i = 0; i<d.count; i++) {
@@ -127,6 +163,7 @@ static NSString * cellIdentifier = @"cellIdentifier";
                 [_meetingModelAry addObject:m];
             }
             [_collection reloadData];
+            
         }
         
     } failure:^(NSError *error) {
@@ -136,6 +173,41 @@ static NSString * cellIdentifier = @"cellIdentifier";
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+#pragma mark - UISearchDisplayDelegate
+- (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText
+{
+//    NSDictionary * dict = [[NSDictionary alloc] initWithObjectsAndKeys:@"1",@"pageNo",@"1",@"teacherId",searchText,@"keywords", nil];
+//    [[NetworkRequest sharedInstance] GET:QueryMeeting dict:dict succeed:^(id data) {
+//        NSLog(@"succeed:%@",data);
+//        [_meetingModelAry removeAllObjects];
+//        NSArray * d = [[data objectForKey:@"body"] objectForKey:@"list"];
+//        for (int i = 0; i<d.count; i++) {
+//            MeetingModel * m = [[MeetingModel alloc] init];
+//            [m setMeetingInfoWithDict:d[i]];
+//            [_meetingModelAry addObject:m];
+//        }
+//        [_collection reloadData];
+//    } failure:^(NSError *error) {
+//        
+//    }];
+}
+-(void)searchBarSearchButtonClicked:(UISearchBar *)searchBar{
+    NSDictionary * dict = [[NSDictionary alloc] initWithObjectsAndKeys:@"1",@"pageNo",@"1",@"teacherId",searchBar.text,@"keywords", nil];
+    [[NetworkRequest sharedInstance] GET:QueryMeeting dict:dict succeed:^(id data) {
+        NSLog(@"succeed:%@",data);
+        [_meetingModelAry removeAllObjects];
+        NSArray * d = [[data objectForKey:@"body"] objectForKey:@"list"];
+        for (int i = 0; i<d.count; i++) {
+            MeetingModel * m = [[MeetingModel alloc] init];
+            [m setMeetingInfoWithDict:d[i]];
+            [_meetingModelAry addObject:m];
+        }
+        [_collection reloadData];
+    } failure:^(NSError *error) {
+        
+    }];
+    [self.view endEditing:YES];
 }
 #pragma mark UICollectionViewDataSource
 //定义每个Section的四边间距
@@ -167,7 +239,7 @@ static NSString * cellIdentifier = @"cellIdentifier";
     mInfo.hidesBottomBarWhenPushed = YES;
     mInfo.meetingModel = _meetingModelAry[indexPath.row];
     [self.navigationController pushViewController:mInfo animated:YES];
-     self.hidesBottomBarWhenPushed=NO;
+    // self.hidesBottomBarWhenPushed=NO;
     
 }
 //有了初次点击再走这个
@@ -178,22 +250,21 @@ static NSString * cellIdentifier = @"cellIdentifier";
     mInfo.hidesBottomBarWhenPushed = YES;
     mInfo.meetingModel = _meetingModelAry[indexPath.row];
     [self.navigationController pushViewController:mInfo animated:YES];
-     self.hidesBottomBarWhenPushed=NO;
+    // self.hidesBottomBarWhenPushed=NO;
     
 }
 #pragma mark UICollectionViewDelegateFlowLayout
 - (CGSize)collectionView:(nonnull UICollectionView *)collectionView layout:(nonnull UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(nonnull NSIndexPath *)indexPath {
     return CGSizeMake(APPLICATION_WIDTH/2-20, Collection_height);
 }
-
 /*
- #pragma mark - Navigation
- 
- // In a storyboard-based application, you will often want to do a little preparation before navigation
- - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
- // Get the new view controller using [segue destinationViewController].
- // Pass the selected object to the new view controller.
- }
- */
+#pragma mark - Navigation
+
+// In a storyboard-based application, you will often want to do a little preparation before navigation
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    // Get the new view controller using [segue destinationViewController].
+    // Pass the selected object to the new view controller.
+}
+*/
 
 @end

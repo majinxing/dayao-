@@ -7,7 +7,17 @@
 //
 
 #import <UIKit/UIKit.h>
-
+#import "MeetingModel.h"
+#import "ClassModel.h"
+/**
+ *  查询数据的类型
+ **/
+typedef enum {
+    SignClassRoom,
+    SignMeeting,
+}SignType;
 @interface SignListViewController : UIViewController
-
+@property (nonatomic,assign)SignType  signType;
+@property (nonatomic,strong)MeetingModel * meetingModel;
+@property (nonatomic,strong)ClassModel * classModel;
 @end

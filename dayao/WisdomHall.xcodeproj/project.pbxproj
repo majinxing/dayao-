@@ -43,6 +43,8 @@
 		8B081E031F078B8C00493B81 /* Appsetting.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B081E021F078B8C00493B81 /* Appsetting.m */; };
 		8B081E051F09DC2F00493B81 /* Foundation+Log.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B081E041F09DC2F00493B81 /* Foundation+Log.m */; };
 		8B081E081F0A4AEC00493B81 /* ClassModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B081E071F0A4AEC00493B81 /* ClassModel.m */; };
+		8B081E0E1F0B766D00493B81 /* SelectMeetingOrClassViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B081E0C1F0B766D00493B81 /* SelectMeetingOrClassViewController.m */; };
+		8B081E0F1F0B766D00493B81 /* SelectMeetingOrClassViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8B081E0D1F0B766D00493B81 /* SelectMeetingOrClassViewController.xib */; };
 		8B0DB1331ED5188C0042DF0D /* ContactModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B0DB1321ED5188C0042DF0D /* ContactModel.m */; };
 		8B0DB1361ED561B80042DF0D /* AnswerModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B0DB1351ED561B80042DF0D /* AnswerModel.m */; };
 		8B0DB13B1ED6CA4E0042DF0D /* ImportTextViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B0DB1391ED6CA4E0042DF0D /* ImportTextViewController.m */; };
@@ -499,6 +501,9 @@
 		8B081E041F09DC2F00493B81 /* Foundation+Log.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Foundation+Log.m"; sourceTree = "<group>"; };
 		8B081E061F0A4AEC00493B81 /* ClassModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ClassModel.h; sourceTree = "<group>"; };
 		8B081E071F0A4AEC00493B81 /* ClassModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ClassModel.m; sourceTree = "<group>"; };
+		8B081E0B1F0B766D00493B81 /* SelectMeetingOrClassViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SelectMeetingOrClassViewController.h; sourceTree = "<group>"; };
+		8B081E0C1F0B766D00493B81 /* SelectMeetingOrClassViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SelectMeetingOrClassViewController.m; sourceTree = "<group>"; };
+		8B081E0D1F0B766D00493B81 /* SelectMeetingOrClassViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SelectMeetingOrClassViewController.xib; sourceTree = "<group>"; };
 		8B0DB1311ED5188C0042DF0D /* ContactModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ContactModel.h; sourceTree = "<group>"; };
 		8B0DB1321ED5188C0042DF0D /* ContactModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ContactModel.m; sourceTree = "<group>"; };
 		8B0DB1341ED561B80042DF0D /* AnswerModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AnswerModel.h; sourceTree = "<group>"; };
@@ -991,6 +996,19 @@
 			path = PinYin;
 			sourceTree = "<group>";
 		};
+		8B081E091F0B763400493B81 /* delect */ = {
+			isa = PBXGroup;
+			children = (
+				8B17370B1EC2EDE400BE3C8F /* MeetingViewController.h */,
+				8B17370C1EC2EDE400BE3C8F /* MeetingViewController.m */,
+				8B17370D1EC2EDE400BE3C8F /* MeetingViewController.xib */,
+				8BA2249F1EADFFE500627A1B /* InteractiveViewController.h */,
+				8BA224A01EADFFE500627A1B /* InteractiveViewController.m */,
+				8BA224A11EADFFE500627A1B /* InteractiveViewController.xib */,
+			);
+			name = delect;
+			sourceTree = "<group>";
+		};
 		8B0F412C1EF51EF9001AF4DF /* Chat */ = {
 			isa = PBXGroup;
 			children = (
@@ -1192,12 +1210,10 @@
 		8BA224931EADFEB500627A1B /* Interactive */ = {
 			isa = PBXGroup;
 			children = (
-				8B17370B1EC2EDE400BE3C8F /* MeetingViewController.h */,
-				8B17370C1EC2EDE400BE3C8F /* MeetingViewController.m */,
-				8B17370D1EC2EDE400BE3C8F /* MeetingViewController.xib */,
-				8BA2249F1EADFFE500627A1B /* InteractiveViewController.h */,
-				8BA224A01EADFFE500627A1B /* InteractiveViewController.m */,
-				8BA224A11EADFFE500627A1B /* InteractiveViewController.xib */,
+				8B081E0B1F0B766D00493B81 /* SelectMeetingOrClassViewController.h */,
+				8B081E0C1F0B766D00493B81 /* SelectMeetingOrClassViewController.m */,
+				8B081E0D1F0B766D00493B81 /* SelectMeetingOrClassViewController.xib */,
+				8B081E091F0B763400493B81 /* delect */,
 				8B2E16E41EBAD95A008B7C57 /* TheMeetingType */,
 			);
 			name = Interactive;
@@ -1804,6 +1820,7 @@
 				8B027A2A1EFB4E0000600E18 /* DataDownloadTableViewCell.xib in Resources */,
 				8BF82D821EE001D600D33473 /* VoteTableViewCell.xib in Resources */,
 				8BA2246C1EADF68500627A1B /* LaunchScreen.storyboard in Resources */,
+				8B081E0F1F0B766D00493B81 /* SelectMeetingOrClassViewController.xib in Resources */,
 				8B05CB6C1EC0056B0063EC20 /* TextsTableViewCell.xib in Resources */,
 				8BFB946C1EE7F7F1004BB963 /* ResultsOfVoteViewController.xib in Resources */,
 				8B1737191EC2F84900BE3C8F /* NoticeTableViewCell.xib in Resources */,
@@ -1929,6 +1946,7 @@
 				8BF864C91ECAD97300B7EED4 /* UIImageView+WebCache.m in Sources */,
 				8BA224B81EAED53D00627A1B /* UIColor+HexString.m in Sources */,
 				8B05CB6B1EC0056B0063EC20 /* TextsTableViewCell.m in Sources */,
+				8B081E0E1F0B766D00493B81 /* SelectMeetingOrClassViewController.m in Sources */,
 				8B05CB761EC070060063EC20 /* SystemSetingTableViewCell.m in Sources */,
 				8BCE7CBD1F04E0EA00FE261B /* NetworkRequest.m in Sources */,
 				8B9171CB1ED41BC7009686FD /* QuestionsTableViewCell.m in Sources */,

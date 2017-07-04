@@ -68,7 +68,7 @@
     _scrollView.showsVerticalScrollIndicator = NO;
     // _scrollView.backgroundColor = [UIColor redColor]
     self.automaticallyAdjustsScrollViewInsets=NO;
-    NSArray *title=[NSArray arrayWithObjects:@"全部测试",@"未开始",@"进行中",@"已结束",nil];
+    NSArray *title=[NSArray arrayWithObjects:@"全部会议",@"未开始",@"进行中",@"已结束",nil];
     //添加点击按钮
     for (int i = 0; i<title.count; i++) {
         UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
