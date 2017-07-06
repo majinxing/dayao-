@@ -7,7 +7,15 @@
 //
 
 #import "PersonalInfoTableViewCell.h"
+#import "SignPeople.h"
 
+@interface PersonalInfoTableViewCell()
+@property (weak, nonatomic) IBOutlet UILabel *nameLabel;
+@property (weak, nonatomic) IBOutlet UILabel *workNo;
+
+@property (strong, nonatomic) IBOutlet UILabel *signNumber;
+
+@end
 @implementation PersonalInfoTableViewCell
 - (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier {
     if (self=[super initWithStyle:style reuseIdentifier:reuseIdentifier]) {
@@ -41,11 +49,18 @@
         cell = [[[NSBundle mainBundle] loadNibNamed:@"PersonalInfoTableViewCell" owner:self options:nil] objectAtIndex:index];
     }
     if (indexPath.section == 3) {
-        cell.personalNameLabel.text = [NSString stringWithFormat:@"姓名：冷小凡%@",ary[(int)indexPath.row]];
+        SignPeople * ss = ary[(int)indexPath.row];//[[SignPeople alloc] init];
+//        [ss setInfoWithDict:ary[(int)indexPath.row]];
+        cell.personalNameLabel.text = [NSString stringWithFormat:@"姓名 :%@",ss.name];
+        cell.workNo.text = [NSString stringWithFormat:@"学号 :%@",ss.workNo];
     }
     return cell;
     
 }
+-(void)setSignNumebr:(NSString *)str{
+    _signNumber.text = [NSString stringWithFormat:@"%@人",str];
+}
+
 - (void)awakeFromNib {
     [super awakeFromNib];
     // Initialization code

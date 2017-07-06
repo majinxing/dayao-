@@ -18,4 +18,5 @@
 @property (weak, nonatomic) IBOutlet UILabel *personalNameLabel;
 @property (nonatomic,weak)id<PersonalInfoTableViewCellDelegate>delegate;
 + (instancetype)tempTableViewCellWith:(UITableView *)tableView indexPath:(NSIndexPath *)indexPath array:(NSMutableArray *)ary;
+-(void)setSignNumebr:(NSString *)str;
 @end

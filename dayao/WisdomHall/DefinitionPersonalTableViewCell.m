@@ -39,6 +39,24 @@
     }
     [_textFile addTarget:self action:@selector(textFileDidChange:) forControlEvents:UIControlEventEditingChanged];
 }
+-(void)addCourseContentView:(NSString *)infoLabelText withTextFileText:(NSString *)textFile withIndex:(int)n{
+    _infoLabel.text = infoLabelText;
+    _textFile.tag = n;
+    _textFile.placeholder = infoLabelText;
+    _textFile.text = textFile;
+    _textFile.delegate = self;
+    if (n==3) {
+        _g.frame = CGRectMake(CGRectGetMaxX(_infoLabel.frame), 0,400, 40);
+        _g.tag = 3;
+    }else if (n==6){
+        _g.frame = CGRectMake(CGRectGetMaxX(_infoLabel.frame), 0,400, 40);
+        _g.tag = 6;
+    }
+    else if (n==5){
+        _textFile.keyboardType = UIKeyboardTypeNumberPad;
+    }
+    [_textFile addTarget:self action:@selector(textFileDidChange:) forControlEvents:UIControlEventEditingChanged];
+}
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
     [super setSelected:selected animated:animated];
 

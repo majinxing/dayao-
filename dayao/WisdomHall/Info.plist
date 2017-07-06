@@ -2,10 +2,6 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key>MOBAppKey</key>
-	<string>188e5c17fb934</string>
-	<key>MOBAppSecret</key>
-	<string>9e4b99c7e6e1e814c6988dc3a834226d</string>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>zh_CN</string>
 	<key>CFBundleDisplayName</key>
@@ -26,6 +22,10 @@
 	<string>1</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
+	<key>MOBAppKey</key>
+	<string>188e5c17fb934</string>
+	<key>MOBAppSecret</key>
+	<string>9e4b99c7e6e1e814c6988dc3a834226d</string>
 	<key>NSAppTransportSecurity</key>
 	<dict>
 		<key>NSAllowsArbitraryLoads</key>
@@ -43,6 +43,11 @@
 	<string>是否允许使用相册</string>
 	<key>NSSpeechRecognitionUsageDescription</key>
 	<string>是否允许使用语音识别</string>
+	<key>UIBackgroundModes</key>
+	<array>
+		<string>audio</string>
+		<string>remote-notification</string>
+	</array>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
 	<key>UIMainStoryboardFile</key>

@@ -43,7 +43,13 @@
         self.window.rootViewController = [[UINavigationController alloc]initWithRootViewController:loginVC];
     }
 
-    
+    // iOS8之后和之前应区别对待
+    if ([[UIDevice currentDevice].systemVersion floatValue] >= 8.0) {
+        UIUserNotificationSettings *settings = [UIUserNotificationSettings settingsForTypes:UIUserNotificationTypeBadge | UIUserNotificationTypeAlert | UIUserNotificationTypeSound categories:nil];
+        [[UIApplication sharedApplication] registerUserNotificationSettings:settings];
+    } else {
+        [application registerForRemoteNotificationTypes:UIRemoteNotificationTypeAlert | UIRemoteNotificationTypeBadge | UIUserNotificationTypeSound];
+    }
 //    //环信注册
 //    EMOptions  * options = [EMOptions optionsWithAppkey:@"1161170505178076#college-sign"];
 //    [[EMClient sharedClient] initializeSDKWithOptions:options];

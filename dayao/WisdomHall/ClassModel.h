@@ -21,5 +21,8 @@
 @property (nonatomic,copy)NSString * creatTime;
 @property (nonatomic,copy)NSString * name;
 @property (nonatomic,copy)NSString * status;
+@property (nonatomic,copy)NSString * mck;
+//@property (nonatomic,copy)NSString 
+
 -(void)setInfoWithDict:(NSDictionary *)dict;
 @end

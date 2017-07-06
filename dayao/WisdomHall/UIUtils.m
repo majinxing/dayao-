@@ -108,12 +108,26 @@
     return [phoneTest evaluateWithObject:phone];
 }
 +(NSString *)getTime{
+    
     NSCalendar *calendar = [NSCalendar currentCalendar];
     int unit = NSCalendarUnitDay | NSCalendarUnitMonth | NSCalendarUnitYear | NSCalendarUnitHour | NSCalendarUnitMinute | NSCalendarUnitSecond;
     
     //获得当前时间的年月日时分
     NSDateComponents *nowCmps = [calendar components:unit fromDate:[NSDate date]];
-    NSString *nowDate = [NSString stringWithFormat:@"%ld-%ld-%ld",nowCmps.year,nowCmps.month,nowCmps.day];
+    NSString *month;
+    if (nowCmps.month<10) {
+        month = [NSString stringWithFormat:@"0%ld",nowCmps.month];
+    }else{
+        month = [NSString stringWithFormat:@"%ld",nowCmps.month];
+    }
+    NSString * day;
+    if (nowCmps.day<10) {
+        day = [NSString stringWithFormat:@"0%ld",nowCmps.day];
+    }else{
+        day = [NSString stringWithFormat:@"%ld",nowCmps.day];
+    }
+    NSString *nowDate = [NSString stringWithFormat:@"%ld-%@-%@",nowCmps.year,month,day];
+    
     return nowDate;
 }
 @end

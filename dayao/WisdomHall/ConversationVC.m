@@ -11,6 +11,7 @@
 #import <AVFoundation/AVFoundation.h>
 #import "DYHeader.h"
 #import "DYTabBarViewController.h"
+#import "EMCallOptions+NSCoding.h"
 @interface ConversationVC ()<EMCallManagerDelegate>
 
 @property (nonatomic,strong)UIView * videoView;
@@ -30,6 +31,7 @@
 -(void)viewWillAppear:(BOOL)animated{
     
     if (!_callSession) {
+
 //        视频之前，设置全局的音视频属性，具体属性有哪些请查看头文件 *EMCallOptions*
         
         EMCallOptions *options = [[EMClient sharedClient].callManager getCallOptions];
@@ -44,7 +46,7 @@
         
         NSLog(@"currentUsername = %@  ,  string = %@",[[EMClient sharedClient] currentUsername],string);
         //15243670131"
-        [[EMClient sharedClient].callManager startCall:EMCallTypeVoice remoteName:@"8001" ext:nil completion:^(EMCallSession *aCallSession, EMError *aError) {
+        [[EMClient sharedClient].callManager startCall:EMCallTypeVoice remoteName:@"500201610171867" ext:nil completion:^(EMCallSession *aCallSession, EMError *aError) {
             
             NSLog(@"startCall : errorDescription = %@",aError.errorDescription);
             

@@ -11,6 +11,7 @@
 @protocol DefinitionPersonalTableViewCellDelegate <NSObject>
 -(void)textFileDidChangeForDPTableViewCellDelegate:(UITextField *)textFile;
 -(void)textFieldDidBeginEditingDPTableViewCellDelegate:(UITextField *)textFile;
+@optional
 -(void)gggDelegate:(UIButton *)btn;
 @end
 
@@ -19,4 +20,5 @@
 
 @property (nonatomic,weak)id<DefinitionPersonalTableViewCellDelegate>delegate;
 -(void)addContentView:(NSString *)infoLabelText withTextFileText:(NSString *)textFile withIndex:(int)n;
+-(void)addCourseContentView:(NSString *)infoLabelText withTextFileText:(NSString *)textFile withIndex:(int)n;
 @end

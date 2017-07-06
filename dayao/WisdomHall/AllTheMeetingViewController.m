@@ -34,6 +34,11 @@ static NSString * cellIdentifier = @"cellIdentifier";
     [self setNavigationTitle];
     
     [self addCollection];
+    
+    // 1.注册通知
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(headerRereshing) name:@"SignSucceed" object:nil];
+    
     // Do any additional setup after loading the view from its nib.
 }
 /**
@@ -55,6 +60,7 @@ static NSString * cellIdentifier = @"cellIdentifier";
     SelectMeetingOrClassViewController * s = [[SelectMeetingOrClassViewController alloc] init];
     self.hidesBottomBarWhenPushed = YES;
     [self.navigationController pushViewController:s animated:YES];
+    self.hidesBottomBarWhenPushed = NO;
 }
 /**
  * 添加collection
@@ -114,9 +120,9 @@ static NSString * cellIdentifier = @"cellIdentifier";
 }
 -(void)getDataWithPage:(NSInteger)page{
     _userModel = [[Appsetting sharedInstance] getUsetInfo];
-    NSDictionary * dict = [[NSDictionary alloc] initWithObjectsAndKeys:@"1",@"teacherId",@"1990-01-01",@"startTime",@"3000-01-01",@"endTime",[NSString stringWithFormat:@"%ld",(long)page],@"pageNo",nil];
     
-    [[NetworkRequest sharedInstance] GET:QueryMeeting dict:dict succeed:^(id data) {
+    NSDictionary * dict = [[NSDictionary alloc] initWithObjectsAndKeys:[NSString stringWithFormat:@"%ld",page],@"start",_userModel.peopleId,@"teacherId",[UIUtils getTime],@"startTime",@"",@"endTime", nil];
+    [[NetworkRequest sharedInstance] GET:QueryMeetingSelfCreate dict:dict succeed:^(id data) {
         NSDictionary * dict = [data objectForKey:@"header"];
         if ([[dict objectForKey:@"code"] isEqualToString:@"0000"]) {
             [_meetingModelAry removeAllObjects];
@@ -126,12 +132,41 @@ static NSString * cellIdentifier = @"cellIdentifier";
                 [m setMeetingInfoWithDict:d[i]];
                 [_meetingModelAry addObject:m];
             }
+            [self getSelfCreateMeetingList:page];
             [_collection reloadData];
         }
         
     } failure:^(NSError *error) {
         NSLog(@"error %@",error);
     }];
+}
+-(void)getSelfCreateMeetingList:(NSInteger)page{
+    UserModel * user = [[Appsetting sharedInstance] getUsetInfo];
+    if ([[NSString stringWithFormat:@"%@",user.identity] isEqualToString:@"0"]) {
+        
+        NSDictionary * dict = [[NSDictionary alloc] initWithObjectsAndKeys:_userModel.peopleId,@"userId",[UIUtils getTime],@"startTime",@"",@"endTime",[NSString stringWithFormat:@"%ld",(long)page],@"start",nil];
+        [[NetworkRequest sharedInstance] GET:QueryMeeting dict:dict succeed:^(id data) {
+//            NSLog(@"succeed%@",data);
+            NSArray * d = [[data objectForKey:@"body"] objectForKey:@"list"];
+            for (int i = 0; i<d.count; i++) {
+                MeetingModel * m = [[MeetingModel alloc] init];
+                [m setMeetingInfoWithDict:d[i]];
+                for (int j = 0; j<_meetingModelAry.count; j++) {
+                    MeetingModel * n = _meetingModelAry[j];
+                    if ([[NSString stringWithFormat:@"%@",n.meetingId] isEqualToString:[NSString stringWithFormat:@"%@",m.meetingId]]) {
+                        break;
+                    }else if(j == (_meetingModelAry.count - 1)){
+                        [_meetingModelAry addObject:m];
+                    }
+                }
+              
+            }
+            [_collection reloadData];
+        } failure:^(NSError *error) {
+            NSLog(@"失败%@",error);
+        }];
+    }
+ 
 }
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

@@ -24,7 +24,7 @@
     }
     return self;
 }
--(void)sevaUserInfoWithDict:(NSDictionary *)dict{
+-(void)sevaUserInfoWithDict:(NSDictionary *)dict withStr:(NSString *)p{
     [_mySettingData setValue:[dict objectForKey:@"id"] forKey:@"user_id"];
     [_mySettingData setValue:[dict objectForKey:@"name"] forKey:@"user_name"];
     [_mySettingData setValue:[dict objectForKey:@"phone"] forKey:@"user_phone"];
@@ -34,6 +34,12 @@
     [_mySettingData setValue:[dict objectForKey:@"majorId"] forKey:@"user_majorCode"];
     [_mySettingData setValue:[dict objectForKey:@"facultyId"] forKey:@"user_facultyCode"];
     [_mySettingData setValue:[dict objectForKey:@"classId"] forKey:@"user_classCode"];
+    
+    [_mySettingData setValue:[dict objectForKey:@"majorName"] forKey:@"user_majorName"];
+    [_mySettingData setValue:[dict objectForKey:@"facultyName"] forKey:@"user_facultyName"];
+    [_mySettingData setValue:[dict objectForKey:@"className"] forKey:@"user_className"];
+    [_mySettingData setValue:[dict objectForKey:@"universityName"] forKey:@"user_universityName"];
+    [_mySettingData setValue:p forKey:@"user_password"];
     [_mySettingData setValue:@"1" forKey:@"is_Login"];
     [_mySettingData synchronize];
     
@@ -49,6 +55,12 @@
     userInfo.classNumber = [_mySettingData objectForKey:@"user_classCode"];
     userInfo.studentId = [_mySettingData objectForKey:@"user_workNo"];
     userInfo.peopleId = [_mySettingData objectForKey:@"user_id"];
+    userInfo.userPassword = [_mySettingData objectForKey:@"user_password"];
+    userInfo.departmentsName = [_mySettingData objectForKey:@"user_facultyName"];
+    userInfo.professionalName = [_mySettingData objectForKey:@"user_majorName"];
+    userInfo.className = [_mySettingData objectForKey:@"user_className"];
+    userInfo.schoolName = [_mySettingData objectForKey:@"user_universityName"];
+    userInfo.userPassword = [_mySettingData objectForKey:@"user_password"];
     return userInfo;
 }
 -(BOOL)isLogin{

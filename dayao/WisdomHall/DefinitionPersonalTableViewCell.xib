@@ -6,6 +6,7 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12089"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -19,16 +20,16 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Bld-V0-Zjc">
-                        <rect key="frame" x="15" y="10" width="55" height="56.5"/>
+                        <rect key="frame" x="15" y="10" width="60" height="56.5"/>
                         <constraints>
-                            <constraint firstAttribute="width" constant="55" id="WOG-43-vd9"/>
+                            <constraint firstAttribute="width" constant="60" id="WOG-43-vd9"/>
                         </constraints>
-                        <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="11"/>
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="学校" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="sBb-e1-lMm">
-                        <rect key="frame" x="80" y="10" width="290" height="56.5"/>
+                        <rect key="frame" x="85" y="10" width="285" height="56.5"/>
                         <nil key="textColor"/>
                         <fontDescription key="fontDescription" type="system" pointSize="13"/>
                         <textInputTraits key="textInputTraits"/>
@@ -51,5 +52,43 @@
             </connections>
             <point key="canvasLocation" x="74" y="108.5"/>
         </tableViewCell>
+        <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="DefinitionPersonalTableViewCellSecond" rowHeight="131" id="hqP-fB-chr" customClass="DefinitionPersonalTableViewCell">
+            <rect key="frame" x="0.0" y="0.0" width="399" height="131"/>
+            <autoresizingMask key="autoresizingMask"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="hqP-fB-chr" id="7yn-SP-8jP">
+                <rect key="frame" x="0.0" y="0.0" width="399" height="130.5"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="课程封面" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="j4y-8q-XNr">
+                        <rect key="frame" x="15" y="10" width="60" height="110.5"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="60" id="SKW-BI-Sxh"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" type="system" pointSize="11"/>
+                        <nil key="textColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="18r-1i-FuI">
+                        <rect key="frame" x="85" y="18" width="60" height="94.5"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="60" id="Nse-dF-vtD"/>
+                        </constraints>
+                        <state key="normal" title="Button" image="addPicture"/>
+                    </button>
+                </subviews>
+                <constraints>
+                    <constraint firstItem="18r-1i-FuI" firstAttribute="leading" secondItem="j4y-8q-XNr" secondAttribute="trailing" constant="10" id="GCN-bb-nTX"/>
+                    <constraint firstItem="18r-1i-FuI" firstAttribute="top" secondItem="7yn-SP-8jP" secondAttribute="topMargin" constant="10" id="S8e-YI-oPb"/>
+                    <constraint firstItem="j4y-8q-XNr" firstAttribute="leading" secondItem="7yn-SP-8jP" secondAttribute="leading" constant="15" id="Wzv-q7-kN4"/>
+                    <constraint firstAttribute="bottom" secondItem="j4y-8q-XNr" secondAttribute="bottom" constant="10" id="XVx-Of-D6y"/>
+                    <constraint firstItem="j4y-8q-XNr" firstAttribute="top" secondItem="7yn-SP-8jP" secondAttribute="top" constant="10" id="cpc-x4-Qi7"/>
+                    <constraint firstAttribute="bottomMargin" secondItem="18r-1i-FuI" secondAttribute="bottom" constant="10" id="slr-7d-4ts"/>
+                </constraints>
+            </tableViewCellContentView>
+            <point key="canvasLocation" x="80.5" y="267.5"/>
+        </tableViewCell>
     </objects>
+    <resources>
+        <image name="addPicture" width="32" height="32"/>
+    </resources>
 </document>

@@ -12,7 +12,7 @@
 @interface Appsetting : NSObject
 @property NSUserDefaults * mySettingData;
 +(Appsetting *)sharedInstance;
--(void)sevaUserInfoWithDict:(NSDictionary *)dict;
+-(void)sevaUserInfoWithDict:(NSDictionary *)dict withStr:(NSString *)p;
 -(UserModel *)getUsetInfo;
 -(BOOL)isLogin;
 -(NSString *)getUserPhone;

@@ -134,6 +134,9 @@
                     <constraint firstItem="589-vD-uH7" firstAttribute="top" secondItem="kh7-YT-Qq0" secondAttribute="topMargin" constant="5" id="z01-Y0-VgV"/>
                 </constraints>
             </tableViewCellContentView>
+            <connections>
+                <outlet property="signNumber" destination="589-vD-uH7" id="jXQ-De-dJx"/>
+            </connections>
             <point key="canvasLocation" x="28" y="457.5"/>
         </tableViewCell>
         <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="PersonalInfoTableViewCellFourth" rowHeight="60" id="ktA-FY-zox" customClass="PersonalInfoTableViewCell">
@@ -180,7 +183,9 @@
                 </constraints>
             </tableViewCellContentView>
             <connections>
+                <outlet property="nameLabel" destination="ZLR-iH-C0h" id="s2T-p0-V4L"/>
                 <outlet property="personalNameLabel" destination="ZLR-iH-C0h" id="gCy-5h-uZP"/>
+                <outlet property="workNo" destination="5Ze-h3-lGh" id="vMt-pu-r5Y"/>
             </connections>
             <point key="canvasLocation" x="28.5" y="675"/>
         </tableViewCell>

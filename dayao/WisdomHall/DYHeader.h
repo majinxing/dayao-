@@ -60,15 +60,27 @@
 //接口
 #define BaseURL @"http://192.168.1.109:8080/"
 
-#define Login            @"course/user/login"      //登录
-#define Register         @"course/user/register"   //注册
-#define ResetPassword    @"course/user/modify"     //重置密码
-#define SchoolDepartMent @"course/department/list" // 院系列表
-#define QueryClassRoom   @"course/classroom/query" //查询教室
-#define QueryCourse      @"course/course/search"   //查询课堂
-#define QueryMeeting     @"course/meeting/select"  //查询会议
-#define MeetingSign      @"course/meeting/sign"    //会议签到
-#define ClassSign        @"course/course/sign"     //课程签到
+#define Login            @"course/user/login"       //登录
+
+#define Register         @"course/user/register"    //注册
+
+#define ResetPassword    @"course/user/modify"      //重置密码
+
+#define SchoolDepartMent @"course/department/list"  // 院系列表
+
+#define QueryClassRoom   @"course/classroom/select" //查询教室
+
+#define QueryCourse      @"course/course/search"    //查询课堂
+
+#define CreateClass      @"course/course/create"    //创建教室
+
+#define QueryMeeting     @"course/meeting/select/user"   //查询会议(参与者)
+
+#define QueryMeetingSelfCreate @"course/meeting/select" //查询自己创建的会议
+
+#define MeetingSign      @"course/meeting/sign"     //会议签到
+
+#define ClassSign        @"course/course/sign"      //课程签到
 
 
 

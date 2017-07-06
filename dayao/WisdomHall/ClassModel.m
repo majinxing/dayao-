@@ -22,6 +22,8 @@
     self.creatTime = [dict objectForKey:@"createTime"];
     self.name = [dict objectForKey:@"name"];
     self.status = [dict objectForKey:@"status"];
+    self.mck = [dict objectForKey:@"mck"];
+    
 }
 @end
 

@@ -45,6 +45,10 @@
 		8B081E081F0A4AEC00493B81 /* ClassModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B081E071F0A4AEC00493B81 /* ClassModel.m */; };
 		8B081E0E1F0B766D00493B81 /* SelectMeetingOrClassViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B081E0C1F0B766D00493B81 /* SelectMeetingOrClassViewController.m */; };
 		8B081E0F1F0B766D00493B81 /* SelectMeetingOrClassViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8B081E0D1F0B766D00493B81 /* SelectMeetingOrClassViewController.xib */; };
+		8B081E131F0C980200493B81 /* SelectClassRoomViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B081E111F0C980200493B81 /* SelectClassRoomViewController.m */; };
+		8B081E141F0C980200493B81 /* SelectClassRoomViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8B081E121F0C980200493B81 /* SelectClassRoomViewController.xib */; };
+		8B081E171F0CBA8900493B81 /* ClassRoomModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B081E161F0CBA8900493B81 /* ClassRoomModel.m */; };
+		8B081E1A1F0E0FA400493B81 /* SignPeople.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B081E191F0E0FA400493B81 /* SignPeople.m */; };
 		8B0DB1331ED5188C0042DF0D /* ContactModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B0DB1321ED5188C0042DF0D /* ContactModel.m */; };
 		8B0DB1361ED561B80042DF0D /* AnswerModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B0DB1351ED561B80042DF0D /* AnswerModel.m */; };
 		8B0DB13B1ED6CA4E0042DF0D /* ImportTextViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B0DB1391ED6CA4E0042DF0D /* ImportTextViewController.m */; };
@@ -504,6 +508,13 @@
 		8B081E0B1F0B766D00493B81 /* SelectMeetingOrClassViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SelectMeetingOrClassViewController.h; sourceTree = "<group>"; };
 		8B081E0C1F0B766D00493B81 /* SelectMeetingOrClassViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SelectMeetingOrClassViewController.m; sourceTree = "<group>"; };
 		8B081E0D1F0B766D00493B81 /* SelectMeetingOrClassViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SelectMeetingOrClassViewController.xib; sourceTree = "<group>"; };
+		8B081E101F0C980200493B81 /* SelectClassRoomViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SelectClassRoomViewController.h; sourceTree = "<group>"; };
+		8B081E111F0C980200493B81 /* SelectClassRoomViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SelectClassRoomViewController.m; sourceTree = "<group>"; };
+		8B081E121F0C980200493B81 /* SelectClassRoomViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SelectClassRoomViewController.xib; sourceTree = "<group>"; };
+		8B081E151F0CBA8900493B81 /* ClassRoomModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ClassRoomModel.h; sourceTree = "<group>"; };
+		8B081E161F0CBA8900493B81 /* ClassRoomModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ClassRoomModel.m; sourceTree = "<group>"; };
+		8B081E181F0E0FA400493B81 /* SignPeople.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SignPeople.h; sourceTree = "<group>"; };
+		8B081E191F0E0FA400493B81 /* SignPeople.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SignPeople.m; sourceTree = "<group>"; };
 		8B0DB1311ED5188C0042DF0D /* ContactModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ContactModel.h; sourceTree = "<group>"; };
 		8B0DB1321ED5188C0042DF0D /* ContactModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ContactModel.m; sourceTree = "<group>"; };
 		8B0DB1341ED561B80042DF0D /* AnswerModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AnswerModel.h; sourceTree = "<group>"; };
@@ -1189,6 +1200,9 @@
 				8B7D5D7F1EB961260068058E /* CreateCourseViewController.h */,
 				8B7D5D801EB961260068058E /* CreateCourseViewController.m */,
 				8B7D5D811EB961260068058E /* CreateCourseViewController.xib */,
+				8B081E101F0C980200493B81 /* SelectClassRoomViewController.h */,
+				8B081E111F0C980200493B81 /* SelectClassRoomViewController.m */,
+				8B081E121F0C980200493B81 /* SelectClassRoomViewController.xib */,
 				8B2E16D21EB9C1EA008B7C57 /* CourseDetailsViewController.h */,
 				8B2E16D31EB9C1EA008B7C57 /* CourseDetailsViewController.m */,
 				8B2E16D41EB9C1EA008B7C57 /* CourseDetailsViewController.xib */,
@@ -1260,6 +1274,10 @@
 				8B081DEA1F0645E600493B81 /* SchoolModel.m */,
 				8B081E061F0A4AEC00493B81 /* ClassModel.h */,
 				8B081E071F0A4AEC00493B81 /* ClassModel.m */,
+				8B081E151F0CBA8900493B81 /* ClassRoomModel.h */,
+				8B081E161F0CBA8900493B81 /* ClassRoomModel.m */,
+				8B081E181F0E0FA400493B81 /* SignPeople.h */,
+				8B081E191F0E0FA400493B81 /* SignPeople.m */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -1721,6 +1739,11 @@
 						CreatedOnToolsVersion = 8.3;
 						DevelopmentTeam = AM9UTP2CL3;
 						ProvisioningStyle = Automatic;
+						SystemCapabilities = {
+							com.apple.BackgroundModes = {
+								enabled = 1;
+							};
+						};
 					};
 					8BA224711EADF68500627A1B = {
 						CreatedOnToolsVersion = 8.3;
@@ -1794,6 +1817,7 @@
 				8BFB94621EE6A381004BB963 /* JoinVoteViewController.xib in Resources */,
 				8B081DDD1F06013300493B81 /* collegedata.json in Resources */,
 				8BF82D731EDEC50E00D33473 /* DiscussViewController.xib in Resources */,
+				8B081E141F0C980200493B81 /* SelectClassRoomViewController.xib in Resources */,
 				8B17374A1EC58BE400BE3C8F /* TestQuestionsViewController.xib in Resources */,
 				8BB56D8D1EB31C110023DAFF /* SystemSettingsViewController.xib in Resources */,
 				8BA224A31EADFFE500627A1B /* InteractiveViewController.xib in Resources */,
@@ -1979,6 +2003,7 @@
 				8BF82D811EE001D600D33473 /* VoteTableViewCell.m in Sources */,
 				8BF8646E1ECACAE800B7EED4 /* FMDatabase.m in Sources */,
 				8BA224A21EADFFE500627A1B /* InteractiveViewController.m in Sources */,
+				8B081E1A1F0E0FA400493B81 /* SignPeople.m in Sources */,
 				8BF864701ECACAE800B7EED4 /* FMDatabasePool.m in Sources */,
 				8B027A291EFB4E0000600E18 /* DataDownloadTableViewCell.m in Sources */,
 				8BF8648D1ECAD21200B7EED4 /* UIScrollView+MJRefresh.m in Sources */,
@@ -1995,7 +2020,9 @@
 				8BB56D641EAF38CA0023DAFF /* AppSetingPersongInfo.m in Sources */,
 				8B05CB701EC015DB0063EC20 /* PersonalInfoTableViewCell.m in Sources */,
 				8BCE7CCC1F04F07600FE261B /* AFHTTPSessionManager.m in Sources */,
+				8B081E171F0CBA8900493B81 /* ClassRoomModel.m in Sources */,
 				8BF82D861EE1573200D33473 /* CreateVoteViewController.m in Sources */,
+				8B081E131F0C980200493B81 /* SelectClassRoomViewController.m in Sources */,
 				8BF8648E1ECAD21200B7EED4 /* UIView+MJExtension.m in Sources */,
 				8BF864C51ECAD97300B7EED4 /* UIButton+WebCache.m in Sources */,
 				8B4D91141EBDAB1000A4BE34 /* SignListViewController.m in Sources */,

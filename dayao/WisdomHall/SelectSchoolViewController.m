@@ -42,7 +42,9 @@
 - (void)returnText:(ReturnTextBlock)block {
     self.returnTextBlock = block;
 }
-
+-(void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event{
+    [self.view endEditing:YES];
+}
 -(void)addData{
     if (_selectType == SelectSchool) {
         NSDictionary * dict = [[NSDictionary alloc] initWithObjectsAndKeys:@"1",@"level",@"",@"parentId",@"",@"name", nil];
@@ -282,6 +284,8 @@
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     NSString * str = _selectSchoolAry[indexPath.row];
+    [self.view endEditing:YES];
+
     for (int i = 0; i <_allSchoolNameAry.count; i++) {
         if ([str isEqualToString:_allSchoolNameAry[i]]) {
             _s = _allSchoolAry[i];

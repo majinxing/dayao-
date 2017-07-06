@@ -149,9 +149,9 @@ static NSString * cellIdentifier = @"cellIdentifier";
 }
 -(void)getDataWithPage:(NSInteger)page{
     _userModel = [[Appsetting sharedInstance] getUsetInfo];
-    NSDictionary * dict = [[NSDictionary alloc] initWithObjectsAndKeys:@"1",@"teacherId",[NSString stringWithFormat:@"%ld",(long)page],@"pageNo",_selectStr,@"keywords",nil];
+    NSDictionary * dict = [[NSDictionary alloc] initWithObjectsAndKeys:_userModel.peopleId,@"teacherId",[NSString stringWithFormat:@"%ld",(long)page],@"start",_selectStr,@"keywords",@"1000",@"length",nil];
     
-    [[NetworkRequest sharedInstance] GET:QueryMeeting dict:dict succeed:^(id data) {
+    [[NetworkRequest sharedInstance] GET:QueryMeetingSelfCreate dict:dict succeed:^(id data) {
         NSDictionary * dict = [data objectForKey:@"header"];
         if ([[dict objectForKey:@"code"] isEqualToString:@"0000"]) {
             
@@ -162,6 +162,8 @@ static NSString * cellIdentifier = @"cellIdentifier";
                 [m setMeetingInfoWithDict:d[i]];
                 [_meetingModelAry addObject:m];
             }
+            [self getSelfCreateMeetingList:page];
+
             [_collection reloadData];
             
         }
@@ -193,8 +195,9 @@ static NSString * cellIdentifier = @"cellIdentifier";
 //    }];
 }
 -(void)searchBarSearchButtonClicked:(UISearchBar *)searchBar{
-    NSDictionary * dict = [[NSDictionary alloc] initWithObjectsAndKeys:@"1",@"pageNo",@"1",@"teacherId",searchBar.text,@"keywords", nil];
-    [[NetworkRequest sharedInstance] GET:QueryMeeting dict:dict succeed:^(id data) {
+    _userModel = [[Appsetting sharedInstance] getUsetInfo];
+    NSDictionary * dict = [[NSDictionary alloc] initWithObjectsAndKeys:_userModel.peopleId,@"teacherId",searchBar.text,@"keywords", nil];
+    [[NetworkRequest sharedInstance] GET:QueryMeetingSelfCreate dict:dict succeed:^(id data) {
         NSLog(@"succeed:%@",data);
         [_meetingModelAry removeAllObjects];
         NSArray * d = [[data objectForKey:@"body"] objectForKey:@"list"];
@@ -203,11 +206,45 @@ static NSString * cellIdentifier = @"cellIdentifier";
             [m setMeetingInfoWithDict:d[i]];
             [_meetingModelAry addObject:m];
         }
+        [self getSelfCreateMeetingList:1];
         [_collection reloadData];
     } failure:^(NSError *error) {
         
     }];
     [self.view endEditing:YES];
+}
+-(void)getSelfCreateMeetingList:(NSInteger)page{
+    UserModel * user = [[Appsetting sharedInstance] getUsetInfo];
+    if ([[NSString stringWithFormat:@"%@",user.identity] isEqualToString:@"0"]) {
+        
+        NSDictionary * dict = [[NSDictionary alloc] initWithObjectsAndKeys:_userModel.peopleId,@"userId",[UIUtils getTime],@"startTime",@"",@"endTime",[NSString stringWithFormat:@"%ld",(long)page],@"start",nil];
+        [[NetworkRequest sharedInstance] GET:QueryMeeting dict:dict succeed:^(id data) {
+            //            NSLog(@"succeed%@",data);
+            NSArray * d = [[data objectForKey:@"body"] objectForKey:@"list"];
+            for (int i = 0; i<d.count; i++) {
+                MeetingModel * m = [[MeetingModel alloc] init];
+                [m setMeetingInfoWithDict:d[i]];
+                for (int j = 0; j<_meetingModelAry.count; j++) {
+                    MeetingModel * n = _meetingModelAry[j];
+                    if ([[NSString stringWithFormat:@"%@",n.meetingId] isEqualToString:[NSString stringWithFormat:@"%@",m.meetingId]]) {
+                        break;
+                    }else if(j == (_meetingModelAry.count - 1)){
+                        [_meetingModelAry addObject:m];
+                    }
+                }
+            }
+            if (_meetingModelAry.count>0) {
+                
+            }else{
+                UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"没有搜索到对应的会议" message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: nil];
+                [alertView show];
+            }
+            [_collection reloadData];
+        } failure:^(NSError *error) {
+            NSLog(@"失败%@",error);
+        }];
+    }
+    
 }
 #pragma mark UICollectionViewDataSource
 //定义每个Section的四边间距
@@ -236,7 +273,7 @@ static NSString * cellIdentifier = @"cellIdentifier";
 {
     
     TheMeetingInfoViewController * mInfo = [[TheMeetingInfoViewController alloc] init];
-    mInfo.hidesBottomBarWhenPushed = YES;
+    self.hidesBottomBarWhenPushed = YES;
     mInfo.meetingModel = _meetingModelAry[indexPath.row];
     [self.navigationController pushViewController:mInfo animated:YES];
     // self.hidesBottomBarWhenPushed=NO;
@@ -247,7 +284,7 @@ static NSString * cellIdentifier = @"cellIdentifier";
 {
     
     TheMeetingInfoViewController * mInfo = [[TheMeetingInfoViewController alloc] init];
-    mInfo.hidesBottomBarWhenPushed = YES;
+    self.hidesBottomBarWhenPushed = YES;
     mInfo.meetingModel = _meetingModelAry[indexPath.row];
     [self.navigationController pushViewController:mInfo animated:YES];
     // self.hidesBottomBarWhenPushed=NO;

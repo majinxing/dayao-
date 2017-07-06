@@ -44,18 +44,24 @@
     self.title = @"签到";
 }
 
+
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
+
 #pragma mark  PersonalInfoTableViewCellDelegate
 -(void)signBtnPressedPInfoDelegate{
     UserModel * userModel = [[Appsetting sharedInstance] getUsetInfo];
     if (_signType == SignMeeting) {
-        NSDictionary * dict = [[NSDictionary alloc] initWithObjectsAndKeys:_meetingModel.meetingId,@"meetingId",userModel.peopleId,@"userId" ,nil];
+        NSString *idfv = [[[UIDevice currentDevice] identifierForVendor] UUIDString];
+        NSDictionary * dict = [[NSDictionary alloc] initWithObjectsAndKeys:_meetingModel.meetingId,@"meetingId",@"30",@"userId" ,idfv,@"mck",nil];
         [[NetworkRequest sharedInstance] POST:MeetingSign dict:dict succeed:^(id data) {
+            
             NSLog(@"succedd:%@",data);
+            
             [self alter:[[data objectForKey:@"header"] objectForKey:@"code"]];
+            
         } failure:^(NSError *error) {
             NSLog(@"失败：%@",error);
         }];
@@ -79,11 +85,23 @@
         UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"没有参加课程" message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: nil];
         [alertView show];
     }else if ([str isEqualToString:@"0000"]){
+        
         UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"签到成功" message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: nil];
         [alertView show];
+        _meetingModel.n = _meetingModel.n + 1;
+        // 2.创建通知
+        NSNotification *notification =[NSNotification notificationWithName:@"SignSucceed" object:nil userInfo:nil];
+        // 3.通过 通知中心 发送 通知
+        
+        [[NSNotificationCenter defaultCenter] postNotification:notification];
+        
+        
     }else if ([str isEqualToString:@"5000"]){
 //        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"" message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: nil];
 //        [alertView show];
+    }else if ([str isEqualToString:@"1008"]){
+        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"不可以用同一台手机签到多个用户" message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: nil];
+        [alertView show];
     }
 }
 #pragma mark  UITableViewdelegate
@@ -97,13 +115,18 @@
         return 1;
     }else if(section == 2){
         return 1;
+    }else if (_meetingModel.signAry.count>0&&section == 3){
+        return _meetingModel.signAry.count;
     }
-    return 10;
+    return 0;
 }
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
-    PersonalInfoTableViewCell * cell = [PersonalInfoTableViewCell tempTableViewCellWith:tableView indexPath:indexPath array:_ary];
+    PersonalInfoTableViewCell * cell = [PersonalInfoTableViewCell tempTableViewCellWith:tableView indexPath:indexPath array:_meetingModel.signAry];
     cell.delegate = self;
+    if (indexPath.section == 2) {
+        [cell setSignNumebr:[NSString stringWithFormat:@"%ld",_meetingModel.m]];
+    }
     return cell;
 }
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{

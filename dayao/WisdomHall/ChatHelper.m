@@ -12,6 +12,7 @@
 #import "DYHeader.h"
 
 static ChatHelper *helper = nil;
+static dispatch_once_t onceToken;
 
 @interface ChatHelper ()<EMClientDelegate,EMChatManagerDelegate,EMContactManagerDelegate,EMGroupManagerDelegate,EMChatroomManagerDelegate,EMCallManagerDelegate>
 
@@ -19,11 +20,13 @@ static ChatHelper *helper = nil;
 @implementation ChatHelper
 + (instancetype)shareHelper
 {
-    static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
         helper = [[ChatHelper alloc] init];
     });
     return helper;
+}
+-(void)getOut{
+    onceToken = 0;
 }
 - (void)dealloc
 {
@@ -33,6 +36,8 @@ static ChatHelper *helper = nil;
     [[EMClient sharedClient].roomManager removeDelegate:self];
     [[EMClient sharedClient].chatManager removeDelegate:self];
     [[EMClient sharedClient].callManager removeDelegate:self];
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+    
 }
 
 - (id)init
@@ -46,7 +51,7 @@ static ChatHelper *helper = nil;
 - (void)initHelper
 {
     [self Hyregistered];
-
+    
     //注册代理
     [[EMClient sharedClient] addDelegate:self delegateQueue:nil];
     [[EMClient sharedClient].groupManager addDelegate:self delegateQueue:nil];
@@ -60,11 +65,13 @@ static ChatHelper *helper = nil;
     //环信注册
     EMOptions  * options = [EMOptions optionsWithAppkey:@"1161170505178076#college-sign"];
     [[EMClient sharedClient] initializeSDKWithOptions:options];
-    EMError *error = [[EMClient sharedClient] registerWithUsername:[[Appsetting sharedInstance] getUserPhone] password:@"111111"];
+    UserModel * user = [[Appsetting sharedInstance] getUsetInfo];
+    
+    EMError *error = [[EMClient sharedClient] registerWithUsername:[NSString stringWithFormat:@"%@%@",user.school,user.studentId] password:user.userPassword];
     if (error==nil) {
         NSLog(@"注册成功");
     }
-    EMError *error2 = [[EMClient sharedClient] loginWithUsername:[[Appsetting sharedInstance] getUserPhone] password:@"111111"];
+    EMError *error2 = [[EMClient sharedClient] loginWithUsername:[NSString stringWithFormat:@"%@%@",user.school,user.studentId] password:user.userPassword];
     if (!error2) {
         NSLog(@"登录成功");
     }
@@ -80,16 +87,60 @@ static ChatHelper *helper = nil;
     // 3.通过 通知中心 发送 通知
     
     [[NSNotificationCenter defaultCenter] postNotification:notification];
+    [self addLocalNotificationWith:aMessages];
+    
+}
+// 发送本地通知通知
+- (void)addLocalNotificationWith:(NSArray *)aMessage {
+    for (int i = 0; i<aMessage.count; i++) {
+        EMMessage * message = aMessage[i];
+        EMTextMessageBody *textBody = (EMTextMessageBody *)message.body;
+        // 1.创建一个本地通知
+        UILocalNotification *localNote = [[UILocalNotification alloc] init];
+        
+        // 1.1.设置通知发出的时间
+        localNote.fireDate = [NSDate dateWithTimeIntervalSinceNow:0];
+        
+        if ([textBody.text rangeOfString:@"LvDongKeTang"].location !=NSNotFound) {
+            
+            
+            NSMutableString *strUrl = [NSMutableString stringWithFormat:@"%@",textBody.text];
+            
+            [strUrl deleteCharactersInRange:NSMakeRange(0, 81)];
+            strUrl = [NSMutableString stringWithFormat:@"%@",[strUrl substringToIndex:[strUrl length] - 2]];
+            // 1.3.设置锁屏时,字体下方显示的一个文字
+            localNote.alertAction = @"";
+            
+            localNote.hasAction = YES;
+            // 1.2.设置通知内容
+            localNote.alertBody = strUrl;
+            
+            // 1.4.设置启动图片(通过通知打开的)
+            //  localNote.alertLaunchImage = @"../Documents/IMG_0024.jpg";
+            
+            // 1.5.设置通过到来的声音
+            // localNote.soundName = UILocalNotificationDefaultSoundName;
+            
+            // 1.6.设置应用图标左上角显示的数字
+            // localNote.applicationIconBadgeNumber = 999;
+            
+            // 1.7.设置一些额外的信息
+            // localNote.userInfo = @{@"qq" : @"704711253", @"msg" : @"success"};
+            
+            // 2.执行通知
+            [[UIApplication sharedApplication] scheduleLocalNotification:localNote];
+        }
+    }
 }
 /*!
  @method
  @brief 接收到一条及以上cmd消息
  */
 - (void)cmdMessagesDidReceive:(NSArray *)aCmdMessages{
-//    NSLog(@"%s",__func__);
-//    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"新信息" message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: nil];
-//    [alertView show];
-//    
+    //    NSLog(@"%s",__func__);
+    //    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"新信息" message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: nil];
+    //    [alertView show];
+    //
 }
 //接收语音聊天
 -(void)callDidReceive:(EMCallSession *)aSession{
@@ -131,10 +182,10 @@ static ChatHelper *helper = nil;
         }
             break;
         case EMMessageBodyTypeImage://图片
-         
+            
             break;
         case EMMessageBodyTypeVideo://视频
-         
+            
             break;
         case EMMessageBodyTypeVoice://语音
             break;
@@ -150,9 +201,9 @@ static ChatHelper *helper = nil;
     CGSize size = CGSizeMake( 200, CGFLOAT_MAX);
     NSDictionary *dic = [NSDictionary dictionaryWithObjectsAndKeys:[UIFont systemFontOfSize:13],NSFontAttributeName, nil];
     CGFloat curheight = [text boundingRectWithSize:size
-                                                    options:NSStringDrawingUsesLineFragmentOrigin | NSStringDrawingUsesFontLeading
-                                                 attributes:dic
-                                                    context:nil].size.height;
+                                           options:NSStringDrawingUsesLineFragmentOrigin | NSStringDrawingUsesFontLeading
+                                        attributes:dic
+                                           context:nil].size.height;
     return curheight;
 }
 
