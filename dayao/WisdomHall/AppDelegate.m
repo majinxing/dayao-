@@ -35,7 +35,7 @@
     
     
     if ([[Appsetting sharedInstance] isLogin]) {
-        _chat = [ChatHelper shareHelper];
+        _chat = [[ChatHelper alloc] init];
         DYTabBarViewController * tab = [[DYTabBarViewController alloc] init];
         self.window.rootViewController = tab;
     }else{

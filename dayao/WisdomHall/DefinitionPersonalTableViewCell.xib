@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="12121" systemVersion="16E195" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
-    <device id="retina4_7" orientation="portrait">
+    <device id="retina4_0" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
@@ -20,16 +20,16 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Bld-V0-Zjc">
-                        <rect key="frame" x="15" y="10" width="60" height="56.5"/>
+                        <rect key="frame" x="15" y="10" width="80" height="56.5"/>
                         <constraints>
-                            <constraint firstAttribute="width" constant="60" id="WOG-43-vd9"/>
+                            <constraint firstAttribute="width" constant="80" id="WOG-43-vd9"/>
                         </constraints>
-                        <fontDescription key="fontDescription" type="system" pointSize="11"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="15"/>
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="学校" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="sBb-e1-lMm">
-                        <rect key="frame" x="85" y="10" width="285" height="56.5"/>
+                        <rect key="frame" x="105" y="10" width="265" height="56.5"/>
                         <nil key="textColor"/>
                         <fontDescription key="fontDescription" type="system" pointSize="13"/>
                         <textInputTraits key="textInputTraits"/>

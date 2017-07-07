@@ -55,7 +55,7 @@
     UserModel * userModel = [[Appsetting sharedInstance] getUsetInfo];
     if (_signType == SignMeeting) {
         NSString *idfv = [[[UIDevice currentDevice] identifierForVendor] UUIDString];
-        NSDictionary * dict = [[NSDictionary alloc] initWithObjectsAndKeys:_meetingModel.meetingId,@"meetingId",@"30",@"userId" ,idfv,@"mck",nil];
+        NSDictionary * dict = [[NSDictionary alloc] initWithObjectsAndKeys:_meetingModel.meetingId,@"meetingId",userModel.peopleId,@"userId" ,idfv,@"mck",@"2",@"status",nil];
         [[NetworkRequest sharedInstance] POST:MeetingSign dict:dict succeed:^(id data) {
             
             NSLog(@"succedd:%@",data);
@@ -115,14 +115,14 @@
         return 1;
     }else if(section == 2){
         return 1;
-    }else if (_meetingModel.signAry.count>0&&section == 3){
-        return _meetingModel.signAry.count;
+    }else if (_meetingModel.m>0&&section == 3){
+        return _meetingModel.m;
     }
     return 0;
 }
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
-    PersonalInfoTableViewCell * cell = [PersonalInfoTableViewCell tempTableViewCellWith:tableView indexPath:indexPath array:_meetingModel.signAry];
+    PersonalInfoTableViewCell * cell = [PersonalInfoTableViewCell tempTableViewCellWith:tableView indexPath:indexPath array:_meetingModel.signNo];
     cell.delegate = self;
     if (indexPath.section == 2) {
         [cell setSignNumebr:[NSString stringWithFormat:@"%ld",_meetingModel.m]];

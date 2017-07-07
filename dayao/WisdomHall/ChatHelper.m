@@ -74,6 +74,8 @@ static dispatch_once_t onceToken;
     EMError *error2 = [[EMClient sharedClient] loginWithUsername:[NSString stringWithFormat:@"%@%@",user.school,user.studentId] password:user.userPassword];
     if (!error2) {
         NSLog(@"登录成功");
+    }else{
+        NSLog(@"环信登录失败%@",error);
     }
 }
 /*!

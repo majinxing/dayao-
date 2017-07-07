@@ -118,7 +118,7 @@
         [self.navigationController pushViewController:signListVC animated:YES];
     }else{
         NSString *idfv = [[[UIDevice currentDevice] identifierForVendor] UUIDString];
-        NSDictionary * dict = [[NSDictionary alloc] initWithObjectsAndKeys:_meetingModel.meetingId,@"meetingId",_user.peopleId,@"userId" ,idfv,@"mck",nil];
+        NSDictionary * dict = [[NSDictionary alloc] initWithObjectsAndKeys:_meetingModel.meetingId,@"meetingId",_user.peopleId,@"userId" ,idfv,@"mck",@"2",@"status",nil];
         [[NetworkRequest sharedInstance] POST:MeetingSign dict:dict succeed:^(id data) {
             NSLog(@"succedd:%@",data);
             [self alter:[[data objectForKey:@"header"] objectForKey:@"code"]];
@@ -210,9 +210,16 @@
     }
     else if ([platform isEqualToString:InteractionType_Responder]){
         NSLog(@"抢答");
-        ConversationVC * c =[[ConversationVC alloc] init];
-        self.hidesBottomBarWhenPushed = YES;
-        [self.navigationController pushViewController:c animated:YES];
+        if (_meetingModel.workNo.length>0) {
+            ConversationVC * c =[[ConversationVC alloc] init];
+            c.HyNumaber = [NSString stringWithFormat:@"%@%@",_user.school,_meetingModel.workNo];
+            self.hidesBottomBarWhenPushed = YES;
+            [self.navigationController pushViewController:c animated:YES];
+        }else{
+            UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"不能呼叫自己" message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: nil];
+            [alertView show];
+        }
+      
     }
     else if ([platform isEqualToString:InteractionType_Test]){
         NSLog(@"测试");

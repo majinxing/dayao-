@@ -29,9 +29,12 @@
 @property (nonatomic,copy) NSString * signStatus;//签到状态
 @property (nonatomic,copy) NSString * url;
 @property (nonatomic,copy) NSString * userSeat;//座次
+@property (nonatomic,copy) NSString * workNo;
 @property (nonatomic,strong) NSMutableArray * signAry;//签到人model数组
+@property (nonatomic,strong) NSMutableArray * signNo;//未签到
 @property (nonatomic,assign)NSInteger n;//签到人数
 @property (nonatomic,assign)NSInteger m;//未签到人数
+
 
 -(void)setMeetingInfoWithDict:(NSDictionary *)dict;
 @end

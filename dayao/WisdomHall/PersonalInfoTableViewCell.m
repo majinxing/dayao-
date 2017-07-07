@@ -51,6 +51,7 @@
     if (indexPath.section == 3) {
         SignPeople * ss = ary[(int)indexPath.row];//[[SignPeople alloc] init];
 //        [ss setInfoWithDict:ary[(int)indexPath.row]];
+        
         cell.personalNameLabel.text = [NSString stringWithFormat:@"姓名 :%@",ss.name];
         cell.workNo.text = [NSString stringWithFormat:@"学号 :%@",ss.workNo];
     }

@@ -46,7 +46,7 @@
         
         NSLog(@"currentUsername = %@  ,  string = %@",[[EMClient sharedClient] currentUsername],string);
         //15243670131"
-        [[EMClient sharedClient].callManager startCall:EMCallTypeVoice remoteName:@"500201610171867" ext:nil completion:^(EMCallSession *aCallSession, EMError *aError) {
+        [[EMClient sharedClient].callManager startCall:EMCallTypeVoice remoteName:@"500123456789" ext:nil completion:^(EMCallSession *aCallSession, EMError *aError) {
             
             NSLog(@"startCall : errorDescription = %@",aError.errorDescription);
             
@@ -238,7 +238,7 @@
         [[EMClient sharedClient].callManager endCall:_callSession.callId reason:EMCallEndReasonDecline];
         _callSession = nil;
     }
-    if (self.navigationController.viewControllers.count>1) {
+    if (self.navigationController.viewControllers.count>0) {
         [self.navigationController popViewControllerAnimated:YES];
     }else{
         DYTabBarViewController *rootVC = [DYTabBarViewController sharedInstance];

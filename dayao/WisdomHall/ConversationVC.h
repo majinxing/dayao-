@@ -11,6 +11,7 @@
 #import "EMCallOptions+NSCoding.h"
 @interface ConversationVC : UIViewController
 
+@property (nonatomic,copy)NSString *HyNumaber;
 
 @property (nonatomic,assign)NSInteger type;
 

@@ -13,6 +13,7 @@
     self = [super init];
     if (self) {
         _signAry = [NSMutableArray arrayWithCapacity:1];
+        _signNo = [NSMutableArray arrayWithCapacity:1];
         _n = 0;
         _m = 0;
     }
@@ -34,16 +35,18 @@
     self.signStatus = [dict objectForKey:@"signStatus"];
     self.url = [dict objectForKey:@"url"];
     self.userSeat = [dict objectForKey:@"userSeat"];
+    self.workNo = [dict objectForKey:@"workNo"];
     [self setSignPeopleWithNSArray:[dict objectForKey:@"userSeatList"]];
 }
 -(void)setSignPeopleWithNSArray:(NSArray *)ary{
     for (int i =0 ; i<ary.count; i++) {
         SignPeople * sign = [[SignPeople alloc] init];
         [sign setInfoWithDict:ary[i]];
-        if ([[NSString stringWithFormat:@"%@",sign.signStatus] isEqualToString:@"1"]) {
+        if ([[NSString stringWithFormat:@"%@",sign.signStatus] isEqualToString:@"2"]) {
             _n = _n +1;
-        }else{
+        }else if([[NSString stringWithFormat:@"%@",sign.signStatus] isEqualToString:@"1"]){
             _m = _m+1;
+            [_signNo  addObject:sign];
         }
         [_signAry addObject:sign];
     }
