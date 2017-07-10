@@ -44,9 +44,8 @@
     if ([UIUtils isSimplePhone:_personalAccount.text]) {
         
         NSDictionary * dict = [[NSDictionary alloc] initWithObjectsAndKeys:_personalAccount.text,@"phone",_personalPassword.text,@"password", nil];
-        __weak NSString * str = _personalPassword.text;
+        NSString * str = _personalPassword.text;
         [[NetworkRequest sharedInstance] POST:Login dict:dict succeed:^(id data) {
-            
             NSLog(@"%@",data);
             NSDictionary * d = [data objectForKey:@"header"];
             if ([[d objectForKey:@"code"] isEqualToString:@"0000"]) {

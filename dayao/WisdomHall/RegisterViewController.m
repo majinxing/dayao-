@@ -19,6 +19,9 @@
 @property (strong, nonatomic) IBOutlet UITextField *phoneTextFile;
 @property (strong, nonatomic) IBOutlet UITextField *vTextFile;
 
+@property (nonatomic,assign)NSInteger _nowSencond;
+
+@property (nonatomic,strong)NSTimer *showTimer;
 
 @end
 
@@ -54,25 +57,63 @@
 - (IBAction)getVerificationCodeButtonPressed:(id)sender {
     
     if ([UIUtils isSimplePhone:_phoneNumber]) {
-        [SMSSDK getVerificationCodeByMethod:SMSGetCodeMethodSMS phoneNumber:_phoneNumber zone:@"86" result:^(NSError *error) {
-            
-            if (!error)
-            {
-                NSLog(@"成功");
-            }
-            else
-            {
-                NSLog(@"失败");
-            }
-        }];
-        
+        [self startTimer];
     }else{
         UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"请输入正确的手机号" message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: nil];
         [alertView show];
     }
+}
+- (void)startTimer
+{
+    [SMSSDK getVerificationCodeByMethod:SMSGetCodeMethodSMS phoneNumber:_phoneNumber zone:@"86" result:^(NSError *error) {
+        
+        if (!error)
+        {
+            NSLog(@"成功");
+        }
+        else
+        {
+            NSLog(@"失败");
+        }
+    }];
+
+    [_getVerificationCodeBtn setEnabled:NO];
+    //时间间隔
+    NSTimeInterval timeInterval = 1.0 ;
+    __nowSencond = 0;
+    //定时器
+    _showTimer = [NSTimer scheduledTimerWithTimeInterval:timeInterval
+                                                  target:self
+                                                selector:@selector(handleMaxShowTimer:)
+                                                userInfo:nil
+                                                 repeats:YES];
+    [_showTimer fire];
+}
+
+//触发事件
+-(void)handleMaxShowTimer:(NSTimer *)theTimer
+{
+    __nowSencond ++;
+    NSInteger count = 60 - __nowSencond;
+    if(__nowSencond >= 60)
+    {
+        [_showTimer invalidate];
+        [_getVerificationCodeBtn setEnabled:YES];
+    }
     
+    NSString *str = [NSString stringWithFormat:@"%ld秒", (long)count];
+    [_getVerificationCodeBtn setTitle:str forState:UIControlStateNormal];
+    [_getVerificationCodeBtn setTitleColor:[UIColor colorWithHexString:@"#999999"] forState:UIControlStateNormal];
+    _getVerificationCodeBtn.layer.borderColor=[[UIColor colorWithHexString:@"#999999"] CGColor];
     
-    
+    //_sendVerification.titleLabel.text = str;// @"60秒";
+    //    _sendVerification.backgroundColor=[UIColor grayColor];
+    if(count <= 0)
+    {
+        [_getVerificationCodeBtn setTitle:@"获取验证码" forState:UIControlStateNormal];
+        [_getVerificationCodeBtn setTitleColor:[UIColor colorWithHexString:@"#01aeff"] forState:UIControlStateNormal];
+        _getVerificationCodeBtn.layer.borderColor=[[UIColor colorWithHexString:@"#01aeff"] CGColor];
+    }
 }
 - (IBAction)registerButtonPressed:(id)sender {
     DefineThePasswordViewController * definePWVC = [[DefineThePasswordViewController alloc] init];

@@ -9,6 +9,13 @@
 #import <UIKit/UIKit.h>
 #import <Hyphenate/Hyphenate.h>
 #import "EMCallOptions+NSCoding.h"
+
+typedef enum{
+    CALLED,//被叫
+    CALLING,//主叫
+}CallType;
+
+
 @interface ConversationVC : UIViewController
 
 @property (nonatomic,copy)NSString *HyNumaber;
@@ -19,5 +26,5 @@
 
 @property (nonatomic,assign)BOOL isSender;
 
-
+@property (nonatomic,assign)CallType * call;
 @end

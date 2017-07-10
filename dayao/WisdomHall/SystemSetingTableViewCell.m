@@ -20,6 +20,7 @@
     if (!_textAry) {
       _textAry = [NSArray arrayWithObjects:@"个人资料", @"学校通知",@"系统设置",@"检测更新",@"关于我们",nil];
     }
+    _user = [[Appsetting sharedInstance] getUsetInfo];
     // Initialization code
 }
 + (instancetype)tempTableViewCellWith:(UITableView *)tableView indexPath:(NSIndexPath *)indexPath {
@@ -43,6 +44,9 @@
   
     if (indexPath.section == 1) {
         cell.setingLabel.text = cell.textAry[indexPath.row];
+    }else if (indexPath.section == 0){
+        cell.userName.text = cell.user.userName;
+        cell.workNo.text = cell.user.studentId;
     }
     return cell;
 }

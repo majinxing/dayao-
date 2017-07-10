@@ -27,6 +27,14 @@
 @property (nonatomic,strong) ShareView * interaction;
 
 @property (strong, nonatomic, readonly) EMCallSession *callSession;
+@property (strong, nonatomic) IBOutlet UILabel *className;
+
+@property (strong, nonatomic) IBOutlet UILabel *classTime;
+@property (strong, nonatomic) IBOutlet UILabel *classNumber;
+
+@property (strong, nonatomic) IBOutlet UILabel *classSignNumber;
+@property (strong, nonatomic) IBOutlet UIButton *classManage;
+@property (strong, nonatomic)UserModel * user;
 @end
 
 @implementation CourseDetailsViewController
@@ -45,6 +53,22 @@
     _signInBtn.layer.masksToBounds = YES;
     _signInBtn.layer.borderWidth = 1;
     _signInBtn.layer.borderColor = [[UIColor whiteColor]CGColor];
+    
+    _user = [[Appsetting sharedInstance] getUsetInfo];
+    
+    _className.text = [NSString stringWithFormat:@"课程名：%@",_c.name];
+    NSMutableString *strUrl = [NSMutableString stringWithFormat:@"%@",_c.time];
+    
+//    [strUrl deleteCharactersInRange:NSMakeRange(0, 81)];
+    _classTime.text = strUrl;
+    
+    _classNumber.text = [NSString stringWithFormat:@""];
+    if ([[NSString stringWithFormat:@"%@",_c.teacherId] isEqualToString:[NSString stringWithFormat:@"%@",_user.peopleId]]) {
+        _classSignNumber.text = [NSString stringWithFormat:@"%@",_c.total];
+        [_classManage setTitle:@"班级管理" forState:UIControlStateNormal];
+    }
+    
+    
 }
 /**
  *  显示navigation的标题
@@ -67,29 +91,6 @@
     
 }
 - (IBAction)signInBtnPressed:(id)sender {
-//        UIAlertView *alertView = [[UIAlertView alloc]
-//                                  initWithTitle:@"发起签到"
-//                                  message:nil
-//                                  delegate:self
-//                                  cancelButtonTitle:nil
-//                                  otherButtonTitles:nil];
-//        [alertView show];
-//    UILabel * tipLabel = [[UILabel alloc] initWithFrame:CGRectMake(APPLICATION_WIDTH/2-60, 300, 120, 30)];
-//    // 设置提示内容
-//    [tipLabel setText:@"发起签到"];
-//    tipLabel.backgroundColor = [UIColor whiteColor];
-//    tipLabel.layer.cornerRadius = 5;
-//    tipLabel.layer.masksToBounds = YES;
-//    tipLabel.textAlignment = NSTextAlignmentCenter;
-//    tipLabel.textColor = [UIColor blackColor];
-//    [self.view addSubview:tipLabel];
-//    // 设置时间和动画效果
-//    [UIView animateWithDuration:1.5 animations:^{
-//        tipLabel.alpha = 0.0;
-//    } completion:^(BOOL finished) {
-//        // 动画完毕从父视图移除
-//        [tipLabel removeFromSuperview];
-//    }];
     SignListViewController * signListVC = [[SignListViewController alloc] init];
     self.hidesBottomBarWhenPushed = YES;
     [self.navigationController pushViewController:signListVC animated:YES];
@@ -176,6 +177,8 @@
         NSLog(@"抢答");
         ConversationVC * c =[[ConversationVC alloc] init];
         self.hidesBottomBarWhenPushed = YES;
+        UserModel * s = [[Appsetting sharedInstance] getUsetInfo];
+        c.HyNumaber = [NSString stringWithFormat:@"%@%@",s.school,_c.teacherId];
         [self.navigationController pushViewController:c animated:YES];
     }
     else if ([platform isEqualToString:InteractionType_Test]){

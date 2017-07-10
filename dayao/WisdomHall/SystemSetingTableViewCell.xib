@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="12118" systemVersion="16E195" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="12121" systemVersion="16E195" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
-        <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12086"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12089"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -37,6 +36,7 @@
                 </constraints>
             </tableViewCellContentView>
             <connections>
+                <outlet property="headImage" destination="kxV-9w-8fV" id="2pz-EQ-gCx"/>
                 <outlet property="setingImage" destination="Gf3-dD-PGP" id="VrO-fc-eCG"/>
                 <outlet property="timeLabel" destination="koa-06-UPZ" id="Hsz-ZG-sY1"/>
             </connections>
@@ -111,7 +111,11 @@
                     <constraint firstItem="z4W-oW-UEr" firstAttribute="leading" secondItem="4UQ-JU-zSV" secondAttribute="leading" constant="150" id="wGF-p7-AwQ"/>
                 </constraints>
             </tableViewCellContentView>
-            <point key="canvasLocation" x="65" y="208.5"/>
+            <connections>
+                <outlet property="userName" destination="6eM-UU-0sH" id="P8D-aC-UBV"/>
+                <outlet property="workNo" destination="oVy-OO-iVK" id="qBm-ZK-FFh"/>
+            </connections>
+            <point key="canvasLocation" x="59" y="244"/>
         </tableViewCell>
         <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="SystemSetingTableViewCellThird" rowHeight="51" id="EpJ-3e-0ic" customClass="SystemSetingTableViewCell">
             <rect key="frame" x="0.0" y="0.0" width="375" height="51"/>

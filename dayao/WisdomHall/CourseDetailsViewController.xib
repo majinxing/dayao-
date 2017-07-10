@@ -4,7 +4,6 @@
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
-        <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12089"/>
         <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -12,6 +11,11 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="CourseDetailsViewController">
             <connections>
+                <outlet property="classManage" destination="Pc8-bX-Cqc" id="r0o-V4-McP"/>
+                <outlet property="className" destination="Jor-9o-9Ge" id="kVd-Th-Iob"/>
+                <outlet property="classNumber" destination="Q4V-2J-MHP" id="UUa-Uy-KCs"/>
+                <outlet property="classSignNumber" destination="Ivm-c9-GB2" id="5Z3-vF-CYb"/>
+                <outlet property="classTime" destination="PHD-DO-ao5" id="UNJ-bE-JNn"/>
                 <outlet property="interactive" destination="Apj-gD-ZOF" id="mnF-WJ-FPv"/>
                 <outlet property="signInBtn" destination="QXI-Lw-n8v" id="1RJ-QX-U5R"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
@@ -31,7 +35,7 @@
                         <constraint firstAttribute="height" constant="150" id="jMG-bP-pXQ"/>
                     </constraints>
                 </imageView>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="课程名称：线性代数" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Jor-9o-9Ge">
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Jor-9o-9Ge">
                     <rect key="frame" x="207.5" y="80" width="159.5" height="25"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="25" id="yV5-AW-pca"/>
@@ -40,7 +44,7 @@
                     <nil key="textColor"/>
                     <nil key="highlightedColor"/>
                 </label>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="签到人数：1/50人" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PHD-DO-ao5">
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PHD-DO-ao5">
                     <rect key="frame" x="207.5" y="115" width="159.5" height="25"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="25" id="tKa-Jl-fdj"/>
@@ -49,7 +53,7 @@
                     <nil key="textColor"/>
                     <nil key="highlightedColor"/>
                 </label>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="上课时间：2016-4-6" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Q4V-2J-MHP">
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Q4V-2J-MHP">
                     <rect key="frame" x="207.5" y="150" width="159.5" height="25"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="25" id="KhC-9G-OUR"/>
@@ -58,7 +62,7 @@
                     <nil key="textColor"/>
                     <nil key="highlightedColor"/>
                 </label>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="班       级：计算机1班" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ivm-c9-GB2">
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ivm-c9-GB2">
                     <rect key="frame" x="207.5" y="185" width="159.5" height="25"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="25" id="JOU-Ib-GWp"/>
@@ -89,11 +93,10 @@
                 </button>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Pc8-bX-Cqc">
                     <rect key="frame" x="0.0" y="340" width="375" height="40"/>
-                    <color key="backgroundColor" red="0.81192707684697474" green="0.99078704350350677" blue="1" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="40" id="G7l-Cm-HxZ"/>
                     </constraints>
-                    <state key="normal" title="班级人员管理"/>
                     <connections>
                         <action selector="classManagementBtnPressed:" destination="-1" eventType="touchUpInside" id="pW7-kf-nOe"/>
                     </connections>

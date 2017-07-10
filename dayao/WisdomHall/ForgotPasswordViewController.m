@@ -16,6 +16,10 @@
 @property (strong, nonatomic) IBOutlet UITextField *Verification;
 @property (strong, nonatomic) IBOutlet UIButton *sendVerification;
 
+@property (nonatomic,assign)NSInteger _nowSencond;
+
+@property (nonatomic,strong)NSTimer *showTimer;
+
 @end
 
 @implementation ForgotPasswordViewController
@@ -44,37 +48,80 @@
                                                                       NSForegroundColorAttributeName:[UIColor blackColor]}];
     self.title = @"忘记密码";
 }
+
+
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
 - (IBAction)sendVerificationBtnPressed:(id)sender {
     if ([UIUtils isSimplePhone:_phoneNumber.text]) {
-        [SMSSDK getVerificationCodeByMethod:SMSGetCodeMethodSMS phoneNumber:_phoneNumber.text zone:@"86" result:^(NSError *error) {
-            
-            if (!error)
-            {
-                NSLog(@"成功");
-            }
-            else
-            {
-                NSLog(@"失败");
-            }
-        }];
+        [self startTimer];
         
     }else{
         UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"请输入正确的手机号" message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: nil];
         [alertView show];
     }
-
 }
+- (void)startTimer
+{
+    [SMSSDK getVerificationCodeByMethod:SMSGetCodeMethodSMS phoneNumber:_phoneNumber.text zone:@"86" result:^(NSError *error) {
+        
+        if (!error)
+        {
+            NSLog(@"成功");
+        }
+        else
+        {
+            NSLog(@"失败");
+        }
+    }];
+    [_sendVerification setEnabled:NO];
+        //时间间隔
+        NSTimeInterval timeInterval = 1.0 ;
+        __nowSencond = 0;
+        //定时器
+        _showTimer = [NSTimer scheduledTimerWithTimeInterval:timeInterval
+                                                      target:self
+                                                    selector:@selector(handleMaxShowTimer:)
+                                                    userInfo:nil
+                                                     repeats:YES];
+        [_showTimer fire];
+}
+
+//触发事件
+-(void)handleMaxShowTimer:(NSTimer *)theTimer
+{
+    __nowSencond ++;
+    NSInteger count = 60 - __nowSencond;
+    if(__nowSencond >= 60)
+    {
+        [_showTimer invalidate];
+        [_sendVerification setEnabled:YES];
+    }
+    
+    NSString *str = [NSString stringWithFormat:@"%ld秒", (long)count];
+    [_sendVerification setTitle:str forState:UIControlStateNormal];
+    [_sendVerification setTitleColor:[UIColor colorWithHexString:@"#999999"] forState:UIControlStateNormal];
+    _sendVerification.layer.borderColor=[[UIColor colorWithHexString:@"#999999"] CGColor];
+    
+    //_sendVerification.titleLabel.text = str;// @"60秒";
+    //    _sendVerification.backgroundColor=[UIColor grayColor];
+    if(count <= 0)
+    {
+        [_sendVerification setTitle:@"获取验证码" forState:UIControlStateNormal];
+        [_sendVerification setTitleColor:[UIColor colorWithHexString:@"#01aeff"] forState:UIControlStateNormal];
+        _sendVerification.layer.borderColor=[[UIColor colorWithHexString:@"#01aeff"] CGColor];
+    }
+}
+
 - (IBAction)nextButtonPressed:(id)sender {
     
-    RedefineThePasswordViewController * redeFineVC = [[RedefineThePasswordViewController alloc] init];
-    redeFineVC.phoneNumber = _phoneNumber.text;
-    [self.navigationController pushViewController:redeFineVC animated:YES];
+//    RedefineThePasswordViewController * redeFineVC = [[RedefineThePasswordViewController alloc] init];
+//    redeFineVC.phoneNumber = _phoneNumber.text;
+//    [self.navigationController pushViewController:redeFineVC animated:YES];
     
-    [SMSSDK commitVerificationCode:_Verification phoneNumber:_phoneNumber.text zone:@"86" result:^(NSError *error) {
+    [SMSSDK commitVerificationCode:_Verification.text phoneNumber:_phoneNumber.text zone:@"86" result:^(NSError *error) {
         
         if (!error)
         {

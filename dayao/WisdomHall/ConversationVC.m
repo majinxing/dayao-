@@ -27,7 +27,6 @@
 
 @implementation ConversationVC
 
-
 -(void)viewWillAppear:(BOOL)animated{
     
     if (!_callSession) {
@@ -46,7 +45,7 @@
         
         NSLog(@"currentUsername = %@  ,  string = %@",[[EMClient sharedClient] currentUsername],string);
         //15243670131"
-        [[EMClient sharedClient].callManager startCall:EMCallTypeVoice remoteName:@"500123456789" ext:nil completion:^(EMCallSession *aCallSession, EMError *aError) {
+        [[EMClient sharedClient].callManager startCall:EMCallTypeVoice remoteName:_HyNumaber ext:nil completion:^(EMCallSession *aCallSession, EMError *aError) {
             
             NSLog(@"startCall : errorDescription = %@",aError.errorDescription);
             

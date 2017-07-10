@@ -20,6 +20,8 @@
 #import "CollectionHeadView.h"
 #import "UserModel.h"
 #import "ClassModel.h"
+#import "MJRefresh.h"
+
 
 static NSString *cellIdentifier = @"cellIdentifier";
 
@@ -27,6 +29,9 @@ static NSString *cellIdentifier = @"cellIdentifier";
 @property (nonatomic,strong) UICollectionView * collection;
 @property (nonatomic,strong) UserModel * userModel;
 @property (nonatomic,strong)NSMutableArray * classAry;
+/** @brief 当前加载的页数 */
+@property (nonatomic) int page;
+
 @end
 
 @implementation SignInViewController
@@ -37,18 +42,16 @@ static NSString *cellIdentifier = @"cellIdentifier";
     _classAry = [NSMutableArray arrayWithCapacity:4];
     
     [self setNavigationTitle];
-    
-    [self getData];
-    
+        
     [self addCollection];
     
     // Do any additional setup after loading the view from its nib.
 }
 -(void)addCollection{
     CollectionFlowLayout * flowLayout = [[CollectionFlowLayout alloc] init];
-    _collection = [[UICollectionView alloc] initWithFrame:CGRectMake(0, 0,APPLICATION_WIDTH,APPLICATION_HEIGHT-48) collectionViewLayout:flowLayout];
+    _collection = [[UICollectionView alloc] initWithFrame:CGRectMake(0, 64,APPLICATION_WIDTH,APPLICATION_HEIGHT-48-64) collectionViewLayout:flowLayout];
     flowLayout.headerReferenceSize = CGSizeMake(0, APPLICATION_HEIGHT/4);
-    
+    self.automaticallyAdjustsScrollViewInsets = NO;
     //注册
     [_collection registerClass:[CourseCollectionViewCell class] forCellWithReuseIdentifier:cellIdentifier];
     [_collection registerClass:[UICollectionReusableView class] forSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:@"UICollectionViewHeader"];
@@ -57,17 +60,56 @@ static NSString *cellIdentifier = @"cellIdentifier";
     _collection.allowsMultipleSelection = YES;
     _collection.showsVerticalScrollIndicator = NO;
     _collection.showsHorizontalScrollIndicator = NO;
-//取消滑动的滚动条
+    //取消滑动的滚动条
     _collection.decelerationRate = UIScrollViewDecelerationRateNormal;
     _collection.backgroundColor = [UIColor clearColor];
+    
+    __weak SignInViewController * weakSelf = self;
+    [self.collection addHeaderWithCallback:^{
+        [weakSelf headerRereshing];
+    }];
+    [self.collection addFooterWithCallback:^{
+        [weakSelf footerRereshing];
+    }];
+    
+    [self headerRereshing];
+    
     [self.view addSubview:_collection];
 }
--(void)getData{
+-(void)headerRereshing{
+    self.page = 1;
+    [self fetchChatRoomsWithPage:self.page isHeader:YES];
+}
+-(void)footerRereshing{
+    self.page +=1;
+    [self fetchChatRoomsWithPage:self.page isHeader:NO];
+}
+- (void)fetchChatRoomsWithPage:(NSInteger)aPage
+                      isHeader:(BOOL)aIsHeader{
+    [self hideHud];
+    [self showHudInView:self.view hint:NSLocalizedString(@"正在加载数据", @"Load data...")];
+    __weak typeof(self)weakSelf = self;
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        if (weakSelf) {
+            SignInViewController * strongSelf = weakSelf;
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [strongSelf hideHud];
+                [strongSelf getDataWithPage:aPage];
+            });
+            if (aIsHeader) {
+                [strongSelf.collection headerEndRefreshing];
+            }else{
+                [strongSelf.collection footerEndRefreshing];
+            }
+        }
+    });
+}
+-(void)getDataWithPage:(NSInteger)page{
     _userModel = [[Appsetting sharedInstance] getUsetInfo];
     
-    NSDictionary * dict = [[NSDictionary alloc] initWithObjectsAndKeys:_userModel.peopleId,@"teacherId",[UIUtils getTime],@"startTime",[UIUtils getTime],@"endTime",@"1",@"page",nil];
+    NSDictionary * dict = [[NSDictionary alloc] initWithObjectsAndKeys:_userModel.peopleId,@"teacherId",[UIUtils getTime],@"startTime",[UIUtils getTime],@"endTime",[NSString stringWithFormat:@"%ld",page],@"page",nil];
     [[NetworkRequest sharedInstance] POST:QueryCourse dict:dict succeed:^(id data) {
-//        NSLog(@"succeed %@",data);
+        //        NSLog(@"succeed %@",data);
         NSDictionary * dict = [data objectForKey:@"body"];
         NSArray * ary = [dict objectForKey:@"list"];
         for (int i = 0; i<ary.count; i++) {
@@ -95,7 +137,8 @@ static NSString *cellIdentifier = @"cellIdentifier";
     self.title = @"课堂";
     
     UIBarButtonItem *myButton = [[UIBarButtonItem alloc] initWithTitle:@"创建" style:UIBarButtonItemStylePlain target:self action:@selector(createAcourse)];
-    self.navigationItem.rightBarButtonItem = myButton;
+   // self.navigationItem.rightBarButtonItem = myButton;
+   
     UIBarButtonItem * selection = [[UIBarButtonItem alloc] initWithTitle:@"搜索" style:UIBarButtonItemStylePlain target:self action:@selector(selectionBtnPressed)];
     self.navigationItem.leftBarButtonItem = selection;
 }
@@ -103,7 +146,7 @@ static NSString *cellIdentifier = @"cellIdentifier";
  * 搜索
  **/
 -(void)selectionBtnPressed{
-
+    
 }
 /**
  *  创建课程
@@ -160,6 +203,7 @@ static NSString *cellIdentifier = @"cellIdentifier";
 {
     self.hidesBottomBarWhenPushed = YES;
     CourseDetailsViewController * cdetailVC = [[CourseDetailsViewController alloc] init];
+    cdetailVC.c = _classAry[indexPath.row];
     [self.navigationController pushViewController:cdetailVC animated:YES];
     self.hidesBottomBarWhenPushed=NO;
 }
@@ -168,6 +212,8 @@ static NSString *cellIdentifier = @"cellIdentifier";
 {
     self.hidesBottomBarWhenPushed = YES;
     CourseDetailsViewController * cdetailVC = [[CourseDetailsViewController alloc] init];
+    cdetailVC.c = _classAry[indexPath.row];
+
     [self.navigationController pushViewController:cdetailVC animated:YES];
     self.hidesBottomBarWhenPushed=NO;
 }

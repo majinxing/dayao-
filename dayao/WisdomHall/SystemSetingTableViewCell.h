@@ -7,9 +7,17 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "DYHeader.h"
 
 @interface SystemSetingTableViewCell : UITableViewCell
 @property (strong, nonatomic) IBOutlet UILabel *timeLabel;
 @property (strong, nonatomic) IBOutlet UILabel *setingLabel;
+@property (strong, nonatomic) IBOutlet UIImageView *headImage;
+@property (strong, nonatomic) IBOutlet UILabel *userName;
+
+@property (weak, nonatomic) IBOutlet UILabel *workNo;
+@property (nonatomic,strong) UserModel * user;
+
+
 + (instancetype)tempTableViewCellWith:(UITableView *)tableView indexPath:(NSIndexPath *)indexPath;
 @end

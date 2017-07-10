@@ -47,7 +47,12 @@
     _hostName.text = [NSString stringWithFormat:@"主持人：%@",meetingModel.meetingHost];
     
     _place.text = [NSString stringWithFormat:@"会议地点：%@",meetingModel.meetingPlace];
-    _time.text = [NSString stringWithFormat:@"时  间：%@",meetingModel.meetingTime];
+    
+    NSMutableString *strUrl = [NSMutableString stringWithFormat:@"%@",meetingModel.meetingTime];
+    
+    [strUrl deleteCharactersInRange:NSMakeRange(0,5)];
+
+    _time.text = [NSString stringWithFormat:@"时  间：%@",strUrl];
 }
 
 -(void)setClassInfoForContentView:(ClassModel *)classModel{
@@ -56,6 +61,10 @@
     _hostName.text = [NSString stringWithFormat:@"老师：%@",classModel.teacherId];
     
     _place.text = [NSString stringWithFormat:@"上课地点：%@",classModel.address];
-    _time.text = [NSString stringWithFormat:@"时  间：%@",classModel.time];
+    NSMutableString *strUrl = [NSMutableString stringWithFormat:@"%@",classModel.time];
+    
+    [strUrl deleteCharactersInRange:NSMakeRange(0,5)];
+    
+    _time.text = [NSString stringWithFormat:@"时  间：%@",strUrl];
 }
 @end
