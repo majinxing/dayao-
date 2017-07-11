@@ -9,6 +9,7 @@
 #import "RedefineThePasswordViewController.h"
 #import "DYTabBarViewController.h"
 #import "DYHeader.h"
+#import "TheLoginViewController.h"
 
 @interface RedefineThePasswordViewController ()
 
@@ -34,12 +35,20 @@
             UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"密码不能为空" message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: nil];
             [alertView show];
         }else{
-            NSDictionary * dict = [[NSDictionary alloc] initWithObjectsAndKeys:_phoneNumber,@"id",_password.text,@"password",nil];
+            NSDictionary * dict = [[NSDictionary alloc] initWithObjectsAndKeys:_phoneNumber,@"pho",_password.text,@"password",nil];
             
             [[NetworkRequest sharedInstance] POST:ResetPassword dict:dict succeed:^(id data) {
                 NSLog(@"succeed%@",data);
-                DYTabBarViewController *rootVC = [[DYTabBarViewController alloc] init];
-                [UIApplication sharedApplication].keyWindow.rootViewController = rootVC;
+                
+                for (UIViewController *controller in self.navigationController.viewControllers) {
+                    if ([controller isKindOfClass:[TheLoginViewController class]]) {
+                        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"修改密码成功请登录" message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: nil];
+                        [alertView show];
+                        [self.navigationController popToViewController:controller animated:YES];
+                    }
+                }
+//                DYTabBarViewController *rootVC = [[DYTabBarViewController alloc] init];
+//                [UIApplication sharedApplication].keyWindow.rootViewController = rootVC;
                 
             } failure:^(NSError *error) {
                 

@@ -18,7 +18,7 @@
 - (void)awakeFromNib {
     [super awakeFromNib];
     UserModel * userl = [[Appsetting sharedInstance] getUsetInfo];
-    _placeholder = [NSArray arrayWithObjects:[NSString stringWithFormat:@"%@",userl.userName],[NSString stringWithFormat:@"%@",userl.studentId],[NSString stringWithFormat:@"%@",userl.school],[NSString stringWithFormat:@"%@",userl.departments],[NSString stringWithFormat:@"%@",userl.professional], nil];
+    _placeholder = [NSArray arrayWithObjects:[NSString stringWithFormat:@"%@",userl.userName],[NSString stringWithFormat:@"%@",userl.studentId],[NSString stringWithFormat:@"%@",userl.schoolName],[NSString stringWithFormat:@"%@",userl.departmentsName],[NSString stringWithFormat:@"%@",userl.professionalName], nil];
     _labelAry = [NSArray arrayWithObjects:@"姓名",@"学号",@"学校",@"院系",@"专业", nil];
     
     // Initialization code
