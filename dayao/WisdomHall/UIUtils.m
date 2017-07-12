@@ -7,6 +7,7 @@
 //
 
 #import "UIUtils.h"
+#import <SystemConfiguration/CaptiveNetwork.h>
 
 @implementation UIUtils
 +(void)addNavigationWithView:(UIView *)view withTitle:(NSString *)str{
@@ -116,18 +117,154 @@
     NSDateComponents *nowCmps = [calendar components:unit fromDate:[NSDate date]];
     NSString *month;
     if (nowCmps.month<10) {
-        month = [NSString stringWithFormat:@"0%ld",nowCmps.month];
+        month = [NSString stringWithFormat:@"0%ld",(long)nowCmps.month];
     }else{
-        month = [NSString stringWithFormat:@"%ld",nowCmps.month];
+        month = [NSString stringWithFormat:@"%ld",(long)nowCmps.month];
     }
     NSString * day;
     if (nowCmps.day<10) {
-        day = [NSString stringWithFormat:@"0%ld",nowCmps.day];
+        day = [NSString stringWithFormat:@"0%ld",(long)nowCmps.day];
     }else{
-        day = [NSString stringWithFormat:@"%ld",nowCmps.day];
+        day = [NSString stringWithFormat:@"%ld",(long)nowCmps.day];
     }
-    NSString *nowDate = [NSString stringWithFormat:@"%ld-%@-%@",nowCmps.year,month,day];
+    NSString *nowDate = [NSString stringWithFormat:@"%ld-%@-%@",(long)nowCmps.year,month,day];
     
     return nowDate;
 }
+//获取当前的无线信号
+
++(NSMutableDictionary *)getWifiName
+
+{
+    NSMutableDictionary * dict = [[NSMutableDictionary alloc] init];
+    
+    NSString *wifiName = nil;
+    
+    
+    
+    CFArrayRef wifiInterfaces = CNCopySupportedInterfaces();
+    
+    
+    
+    if (!wifiInterfaces) {
+        
+        return dict;
+        
+    }
+    
+    NSArray *interfaces = (__bridge NSArray *)wifiInterfaces;
+    
+    
+    for (NSString *interfaceName in interfaces) {
+        
+        CFDictionaryRef dictRef = CNCopyCurrentNetworkInfo((__bridge CFStringRef)(interfaceName));
+        
+        
+        
+        if (dictRef) {
+            
+            NSDictionary *networkInfo = (__bridge NSDictionary *)dictRef;
+            
+           // NSLog(@"network info -> %@", networkInfo);
+            dict = networkInfo;
+            wifiName = [networkInfo objectForKey:(__bridge NSString*)kCNNetworkInfoKeySSID];
+            
+            CFRelease(dictRef);
+            
+        }
+        
+    }
+    
+    CFRelease(wifiInterfaces);
+    
+    return dict;
+    
+}
+
++(NSString *)specificationMCKAddress:(NSString *)str{
+    NSMutableString * bssid = [NSMutableString stringWithString:[NSString stringWithFormat:@"%@",str]];
+    
+    NSArray * ary = [bssid componentsSeparatedByString:@":"];
+    
+    NSString * str1 = [[NSString alloc] init];
+    for (int i = 0; i<ary.count; i++) {
+        NSString * s = [NSString stringWithFormat:@"%@",ary[i]];
+        if (s.length==2) {
+            str1 = [NSString stringWithFormat:@"%@%@",str1,s];
+        }else{
+            str1 = [NSString stringWithFormat:@"%@0%@",str1,s];
+        }
+    }
+    
+    //            bssid = [bssid stringByReplacingOccurrencesOfString:@":" withString:@""];
+    
+    bssid = [str1 uppercaseString];
+    return bssid;
+}
+
+/**
+ *  判断当前时间是否处于某个时间段内
+ *
+ *  @param startTime        开始时间
+ *  @param expireTime       结束时间
+ */
+
++(BOOL)validateWithStartTime:(NSString *)startTime withExpireTime:(NSString *)expireTime {
+    
+    NSArray *ary = [startTime componentsSeparatedByString:@" "];
+    expireTime = ary[1];
+    NSMutableArray * ary1 = [expireTime componentsSeparatedByString:@":"];
+    expireTime = ary1[0];
+    long n = [expireTime integerValue];
+    if (n == 12||n == 24) {
+        n = 1;
+        ary1[0] = [NSString stringWithFormat:@"%ld",n];
+    }else {
+        n = n+1;
+        ary1[0] = [NSString stringWithFormat:@"%ld",n];
+    }
+    expireTime = [NSString stringWithFormat:@"%@ %@-%@",ary[0],ary1[0],ary1[1]];
+    NSDate *today = [NSDate date];
+    
+    NSDateFormatter *dateFormat = [[NSDateFormatter alloc] init];
+    // 时间格式,此处遇到过坑,建议时间HH大写,手机24小时进制和12小时禁止都可以完美格式化
+    [dateFormat setDateFormat:@"yyyy-MM-dd HH:mm"];
+    
+    NSDate *start = [dateFormat dateFromString:startTime];
+    NSDate *expire = [dateFormat dateFromString:expireTime];
+    
+    if ([today compare:start] == NSOrderedDescending && [today compare:expire] == NSOrderedAscending) {
+        return YES;
+    }
+    return NO;
+}
 @end
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

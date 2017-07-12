@@ -67,7 +67,7 @@
 //    
 //    [[EMClient sharedClient].roomManager addDelegate:self delegateQueue:nil];
     
-    [self getWifiName];
+//    [self getWifiName];
     
     return YES;
 }

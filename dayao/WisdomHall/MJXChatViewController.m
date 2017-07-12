@@ -11,7 +11,7 @@
 #import <Hyphenate/Hyphenate.h>
 #import "ChatHelper.h"
 #import "DYHeader.h"
-
+#import "RecorderView.h"
 
 #define RGBA_COLOR(R, G, B, A) [UIColor colorWithRed:((R) / 255.0f) green:((G) / 255.0f) blue:((B) / 255.0f) alpha:A]
 #define  MaxTextViewHeight 80 //限制文字输入的高度
@@ -36,6 +36,7 @@
 @property (nonatomic,strong)NSMutableArray * dataChat;
 
 @property (nonatomic,assign)BOOL currentIsInBottom;
+@property (nonatomic,strong)RecorderView  *recorderView;
 @end
 
 @implementation MJXChatViewController
@@ -134,8 +135,14 @@
     _sendVoice.layer.masksToBounds = YES;
     _sendVoice.layer.borderWidth = 1;
     _sendVoice.layer.borderColor = RGBA_COLOR(214, 214, 214, 1).CGColor;
+    [_sendVoice addTarget:self action:@selector(sendVoicrPressed) forControlEvents:UIControlEventTouchUpInside];
     [_sendVoice setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
     [_btoView addSubview:_sendVoice];
+}
+-(void)sendVoicrPressed{
+     _recorderView = [[RecorderView alloc] initWithFrame:self.view.frame];
+    [_recorderView showInView:self.view];
+
 }
 -(void)sendVoice:(UIButton *)btn{
     if (_sendVoice.frame.size.height == 0) {

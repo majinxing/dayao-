@@ -50,7 +50,11 @@ static NSString *cellIdentifier = @"cellIdentifierPersonal";
     [self.navigationController.navigationBar setTitleTextAttributes:@{
                                                                       NSFontAttributeName:[UIFont systemFontOfSize:17],
                                                                       NSForegroundColorAttributeName:[UIColor blackColor]}];
-    self.title = @"班级管理";
+    if ([UIUtils isBlankString:[NSString stringWithFormat:@"%@",_meeting.meetingId]]) {
+        self.title = @"班级管理";
+    }else{
+        self.title = @"会议管理";
+    }
 }
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
@@ -64,8 +68,10 @@ static NSString *cellIdentifier = @"cellIdentifierPersonal";
 }
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
 {
-    
-    return 14;
+    if (_meeting.signAry.count>0) {
+        return _meeting.signAry.count;
+    }
+    return 0;
 }
 
 
@@ -74,7 +80,7 @@ static NSString *cellIdentifier = @"cellIdentifierPersonal";
 {
     PersonalCollectionViewCell * cell = [collectionView dequeueReusableCellWithReuseIdentifier:cellIdentifier forIndexPath:indexPath];
     cell.backgroundColor = [UIColor whiteColor];
-    //[cell addCourseInfo];
+    [cell setPersonalInfo:_meeting.signAry[indexPath.row]];
     return cell;
     //    CourseCollectionViewCell *cell1 = [collectionView dequeueReusableCellWithReuseIdentifier:cellIdentifier forIndexPath:indexPath];
     //    return cell1;
@@ -107,7 +113,7 @@ didDeselectItemAtIndexPath:(NSIndexPath *)indexPath
 
 #pragma mark UICollectionViewDelegateFlowLayout
 - (CGSize)collectionView:(nonnull UICollectionView *)collectionView layout:(nonnull UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(nonnull NSIndexPath *)indexPath {
-    return CGSizeMake(APPLICATION_WIDTH/3-10, APPLICATION_WIDTH/3-10);
+    return CGSizeMake(APPLICATION_WIDTH/3-10, APPLICATION_WIDTH/3+40);
 }
 
 /*

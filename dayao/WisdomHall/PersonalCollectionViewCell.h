@@ -7,7 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "SignPeople.h"
 
 @interface PersonalCollectionViewCell : UICollectionViewCell
-
+-(void)setPersonalInfo:(SignPeople *)sign;
 @end

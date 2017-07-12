@@ -237,7 +237,7 @@
         [[EMClient sharedClient].callManager endCall:_callSession.callId reason:EMCallEndReasonDecline];
         _callSession = nil;
     }
-    if (self.navigationController.viewControllers.count>0) {
+    if (self.call == CALLING) {
         [self.navigationController popViewControllerAnimated:YES];
     }else{
         DYTabBarViewController *rootVC = [DYTabBarViewController sharedInstance];

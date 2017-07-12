@@ -7,7 +7,15 @@
 //
 
 #import "PersonalCollectionViewCell.h"
+#import "MeetingModel.h"
+#import "SignPeople.h"
 
+@interface PersonalCollectionViewCell()
+@property (strong, nonatomic) IBOutlet UILabel *nameLabel;
+@property (strong, nonatomic) IBOutlet UILabel *workNo;
+
+
+@end
 @implementation PersonalCollectionViewCell
 
 - (void)awakeFromNib {
@@ -22,6 +30,12 @@
         self.backgroundColor = [UIColor clearColor];
     }
     return self;
-    
+}
+-(void)setPersonalInfo:(SignPeople *)sign{
+    SignPeople * s = sign;
+    _nameLabel.text = [NSString stringWithFormat:@"姓名：%@",s.name];
+    _workNo.text = [NSString stringWithFormat:@"工号：%@",s.workNo];
+    _workNo.font = [UIFont systemFontOfSize:11];
+    _workNo.textAlignment = NSTextAlignmentLeft;
 }
 @end

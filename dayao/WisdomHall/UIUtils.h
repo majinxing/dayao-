@@ -29,4 +29,14 @@
  * 获取当前时间
  **/
 +(NSString *)getTime;
+/**
+ * 获取当前的无线信号
+ **/
++(NSMutableDictionary *)getWifiName;
+/**
+ * 规范路由器地址
+ **/
++(NSString *)specificationMCKAddress:(NSString *)str;
+//判断今天是否在这个时间段内
++(BOOL)validateWithStartTime:(NSString *)startTime withExpireTime:(NSString *)expireTime;
 @end

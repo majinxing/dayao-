@@ -7,7 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "MeetingModel.h"
 
 @interface ClassManagementViewController : UIViewController
-
+@property (nonatomic,strong)MeetingModel * meeting;
 @end

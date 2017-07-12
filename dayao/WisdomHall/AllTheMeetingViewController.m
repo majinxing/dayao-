@@ -41,6 +41,11 @@ static NSString * cellIdentifier = @"cellIdentifier";
     
     // Do any additional setup after loading the view from its nib.
 }
+-(void)viewWillAppear:(BOOL)animated{
+    if (_page>0) {
+        [self fetchChatRoomsWithPage:1 isHeader:YES];
+    }
+}
 /**
  *  显示navigation的标题
  **/
@@ -78,6 +83,7 @@ static NSString * cellIdentifier = @"cellIdentifier";
     //取消滑动的滚动条
     _collection.decelerationRate = UIScrollViewDecelerationRateNormal;
     _collection.backgroundColor = [UIColor clearColor];
+    self.collection.alwaysBounceVertical = YES; //垂直方向遇到边框是否总是反弹
     __weak AllTheMeetingViewController * weakSelf = self;
     [self.collection addHeaderWithCallback:^{
         [weakSelf headerRereshing];
@@ -108,7 +114,7 @@ static NSString * cellIdentifier = @"cellIdentifier";
             AllTheMeetingViewController * strongSelf = weakSelf;
             dispatch_async(dispatch_get_main_queue(), ^{
                 [strongSelf hideHud];
-                [strongSelf getDataWithPage:aPage];
+                [strongSelf getDataWithPage:aPage isHeader:aIsHeader];
             });
             if (aIsHeader) {
                 [strongSelf.collection headerEndRefreshing];
@@ -118,14 +124,16 @@ static NSString * cellIdentifier = @"cellIdentifier";
         }
     });
 }
--(void)getDataWithPage:(NSInteger)page{
+-(void)getDataWithPage:(NSInteger)page isHeader:(BOOL)isHeader{
     _userModel = [[Appsetting sharedInstance] getUsetInfo];
     
-    NSDictionary * dict = [[NSDictionary alloc] initWithObjectsAndKeys:[NSString stringWithFormat:@"%ld",page],@"start",_userModel.peopleId,@"teacherId",[UIUtils getTime],@"startTime",@"",@"endTime", nil];
+    NSDictionary * dict = [[NSDictionary alloc] initWithObjectsAndKeys:[NSString stringWithFormat:@"%ld",(long)page],@"start",_userModel.peopleId,@"teacherId",[UIUtils getTime],@"startTime",@"",@"endTime", nil];
     [[NetworkRequest sharedInstance] GET:QueryMeetingSelfCreate dict:dict succeed:^(id data) {
         NSDictionary * dict = [data objectForKey:@"header"];
         if ([[dict objectForKey:@"code"] isEqualToString:@"0000"]) {
-            [_meetingModelAry removeAllObjects];
+            if (isHeader) {
+                [_meetingModelAry removeAllObjects];
+            }
             NSArray * d = [[data objectForKey:@"body"] objectForKey:@"list"];
             for (int i = 0; i<d.count; i++) {
                 MeetingModel * m = [[MeetingModel alloc] init];
@@ -151,14 +159,19 @@ static NSString * cellIdentifier = @"cellIdentifier";
             for (int i = 0; i<d.count; i++) {
                 MeetingModel * m = [[MeetingModel alloc] init];
                 [m setMeetingInfoWithDict:d[i]];
-                for (int j = 0; j<_meetingModelAry.count; j++) {
-                    MeetingModel * n = _meetingModelAry[j];
-                    if ([[NSString stringWithFormat:@"%@",n.meetingId] isEqualToString:[NSString stringWithFormat:@"%@",m.meetingId]]) {
-                        break;
-                    }else if(j == (_meetingModelAry.count - 1)){
-                        [_meetingModelAry addObject:m];
+                if (_meetingModelAry.count>0) {
+                    for (int j = 0; j<_meetingModelAry.count; j++) {
+                        MeetingModel * n = _meetingModelAry[j];
+                        if ([[NSString stringWithFormat:@"%@",n.meetingId] isEqualToString:[NSString stringWithFormat:@"%@",m.meetingId]]) {
+                            break;
+                        }else if(j == (_meetingModelAry.count - 1)){
+                            [_meetingModelAry addObject:m];
+                        }
                     }
+                }else{
+                    [_meetingModelAry addObject:m];
                 }
+                
               
             }
             [_collection reloadData];

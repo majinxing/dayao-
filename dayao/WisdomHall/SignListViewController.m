@@ -106,16 +106,12 @@
 }
 #pragma mark  UITableViewdelegate
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
-    return 4;
+    return 2;
 }
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
-    if (section == 0) {
+    if (section==0) {
         return 1;
-    }else if (section == 1){
-        return 1;
-    }else if(section == 2){
-        return 1;
-    }else if (_meetingModel.m>0&&section == 3){
+    }if (_meetingModel.m>0&&section==1){
         return _meetingModel.m;
     }
     return 0;
@@ -124,23 +120,17 @@
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     PersonalInfoTableViewCell * cell = [PersonalInfoTableViewCell tempTableViewCellWith:tableView indexPath:indexPath array:_meetingModel.signNo];
     cell.delegate = self;
-    if (indexPath.section == 2) {
-        [cell setSignNumebr:[NSString stringWithFormat:@"%ld",_meetingModel.m]];
-    }
+    [cell setSignNumebr:[NSString stringWithFormat:@"%ld",(long)_meetingModel.m]];
     return cell;
 }
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
-    if (indexPath.section == 0) {
-        return 40;
-    }else if (indexPath.section == 1){
-        return 50;
-    }else if (indexPath.section == 2){
-        return 50;
+    if (indexPath.section == 1) {
+        return 60;
     }
-    return 60;
+    return 50;
 }
 -(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
     if (section == 0) {

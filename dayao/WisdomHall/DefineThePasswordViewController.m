@@ -57,7 +57,7 @@
 }
 -(void)saveBtnPressed{
     NSMutableDictionary * dict = [[NSMutableDictionary alloc] init];
-    NSArray * ary = [[NSArray alloc] initWithObjects:@"name",@"password",@"p",@"universityId",@"type",@"workNo",@"facultyId",@"majorId",@"classId", nil];
+    NSArray * ary = [[NSArray alloc] initWithObjects:@"name",@"password",@"p",@"universityId",@"type",@"workNo",@"facultyId",@"majorId",@"classId",nil];
     for (int i = 0 ; i<ary.count; i++) {
         if ([_textFileAry[i] isEqualToString:@""]) {
             UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"请填写完整" message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: nil];
@@ -79,6 +79,7 @@
             [dict setObject:_textFileAry[i] forKey:ary[i]];
         }
     }
+    [dict setObject:@"111111" forKey:@"imPswd"];
     
     [[NetworkRequest sharedInstance] POST:Register dict:dict succeed:^(id data) {
         NSLog(@"succeed:%@",data);
