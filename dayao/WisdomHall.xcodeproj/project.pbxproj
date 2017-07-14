@@ -49,6 +49,8 @@
 		8B081E141F0C980200493B81 /* SelectClassRoomViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8B081E121F0C980200493B81 /* SelectClassRoomViewController.xib */; };
 		8B081E171F0CBA8900493B81 /* ClassRoomModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B081E161F0CBA8900493B81 /* ClassRoomModel.m */; };
 		8B081E1A1F0E0FA400493B81 /* SignPeople.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B081E191F0E0FA400493B81 /* SignPeople.m */; };
+		8B0D960B1F1893A2006796E3 /* CreateCouresTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B0D96091F1893A2006796E3 /* CreateCouresTableViewCell.m */; };
+		8B0D960C1F1893A2006796E3 /* CreateCouresTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8B0D960A1F1893A2006796E3 /* CreateCouresTableViewCell.xib */; };
 		8B0DB1331ED5188C0042DF0D /* ContactModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B0DB1321ED5188C0042DF0D /* ContactModel.m */; };
 		8B0DB1361ED561B80042DF0D /* AnswerModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B0DB1351ED561B80042DF0D /* AnswerModel.m */; };
 		8B0DB13B1ED6CA4E0042DF0D /* ImportTextViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B0DB1391ED6CA4E0042DF0D /* ImportTextViewController.m */; };
@@ -127,6 +129,8 @@
 		8B9CCB8B1F14693B001833FD /* Hyphenate.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 8B9CCB861F1468D6001833FD /* Hyphenate.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		8B9CCC8C1F14D3B7001833FD /* RecorderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B9CCC891F14D3B7001833FD /* RecorderView.m */; };
 		8B9CCC8D1F14D3B7001833FD /* PlayerButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B9CCC8B1F14D3B7001833FD /* PlayerButton.m */; };
+		8B9CCC921F17204B001833FD /* SelectPeopleToClassViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B9CCC901F17204B001833FD /* SelectPeopleToClassViewController.m */; };
+		8B9CCC931F17204B001833FD /* SelectPeopleToClassViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8B9CCC911F17204B001833FD /* SelectPeopleToClassViewController.xib */; };
 		8BA2245E1EADF68500627A1B /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BA2245D1EADF68500627A1B /* main.m */; };
 		8BA224611EADF68500627A1B /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BA224601EADF68500627A1B /* AppDelegate.m */; };
 		8BA224641EADF68500627A1B /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BA224631EADF68500627A1B /* ViewController.m */; };
@@ -517,6 +521,9 @@
 		8B081E161F0CBA8900493B81 /* ClassRoomModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ClassRoomModel.m; sourceTree = "<group>"; };
 		8B081E181F0E0FA400493B81 /* SignPeople.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SignPeople.h; sourceTree = "<group>"; };
 		8B081E191F0E0FA400493B81 /* SignPeople.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SignPeople.m; sourceTree = "<group>"; };
+		8B0D96081F1893A2006796E3 /* CreateCouresTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CreateCouresTableViewCell.h; sourceTree = "<group>"; };
+		8B0D96091F1893A2006796E3 /* CreateCouresTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CreateCouresTableViewCell.m; sourceTree = "<group>"; };
+		8B0D960A1F1893A2006796E3 /* CreateCouresTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CreateCouresTableViewCell.xib; sourceTree = "<group>"; };
 		8B0DB1311ED5188C0042DF0D /* ContactModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ContactModel.h; sourceTree = "<group>"; };
 		8B0DB1321ED5188C0042DF0D /* ContactModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ContactModel.m; sourceTree = "<group>"; };
 		8B0DB1341ED561B80042DF0D /* AnswerModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AnswerModel.h; sourceTree = "<group>"; };
@@ -627,6 +634,9 @@
 		8B9CCC891F14D3B7001833FD /* RecorderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RecorderView.m; sourceTree = "<group>"; };
 		8B9CCC8A1F14D3B7001833FD /* PlayerButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PlayerButton.h; sourceTree = "<group>"; };
 		8B9CCC8B1F14D3B7001833FD /* PlayerButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PlayerButton.m; sourceTree = "<group>"; };
+		8B9CCC8F1F17204B001833FD /* SelectPeopleToClassViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SelectPeopleToClassViewController.h; sourceTree = "<group>"; };
+		8B9CCC901F17204B001833FD /* SelectPeopleToClassViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SelectPeopleToClassViewController.m; sourceTree = "<group>"; };
+		8B9CCC911F17204B001833FD /* SelectPeopleToClassViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SelectPeopleToClassViewController.xib; sourceTree = "<group>"; };
 		8BA224591EADF68500627A1B /* WisdomHall.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WisdomHall.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8BA2245D1EADF68500627A1B /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		8BA2245F1EADF68500627A1B /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -1026,6 +1036,16 @@
 			name = delect;
 			sourceTree = "<group>";
 		};
+		8B0D96071F189373006796E3 /* CreateCourserCell */ = {
+			isa = PBXGroup;
+			children = (
+				8B0D96081F1893A2006796E3 /* CreateCouresTableViewCell.h */,
+				8B0D96091F1893A2006796E3 /* CreateCouresTableViewCell.m */,
+				8B0D960A1F1893A2006796E3 /* CreateCouresTableViewCell.xib */,
+			);
+			name = CreateCourserCell;
+			sourceTree = "<group>";
+		};
 		8B0F412C1EF51EF9001AF4DF /* Chat */ = {
 			isa = PBXGroup;
 			children = (
@@ -1087,6 +1107,23 @@
 				8B9CCB871F1468D6001833FD /* Hyphenate.podspec */,
 			);
 			path = HyphenateFullSDK;
+			sourceTree = "<group>";
+		};
+		8B9CCC8E1F16FEAB001833FD /* CreateCourse */ = {
+			isa = PBXGroup;
+			children = (
+				8B0D96071F189373006796E3 /* CreateCourserCell */,
+				8B7D5D7F1EB961260068058E /* CreateCourseViewController.h */,
+				8B7D5D801EB961260068058E /* CreateCourseViewController.m */,
+				8B7D5D811EB961260068058E /* CreateCourseViewController.xib */,
+				8B081E101F0C980200493B81 /* SelectClassRoomViewController.h */,
+				8B081E111F0C980200493B81 /* SelectClassRoomViewController.m */,
+				8B081E121F0C980200493B81 /* SelectClassRoomViewController.xib */,
+				8B9CCC8F1F17204B001833FD /* SelectPeopleToClassViewController.h */,
+				8B9CCC901F17204B001833FD /* SelectPeopleToClassViewController.m */,
+				8B9CCC911F17204B001833FD /* SelectPeopleToClassViewController.xib */,
+			);
+			name = CreateCourse;
 			sourceTree = "<group>";
 		};
 		8BA224501EADF68500627A1B = {
@@ -1208,6 +1245,7 @@
 		8BA224921EADFE9500627A1B /* SignIn */ = {
 			isa = PBXGroup;
 			children = (
+				8B9CCC8E1F16FEAB001833FD /* CreateCourse */,
 				8B0F412C1EF51EF9001AF4DF /* Chat */,
 				8BF82D741EDFA04A00D33473 /* Vote */,
 				8BF82D6E1EDEC4E800D33473 /* Discuss */,
@@ -1216,12 +1254,6 @@
 				8BA2249A1EADFFA400627A1B /* SignInViewController.h */,
 				8BA2249B1EADFFA400627A1B /* SignInViewController.m */,
 				8BA2249C1EADFFA400627A1B /* SignInViewController.xib */,
-				8B7D5D7F1EB961260068058E /* CreateCourseViewController.h */,
-				8B7D5D801EB961260068058E /* CreateCourseViewController.m */,
-				8B7D5D811EB961260068058E /* CreateCourseViewController.xib */,
-				8B081E101F0C980200493B81 /* SelectClassRoomViewController.h */,
-				8B081E111F0C980200493B81 /* SelectClassRoomViewController.m */,
-				8B081E121F0C980200493B81 /* SelectClassRoomViewController.xib */,
 				8B2E16D21EB9C1EA008B7C57 /* CourseDetailsViewController.h */,
 				8B2E16D31EB9C1EA008B7C57 /* CourseDetailsViewController.m */,
 				8B2E16D41EB9C1EA008B7C57 /* CourseDetailsViewController.xib */,
@@ -1748,7 +1780,7 @@
 					8BA224581EADF68500627A1B = {
 						CreatedOnToolsVersion = 8.3;
 						DevelopmentTeam = AM9UTP2CL3;
-						ProvisioningStyle = Automatic;
+						ProvisioningStyle = Manual;
 						SystemCapabilities = {
 							com.apple.BackgroundModes = {
 								enabled = 1;
@@ -1763,8 +1795,7 @@
 					};
 					8BA2247C1EADF68500627A1B = {
 						CreatedOnToolsVersion = 8.3;
-						DevelopmentTeam = JTL23C2M8H;
-						ProvisioningStyle = Automatic;
+						ProvisioningStyle = Manual;
 						TestTargetID = 8BA224581EADF68500627A1B;
 					};
 					8BF82D881EE167C300D33473 = {
@@ -1820,6 +1851,7 @@
 				8B081DE21F06238E00493B81 /* DefinitionPersonalTableViewCell.xib in Resources */,
 				8B027A251EFA5FF200600E18 /* DataDownloadViewController.xib in Resources */,
 				8BB56D881EB2E2820023DAFF /* RedefineThePasswordViewController.xib in Resources */,
+				8B9CCC931F17204B001833FD /* SelectPeopleToClassViewController.xib in Resources */,
 				8BFB94671EE79745004BB963 /* JoinVoteTableViewCell.xib in Resources */,
 				8B2E16EE1EBAD9F3008B7C57 /* InTheMeetingViewController.xib in Resources */,
 				8B05CB711EC015DB0063EC20 /* PersonalInfoTableViewCell.xib in Resources */,
@@ -1831,6 +1863,7 @@
 				8B081E141F0C980200493B81 /* SelectClassRoomViewController.xib in Resources */,
 				8B17374A1EC58BE400BE3C8F /* TestQuestionsViewController.xib in Resources */,
 				8BB56D8D1EB31C110023DAFF /* SystemSettingsViewController.xib in Resources */,
+				8B0D960C1F1893A2006796E3 /* CreateCouresTableViewCell.xib in Resources */,
 				8BA224A31EADFFE500627A1B /* InteractiveViewController.xib in Resources */,
 				8BE9139A1EEF7EF000000282 /* DiscussListTableViewCell.xib in Resources */,
 				8B1737141EC2F6A700BE3C8F /* NoticeViewController.xib in Resources */,
@@ -1998,6 +2031,7 @@
 				8BFB945D1EE53B2D004BB963 /* VoteModel.m in Sources */,
 				8BE8776C1EBAF82E00866A34 /* ShareButton.m in Sources */,
 				8BA224611EADF68500627A1B /* AppDelegate.m in Sources */,
+				8B0D960B1F1893A2006796E3 /* CreateCouresTableViewCell.m in Sources */,
 				8BE877901EBD69C000866A34 /* CreateTestViewController.m in Sources */,
 				8BFB947A1EE94948004BB963 /* VoteDrawView.m in Sources */,
 				8B081DFB1F06524000493B81 /* HanyuPinyinOutputFormat.m in Sources */,
@@ -2019,6 +2053,7 @@
 				8B027A291EFB4E0000600E18 /* DataDownloadTableViewCell.m in Sources */,
 				8BF8648D1ECAD21200B7EED4 /* UIScrollView+MJRefresh.m in Sources */,
 				8BA2245E1EADF68500627A1B /* main.m in Sources */,
+				8B9CCC921F17204B001833FD /* SelectPeopleToClassViewController.m in Sources */,
 				8BE877701EBC1CA800866A34 /* TextViewController.m in Sources */,
 				8BA224AD1EAE00B000627A1B /* DYTabBarViewController.m in Sources */,
 				8BF864CA1ECAD97300B7EED4 /* UIView+WebCacheOperation.m in Sources */,
@@ -2280,7 +2315,7 @@
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Distribution: yao zhiqiang (AM9UTP2CL3)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: yao zhiqiang (AM9UTP2CL3)";
 				DEVELOPMENT_TEAM = AM9UTP2CL3;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -2391,8 +2426,8 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.dayaokeji.rhythm;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "";
-				PROVISIONING_PROFILE_SPECIFIER = "";
+				PROVISIONING_PROFILE = "a08f6fcd-2414-423a-b12a-e4d45bf4812e";
+				PROVISIONING_PROFILE_SPECIFIER = rhythmPP;
 				TARGETED_DEVICE_FAMILY = 1;
 				USER_HEADER_SEARCH_PATHS = "";
 			};
@@ -2414,11 +2449,12 @@
 		8B9CCB831F1463B6001833FD /* ad hoc distribution */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				DEVELOPMENT_TEAM = JTL23C2M8H;
+				DEVELOPMENT_TEAM = "";
 				INFOPLIST_FILE = WisdomHallUITests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.dayao.WisdomHallUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				TEST_TARGET_NAME = WisdomHall;
 			};
 			name = "ad hoc distribution";
@@ -2553,7 +2589,7 @@
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Distribution: yao zhiqiang (AM9UTP2CL3)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: yao zhiqiang (AM9UTP2CL3)";
 				DEVELOPMENT_TEAM = AM9UTP2CL3;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -2664,8 +2700,8 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.dayaokeji.rhythm;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "";
-				PROVISIONING_PROFILE_SPECIFIER = "";
+				PROVISIONING_PROFILE = "a08f6fcd-2414-423a-b12a-e4d45bf4812e";
+				PROVISIONING_PROFILE_SPECIFIER = rhythmPP;
 				TARGETED_DEVICE_FAMILY = 1;
 				USER_HEADER_SEARCH_PATHS = "";
 			};
@@ -2677,7 +2713,7 @@
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Distribution: yao zhiqiang (AM9UTP2CL3)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: yao zhiqiang (AM9UTP2CL3)";
 				DEVELOPMENT_TEAM = AM9UTP2CL3;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -2788,8 +2824,8 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.dayaokeji.rhythm;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "";
-				PROVISIONING_PROFILE_SPECIFIER = "";
+				PROVISIONING_PROFILE = "a08f6fcd-2414-423a-b12a-e4d45bf4812e";
+				PROVISIONING_PROFILE_SPECIFIER = rhythmPP;
 				TARGETED_DEVICE_FAMILY = 1;
 				USER_HEADER_SEARCH_PATHS = "";
 			};
@@ -2824,11 +2860,12 @@
 		8BA2248D1EADF68600627A1B /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				DEVELOPMENT_TEAM = JTL23C2M8H;
+				DEVELOPMENT_TEAM = "";
 				INFOPLIST_FILE = WisdomHallUITests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.dayao.WisdomHallUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				TEST_TARGET_NAME = WisdomHall;
 			};
 			name = Debug;
@@ -2836,11 +2873,12 @@
 		8BA2248E1EADF68600627A1B /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				DEVELOPMENT_TEAM = JTL23C2M8H;
+				DEVELOPMENT_TEAM = "";
 				INFOPLIST_FILE = WisdomHallUITests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.dayao.WisdomHallUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				TEST_TARGET_NAME = WisdomHall;
 			};
 			name = Release;

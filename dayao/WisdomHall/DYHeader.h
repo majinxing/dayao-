@@ -57,8 +57,8 @@
 
 #define CONTACT_TABLE_NAME     @"contactTable"//试卷和题目联系的表格
 
-//接口
-#define BaseURL @"http://192.168.1.109:8080/"
+//接口116.62.161.250
+#define BaseURL @"http://192.168.1.81:8080/"
 
 #define Login            @"course/user/login"       //登录
 
@@ -82,7 +82,7 @@
 
 #define ClassSign        @"course/course/sign"      //课程签到
 
-
+#define QueryPeople     @"course/user/list"         //人员条件查询
 
 
 

@@ -42,7 +42,7 @@ static NSString *cellIdentifier = @"cellIdentifier";
     _classAry = [NSMutableArray arrayWithCapacity:4];
     
     [self setNavigationTitle];
-        
+    
     [self addCollection];
     
     // Do any additional setup after loading the view from its nib.
@@ -105,9 +105,11 @@ static NSString *cellIdentifier = @"cellIdentifier";
     });
 }
 -(void)getDataWithPage:(NSInteger)page{
+    
     _userModel = [[Appsetting sharedInstance] getUsetInfo];
     
     NSDictionary * dict = [[NSDictionary alloc] initWithObjectsAndKeys:_userModel.peopleId,@"teacherId",[UIUtils getTime],@"startTime",[UIUtils getTime],@"endTime",[NSString stringWithFormat:@"%ld",page],@"page",nil];
+    
     [[NetworkRequest sharedInstance] POST:QueryCourse dict:dict succeed:^(id data) {
         //        NSLog(@"succeed %@",data);
         NSDictionary * dict = [data objectForKey:@"body"];
@@ -121,6 +123,7 @@ static NSString *cellIdentifier = @"cellIdentifier";
     } failure:^(NSError *error) {
         NSLog(@"失败%@",error);
     }];
+    
 }
 -(void)viewWillAppear:(BOOL)animated{
     // [self.navigationController setNavigationBarHidden:YES animated:NO];
@@ -137,8 +140,8 @@ static NSString *cellIdentifier = @"cellIdentifier";
     self.title = @"课堂";
     
     UIBarButtonItem *myButton = [[UIBarButtonItem alloc] initWithTitle:@"创建" style:UIBarButtonItemStylePlain target:self action:@selector(createAcourse)];
-   // self.navigationItem.rightBarButtonItem = myButton;
-   
+    self.navigationItem.rightBarButtonItem = myButton;
+    
     UIBarButtonItem * selection = [[UIBarButtonItem alloc] initWithTitle:@"搜索" style:UIBarButtonItemStylePlain target:self action:@selector(selectionBtnPressed)];
     self.navigationItem.leftBarButtonItem = selection;
 }
@@ -152,12 +155,32 @@ static NSString *cellIdentifier = @"cellIdentifier";
  *  创建课程
  **/
 -(void)createAcourse{
-    CreateCourseViewController * cCourseVC = [[CreateCourseViewController alloc] init];
-    self.hidesBottomBarWhenPushed = YES;
-    //    self.tabBarController.tabBar.hidden=YES;
-    [self.navigationController pushViewController:cCourseVC animated:YES];
-    self.hidesBottomBarWhenPushed=NO;
+    [self setAlterAction];
 }
+-(void)setAlterAction{
+    UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"提示" message:nil preferredStyle:  UIAlertControllerStyleActionSheet];
+    //分别按顺序放入每个按钮；
+    [alert addAction:[UIAlertAction actionWithTitle:@"创建周期性课堂" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        //点击按钮的响应事件；
+        CreateCourseViewController * cCourseVC = [[CreateCourseViewController alloc] init];
+        self.hidesBottomBarWhenPushed = YES;
+        //    self.tabBarController.tabBar.hidden=YES;
+        [self.navigationController pushViewController:cCourseVC animated:YES];
+        self.hidesBottomBarWhenPushed=NO;
+    }]];
+    
+    [alert addAction:[UIAlertAction actionWithTitle:@"创建临时性课堂" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        //点击按钮的响应事件；
+        
+    }]];
+    
+    [alert addAction:[UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleDestructive handler:^(UIAlertAction * _Nonnull action) {
+        //点击按钮的响应事件；
+    }]];
+    //弹出提示框；
+    [self presentViewController:alert animated:true completion:nil];
+}
+#pragma mark ---- UIAlterAction
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
@@ -213,7 +236,7 @@ static NSString *cellIdentifier = @"cellIdentifier";
     self.hidesBottomBarWhenPushed = YES;
     CourseDetailsViewController * cdetailVC = [[CourseDetailsViewController alloc] init];
     cdetailVC.c = _classAry[indexPath.row];
-
+    
     [self.navigationController pushViewController:cdetailVC animated:YES];
     self.hidesBottomBarWhenPushed=NO;
 }

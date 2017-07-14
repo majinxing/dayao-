@@ -238,6 +238,12 @@
     }
     return NO;
 }
+-(NSMutableDictionary *)createCourseWith:(NSMutableArray *)ary{
+    NSMutableDictionary * dict = [[NSMutableDictionary alloc] init];
+    
+    
+    return dict;
+}
 @end
 
 

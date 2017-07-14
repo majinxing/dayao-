@@ -9,5 +9,7 @@
 #import "SchoolModel.h"
 
 @implementation SchoolModel
+-(void)setInfoWithDict:(NSDictionary *)dict{
 
+}
 @end

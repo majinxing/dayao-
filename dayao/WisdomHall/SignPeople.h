@@ -9,10 +9,11 @@
 #import <Foundation/Foundation.h>
 
 @interface SignPeople : NSObject
-@property (nonatomic,copy)NSString * name;
+@property (nonatomic,copy) NSString * name;
 @property (nonatomic,copy) NSString * seat;
 @property (nonatomic,copy) NSString * signStatus;
 @property (nonatomic,copy) NSString * userId;
 @property (nonatomic,copy) NSString * workNo;
+@property (nonatomic,assign) BOOL isSelect;
 -(void)setInfoWithDict:(NSDictionary *)dict;
 @end

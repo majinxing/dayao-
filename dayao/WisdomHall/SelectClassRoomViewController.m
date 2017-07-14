@@ -26,7 +26,7 @@
 -(void)getData{
     _dataAry = [NSMutableArray arrayWithCapacity:1];
     UserModel * user = [[Appsetting sharedInstance] getUsetInfo];
-    NSDictionary * dict = [[NSDictionary alloc] initWithObjectsAndKeys:user.school,@"universityId", nil];
+    NSDictionary * dict = [[NSDictionary alloc] initWithObjectsAndKeys:user.school,@"universityId",@"1",@"start",@"10000",@"length", nil];
     [[NetworkRequest sharedInstance] GET:QueryClassRoom dict:dict succeed:^(id data) {
         NSArray * ary = [[data objectForKey:@"body"] objectForKey:@"list"];
         for (int i = 0; i<ary.count; i++) {

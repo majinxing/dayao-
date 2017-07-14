@@ -11,6 +11,8 @@
 #import "DefinitionPersonalTableViewCell.h"
 #import "SelectClassRoomViewController.h"
 #import "ClassRoomModel.h"
+#import "SelectPeopleToClassViewController.h"
+#import "SignPeople.h"
 
 @interface CreateCourseViewController ()<UITableViewDelegate,UITableViewDataSource,DefinitionPersonalTableViewCellDelegate,UIPickerViewDelegate,UIPickerViewDataSource>
 @property (nonatomic,strong)UITableView * tabelView;
@@ -20,7 +22,13 @@
 @property (nonatomic,strong)UIView * pickerView;
 @property (nonatomic,assign)int temp;//标志位判断选择的是哪一个滚轮
 @property (nonatomic,assign) int n;
+@property (nonatomic,assign) int m1;
+@property (nonatomic,assign) int m2;
+@property (nonatomic,assign) int m3;
 @property (nonatomic,strong) ClassRoomModel * classRoom;
+@property (nonatomic,strong) NSMutableArray * selectPeopleAry;
+
+
 
 @end
 
@@ -29,15 +37,19 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     _n = 0;
+    _m1 = 0;
+    _m2 = 0;
+    _m3 = 0;
+    _selectPeopleAry = [NSMutableArray arrayWithCapacity:1];
     [self setNavigationTitle];
     [self addTabelView];
     [self keyboardNotification];
     // Do any additional setup after loading the view from its nib.
 }
 -(void)addTabelView{
-    _labelAry = [[NSMutableArray alloc] initWithObjects:@"课堂封面",@"课  程  名",@"开始时间",@"签到方式",@"老师姓名",@"课堂总人数",@"教      室", nil];
+    _labelAry = [[NSMutableArray alloc] initWithObjects:@"课堂封面",@"课  程  名",@"老师姓名",@"签到方式",@"课堂总人数",@"上课的人",@"教      室", @"课程周期",@"第一周星期一日期",nil];
     _textFileAry = [NSMutableArray arrayWithCapacity:4];
-    for (int i = 0; i<7; i++) {
+    for (int i = 0; i<10; i++) {
         [_textFileAry addObject:@""];
     }
     
@@ -83,6 +95,7 @@
     }
     NSString * time = [UIUtils getTime];
     NSDictionary * dict = [[NSDictionary alloc] initWithObjectsAndKeys:_textFileAry[1],@"name",_classRoom.classRoomName,@"address", _textFileAry[2],@"time",sign,@"signWay",_textFileAry[4],@"teacherId",_textFileAry[5],@"total",_classRoom.classRoomId,@"room",@"",@"userList",@"1",@"type",@"no",@"pictureId",time,@"createTime",@"0",@"status",nil];
+    
     [[NetworkRequest sharedInstance] POST:CreateClass dict:dict succeed:^(id data) {
         NSLog(@"succeed:%@",data);
     } failure:^(NSError *error) {
@@ -139,11 +152,36 @@
 -(void)rightButton{
     [self.bView removeFromSuperview];
     [self.pickerView removeFromSuperview];
-    if (_n==0) {
-        [_textFileAry setObject:@"一键签到" atIndexedSubscript:3];
-    }else if(_n==1){
-        [_textFileAry setObject:@"头像签到" atIndexedSubscript:3];
+    if (_temp == 3) {
+        if (_n==0) {
+            [_textFileAry setObject:@"一键签到" atIndexedSubscript:3];
+        }else if(_n==1){
+            [_textFileAry setObject:@"头像签到" atIndexedSubscript:3];
+        }
+    }else if (_temp == 7){
+        NSString * str1;
+        NSString * str2;
+        NSString * str3;
+        if (_m1 == 0) {
+            str1 = [NSString stringWithFormat:@"1"];
+        }else if(_m1!=0){
+            str1 =  [NSString stringWithFormat:@"%d",_m1];
+        }
+        if (_m2 == 0) {
+            str2 = [NSString stringWithFormat:@"1"];
+        }else if(_m2!=0){
+            str2 =  [NSString stringWithFormat:@"%d",_m2];
+        }
+        if (_m3 == 0) {
+            str3 = [NSString stringWithFormat:@"全"];
+        }else if(_m3==1){
+            str3 =  [NSString stringWithFormat:@"单周"];
+        }else if(_m3==2){
+            str3 =  [NSString stringWithFormat:@"双周"];
+        }
+        [_textFileAry setObject:[NSString stringWithFormat:@"%@周-%@周-%@上课",str1,str2,str3] atIndexedSubscript:7];
     }
+    
     [_tabelView reloadData];
 }
 
@@ -151,11 +189,13 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
-#pragma mark pick
+#pragma mark UIPickViewDelegate
 
 -(NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView{
     if (_temp==3) {
         return 1;
+    }else if (_temp==7){
+        return 3;
     }
     return 0;
 }
@@ -163,6 +203,12 @@
 {
     if (_temp == 3) {
         return 2;
+    }else if (_temp == 7){
+        if (component == 0||component == 1) {
+            return 25;
+        }else if(component == 2){
+            return 3;
+        }
     }
     return 0;
 }
@@ -173,7 +219,19 @@
         if (row==0) {
             return @"一键签到";
         }else if(row==1){
-            return @"头像签到";
+            return @"照片签到";
+        }
+    }else if (_temp == 7){
+        if (component == 0||component == 1) {
+            return [NSString stringWithFormat:@"%ld",row+1];
+        }else if (component == 2){
+            if (row == 0) {
+                return @"全";
+            }else if (row == 1){
+                return @"单周";
+            }else if (row == 2){
+                return @"双周";
+            }
         }
     }
     return @"2016";
@@ -185,6 +243,14 @@
             _n = 1;
         }else{
             _n = 0;
+        }
+    }else if (_temp == 7){
+        if (component == 0) {
+            _m1 = (int) row;
+        }else if (component == 1){
+            _m2 = (int)row;
+        }else if (component == 2){
+            _m3 = (int)row;
         }
     }
     
@@ -226,6 +292,34 @@
                 }
             }
         }];
+    }else if (btn.tag == 5){
+        SelectPeopleToClassViewController * s = [[SelectPeopleToClassViewController alloc] init];
+        self.hidesBottomBarWhenPushed = YES;
+        [self.navigationController pushViewController:s animated:YES];
+        [s returnText:^(NSMutableArray *returnText) {
+            for (int i = 0; i<returnText.count; i++) {
+                SignPeople * s = returnText[i];
+                int n = 0;
+                for (int j = 0; j<_selectPeopleAry.count; j++) {
+                    SignPeople * sp = _selectPeopleAry[j];
+                    if ([[NSString stringWithFormat:@"%@",s.userId] isEqualToString:[NSString stringWithFormat:@"%@",sp.userId]]) {
+                        n = 1;
+                        break;
+                    }
+                }
+                if (n == 0) {
+                    [_selectPeopleAry addObject:s];
+                }
+            }
+            if (_selectPeopleAry.count>0) {
+                [_textFileAry setObject:[NSString stringWithFormat:@"已选择%ld人",_selectPeopleAry.count] atIndexedSubscript:btn.tag];
+                [_tabelView reloadData];
+            }
+            
+        }];
+    }else if (btn.tag == 7){
+        _temp = 7;
+        [self addPickView];
     }
     
 }
@@ -236,7 +330,7 @@
     return 1;
 }
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
-    return 7;
+    return 9;
 }
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     

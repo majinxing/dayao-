@@ -46,15 +46,21 @@
     _textFile.text = textFile;
     _textFile.delegate = self;
     if (n==3) {
-        _g.frame = CGRectMake(CGRectGetMaxX(_infoLabel.frame), 0,400, 40);
+        _g.frame = CGRectMake(CGRectGetMaxX(_infoLabel.frame), 0,400, 60);
         _g.tag = 3;
     }else if (n==6){
-        _g.frame = CGRectMake(CGRectGetMaxX(_infoLabel.frame), 0,400, 40);
+        _g.frame = CGRectMake(CGRectGetMaxX(_infoLabel.frame), 0,400, 60);
         _g.tag = 6;
-    }
-    else if (n==5){
+    }else if (n==4 ){
         _textFile.keyboardType = UIKeyboardTypeNumberPad;
+    }else if (n == 5){
+        _g.frame = CGRectMake(CGRectGetMaxX(_infoLabel.frame), 0,400, 60);
+        _g.tag = 5;
+    }else if (n == 7){
+        _g.frame = CGRectMake(CGRectGetMaxX(_infoLabel.frame), 0,400, 60);
+        _g.tag = 7;
     }
+    
     [_textFile addTarget:self action:@selector(textFileDidChange:) forControlEvents:UIControlEventEditingChanged];
 }
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
