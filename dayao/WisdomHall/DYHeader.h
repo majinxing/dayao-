@@ -57,7 +57,7 @@
 
 #define CONTACT_TABLE_NAME     @"contactTable"//试卷和题目联系的表格
 
-//接口116.62.161.250
+//接口116.62.161.250 192.168.1.81:8080
 #define BaseURL @"http://192.168.1.81:8080/"
 
 #define Login            @"course/user/login"       //登录
@@ -70,15 +70,22 @@
 
 #define QueryClassRoom   @"course/classroom/select" //查询教室
 
-#define QueryCourse      @"course/course/search"    //查询课堂
+#define QueryCourse      @"course/course/select"    //查询课堂
 
 #define CreateClass      @"course/course/create"    //创建教室
+
+#define CreateCoures     @"course/course/create/cycle" //创建课堂
+
+#define CreateTemporaryCourse @"course/course/create/once" //创建临时课堂
+#define QueryCourseMemBer     @"course/course/member"      //查询课堂成员
 
 #define QueryMeeting     @"course/meeting/select/user"   //查询会议(参与者)
 
 #define QueryMeetingSelfCreate @"course/meeting/select" //查询自己创建的会议
 
 #define MeetingSign      @"course/meeting/sign"     //会议签到
+
+#define ClassSign        @"course/course/sign"       //课程签到
 
 #define ClassSign        @"course/course/sign"      //课程签到
 

@@ -60,7 +60,8 @@ static NSString * cellIdentifier = @"cellIdentifier";
     UIBarButtonItem * selection = [[UIBarButtonItem alloc] initWithTitle:@"搜索" style:UIBarButtonItemStylePlain target:self action:@selector(selectionBtnPressed)];
     self.navigationItem.leftBarButtonItem = selection;
     
-};
+}
+
 -(void)selectionBtnPressed{
     SelectMeetingOrClassViewController * s = [[SelectMeetingOrClassViewController alloc] init];
     self.hidesBottomBarWhenPushed = YES;

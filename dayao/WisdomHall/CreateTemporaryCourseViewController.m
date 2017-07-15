@@ -1,12 +1,11 @@
 //
-//  CreateCourseViewController.m
+//  CreateTemporaryCourseViewController.m
 //  WisdomHall
 //
-//  Created by XTU-TI on 2017/5/3.
+//  Created by XTU-TI on 2017/7/15.
 //  Copyright © 2017年 majinxing. All rights reserved.
 //
-
-#import "CreateCourseViewController.h"
+#import "CreateTemporaryCourseViewController.h"
 #import "DYHeader.h"
 #import "DefinitionPersonalTableViewCell.h"
 #import "SelectClassRoomViewController.h"
@@ -14,7 +13,7 @@
 #import "SelectPeopleToClassViewController.h"
 #import "SignPeople.h"
 
-@interface CreateCourseViewController ()<UITableViewDelegate,UITableViewDataSource,DefinitionPersonalTableViewCellDelegate,UIPickerViewDelegate,UIPickerViewDataSource>
+@interface CreateTemporaryCourseViewController ()<UITableViewDelegate,UITableViewDataSource,DefinitionPersonalTableViewCellDelegate,UIPickerViewDelegate,UIPickerViewDataSource>
 @property (nonatomic,strong)UITableView * tabelView;
 @property (nonatomic,strong)NSMutableArray * labelAry;
 @property (nonatomic,strong)NSMutableArray * textFileAry;
@@ -36,9 +35,10 @@
 @property (nonatomic,strong) NSMutableArray * classAry2;
 @property (nonatomic,strong) NSMutableArray * weekAry;
 
+
 @end
 
-@implementation CreateCourseViewController
+@implementation CreateTemporaryCourseViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -71,7 +71,7 @@
     // Do any additional setup after loading the view from its nib.
 }
 -(void)addTabelView{
-    _labelAry = [[NSMutableArray alloc] initWithObjects:@"课堂封面",@"课  程  名",@"老师姓名",@"签到方式",@"上课的人",@"教      室", @"课程周期",@"第一周星期一日期",@"上课时间列表",nil];
+    _labelAry = [[NSMutableArray alloc] initWithObjects:@"课堂封面",@"课  程  名",@"老师姓名",@"签到方式",@"上课的人",@"教      室",@"上课时间列表",@"上课的时间",nil];
     _textFileAry = [NSMutableArray arrayWithCapacity:4];
     for (int i = 0; i<10; i++) {
         [_textFileAry addObject:@""];
@@ -110,9 +110,9 @@
     self.navigationItem.rightBarButtonItem = myButton;
 }
 -(void)createAcourse{
-   NSDictionary * dict = [UIUtils createCourseWith:_textFileAry ClassRoom:_classRoom joinClassPeople:_selectPeopleAry m1:_m1 m2:_m2 m3:_m3 week:_week class1:_class1 class2:_class2];
+    NSDictionary * dict = [UIUtils createTemporaryCourseWith:_textFileAry ClassRoom:_classRoom joinClassPeople:_selectPeopleAry week:_week class1:_class1 class2:_class2];
     
-    [[NetworkRequest sharedInstance] POST:CreateCoures dict:dict succeed:^(id data) {
+    [[NetworkRequest sharedInstance] POST:CreateTemporaryCourse dict:dict succeed:^(id data) {
         NSLog(@"%@",data);
         [self.navigationController popViewControllerAnimated:YES];
     } failure:^(NSError *error) {
@@ -179,29 +179,7 @@
             [_textFileAry setObject:@"头像签到" atIndexedSubscript:3];
         }
     }else if (_temp == 6){
-        NSString * str1;
-        NSString * str2;
-        NSString * str3;
-        if (_m1 == 0) {
-            str1 = [NSString stringWithFormat:@"1"];
-        }else if(_m1!=0){
-            str1 =  [NSString stringWithFormat:@"%d",_m1];
-        }
-        if (_m2 == 0) {
-            str2 = [NSString stringWithFormat:@"1"];
-        }else if(_m2!=0){
-            str2 =  [NSString stringWithFormat:@"%d",_m2];
-        }
-        if (_m3 == 0) {
-            str3 = [NSString stringWithFormat:@"全"];
-        }else if(_m3==1){
-            str3 =  [NSString stringWithFormat:@"单周"];
-        }else if(_m3==2){
-            str3 =  [NSString stringWithFormat:@"双周"];
-        }
-        [_textFileAry setObject:[NSString stringWithFormat:@"%@周-%@周-%@上课",str1,str2,str3] atIndexedSubscript:6];
-    }else if (_temp == 8){
-        [_textFileAry setObject:[NSString stringWithFormat:@"周%d-第%d节-第%d节",_week+1,_class1+1,_class2+1] atIndexedSubscript:8];
+        [_textFileAry setObject:[NSString stringWithFormat:@"周%d-第%d节-第%d节",_week+1,_class1+1,_class2+1] atIndexedSubscript:6];
     }
     
     [_tabelView reloadData];
@@ -218,8 +196,6 @@
         return 1;
     }else if (_temp == 6){
         return 3;
-    }else if (_temp == 8){
-        return 3;
     }
     return 0;
 }
@@ -228,12 +204,6 @@
     if (_temp == 3) {
         return 2;
     }else if (_temp == 6){
-        if (component == 0||component == 1) {
-            return 25;
-        }else if(component == 2){
-            return 3;
-        }
-    }else if (_temp == 8){
         if (component == 0) {
             return 7;
         }else if (component == 1 || component == 2){
@@ -251,19 +221,7 @@
         }else if(row==1){
             return @"照片签到";
         }
-    }else if (_temp == 6){
-        if (component == 0||component == 1) {
-            return [NSString stringWithFormat:@"%ld",row+1];
-        }else if (component == 2){
-            if (row == 0) {
-                return @"全";
-            }else if (row == 1){
-                return @"单周";
-            }else if (row == 2){
-                return @"双周";
-            }
-        }
-    }else if(_temp == 8){
+    }else if(_temp == 6){
         if (component == 0) {
             return _weekAry[row];
         }else if (component == 1){
@@ -284,21 +242,13 @@
         }
     }else if (_temp == 6){
         if (component == 0) {
-            _m1 = (int) row;
-        }else if (component == 1){
-            _m2 = (int)row;
-        }else if (component == 2){
-            _m3 = (int)row;
-        }
-    }else if (_temp == 8){
-        if (component == 0) {
             _week = (int) row;
         }else if (component == 1){
             _class1 = (int)row;
         }else if (component == 2){
             _class2 = (int)row;
         }
-
+        
     }
     
 }
@@ -367,9 +317,6 @@
     }else if (btn.tag == 6){
         _temp = 6;
         [self addPickView];
-    }else if (btn.tag == 8){
-        _temp = 8;
-        [self addPickView];
     }
     
 }
@@ -380,7 +327,7 @@
     return 1;
 }
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
-    return 9;
+    return 8;
 }
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     
@@ -399,7 +346,7 @@
         }
         
     }
-    [cell addCourseContentView:_labelAry[indexPath.row] withTextFileText:_textFileAry[indexPath.row] withIndex:(int)indexPath.row];
+    [cell addTemporaryCourseContentView:_labelAry[indexPath.row] withTextFileText:_textFileAry[indexPath.row] withIndex:(int)indexPath.row];
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     cell.delegate = self;
     
@@ -421,13 +368,13 @@
 }
 
 /*
- #pragma mark - Navigation
- 
- // In a storyboard-based application, you will often want to do a little preparation before navigation
- - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
- // Get the new view controller using [segue destinationViewController].
- // Pass the selected object to the new view controller.
- }
- */
+#pragma mark - Navigation
+
+// In a storyboard-based application, you will often want to do a little preparation before navigation
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    // Get the new view controller using [segue destinationViewController].
+    // Pass the selected object to the new view controller.
+}
+*/
 
 @end

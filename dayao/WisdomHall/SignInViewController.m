@@ -21,7 +21,8 @@
 #import "UserModel.h"
 #import "ClassModel.h"
 #import "MJRefresh.h"
-
+#import "CreateTemporaryCourseViewController.h"
+#import "SelectClassViewController.h"
 
 static NSString *cellIdentifier = @"cellIdentifier";
 
@@ -63,7 +64,7 @@ static NSString *cellIdentifier = @"cellIdentifier";
     //取消滑动的滚动条
     _collection.decelerationRate = UIScrollViewDecelerationRateNormal;
     _collection.backgroundColor = [UIColor clearColor];
-    
+    self.collection.alwaysBounceVertical = YES; //垂直方向遇到边框是否总是反弹
     __weak SignInViewController * weakSelf = self;
     [self.collection addHeaderWithCallback:^{
         [weakSelf headerRereshing];
@@ -97,6 +98,9 @@ static NSString *cellIdentifier = @"cellIdentifier";
                 [strongSelf getDataWithPage:aPage];
             });
             if (aIsHeader) {
+                [_classAry removeAllObjects];
+            }
+            if (aIsHeader) {
                 [strongSelf.collection headerEndRefreshing];
             }else{
                 [strongSelf.collection footerEndRefreshing];
@@ -108,23 +112,84 @@ static NSString *cellIdentifier = @"cellIdentifier";
     
     _userModel = [[Appsetting sharedInstance] getUsetInfo];
     
-    NSDictionary * dict = [[NSDictionary alloc] initWithObjectsAndKeys:_userModel.peopleId,@"teacherId",[UIUtils getTime],@"startTime",[UIUtils getTime],@"endTime",[NSString stringWithFormat:@"%ld",page],@"page",nil];
-    
-    [[NetworkRequest sharedInstance] POST:QueryCourse dict:dict succeed:^(id data) {
-        //        NSLog(@"succeed %@",data);
-        NSDictionary * dict = [data objectForKey:@"body"];
-        NSArray * ary = [dict objectForKey:@"list"];
-        for (int i = 0; i<ary.count; i++) {
-            ClassModel * classRoom = [[ClassModel alloc] init];
-            [classRoom setInfoWithDict:ary[i]];
-            [_classAry addObject:classRoom];
+    NSDictionary * dict = [[NSDictionary alloc] initWithObjectsAndKeys:[NSString stringWithFormat:@"%ld",page],@"start",_userModel.peopleId,@"teacherId",[UIUtils getTime],@"actStartTime",[UIUtils getMoreMonthTime],@"actEndTime",@"1000",@"length",_userModel.school,@"universityId",@"2",@"type",[NSString stringWithFormat:@"%d",[UIUtils getTermId]],@"termId",@"1",@"courseType",nil];
+    [[NetworkRequest sharedInstance] GET:QueryCourse dict:dict succeed:^(id data) {
+        //NSLog(@"%@",data);
+        NSString * str = [[data objectForKey:@"header"] objectForKey:@"message"];
+        if ([str isEqualToString:@"成功"]) {
+            NSArray * ary = [[data objectForKey:@"body"] objectForKey:@"list"];
+            for (int i = 0; i<ary.count; i++) {
+                ClassModel * c = [[ClassModel alloc] init];
+                [c setInfoWithDict:ary[i]];
+                [_classAry addObject:c];
+            }
+        }
+        [_collection reloadData];
+        [self getSelfJoinClass:page];
+    } failure:^(NSError *error) {
+        NSLog(@"%@",error);
+    }];
+}
+-(void)getSelfJoinClass:(NSInteger)page{
+    NSDictionary * dict = [[NSDictionary alloc] initWithObjectsAndKeys:[NSString stringWithFormat:@"%ld",page],@"start",_userModel.peopleId,@"studentId",[UIUtils getTime],@"actStartTime",[UIUtils getMoreMonthTime],@"actEndTime",@"1000",@"length",_userModel.school,@"universityId",@"1",@"type",[NSString stringWithFormat:@"%d",[UIUtils getTermId]],@"termId",@"1",@"courseType",nil];
+    [[NetworkRequest sharedInstance] GET:QueryCourse dict:dict succeed:^(id data) {
+       // NSLog(@"%@",data);
+        NSString * str = [[data objectForKey:@"header"] objectForKey:@"message"];
+        if ([str isEqualToString:@"成功"]) {
+            NSArray * ary = [[data objectForKey:@"body"] objectForKey:@"list"];
+            for (int i = 0; i<ary.count; i++) {
+                ClassModel * c = [[ClassModel alloc] init];
+                [c setInfoWithDict:ary[i]];
+                [_classAry addObject:c];
+            }
+        }
+        [_collection reloadData];
+        [self getSelfCreateClassType:page];
+    } failure:^(NSError *error) {
+        NSLog(@"%@",error);
+    }];
+}
+//临时
+-(void)getSelfCreateClassType:(NSInteger)page{
+    NSDictionary * dict = [[NSDictionary alloc] initWithObjectsAndKeys:[NSString stringWithFormat:@"%ld",page],@"start",_userModel.peopleId,@"teacherId",[UIUtils getTime],@"actStartTime",[UIUtils getMoreMonthTime],@"actEndTime",@"1000",@"length",_userModel.school,@"universityId",@"2",@"type",@"2",@"courseType",nil];
+    [[NetworkRequest sharedInstance] GET:QueryCourse dict:dict succeed:^(id data) {
+       // NSLog(@"%@",data);
+        NSString * str = [[data objectForKey:@"header"] objectForKey:@"message"];
+        if ([str isEqualToString:@"成功"]) {
+            NSArray * ary = [[data objectForKey:@"body"] objectForKey:@"list"];
+            for (int i = 0; i<ary.count; i++) {
+                ClassModel * c = [[ClassModel alloc] init];
+                [c setInfoWithDict:ary[i]];
+                [_classAry addObject:c];
+            }
+        }
+        [_collection reloadData];
+        [self getSelfJoinClassType:page];
+    } failure:^(NSError *error) {
+        NSLog(@"%@",error);
+    }];
+}
+//临时
+-(void)getSelfJoinClassType:(NSInteger)page{
+    NSDictionary * dict = [[NSDictionary alloc] initWithObjectsAndKeys:[NSString stringWithFormat:@"%ld",page],@"start",_userModel.peopleId,@"studentId",[UIUtils getTime],@"actStartTime",[UIUtils getMoreMonthTime],@"actEndTime",@"1000",@"length",_userModel.school,@"universityId",@"1",@"type",@"2",@"courseType",nil];
+    [[NetworkRequest sharedInstance] GET:QueryCourse dict:dict succeed:^(id data) {
+        //NSLog(@"%@",data);
+        NSString * str = [[data objectForKey:@"header"] objectForKey:@"message"];
+        if ([str isEqualToString:@"成功"]) {
+            NSArray * ary = [[data objectForKey:@"body"] objectForKey:@"list"];
+            for (int i = 0; i<ary.count; i++) {
+                ClassModel * c = [[ClassModel alloc] init];
+                [c setInfoWithDict:ary[i]];
+                [_classAry addObject:c];
+            }
         }
         [_collection reloadData];
     } failure:^(NSError *error) {
-        NSLog(@"失败%@",error);
+        NSLog(@"%@",error);
     }];
-    
+
 }
+
 -(void)viewWillAppear:(BOOL)animated{
     // [self.navigationController setNavigationBarHidden:YES animated:NO];
 }
@@ -150,6 +215,10 @@ static NSString *cellIdentifier = @"cellIdentifier";
  **/
 -(void)selectionBtnPressed{
     
+    SelectClassViewController * s = [[SelectClassViewController alloc] init];
+    self.hidesBottomBarWhenPushed = YES;
+    [self.navigationController pushViewController:s animated:YES];
+    self.hidesBottomBarWhenPushed = NO;
 }
 /**
  *  创建课程
@@ -166,11 +235,15 @@ static NSString *cellIdentifier = @"cellIdentifier";
         self.hidesBottomBarWhenPushed = YES;
         //    self.tabBarController.tabBar.hidden=YES;
         [self.navigationController pushViewController:cCourseVC animated:YES];
-        self.hidesBottomBarWhenPushed=NO;
+        self.hidesBottomBarWhenPushed = NO;
     }]];
     
     [alert addAction:[UIAlertAction actionWithTitle:@"创建临时性课堂" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
         //点击按钮的响应事件；
+        CreateTemporaryCourseViewController * c = [[CreateTemporaryCourseViewController alloc] init];
+        self.hidesBottomBarWhenPushed = YES;
+        [self.navigationController pushViewController:c animated:YES];
+        self.hidesBottomBarWhenPushed = NO;
         
     }]];
     

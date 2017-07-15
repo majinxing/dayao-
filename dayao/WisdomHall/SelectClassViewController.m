@@ -1,12 +1,12 @@
 //
-//  SelectMeetingOrClassViewController.m
+//  SelectClassViewController.m
 //  WisdomHall
 //
-//  Created by XTU-TI on 2017/7/4.
+//  Created by XTU-TI on 2017/7/15.
 //  Copyright © 2017年 majinxing. All rights reserved.
 //
 
-#import "SelectMeetingOrClassViewController.h"
+#import "SelectClassViewController.h"
 #import "CourseCollectionViewCell.h"
 #import "CollectionFlowLayout.h"
 #import "DYHeader.h"
@@ -15,30 +15,29 @@
 #import "MJRefresh.h"
 
 static NSString * cellIdentifier = @"cellIdentifier";
-
-@interface SelectMeetingOrClassViewController ()<UICollectionViewDelegate,UICollectionViewDataSource,UISearchBarDelegate>
+@interface SelectClassViewController ()<UICollectionViewDelegate,UICollectionViewDataSource,UISearchBarDelegate>
 
 @property (nonatomic,strong) UICollectionView * collection;
-@property (nonatomic,strong) NSMutableArray * meetingModelAry;
+@property (nonatomic,strong) NSMutableArray * classModelAry;
 @property (nonatomic,strong) UserModel * userModel;
 @property (nonatomic,strong)UISearchBar * mySearchBar;
 @property (nonatomic,copy) NSString * selectStr;
+@property (nonatomic,copy) NSString * searchStr;
 /** @brief 当前加载的页数 */
 @property (nonatomic) int page;
 @end
 
-@implementation SelectMeetingOrClassViewController
+@implementation SelectClassViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    _meetingModelAry = [NSMutableArray arrayWithCapacity:12];
+    _classModelAry = [NSMutableArray arrayWithCapacity:12];
     
     [self addSeachBar];
     
     [self setNavigationTitle];
     
     [self addCollection];
-    
     // Do any additional setup after loading the view from its nib.
 }
 -(void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event{
@@ -76,11 +75,11 @@ static NSString * cellIdentifier = @"cellIdentifier";
     //    [_mySearchBar sizeToFit];
     //_mySearchBar.hidden = YES;  ///隐藏搜索框
     [self.view addSubview:self.mySearchBar];
-//    [self.mySearchBar becomeFirstResponder];
+    //    [self.mySearchBar becomeFirstResponder];
 }
 /**
-  *  显示navigation的标题
-  **/
+ *  显示navigation的标题
+ **/
 -(void)setNavigationTitle{
     [UIApplication sharedApplication].statusBarStyle = UIStatusBarStyleLightContent;
     //[self.navigationController.navigationBar setBarTintColor:[UIColor blackColor]];
@@ -106,7 +105,7 @@ static NSString * cellIdentifier = @"cellIdentifier";
     //取消滑动的滚动条
     _collection.decelerationRate = UIScrollViewDecelerationRateNormal;
     _collection.backgroundColor = [UIColor clearColor];
-    __weak SelectMeetingOrClassViewController * weakSelf = self;
+    __weak SelectClassViewController * weakSelf = self;
     [self.collection addHeaderWithCallback:^{
         [weakSelf headerRereshing];
     }];
@@ -114,7 +113,7 @@ static NSString * cellIdentifier = @"cellIdentifier";
         [weakSelf footerRereshing];
     }];
     
-//    [self headerRereshing];
+    //    [self headerRereshing];
     [self.view addSubview:_collection];
 }
 #pragma mrak MJR
@@ -133,11 +132,14 @@ static NSString * cellIdentifier = @"cellIdentifier";
     __weak typeof(self)weakSelf = self;
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         if (weakSelf) {
-            SelectMeetingOrClassViewController * strongSelf = weakSelf;
+            SelectClassViewController * strongSelf = weakSelf;
             dispatch_async(dispatch_get_main_queue(), ^{
                 [strongSelf hideHud];
                 [strongSelf getDataWithPage:aPage];
             });
+            if (aIsHeader) {
+                [_classModelAry removeAllObjects];
+            }
             if (aIsHeader) {
                 [strongSelf.collection headerEndRefreshing];
             }else{
@@ -146,30 +148,89 @@ static NSString * cellIdentifier = @"cellIdentifier";
         }
     });
 }
--(void)getDataWithPage:(NSInteger)page{
-    _userModel = [[Appsetting sharedInstance] getUsetInfo];
-    NSDictionary * dict = [[NSDictionary alloc] initWithObjectsAndKeys:_userModel.peopleId,@"teacherId",[NSString stringWithFormat:@"%ld",(long)page],@"start",_selectStr,@"keywords",@"1000",@"length",nil];
-    
-    [[NetworkRequest sharedInstance] GET:QueryMeetingSelfCreate dict:dict succeed:^(id data) {
-        NSDictionary * dict = [data objectForKey:@"header"];
-        if ([[dict objectForKey:@"code"] isEqualToString:@"0000"]) {
-            
-            [_meetingModelAry removeAllObjects];
-            NSArray * d = [[data objectForKey:@"body"] objectForKey:@"list"];
-            for (int i = 0; i<d.count; i++) {
-                MeetingModel * m = [[MeetingModel alloc] init];
-                [m setMeetingInfoWithDict:d[i]];
-                [_meetingModelAry addObject:m];
-            }
-            [self getSelfCreateMeetingList:page];
 
-            [_collection reloadData];
-            
+-(void)getDataWithPage:(NSInteger)page{
+    
+    _userModel = [[Appsetting sharedInstance] getUsetInfo];
+    
+    NSDictionary * dict = [[NSDictionary alloc] initWithObjectsAndKeys:[NSString stringWithFormat:@"%ld",page],@"start",_userModel.peopleId,@"teacherId",[UIUtils getTime],@"actStartTime",[UIUtils getMoreMonthTime],@"actEndTime",@"1000",@"length",_userModel.school,@"universityId",@"2",@"type",[NSString stringWithFormat:@"%d",[UIUtils getTermId]],@"termId",@"1",@"courseType",_searchStr,@"keywords",nil];
+    
+//    NSDictionary * dict = [[NSDictionary alloc] initWithObjectsAndKeys:@"1",@"start",_userModel.peopleId,@"studentId",@"1000",@"length",_userModel.school,@"universityId",@"1",@"type",_searchStr,@"keywords",nil];
+    [[NetworkRequest sharedInstance] GET:QueryCourse dict:dict succeed:^(id data) {
+        //NSLog(@"%@",data);
+        NSString * str = [[data objectForKey:@"header"] objectForKey:@"message"];
+        if ([str isEqualToString:@"成功"]) {
+            NSArray * ary = [[data objectForKey:@"body"] objectForKey:@"list"];
+            for (int i = 0; i<ary.count; i++) {
+                ClassModel * c = [[ClassModel alloc] init];
+                [c setInfoWithDict:ary[i]];
+                [_classModelAry addObject:c];
+            }
         }
-        
+        [_collection reloadData];
+        [self getSelfJoinClass:page];
     } failure:^(NSError *error) {
-        NSLog(@"error %@",error);
+        NSLog(@"%@",error);
     }];
+}
+-(void)getSelfJoinClass:(NSInteger)page{
+    NSDictionary * dict = [[NSDictionary alloc] initWithObjectsAndKeys:[NSString stringWithFormat:@"%ld",page],@"start",_userModel.peopleId,@"studentId",[UIUtils getTime],@"actStartTime",[UIUtils getMoreMonthTime],@"actEndTime",@"1000",@"length",_userModel.school,@"universityId",@"1",@"type",[NSString stringWithFormat:@"%d",[UIUtils getTermId]],@"termId",@"1",@"courseType",_searchStr,@"keywords",nil];
+    [[NetworkRequest sharedInstance] GET:QueryCourse dict:dict succeed:^(id data) {
+        // NSLog(@"%@",data);
+        NSString * str = [[data objectForKey:@"header"] objectForKey:@"message"];
+        if ([str isEqualToString:@"成功"]) {
+            NSArray * ary = [[data objectForKey:@"body"] objectForKey:@"list"];
+            for (int i = 0; i<ary.count; i++) {
+                ClassModel * c = [[ClassModel alloc] init];
+                [c setInfoWithDict:ary[i]];
+                [_classModelAry addObject:c];
+            }
+        }
+        [_collection reloadData];
+        [self getSelfCreateClassType:page];
+    } failure:^(NSError *error) {
+        NSLog(@"%@",error);
+    }];
+}
+//临时
+-(void)getSelfCreateClassType:(NSInteger)page{
+    NSDictionary * dict = [[NSDictionary alloc] initWithObjectsAndKeys:[NSString stringWithFormat:@"%ld",page],@"start",_userModel.peopleId,@"teacherId",[UIUtils getTime],@"actStartTime",[UIUtils getMoreMonthTime],@"actEndTime",@"1000",@"length",_userModel.school,@"universityId",@"2",@"type",@"2",@"courseType",_searchStr,@"keywords",nil];
+    [[NetworkRequest sharedInstance] GET:QueryCourse dict:dict succeed:^(id data) {
+        // NSLog(@"%@",data);
+        NSString * str = [[data objectForKey:@"header"] objectForKey:@"message"];
+        if ([str isEqualToString:@"成功"]) {
+            NSArray * ary = [[data objectForKey:@"body"] objectForKey:@"list"];
+            for (int i = 0; i<ary.count; i++) {
+                ClassModel * c = [[ClassModel alloc] init];
+                [c setInfoWithDict:ary[i]];
+                [_classModelAry addObject:c];
+            }
+        }
+        [_collection reloadData];
+        [self getSelfJoinClassType:page];
+    } failure:^(NSError *error) {
+        NSLog(@"%@",error);
+    }];
+}
+//临时
+-(void)getSelfJoinClassType:(NSInteger)page{
+    NSDictionary * dict = [[NSDictionary alloc] initWithObjectsAndKeys:[NSString stringWithFormat:@"%ld",page],@"start",_userModel.peopleId,@"studentId",[UIUtils getTime],@"actStartTime",[UIUtils getMoreMonthTime],@"actEndTime",@"1000",@"length",_userModel.school,@"universityId",@"1",@"type",@"2",@"courseType",_searchStr,@"keywords",nil];
+    [[NetworkRequest sharedInstance] GET:QueryCourse dict:dict succeed:^(id data) {
+        //NSLog(@"%@",data);
+        NSString * str = [[data objectForKey:@"header"] objectForKey:@"message"];
+        if ([str isEqualToString:@"成功"]) {
+            NSArray * ary = [[data objectForKey:@"body"] objectForKey:@"list"];
+            for (int i = 0; i<ary.count; i++) {
+                ClassModel * c = [[ClassModel alloc] init];
+                [c setInfoWithDict:ary[i]];
+                [_classModelAry addObject:c];
+            }
+        }
+        [_collection reloadData];
+    } failure:^(NSError *error) {
+        NSLog(@"%@",error);
+    }];
+    
 }
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
@@ -178,38 +239,11 @@ static NSString * cellIdentifier = @"cellIdentifier";
 #pragma mark - UISearchDisplayDelegate
 - (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText
 {
-//    NSDictionary * dict = [[NSDictionary alloc] initWithObjectsAndKeys:@"1",@"pageNo",@"1",@"teacherId",searchText,@"keywords", nil];
-//    [[NetworkRequest sharedInstance] GET:QueryMeeting dict:dict succeed:^(id data) {
-//        NSLog(@"succeed:%@",data);
-//        [_meetingModelAry removeAllObjects];
-//        NSArray * d = [[data objectForKey:@"body"] objectForKey:@"list"];
-//        for (int i = 0; i<d.count; i++) {
-//            MeetingModel * m = [[MeetingModel alloc] init];
-//            [m setMeetingInfoWithDict:d[i]];
-//            [_meetingModelAry addObject:m];
-//        }
-//        [_collection reloadData];
-//    } failure:^(NSError *error) {
-//        
-//    }];
 }
 -(void)searchBarSearchButtonClicked:(UISearchBar *)searchBar{
     _userModel = [[Appsetting sharedInstance] getUsetInfo];
-    NSDictionary * dict = [[NSDictionary alloc] initWithObjectsAndKeys:_userModel.peopleId,@"teacherId",searchBar.text,@"keywords", nil];
-    [[NetworkRequest sharedInstance] GET:QueryMeetingSelfCreate dict:dict succeed:^(id data) {
-        NSLog(@"succeed:%@",data);
-        [_meetingModelAry removeAllObjects];
-        NSArray * d = [[data objectForKey:@"body"] objectForKey:@"list"];
-        for (int i = 0; i<d.count; i++) {
-            MeetingModel * m = [[MeetingModel alloc] init];
-            [m setMeetingInfoWithDict:d[i]];
-            [_meetingModelAry addObject:m];
-        }
-        [self getSelfCreateMeetingList:1];
-        [_collection reloadData];
-    } failure:^(NSError *error) {
-        
-    }];
+    _searchStr = searchBar.text;
+    [self getDataWithPage:_page];
     [self.view endEditing:YES];
 }
 -(void)getSelfCreateMeetingList:(NSInteger)page{
@@ -223,19 +257,19 @@ static NSString * cellIdentifier = @"cellIdentifier";
             for (int i = 0; i<d.count; i++) {
                 MeetingModel * m = [[MeetingModel alloc] init];
                 [m setMeetingInfoWithDict:d[i]];
-                for (int j = 0; j<_meetingModelAry.count; j++) {
-                    MeetingModel * n = _meetingModelAry[j];
+                for (int j = 0; j<_classModelAry.count; j++) {
+                    MeetingModel * n = _classModelAry[j];
                     if ([[NSString stringWithFormat:@"%@",n.meetingId] isEqualToString:[NSString stringWithFormat:@"%@",m.meetingId]]) {
                         break;
-                    }else if(j == (_meetingModelAry.count - 1)){
-                        [_meetingModelAry addObject:m];
+                    }else if(j == (_classModelAry.count - 1)){
+                        [_classModelAry addObject:m];
                     }
                 }
             }
-            if (_meetingModelAry.count>0) {
+            if (_classModelAry.count>0) {
                 
             }else{
-                UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"没有搜索到对应的会议" message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: nil];
+                UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"没有搜索到对应的课程" message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: nil];
                 [alertView show];
             }
             [_collection reloadData];
@@ -253,8 +287,8 @@ static NSString * cellIdentifier = @"cellIdentifier";
 }
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
 {
-    if (_meetingModelAry.count>0) {
-        return _meetingModelAry.count;
+    if (_classModelAry.count>0) {
+        return _classModelAry.count;
     }
     return 0;
 }
@@ -263,7 +297,7 @@ static NSString * cellIdentifier = @"cellIdentifier";
 {
     CourseCollectionViewCell * cell = [collectionView dequeueReusableCellWithReuseIdentifier:cellIdentifier forIndexPath:indexPath];
     cell.backgroundColor = [UIColor whiteColor];
-    [cell setInfoForContentView:_meetingModelAry[indexPath.row]];
+    [cell setClassInfoForContentView:_classModelAry[indexPath.row]];
     return cell;
 }
 #pragma mark UICollectionViewDelegate
@@ -273,7 +307,7 @@ static NSString * cellIdentifier = @"cellIdentifier";
     
     TheMeetingInfoViewController * mInfo = [[TheMeetingInfoViewController alloc] init];
     self.hidesBottomBarWhenPushed = YES;
-    mInfo.meetingModel = _meetingModelAry[indexPath.row];
+    mInfo.meetingModel = _classModelAry[indexPath.row];
     [self.navigationController pushViewController:mInfo animated:YES];
     // self.hidesBottomBarWhenPushed=NO;
     
@@ -284,7 +318,7 @@ static NSString * cellIdentifier = @"cellIdentifier";
     
     TheMeetingInfoViewController * mInfo = [[TheMeetingInfoViewController alloc] init];
     self.hidesBottomBarWhenPushed = YES;
-    mInfo.meetingModel = _meetingModelAry[indexPath.row];
+    mInfo.meetingModel = _classModelAry[indexPath.row];
     [self.navigationController pushViewController:mInfo animated:YES];
     // self.hidesBottomBarWhenPushed=NO;
     
@@ -293,6 +327,8 @@ static NSString * cellIdentifier = @"cellIdentifier";
 - (CGSize)collectionView:(nonnull UICollectionView *)collectionView layout:(nonnull UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(nonnull NSIndexPath *)indexPath {
     return CGSizeMake(APPLICATION_WIDTH/2-20, Collection_height);
 }
+
+
 /*
 #pragma mark - Navigation
 

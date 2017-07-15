@@ -68,9 +68,18 @@ static NSString *cellIdentifier = @"cellIdentifierPersonal";
 }
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
 {
-    if (_meeting.signAry.count>0) {
-        return _meeting.signAry.count;
+    if (_manage == MeetingManageType) {
+        if (_meeting.signAry.count>0) {
+            return _meeting.signAry.count;
+        }
+    }else if (_manage == ClassManageType){
+        if (_signAry.count>0) {
+            return _signAry.count;
+        }else{
+            return 0;
+        }
     }
+    
     return 0;
 }
 
@@ -80,7 +89,11 @@ static NSString *cellIdentifier = @"cellIdentifierPersonal";
 {
     PersonalCollectionViewCell * cell = [collectionView dequeueReusableCellWithReuseIdentifier:cellIdentifier forIndexPath:indexPath];
     cell.backgroundColor = [UIColor whiteColor];
-    [cell setPersonalInfo:_meeting.signAry[indexPath.row]];
+    if (_manage == MeetingManageType) {
+        [cell setPersonalInfo:_meeting.signAry[indexPath.row]];
+    }else{
+        [cell setPersonalInfo:_signAry[indexPath.row]];
+    }
     return cell;
     //    CourseCollectionViewCell *cell1 = [collectionView dequeueReusableCellWithReuseIdentifier:cellIdentifier forIndexPath:indexPath];
     //    return cell1;

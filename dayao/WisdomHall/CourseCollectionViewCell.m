@@ -58,10 +58,10 @@
 -(void)setClassInfoForContentView:(ClassModel *)classModel{
     _classOrMeetingName.text = [NSString stringWithFormat:@"课程名：%@",classModel.name];
     
-    _hostName.text = [NSString stringWithFormat:@"老师：%@",classModel.teacherId];
+    _hostName.text = [NSString stringWithFormat:@"老师：%@",classModel.teacherName];
     
-    _place.text = [NSString stringWithFormat:@"上课地点：%@",classModel.address];
-    NSMutableString *strUrl = [NSMutableString stringWithFormat:@"%@",classModel.time];
+    _place.text = [NSString stringWithFormat:@"上课地点：%@",classModel.typeRoom];
+    NSMutableString *strUrl = [NSMutableString stringWithFormat:@"%@",classModel.actStarTime];
     
     [strUrl deleteCharactersInRange:NSMakeRange(0,5)];
     

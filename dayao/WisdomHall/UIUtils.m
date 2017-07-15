@@ -8,6 +8,9 @@
 
 #import "UIUtils.h"
 #import <SystemConfiguration/CaptiveNetwork.h>
+#import "DYHeader.h"
+#import "ClassRoomModel.h"
+#import "SignPeople.h"
 
 @implementation UIUtils
 +(void)addNavigationWithView:(UIView *)view withTitle:(NSString *)str{
@@ -131,6 +134,29 @@
     
     return nowDate;
 }
++(NSString *)getMoreMonthTime{
+    
+    NSCalendar *calendar = [NSCalendar currentCalendar];
+    int unit = NSCalendarUnitDay | NSCalendarUnitMonth | NSCalendarUnitYear | NSCalendarUnitHour | NSCalendarUnitMinute | NSCalendarUnitSecond;
+    
+    //获得当前时间的年月日时分
+    NSDateComponents *nowCmps = [calendar components:unit fromDate:[NSDate date]];
+    NSString *month;
+    if (nowCmps.month<9) {
+        month = [NSString stringWithFormat:@"0%ld",(long)nowCmps.month+1];
+    }else{
+        month = [NSString stringWithFormat:@"%ld",(long)nowCmps.month+1];
+    }
+    NSString * day;
+    if (nowCmps.day<10) {
+        day = [NSString stringWithFormat:@"0%ld",(long)nowCmps.day];
+    }else{
+        day = [NSString stringWithFormat:@"%ld",(long)nowCmps.day];
+    }
+    NSString *nowDate = [NSString stringWithFormat:@"%ld-%@-%@",(long)nowCmps.year,month,day];
+    
+    return nowDate;
+}
 //获取当前的无线信号
 
 +(NSMutableDictionary *)getWifiName
@@ -238,11 +264,138 @@
     }
     return NO;
 }
--(NSMutableDictionary *)createCourseWith:(NSMutableArray *)ary{
-    NSMutableDictionary * dict = [[NSMutableDictionary alloc] init];
++(NSMutableDictionary *)createTemporaryCourseWith:(NSMutableArray *)ary ClassRoom:(ClassRoomModel *)c joinClassPeople:(NSMutableArray *)joinPeopleAry week:(int)week class1:(int)class1 class2:(int)class2{
     
+    NSMutableDictionary * dict = [[NSMutableDictionary alloc] init];
+    for (int i = 1; i<ary.count; i++) {
+        if ([UIUtils isBlankString:ary[i]]) {
+            return dict;
+            break;
+        }
+    }
+    [dict setObject:ary[1] forKey:@"name"];
+    
+    UserModel * users = [[Appsetting sharedInstance] getUsetInfo];
+    
+    [dict setObject:[NSString stringWithFormat:@"%@",users.peopleId] forKey:@"teacherId"];
+    
+    [dict setObject:@"1" forKey:@"signWay"];
+    
+    [dict setObject:[NSString stringWithFormat:@"%@",c.classRoomId] forKey:@"roomId"];
+    
+    NSMutableArray * userList = [NSMutableArray arrayWithCapacity:1];
+    for (int i = 0; i<joinPeopleAry.count; i++) {
+        SignPeople * s = joinPeopleAry[i];
+        if (![[NSString stringWithFormat:@"%@",s.userId] isEqualToString:[NSString stringWithFormat:@"%@",users.peopleId]]) {
+            [userList addObject:s.userId];
+        }
+    }
+    
+    [dict setObject:userList forKey:@"userList"];
+    
+    [dict setObject:@"0" forKey:@"pictureId"];
+    
+    [dict setObject:users.school forKey:@"universityId"];
+    
+    [dict setObject:ary[7] forKey:@"startTime"];
+    
+    [dict setObject:[NSString stringWithFormat:@"%d",class1+1] forKey:@"startTh"];
+    
+    [dict setObject:[NSString stringWithFormat:@"%d",class2+1] forKey:@"endTh"];
     
     return dict;
+}
++(NSMutableDictionary *)createCourseWith:(NSMutableArray *)ary ClassRoom:(ClassRoomModel *)c joinClassPeople:(NSMutableArray *)joinPeopleAry m1:(int)m1 m2:(int)m2 m3:(int)m3 week:(int)week class1:(int)class1 class2:(int)class2{
+    
+    NSMutableDictionary * dict = [[NSMutableDictionary alloc] init];
+    for (int i = 1; i<ary.count; i++) {
+        if ([UIUtils isBlankString:ary[i]]) {
+            return dict;
+            break;
+        }
+    }
+    [dict setObject:ary[1] forKey:@"name"];
+    UserModel * users = [[Appsetting sharedInstance] getUsetInfo];
+    [dict setObject:[NSString stringWithFormat:@"%@",users.peopleId] forKey:@"teacherId"];
+    [dict setObject:@"1" forKey:@"signWay"];
+    [dict setObject:[NSString stringWithFormat:@"%@",c.classRoomId] forKey:@"roomId"];
+    
+    NSMutableArray * userList = [NSMutableArray arrayWithCapacity:1];
+    for (int i = 0; i<joinPeopleAry.count; i++) {
+        SignPeople * s = joinPeopleAry[i];
+        if (![[NSString stringWithFormat:@"%@",s.userId] isEqualToString:[NSString stringWithFormat:@"%@",users.peopleId]]) {
+            [userList addObject:s.userId];
+        }
+    }
+    
+    [dict setObject:userList forKey:@"userList"];
+    
+    [dict setObject:@"0" forKey:@"pictureId"];
+    [dict setObject:[NSString stringWithFormat:@"%d",[UIUtils getTermId]] forKey:@"termId"];
+    [dict setObject:ary[7] forKey:@"firstDay"];
+    
+    if (m3 == 0) {
+        NSArray * aryT = [[NSArray alloc] initWithObjects:@{@"startWeek":[NSString stringWithFormat:@"%d",m1],@"endWeek":[NSString stringWithFormat:@"%d",m2]}, nil];
+        [dict setObject:aryT forKey:@"courseWeekList"];
+        
+    }else if (m3 == 1){
+        NSMutableArray * aryT1 = [NSMutableArray arrayWithCapacity:1];
+        if (m1%2==0) {
+            for (int i = m1+1; i<=m2; i=i+2) {
+                NSDictionary * d = [[NSDictionary alloc] initWithObjectsAndKeys:[NSString stringWithFormat:@"%d",i],@"startWeek",[NSString stringWithFormat:@"%d",i],@"endWeek", nil];
+                
+                [aryT1 addObject:d];
+            }
+            
+        }else{
+            for (int i = m1; i<=m2; i= i+2) {
+                NSDictionary * d = [[NSDictionary alloc] initWithObjectsAndKeys:[NSString stringWithFormat:@"%d",i],@"startWeek",[NSString stringWithFormat:@"%d",i],@"endWeek", nil];
+                
+                [aryT1 addObject:d];
+            }
+        }
+        [dict setObject:aryT1 forKey:@"courseWeekList"];
+        
+    }else if (m3 == 2){
+        NSMutableArray * aryT1 = [NSMutableArray arrayWithCapacity:1];
+        if (m1%2==0) {
+            for (int i = m1; i<=m2; i=i+2) {
+                NSDictionary * d = [[NSDictionary alloc] initWithObjectsAndKeys:[NSString stringWithFormat:@"%d",i],@"startWeek",[NSString stringWithFormat:@"%d",i],@"endWeek", nil];
+                [aryT1 addObject:d];
+            }
+            
+        }else{
+            for (int i = m1+1; i<=m2; i=i+2) {
+                NSDictionary * d = [[NSDictionary alloc] initWithObjectsAndKeys:[NSString stringWithFormat:@"%d",i],@"startWeek",[NSString stringWithFormat:@"%d",i],@"endWeek", nil];
+                [aryT1 addObject:d];
+            }
+        }
+        [dict setObject:aryT1 forKey:@"courseWeekList"];
+    }
+    [dict setObject:users.school forKey:@"universityId"];
+    
+    
+    NSDictionary * w = [[NSDictionary alloc] initWithObjectsAndKeys:[NSString stringWithFormat:@"%d",week+1],@"weekDay",[NSString stringWithFormat:@"%d",class1+1],@"startTh",[NSString stringWithFormat:@"%d",class2+1],@"endTh",nil];
+    
+    NSArray * aa = [[NSArray alloc] initWithObjects:w, nil];
+    [dict setObject:aa forKey:@"courseTimeList"];
+    
+    return dict;
+}
+
++(int)getTermId{
+    NSString * time = [UIUtils getTime];
+    NSString * year = [time substringWithRange:NSMakeRange(0, 4)];
+    NSString * month = [time substringWithRange:NSMakeRange(5, 2)];
+    int y = [year intValue];
+    int m = [month intValue];
+    int  n = (y - 2017)*2;
+    if (m>8) {
+        n = n + 1;
+    }else{
+        n = n + 0;
+    }
+    return n;
 }
 @end
 

@@ -18,6 +18,7 @@
 #import "DiscussViewController.h"
 #import "VoteViewController.h"
 #import "DataDownloadViewController.h"
+#import "SignPeople.h"
 
 @interface CourseDetailsViewController ()<InteractiveViewdDelegate,UIActionSheetDelegate,ShareViewDelegate>
 @property (strong, nonatomic) IBOutlet UIButton *interactive;
@@ -30,19 +31,25 @@
 @property (strong, nonatomic) IBOutlet UILabel *className;
 
 @property (strong, nonatomic) IBOutlet UILabel *classTime;
-@property (strong, nonatomic) IBOutlet UILabel *classNumber;
+@property (strong, nonatomic) IBOutlet UILabel *classPlace;
 
-@property (strong, nonatomic) IBOutlet UILabel *classSignNumber;
+@property (strong, nonatomic) IBOutlet UILabel *classTeacherName;
+@property (strong, nonatomic) IBOutlet UILabel *classSign;
 @property (strong, nonatomic) IBOutlet UIButton *classManage;
 @property (strong, nonatomic)UserModel * user;
+@property (strong,nonatomic) NSMutableArray * signAry;
+@property (nonatomic,strong)NSTimer * timeRun;
+
 @end
 
 @implementation CourseDetailsViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    _signAry = [NSMutableArray arrayWithCapacity:1];
     [self setNavigationTitle];
     [self xib];
+    [self getData];
     // Do any additional setup after loading the view from its nib.
 }
 -(void)xib{
@@ -57,18 +64,33 @@
     _user = [[Appsetting sharedInstance] getUsetInfo];
     
     _className.text = [NSString stringWithFormat:@"课程名：%@",_c.name];
-    NSMutableString *strUrl = [NSMutableString stringWithFormat:@"%@",_c.time];
+    NSMutableString *strUrl = [NSMutableString stringWithFormat:@"%@",_c.actStarTime];
     
-//    [strUrl deleteCharactersInRange:NSMakeRange(0, 81)];
-    _classTime.text = strUrl;
+    [strUrl deleteCharactersInRange:NSMakeRange(0,5)];
+    _classTime.text = [NSString stringWithFormat:@"上课时间：%@",strUrl];
+    _classPlace.text = [NSString stringWithFormat:@"上课地点：%@",_c.typeRoom];
+    _classTeacherName.text = [NSString stringWithFormat:@"老  师：%@",_c.teacherName];
     
-    _classNumber.text = [NSString stringWithFormat:@""];
+    
     if ([[NSString stringWithFormat:@"%@",_c.teacherId] isEqualToString:[NSString stringWithFormat:@"%@",_user.peopleId]]) {
-        _classSignNumber.text = [NSString stringWithFormat:@"%@",_c.total];
         [_classManage setTitle:@"班级管理" forState:UIControlStateNormal];
     }
-    
-    
+    [_classManage setTitle:@"班级管理" forState:UIControlStateNormal];
+    _classManage.backgroundColor = [UIColor colorWithHexString:@"#29a7e1"];
+}
+-(void)getData{
+    NSDictionary * dict = [[NSDictionary alloc] initWithObjectsAndKeys:_c.sclassId,@"id",_c.courseDetailId,@"courseDetailId", nil];
+    [[NetworkRequest sharedInstance] GET:QueryCourseMemBer dict:dict succeed:^(id data) {
+        NSLog(@"成功%@",data);
+        NSArray *ary = [data objectForKey:@"body"];
+        for (int i = 0; i<ary.count;i++) {
+            SignPeople * s = [[SignPeople alloc] init];
+            [s setInfoWithDict:ary[i]];
+            [_signAry addObject:s];
+        }
+    } failure:^(NSError *error) {
+        NSLog(@"失败%@",error);
+    }];
 }
 /**
  *  显示navigation的标题
@@ -93,9 +115,124 @@
 - (IBAction)signInBtnPressed:(id)sender {
     SignListViewController * signListVC = [[SignListViewController alloc] init];
     self.hidesBottomBarWhenPushed = YES;
-    [self.navigationController pushViewController:signListVC animated:YES];
-//    self.hidesBottomBarWhenPushed = NO;
+  //  [self.navigationController pushViewController:signListVC animated:YES];
+    
+    if ([[NSString stringWithFormat:@"%@",_c.signStatus] isEqualToString:@"2"]) {
+        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:[NSString stringWithFormat:@"已签到"] message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil];
+        [alertView show];
+        return;
+    }else{
+        if (![UIUtils validateWithStartTime:_c.actStarTime withExpireTime:nil]) {
+            UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:[NSString stringWithFormat:@"不在时间段内"] message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil];
+            [alertView show];
+//            return;
+        }
+        
+    }
+    NSMutableDictionary * dictWifi =  [UIUtils getWifiName];
+    
+    if (![UIUtils isBlankString:[dictWifi objectForKey:@"BSSID"]]) {
+        
+        
+        NSString * bssid  = [UIUtils specificationMCKAddress:[dictWifi objectForKey:@"BSSID"]];
+        
+        if ([bssid isEqualToString:_c.mck]) {
+            
+            UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:[NSString stringWithFormat:@"已检测到WiFi，请连接网络数据以便签到"] message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: @"取消", nil];
+            alertView.delegate = self;
+            alertView.tag = 2;
+            [alertView show];
+            
+        }else{
+            NSString * s = [_c.mck substringWithRange:NSMakeRange(_c.mck.length-4, 4)];
+            s = [NSString stringWithFormat:@"DAYAO_%@",s];
+            UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:[NSString stringWithFormat:@"请到WiFi列表连接指定WiFi:%@,再点击签到",s] message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: @"取消", nil];
+            alertView.delegate = self;
+            alertView.tag = 1;
+            [alertView show];
+        }
+        
+    }else{
+        NSString * s = [_c.mck substringWithRange:NSMakeRange(_c.mck.length-4, 4)];
+        s = [NSString stringWithFormat:@"DAYAO_%@",s];
+        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:[NSString stringWithFormat:@"请到WiFi列表连接指定WiFi:%@,再点击签到",s] message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: @"取消", nil];
+        alertView.delegate = self;
+        alertView.tag = 1;
+        [alertView show];
+    }
+    
 }
+-(void)alter:(NSString *) str{
+    if ([str isEqualToString:@"1002"]) {
+        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"现在还不能签到" message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: nil];
+        [_timeRun invalidate];
+        _timeRun = nil;
+        [alertView show];
+    }else if ([str isEqualToString:@"1003"]){
+        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"已经签到" message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: nil];
+        [_timeRun invalidate];
+        _timeRun = nil;
+        [alertView show];
+    }else if ([str isEqualToString:@"1004"]){
+        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"没有参加课程" message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: nil];
+        [alertView show];
+        [_timeRun invalidate];
+        _timeRun = nil;
+    }else if ([str isEqualToString:@"0000"]){
+        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"签到成功" message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: nil];
+       // [_signBtn setTitle:@"已签到" forState:UIControlStateNormal];
+        [alertView show];
+        [_timeRun invalidate];
+        _timeRun = nil;
+      //  _signNumber.text = @"签到状态：已签到";
+    }else if ([str isEqualToString:@"5000"]){
+        //        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"" message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: nil];
+        //        [alertView show];
+    }else if ([str isEqualToString:@"1016"]){
+        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"进行中状态的课程不能进行签到" message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: nil];
+        [alertView show];
+        [_timeRun invalidate];
+        _timeRun = nil;
+    }
+}
+#pragma mark ALter
+-(void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
+    if (alertView.tag == 1) {
+        if (buttonIndex == 0) {
+            [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"prefs:root=WIFI"]];
+        }else if(buttonIndex == 1){
+            [alertView setHidden:YES];
+        }
+    }else if (alertView.tag == 2){
+        if (buttonIndex == 0) {
+            [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"prefs:root=WIFI"]];
+            //时间间隔
+            NSTimeInterval timeInterval = 1.0 ;
+            _timeRun =  [NSTimer scheduledTimerWithTimeInterval:timeInterval
+                                                         target:self
+                                                       selector:@selector(handleMaxShowTimer:)
+                                                       userInfo:nil
+                                                        repeats:YES];
+            [_timeRun fire];
+        }else if(buttonIndex == 1){
+            UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"若没有网络数据连接将不能签到" message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: nil];
+            [alertView show];
+        }
+    }
+}
+-(void)handleMaxShowTimer:(NSTimer *)theTimer{
+    NSString *idfv = [[[UIDevice currentDevice] identifierForVendor] UUIDString];
+    
+    NSDictionary * dict = [[NSDictionary alloc] initWithObjectsAndKeys:_c.sclassId,@"Id",_c.courseDetailId,@"courseDetailId",_user.peopleId,@"userId" ,idfv,@"mck",@"2",@"status",nil];
+    [[NetworkRequest sharedInstance] POST:ClassSign dict:dict succeed:^(id data) {
+        NSLog(@"succedd:%@",data);
+        [self alter:[[data objectForKey:@"header"] objectForKey:@"code"]];
+        
+    } failure:^(NSError *error) {
+        NSLog(@"失败：%@",error);
+    }];
+}
+
 - (IBAction)interactiveBtnPressed:(id)sender {
     if (!_interaction)
     {
@@ -107,7 +244,9 @@
 - (IBAction)classManagementBtnPressed:(id)sender {
     ClassManagementViewController * classManegeVC = [[ClassManagementViewController alloc] init];
     self.hidesBottomBarWhenPushed = YES;
-
+    classManegeVC.manage = ClassManageType;
+    classManegeVC.signAry = [NSMutableArray arrayWithCapacity:1];
+    classManegeVC.signAry = _signAry;
     [self.navigationController pushViewController:classManegeVC animated:YES];
 
 }

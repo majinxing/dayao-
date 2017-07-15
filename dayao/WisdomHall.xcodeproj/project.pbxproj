@@ -103,6 +103,10 @@
 		8B2E16F81EBADA5D008B7C57 /* TheMeetingEndedViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8B2E16F61EBADA5D008B7C57 /* TheMeetingEndedViewController.xib */; };
 		8B4D91141EBDAB1000A4BE34 /* SignListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B4D91121EBDAB1000A4BE34 /* SignListViewController.m */; };
 		8B4D91151EBDAB1000A4BE34 /* SignListViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8B4D91131EBDAB1000A4BE34 /* SignListViewController.xib */; };
+		8B64EB561F1A162F00BF7D0F /* CreateTemporaryCourseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B64EB541F1A162F00BF7D0F /* CreateTemporaryCourseViewController.m */; };
+		8B64EB571F1A162F00BF7D0F /* CreateTemporaryCourseViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8B64EB551F1A162F00BF7D0F /* CreateTemporaryCourseViewController.xib */; };
+		8B64EB5B1F1A2BA900BF7D0F /* SelectClassViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B64EB591F1A2BA900BF7D0F /* SelectClassViewController.m */; };
+		8B64EB5C1F1A2BA900BF7D0F /* SelectClassViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8B64EB5A1F1A2BA900BF7D0F /* SelectClassViewController.xib */; };
 		8B6E61CB1EE292B10040FDC1 /* CreateVoteTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B6E61C91EE292B10040FDC1 /* CreateVoteTableViewCell.m */; };
 		8B6E61CC1EE292B10040FDC1 /* CreateVoteTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8B6E61CA1EE292B10040FDC1 /* CreateVoteTableViewCell.xib */; };
 		8B7D5D821EB961260068058E /* CreateCourseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B7D5D801EB961260068058E /* CreateCourseViewController.m */; };
@@ -597,6 +601,12 @@
 		8B4D91111EBDAB1000A4BE34 /* SignListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SignListViewController.h; sourceTree = "<group>"; };
 		8B4D91121EBDAB1000A4BE34 /* SignListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SignListViewController.m; sourceTree = "<group>"; };
 		8B4D91131EBDAB1000A4BE34 /* SignListViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SignListViewController.xib; sourceTree = "<group>"; };
+		8B64EB531F1A162F00BF7D0F /* CreateTemporaryCourseViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CreateTemporaryCourseViewController.h; sourceTree = "<group>"; };
+		8B64EB541F1A162F00BF7D0F /* CreateTemporaryCourseViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CreateTemporaryCourseViewController.m; sourceTree = "<group>"; };
+		8B64EB551F1A162F00BF7D0F /* CreateTemporaryCourseViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CreateTemporaryCourseViewController.xib; sourceTree = "<group>"; };
+		8B64EB581F1A2BA900BF7D0F /* SelectClassViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SelectClassViewController.h; sourceTree = "<group>"; };
+		8B64EB591F1A2BA900BF7D0F /* SelectClassViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SelectClassViewController.m; sourceTree = "<group>"; };
+		8B64EB5A1F1A2BA900BF7D0F /* SelectClassViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SelectClassViewController.xib; sourceTree = "<group>"; };
 		8B6E61C81EE292B10040FDC1 /* CreateVoteTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CreateVoteTableViewCell.h; sourceTree = "<group>"; };
 		8B6E61C91EE292B10040FDC1 /* CreateVoteTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CreateVoteTableViewCell.m; sourceTree = "<group>"; };
 		8B6E61CA1EE292B10040FDC1 /* CreateVoteTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CreateVoteTableViewCell.xib; sourceTree = "<group>"; };
@@ -1122,6 +1132,9 @@
 				8B9CCC8F1F17204B001833FD /* SelectPeopleToClassViewController.h */,
 				8B9CCC901F17204B001833FD /* SelectPeopleToClassViewController.m */,
 				8B9CCC911F17204B001833FD /* SelectPeopleToClassViewController.xib */,
+				8B64EB531F1A162F00BF7D0F /* CreateTemporaryCourseViewController.h */,
+				8B64EB541F1A162F00BF7D0F /* CreateTemporaryCourseViewController.m */,
+				8B64EB551F1A162F00BF7D0F /* CreateTemporaryCourseViewController.xib */,
 			);
 			name = CreateCourse;
 			sourceTree = "<group>";
@@ -1254,6 +1267,9 @@
 				8BA2249A1EADFFA400627A1B /* SignInViewController.h */,
 				8BA2249B1EADFFA400627A1B /* SignInViewController.m */,
 				8BA2249C1EADFFA400627A1B /* SignInViewController.xib */,
+				8B64EB581F1A2BA900BF7D0F /* SelectClassViewController.h */,
+				8B64EB591F1A2BA900BF7D0F /* SelectClassViewController.m */,
+				8B64EB5A1F1A2BA900BF7D0F /* SelectClassViewController.xib */,
 				8B2E16D21EB9C1EA008B7C57 /* CourseDetailsViewController.h */,
 				8B2E16D31EB9C1EA008B7C57 /* CourseDetailsViewController.m */,
 				8B2E16D41EB9C1EA008B7C57 /* CourseDetailsViewController.xib */,
@@ -1780,7 +1796,7 @@
 					8BA224581EADF68500627A1B = {
 						CreatedOnToolsVersion = 8.3;
 						DevelopmentTeam = AM9UTP2CL3;
-						ProvisioningStyle = Manual;
+						ProvisioningStyle = Automatic;
 						SystemCapabilities = {
 							com.apple.BackgroundModes = {
 								enabled = 1;
@@ -1840,12 +1856,14 @@
 				8B17370A1EC2BE2B00BE3C8F /* PersonalDataTableViewCell.xib in Resources */,
 				8BE877811EBC2DE000866A34 /* InTheTestViewController.xib in Resources */,
 				8B2E16F81EBADA5D008B7C57 /* TheMeetingEndedViewController.xib in Resources */,
+				8B64EB571F1A162F00BF7D0F /* CreateTemporaryCourseViewController.xib in Resources */,
 				8BE877771EBC2D6B00866A34 /* AllTestViewController.xib in Resources */,
 				8BA224AE1EAE00B000627A1B /* DYTabBarViewController.xib in Resources */,
 				8B0DB13C1ED6CA4E0042DF0D /* ImportTextViewController.xib in Resources */,
 				8BA224D51EAF25DC00627A1B /* RegisterViewController.xib in Resources */,
 				8BA2249E1EADFFA400627A1B /* SignInViewController.xib in Resources */,
 				8B9171CC1ED41BC7009686FD /* QuestionsTableViewCell.xib in Resources */,
+				8B64EB5C1F1A2BA900BF7D0F /* SelectClassViewController.xib in Resources */,
 				8B7D5D831EB961260068058E /* CreateCourseViewController.xib in Resources */,
 				8B7D5D911EB9782C0068058E /* CourseCollectionViewCell.xib in Resources */,
 				8B081DE21F06238E00493B81 /* DefinitionPersonalTableViewCell.xib in Resources */,
@@ -1996,6 +2014,7 @@
 				8B081DFC1F06524000493B81 /* NSString+PinYin4Cocoa.m in Sources */,
 				8B2E16DE1EBABBC0008B7C57 /* InteractiveView.m in Sources */,
 				8BF864C71ECAD97300B7EED4 /* UIImage+MultiFormat.m in Sources */,
+				8B64EB5B1F1A2BA900BF7D0F /* SelectClassViewController.m in Sources */,
 				8B2E16D51EB9C1EA008B7C57 /* CourseDetailsViewController.m in Sources */,
 				8B027A181EF8F48800600E18 /* MeetingModel.m in Sources */,
 				8B05CB7B1EC2ABFD0063EC20 /* PersonalInfoViewController.m in Sources */,
@@ -2109,6 +2128,7 @@
 				8BCE7CAD1F033AE100FE261B /* HYDelegate.m in Sources */,
 				8BB56D6A1EB037410023DAFF /* UIUtils.m in Sources */,
 				8B8C3D171ECD7A6700E9FB56 /* TextModel.m in Sources */,
+				8B64EB561F1A162F00BF7D0F /* CreateTemporaryCourseViewController.m in Sources */,
 				8B8C3D111ECC336500E9FB56 /* ConversationVC.m in Sources */,
 				8B6E61CB1EE292B10040FDC1 /* CreateVoteTableViewCell.m in Sources */,
 				8B081DFE1F06524000493B81 /* PinYinForObjc.m in Sources */,
@@ -2314,9 +2334,9 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_IDENTITY = "iPhone Distribution: yao zhiqiang (AM9UTP2CL3)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: yao zhiqiang (AM9UTP2CL3)";
-				DEVELOPMENT_TEAM = AM9UTP2CL3;
+				CODE_SIGN_IDENTITY = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				DEVELOPMENT_TEAM = "";
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -2426,8 +2446,8 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.dayaokeji.rhythm;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "a08f6fcd-2414-423a-b12a-e4d45bf4812e";
-				PROVISIONING_PROFILE_SPECIFIER = rhythmPP;
+				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				TARGETED_DEVICE_FAMILY = 1;
 				USER_HEADER_SEARCH_PATHS = "";
 			};
@@ -2588,9 +2608,9 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_IDENTITY = "iPhone Distribution: yao zhiqiang (AM9UTP2CL3)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: yao zhiqiang (AM9UTP2CL3)";
-				DEVELOPMENT_TEAM = AM9UTP2CL3;
+				CODE_SIGN_IDENTITY = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				DEVELOPMENT_TEAM = "";
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -2700,8 +2720,8 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.dayaokeji.rhythm;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "a08f6fcd-2414-423a-b12a-e4d45bf4812e";
-				PROVISIONING_PROFILE_SPECIFIER = rhythmPP;
+				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				TARGETED_DEVICE_FAMILY = 1;
 				USER_HEADER_SEARCH_PATHS = "";
 			};
@@ -2712,9 +2732,9 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_IDENTITY = "iPhone Distribution: yao zhiqiang (AM9UTP2CL3)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: yao zhiqiang (AM9UTP2CL3)";
-				DEVELOPMENT_TEAM = AM9UTP2CL3;
+				CODE_SIGN_IDENTITY = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				DEVELOPMENT_TEAM = "";
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -2824,8 +2844,8 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.dayaokeji.rhythm;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "a08f6fcd-2414-423a-b12a-e4d45bf4812e";
-				PROVISIONING_PROFILE_SPECIFIER = rhythmPP;
+				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				TARGETED_DEVICE_FAMILY = 1;
 				USER_HEADER_SEARCH_PATHS = "";
 			};

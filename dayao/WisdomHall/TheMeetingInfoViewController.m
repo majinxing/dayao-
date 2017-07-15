@@ -216,6 +216,7 @@
 - (IBAction)personnelManagement:(id)sender {
     ClassManagementViewController * classManegeVC = [[ClassManagementViewController alloc] init];
     self.hidesBottomBarWhenPushed = YES;
+    classManegeVC.manage = MeetingManageType;
     classManegeVC.meeting = _meetingModel;
     [self.navigationController pushViewController:classManegeVC animated:YES];
 }
