@@ -125,7 +125,7 @@
         if (![UIUtils validateWithStartTime:_c.actStarTime withExpireTime:nil]) {
             UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:[NSString stringWithFormat:@"不在时间段内"] message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil];
             [alertView show];
-//            return;
+            return;
         }
         
     }
@@ -260,39 +260,7 @@
 
 - (void)shareViewButtonClick:(NSString *)platform
 {
-    if ([platform isEqualToString:ShareType_Weixin_Friend])
-    {
-        NSLog(@"微信好友");
-    }
-    else if ([platform isEqualToString:ShareType_Weixin_Circle])
-    {
-        NSLog(@"朋友圈");
-    }
-    else if ([platform isEqualToString:ShareType_QQ_Friend])
-    {
-        NSLog(@"QQ好友");
-    }
-    else if ([platform isEqualToString:ShareType_QQ_Zone])
-    {
-        NSLog(@"QQ空间");
-    }
-    else if ([platform isEqualToString:ShareType_Weibo])
-    {
-        NSLog(@"新浪微博");
-    }
-    else if ([platform isEqualToString:ShareType_Email])
-    {
-        NSLog(@"Email");
-    }
-    else if ([platform isEqualToString:ShareType_Message])
-    {
-        NSLog(@"短信");
-    }
-    else if ([platform isEqualToString:ShareType_Copy])
-    {
-        NSLog(@"复制链接");
-    }
-    else if ([platform isEqualToString:InteractionType_Test]){
+    if ([platform isEqualToString:InteractionType_Test]){
         NSLog(@"测试");
         [_interaction hide];
         self.hidesBottomBarWhenPushed = YES;
@@ -317,7 +285,8 @@
         ConversationVC * c =[[ConversationVC alloc] init];
         self.hidesBottomBarWhenPushed = YES;
         UserModel * s = [[Appsetting sharedInstance] getUsetInfo];
-        c.HyNumaber = [NSString stringWithFormat:@"%@%@",s.school,_c.teacherId];
+        c.HyNumaber = [NSString stringWithFormat:@"%@%@",s.school,_c.teacherWorkNo];
+        c.call = CALLING;
         [self.navigationController pushViewController:c animated:YES];
     }
     else if ([platform isEqualToString:InteractionType_Test]){

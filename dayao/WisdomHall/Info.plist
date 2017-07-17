@@ -17,7 +17,7 @@
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>
-	<string>1.0.2</string>
+	<string>1.0.3</string>
 	<key>CFBundleURLTypes</key>
 	<array>
 		<dict>
@@ -33,6 +33,8 @@
 	<string>1</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
+	<key>Launch image(iPhone)</key>
+	<string>LaunchImage</string>
 	<key>MOBAppKey</key>
 	<string>188e5c17fb934</string>
 	<key>MOBAppSecret</key>

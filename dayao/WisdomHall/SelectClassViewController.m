@@ -13,6 +13,7 @@
 #import "TheMeetingInfoViewController.h"
 #import "MeetingModel.h"
 #import "MJRefresh.h"
+#import "CourseDetailsViewController.h"
 
 static NSString * cellIdentifier = @"cellIdentifier";
 @interface SelectClassViewController ()<UICollectionViewDelegate,UICollectionViewDataSource,UISearchBarDelegate>
@@ -305,9 +306,9 @@ static NSString * cellIdentifier = @"cellIdentifier";
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
     
-    TheMeetingInfoViewController * mInfo = [[TheMeetingInfoViewController alloc] init];
+    CourseDetailsViewController * mInfo = [[CourseDetailsViewController alloc] init];
     self.hidesBottomBarWhenPushed = YES;
-    mInfo.meetingModel = _classModelAry[indexPath.row];
+    mInfo.c = _classModelAry[indexPath.row];
     [self.navigationController pushViewController:mInfo animated:YES];
     // self.hidesBottomBarWhenPushed=NO;
     
@@ -316,9 +317,9 @@ static NSString * cellIdentifier = @"cellIdentifier";
 - (void)collectionView:(UICollectionView *)collectionView didDeselectItemAtIndexPath:(NSIndexPath *)indexPath
 {
     
-    TheMeetingInfoViewController * mInfo = [[TheMeetingInfoViewController alloc] init];
+    CourseDetailsViewController * mInfo = [[CourseDetailsViewController alloc] init];
     self.hidesBottomBarWhenPushed = YES;
-    mInfo.meetingModel = _classModelAry[indexPath.row];
+    mInfo.c = _classModelAry[indexPath.row];
     [self.navigationController pushViewController:mInfo animated:YES];
     // self.hidesBottomBarWhenPushed=NO;
     

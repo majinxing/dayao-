@@ -116,9 +116,9 @@
     }
 }
 - (IBAction)registerButtonPressed:(id)sender {
-    DefineThePasswordViewController * definePWVC = [[DefineThePasswordViewController alloc] init];
-    definePWVC.phoneNumber = _phoneNumber;
-    [self.navigationController pushViewController:definePWVC animated:YES];
+//    DefineThePasswordViewController * definePWVC = [[DefineThePasswordViewController alloc] init];
+//    definePWVC.phoneNumber = _phoneNumber;
+//    [self.navigationController pushViewController:definePWVC animated:YES];
     
     [SMSSDK commitVerificationCode:_Verification phoneNumber:_phoneNumber zone:@"86" result:^(NSError *error) {
         
@@ -130,6 +130,8 @@
             [self.navigationController pushViewController:definePWVC animated:YES];
         }else
         {
+            UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"验证码错误" message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: nil];
+            [alertView show];
             NSLog(@"失败");
         }
     }];

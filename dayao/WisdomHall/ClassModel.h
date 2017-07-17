@@ -21,6 +21,7 @@
 @property (nonatomic,copy)NSString * actStarTime;
 @property (nonatomic,copy)NSString * courseStatus;
 @property (nonatomic,copy)NSString * teacherId;
+@property (nonatomic,copy)NSString * teacherWorkNo;
 @property (nonatomic,copy)NSString * teacherName;
 @property (nonatomic,copy)NSString * time;
 @property (nonatomic,copy)NSString * total;

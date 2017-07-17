@@ -241,6 +241,7 @@
     expireTime = ary[1];
     NSMutableArray * ary1 = [expireTime componentsSeparatedByString:@":"];
     expireTime = ary1[0];
+    startTime = [NSString stringWithFormat:@"%@ %@:%@",ary[0],ary1[0],ary1[1]];
     long n = [expireTime integerValue];
     if (n == 12||n == 24) {
         n = 1;
@@ -249,7 +250,7 @@
         n = n+1;
         ary1[0] = [NSString stringWithFormat:@"%ld",n];
     }
-    expireTime = [NSString stringWithFormat:@"%@ %@-%@",ary[0],ary1[0],ary1[1]];
+    expireTime = [NSString stringWithFormat:@"%@ %@:%@",ary[0],ary1[0],ary1[1]];
     NSDate *today = [NSDate date];
     
     NSDateFormatter *dateFormat = [[NSDateFormatter alloc] init];
@@ -263,6 +264,42 @@
         return YES;
     }
     return NO;
+}
++(NSString *)compareTimeStartTime:(NSString *)startTime withExpireTime:(NSString *)expireTime {
+    
+    NSArray *ary = [startTime componentsSeparatedByString:@" "];
+    NSString * str = ary[1];
+    NSArray * ary1 = [str componentsSeparatedByString:@":"];
+    startTime = [NSString stringWithFormat:@"%@ %@:%@",ary[0],ary1[0],ary1[1]];
+    
+    NSArray *aryX = [expireTime componentsSeparatedByString:@" "];
+    NSString * strX = ary[1];
+    NSArray * aryX1 = [strX componentsSeparatedByString:@":"];
+    expireTime = [NSString stringWithFormat:@"%@ %@:%@",aryX[0],aryX1[0],aryX1[1]];
+    
+    NSDateFormatter *dateFormat = [[NSDateFormatter alloc] init];
+    // 时间格式,此处遇到过坑,建议时间HH大写,手机24小时进制和12小时禁止都可以完美格式化
+    [dateFormat setDateFormat:@"yyyy-MM-dd HH:mm"];
+    
+    NSDate *start = [dateFormat dateFromString:startTime];
+    NSDate *expire = [dateFormat dateFromString:expireTime];
+    NSComparisonResult result = [start compare:expire];
+    NSString * ci;
+    switch (result)
+    {
+            //date02比date01大
+        case NSOrderedAscending:
+            ci=@"1"; break;
+            //date02比date01小
+        case NSOrderedDescending:
+            ci=@"-1"; break;
+            //date02=date01
+        case NSOrderedSame:
+            ci=@"0"; break;
+        default:
+             break;
+    }
+    return ci;
 }
 +(NSMutableDictionary *)createTemporaryCourseWith:(NSMutableArray *)ary ClassRoom:(ClassRoomModel *)c joinClassPeople:(NSMutableArray *)joinPeopleAry week:(int)week class1:(int)class1 class2:(int)class2{
     
@@ -305,6 +342,7 @@
     
     return dict;
 }
+
 +(NSMutableDictionary *)createCourseWith:(NSMutableArray *)ary ClassRoom:(ClassRoomModel *)c joinClassPeople:(NSMutableArray *)joinPeopleAry m1:(int)m1 m2:(int)m2 m3:(int)m3 week:(int)week class1:(int)class1 class2:(int)class2{
     
     NSMutableDictionary * dict = [[NSMutableDictionary alloc] init];

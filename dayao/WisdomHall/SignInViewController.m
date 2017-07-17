@@ -40,7 +40,7 @@ static NSString *cellIdentifier = @"cellIdentifier";
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor whiteColor];
-    _classAry = [NSMutableArray arrayWithCapacity:4];
+    _classAry = [NSMutableArray arrayWithCapacity:10];
     
     [self setNavigationTitle];
     
@@ -93,13 +93,14 @@ static NSString *cellIdentifier = @"cellIdentifier";
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         if (weakSelf) {
             SignInViewController * strongSelf = weakSelf;
+            if (aIsHeader) {
+                [_classAry removeAllObjects];
+            }
             dispatch_async(dispatch_get_main_queue(), ^{
                 [strongSelf hideHud];
                 [strongSelf getDataWithPage:aPage];
             });
-            if (aIsHeader) {
-                [_classAry removeAllObjects];
-            }
+           
             if (aIsHeader) {
                 [strongSelf.collection headerEndRefreshing];
             }else{
@@ -108,17 +109,20 @@ static NSString *cellIdentifier = @"cellIdentifier";
         }
     });
 }
+#pragma mark 获取数据
 -(void)getDataWithPage:(NSInteger)page{
     
     _userModel = [[Appsetting sharedInstance] getUsetInfo];
     
     NSDictionary * dict = [[NSDictionary alloc] initWithObjectsAndKeys:[NSString stringWithFormat:@"%ld",page],@"start",_userModel.peopleId,@"teacherId",[UIUtils getTime],@"actStartTime",[UIUtils getMoreMonthTime],@"actEndTime",@"1000",@"length",_userModel.school,@"universityId",@"2",@"type",[NSString stringWithFormat:@"%d",[UIUtils getTermId]],@"termId",@"1",@"courseType",nil];
+    
     [[NetworkRequest sharedInstance] GET:QueryCourse dict:dict succeed:^(id data) {
         //NSLog(@"%@",data);
         NSString * str = [[data objectForKey:@"header"] objectForKey:@"message"];
         if ([str isEqualToString:@"成功"]) {
             NSArray * ary = [[data objectForKey:@"body"] objectForKey:@"list"];
             for (int i = 0; i<ary.count; i++) {
+                
                 ClassModel * c = [[ClassModel alloc] init];
                 [c setInfoWithDict:ary[i]];
                 [_classAry addObject:c];
@@ -182,6 +186,24 @@ static NSString *cellIdentifier = @"cellIdentifier";
                 [c setInfoWithDict:ary[i]];
                 [_classAry addObject:c];
             }
+        }
+        for (int i = 0 ; i<_classAry.count; i++) {
+            ClassModel * c = _classAry[i];
+            ClassModel *c2 = [[ClassModel alloc] init];
+
+            for (int j = i; j<_classAry.count; j++) {
+                ClassModel * c1 = _classAry[j];
+                c2 = c;
+                //date02比date01小
+                if ([[UIUtils compareTimeStartTime:c.actStarTime withExpireTime:c1.actStarTime] isEqualToString:@"-1"]) {
+                    c2 = c1;
+//                    c2 = c;
+//                    [_classAry setObject:c1 atIndexedSubscript:i];
+//                    [_classAry setObject:c2 atIndexedSubscript:j];
+//                    c = _classAry[i];
+                }
+            }
+            
         }
         [_collection reloadData];
     } failure:^(NSError *error) {

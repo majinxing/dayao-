@@ -77,6 +77,7 @@
 #define CreateCoures     @"course/course/create/cycle" //创建课堂
 
 #define CreateTemporaryCourse @"course/course/create/once" //创建临时课堂
+
 #define QueryCourseMemBer     @"course/course/member"      //查询课堂成员
 
 #define QueryMeeting     @"course/meeting/select/user"   //查询会议(参与者)

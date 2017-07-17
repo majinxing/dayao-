@@ -41,6 +41,8 @@
 +(NSString *)specificationMCKAddress:(NSString *)str;
 //判断今天是否在这个时间段内
 +(BOOL)validateWithStartTime:(NSString *)startTime withExpireTime:(NSString *)expireTime;
+//比较两个时间的早晚
++(NSString *)compareTimeStartTime:(NSString *)startTime withExpireTime:(NSString *)expireTime;
 //获取学期数
 +(int)getTermId;
 //创建课程

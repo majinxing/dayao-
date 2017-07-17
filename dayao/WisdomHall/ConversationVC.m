@@ -53,13 +53,13 @@
                 _callSession = aCallSession;
                 [self createUI];
             }else{
-                if (self.navigationController.viewControllers.count>1) {
+//                if (self.navigationController.viewControllers.count>1) {
                     [self.navigationController popViewControllerAnimated:YES];
-                }else{
-                    
-                    DYTabBarViewController *rootVC = [DYTabBarViewController sharedInstance];
-                    [UIApplication sharedApplication].keyWindow.rootViewController = rootVC;
-                }
+//                }else{
+//                    
+//                    DYTabBarViewController *rootVC = [DYTabBarViewController sharedInstance];
+//                    [UIApplication sharedApplication].keyWindow.rootViewController = rootVC;
+//                }
 
             }
             
@@ -237,12 +237,12 @@
         [[EMClient sharedClient].callManager endCall:_callSession.callId reason:EMCallEndReasonDecline];
         _callSession = nil;
     }
-    if (self.call == CALLING) {
+//    if (self.call == CALLING) {
         [self.navigationController popViewControllerAnimated:YES];
-    }else{
-        DYTabBarViewController *rootVC = [DYTabBarViewController sharedInstance];
-        [UIApplication sharedApplication].keyWindow.rootViewController = rootVC;
-    }
+//    }else{
+//        DYTabBarViewController *rootVC = [DYTabBarViewController sharedInstance];
+//        [UIApplication sharedApplication].keyWindow.rootViewController = rootVC;
+//    }
 }
 
 
