@@ -80,6 +80,8 @@
 
 #define QueryCourseMemBer     @"course/course/member"      //查询课堂成员
 
+#define DelecateCourse         @"course/course/delete"   //删除课程
+
 #define QueryMeeting     @"course/meeting/select/user"   //查询会议(参与者)
 
 #define QueryMeetingSelfCreate @"course/meeting/select" //查询自己创建的会议

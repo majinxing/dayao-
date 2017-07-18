@@ -22,6 +22,9 @@
 
 
 @property (nonatomic,strong)UILabel * typeLab;
+@property (nonatomic,assign) int n;
+@property (nonatomic,assign) int m;
+
 
 @end
 
@@ -72,7 +75,12 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.view.backgroundColor = [UIColor whiteColor];
+    _n = 0;
+    _m = 0;
+    self.view.backgroundColor = [UIColor blackColor];
+    UIImageView * image = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, APPLICATION_WIDTH, APPLICATION_HEIGHT)];
+    image.image = [UIImage imageNamed:@"callBg"];
+    [self.view addSubview:image];
     [[EMClient sharedClient].callManager addDelegate:self delegateQueue:nil];
 
     // Do any additional setup after loading the view.
@@ -88,12 +96,33 @@
         
         _hangupBtn.backgroundColor = [UIColor redColor];
         
-        [_hangupBtn setTitle:@"hangup" forState:UIControlStateNormal];
+        [_hangupBtn setTitle:@"挂断" forState:UIControlStateNormal];
         
         [_hangupBtn addTarget:self action:@selector(hangupBtnClick) forControlEvents:UIControlEventTouchUpInside];
         
         [self.view addSubview:_hangupBtn];
     }
+    UIButton * btn = [UIButton buttonWithType:UIButtonTypeCustom];
+    
+    btn.frame = CGRectMake(APPLICATION_WIDTH/2+40, CGRectGetMaxY(_hangupBtn.frame)-40-100-30, 100, 100);
+    
+    [btn setBackgroundImage:[UIImage imageNamed:@"call_out"] forState:UIControlStateNormal];
+    
+    [btn addTarget:self action:@selector(callSilence:) forControlEvents:UIControlEventTouchUpInside];
+    
+    [self.view addSubview:btn];
+    
+    UIButton * handsFree = [UIButton buttonWithType:UIButtonTypeCustom];
+    
+    handsFree.frame = CGRectMake(APPLICATION_WIDTH/2-140, CGRectGetMaxY(_hangupBtn.frame)-40-100-30, 100, 100);
+    
+    [handsFree setBackgroundImage:[UIImage imageNamed:@"call_silence"] forState:UIControlStateNormal];
+    
+    [handsFree addTarget:self action:@selector(handsFree:) forControlEvents:UIControlEventTouchUpInside];
+    
+    [self.view addSubview:handsFree];
+    
+    
     if (!_receiveBtn) {
         _receiveBtn = [UIButton buttonWithType:UIButtonTypeCustom];
         
@@ -105,7 +134,7 @@
         
         [_receiveBtn addTarget:self action:@selector(receiveBtnClick:) forControlEvents:UIControlEventTouchUpInside];
         
-        [self.view addSubview:_receiveBtn];
+        //[self.view addSubview:_receiveBtn];
     }
     if (!_typeLab) {
         
@@ -113,10 +142,31 @@
         
         _typeLab.textAlignment = NSTextAlignmentCenter;
         
+        [_typeLab setTextColor:[UIColor whiteColor]];
+        
         [self.view addSubview:_typeLab];
     }
     _typeLab.text = @"正在链接";
-    _receiveBtn.hidden = _isSender;
+    
+    
+    UIImageView * headIamge = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"chatListCellHead"]];
+    
+    
+    headIamge.frame = CGRectMake(APPLICATION_WIDTH/2-30, 200, 60, 60);
+    
+    [self.view addSubview:headIamge];
+    
+    UILabel * teacherName = [[UILabel alloc] initWithFrame:CGRectMake(0, 280, APPLICATION_WIDTH, 20)];
+    
+    teacherName.text = _teacherName;
+    
+    teacherName.textAlignment = NSTextAlignmentCenter;
+    
+    [teacherName setTextColor:[UIColor whiteColor]];
+    
+    [self.view addSubview:teacherName];
+    
+    
     
     if (_type == 1) {
         
@@ -131,11 +181,39 @@
         [self.view addSubview:_callSession.localVideoView];
         
     }
-    [self.view bringSubviewToFront:_receiveBtn];
+
     [self.view bringSubviewToFront:_hangupBtn];
     
+    
+    
 }
+-(void)callSilence:(UIButton *)btn{
+    if (_n == 0) {
+        _n = 1;
+        [btn setBackgroundImage:[UIImage imageNamed:@"call_out_h"] forState:UIControlStateNormal];
+        AVAudioSession *audioSession = [AVAudioSession sharedInstance]; //设置为播放
+        [audioSession setCategory:AVAudioSessionCategoryPlayback error:nil];
+        [audioSession setActive:YES error:nil];
+    }else if (_n == 1){
+        _n = 0;
+        [btn setBackgroundImage:[UIImage imageNamed:@"call_out"] forState:UIControlStateNormal];
+        AVAudioSession *audioSession = [AVAudioSession sharedInstance]; //设置为播放
+        [audioSession setCategory:AVAudioSessionCategoryPlayback error:nil];
+        [audioSession setActive:NO error:nil];
+    }
 
+}
+-(void)handsFree:(UIButton *)btn{
+    if (_m == 0) {
+        _m = 1;
+        [btn setBackgroundImage:[UIImage imageNamed:@"call_silence_h"] forState:UIControlStateNormal];
+
+    }else if(_m == 1){
+        _m = 0;
+        [btn setBackgroundImage:[UIImage imageNamed:@"call_silence"] forState:UIControlStateNormal];
+    }
+   
+}
 /*!
  *  \~chinese
  *  通话通道建立完成，用户A和用户B都会收到这个回调

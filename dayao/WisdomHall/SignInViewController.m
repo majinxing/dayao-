@@ -29,7 +29,7 @@ static NSString *cellIdentifier = @"cellIdentifier";
 @interface SignInViewController ()<UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout>
 @property (nonatomic,strong) UICollectionView * collection;
 @property (nonatomic,strong) UserModel * userModel;
-@property (nonatomic,strong)NSMutableArray * classAry;
+@property (nonatomic,strong) NSMutableArray * classAry;
 /** @brief 当前加载的页数 */
 @property (nonatomic) int page;
 
@@ -39,7 +39,9 @@ static NSString *cellIdentifier = @"cellIdentifier";
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
     self.view.backgroundColor = [UIColor whiteColor];
+    
     _classAry = [NSMutableArray arrayWithCapacity:10];
     
     [self setNavigationTitle];
@@ -66,9 +68,11 @@ static NSString *cellIdentifier = @"cellIdentifier";
     _collection.backgroundColor = [UIColor clearColor];
     self.collection.alwaysBounceVertical = YES; //垂直方向遇到边框是否总是反弹
     __weak SignInViewController * weakSelf = self;
+    
     [self.collection addHeaderWithCallback:^{
         [weakSelf headerRereshing];
     }];
+    
     [self.collection addFooterWithCallback:^{
         [weakSelf footerRereshing];
     }];
@@ -95,7 +99,7 @@ static NSString *cellIdentifier = @"cellIdentifier";
             SignInViewController * strongSelf = weakSelf;
             if (aIsHeader) {
                 [_classAry removeAllObjects];
-            }
+                _classAry = [NSMutableArray arrayWithCapacity:1];            }
             dispatch_async(dispatch_get_main_queue(), ^{
                 [strongSelf hideHud];
                 [strongSelf getDataWithPage:aPage];
@@ -128,14 +132,15 @@ static NSString *cellIdentifier = @"cellIdentifier";
                 [_classAry addObject:c];
             }
         }
-        [_collection reloadData];
+//        [_collection reloadData];
         [self getSelfJoinClass:page];
     } failure:^(NSError *error) {
         NSLog(@"%@",error);
     }];
 }
 -(void)getSelfJoinClass:(NSInteger)page{
-    NSDictionary * dict = [[NSDictionary alloc] initWithObjectsAndKeys:[NSString stringWithFormat:@"%ld",page],@"start",_userModel.peopleId,@"studentId",[UIUtils getTime],@"actStartTime",[UIUtils getMoreMonthTime],@"actEndTime",@"1000",@"length",_userModel.school,@"universityId",@"1",@"type",[NSString stringWithFormat:@"%d",[UIUtils getTermId]],@"termId",@"1",@"courseType",nil];
+    NSDictionary * dict = [[NSDictionary alloc] initWithObjectsAndKeys:[NSString stringWithFormat:@"%ld",(long)page],@"start",_userModel.peopleId,@"studentId",[UIUtils getTime],@"actStartTime",[UIUtils getMoreMonthTime],@"actEndTime",@"1000",@"length",_userModel.school,@"universityId",@"1",@"type",[NSString stringWithFormat:@"%d",[UIUtils getTermId]],@"termId",@"1",@"courseType",nil];
+    
     [[NetworkRequest sharedInstance] GET:QueryCourse dict:dict succeed:^(id data) {
        // NSLog(@"%@",data);
         NSString * str = [[data objectForKey:@"header"] objectForKey:@"message"];
@@ -147,7 +152,7 @@ static NSString *cellIdentifier = @"cellIdentifier";
                 [_classAry addObject:c];
             }
         }
-        [_collection reloadData];
+//        [_collection reloadData];
         [self getSelfCreateClassType:page];
     } failure:^(NSError *error) {
         NSLog(@"%@",error);
@@ -155,7 +160,7 @@ static NSString *cellIdentifier = @"cellIdentifier";
 }
 //临时
 -(void)getSelfCreateClassType:(NSInteger)page{
-    NSDictionary * dict = [[NSDictionary alloc] initWithObjectsAndKeys:[NSString stringWithFormat:@"%ld",page],@"start",_userModel.peopleId,@"teacherId",[UIUtils getTime],@"actStartTime",[UIUtils getMoreMonthTime],@"actEndTime",@"1000",@"length",_userModel.school,@"universityId",@"2",@"type",@"2",@"courseType",nil];
+    NSDictionary * dict = [[NSDictionary alloc] initWithObjectsAndKeys:[NSString stringWithFormat:@"%ld",(long)page],@"start",_userModel.peopleId,@"teacherId",[UIUtils getTime],@"actStartTime",[UIUtils getMoreMonthTime],@"actEndTime",@"1000",@"length",_userModel.school,@"universityId",@"2",@"type",@"2",@"courseType",nil];
     [[NetworkRequest sharedInstance] GET:QueryCourse dict:dict succeed:^(id data) {
        // NSLog(@"%@",data);
         NSString * str = [[data objectForKey:@"header"] objectForKey:@"message"];
@@ -167,7 +172,7 @@ static NSString *cellIdentifier = @"cellIdentifier";
                 [_classAry addObject:c];
             }
         }
-        [_collection reloadData];
+//        [_collection reloadData];
         [self getSelfJoinClassType:page];
     } failure:^(NSError *error) {
         NSLog(@"%@",error);
@@ -175,7 +180,7 @@ static NSString *cellIdentifier = @"cellIdentifier";
 }
 //临时
 -(void)getSelfJoinClassType:(NSInteger)page{
-    NSDictionary * dict = [[NSDictionary alloc] initWithObjectsAndKeys:[NSString stringWithFormat:@"%ld",page],@"start",_userModel.peopleId,@"studentId",[UIUtils getTime],@"actStartTime",[UIUtils getMoreMonthTime],@"actEndTime",@"1000",@"length",_userModel.school,@"universityId",@"1",@"type",@"2",@"courseType",nil];
+    NSDictionary * dict = [[NSDictionary alloc] initWithObjectsAndKeys:[NSString stringWithFormat:@"%ld",(long)page],@"start",_userModel.peopleId,@"studentId",[UIUtils getTime],@"actStartTime",[UIUtils getMoreMonthTime],@"actEndTime",@"1000",@"length",_userModel.school,@"universityId",@"1",@"type",@"2",@"courseType",nil];
     [[NetworkRequest sharedInstance] GET:QueryCourse dict:dict succeed:^(id data) {
         //NSLog(@"%@",data);
         NSString * str = [[data objectForKey:@"header"] objectForKey:@"message"];
@@ -189,23 +194,25 @@ static NSString *cellIdentifier = @"cellIdentifier";
         }
         for (int i = 0 ; i<_classAry.count; i++) {
             ClassModel * c = _classAry[i];
-            ClassModel *c2 = [[ClassModel alloc] init];
 
             for (int j = i; j<_classAry.count; j++) {
                 ClassModel * c1 = _classAry[j];
-                c2 = c;
                 //date02比date01小
                 if ([[UIUtils compareTimeStartTime:c.actStarTime withExpireTime:c1.actStarTime] isEqualToString:@"-1"]) {
-                    c2 = c1;
-//                    c2 = c;
-//                    [_classAry setObject:c1 atIndexedSubscript:i];
-//                    [_classAry setObject:c2 atIndexedSubscript:j];
-//                    c = _classAry[i];
+//                    c2 = c1;
+                    ClassModel *c2 = [[ClassModel alloc] init];
+                    c2 = c;
+                    [_classAry setObject:c1 atIndexedSubscript:i];
+                    [_classAry setObject:c2 atIndexedSubscript:j];
+                    c = _classAry[i];
                 }
             }
             
         }
-        [_collection reloadData];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [_collection reloadData];
+        });
+        
     } failure:^(NSError *error) {
         NSLog(@"%@",error);
     }];
@@ -213,7 +220,7 @@ static NSString *cellIdentifier = @"cellIdentifier";
 }
 
 -(void)viewWillAppear:(BOOL)animated{
-    // [self.navigationController setNavigationBarHidden:YES animated:NO];
+
 }
 /**
  *  显示navigation的标题

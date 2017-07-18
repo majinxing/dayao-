@@ -11,7 +11,6 @@
 #import "DYHeader.h"
 @interface SignListViewController ()<UITableViewDelegate,UITableViewDataSource,PersonalInfoTableViewCellDelegate>
 @property (nonatomic,strong)UITableView * tableView;
-@property (nonatomic,strong)NSMutableArray * ary;
 @end
 
 @implementation SignListViewController
@@ -22,10 +21,6 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self setNavigationTitle];
-    _ary = [NSMutableArray arrayWithCapacity:10];
-    for (int i = 0; i<10; i++) {
-        [_ary setObject:[NSString stringWithFormat:@"掌声%d",i] atIndexedSubscript:i];
-    }
     _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0,64, APPLICATION_WIDTH,APPLICATION_HEIGHT-64) style:UITableViewStylePlain];
     _tableView.delegate = self;
     _tableView.dataSource = self;
@@ -65,6 +60,7 @@
         } failure:^(NSError *error) {
             NSLog(@"失败：%@",error);
         }];
+        
     }else if(_signType == SignClassRoom){
         NSDictionary * dict = [[NSDictionary alloc] initWithObjectsAndKeys:_classModel.sclassId,@"courseId",userModel.peopleId,@"userId" ,nil];
         [[NetworkRequest sharedInstance] POST:ClassSign dict:dict succeed:^(id data) {
@@ -109,18 +105,35 @@
     return 2;
 }
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
-    if (section==0) {
-        return 1;
-    }if (_meetingModel.m>0&&section==1){
-        return _meetingModel.m;
+    if (_signType == SignMeeting) {
+        if (section==0) {
+            return 1;
+        }if (_meetingModel.m>0&&section==1){
+            return _meetingModel.m;
+        }
+    }else if (_signType == SignClassRoom){
+        if (section == 0) {
+            return 1;
+        }else if(_ary.count>0&&section == 1){
+            return _ary.count;
+        }
     }
+    
     return 0;
 }
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
-    PersonalInfoTableViewCell * cell = [PersonalInfoTableViewCell tempTableViewCellWith:tableView indexPath:indexPath array:_meetingModel.signNo];
+    PersonalInfoTableViewCell * cell ;
+    if (_signType == SignMeeting) {
+        cell = [PersonalInfoTableViewCell tempTableViewCellWith:tableView indexPath:indexPath array:_meetingModel.signNo];
+        [cell setSignNumebr:[NSString stringWithFormat:@"%ld",(long)_meetingModel.m]];
+    }else if(_signType == SignClassRoom){
+        cell = [PersonalInfoTableViewCell tempTableViewCellWith:tableView indexPath:indexPath array:_ary];
+        [cell setSignNumebr:[NSString stringWithFormat:@"%ld",(long)_ary.count]];
+    }
+    
     cell.delegate = self;
-    [cell setSignNumebr:[NSString stringWithFormat:@"%ld",(long)_meetingModel.m]];
+    
     return cell;
 }
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{

@@ -15,5 +15,7 @@
 @property (nonatomic,copy) NSString * userId;
 @property (nonatomic,copy) NSString * workNo;
 @property (nonatomic,assign) BOOL isSelect;
+
+
 -(void)setInfoWithDict:(NSDictionary *)dict;
 @end

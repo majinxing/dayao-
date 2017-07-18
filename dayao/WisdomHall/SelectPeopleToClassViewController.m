@@ -12,7 +12,7 @@
 #import "SignPeople.h"
 #import "CreateCouresTableViewCell.h"
 
-@interface SelectPeopleToClassViewController ()<UITableViewDelegate,UITableViewDataSource,UIPickerViewDelegate,UIPickerViewDataSource,CreateCouresTableViewCellDelegate>
+@interface SelectPeopleToClassViewController ()<UITableViewDelegate,UITableViewDataSource,UIPickerViewDelegate,UIPickerViewDataSource,CreateCouresTableViewCellDelegate,UISearchBarDelegate>
 @property (nonatomic,strong)UITableView * tableView;
 @property (strong, nonatomic) IBOutlet UIButton *departments;
 @property (strong, nonatomic) IBOutlet UIButton *professional;
@@ -32,6 +32,8 @@
 @property (nonatomic,strong) NSMutableArray * pickAry;
 @property (nonatomic,strong) NSMutableArray * dataAry;
 @property (nonatomic,strong) NSMutableArray * selectPeople;
+@property (nonatomic,strong)UISearchBar * mySearchBar;
+
 
 @property (nonatomic,strong) UserModel * user;
 @property (nonatomic,strong) SchoolModel * school;
@@ -81,7 +83,7 @@
     
     UIButton * fuzzySearch = [UIButton buttonWithType:UIButtonTypeCustom];
     fuzzySearch.frame = CGRectMake(APPLICATION_WIDTH/2-100, 30, 100, 30);
-    [fuzzySearch setTitle:@"模糊搜索" forState:UIControlStateNormal];
+    [fuzzySearch setTitle:@"范围搜索" forState:UIControlStateNormal];
     [fuzzySearch setTitleColor:[UIColor colorWithHexString:@"#29a7e1"] forState:UIControlStateNormal];
     fuzzySearch.titleLabel.font = [UIFont systemFontOfSize:15];
     [fuzzySearch addTarget:self action:@selector(searchType:) forControlEvents:UIControlEventTouchUpInside];
@@ -134,8 +136,44 @@
     _search.layer.borderWidth = 0.5;
     _search.layer.cornerRadius = 5;
     [_search setTitleColor:[UIColor colorWithHexString:@"#29a7e1"] forState:UIControlStateNormal];
-
+    [self addSeachBar];
 }
+-(void)addSeachBar{
+    _mySearchBar = [[UISearchBar alloc] initWithFrame:CGRectMake(0, 64, APPLICATION_WIDTH, 45)];
+    _mySearchBar.backgroundColor = [UIColor clearColor];
+    //去掉搜索框背景
+    
+    //1.
+    for (UIView *subview in _mySearchBar.subviews)
+        
+    {
+        
+        if ([subview isKindOfClass:NSClassFromString(@"UISearchBarBackground")])
+            
+        {
+            
+            [subview removeFromSuperview];
+            
+            break;
+            
+        }
+        
+    }
+    _mySearchBar.delegate = self;
+    _mySearchBar.searchBarStyle = UISearchBarStyleDefault;
+    //这个可以加方法 取消的方法
+    //_mySearchBar.showsCancelButton = YES;
+    _mySearchBar.tintColor = [UIColor blackColor];
+    [_mySearchBar setPlaceholder:@"搜索精确信息：姓名/学号"];
+    //[_mySearchBar setBackgroundImage:[UIImage imageNamed:@"search-1"]];
+    _mySearchBar.showsScopeBar = YES;
+    //    [_mySearchBar sizeToFit];
+    //_mySearchBar.hidden = YES;  ///隐藏搜索框
+    [self.view addSubview:self.mySearchBar];
+    [self.mySearchBar becomeFirstResponder];
+    [_mySearchBar setHidden:YES];
+}
+
 -(void)back{
     [self.navigationController popViewControllerAnimated:YES];
 }
@@ -221,9 +259,16 @@
 -(void)searchType:(UIButton *)btn{
     if (btn.tag == 1001) {
         [_departments setHidden: NO];
-
+        [_professional setHidden:NO];
+        [_theClass setHidden:NO];
+        [_search setHidden:NO];
+        [_mySearchBar setHidden:YES];
     }else if (btn.tag == 1002){
         [_departments setHidden: YES];
+        [_professional setHidden:YES];
+        [_theClass setHidden:YES];
+        [_search setHidden:YES];
+        [_mySearchBar setHidden:NO];
     }else if (btn.tag == 1003){
         if ([btn.titleLabel.text isEqualToString:@"全选"]) {
             for (int i = 0; i<_dataAry.count; i++) {
@@ -353,6 +398,67 @@
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+#pragma mark - UISearchDisplayDelegate
+-(void)searchBarSearchButtonClicked:(UISearchBar *)searchBar{
+    __block NSMutableArray * ary = [NSMutableArray arrayWithCapacity:1];
+    if ([UIUtils isPureInt:searchBar.text]) {
+        NSDictionary * dict = [[NSDictionary alloc] initWithObjectsAndKeys:[NSString stringWithFormat:@"%@",searchBar.text],@"workNo",@"1",@"start",@"1000",@"length", nil];
+        [[NetworkRequest sharedInstance] GET:QueryPeople dict:dict succeed:^(id data) {
+            NSArray * aty = [[data objectForKey:@"body"] objectForKey:@"list"];
+            [_dataAry removeAllObjects];
+            for (int i = 0; i<aty.count; i++) {
+                SignPeople * s = [[SignPeople alloc] init];
+                s.name = [aty[i] objectForKey:@"name"];
+                s.userId = [aty[i] objectForKey:@"id"];
+                s.workNo = [aty[i] objectForKey:@"workNo"];
+                for (int j = 0; j<_selectPeople.count; j++) {
+                    SignPeople * sg = _selectPeople[j];
+                    if ([[NSString stringWithFormat:@"%@",s.userId] isEqualToString:[NSString stringWithFormat:@"%@",sg.userId]]) {
+                        s.isSelect = YES;
+                        break;
+                    }
+                }
+                [_dataAry addObject:s];
+            }
+            [_tableView reloadData];
+        } failure:^(NSError *error) {
+            
+        }];
+    }else{
+         NSDictionary * dict = [[NSDictionary alloc] initWithObjectsAndKeys:[NSString stringWithFormat:@"%@",searchBar.text],@"name",@"1",@"start",@"1000",@"length", nil];
+        [[NetworkRequest sharedInstance] GET:QueryPeople dict:dict succeed:^(id data) {
+            NSArray * aty = [[data objectForKey:@"body"] objectForKey:@"list"];
+            [_dataAry removeAllObjects];
+            for (int i = 0; i<aty.count; i++) {
+                SignPeople * s = [[SignPeople alloc] init];
+                s.name = [aty[i] objectForKey:@"name"];
+                s.userId = [aty[i] objectForKey:@"id"];
+                s.workNo = [aty[i] objectForKey:@"workNo"];
+                for (int j = 0; j<_selectPeople.count; j++) {
+                    SignPeople * sg = _selectPeople[j];
+                    if ([[NSString stringWithFormat:@"%@",s.userId] isEqualToString:[NSString stringWithFormat:@"%@",sg.userId]]) {
+                        s.isSelect = YES;
+                        break;
+                    }
+                }
+                [_dataAry addObject:s];
+            }
+            [_tableView reloadData];
+        } failure:^(NSError *error) {
+            
+        }];
+
+    }
+    
+    
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [_tableView reloadData];
+        });
+    });
+    
 }
 #pragma mark UIPickViewDelegate
 

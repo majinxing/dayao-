@@ -18,6 +18,8 @@ typedef enum{
 
 @interface ConversationVC : UIViewController
 
+@property (nonatomic,copy) NSString * teacherName;
+
 @property (nonatomic,copy)NSString *HyNumaber;
 
 @property (nonatomic,assign)NSInteger type;

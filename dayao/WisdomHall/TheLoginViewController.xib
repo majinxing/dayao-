@@ -22,19 +22,22 @@
             <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <imageView contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="bg3" translatesAutoresizingMaskIntoConstraints="NO" id="PVt-Pg-pZV">
+                <imageView contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="login_back" translatesAutoresizingMaskIntoConstraints="NO" id="PVt-Pg-pZV">
                     <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                     <color key="backgroundColor" red="0.99802789374738732" green="0.99928342173393658" blue="1" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                 </imageView>
-                <imageView contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="icon" translatesAutoresizingMaskIntoConstraints="NO" id="iPr-Jw-Rci">
+                <imageView contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="logo" translatesAutoresizingMaskIntoConstraints="NO" id="iPr-Jw-Rci">
                     <rect key="frame" x="125" y="70" width="125" height="125"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="125" id="Csp-Ax-wiQ"/>
                         <constraint firstAttribute="width" constant="125" id="oKY-Sb-0jD"/>
                     </constraints>
                 </imageView>
-                <label opaque="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="工号/学号" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Sgg-UZ-3lk">
-                    <rect key="frame" x="30" y="245" width="75" height="21"/>
+                <label opaque="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="手 机 号" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Sgg-UZ-3lk">
+                    <rect key="frame" x="30" y="245" width="70" height="21"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="70" id="gUS-NG-FoM"/>
+                    </constraints>
                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                     <color key="textColor" red="0.97232758782959194" green="0.97723805047400558" blue="1" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                     <nil key="highlightedColor"/>
@@ -50,7 +53,7 @@
                     <nil key="highlightedColor"/>
                 </label>
                 <textField opaque="NO" clipsSubviews="YES" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="请输入账号" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="CJU-LI-J9A">
-                    <rect key="frame" x="115" y="245" width="200" height="20"/>
+                    <rect key="frame" x="110" y="245" width="200" height="20"/>
                     <color key="backgroundColor" red="0.9865880577396926" green="0.99555968650306481" blue="1" alpha="0.0" colorSpace="custom" customColorSpace="displayP3"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="200" id="Ae9-sz-Cmz"/>
@@ -87,7 +90,7 @@
                 </view>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="yXt-zY-hHJ">
                     <rect key="frame" x="30" y="384.5" width="315" height="40"/>
-                    <color key="backgroundColor" red="0.69155894810055885" green="0.91367435336976088" blue="1" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                    <color key="backgroundColor" red="0.36303427858061399" green="0.67155549519642732" blue="1" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="40" id="Z8c-Ez-S3I"/>
                     </constraints>
@@ -159,11 +162,11 @@
                 <constraint firstAttribute="trailing" secondItem="0B6-cV-dd5" secondAttribute="trailing" constant="30" id="y6P-91-jaO"/>
                 <constraint firstAttribute="bottom" secondItem="PVt-Pg-pZV" secondAttribute="bottom" id="zYO-h7-Uxa"/>
             </constraints>
-            <point key="canvasLocation" x="33.5" y="54.5"/>
+            <point key="canvasLocation" x="65" y="64"/>
         </view>
     </objects>
     <resources>
-        <image name="bg3" width="480" height="720"/>
-        <image name="icon" width="40" height="40"/>
+        <image name="login_back" width="1440" height="2560"/>
+        <image name="logo" width="1030" height="1024"/>
     </resources>
 </document>

@@ -20,7 +20,7 @@
 #import "DataDownloadViewController.h"
 #import "SignPeople.h"
 
-@interface CourseDetailsViewController ()<InteractiveViewdDelegate,UIActionSheetDelegate,ShareViewDelegate>
+@interface CourseDetailsViewController ()<UIActionSheetDelegate,ShareViewDelegate>
 @property (strong, nonatomic) IBOutlet UIButton *interactive;
 @property (strong, nonatomic) IBOutlet UIButton *signInBtn;
 @property (nonatomic,strong) InteractiveView * interactiveView;
@@ -37,8 +37,12 @@
 @property (strong, nonatomic) IBOutlet UILabel *classSign;
 @property (strong, nonatomic) IBOutlet UIButton *classManage;
 @property (strong, nonatomic)UserModel * user;
-@property (strong,nonatomic) NSMutableArray * signAry;
+@property (strong, nonatomic) NSMutableArray * signAry;
+@property (strong, nonatomic) NSMutableArray * notSignAry;
 @property (nonatomic,strong)NSTimer * timeRun;
+
+@property (nonatomic,assign)NSInteger n;//签到人数
+@property (nonatomic,assign)NSInteger m;//未签到人数
 
 @end
 
@@ -47,6 +51,10 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     _signAry = [NSMutableArray arrayWithCapacity:1];
+    _notSignAry = [NSMutableArray arrayWithCapacity:1];
+    _user = [[Appsetting sharedInstance] getUsetInfo];
+    _n = 0;
+    _m = 0;
     [self setNavigationTitle];
     [self xib];
     [self getData];
@@ -61,7 +69,6 @@
     _signInBtn.layer.borderWidth = 1;
     _signInBtn.layer.borderColor = [[UIColor whiteColor]CGColor];
     
-    _user = [[Appsetting sharedInstance] getUsetInfo];
     
     _className.text = [NSString stringWithFormat:@"课程名：%@",_c.name];
     NSMutableString *strUrl = [NSMutableString stringWithFormat:@"%@",_c.actStarTime];
@@ -72,11 +79,12 @@
     _classTeacherName.text = [NSString stringWithFormat:@"老  师：%@",_c.teacherName];
     
     
-    if ([[NSString stringWithFormat:@"%@",_c.teacherId] isEqualToString:[NSString stringWithFormat:@"%@",_user.peopleId]]) {
+    if ([[NSString stringWithFormat:@"%@",_c.teacherWorkNo] isEqualToString:[NSString stringWithFormat:@"%@",_user.studentId]]) {
         [_classManage setTitle:@"班级管理" forState:UIControlStateNormal];
+        _classManage.backgroundColor = [UIColor colorWithHexString:@"#29a7e1"];
+
     }
-    [_classManage setTitle:@"班级管理" forState:UIControlStateNormal];
-    _classManage.backgroundColor = [UIColor colorWithHexString:@"#29a7e1"];
+//    [_classManage setTitle:@"班级管理" forState:UIControlStateNormal];
 }
 -(void)getData{
     NSDictionary * dict = [[NSDictionary alloc] initWithObjectsAndKeys:_c.sclassId,@"id",_c.courseDetailId,@"courseDetailId", nil];
@@ -86,7 +94,16 @@
         for (int i = 0; i<ary.count;i++) {
             SignPeople * s = [[SignPeople alloc] init];
             [s setInfoWithDict:ary[i]];
+            if ([[NSString stringWithFormat:@"%@",s.signStatus] isEqualToString:@"1"]) {
+                _m = _m + 1;
+                [_notSignAry addObject:s];
+            }else{
+                _n = _n + 1;
+            }
             [_signAry addObject:s];
+        }
+        if ([[NSString stringWithFormat:@"%@",_c.teacherWorkNo] isEqualToString:[NSString stringWithFormat:@"%@",_user.studentId]]) {
+            _classSign.text = [NSString stringWithFormat:@"签到人：%ld/%ld",_n,(_m+_n)];
         }
     } failure:^(NSError *error) {
         NSLog(@"失败%@",error);
@@ -102,6 +119,30 @@
                                                                       NSFontAttributeName:[UIFont systemFontOfSize:17],
                                                                       NSForegroundColorAttributeName:[UIColor blackColor]}];
     self.title = @"课程详情";
+    
+    UIBarButtonItem *myButton = [[UIBarButtonItem alloc] initWithTitle:@"删除课程" style:UIBarButtonItemStylePlain target:self action:@selector(delecateCourse)];
+//    self.navigationItem.rightBarButtonItem = myButton;
+
+    if ([[NSString stringWithFormat:@"%@",_c.teacherWorkNo] isEqualToString:[NSString stringWithFormat:@"%@",_user.studentId]]) {
+        self.navigationItem.rightBarButtonItem = myButton;
+    }
+}
+-(void)delecateCourse{
+    NSDictionary * dict = [[NSDictionary alloc] initWithObjectsAndKeys:_c.courseDetailId,@"courseDetailId", nil];
+    [[NetworkRequest sharedInstance] POST:DelecateCourse dict:dict succeed:^(id data) {
+        NSString * s = [NSString stringWithFormat:@"%@",[[data objectForKey:@"header"] objectForKey:@"message"]];
+        if ([s isEqualToString:@"成功"]) {
+            [self.navigationController popViewControllerAnimated:YES];
+        }else{
+            UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"课程删除失败" message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: nil];
+            [alertView show];
+        }
+        
+    } failure:^(NSError *error) {
+        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"课程删除失败" message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: nil];
+        [alertView show];
+
+    }];
 }
 - (IBAction)shareBtnPressed:(id)sender {
     if (!_shareView)
@@ -113,9 +154,18 @@
     
 }
 - (IBAction)signInBtnPressed:(id)sender {
-    SignListViewController * signListVC = [[SignListViewController alloc] init];
-    self.hidesBottomBarWhenPushed = YES;
-  //  [self.navigationController pushViewController:signListVC animated:YES];
+    if ([[NSString stringWithFormat:@"%@",_c.teacherWorkNo] isEqualToString:[NSString stringWithFormat:@"%@",_user.studentId]]) {
+        
+        SignListViewController * signListVC = [[SignListViewController alloc] init];
+        self.hidesBottomBarWhenPushed = YES;
+        signListVC.signType = SignClassRoom;
+        signListVC.ary = [NSMutableArray arrayWithCapacity:1];
+        signListVC.ary = _notSignAry;
+        [self.navigationController pushViewController:signListVC animated:YES];
+        return;
+        
+    }
+  
     
     if ([[NSString stringWithFormat:@"%@",_c.signStatus] isEqualToString:@"2"]) {
         UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:[NSString stringWithFormat:@"已签到"] message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil];
@@ -287,6 +337,7 @@
         UserModel * s = [[Appsetting sharedInstance] getUsetInfo];
         c.HyNumaber = [NSString stringWithFormat:@"%@%@",s.school,_c.teacherWorkNo];
         c.call = CALLING;
+        c.teacherName = _c.teacherName;
         [self.navigationController pushViewController:c animated:YES];
     }
     else if ([platform isEqualToString:InteractionType_Test]){

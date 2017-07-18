@@ -27,6 +27,10 @@
 
 +(BOOL)isSimplePhone:(NSString *)phone;
 /**
+ * 判断是否全是数字
+ **/
++(BOOL)isPureInt:(NSString *)string;
+/**
  * 获取当前时间
  **/
 +(NSString *)getTime;

@@ -20,4 +20,5 @@ typedef enum {
 @property (nonatomic,assign)SignType  signType;
 @property (nonatomic,strong)MeetingModel * meetingModel;
 @property (nonatomic,strong)ClassModel * classModel;
+@property (nonatomic,strong)NSMutableArray * ary;
 @end

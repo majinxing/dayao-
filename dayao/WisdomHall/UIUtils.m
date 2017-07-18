@@ -268,6 +268,7 @@
 +(NSString *)compareTimeStartTime:(NSString *)startTime withExpireTime:(NSString *)expireTime {
     
     NSArray *ary = [startTime componentsSeparatedByString:@" "];
+    
     NSString * str = ary[1];
     NSArray * ary1 = [str componentsSeparatedByString:@":"];
     startTime = [NSString stringWithFormat:@"%@ %@:%@",ary[0],ary1[0],ary1[1]];
@@ -435,6 +436,15 @@
     }
     return n;
 }
++(BOOL)isPureInt:(NSString *)string{
+    
+    NSScanner* scan = [NSScanner scannerWithString:string];
+    int val;
+    return [scan scanInt:&val] && [scan isAtEnd];
+
+}
+
+
 @end
 
 

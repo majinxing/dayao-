@@ -19,7 +19,13 @@
     self.endTh = [dict objectForKey:@"endTh"];
     self.startTh = [dict objectForKey:@"startTh"];
     self.actEndTime = [dict objectForKey:@"actEndTime"];
+    self.actEndTime = [self.actEndTime stringByReplacingOccurrencesOfString:@"\n" withString:@" "];
+    self.actEndTime = [self.actEndTime stringByReplacingOccurrencesOfString:@"\t" withString:@""];
+    
     self.actStarTime = [dict objectForKey:@"actStartTime"];
+    self.actStarTime = [self.actStarTime stringByReplacingOccurrencesOfString:@"\n" withString:@" "];
+    self.actStarTime = [self.actStarTime stringByReplacingOccurrencesOfString:@"\t" withString:@""];
+    
     self.courseDetailId = [dict objectForKey:@"courseDetailId"];
     self.time = [dict objectForKey:@"time"];
     self.total = [dict objectForKey:@"total"];

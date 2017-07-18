@@ -30,6 +30,8 @@
     _personalPassword.secureTextEntry = YES;
     [_personalAccount addTarget:self action:@selector(textFieldDidChange:) forControlEvents:UIControlEventEditingChanged];
     [_personalPassword addTarget:self action:@selector(textFieldDidChange:) forControlEvents:UIControlEventEditingChanged];
+    [_personalAccount setValue:[UIColor whiteColor] forKeyPath:@"_placeholderLabel.textColor"];
+    [_personalPassword setValue:[UIColor whiteColor] forKeyPath:@"_placeholderLabel.textColor"];
     // Do any additional setup after loading the view from its nib.
 }
 -(void)viewWillAppear:(BOOL)animated{
