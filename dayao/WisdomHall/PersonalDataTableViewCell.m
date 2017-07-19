@@ -19,6 +19,7 @@
     [super awakeFromNib];
     UserModel * userl = [[Appsetting sharedInstance] getUsetInfo];
     _placeholder = [NSArray arrayWithObjects:[NSString stringWithFormat:@"%@",userl.userName],[NSString stringWithFormat:@"%@",userl.studentId],[NSString stringWithFormat:@"%@",userl.schoolName],[NSString stringWithFormat:@"%@",userl.departmentsName],[NSString stringWithFormat:@"%@",userl.professionalName], nil];
+    
     _labelAry = [NSArray arrayWithObjects:@"姓名",@"学号",@"学校",@"院系",@"专业", nil];
     
     // Initialization code
@@ -40,16 +41,23 @@
     PersonalDataTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:identifier];
     if (!cell) {
         cell = [[[NSBundle mainBundle] loadNibNamed:@"PersonalDataTableViewCell" owner:self options:nil] objectAtIndex:index];
-        if (indexPath.section == 1) {
-            cell.dataLabel.text = cell.labelAry[indexPath.row];
-            cell.textFilePh.text = cell.placeholder[indexPath.row];
-        }
     }
-        return cell;
+    return cell;
+}
+-(void)setInfo:(NSString *)labelText withTextAry:(NSString *)textText isEdictor:(BOOL)edictor{
+    _dataLabel.text = labelText;
+    _textFilePh.placeholder = labelText;
+    _textFilePh.text = textText;
+    if (edictor) {
+        _textFilePh.enabled = YES ;
+    }else{
+        _textFilePh.enabled = NO ;
+
+    }
 }
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
     [super setSelected:selected animated:animated];
-
+    
     // Configure the view for the selected state
 }
 

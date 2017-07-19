@@ -94,5 +94,7 @@
 
 #define QueryPeople     @"course/user/list"         //人员条件查询
 
+#define QuerySelfInfo   @"course/user/detail"       //查询个人信息
+
 
 

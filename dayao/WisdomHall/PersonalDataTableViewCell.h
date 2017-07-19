@@ -14,4 +14,5 @@
 @property (nonatomic,strong)NSArray * placeholder;
 @property (nonatomic,strong)NSArray * labelAry;
 + (instancetype)tempTableViewCellWith:(UITableView *)tableView indexPath:(NSIndexPath *)indexPath;
+-(void)setInfo:(NSString *)labelText withTextAry:(NSString *)textText isEdictor:(BOOL)edictor;
 @end

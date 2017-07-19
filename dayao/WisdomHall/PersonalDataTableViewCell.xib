@@ -4,7 +4,6 @@
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
-        <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12089"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -53,17 +52,17 @@
                 <rect key="frame" x="0.0" y="0.0" width="350" height="59.5"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="SAA-C2-Ndv">
-                        <rect key="frame" x="18" y="13" width="50" height="33.5"/>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="SAA-C2-Ndv">
+                        <rect key="frame" x="18" y="13" width="70" height="33.5"/>
                         <constraints>
-                            <constraint firstAttribute="width" constant="50" id="Ado-fN-XLt"/>
+                            <constraint firstAttribute="width" constant="70" id="Ado-fN-XLt"/>
                         </constraints>
-                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="13"/>
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Zhx-C5-gCc">
-                        <rect key="frame" x="88" y="13" width="249" height="33"/>
+                        <rect key="frame" x="98" y="10" width="239" height="39.5"/>
                         <nil key="textColor"/>
                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                         <textInputTraits key="textInputTraits"/>
@@ -82,9 +81,9 @@
                     <constraint firstAttribute="trailing" secondItem="cFF-I4-7q5" secondAttribute="trailing" id="N0C-S8-LqH"/>
                     <constraint firstItem="SAA-C2-Ndv" firstAttribute="leading" secondItem="dsj-4B-2Rd" secondAttribute="leadingMargin" constant="10" id="YMD-Cu-A5i"/>
                     <constraint firstItem="cFF-I4-7q5" firstAttribute="leading" secondItem="dsj-4B-2Rd" secondAttribute="leading" id="arX-36-mfk"/>
-                    <constraint firstAttribute="bottomMargin" secondItem="Zhx-C5-gCc" secondAttribute="bottom" constant="5" id="huJ-8E-T0V"/>
-                    <constraint firstItem="Zhx-C5-gCc" firstAttribute="top" secondItem="dsj-4B-2Rd" secondAttribute="topMargin" constant="5" id="rfT-8F-BB6"/>
-                    <constraint firstItem="Zhx-C5-gCc" firstAttribute="leading" secondItem="SAA-C2-Ndv" secondAttribute="trailing" constant="20" id="uE4-xA-9mk"/>
+                    <constraint firstAttribute="bottomMargin" secondItem="Zhx-C5-gCc" secondAttribute="bottom" constant="2" id="huJ-8E-T0V"/>
+                    <constraint firstItem="Zhx-C5-gCc" firstAttribute="top" secondItem="dsj-4B-2Rd" secondAttribute="topMargin" constant="2" id="rfT-8F-BB6"/>
+                    <constraint firstItem="Zhx-C5-gCc" firstAttribute="leading" secondItem="SAA-C2-Ndv" secondAttribute="trailing" constant="10" id="uE4-xA-9mk"/>
                     <constraint firstAttribute="bottomMargin" secondItem="SAA-C2-Ndv" secondAttribute="bottom" constant="5" id="xLn-15-eso"/>
                     <constraint firstItem="SAA-C2-Ndv" firstAttribute="top" secondItem="dsj-4B-2Rd" secondAttribute="topMargin" constant="5" id="xmi-Vx-Gtu"/>
                 </constraints>

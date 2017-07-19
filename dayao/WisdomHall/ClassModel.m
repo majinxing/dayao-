@@ -37,6 +37,7 @@
     self.status = [dict objectForKey:@"status"];
     self.mck = [dict objectForKey:@"mck"];
     self.teacherWorkNo = [dict objectForKey:@"teacherWorkNo"];
+    self.courseType = [dict objectForKey:@"courseType"];
     
 }
 @end

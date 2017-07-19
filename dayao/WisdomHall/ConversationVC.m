@@ -12,6 +12,8 @@
 #import "DYHeader.h"
 #import "DYTabBarViewController.h"
 #import "EMCallOptions+NSCoding.h"
+
+#import <Hyphenate/Hyphenate.h>
 @interface ConversationVC ()<EMCallManagerDelegate>
 
 @property (nonatomic,strong)UIView * videoView;
@@ -19,6 +21,7 @@
 
 @property (nonatomic,strong)UIButton * hangupBtn;
 @property (nonatomic,strong)UIButton * receiveBtn;
+
 
 
 @property (nonatomic,strong)UILabel * typeLab;
@@ -30,7 +33,14 @@
 
 @implementation ConversationVC
 
+- (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+    
+    [self.navigationController setNavigationBarHidden:NO animated:YES];
+}
+
 -(void)viewWillAppear:(BOOL)animated{
+    [self.navigationController setNavigationBarHidden:YES animated:YES];
     
     if (!_callSession) {
 
@@ -191,26 +201,119 @@
     if (_n == 0) {
         _n = 1;
         [btn setBackgroundImage:[UIImage imageNamed:@"call_out_h"] forState:UIControlStateNormal];
-        AVAudioSession *audioSession = [AVAudioSession sharedInstance]; //设置为播放
-        [audioSession setCategory:AVAudioSessionCategoryPlayback error:nil];
-        [audioSession setActive:YES error:nil];
+        [self setSpeakerOn];
     }else if (_n == 1){
         _n = 0;
         [btn setBackgroundImage:[UIImage imageNamed:@"call_out"] forState:UIControlStateNormal];
-        AVAudioSession *audioSession = [AVAudioSession sharedInstance]; //设置为播放
-        [audioSession setCategory:AVAudioSessionCategoryPlayback error:nil];
-        [audioSession setActive:NO error:nil];
+        [self setSpeakerOff];
     }
 
+}
+- (void)setSpeakerOff
+
+{
+    
+    
+    
+    UInt32 doChangeDefaultRoute = kAudioSessionOverrideAudioRoute_None;
+    
+    
+    
+    AudioSessionSetProperty (kAudioSessionProperty_OverrideCategoryDefaultToSpeaker,
+                             
+                             sizeof (doChangeDefaultRoute),
+                             
+                             &doChangeDefaultRoute
+                             
+                             );
+    
+    
+    
+//    _isSpeakerOn = [self checkSpeakerOn];
+    
+}
+- (void)setSpeakerOn
+
+{
+    
+    NSLog(@"setSpeakerOn:%d",[NSThread isMainThread]);
+    
+    UInt32 doChangeDefaultRoute = kAudioSessionOverrideAudioRoute_Speaker;
+    
+    
+    
+    AudioSessionSetProperty (kAudioSessionProperty_OverrideCategoryDefaultToSpeaker,
+                             
+                             sizeof (doChangeDefaultRoute),
+                             
+                             &doChangeDefaultRoute
+                             
+                             );
+    
+    
+    
+//    _isSpeakerOn = [self checkSpeakerOn];
+//
+//    _isHeadsetOn = NO;
+//
+    
+    
+    //[self resetOutputTarget];
+
+}
+- (BOOL)checkSpeakerOn
+
+{
+    
+    CFStringRef route;
+    
+    UInt32 propertySize = sizeof(CFStringRef);
+    
+    AudioSessionGetProperty(kAudioSessionProperty_AudioRoute, &propertySize, &route);
+    
+    
+    
+    if((route == NULL) || (CFStringGetLength(route) == 0))
+        
+    {
+        
+        // Silent Mode
+        
+        NSLog(@"AudioRoute: SILENT, do nothing!");
+        
+    }
+    
+    else
+        
+    {
+        
+        NSString* routeStr = (__bridge NSString*)route;
+        
+        NSRange speakerRange = [routeStr rangeOfString : @"Speaker"];
+        
+        if (speakerRange.location != NSNotFound)
+            
+            return YES;
+        
+    }
+    
+    
+    
+    return NO;
+    
 }
 -(void)handsFree:(UIButton *)btn{
     if (_m == 0) {
         _m = 1;
         [btn setBackgroundImage:[UIImage imageNamed:@"call_silence_h"] forState:UIControlStateNormal];
+        [self.callSession pauseVoice];
+
 
     }else if(_m == 1){
         _m = 0;
         [btn setBackgroundImage:[UIImage imageNamed:@"call_silence"] forState:UIControlStateNormal];
+        [self.callSession resumeVoice];
+
     }
    
 }

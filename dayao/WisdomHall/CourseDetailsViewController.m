@@ -35,6 +35,7 @@
 
 @property (strong, nonatomic) IBOutlet UILabel *classTeacherName;
 @property (strong, nonatomic) IBOutlet UILabel *classSign;
+
 @property (strong, nonatomic) IBOutlet UIButton *classManage;
 @property (strong, nonatomic)UserModel * user;
 @property (strong, nonatomic) NSMutableArray * signAry;
@@ -44,6 +45,7 @@
 @property (nonatomic,assign)NSInteger n;//签到人数
 @property (nonatomic,assign)NSInteger m;//未签到人数
 
+@property (nonatomic,copy)NSString * selfSignStatus;
 @end
 
 @implementation CourseDetailsViewController
@@ -82,9 +84,9 @@
     if ([[NSString stringWithFormat:@"%@",_c.teacherWorkNo] isEqualToString:[NSString stringWithFormat:@"%@",_user.studentId]]) {
         [_classManage setTitle:@"班级管理" forState:UIControlStateNormal];
         _classManage.backgroundColor = [UIColor colorWithHexString:@"#29a7e1"];
-
+        
     }
-//    [_classManage setTitle:@"班级管理" forState:UIControlStateNormal];
+    //    [_classManage setTitle:@"班级管理" forState:UIControlStateNormal];
 }
 -(void)getData{
     NSDictionary * dict = [[NSDictionary alloc] initWithObjectsAndKeys:_c.sclassId,@"id",_c.courseDetailId,@"courseDetailId", nil];
@@ -100,10 +102,19 @@
             }else{
                 _n = _n + 1;
             }
+            if ([[NSString stringWithFormat:@"%@",s.userId] isEqualToString:[NSString stringWithFormat:@"%@",_user.peopleId]]) {
+                if ([[NSString stringWithFormat:@"%@",s.signStatus] isEqualToString:@"1"]) {
+                    _selfSignStatus = @"签到状态：未签到";
+                }else if ([[NSString stringWithFormat:@"%@",s.signStatus] isEqualToString:@"2"]){
+                    _selfSignStatus = @"签到状态：已签到";
+                }
+            }
             [_signAry addObject:s];
         }
         if ([[NSString stringWithFormat:@"%@",_c.teacherWorkNo] isEqualToString:[NSString stringWithFormat:@"%@",_user.studentId]]) {
             _classSign.text = [NSString stringWithFormat:@"签到人：%ld/%ld",_n,(_m+_n)];
+        }else{
+            _classSign.text = _selfSignStatus;
         }
     } failure:^(NSError *error) {
         NSLog(@"失败%@",error);
@@ -121,28 +132,84 @@
     self.title = @"课程详情";
     
     UIBarButtonItem *myButton = [[UIBarButtonItem alloc] initWithTitle:@"删除课程" style:UIBarButtonItemStylePlain target:self action:@selector(delecateCourse)];
-//    self.navigationItem.rightBarButtonItem = myButton;
-
+    //    self.navigationItem.rightBarButtonItem = myButton;
+    
     if ([[NSString stringWithFormat:@"%@",_c.teacherWorkNo] isEqualToString:[NSString stringWithFormat:@"%@",_user.studentId]]) {
         self.navigationItem.rightBarButtonItem = myButton;
     }
 }
 -(void)delecateCourse{
-    NSDictionary * dict = [[NSDictionary alloc] initWithObjectsAndKeys:_c.courseDetailId,@"courseDetailId", nil];
-    [[NetworkRequest sharedInstance] POST:DelecateCourse dict:dict succeed:^(id data) {
-        NSString * s = [NSString stringWithFormat:@"%@",[[data objectForKey:@"header"] objectForKey:@"message"]];
-        if ([s isEqualToString:@"成功"]) {
-            [self.navigationController popViewControllerAnimated:YES];
-        }else{
+    if ([[NSString stringWithFormat:@"%@",_c.courseType] isEqualToString:@"1"]) {
+        UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"提示" message:nil preferredStyle:  UIAlertControllerStyleActionSheet];
+        //分别按顺序放入每个按钮；
+        [alert addAction:[UIAlertAction actionWithTitle:@"删除周期课程" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+            //点击按钮的响应事件；
+            NSDictionary * dict = [[NSDictionary alloc] initWithObjectsAndKeys:_c.courseDetailId,@"courseDetailId",_c.sclassId,@"id",@"1",@"courseType", nil];
+            
+            [[NetworkRequest sharedInstance] POST:DelecateCourse dict:dict succeed:^(id data) {
+                NSString * s = [NSString stringWithFormat:@"%@",[[data objectForKey:@"header"] objectForKey:@"message"]];
+                if ([s isEqualToString:@"成功"]) {
+                    [self.navigationController popViewControllerAnimated:YES];
+                }else{
+                    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"课程删除失败" message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: nil];
+                    [alertView show];
+                }
+                
+            } failure:^(NSError *error) {
+                UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"课程删除失败" message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: nil];
+                [alertView show];
+                
+            }];
+
+        }]];
+        
+        [alert addAction:[UIAlertAction actionWithTitle:@"删除当前课程" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+            //点击按钮的响应事件；
+            NSDictionary * dict = [[NSDictionary alloc] initWithObjectsAndKeys:_c.courseDetailId,@"courseDetailId",@"1",@"courseType", nil];
+            
+            [[NetworkRequest sharedInstance] POST:DelecateCourse dict:dict succeed:^(id data) {
+                NSString * s = [NSString stringWithFormat:@"%@",[[data objectForKey:@"header"] objectForKey:@"message"]];
+                if ([s isEqualToString:@"成功"]) {
+                    [self.navigationController popViewControllerAnimated:YES];
+                }else{
+                    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"课程删除失败" message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: nil];
+                    [alertView show];
+                }
+                
+            } failure:^(NSError *error) {
+                UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"课程删除失败" message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: nil];
+                [alertView show];
+                
+            }];
+            
+        }]];
+        
+        [alert addAction:[UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleDestructive handler:^(UIAlertAction * _Nonnull action) {
+            //点击按钮的响应事件；
+        }]];
+        //弹出提示框；
+        [self presentViewController:alert animated:true completion:nil];
+        
+    }else if([[NSString stringWithFormat:@"%@",_c.courseType] isEqualToString:@"2"]){
+        
+        NSDictionary * dict = [[NSDictionary alloc] initWithObjectsAndKeys:_c.courseDetailId,@"courseDetailId",_c.sclassId,@"id",@"2",@"courseType", nil];
+        
+        [[NetworkRequest sharedInstance] POST:DelecateCourse dict:dict succeed:^(id data) {
+            NSString * s = [NSString stringWithFormat:@"%@",[[data objectForKey:@"header"] objectForKey:@"message"]];
+            if ([s isEqualToString:@"成功"]) {
+                [self.navigationController popViewControllerAnimated:YES];
+            }else{
+                UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"课程删除失败" message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: nil];
+                [alertView show];
+            }
+            
+        } failure:^(NSError *error) {
             UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"课程删除失败" message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: nil];
             [alertView show];
-        }
+            
+        }];
         
-    } failure:^(NSError *error) {
-        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"课程删除失败" message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: nil];
-        [alertView show];
-
-    }];
+    }
 }
 - (IBAction)shareBtnPressed:(id)sender {
     if (!_shareView)
@@ -165,7 +232,7 @@
         return;
         
     }
-  
+    
     
     if ([[NSString stringWithFormat:@"%@",_c.signStatus] isEqualToString:@"2"]) {
         UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:[NSString stringWithFormat:@"已签到"] message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil];
@@ -230,11 +297,11 @@
         _timeRun = nil;
     }else if ([str isEqualToString:@"0000"]){
         UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"签到成功" message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: nil];
-       // [_signBtn setTitle:@"已签到" forState:UIControlStateNormal];
+        // [_signBtn setTitle:@"已签到" forState:UIControlStateNormal];
         [alertView show];
         [_timeRun invalidate];
         _timeRun = nil;
-      //  _signNumber.text = @"签到状态：已签到";
+        //  _signNumber.text = @"签到状态：已签到";
     }else if ([str isEqualToString:@"5000"]){
         //        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"" message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: nil];
         //        [alertView show];
@@ -286,8 +353,8 @@
 - (IBAction)interactiveBtnPressed:(id)sender {
     if (!_interaction)
     {
-    _interaction = [[ShareView alloc] initWithFrame:self.navigationController.view.bounds withType:@"interaction"];
-    _interaction.delegate = self;
+        _interaction = [[ShareView alloc] initWithFrame:self.navigationController.view.bounds withType:@"interaction"];
+        _interaction.delegate = self;
     }
     [_interaction showInView:self.view];
 }
@@ -298,7 +365,7 @@
     classManegeVC.signAry = [NSMutableArray arrayWithCapacity:1];
     classManegeVC.signAry = _signAry;
     [self.navigationController pushViewController:classManegeVC animated:YES];
-
+    
 }
 
 
@@ -355,13 +422,13 @@
 
 
 /*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
+ #pragma mark - Navigation
+ 
+ // In a storyboard-based application, you will often want to do a little preparation before navigation
+ - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+ // Get the new view controller using [segue destinationViewController].
+ // Pass the selected object to the new view controller.
+ }
+ */
 
 @end

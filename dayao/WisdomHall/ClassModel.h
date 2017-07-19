@@ -32,6 +32,7 @@
 @property (nonatomic,copy)NSString * name;//课程名
 @property (nonatomic,copy)NSString * status;
 @property (nonatomic,copy)NSString * mck;
+@property (nonatomic,copy)NSString * courseType;//1、周期 2、临时
 //@property (nonatomic,copy)NSString 
 
 -(void)setInfoWithDict:(NSDictionary *)dict;

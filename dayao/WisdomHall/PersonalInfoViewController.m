@@ -12,19 +12,52 @@
 @interface PersonalInfoViewController ()<UITableViewDelegate,UITableViewDataSource,UITextFieldDelegate
 >
 @property (nonatomic,strong)UITableView * tableView;
+@property (nonatomic,strong)UserModel * user;
+@property (nonatomic,strong)NSMutableArray * labelAry;
+@property (nonatomic,strong)NSMutableArray * textAry;
+@property (nonatomic,assign) BOOL isEdictor;
+@property (nonatomic,strong)UIBarButtonItem *myButton;
 @end
 
 @implementation PersonalInfoViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
     [self setNavigationTitle];
+    [self getData];
+    [self addTableView];
+       // Do any additional setup after loading the view from its nib.
+}
+-(void)getData{
+    _user = [[Appsetting sharedInstance] getUsetInfo];
+    NSDictionary * dict = [[NSDictionary alloc] initWithObjectsAndKeys:_user.peopleId,@"id", nil];
+    
+    [[NetworkRequest sharedInstance] GET:QuerySelfInfo dict:dict succeed:^(id data) {
+        NSLog(@"%@",data);
+        NSDictionary * dict = [data objectForKey:@"body"];
+        [[Appsetting sharedInstance] saveUserOtherInfo:dict];
+        _user = [[Appsetting sharedInstance] getUsetInfo];
+        _textAry =  [UIUtils returnAry:_user];
+        [_tableView reloadData];
+    } failure:^(NSError *error) {
+        
+    }];
+}
+-(void)addTableView{
+    
+    _labelAry = [[NSMutableArray alloc] initWithObjects:@"姓名",@"学号",@"学校",@"院系",@"专业",@"电话",@"邮箱",@"住址",@"性别",@"生日",@"个性签名", nil];
+    _textAry = [NSMutableArray arrayWithCapacity:1];
+    for (int i = 0; i<11; i++) {
+        [_textAry addObject:@""];
+    }
+    _isEdictor = NO;
     _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 64, APPLICATION_WIDTH, APPLICATION_HEIGHT-64) style:UITableViewStylePlain];
     _tableView.delegate = self;
     _tableView.dataSource = self;
     _tableView.separatorStyle = NO;
     [self.view addSubview:_tableView];
-    // Do any additional setup after loading the view from its nib.
+
 }
 -(void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event{
     [self.view endEditing:YES];
@@ -39,8 +72,20 @@
                                                                       NSFontAttributeName:[UIFont systemFontOfSize:17],
                                                                       NSForegroundColorAttributeName:[UIColor blackColor]}];
     self.title = @"个人资料";
+    _myButton = [[UIBarButtonItem alloc] initWithTitle:@"修改" style:UIBarButtonItemStylePlain target:self action:@selector(changeInfo:)];
+    self.navigationItem.rightBarButtonItem = _myButton;
 }
-
+-(void)changeInfo:(UIBarButtonItem *)btn{
+    if ([_myButton.title isEqualToString:@"修改"]) {
+        [_myButton setTitle:@"保存"];
+        _isEdictor = YES;
+        [_tableView reloadData];
+    }else{
+        [_myButton setTitle:@"修改"];
+        _isEdictor = NO;
+        [_tableView reloadData];
+    }
+}
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
@@ -53,7 +98,7 @@
     if (section == 0) {
         return 1;
     }else if (section == 1){
-        return 5;
+        return 11;
     }
     return 0;
 }
@@ -62,6 +107,9 @@
     PersonalDataTableViewCell * cell = [PersonalDataTableViewCell tempTableViewCellWith:tableView indexPath:indexPath];
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     cell.textFilePh.delegate = self;
+    if (indexPath.section == 1) {
+        [cell setInfo:_labelAry[indexPath.row] withTextAry:_textAry[indexPath.row] isEdictor:_isEdictor];
+    }
     return cell;
 }
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{

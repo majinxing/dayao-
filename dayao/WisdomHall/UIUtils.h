@@ -9,6 +9,7 @@
 #import <Foundation/Foundation.h>
 #import "DYHeader.h"
 #import "ClassRoomModel.h"
+#import "UserModel.h"
 @interface UIUtils : NSObject
 +(void)addNavigationWithView:(UIView *)view withTitle:(NSString *)str;
 //判断电话号码是否正确
@@ -53,4 +54,7 @@
 +(NSMutableDictionary *)createCourseWith:(NSMutableArray *)ary ClassRoom:(ClassRoomModel *)c joinClassPeople:(NSMutableArray *)joinPeopleAry m1:(int)m1 m2:(int)m2 m3:(int)m3 week:(int)week class1:(int)class1 class2:(int)class2;
 //创建临时课程
 +(NSMutableDictionary *)createTemporaryCourseWith:(NSMutableArray *)ary ClassRoom:(ClassRoomModel *)c joinClassPeople:(NSMutableArray *)joinPeopleAry week:(int)week class1:(int)class1 class2:(int)class2;
+//返回个人信息数组
++(NSMutableArray *)returnAry:(UserModel *)user;
 @end
+

@@ -118,10 +118,10 @@ static NSString *cellIdentifier = @"cellIdentifier";
     
     _userModel = [[Appsetting sharedInstance] getUsetInfo];
     
-    NSDictionary * dict = [[NSDictionary alloc] initWithObjectsAndKeys:[NSString stringWithFormat:@"%ld",page],@"start",_userModel.peopleId,@"teacherId",[UIUtils getTime],@"actStartTime",[UIUtils getMoreMonthTime],@"actEndTime",@"1000",@"length",_userModel.school,@"universityId",@"2",@"type",[NSString stringWithFormat:@"%d",[UIUtils getTermId]],@"termId",@"1",@"courseType",nil];
+    NSDictionary * dict = [[NSDictionary alloc] initWithObjectsAndKeys:[NSString stringWithFormat:@"%ld",(long)page],@"start",_userModel.peopleId,@"teacherId",[UIUtils getTime],@"actStartTime",[UIUtils getMoreMonthTime],@"actEndTime",@"1000",@"length",_userModel.school,@"universityId",@"2",@"type",[NSString stringWithFormat:@"%d",[UIUtils getTermId]],@"termId",@"1",@"courseType",nil];
     
     [[NetworkRequest sharedInstance] GET:QueryCourse dict:dict succeed:^(id data) {
-        //NSLog(@"%@",data);
+//        NSLog(@"1");
         NSString * str = [[data objectForKey:@"header"] objectForKey:@"message"];
         if ([str isEqualToString:@"成功"]) {
             NSArray * ary = [[data objectForKey:@"body"] objectForKey:@"list"];
@@ -142,7 +142,7 @@ static NSString *cellIdentifier = @"cellIdentifier";
     NSDictionary * dict = [[NSDictionary alloc] initWithObjectsAndKeys:[NSString stringWithFormat:@"%ld",(long)page],@"start",_userModel.peopleId,@"studentId",[UIUtils getTime],@"actStartTime",[UIUtils getMoreMonthTime],@"actEndTime",@"1000",@"length",_userModel.school,@"universityId",@"1",@"type",[NSString stringWithFormat:@"%d",[UIUtils getTermId]],@"termId",@"1",@"courseType",nil];
     
     [[NetworkRequest sharedInstance] GET:QueryCourse dict:dict succeed:^(id data) {
-       // NSLog(@"%@",data);
+//        NSLog(@"2");
         NSString * str = [[data objectForKey:@"header"] objectForKey:@"message"];
         if ([str isEqualToString:@"成功"]) {
             NSArray * ary = [[data objectForKey:@"body"] objectForKey:@"list"];
@@ -162,7 +162,7 @@ static NSString *cellIdentifier = @"cellIdentifier";
 -(void)getSelfCreateClassType:(NSInteger)page{
     NSDictionary * dict = [[NSDictionary alloc] initWithObjectsAndKeys:[NSString stringWithFormat:@"%ld",(long)page],@"start",_userModel.peopleId,@"teacherId",[UIUtils getTime],@"actStartTime",[UIUtils getMoreMonthTime],@"actEndTime",@"1000",@"length",_userModel.school,@"universityId",@"2",@"type",@"2",@"courseType",nil];
     [[NetworkRequest sharedInstance] GET:QueryCourse dict:dict succeed:^(id data) {
-       // NSLog(@"%@",data);
+//        NSLog(@"3");
         NSString * str = [[data objectForKey:@"header"] objectForKey:@"message"];
         if ([str isEqualToString:@"成功"]) {
             NSArray * ary = [[data objectForKey:@"body"] objectForKey:@"list"];
@@ -182,7 +182,7 @@ static NSString *cellIdentifier = @"cellIdentifier";
 -(void)getSelfJoinClassType:(NSInteger)page{
     NSDictionary * dict = [[NSDictionary alloc] initWithObjectsAndKeys:[NSString stringWithFormat:@"%ld",(long)page],@"start",_userModel.peopleId,@"studentId",[UIUtils getTime],@"actStartTime",[UIUtils getMoreMonthTime],@"actEndTime",@"1000",@"length",_userModel.school,@"universityId",@"1",@"type",@"2",@"courseType",nil];
     [[NetworkRequest sharedInstance] GET:QueryCourse dict:dict succeed:^(id data) {
-        //NSLog(@"%@",data);
+//        NSLog(@"4");
         NSString * str = [[data objectForKey:@"header"] objectForKey:@"message"];
         if ([str isEqualToString:@"成功"]) {
             NSArray * ary = [[data objectForKey:@"body"] objectForKey:@"list"];
@@ -207,7 +207,6 @@ static NSString *cellIdentifier = @"cellIdentifier";
                     c = _classAry[i];
                 }
             }
-            
         }
         dispatch_async(dispatch_get_main_queue(), ^{
             [_collection reloadData];
@@ -305,7 +304,9 @@ static NSString *cellIdentifier = @"cellIdentifier";
 {
     CourseCollectionViewCell * cell = [collectionView dequeueReusableCellWithReuseIdentifier:cellIdentifier forIndexPath:indexPath];
     cell.backgroundColor = [UIColor whiteColor];
-    [cell setClassInfoForContentView:_classAry[indexPath.row]];
+    if (indexPath.row<_classAry.count) {
+        [cell setClassInfoForContentView:_classAry[indexPath.row]];
+    }
     return cell;
 }
 //创建头视图

@@ -42,7 +42,14 @@
     [_mySettingData setValue:p forKey:@"user_password"];
     [_mySettingData setValue:@"1" forKey:@"is_Login"];
     [_mySettingData synchronize];
-    
+}
+-(void)saveUserOtherInfo:(NSDictionary *)dict{
+    [_mySettingData setValue:[dict objectForKey:@"birthday"] forKey:@"user_birthday"];
+    [_mySettingData setValue:[dict objectForKey:@"email"] forKey:@"user_email"];
+    [_mySettingData setValue:[dict objectForKey:@"region"] forKey:@"user_region"];
+    [_mySettingData setValue:[dict objectForKey:@"sex"] forKey:@"user_sex"];
+    [_mySettingData setValue:[dict objectForKey:@"sign"] forKey:@"user_sign"];
+    [_mySettingData synchronize];
 }
 -(UserModel *)getUsetInfo{
     UserModel * userInfo = [[UserModel alloc] init];
@@ -61,6 +68,12 @@
     userInfo.className = [_mySettingData objectForKey:@"user_className"];
     userInfo.schoolName = [_mySettingData objectForKey:@"user_universityName"];
     userInfo.userPassword = [_mySettingData objectForKey:@"user_password"];
+    userInfo.birthday = [_mySettingData objectForKey:@"user_birthday"];
+    userInfo.email = [_mySettingData objectForKey:@"user_email"];
+    userInfo.sex = [_mySettingData objectForKey:@"user_sex"];
+    userInfo.region = [_mySettingData objectForKey:@"user_region"];
+    userInfo.sign = [_mySettingData objectForKey:@"user_sign"];
+    
     return userInfo;
 }
 -(BOOL)isLogin{

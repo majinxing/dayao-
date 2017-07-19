@@ -19,10 +19,15 @@
 @property (nonatomic,copy) NSString * studentId;//学号，工号
 @property (nonatomic,copy) NSString * departments;
 @property (nonatomic,copy) NSString * departmentsName;
-@property (nonatomic,copy) NSString * professional;
+@property (nonatomic,copy) NSString * professional;//专业
 @property (nonatomic,copy) NSString * professionalName;
 @property (nonatomic,copy) NSString * classNumber; //班级id
 @property (nonatomic,copy) NSString * className;
 @property (nonatomic,copy) NSString * peopleId; //id
+@property (nonatomic,copy) NSString * birthday;
+@property (nonatomic,copy) NSString * email;
+@property (nonatomic,copy) NSString * sex;
+@property (nonatomic,copy) NSString * region;
+@property (nonatomic,copy) NSString * sign;//个性签名
 
 @end

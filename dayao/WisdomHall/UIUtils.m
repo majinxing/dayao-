@@ -99,6 +99,9 @@
     {
         return YES;
     }
+    if ([string isEqualToString:@"(null)"]) {
+        return YES;
+    }
 //    if (string.length == 0)
 //    {
 //        return YES;
@@ -444,6 +447,48 @@
 
 }
 
++(NSMutableArray *)returnAry:(UserModel *)user{
+    NSMutableArray * ary = [NSMutableArray arrayWithCapacity:1];
+    [ary addObject:[NSString stringWithFormat:@"%@",user.userName]];
+    [ary addObject:[NSString stringWithFormat:@"%@",user.studentId]];
+    [ary addObject:[NSString stringWithFormat:@"%@",user.schoolName]];
+    [ary addObject:[NSString stringWithFormat:@"%@",user.departmentsName]];
+    [ary addObject:[NSString stringWithFormat:@"%@",user.professionalName]];
+    [ary addObject:[NSString stringWithFormat:@"%@",user.userPhone]];
+
+    if ([UIUtils isBlankString:[NSString stringWithFormat:@"%@",user.email]]) {
+        [ary addObject:[NSString stringWithFormat:@" "]];
+
+    }else{
+        [ary addObject:[NSString stringWithFormat:@"%@",user.email]];
+    }
+    if ([UIUtils isBlankString:[NSString stringWithFormat:@"%@",user.region]]) {
+        [ary addObject:[NSString stringWithFormat:@" "]];
+        
+    }else{
+        [ary addObject:[NSString stringWithFormat:@"%@",user.region]];
+    }
+    if ([UIUtils isBlankString:[NSString stringWithFormat:@"%@",user.sex]]) {
+        [ary addObject:[NSString stringWithFormat:@" "]];
+        
+    }else{
+        [ary addObject:[NSString stringWithFormat:@"%@",user.sex]];
+    }
+    if ([UIUtils isBlankString:[NSString stringWithFormat:@"%@",user.birthday]]) {
+        [ary addObject:[NSString stringWithFormat:@" "]];
+        
+    }else{
+        [ary addObject:[NSString stringWithFormat:@"%@",user.birthday]];
+    }
+    if ([UIUtils isBlankString:[NSString stringWithFormat:@"%@",user.sign]]) {
+        [ary addObject:[NSString stringWithFormat:@" "]];
+        
+    }else{
+        [ary addObject:[NSString stringWithFormat:@"%@",user.sign]];
+    }
+
+    return ary;
+}
 
 @end
 
