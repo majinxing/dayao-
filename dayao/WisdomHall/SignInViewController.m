@@ -39,7 +39,7 @@ static NSString *cellIdentifier = @"cellIdentifier";
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
+    self.page = 0;
     self.view.backgroundColor = [UIColor whiteColor];
     
     _classAry = [NSMutableArray arrayWithCapacity:10];
@@ -49,6 +49,11 @@ static NSString *cellIdentifier = @"cellIdentifier";
     [self addCollection];
     
     // Do any additional setup after loading the view from its nib.
+}
+-(void)viewWillAppear:(BOOL)animated{
+    if (self.page>0) {
+        [self headerRereshing];
+    }
 }
 -(void)addCollection{
     CollectionFlowLayout * flowLayout = [[CollectionFlowLayout alloc] init];
@@ -215,10 +220,6 @@ static NSString *cellIdentifier = @"cellIdentifier";
     } failure:^(NSError *error) {
         NSLog(@"%@",error);
     }];
-
-}
-
--(void)viewWillAppear:(BOOL)animated{
 
 }
 /**

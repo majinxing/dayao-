@@ -88,6 +88,8 @@
 
 #define MeetingSign      @"course/meeting/sign"     //会议签到
 
+#define MeetingDelect  @"course/meeting/delete"    //会议删除
+
 #define ClassSign        @"course/course/sign"       //课程签到
 
 #define ClassSign        @"course/course/sign"      //课程签到

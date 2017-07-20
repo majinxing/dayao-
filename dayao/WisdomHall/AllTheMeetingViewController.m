@@ -180,7 +180,6 @@ static NSString * cellIdentifier = @"cellIdentifier";
             NSLog(@"失败%@",error);
         }];
     }
- 
 }
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

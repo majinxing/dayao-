@@ -42,6 +42,8 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    _user = [[Appsetting sharedInstance] getUsetInfo];
+
     self.view.backgroundColor = [UIColor whiteColor];
     
     [self addContentView];
@@ -72,6 +74,28 @@
                                                                       NSForegroundColorAttributeName:[UIColor blackColor]}];
     self.title = @"会议详情";
     
+    if ([[NSString stringWithFormat:@"%@",_user.peopleId] isEqualToString:[NSString stringWithFormat:@"%@",_meetingModel.meetingHostId]]) {
+        UIBarButtonItem *myButton = [[UIBarButtonItem alloc] initWithTitle:@"删除会议" style:UIBarButtonItemStylePlain target:self action:@selector(deleteMeeting)];
+        self.navigationItem.rightBarButtonItem = myButton;
+    }
+    
+}
+-(void)deleteMeeting{
+    NSDictionary * dict = [[NSDictionary alloc] initWithObjectsAndKeys:_meetingModel.meetingId,@"id", nil];
+    [[NetworkRequest sharedInstance] POST:MeetingDelect dict:dict succeed:^(id data) {
+        NSLog(@"%@",data);
+        NSString * str = [[data objectForKey:@"header"] objectForKey:@"message"];
+        if ([str isEqualToString:@"成功"]) {
+            [self.navigationController popViewControllerAnimated:YES];
+        }else{
+            UIAlertView * alter = [[UIAlertView alloc] initWithTitle:nil message:@"删除会议失败" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil];
+            [alter show];
+        }
+    } failure:^(NSError *error) {
+        UIAlertView * alter = [[UIAlertView alloc] initWithTitle:nil message:@"删除会议失败" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil];
+        [alter show];
+    }];
+    
 }
 -(void)back{
     [self.navigationController popViewControllerAnimated:YES];
@@ -83,7 +107,6 @@
     
     _meetingPlace.text = [NSString stringWithFormat:@"会议地点：%@",_meetingModel.meetingPlace];
     
-    _user = [[Appsetting sharedInstance] getUsetInfo];
     
     if ([[NSString stringWithFormat:@"%@",_user.peopleId] isEqualToString:[NSString stringWithFormat:@"%@",_meetingModel.meetingHostId]]) {
         _signNumber.text = [NSString stringWithFormat:@"签到人数：%ld/%@",(long)_meetingModel.n,_meetingModel.meetingTotal];

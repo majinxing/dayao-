@@ -23,6 +23,7 @@ static NSString * cellIdentifier = @"cellIdentifier";
 @property (nonatomic,strong) UserModel * userModel;
 @property (nonatomic,strong)UISearchBar * mySearchBar;
 @property (nonatomic,copy) NSString * selectStr;
+@property (nonatomic,copy) NSString * keyWord;
 /** @brief 当前加载的页数 */
 @property (nonatomic) int page;
 @end
@@ -33,6 +34,8 @@ static NSString * cellIdentifier = @"cellIdentifier";
     [super viewDidLoad];
     _meetingModelAry = [NSMutableArray arrayWithCapacity:12];
     
+    _userModel = [[Appsetting sharedInstance] getUsetInfo];
+
     [self addSeachBar];
     
     [self setNavigationTitle];
@@ -95,6 +98,10 @@ static NSString * cellIdentifier = @"cellIdentifier";
  **/
 -(void)addCollection{
     _collection = [[UICollectionView alloc] initWithFrame:CGRectMake(0,64+54,APPLICATION_WIDTH,APPLICATION_HEIGHT-64-54) collectionViewLayout:[[CollectionFlowLayout alloc] init]];
+    self.automaticallyAdjustsScrollViewInsets = NO;
+
+    self.collection.alwaysBounceVertical = YES; //垂直方向遇到边框是否总是反弹
+
     //注册
     [_collection registerClass:[CourseCollectionViewCell class] forCellWithReuseIdentifier:cellIdentifier];
     
@@ -134,6 +141,9 @@ static NSString * cellIdentifier = @"cellIdentifier";
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         if (weakSelf) {
             SelectMeetingOrClassViewController * strongSelf = weakSelf;
+            if (aIsHeader) {
+                [_meetingModelAry removeAllObjects];
+            }
             dispatch_async(dispatch_get_main_queue(), ^{
                 [strongSelf hideHud];
                 [strongSelf getDataWithPage:aPage];
@@ -148,13 +158,12 @@ static NSString * cellIdentifier = @"cellIdentifier";
 }
 -(void)getDataWithPage:(NSInteger)page{
     _userModel = [[Appsetting sharedInstance] getUsetInfo];
-    NSDictionary * dict = [[NSDictionary alloc] initWithObjectsAndKeys:_userModel.peopleId,@"teacherId",[NSString stringWithFormat:@"%ld",(long)page],@"start",_selectStr,@"keywords",@"1000",@"length",nil];
-    
+//    NSDictionary * dict = [[NSDictionary alloc] initWithObjectsAndKeys:_userModel.peopleId,@"teacherId",[NSString stringWithFormat:@"%ld",(long)page],@"start",_selectStr,@"keywords",@"1000",@"length",nil];
+    NSDictionary * dict = [[NSDictionary alloc] initWithObjectsAndKeys:_userModel.peopleId,@"teacherId",_keyWord,@"keywords",[NSString stringWithFormat:@"%ld",(long)page],@"start", nil];
     [[NetworkRequest sharedInstance] GET:QueryMeetingSelfCreate dict:dict succeed:^(id data) {
         NSDictionary * dict = [data objectForKey:@"header"];
         if ([[dict objectForKey:@"code"] isEqualToString:@"0000"]) {
             
-            [_meetingModelAry removeAllObjects];
             NSArray * d = [[data objectForKey:@"body"] objectForKey:@"list"];
             for (int i = 0; i<d.count; i++) {
                 MeetingModel * m = [[MeetingModel alloc] init];
@@ -170,6 +179,44 @@ static NSString * cellIdentifier = @"cellIdentifier";
     } failure:^(NSError *error) {
         NSLog(@"error %@",error);
     }];
+}
+-(void)getSelfCreateMeetingList:(NSInteger)page{
+    UserModel * user = [[Appsetting sharedInstance] getUsetInfo];
+    if ([[NSString stringWithFormat:@"%@",user.identity] isEqualToString:@"0"]) {
+        
+//        NSDictionary * dict = [[NSDictionary alloc] initWithObjectsAndKeys:_userModel.peopleId,@"userId",[UIUtils getTime],@"startTime",@"",@"endTime",[NSString stringWithFormat:@"%ld",(long)page],@"start",nil];
+        NSDictionary * dict = [[NSDictionary alloc] initWithObjectsAndKeys:_userModel.peopleId,@"userId",_keyWord,@"keywords",[NSString stringWithFormat:@"%ld",(long)page],@"start", nil];
+        [[NetworkRequest sharedInstance] GET:QueryMeeting dict:dict succeed:^(id data) {
+            //            NSLog(@"succeed%@",data);
+            NSArray * d = [[data objectForKey:@"body"] objectForKey:@"list"];
+            for (int i = 0; i<d.count; i++) {
+                MeetingModel * m = [[MeetingModel alloc] init];
+                [m setMeetingInfoWithDict:d[i]];
+                if (_meetingModelAry.count>0) {
+                    for (int j = 0; j<_meetingModelAry.count; j++) {
+                        MeetingModel * n = _meetingModelAry[j];
+                        if ([[NSString stringWithFormat:@"%@",n.meetingId] isEqualToString:[NSString stringWithFormat:@"%@",m.meetingId]]) {
+                            break;
+                        }else if(j == (_meetingModelAry.count - 1)){
+                            [_meetingModelAry addObject:m];
+                        }
+                    }
+                }else{
+                    [_meetingModelAry addObject:m];
+                }
+                
+            }
+            if (_meetingModelAry.count>0) {
+                
+            }else{
+                UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"没有搜索到对应的会议" message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: nil];
+                [alertView show];
+            }
+            [_collection reloadData];
+        } failure:^(NSError *error) {
+            NSLog(@"失败%@",error);
+        }];
+    }
 }
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
@@ -194,57 +241,12 @@ static NSString * cellIdentifier = @"cellIdentifier";
 //    }];
 }
 -(void)searchBarSearchButtonClicked:(UISearchBar *)searchBar{
-    _userModel = [[Appsetting sharedInstance] getUsetInfo];
-    NSDictionary * dict = [[NSDictionary alloc] initWithObjectsAndKeys:_userModel.peopleId,@"teacherId",searchBar.text,@"keywords", nil];
-    [[NetworkRequest sharedInstance] GET:QueryMeetingSelfCreate dict:dict succeed:^(id data) {
-        NSLog(@"succeed:%@",data);
-        [_meetingModelAry removeAllObjects];
-        NSArray * d = [[data objectForKey:@"body"] objectForKey:@"list"];
-        for (int i = 0; i<d.count; i++) {
-            MeetingModel * m = [[MeetingModel alloc] init];
-            [m setMeetingInfoWithDict:d[i]];
-            [_meetingModelAry addObject:m];
-        }
-        [self getSelfCreateMeetingList:1];
-        [_collection reloadData];
-    } failure:^(NSError *error) {
-        
-    }];
+  
+    _keyWord = [NSString stringWithFormat:@"%@",searchBar.text];
+    [self headerRereshing];
     [self.view endEditing:YES];
 }
--(void)getSelfCreateMeetingList:(NSInteger)page{
-    UserModel * user = [[Appsetting sharedInstance] getUsetInfo];
-    if ([[NSString stringWithFormat:@"%@",user.identity] isEqualToString:@"0"]) {
-        
-        NSDictionary * dict = [[NSDictionary alloc] initWithObjectsAndKeys:_userModel.peopleId,@"userId",[UIUtils getTime],@"startTime",@"",@"endTime",[NSString stringWithFormat:@"%ld",(long)page],@"start",nil];
-        [[NetworkRequest sharedInstance] GET:QueryMeeting dict:dict succeed:^(id data) {
-            //            NSLog(@"succeed%@",data);
-            NSArray * d = [[data objectForKey:@"body"] objectForKey:@"list"];
-            for (int i = 0; i<d.count; i++) {
-                MeetingModel * m = [[MeetingModel alloc] init];
-                [m setMeetingInfoWithDict:d[i]];
-                for (int j = 0; j<_meetingModelAry.count; j++) {
-                    MeetingModel * n = _meetingModelAry[j];
-                    if ([[NSString stringWithFormat:@"%@",n.meetingId] isEqualToString:[NSString stringWithFormat:@"%@",m.meetingId]]) {
-                        break;
-                    }else if(j == (_meetingModelAry.count - 1)){
-                        [_meetingModelAry addObject:m];
-                    }
-                }
-            }
-            if (_meetingModelAry.count>0) {
-                
-            }else{
-                UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"没有搜索到对应的会议" message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: nil];
-                [alertView show];
-            }
-            [_collection reloadData];
-        } failure:^(NSError *error) {
-            NSLog(@"失败%@",error);
-        }];
-    }
-    
-}
+
 #pragma mark UICollectionViewDataSource
 //定义每个Section的四边间距
 -(UIEdgeInsets)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout insetForSectionAtIndex:(NSInteger)section
@@ -263,7 +265,9 @@ static NSString * cellIdentifier = @"cellIdentifier";
 {
     CourseCollectionViewCell * cell = [collectionView dequeueReusableCellWithReuseIdentifier:cellIdentifier forIndexPath:indexPath];
     cell.backgroundColor = [UIColor whiteColor];
-    [cell setInfoForContentView:_meetingModelAry[indexPath.row]];
+    if (indexPath.row<_meetingModelAry.count) {
+        [cell setInfoForContentView:_meetingModelAry[indexPath.row]];
+    }
     return cell;
 }
 #pragma mark UICollectionViewDelegate

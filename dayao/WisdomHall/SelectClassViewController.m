@@ -94,10 +94,13 @@ static NSString * cellIdentifier = @"cellIdentifier";
  * 添加collection
  **/
 -(void)addCollection{
-    _collection = [[UICollectionView alloc] initWithFrame:CGRectMake(0,64+54,APPLICATION_WIDTH,APPLICATION_HEIGHT-64-54) collectionViewLayout:[[CollectionFlowLayout alloc] init]];
+    CollectionFlowLayout * flowLayout = [[CollectionFlowLayout alloc] init];
+    _collection = [[UICollectionView alloc] initWithFrame:CGRectMake(0, 64+54,APPLICATION_WIDTH,APPLICATION_HEIGHT-54-64) collectionViewLayout:flowLayout];
+//    flowLayout.headerReferenceSize = CGSizeMake(0, APPLICATION_HEIGHT/4);
+    self.automaticallyAdjustsScrollViewInsets = NO;
     //注册
     [_collection registerClass:[CourseCollectionViewCell class] forCellWithReuseIdentifier:cellIdentifier];
-    
+    [_collection registerClass:[UICollectionReusableView class] forSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:@"UICollectionViewHeader"];
     _collection.delegate = self;
     _collection.dataSource = self;
     _collection.allowsMultipleSelection = YES;
@@ -106,7 +109,9 @@ static NSString * cellIdentifier = @"cellIdentifier";
     //取消滑动的滚动条
     _collection.decelerationRate = UIScrollViewDecelerationRateNormal;
     _collection.backgroundColor = [UIColor clearColor];
+    self.collection.alwaysBounceVertical = YES; //垂直方向遇到边框是否总是反弹
     __weak SelectClassViewController * weakSelf = self;
+    
     [self.collection addHeaderWithCallback:^{
         [weakSelf headerRereshing];
     }];
@@ -134,13 +139,14 @@ static NSString * cellIdentifier = @"cellIdentifier";
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         if (weakSelf) {
             SelectClassViewController * strongSelf = weakSelf;
+            if (aIsHeader) {
+                [_classModelAry removeAllObjects];
+            }
             dispatch_async(dispatch_get_main_queue(), ^{
                 [strongSelf hideHud];
                 [strongSelf getDataWithPage:aPage];
             });
-            if (aIsHeader) {
-                [_classModelAry removeAllObjects];
-            }
+            
             if (aIsHeader) {
                 [strongSelf.collection headerEndRefreshing];
             }else{
@@ -168,7 +174,7 @@ static NSString * cellIdentifier = @"cellIdentifier";
                 [_classModelAry addObject:c];
             }
         }
-        [_collection reloadData];
+//        [_collection reloadData];
         [self getSelfJoinClass:page];
     } failure:^(NSError *error) {
         NSLog(@"%@",error);
@@ -187,7 +193,7 @@ static NSString * cellIdentifier = @"cellIdentifier";
                 [_classModelAry addObject:c];
             }
         }
-        [_collection reloadData];
+//        [_collection reloadData];
         [self getSelfCreateClassType:page];
     } failure:^(NSError *error) {
         NSLog(@"%@",error);
@@ -207,7 +213,7 @@ static NSString * cellIdentifier = @"cellIdentifier";
                 [_classModelAry addObject:c];
             }
         }
-        [_collection reloadData];
+//        [_collection reloadData];
         [self getSelfJoinClassType:page];
     } failure:^(NSError *error) {
         NSLog(@"%@",error);
@@ -227,7 +233,9 @@ static NSString * cellIdentifier = @"cellIdentifier";
                 [_classModelAry addObject:c];
             }
         }
-        [_collection reloadData];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [_collection reloadData];
+        });
     } failure:^(NSError *error) {
         NSLog(@"%@",error);
     }];
@@ -244,7 +252,8 @@ static NSString * cellIdentifier = @"cellIdentifier";
 -(void)searchBarSearchButtonClicked:(UISearchBar *)searchBar{
     _userModel = [[Appsetting sharedInstance] getUsetInfo];
     _searchStr = searchBar.text;
-    [self getDataWithPage:_page];
+    
+    [self headerRereshing];
     [self.view endEditing:YES];
 }
 -(void)getSelfCreateMeetingList:(NSInteger)page{
@@ -298,7 +307,9 @@ static NSString * cellIdentifier = @"cellIdentifier";
 {
     CourseCollectionViewCell * cell = [collectionView dequeueReusableCellWithReuseIdentifier:cellIdentifier forIndexPath:indexPath];
     cell.backgroundColor = [UIColor whiteColor];
-    [cell setClassInfoForContentView:_classModelAry[indexPath.row]];
+    if (indexPath.row<_classModelAry.count) {
+        [cell setClassInfoForContentView:_classModelAry[indexPath.row]];
+    }
     return cell;
 }
 #pragma mark UICollectionViewDelegate
