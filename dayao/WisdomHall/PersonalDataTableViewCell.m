@@ -9,7 +9,7 @@
 #import "PersonalDataTableViewCell.h"
 #import "DYHeader.h"
 
-@interface PersonalDataTableViewCell()
+@interface PersonalDataTableViewCell()<UITextFieldDelegate>
 
 
 @end
@@ -44,15 +44,25 @@
     }
     return cell;
 }
--(void)setInfo:(NSString *)labelText withTextAry:(NSString *)textText isEdictor:(BOOL)edictor{
+-(void)setInfo:(NSString *)labelText withTextAry:(NSString *)textText isEdictor:(BOOL)edictor withRow:(NSInteger)n{
     _dataLabel.text = labelText;
     _textFilePh.placeholder = labelText;
     _textFilePh.text = textText;
+    _textFilePh.delegate = self;
+    _textFilePh.tag = n;
+    [_textFilePh addTarget:self action:@selector(textFileDidChange:) forControlEvents:UIControlEventEditingChanged];
     if (edictor) {
-        _textFilePh.enabled = YES ;
+        if (n<6) {
+            _dataLabel.alpha = 0.5;
+            _textFilePh.alpha = 0.5;
+        }else{
+            _textFilePh.enabled = YES ;
+        }
     }else{
+        _dataLabel.alpha = 1;
+        _textFilePh.alpha = 1;
         _textFilePh.enabled = NO ;
-
+        
     }
 }
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
@@ -60,5 +70,9 @@
     
     // Configure the view for the selected state
 }
-
+-(void)textFileDidChange:(UITextField *)textField{
+    if (self.delegate&&[self.delegate respondsToSelector:@selector(textFieldDidChangeDelegate:)]) {
+        [self.delegate textFieldDidChangeDelegate:textField];
+    }
+}
 @end

@@ -36,9 +36,20 @@
     [self addChildViewControllerWithClassname:[AllTheMeetingViewController description] imagename:@"hudongIcon" title:@"会场" withSelectImageName:@"hudongIcon"];
     
     [self addChildViewControllerWithClassname:[PersonalCenterViewController description] imagename:@"yonghuIcon" title:@"我" withSelectImageName:@"yonghuIcon"];
-    
+    [self selectApp];
     // Do any additional setup after loading the view from its nib.
 }
+-(void)selectApp{
+    NSDictionary * dict = [[NSDictionary alloc] initWithObjectsAndKeys:@"2",@"type", nil];
+    [[NetworkRequest sharedInstance] GET:QueryApp dict:dict succeed:^(id data) {
+        NSLog(@"%@",data);
+//        UIAlertView * later = [[UIAlertView alloc] initWithTitle:nil message:@"请更新版本" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil];
+//        [later show];
+    } failure:^(NSError *error) {
+        
+    }];
+}
+
 /**
  *  添加子控制器
  *

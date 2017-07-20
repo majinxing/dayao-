@@ -18,7 +18,7 @@
                 <rect key="frame" x="0.0" y="0.0" width="533" height="598"/>
                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                 <subviews>
-                    <imageView clearsContextBeforeDrawing="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="course" translatesAutoresizingMaskIntoConstraints="NO" id="UGM-Om-yLr">
+                    <imageView clearsContextBeforeDrawing="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="meet" translatesAutoresizingMaskIntoConstraints="NO" id="UGM-Om-yLr">
                         <rect key="frame" x="10" y="10" width="513" height="299"/>
                     </imageView>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="课程名 ：  线性代数" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RVQ-Ru-ehT">
@@ -86,6 +86,7 @@
                 <outlet property="classOrMeetingName" destination="RVQ-Ru-ehT" id="BxK-eb-FTf"/>
                 <outlet property="courseImage" destination="UGM-Om-yLr" id="Qb0-d6-BHG"/>
                 <outlet property="hostName" destination="0gh-lH-mpH" id="YAW-Ao-3oo"/>
+                <outlet property="imageH" destination="UGM-Om-yLr" id="cEa-vH-Y4Z"/>
                 <outlet property="place" destination="bqc-cC-k9c" id="3WA-YO-Yj3"/>
                 <outlet property="time" destination="jmv-bb-u3y" id="UfB-2f-2Ij"/>
             </connections>
@@ -93,6 +94,6 @@
         </collectionViewCell>
     </objects>
     <resources>
-        <image name="course" width="424" height="300"/>
+        <image name="meet" width="700" height="539"/>
     </resources>
 </document>

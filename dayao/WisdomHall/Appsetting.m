@@ -39,7 +39,7 @@
     [_mySettingData setValue:[dict objectForKey:@"facultyName"] forKey:@"user_facultyName"];
     [_mySettingData setValue:[dict objectForKey:@"className"] forKey:@"user_className"];
     [_mySettingData setValue:[dict objectForKey:@"universityName"] forKey:@"user_universityName"];
-    [_mySettingData setValue:p forKey:@"user_password"];
+    [_mySettingData setValue:[dict objectForKey:@"imPswd"] forKey:@"user_password"];
     [_mySettingData setValue:@"1" forKey:@"is_Login"];
     [_mySettingData synchronize];
 }

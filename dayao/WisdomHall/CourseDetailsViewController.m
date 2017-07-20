@@ -91,7 +91,7 @@
 -(void)getData{
     NSDictionary * dict = [[NSDictionary alloc] initWithObjectsAndKeys:_c.sclassId,@"id",_c.courseDetailId,@"courseDetailId", nil];
     [[NetworkRequest sharedInstance] GET:QueryCourseMemBer dict:dict succeed:^(id data) {
-        NSLog(@"成功%@",data);
+//        NSLog(@"成功%@",data);
         NSArray *ary = [data objectForKey:@"body"];
         for (int i = 0; i<ary.count;i++) {
             SignPeople * s = [[SignPeople alloc] init];
@@ -160,7 +160,7 @@
                 [alertView show];
                 
             }];
-
+            
         }]];
         
         [alert addAction:[UIAlertAction actionWithTitle:@"删除当前课程" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
@@ -377,6 +377,9 @@
 
 - (void)shareViewButtonClick:(NSString *)platform
 {
+    UIAlertView * later = [[UIAlertView alloc] initWithTitle:nil message:@"未完待续" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil];
+    [later show];
+    return;
     if ([platform isEqualToString:InteractionType_Test]){
         NSLog(@"测试");
         [_interaction hide];

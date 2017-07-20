@@ -98,5 +98,6 @@
 
 #define QuerySelfInfo   @"course/user/detail"       //查询个人信息
 
+#define ChangeSelfInfo   @"course/user/update"       //修改个人信息
 
-
+#define QueryApp         @"course/app/select"         //查询版本号

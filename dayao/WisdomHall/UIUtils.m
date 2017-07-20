@@ -145,16 +145,16 @@
     //获得当前时间的年月日时分
     NSDateComponents *nowCmps = [calendar components:unit fromDate:[NSDate date]];
     NSString *month;
-    if (nowCmps.month<9) {
-        month = [NSString stringWithFormat:@"0%ld",(long)nowCmps.month+1];
+    if (nowCmps.month<10) {
+        month = [NSString stringWithFormat:@"0%ld",(long)nowCmps.month];
     }else{
-        month = [NSString stringWithFormat:@"%ld",(long)nowCmps.month+1];
+        month = [NSString stringWithFormat:@"%ld",(long)nowCmps.month];
     }
     NSString * day;
-    if (nowCmps.day<10) {
-        day = [NSString stringWithFormat:@"0%ld",(long)nowCmps.day];
+    if (nowCmps.day<9) {
+        day = [NSString stringWithFormat:@"0%ld",(long)nowCmps.day+1];
     }else{
-        day = [NSString stringWithFormat:@"%ld",(long)nowCmps.day];
+        day = [NSString stringWithFormat:@"%ld",(long)nowCmps.day+1];
     }
     NSString *nowDate = [NSString stringWithFormat:@"%ld-%@-%@",(long)nowCmps.year,month,day];
     
@@ -457,31 +457,31 @@
     [ary addObject:[NSString stringWithFormat:@"%@",user.userPhone]];
 
     if ([UIUtils isBlankString:[NSString stringWithFormat:@"%@",user.email]]) {
-        [ary addObject:[NSString stringWithFormat:@" "]];
+        [ary addObject:[NSString stringWithFormat:@""]];
 
     }else{
         [ary addObject:[NSString stringWithFormat:@"%@",user.email]];
     }
     if ([UIUtils isBlankString:[NSString stringWithFormat:@"%@",user.region]]) {
-        [ary addObject:[NSString stringWithFormat:@" "]];
+        [ary addObject:[NSString stringWithFormat:@""]];
         
     }else{
         [ary addObject:[NSString stringWithFormat:@"%@",user.region]];
     }
     if ([UIUtils isBlankString:[NSString stringWithFormat:@"%@",user.sex]]) {
-        [ary addObject:[NSString stringWithFormat:@" "]];
+        [ary addObject:[NSString stringWithFormat:@""]];
         
     }else{
         [ary addObject:[NSString stringWithFormat:@"%@",user.sex]];
     }
     if ([UIUtils isBlankString:[NSString stringWithFormat:@"%@",user.birthday]]) {
-        [ary addObject:[NSString stringWithFormat:@" "]];
+        [ary addObject:[NSString stringWithFormat:@""]];
         
     }else{
         [ary addObject:[NSString stringWithFormat:@"%@",user.birthday]];
     }
     if ([UIUtils isBlankString:[NSString stringWithFormat:@"%@",user.sign]]) {
-        [ary addObject:[NSString stringWithFormat:@" "]];
+        [ary addObject:[NSString stringWithFormat:@""]];
         
     }else{
         [ary addObject:[NSString stringWithFormat:@"%@",user.sign]];

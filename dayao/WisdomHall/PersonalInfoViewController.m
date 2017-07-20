@@ -9,8 +9,7 @@
 #import "PersonalInfoViewController.h"
 #import "PersonalDataTableViewCell.h"
 #import "DYHeader.h"
-@interface PersonalInfoViewController ()<UITableViewDelegate,UITableViewDataSource,UITextFieldDelegate
->
+@interface PersonalInfoViewController ()<UITableViewDelegate,UITableViewDataSource,UITextFieldDelegate,PersonalDataTableViewCellDelegate>
 @property (nonatomic,strong)UITableView * tableView;
 @property (nonatomic,strong)UserModel * user;
 @property (nonatomic,strong)NSMutableArray * labelAry;
@@ -84,11 +83,25 @@
         [_myButton setTitle:@"修改"];
         _isEdictor = NO;
         [_tableView reloadData];
+        NSDictionary * dict = [[NSDictionary alloc] initWithObjectsAndKeys:_user.peopleId,@"id",_textAry[6],@"email",_textAry[7],@"region",_textAry[8],@"sex",_textAry[9],@"birthday",_textAry[10],@"sign",nil];
+        [[NetworkRequest sharedInstance] POST:ChangeSelfInfo dict:dict succeed:^(id data) {
+            NSLog(@"%@",data);
+        } failure:^(NSError *error) {
+            
+        }];
     }
 }
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+#pragma mark PersonalDataTableViewCellDelegate
+-(void)textFieldDidChangeDelegate:(UITextField *)textFile{
+    if ([UIUtils isBlankString:textFile.text]) {
+        [_textAry setObject:@"" atIndexedSubscript:textFile.tag];
+    }else{
+        [_textAry setObject:textFile.text atIndexedSubscript:textFile.tag];
+    }
 }
 #pragma mark UITableViewdelegate
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
@@ -106,14 +119,16 @@
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     PersonalDataTableViewCell * cell = [PersonalDataTableViewCell tempTableViewCellWith:tableView indexPath:indexPath];
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
-    cell.textFilePh.delegate = self;
+//    cell.textFilePh.delegate = self;
+    cell.delegate = self;
     if (indexPath.section == 1) {
-        [cell setInfo:_labelAry[indexPath.row] withTextAry:_textAry[indexPath.row] isEdictor:_isEdictor];
+        [cell setInfo:_labelAry[indexPath.row] withTextAry:_textAry[indexPath.row] isEdictor:_isEdictor withRow:indexPath.row];
     }
     return cell;
 }
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    [self.view endEditing:YES];
 }
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
     return 40;

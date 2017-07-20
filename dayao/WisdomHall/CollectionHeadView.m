@@ -37,17 +37,17 @@
         if (i==0) {
             v.backgroundColor = [UIColor redColor];
             UIImageView * i = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, APPLICATION_WIDTH, APPLICATION_HEIGHT/4)];
-            i.image = [UIImage imageNamed:@"bg1"];
+            i.image = [UIImage imageNamed:@"abc_adv_3"];
             [v addSubview:i];
         }else if (i==1){
             v.backgroundColor = [UIColor greenColor];
             UIImageView * i = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, APPLICATION_WIDTH, APPLICATION_HEIGHT/4)];
-            i.image = [UIImage imageNamed:@"bg2"];
+            i.image = [UIImage imageNamed:@"abc_adv_3"];
             [v addSubview:i];
         }else if(i==2){
             v.backgroundColor = [UIColor blueColor];
             UIImageView * i = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, APPLICATION_WIDTH, APPLICATION_HEIGHT/4)];
-            i.image = [UIImage imageNamed:@"bg3"];
+            i.image = [UIImage imageNamed:@"abc_adv_3"];
             [v addSubview:i];
         }
         [s addSubview:v];

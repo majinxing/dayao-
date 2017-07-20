@@ -79,7 +79,7 @@
             [dict setObject:_textFileAry[i] forKey:ary[i]];
         }
     }
-    [dict setObject:@"111111" forKey:@"imPswd"];
+    [dict setObject:_textFileAry[1] forKey:@"imPswd"];
     
     [[NetworkRequest sharedInstance] POST:Register dict:dict succeed:^(id data) {
         NSLog(@"succeed:%@",data);
