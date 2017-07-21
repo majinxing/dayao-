@@ -38,7 +38,7 @@
  * 判断试题属性是否为空
  **/
 -(BOOL)whetherIsEmpty{
-    if ([UIUtils isBlankString:self.questionsID]) {
+    if ([UIUtils isBlankString:[NSString stringWithFormat:@"%@",self.questionsID]]) {
         return NO;
     }else if ([UIUtils isBlankString:self.score]){
         return NO;

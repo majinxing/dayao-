@@ -252,7 +252,13 @@
 -(void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
     if (alertView.tag == 1) {
         if (buttonIndex == 0) {
-            [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"prefs:root=WIFI"]];
+            NSURL *url = [NSURL URLWithString:@"prefs:root=WIFI"];
+            [[UIApplication sharedApplication] openURL:url];
+
+            if ([[UIApplication sharedApplication] canOpenURL:url])
+            {
+                [[UIApplication sharedApplication] openURL:url];
+            }
         }else if(buttonIndex == 1){
             [alertView setHidden:YES];
         }

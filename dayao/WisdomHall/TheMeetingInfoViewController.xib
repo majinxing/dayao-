@@ -31,7 +31,7 @@
                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="bg3" translatesAutoresizingMaskIntoConstraints="NO" id="RCS-K5-6P0">
                     <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                 </imageView>
-                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="749" image="headImage" translatesAutoresizingMaskIntoConstraints="NO" id="Bwg-OT-lrY">
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="749" image="meet" translatesAutoresizingMaskIntoConstraints="NO" id="Bwg-OT-lrY">
                     <rect key="frame" x="10" y="70" width="187.5" height="150"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="150" id="XNp-dJ-1Ch"/>
@@ -154,6 +154,6 @@
     </objects>
     <resources>
         <image name="bg3" width="480" height="720"/>
-        <image name="headImage" width="352" height="220"/>
+        <image name="meet" width="700" height="539"/>
     </resources>
 </document>

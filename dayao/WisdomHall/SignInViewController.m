@@ -31,7 +31,9 @@ static NSString *cellIdentifier = @"cellIdentifier";
 @property (nonatomic,strong) UserModel * userModel;
 @property (nonatomic,strong) NSMutableArray * classAry;
 /** @brief 当前加载的页数 */
-@property (nonatomic) int page;
+@property (nonatomic,assign) int page;
+
+@property (nonatomic,assign) int temp;
 
 @end
 
@@ -40,6 +42,7 @@ static NSString *cellIdentifier = @"cellIdentifier";
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.page = 0;
+    self.temp = 0;
     self.view.backgroundColor = [UIColor whiteColor];
     
     _classAry = [NSMutableArray arrayWithCapacity:10];
@@ -51,8 +54,10 @@ static NSString *cellIdentifier = @"cellIdentifier";
     // Do any additional setup after loading the view from its nib.
 }
 -(void)viewWillAppear:(BOOL)animated{
-    if (self.page>0) {
+    if (self.temp>1) {
         [self headerRereshing];
+    }else{
+        _temp = 2;
     }
 }
 -(void)addCollection{
@@ -104,7 +109,8 @@ static NSString *cellIdentifier = @"cellIdentifier";
             SignInViewController * strongSelf = weakSelf;
             if (aIsHeader) {
                 [_classAry removeAllObjects];
-                _classAry = [NSMutableArray arrayWithCapacity:1];            }
+                _classAry = [NSMutableArray arrayWithCapacity:1];
+            }
             dispatch_async(dispatch_get_main_queue(), ^{
                 [strongSelf hideHud];
                 [strongSelf getDataWithPage:aPage];

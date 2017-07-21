@@ -31,7 +31,7 @@
  *
  **/
 -(BOOL)whetherIsEmpty{
-    if ([UIUtils isBlankString:self.textId]) {
+    if ([UIUtils isBlankString:[NSString stringWithFormat:@"%@",self.textId]]) {
         return NO;
     }else if ([UIUtils isBlankString:self.title]){
         return NO;

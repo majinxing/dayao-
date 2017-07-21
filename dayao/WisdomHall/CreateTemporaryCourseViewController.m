@@ -27,6 +27,9 @@
 @property (nonatomic,assign) int week;
 @property (nonatomic,assign) int class1;
 @property (nonatomic,assign) int class2;
+@property (nonatomic,assign) int year;
+@property (nonatomic,assign) int month;
+@property (nonatomic,assign) int day;
 
 @property (nonatomic,strong) ClassRoomModel * classRoom;
 @property (nonatomic,strong) NSMutableArray * selectPeopleAry;
@@ -49,6 +52,9 @@
     _week = 0;
     _class1 = 0;
     _class2 = 0;
+    _year = 0;
+    _month = 0;
+    _day = 0;
     
     _selectPeopleAry = [NSMutableArray arrayWithCapacity:1];
     _classAry1 = [NSMutableArray arrayWithCapacity:1];
@@ -180,7 +186,23 @@
         }
     }else if (_temp == 6){
         [_textFileAry setObject:[NSString stringWithFormat:@"周%d-第%d节-第%d节",_week+1,_class1+1,_class2+1] atIndexedSubscript:6];
+    }else if (_temp == 7){
+        
+        NSString * month;
+        if (_month<9) {
+            month = [NSString stringWithFormat:@"0%d",_month+1];
+        }else{
+            month = [NSString stringWithFormat:@"%d",_month+1];
+        }
+        NSString * day;
+        if (_day<9) {
+            day = [NSString stringWithFormat:@"0%d",_day+1];
+        }else{
+            day = [NSString stringWithFormat:@"%d",_day+1];
+        }
+        [_textFileAry setObject:[NSString stringWithFormat:@"%d-%@-%@",2017+_year,month,day] atIndexedSubscript:7];
     }
+    
     
     [_tabelView reloadData];
 }
@@ -196,6 +218,8 @@
         return 1;
     }else if (_temp == 6){
         return 3;
+    }else if (_temp == 7){
+        return 3;
     }
     return 0;
 }
@@ -209,7 +233,16 @@
         }else if (component == 1 || component == 2){
             return 12;
         }
+    }else if (_temp == 7){
+        if (component == 0) {
+            return 12;
+        }else if (component == 1){
+            return 12;
+        }else if (component == 2){
+            return 31;
+        }
     }
+    
     return 0;
 }
 - (NSString *)pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component
@@ -229,8 +262,16 @@
         }else if (component == 2){
             return _classAry2[row];
         }
+    }else if (_temp == 7){
+        if (component == 0) {
+            return [NSString stringWithFormat:@"%ld",row+2017];
+        }else if (component == 1){
+            return [NSString stringWithFormat:@"%ld",row+1];
+        }else if(component == 2){
+            return [NSString stringWithFormat:@"%ld",row+1];
+        }
     }
-    return @"2016";
+    return @"2017";
 }
 - (void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component
 {
@@ -248,7 +289,14 @@
         }else if (component == 2){
             _class2 = (int)row;
         }
-        
+    }else if (_temp == 7){
+        if (component == 0) {
+            _year = (int)row;
+        }else if (component == 1){
+            _month = (int)row;
+        }else if (component == 2){
+            _day = (int)row;
+        }
     }
     
 }
@@ -282,7 +330,7 @@
         [s returnText:^(ClassRoomModel *returnText) {
             if (returnText) {
                 [self.view endEditing:YES];
-                if (![UIUtils isBlankString:returnText.classRoomId]) {
+                if (![UIUtils isBlankString:[NSString stringWithFormat:@"%@",returnText.classRoomId]]) {
                     _classRoom = returnText;
                     [_textFileAry setObject:_classRoom.classRoomName atIndexedSubscript:5];
                     [_tabelView reloadData];
@@ -316,6 +364,9 @@
         }];
     }else if (btn.tag == 6){
         _temp = 6;
+        [self addPickView];
+    }else if (btn.tag == 7){
+        _temp = 7;
         [self addPickView];
     }
     
@@ -368,13 +419,13 @@
 }
 
 /*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
+ #pragma mark - Navigation
+ 
+ // In a storyboard-based application, you will often want to do a little preparation before navigation
+ - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+ // Get the new view controller using [segue destinationViewController].
+ // Pass the selected object to the new view controller.
+ }
+ */
 
 @end

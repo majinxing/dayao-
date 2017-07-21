@@ -28,6 +28,9 @@
 @property (nonatomic,assign) int week;
 @property (nonatomic,assign) int class1;
 @property (nonatomic,assign) int class2;
+@property (nonatomic,assign) int year;
+@property (nonatomic,assign) int month;
+@property (nonatomic,assign) int day;
 
 @property (nonatomic,strong) ClassRoomModel * classRoom;
 @property (nonatomic,strong) NSMutableArray * selectPeopleAry;
@@ -49,6 +52,9 @@
     _week = 0;
     _class1 = 0;
     _class2 = 0;
+    _year = 0;
+    _month = 0;
+    _day = 0;
     
     _selectPeopleAry = [NSMutableArray arrayWithCapacity:1];
     _classAry1 = [NSMutableArray arrayWithCapacity:1];
@@ -61,7 +67,7 @@
         [_classAry2 addObject:s1];
         
         if (i<7) {
-            NSString * a = [NSString stringWithFormat:@"周%d",i+1];
+            NSString * a = [NSString stringWithFormat:@"星期%d",i+1];
             [_weekAry addObject:a];
         }
     }
@@ -199,9 +205,35 @@
         }else if(_m3==2){
             str3 =  [NSString stringWithFormat:@"双周"];
         }
-        [_textFileAry setObject:[NSString stringWithFormat:@"%@周-%@周-%@上课",str1,str2,str3] atIndexedSubscript:6];
+        [_textFileAry setObject:[NSString stringWithFormat:@"第%@周-到%@周-%@上课",str1,str2,str3] atIndexedSubscript:6];
     }else if (_temp == 8){
         [_textFileAry setObject:[NSString stringWithFormat:@"周%d-第%d节-第%d节",_week+1,_class1+1,_class2+1] atIndexedSubscript:8];
+    }else if (_temp == 7){
+        
+        NSString * month;
+        if (_month<9) {
+            month = [NSString stringWithFormat:@"0%d",_month+1];
+        }else{
+            month = [NSString stringWithFormat:@"%d",_month+1];
+        }
+        NSString * day;
+        if (_day<9) {
+            day = [NSString stringWithFormat:@"0%d",_day+1];
+        }else{
+            day = [NSString stringWithFormat:@"%d",_day+1];
+        }
+       NSString * str =  [UIUtils weekdayStringFromDate:[NSString stringWithFormat:@"%d-%@-%@",2017+_year,month,day]];
+        if ([str isEqualToString:@"星期一"]) {
+           [_textFileAry setObject:[NSString stringWithFormat:@"%d-%@-%@",2017+_year,month,day] atIndexedSubscript:7];
+        }else{
+            UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"选择的日期并不是周一，请重新选择日期" message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: nil];
+            [alertView show];
+            _year = 0;
+            _month = 0;
+            _day = 0;
+        }
+        
+        
     }
     
     [_tabelView reloadData];
@@ -219,6 +251,8 @@
     }else if (_temp == 6){
         return 3;
     }else if (_temp == 8){
+        return 3;
+    }else if (_temp == 7){
         return 3;
     }
     return 0;
@@ -239,6 +273,14 @@
         }else if (component == 1 || component == 2){
             return 12;
         }
+    }else if (_temp == 7){
+        if (component == 0) {
+            return 12;
+        }else if (component == 1){
+            return 12;
+        }else if (component == 2){
+            return 31;
+        }
     }
     return 0;
 }
@@ -252,9 +294,12 @@
             return @"照片签到";
         }
     }else if (_temp == 6){
-        if (component == 0||component == 1) {
-            return [NSString stringWithFormat:@"%ld",row+1];
-        }else if (component == 2){
+        if (component == 0) {
+            return [NSString stringWithFormat:@"第%ld周",row+1];
+        }else if (component == 1){
+            return [NSString stringWithFormat:@"到%ld周",row+1];
+        }
+        else if (component == 2){
             if (row == 0) {
                 return @"全";
             }else if (row == 1){
@@ -270,6 +315,14 @@
             return _classAry1[row];
         }else if (component == 2){
             return _classAry2[row];
+        }
+    }else if (_temp == 7){
+        if (component == 0) {
+            return [NSString stringWithFormat:@"%ld",row+2017];
+        }else if (component == 1){
+            return [NSString stringWithFormat:@"%ld",row+1];
+        }else if(component == 2){
+            return [NSString stringWithFormat:@"%ld",row+1];
         }
     }
     return @"2016";
@@ -298,7 +351,14 @@
         }else if (component == 2){
             _class2 = (int)row;
         }
-
+    }else if (_temp == 7){
+        if (component == 0) {
+            _year = (int)row;
+        }else if (component == 1){
+            _month = (int)row;
+        }else if (component == 2){
+            _day = (int)row;
+        }
     }
     
 }
@@ -332,7 +392,7 @@
         [s returnText:^(ClassRoomModel *returnText) {
             if (returnText) {
                 [self.view endEditing:YES];
-                if (![UIUtils isBlankString:returnText.classRoomId]) {
+                if (![UIUtils isBlankString:[NSString stringWithFormat:@"%@",returnText.classRoomId]]) {
                     _classRoom = returnText;
                     [_textFileAry setObject:_classRoom.classRoomName atIndexedSubscript:5];
                     [_tabelView reloadData];
@@ -369,6 +429,9 @@
         [self addPickView];
     }else if (btn.tag == 8){
         _temp = 8;
+        [self addPickView];
+    }else if (btn.tag == 7){
+        _temp = 7;
         [self addPickView];
     }
     

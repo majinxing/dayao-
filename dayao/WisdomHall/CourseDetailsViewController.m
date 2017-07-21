@@ -20,7 +20,7 @@
 #import "DataDownloadViewController.h"
 #import "SignPeople.h"
 
-@interface CourseDetailsViewController ()<UIActionSheetDelegate,ShareViewDelegate>
+@interface CourseDetailsViewController ()<UIActionSheetDelegate,ShareViewDelegate,UIAlertViewDelegate>
 @property (strong, nonatomic) IBOutlet UIButton *interactive;
 @property (strong, nonatomic) IBOutlet UIButton *signInBtn;
 @property (nonatomic,strong) InteractiveView * interactiveView;
@@ -140,48 +140,22 @@
 }
 -(void)delecateCourse{
     if ([[NSString stringWithFormat:@"%@",_c.courseType] isEqualToString:@"1"]) {
+        
         UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"提示" message:nil preferredStyle:  UIAlertControllerStyleActionSheet];
         //分别按顺序放入每个按钮；
         [alert addAction:[UIAlertAction actionWithTitle:@"删除周期课程" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-            //点击按钮的响应事件；
-            NSDictionary * dict = [[NSDictionary alloc] initWithObjectsAndKeys:_c.courseDetailId,@"courseDetailId",_c.sclassId,@"id",@"1",@"courseType", nil];
             
-            [[NetworkRequest sharedInstance] POST:DelecateCourse dict:dict succeed:^(id data) {
-                NSString * s = [NSString stringWithFormat:@"%@",[[data objectForKey:@"header"] objectForKey:@"message"]];
-                if ([s isEqualToString:@"成功"]) {
-                    [self.navigationController popViewControllerAnimated:YES];
-                }else{
-                    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"课程删除失败" message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: nil];
-                    [alertView show];
-                }
-                
-            } failure:^(NSError *error) {
-                UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"课程删除失败" message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: nil];
-                [alertView show];
-                
-            }];
-            
+            UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"是否确定删除周期性课程" message:nil delegate:nil cancelButtonTitle:@"取消" otherButtonTitles:@"确定",nil];
+            alertView.delegate = self;
+            alertView.tag = 1002;
+            [alertView show];
         }]];
         
         [alert addAction:[UIAlertAction actionWithTitle:@"删除当前课程" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-            //点击按钮的响应事件；
-            NSDictionary * dict = [[NSDictionary alloc] initWithObjectsAndKeys:_c.courseDetailId,@"courseDetailId",@"1",@"courseType", nil];
-            
-            [[NetworkRequest sharedInstance] POST:DelecateCourse dict:dict succeed:^(id data) {
-                NSString * s = [NSString stringWithFormat:@"%@",[[data objectForKey:@"header"] objectForKey:@"message"]];
-                if ([s isEqualToString:@"成功"]) {
-                    [self.navigationController popViewControllerAnimated:YES];
-                }else{
-                    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"课程删除失败" message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: nil];
-                    [alertView show];
-                }
-                
-            } failure:^(NSError *error) {
-                UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"课程删除失败" message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: nil];
-                [alertView show];
-                
-            }];
-            
+            UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"是否确定删除当前课程" message:nil delegate:nil cancelButtonTitle:@"取消" otherButtonTitles:@"确定",nil];
+            alertView.delegate = self;
+            alertView.tag = 1003;
+            [alertView show];
         }]];
         
         [alert addAction:[UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleDestructive handler:^(UIAlertAction * _Nonnull action) {
@@ -192,23 +166,10 @@
         
     }else if([[NSString stringWithFormat:@"%@",_c.courseType] isEqualToString:@"2"]){
         
-        NSDictionary * dict = [[NSDictionary alloc] initWithObjectsAndKeys:_c.courseDetailId,@"courseDetailId",_c.sclassId,@"id",@"2",@"courseType", nil];
-        
-        [[NetworkRequest sharedInstance] POST:DelecateCourse dict:dict succeed:^(id data) {
-            NSString * s = [NSString stringWithFormat:@"%@",[[data objectForKey:@"header"] objectForKey:@"message"]];
-            if ([s isEqualToString:@"成功"]) {
-                [self.navigationController popViewControllerAnimated:YES];
-            }else{
-                UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"课程删除失败" message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: nil];
-                [alertView show];
-            }
-            
-        } failure:^(NSError *error) {
-            UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"课程删除失败" message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: nil];
-            [alertView show];
-            
-        }];
-        
+        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"是否确定删除临时性课程" message:nil delegate:nil cancelButtonTitle:@"取消" otherButtonTitles:@"确定",nil];
+        alertView.delegate = self;
+        alertView.tag = 1001;
+        [alertView show];
     }
 }
 - (IBAction)shareBtnPressed:(id)sender {
@@ -248,7 +209,7 @@
     }
     NSMutableDictionary * dictWifi =  [UIUtils getWifiName];
     
-    if (![UIUtils isBlankString:[dictWifi objectForKey:@"BSSID"]]) {
+    if (![UIUtils isBlankString:[NSString stringWithFormat:@"%@",[dictWifi objectForKey:@"BSSID"]]]) {
         
         
         NSString * bssid  = [UIUtils specificationMCKAddress:[dictWifi objectForKey:@"BSSID"]];
@@ -334,6 +295,68 @@
         }else if(buttonIndex == 1){
             UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"若没有网络数据连接将不能签到" message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: nil];
             [alertView show];
+        }
+    }else if (alertView.tag == 1001){
+        if (buttonIndex == 1) {
+            
+            NSDictionary * dict = [[NSDictionary alloc] initWithObjectsAndKeys:_c.courseDetailId,@"courseDetailId",_c.sclassId,@"id",@"2",@"courseType", nil];
+            
+            [[NetworkRequest sharedInstance] POST:DelecateCourse dict:dict succeed:^(id data) {
+                NSString * s = [NSString stringWithFormat:@"%@",[[data objectForKey:@"header"] objectForKey:@"message"]];
+                if ([s isEqualToString:@"成功"]) {
+                    [self.navigationController popViewControllerAnimated:YES];
+                }else{
+                    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"课程删除失败" message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: nil];
+                    [alertView show];
+                }
+                
+            } failure:^(NSError *error) {
+                UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"课程删除失败" message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: nil];
+                [alertView show];
+                
+            }];
+        }
+    }else if (alertView.tag == 1002){
+        if (buttonIndex == 1) {
+            //点击按钮的响应事件；
+            NSDictionary * dict = [[NSDictionary alloc] initWithObjectsAndKeys:_c.courseDetailId,@"courseDetailId",_c.sclassId,@"id",@"1",@"courseType", nil];
+            
+            [[NetworkRequest sharedInstance] POST:DelecateCourse dict:dict succeed:^(id data) {
+                NSString * s = [NSString stringWithFormat:@"%@",[[data objectForKey:@"header"] objectForKey:@"message"]];
+                if ([s isEqualToString:@"成功"]) {
+                    [self.navigationController popViewControllerAnimated:YES];
+                }else{
+                    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"课程删除失败" message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: nil];
+                    [alertView show];
+                }
+                
+            } failure:^(NSError *error) {
+                UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"课程删除失败" message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: nil];
+                [alertView show];
+                
+            }];
+        }
+    }else if (alertView.tag == 1003){
+        if (buttonIndex == 1) {
+            
+            //点击按钮的响应事件；
+            NSDictionary * dict = [[NSDictionary alloc] initWithObjectsAndKeys:_c.courseDetailId,@"courseDetailId",@"1",@"courseType", nil];
+            
+            [[NetworkRequest sharedInstance] POST:DelecateCourse dict:dict succeed:^(id data) {
+                NSString * s = [NSString stringWithFormat:@"%@",[[data objectForKey:@"header"] objectForKey:@"message"]];
+                if ([s isEqualToString:@"成功"]) {
+                    [self.navigationController popViewControllerAnimated:YES];
+                }else{
+                    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"课程删除失败" message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: nil];
+                    [alertView show];
+                }
+                
+            } failure:^(NSError *error) {
+                UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"课程删除失败" message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: nil];
+                [alertView show];
+                
+            }];
+
         }
     }
 }

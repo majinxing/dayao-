@@ -170,7 +170,7 @@
     //    [_mySearchBar sizeToFit];
     //_mySearchBar.hidden = YES;  ///隐藏搜索框
     [self.view addSubview:self.mySearchBar];
-    [self.mySearchBar becomeFirstResponder];
+//    [self.mySearchBar becomeFirstResponder];
     [_mySearchBar setHidden:YES];
 }
 
@@ -317,7 +317,7 @@
             [alertView show];
         }];
     }else if (sender.tag == 2){
-        if ([UIUtils isBlankString:_school.departmentId]) {
+        if ([UIUtils isBlankString:[NSString stringWithFormat:@"%@",_school.departmentId]]) {
             UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"请先选择学校" message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: nil];
             [alertView show];
             return;
@@ -342,7 +342,7 @@
             [alertView show];
         }];
     }else if (sender.tag == 3){
-        if ([UIUtils isBlankString:_school.departmentId]) {
+        if ([UIUtils isBlankString:[NSString stringWithFormat:@"_school.departmentId"]]) {
             UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"请先选择专业" message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: nil];
             [alertView show];
             return;

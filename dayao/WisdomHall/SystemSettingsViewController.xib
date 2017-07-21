@@ -18,12 +18,9 @@
             <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="bg3" translatesAutoresizingMaskIntoConstraints="NO" id="Hts-Fp-cNL">
-                    <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
-                </imageView>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dTm-V5-zkP">
-                    <rect key="frame" x="5" y="245" width="365" height="50"/>
-                    <color key="backgroundColor" red="0.62325228235598895" green="0.94267109224823242" blue="1" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                    <rect key="frame" x="5" y="100" width="365" height="50"/>
+                    <color key="backgroundColor" red="1" green="0.50806224601745265" blue="0.44298734151814656" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="50" id="F4j-Y1-X4O"/>
                     </constraints>
@@ -36,17 +33,10 @@
             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
                 <constraint firstItem="dTm-V5-zkP" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="5" id="83M-mt-21a"/>
-                <constraint firstAttribute="bottom" secondItem="Hts-Fp-cNL" secondAttribute="bottom" id="Ls7-yG-UkW"/>
-                <constraint firstItem="Hts-Fp-cNL" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="Q6l-H7-tfG"/>
                 <constraint firstAttribute="trailing" secondItem="dTm-V5-zkP" secondAttribute="trailing" constant="5" id="TdP-Oj-WQz"/>
-                <constraint firstItem="Hts-Fp-cNL" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="Zmj-LB-xJa"/>
-                <constraint firstAttribute="trailing" secondItem="Hts-Fp-cNL" secondAttribute="trailing" id="e3V-ng-lBC"/>
-                <constraint firstItem="dTm-V5-zkP" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="245" id="gwg-j6-J9E"/>
+                <constraint firstItem="dTm-V5-zkP" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="100" id="gwg-j6-J9E"/>
             </constraints>
             <point key="canvasLocation" x="71.5" y="54.5"/>
         </view>
     </objects>
-    <resources>
-        <image name="bg3" width="480" height="720"/>
-    </resources>
 </document>

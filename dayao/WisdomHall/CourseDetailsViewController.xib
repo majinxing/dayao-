@@ -30,7 +30,7 @@
                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="bg3" translatesAutoresizingMaskIntoConstraints="NO" id="Op9-qN-oo9">
                     <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                 </imageView>
-                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="course" translatesAutoresizingMaskIntoConstraints="NO" id="qhZ-to-FJa">
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="index_user_left" translatesAutoresizingMaskIntoConstraints="NO" id="qhZ-to-FJa">
                     <rect key="frame" x="10" y="70" width="177.5" height="150"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="150" id="jMG-bP-pXQ"/>
@@ -151,6 +151,6 @@
     </objects>
     <resources>
         <image name="bg3" width="480" height="720"/>
-        <image name="course" width="424" height="300"/>
+        <image name="index_user_left" width="1200" height="800"/>
     </resources>
 </document>

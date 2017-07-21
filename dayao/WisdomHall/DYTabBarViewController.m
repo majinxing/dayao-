@@ -40,11 +40,30 @@
     // Do any additional setup after loading the view from its nib.
 }
 -(void)selectApp{
+    NSDictionary *infoDictionary = [[NSBundle mainBundle] infoDictionary];
+    
+//    CFShow((__bridge CFTypeRef)(infoDictionary));
+    
+
+    NSString *app_Version = [infoDictionary objectForKey:@"CFBundleShortVersionString"];
+    NSString *app_build = [infoDictionary objectForKey:@"CFBundleVersion"];
+    NSLog(@"%@-------%@",app_Version,app_build);
+    
     NSDictionary * dict = [[NSDictionary alloc] initWithObjectsAndKeys:@"2",@"type", nil];
     [[NetworkRequest sharedInstance] GET:QueryApp dict:dict succeed:^(id data) {
         NSLog(@"%@",data);
-//        UIAlertView * later = [[UIAlertView alloc] initWithTitle:nil message:@"请更新版本" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil];
-//        [later show];
+        NSString * str = [[data objectForKey:@"body"] objectForKey:@"version"];
+        NSString * q = [[data objectForKey:@"body"] objectForKey:@"isAutoUpdate"];
+        if (![[NSString stringWithFormat:@"%@",str] isEqualToString:app_build]) {
+            if ([[NSString stringWithFormat:@"%@",q] isEqualToString:@"0"]) {
+                UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"请更新最新版本" message:nil delegate:nil cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
+                [alertView show];
+            }else{
+                UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"请更新最新版本" message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil];
+                [alertView show];
+            }
+            
+        }
     } failure:^(NSError *error) {
         
     }];

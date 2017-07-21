@@ -271,13 +271,12 @@
 +(NSString *)compareTimeStartTime:(NSString *)startTime withExpireTime:(NSString *)expireTime {
     
     NSArray *ary = [startTime componentsSeparatedByString:@" "];
-    
     NSString * str = ary[1];
     NSArray * ary1 = [str componentsSeparatedByString:@":"];
     startTime = [NSString stringWithFormat:@"%@ %@:%@",ary[0],ary1[0],ary1[1]];
     
     NSArray *aryX = [expireTime componentsSeparatedByString:@" "];
-    NSString * strX = ary[1];
+    NSString * strX = aryX[1];
     NSArray * aryX1 = [strX componentsSeparatedByString:@":"];
     expireTime = [NSString stringWithFormat:@"%@ %@:%@",aryX[0],aryX1[0],aryX1[1]];
     
@@ -377,7 +376,7 @@
     [dict setObject:ary[7] forKey:@"firstDay"];
     
     if (m3 == 0) {
-        NSArray * aryT = [[NSArray alloc] initWithObjects:@{@"startWeek":[NSString stringWithFormat:@"%d",m1],@"endWeek":[NSString stringWithFormat:@"%d",m2]}, nil];
+        NSArray * aryT = [[NSArray alloc] initWithObjects:@{@"startWeek":[NSString stringWithFormat:@"%d",m1+1],@"endWeek":[NSString stringWithFormat:@"%d",m2+1]}, nil];
         [dict setObject:aryT forKey:@"courseWeekList"];
         
     }else if (m3 == 1){
@@ -416,8 +415,12 @@
     }
     [dict setObject:users.school forKey:@"universityId"];
     
-    
-    NSDictionary * w = [[NSDictionary alloc] initWithObjectsAndKeys:[NSString stringWithFormat:@"%d",week+1],@"weekDay",[NSString stringWithFormat:@"%d",class1+1],@"startTh",[NSString stringWithFormat:@"%d",class2+1],@"endTh",nil];
+    if (week == 6) {
+        week = 1;
+    }else{
+        week = week + 2;
+    }
+    NSDictionary * w = [[NSDictionary alloc] initWithObjectsAndKeys:[NSString stringWithFormat:@"%d",week],@"weekDay",[NSString stringWithFormat:@"%d",class1+1],@"startTh",[NSString stringWithFormat:@"%d",class2+1],@"endTh",nil];
     
     NSArray * aa = [[NSArray alloc] initWithObjects:w, nil];
     [dict setObject:aa forKey:@"courseTimeList"];
@@ -488,6 +491,28 @@
     }
 
     return ary;
+}
++ (NSString*)weekdayStringFromDate:(NSString *)startTime {
+    
+    NSDateFormatter *dateFormat = [[NSDateFormatter alloc] init];
+    // 时间格式,此处遇到过坑,建议时间HH大写,手机24小时进制和12小时禁止都可以完美格式化
+    [dateFormat setDateFormat:@"yyyy-MM-dd"];
+    
+    NSDate *inputDate = [dateFormat dateFromString:startTime];
+    
+    NSArray *weekdays = [NSArray arrayWithObjects: [NSNull null], @"星期天", @"星期一", @"星期二", @"星期三", @"星期四", @"星期五", @"星期六",nil];
+    
+    NSCalendar *calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSCalendarIdentifierGregorian];
+    
+    NSTimeZone *timeZone = [[NSTimeZone alloc] initWithName:@"Asia/Shanghai"];
+    
+    [calendar setTimeZone: timeZone];
+    
+    NSCalendarUnit calendarUnit = NSCalendarUnitWeekday;
+    
+    NSDateComponents *theComponents = [calendar components:calendarUnit fromDate:inputDate];
+    
+    return [weekdays objectAtIndex:theComponents.weekday];
 }
 
 @end

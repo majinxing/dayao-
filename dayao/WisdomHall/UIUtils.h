@@ -56,5 +56,7 @@
 +(NSMutableDictionary *)createTemporaryCourseWith:(NSMutableArray *)ary ClassRoom:(ClassRoomModel *)c joinClassPeople:(NSMutableArray *)joinPeopleAry week:(int)week class1:(int)class1 class2:(int)class2;
 //返回个人信息数组
 +(NSMutableArray *)returnAry:(UserModel *)user;
+//查询是否是周一
++ (NSString*)weekdayStringFromDate:(NSString *)startTime;
 @end
 

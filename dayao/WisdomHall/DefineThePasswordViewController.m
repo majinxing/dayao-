@@ -91,6 +91,9 @@
                     [self.navigationController popToViewController:controller animated:YES];
                 }
             }
+        }else if ([[[data objectForKey:@"header"] objectForKey:@"code"] isEqualToString:@"1009"]){
+            UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"手机号码已经注册" message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: nil];
+            [alertView show];
         }else{
             UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"注册失败" message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: nil];
             [alertView show];
@@ -256,7 +259,7 @@
         [s returnText:^(SchoolModel *returnText) {
             if (returnText) {
                 [self.view endEditing:YES];
-                if (![UIUtils isBlankString:returnText.schoolId]) {
+                if (![UIUtils isBlankString:[NSString stringWithFormat:@"%@",returnText.schoolId]]) {
                     _s = returnText;
                     [_textFileAry setObject:_s.schoolName atIndexedSubscript:textFile.tag];
                     [_tableView reloadData];
@@ -265,7 +268,7 @@
             }
         }];
     }else if (textFile.tag == 6){
-        if ([UIUtils isBlankString:_s.schoolId]) {
+        if ([UIUtils isBlankString:[NSString stringWithFormat:@"%@",_s.schoolId]]) {
             UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"请先选择学校" message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: nil];
             [alertView show];
         }else{
@@ -279,7 +282,7 @@
             [s returnText:^(SchoolModel *returnText) {
                 if (returnText) {
                     [self.view endEditing:YES];
-                    if (![UIUtils isBlankString:returnText.departmentId]) {
+                    if (![UIUtils isBlankString:[NSString stringWithFormat:@"%@",returnText.departmentId]]) {
                         _s.department = returnText.department;
                         _s.departmentId = returnText.departmentId;
                         [_textFileAry setObject:_s.department atIndexedSubscript:textFile.tag];
@@ -289,7 +292,7 @@
             }];
         }
     }else if (textFile.tag == 7){
-        if ([UIUtils isBlankString:_s.departmentId]) {
+        if ([UIUtils isBlankString:[NSString stringWithFormat:@"%@",_s.departmentId]]) {
             UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"请先选择院系" message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: nil];
             [alertView show];
         }else{
@@ -314,7 +317,7 @@
         }
         
     }else if (textFile.tag == 8){
-        if ([UIUtils isBlankString:_s.departmentId]) {
+        if ([UIUtils isBlankString:[NSString stringWithFormat:@"%@",_s.departmentId]]) {
             UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"请先选择专业" message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: nil];
             [alertView show];
         }else{
@@ -328,7 +331,7 @@
             [s returnText:^(SchoolModel *returnText) {
                 if (returnText) {
                     [self.view endEditing:YES];
-                    if (![UIUtils isBlankString:returnText.sclassId]) {
+                    if (![UIUtils isBlankString:[NSString stringWithFormat:@"%@",returnText.sclassId]]) {
                         _s.sclass = returnText.sclass;
                         _s.sclassId = returnText.sclassId;
                         [_textFileAry setObject:_s.sclass atIndexedSubscript:textFile.tag];

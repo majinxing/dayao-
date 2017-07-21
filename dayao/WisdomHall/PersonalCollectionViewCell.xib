@@ -17,7 +17,7 @@
                 <rect key="frame" x="0.0" y="0.0" width="388" height="549"/>
                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                 <subviews>
-                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="h" translatesAutoresizingMaskIntoConstraints="NO" id="vav-eX-VKs">
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="headImage" translatesAutoresizingMaskIntoConstraints="NO" id="vav-eX-VKs">
                         <rect key="frame" x="10" y="5" width="368" height="484"/>
                     </imageView>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="L7M-In-qda">
@@ -58,6 +58,6 @@
         </collectionViewCell>
     </objects>
     <resources>
-        <image name="h" width="650" height="464"/>
+        <image name="headImage" width="96" height="96"/>
     </resources>
 </document>

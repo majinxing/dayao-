@@ -28,8 +28,10 @@
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor whiteColor];
     [self setNavigationTitle];
+    
     // Do any additional setup after loading the view from its nib.
 }
+
 -(void)viewWillAppear:(BOOL)animated{
     [self.navigationController setNavigationBarHidden:NO animated:YES];
 }
@@ -131,7 +133,8 @@
             [self.navigationController pushViewController:redeFineVC animated:YES];
         }else
         {
-            NSLog(@"失败");
+            UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"请输入正确的验证码" message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: nil];
+            [alertView show];
         }
     }];
    

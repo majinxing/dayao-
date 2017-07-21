@@ -58,7 +58,8 @@
         _g.frame = CGRectMake(CGRectGetMaxX(_infoLabel.frame), 0,400, 60);
         _g.tag = 6;
     }else if (n == 7){
-        _textFile.placeholder = [NSString stringWithFormat:@"%@ yyyy-mm-dd",infoLabelText];
+        _g.frame = CGRectMake(CGRectGetMaxX(_infoLabel.frame), 0,400, 60);
+        _g.tag = 7;
     }else if (n == 8){
         _g.frame = CGRectMake(CGRectGetMaxX(_infoLabel.frame), 0,400, 60);
         _g.tag = 8;
@@ -85,7 +86,8 @@
         _g.frame = CGRectMake(CGRectGetMaxX(_infoLabel.frame), 0,400, 60);
         _g.tag = 6;
     }else if (n == 7){
-        _textFile.placeholder = [NSString stringWithFormat:@"%@ yyyy-mm-dd",infoLabelText];
+        _g.frame = CGRectMake(CGRectGetMaxX(_infoLabel.frame), 0,400, 60);
+        _g.tag = 7;
     }
     
     [_textFile addTarget:self action:@selector(textFileDidChange:) forControlEvents:UIControlEventEditingChanged];
