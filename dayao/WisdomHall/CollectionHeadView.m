@@ -56,7 +56,7 @@
     v.backgroundColor = [UIColor redColor];
     s.tag = 1000;
     UIImageView * i = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, APPLICATION_WIDTH, APPLICATION_HEIGHT/4)];
-    i.image = [UIImage imageNamed:@"bg1"];
+    i.image = [UIImage imageNamed:@"abc_adv_3"];
     [v addSubview:i];
 
     [s addSubview:v];

@@ -39,6 +39,9 @@
 @property (nonatomic,strong) NSMutableArray * classAry2;
 @property (nonatomic,strong) NSMutableArray * weekAry;
 
+@property (nonatomic,assign) int numberClass;//一天有多少节课
+
+@property (nonatomic,strong) UserModel * userModel;
 @end
 
 @implementation CreateCourseViewController
@@ -55,6 +58,7 @@
     _year = 0;
     _month = 0;
     _day = 0;
+    _userModel = [[Appsetting sharedInstance] getUsetInfo];
     
     _selectPeopleAry = [NSMutableArray arrayWithCapacity:1];
     _classAry1 = [NSMutableArray arrayWithCapacity:1];
@@ -74,8 +78,10 @@
     [self setNavigationTitle];
     [self addTabelView];
     [self keyboardNotification];
+    [self quertyNumberClass];
     // Do any additional setup after loading the view from its nib.
 }
+
 -(void)addTabelView{
     _labelAry = [[NSMutableArray alloc] initWithObjects:@"课堂封面",@"课  程  名",@"老师姓名",@"签到方式",@"上课的人",@"教      室", @"课程周期",@"第一周星期一日期",@"上课时间列表",nil];
     _textFileAry = [NSMutableArray arrayWithCapacity:4];
@@ -88,6 +94,14 @@
     _tabelView.dataSource = self;
     _tabelView.delegate = self;
     [self.view addSubview:_tabelView];
+}
+-(void)quertyNumberClass{
+    NSDictionary * dict = [[NSDictionary alloc] initWithObjectsAndKeys:_userModel.school,@" universityId", nil];
+    [[NetworkRequest sharedInstance] GET:QuertyClassNumber dict:dict succeed:^(id data) {
+        NSLog(@"%@",data);
+    } failure:^(NSError *error) {
+        
+    }];
 }
 /**
  * 键盘监听
@@ -136,9 +150,9 @@
         self.bView.backgroundColor = [UIColor blackColor];
         [self.bView addTarget:self action:@selector(outView) forControlEvents:UIControlEventTouchUpInside];
         self.bView.alpha = 0.5;
-        self.pickerView = [[UIView alloc] initWithFrame:CGRectMake(0, APPLICATION_HEIGHT - 150 - 30, APPLICATION_WIDTH, 150 + 30)];
+        self.pickerView = [[UIView alloc] initWithFrame:CGRectMake(0, APPLICATION_HEIGHT - 200 - 30, APPLICATION_WIDTH, 200 + 30)];
         
-        UIPickerView * pickerViewD = [[UIPickerView alloc] initWithFrame:CGRectMake(0.0,30,APPLICATION_WIDTH,150)];
+        UIPickerView * pickerViewD = [[UIPickerView alloc] initWithFrame:CGRectMake(0.0,30,APPLICATION_WIDTH,200)];
         pickerViewD.backgroundColor=[UIColor whiteColor];
         pickerViewD.delegate = self;
         pickerViewD.dataSource =  self;
@@ -271,7 +285,7 @@
         if (component == 0) {
             return 7;
         }else if (component == 1 || component == 2){
-            return 12;
+            return 11;
         }
     }else if (_temp == 7){
         if (component == 0) {

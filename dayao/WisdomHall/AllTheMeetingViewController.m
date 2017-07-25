@@ -151,35 +151,34 @@ static NSString * cellIdentifier = @"cellIdentifier";
 }
 -(void)getSelfCreateMeetingList:(NSInteger)page{
     UserModel * user = [[Appsetting sharedInstance] getUsetInfo];
-    if ([[NSString stringWithFormat:@"%@",user.identity] isEqualToString:@"0"]) {
-        
-        NSDictionary * dict = [[NSDictionary alloc] initWithObjectsAndKeys:_userModel.peopleId,@"userId",[UIUtils getTime],@"startTime",@"",@"endTime",[NSString stringWithFormat:@"%ld",(long)page],@"start",nil];
-        [[NetworkRequest sharedInstance] GET:QueryMeeting dict:dict succeed:^(id data) {
-//            NSLog(@"succeed%@",data);
-            NSArray * d = [[data objectForKey:@"body"] objectForKey:@"list"];
-            for (int i = 0; i<d.count; i++) {
-                MeetingModel * m = [[MeetingModel alloc] init];
-                [m setMeetingInfoWithDict:d[i]];
-                if (_meetingModelAry.count>0) {
-                    for (int j = 0; j<_meetingModelAry.count; j++) {
-                        MeetingModel * n = _meetingModelAry[j];
-                        if ([[NSString stringWithFormat:@"%@",n.meetingId] isEqualToString:[NSString stringWithFormat:@"%@",m.meetingId]]) {
-                            break;
-                        }else if(j == (_meetingModelAry.count - 1)){
-                            [_meetingModelAry addObject:m];
-                        }
+    
+    NSDictionary * dict = [[NSDictionary alloc] initWithObjectsAndKeys:_userModel.peopleId,@"userId",[UIUtils getTime],@"startTime",@"",@"endTime",[NSString stringWithFormat:@"%ld",(long)page],@"start",nil];
+    [[NetworkRequest sharedInstance] GET:QueryMeeting dict:dict succeed:^(id data) {
+        //            NSLog(@"succeed%@",data);
+        NSArray * d = [[data objectForKey:@"body"] objectForKey:@"list"];
+        for (int i = 0; i<d.count; i++) {
+            MeetingModel * m = [[MeetingModel alloc] init];
+            [m setMeetingInfoWithDict:d[i]];
+            if (_meetingModelAry.count>0) {
+                for (int j = 0; j<_meetingModelAry.count; j++) {
+                    MeetingModel * n = _meetingModelAry[j];
+                    if ([[NSString stringWithFormat:@"%@",n.meetingId] isEqualToString:[NSString stringWithFormat:@"%@",m.meetingId]]) {
+                        break;
+                    }else if(j == (_meetingModelAry.count - 1)){
+                        [_meetingModelAry addObject:m];
                     }
-                }else{
-                    [_meetingModelAry addObject:m];
                 }
-                
-              
+            }else{
+                [_meetingModelAry addObject:m];
             }
-            [_collection reloadData];
-        } failure:^(NSError *error) {
-            NSLog(@"失败%@",error);
-        }];
-    }
+            
+            
+        }
+        [_collection reloadData];
+    } failure:^(NSError *error) {
+        NSLog(@"失败%@",error);
+    }];
+    
 }
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
@@ -215,7 +214,7 @@ static NSString * cellIdentifier = @"cellIdentifier";
     mInfo.hidesBottomBarWhenPushed = YES;
     mInfo.meetingModel = _meetingModelAry[indexPath.row];
     [self.navigationController pushViewController:mInfo animated:YES];
-     self.hidesBottomBarWhenPushed=NO;
+    self.hidesBottomBarWhenPushed=NO;
     
 }
 //有了初次点击再走这个
@@ -226,7 +225,7 @@ static NSString * cellIdentifier = @"cellIdentifier";
     mInfo.hidesBottomBarWhenPushed = YES;
     mInfo.meetingModel = _meetingModelAry[indexPath.row];
     [self.navigationController pushViewController:mInfo animated:YES];
-     self.hidesBottomBarWhenPushed=NO;
+    self.hidesBottomBarWhenPushed=NO;
     
 }
 #pragma mark UICollectionViewDelegateFlowLayout

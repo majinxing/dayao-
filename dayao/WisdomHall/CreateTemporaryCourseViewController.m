@@ -136,9 +136,9 @@
         self.bView.backgroundColor = [UIColor blackColor];
         [self.bView addTarget:self action:@selector(outView) forControlEvents:UIControlEventTouchUpInside];
         self.bView.alpha = 0.5;
-        self.pickerView = [[UIView alloc] initWithFrame:CGRectMake(0, APPLICATION_HEIGHT - 150 - 30, APPLICATION_WIDTH, 150 + 30)];
+        self.pickerView = [[UIView alloc] initWithFrame:CGRectMake(0, APPLICATION_HEIGHT - 200 - 30, APPLICATION_WIDTH, 200 + 30)];
         
-        UIPickerView * pickerViewD = [[UIPickerView alloc] initWithFrame:CGRectMake(0.0,30,APPLICATION_WIDTH,150)];
+        UIPickerView * pickerViewD = [[UIPickerView alloc] initWithFrame:CGRectMake(0.0,30,APPLICATION_WIDTH,200)];
         pickerViewD.backgroundColor=[UIColor whiteColor];
         pickerViewD.delegate = self;
         pickerViewD.dataSource =  self;
@@ -185,7 +185,7 @@
             [_textFileAry setObject:@"头像签到" atIndexedSubscript:3];
         }
     }else if (_temp == 6){
-        [_textFileAry setObject:[NSString stringWithFormat:@"周%d-第%d节-第%d节",_week+1,_class1+1,_class2+1] atIndexedSubscript:6];
+        [_textFileAry setObject:[NSString stringWithFormat:@"第%d节-第%d节",_class1+1,_class2+1] atIndexedSubscript:6];
     }else if (_temp == 7){
         
         NSString * month;
@@ -217,7 +217,7 @@
     if (_temp == 3) {
         return 1;
     }else if (_temp == 6){
-        return 3;
+        return 2;
     }else if (_temp == 7){
         return 3;
     }
@@ -228,11 +228,7 @@
     if (_temp == 3) {
         return 2;
     }else if (_temp == 6){
-        if (component == 0) {
-            return 7;
-        }else if (component == 1 || component == 2){
-            return 12;
-        }
+        return 11;
     }else if (_temp == 7){
         if (component == 0) {
             return 12;
@@ -255,11 +251,9 @@
             return @"照片签到";
         }
     }else if(_temp == 6){
-        if (component == 0) {
-            return _weekAry[row];
-        }else if (component == 1){
+       if (component == 0){
             return _classAry1[row];
-        }else if (component == 2){
+        }else if (component == 1){
             return _classAry2[row];
         }
     }else if (_temp == 7){
@@ -282,11 +276,9 @@
             _n = 0;
         }
     }else if (_temp == 6){
-        if (component == 0) {
-            _week = (int) row;
-        }else if (component == 1){
+        if (component == 0){
             _class1 = (int)row;
-        }else if (component == 2){
+        }else if (component == 1){
             _class2 = (int)row;
         }
     }else if (_temp == 7){

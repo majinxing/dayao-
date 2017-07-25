@@ -12,8 +12,8 @@
 #import "PersonalCenterViewController.h"
 #import "AllTheMeetingViewController.h"
 #import "DYHeader.h"
-@interface DYTabBarViewController ()
-
+@interface DYTabBarViewController ()<UIAlertViewDelegate>
+@property (nonatomic,copy)NSString * url;
 @end
 
 @implementation DYTabBarViewController
@@ -42,9 +42,9 @@
 -(void)selectApp{
     NSDictionary *infoDictionary = [[NSBundle mainBundle] infoDictionary];
     
-//    CFShow((__bridge CFTypeRef)(infoDictionary));
+    //    CFShow((__bridge CFTypeRef)(infoDictionary));
     
-
+    
     NSString *app_Version = [infoDictionary objectForKey:@"CFBundleShortVersionString"];
     NSString *app_build = [infoDictionary objectForKey:@"CFBundleVersion"];
     NSLog(@"%@-------%@",app_Version,app_build);
@@ -56,11 +56,26 @@
         NSString * q = [[data objectForKey:@"body"] objectForKey:@"isAutoUpdate"];
         if (![[NSString stringWithFormat:@"%@",str] isEqualToString:app_build]) {
             if ([[NSString stringWithFormat:@"%@",q] isEqualToString:@"0"]) {
+                _url = [[data objectForKey:@"body"] objectForKey:@"downloadUrl"];
+
                 UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"请更新最新版本" message:nil delegate:nil cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
+                alertView.delegate = self;
+                alertView.tag = 1;
                 [alertView show];
+                
             }else{
-                UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"请更新最新版本" message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil];
-                [alertView show];
+                _url = [[data objectForKey:@"body"] objectForKey:@"downloadUrl"];
+                if ([UIUtils isBlankString:_url]) {
+                    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"请更新最新版本" message:nil delegate:nil cancelButtonTitle:nil otherButtonTitles:nil];
+                    alertView.delegate = self;
+                    alertView.tag = 3;
+                    [alertView show];
+                }else{
+                    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"请更新最新版本" message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil];
+                    alertView.delegate = self;
+                    alertView.tag = 2;
+                    [alertView show];
+                }
             }
             
         }
@@ -68,7 +83,23 @@
         
     }];
 }
-
+#pragma mark Alter
+-(void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
+    
+    if (alertView.tag == 2) {
+        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:_url]];
+        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"请更新最新版本" message:nil delegate:nil cancelButtonTitle:nil otherButtonTitles:nil];
+//        alertView.delegate = self;
+//        alertView.tag = 3;
+        [alertView show];
+    }else if(alertView.tag == 1){
+        if (buttonIndex == 1) {
+             [[UIApplication sharedApplication] openURL:[NSURL URLWithString:_url]];
+        }
+        
+    }
+    
+}
 /**
  *  添加子控制器
  *

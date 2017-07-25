@@ -58,7 +58,7 @@
 #define CONTACT_TABLE_NAME     @"contactTable"//试卷和题目联系的表格
 
 //接口116.62.161.250:8080 192.168.1.81:8080
-#define BaseURL @"http://116.62.161.250:8080/"
+#define BaseURL @"http://api.dayaokeji.com/"
 
 #define Login            @"course/user/login"       //登录
 
@@ -74,6 +74,8 @@
 
 #define CreateClass      @"course/course/create"    //创建教室
 
+#define QuertyClassNumber    @"course/course/maxnum" //查询教室节数
+
 #define CreateCoures     @"course/course/create/cycle" //创建课堂
 
 #define CreateTemporaryCourse @"course/course/create/once" //创建临时课堂
@@ -88,16 +90,18 @@
 
 #define MeetingSign      @"course/meeting/sign"     //会议签到
 
-#define MeetingDelect  @"course/meeting/delete"    //会议删除
+#define MeetingDelect    @"course/meeting/delete"    //会议删除
 
 #define ClassSign        @"course/course/sign"       //课程签到
 
 #define ClassSign        @"course/course/sign"      //课程签到
 
-#define QueryPeople     @"course/user/list"         //人员条件查询
+#define QueryPeople      @"course/user/list"         //人员条件查询
 
-#define QuerySelfInfo   @"course/user/detail"       //查询个人信息
+#define QuerySelfInfo    @"course/user/detail"       //查询个人信息
 
 #define ChangeSelfInfo   @"course/user/update"       //修改个人信息
 
 #define QueryApp         @"course/app/select"         //查询版本号
+
+#define QuertPeople      @"course/meeting/member"

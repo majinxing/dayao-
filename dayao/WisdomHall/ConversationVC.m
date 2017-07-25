@@ -369,9 +369,10 @@
     if (self.navigationController.viewControllers.count>1) {
         [self.navigationController popViewControllerAnimated:YES];
     }else{
-        
-        DYTabBarViewController *rootVC = [DYTabBarViewController sharedInstance];
-        [UIApplication sharedApplication].keyWindow.rootViewController = rootVC;
+        [self.navigationController popViewControllerAnimated:YES];
+
+//        DYTabBarViewController *rootVC = [DYTabBarViewController sharedInstance];
+//        [UIApplication sharedApplication].keyWindow.rootViewController = rootVC;
     }
 
     //[self.navigationController popViewControllerAnimated:YES];
@@ -430,7 +431,12 @@
 
 -(void)dealloc{
     [[UIApplication sharedApplication] setIdleTimerDisabled:NO];//休眠关闭
-    [self hangupBtnClick];
+    
+    if (_callSession) {
+        [[EMClient sharedClient].callManager endCall:_callSession.callId reason:EMCallEndReasonDecline];
+        _callSession = nil;
+    }
+    
     if (_callSession) {
         [[EMClient sharedClient].callManager endCall:_callSession.callId reason:EMCallEndReasonHangup];
     }

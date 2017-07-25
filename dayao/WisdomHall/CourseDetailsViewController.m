@@ -400,9 +400,12 @@
 
 - (void)shareViewButtonClick:(NSString *)platform
 {
-    UIAlertView * later = [[UIAlertView alloc] initWithTitle:nil message:@"未完待续" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil];
-    [later show];
-    return;
+    if (![platform isEqualToString:InteractionType_Responder]) {
+        UIAlertView * later = [[UIAlertView alloc] initWithTitle:nil message:@"未完待续" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil];
+        [later show];
+        return;
+    }
+  
     if ([platform isEqualToString:InteractionType_Test]){
         NSLog(@"测试");
         [_interaction hide];
