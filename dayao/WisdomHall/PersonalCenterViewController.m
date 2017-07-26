@@ -54,7 +54,7 @@
     if (section == 0) {
         return 1;
     }else if (section == 1){
-        return 5;
+        return 4;
     }
     return 0;
 }
@@ -89,9 +89,6 @@
             [self.navigationController pushViewController:systemVC animated:YES];
             self.hidesBottomBarWhenPushed = NO;
         }else if (indexPath.row == 3){
-            UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"暂无更新" message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: nil];
-            [alertView show];
-        }else if (indexPath.row == 4){
             UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"暂无简介" message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: nil];
             [alertView show];
         }

@@ -10,6 +10,7 @@
 #import <Hyphenate/Hyphenate.h>
 
 @interface ChatHelper : NSObject
+@property (nonatomic,copy) NSString * outOrIn;
 + (instancetype)shareHelper;
 -(EMMessage *)sendTextMessage:(NSString *)text withReceiver:(NSString *)receiver;//发送文字消息
 -(float)returnMessageInfoHeight:(EMMessage *)message;//提前计算信息高度

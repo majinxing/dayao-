@@ -45,6 +45,7 @@ static dispatch_once_t onceToken;
     self = [super init];
     if (self) {
         [self initHelper];
+        _outOrIn = @"In";
     }
     return self;
 }
@@ -62,21 +63,25 @@ static dispatch_once_t onceToken;
     
 }
 -(void)Hyregistered{
-    //环信注册
-    EMOptions  * options = [EMOptions optionsWithAppkey:@"1161170505178076#college-sign"];
-    [[EMClient sharedClient] initializeSDKWithOptions:options];
-    UserModel * user = [[Appsetting sharedInstance] getUsetInfo];
     
-    EMError *error = [[EMClient sharedClient] registerWithUsername:[NSString stringWithFormat:@"%@%@",user.school,user.studentId] password:user.userPassword];
-    if (error==nil) {
-        NSLog(@"注册成功");
-    }
-    EMError *error2 = [[EMClient sharedClient] loginWithUsername:[NSString stringWithFormat:@"%@%@",user.school,user.studentId] password:user.userPassword];
-    if (!error2) {
-        NSLog(@"登录成功");
-    }else{
-        NSLog(@"环信登录失败%@",error);
-    }
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        //环信注册
+        EMOptions  * options = [EMOptions optionsWithAppkey:@"1161170505178076#college-sign"];
+        [[EMClient sharedClient] initializeSDKWithOptions:options];
+        UserModel * user = [[Appsetting sharedInstance] getUsetInfo];
+        
+        EMError *error = [[EMClient sharedClient] registerWithUsername:[NSString stringWithFormat:@"%@%@",user.school,user.studentId] password:user.userPassword];
+        if (error==nil) {
+            NSLog(@"注册成功");
+        }
+        EMError *error2 = [[EMClient sharedClient] loginWithUsername:[NSString stringWithFormat:@"%@%@",user.school,user.studentId] password:user.userPassword];
+        if (!error2) {
+            NSLog(@"登录成功");
+        }else{
+            NSLog(@"环信登录失败%@",error);
+        }
+    });
+
 }
 /*!
  @method
@@ -131,6 +136,12 @@ static dispatch_once_t onceToken;
             
             // 2.执行通知
             [[UIApplication sharedApplication] scheduleLocalNotification:localNote];
+            
+            if ([self.outOrIn isEqualToString:@"In"]) {
+                UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:strUrl message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: nil];
+                [alertView show];
+            }
+            
         }
     }
 }
@@ -172,6 +183,7 @@ static dispatch_once_t onceToken;
             NSLog(@"失败");
         }
     }];
+    
     return message;
 }
 -(float)returnMessageInfoHeight:(EMMessage *)message{

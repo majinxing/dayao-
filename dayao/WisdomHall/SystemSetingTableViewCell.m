@@ -18,7 +18,7 @@
 - (void)awakeFromNib {
     [super awakeFromNib];
     if (!_textAry) {
-      _textAry = [NSArray arrayWithObjects:@"个人资料", @"学校通知",@"系统设置",@"检测更新",@"关于我们",nil];
+      _textAry = [NSArray arrayWithObjects:@"个人资料", @"学校通知",@"系统设置",@"关于我们",nil];
     }
     _user = [[Appsetting sharedInstance] getUsetInfo];
     // Initialization code
