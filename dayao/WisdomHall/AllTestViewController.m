@@ -103,7 +103,7 @@
             [_textArray addObject:t];
         }
     }
-    [_db class];
+    [_db close];
 }
 #pragma mark UITableViewdelegate
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{

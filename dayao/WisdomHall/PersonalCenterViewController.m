@@ -76,12 +76,12 @@
             self.hidesBottomBarWhenPushed = NO;
         }
         else if (indexPath.row == 1){
-            UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"暂无通知" message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: nil];
-            [alertView show];
-//            NoticeViewController * noticeVC = [[NoticeViewController alloc] init];
-//            self.hidesBottomBarWhenPushed = YES;
-//            [self.navigationController pushViewController:noticeVC animated:YES];
-//            self.hidesBottomBarWhenPushed = NO;
+//            UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"暂无通知" message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: nil];
+//            [alertView show];
+            NoticeViewController * noticeVC = [[NoticeViewController alloc] init];
+            self.hidesBottomBarWhenPushed = YES;
+            [self.navigationController pushViewController:noticeVC animated:YES];
+            self.hidesBottomBarWhenPushed = NO;
         }
         else if (indexPath.row == 2) {
             SystemSettingsViewController * systemVC = [[SystemSettingsViewController alloc] init];

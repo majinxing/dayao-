@@ -34,7 +34,7 @@
     _textFile.delegate = self;
     if (n==5||n==8) {
         _textFile.keyboardType = UIKeyboardTypeNumberPad;
-    }else if (n==4){
+    }else if (n==3){
         _g.frame = CGRectMake(CGRectGetMaxX(_infoLabel.frame), 0,400, 40);
     }
     [_textFile addTarget:self action:@selector(textFileDidChange:) forControlEvents:UIControlEventEditingChanged];

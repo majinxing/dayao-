@@ -9,5 +9,5 @@
 #import <UIKit/UIKit.h>
 
 @interface NoticeTableViewCell : UITableViewCell
-
+-(void)setContentView:(NSString *)time withNoticContent:(NSString *)conten;
 @end

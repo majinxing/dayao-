@@ -57,24 +57,40 @@
 }
 -(void)saveBtnPressed{
     NSMutableDictionary * dict = [[NSMutableDictionary alloc] init];
-    NSArray * ary = [[NSArray alloc] initWithObjects:@"name",@"password",@"p",@"universityId",@"type",@"workNo",@"facultyId",@"majorId",@"classId",nil];
+    NSArray * ary = [[NSArray alloc] initWithObjects:@"name",@"password",@"p",@"type",@"workNo",@"universityId",@"facultyId",@"majorId",@"classId",nil];
     for (int i = 0 ; i<ary.count; i++) {
         if ([_textFileAry[i] isEqualToString:@""]) {
-            UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"请填写完整" message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: nil];
-            [alertView show];
-            return;
+            if ([_textFileAry[3] isEqualToString:@"老师"]) {
+                if (i<=6) {
+                    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"请填写完整" message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: nil];
+                    [alertView show];
+                    return;
+                }
+            }else{
+                UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"请填写完整" message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: nil];
+                [alertView show];
+                return;
+            }
         }else if (i == 2){
             [dict setObject:_phoneNumber forKey:@"phone"];
-        }else if(i == 3){
+        }else if(i == 5){
             [dict setObject:_s.schoolId forKey:@"universityId"];
-        }else if (i == 4){
+        }else if (i == 3){
             [dict setObject:[NSString stringWithFormat:@"%d",_n] forKey:@"type"];
         }else if(i == 6){
             [dict setObject:[NSString stringWithFormat:@"%@",_s.departmentId] forKey:@"facultyId"];
         }else if (i == 7){
-            [dict setObject:[NSString stringWithFormat:@"%@",_s.majorId] forKey:@"majorId"];
+            if ([UIUtils isBlankString:[NSString stringWithFormat:@"%@",_s.majorId]]) {
+                [dict setObject:[NSString stringWithFormat:@"0"] forKey:@"majorId"];
+            }else{
+                [dict setObject:[NSString stringWithFormat:@"%@",_s.majorId] forKey:@"majorId"];
+            }
         }else if (i == 8){
-            [dict setObject:[NSString stringWithFormat:@"%@",_s.sclassId] forKey:@"classId"];
+            if ([UIUtils isBlankString:[NSString stringWithFormat:@"%@",_s.sclassId]]) {
+                [dict setObject:[NSString stringWithFormat:@"0"] forKey:@"classId"];
+            }else{
+                [dict setObject:[NSString stringWithFormat:@"%@",_s.sclassId] forKey:@"classId"];
+            }
         } else{
             [dict setObject:_textFileAry[i] forKey:ary[i]];
         }
@@ -100,14 +116,15 @@
         }
         
     } failure:^(NSError *error) {
-        NSLog(@"失败：%@",error);
+        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"注册失败" message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: nil];
+        [alertView show];
     }];
 }
 -(void)viewWillAppear:(BOOL)animated{
     [self.navigationController setNavigationBarHidden:NO animated:YES];
 }
 -(void)addTableView{
-    _labelAry = [[NSMutableArray alloc] initWithObjects:@"用  户  名",@"密      码",@"确认密码",@"学      校",@"身      份",@"工号/学号",@"院      系",@"专      业",@"班      级", nil];
+    _labelAry = [[NSMutableArray alloc] initWithObjects:@"用  户  名",@"密      码",@"确认密码",@"身      份",@"工号/学号",@"学      校",@"院      系",@"专      业",@"班      级", nil];
     _textFileAry = [NSMutableArray arrayWithCapacity:4];
     for (int i = 0 ; i<10; i++) {
         [_textFileAry addObject:@""];
@@ -140,9 +157,9 @@
         self.bView.backgroundColor = [UIColor blackColor];
         [self.bView addTarget:self action:@selector(outView) forControlEvents:UIControlEventTouchUpInside];
         self.bView.alpha = 0.5;
-        self.pickerView = [[UIView alloc] initWithFrame:CGRectMake(0, APPLICATION_HEIGHT - 150 - 30, APPLICATION_WIDTH, 150 + 30)];
+        self.pickerView = [[UIView alloc] initWithFrame:CGRectMake(0, APPLICATION_HEIGHT - 200 - 30, APPLICATION_WIDTH, 200 + 30)];
         
-        UIPickerView * pickerViewD = [[UIPickerView alloc] initWithFrame:CGRectMake(0.0,30,APPLICATION_WIDTH,150)];
+        UIPickerView * pickerViewD = [[UIPickerView alloc] initWithFrame:CGRectMake(0.0,30,APPLICATION_WIDTH,200)];
         pickerViewD.backgroundColor=[UIColor whiteColor];
         pickerViewD.delegate = self;
         pickerViewD.dataSource =  self;
@@ -180,9 +197,9 @@
     [self.bView removeFromSuperview];
     [self.pickerView removeFromSuperview];
     if (_n==0) {
-        [_textFileAry setObject:@"老师" atIndexedSubscript:4];
+        [_textFileAry setObject:@"老师" atIndexedSubscript:3];
     }else if(_n==1){
-        [_textFileAry setObject:@"学生" atIndexedSubscript:4];
+        [_textFileAry setObject:@"学生" atIndexedSubscript:3];
     }
     [_tableView reloadData];
 }
@@ -250,7 +267,7 @@
     [_textFileAry setObject:textFile.text atIndexedSubscript:textFile.tag];
 }
 -(void)textFieldDidBeginEditingDPTableViewCellDelegate:(UITextField *)textFile{
-    if (textFile.tag == 3) {
+    if (textFile.tag == 5) {
         [textFile endEditing:YES];
         SelectSchoolViewController * s = [[SelectSchoolViewController alloc] init];
         s.selectType = SelectSchool;
@@ -311,6 +328,11 @@
                         _s.majorId = returnText.majorId;
                         [_textFileAry setObject:_s.major atIndexedSubscript:textFile.tag];
                         [_tableView reloadData];
+                    }else{
+                        _s.major = @"";
+                        _s.majorId = @"";
+                        [_textFileAry setObject:_s.major atIndexedSubscript:textFile.tag];
+                        [_tableView reloadData];
                     }
                 }
             }];
@@ -334,6 +356,11 @@
                     if (![UIUtils isBlankString:[NSString stringWithFormat:@"%@",returnText.sclassId]]) {
                         _s.sclass = returnText.sclass;
                         _s.sclassId = returnText.sclassId;
+                        [_textFileAry setObject:_s.sclass atIndexedSubscript:textFile.tag];
+                        [_tableView reloadData];
+                    }else{
+                        _s.sclass = @"";
+                        _s.sclassId = @"";
                         [_textFileAry setObject:_s.sclass atIndexedSubscript:textFile.tag];
                         [_tableView reloadData];
                     }

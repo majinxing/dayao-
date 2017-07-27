@@ -134,6 +134,9 @@
     
     [[NetworkRequest sharedInstance] POST:CreateCoures dict:dict succeed:^(id data) {
         NSLog(@"%@",data);
+        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"创建成功" message:nil delegate:nil cancelButtonTitle:nil otherButtonTitles: nil];
+        [alertView show];
+        [alertView setHidden:YES];
         [self.navigationController popViewControllerAnimated:YES];
     } failure:^(NSError *error) {
         NSLog(@"%@",error);

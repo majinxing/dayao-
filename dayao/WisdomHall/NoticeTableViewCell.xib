@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="12118" systemVersion="16E195" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="12121" systemVersion="16E195" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
-        <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12086"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12089"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -19,14 +18,14 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="text" translatesAutoresizingMaskIntoConstraints="NO" id="xiz-gV-Bsx">
-                        <rect key="frame" x="10" y="5" width="20" height="20"/>
+                        <rect key="frame" x="10" y="8" width="20" height="20"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="20" id="S7C-fJ-Z2z"/>
                             <constraint firstAttribute="width" constant="20" id="TfJ-dI-1ks"/>
                         </constraints>
                     </imageView>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="暑假放假通知" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kYN-Xf-HeA">
-                        <rect key="frame" x="35" y="5" width="245" height="25"/>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="  通知" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kYN-Xf-HeA">
+                        <rect key="frame" x="35" y="6" width="175" height="25"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="25" id="UBE-p1-753"/>
                         </constraints>
@@ -34,48 +33,46 @@
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="提前购票，注意安全" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ubM-eB-YZx">
-                        <rect key="frame" x="25" y="40" width="325" height="48.5"/>
-                        <fontDescription key="fontDescription" type="system" pointSize="12"/>
-                        <nil key="textColor"/>
-                        <nil key="highlightedColor"/>
-                    </label>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="2017-05-1" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="MB2-JG-ww3">
-                        <rect key="frame" x="285" y="5" width="70" height="25"/>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="2017-05-1" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="MB2-JG-ww3">
+                        <rect key="frame" x="215" y="5" width="130" height="25"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="25" id="W3F-U2-oqe"/>
                         </constraints>
-                        <fontDescription key="fontDescription" type="system" pointSize="10"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="13"/>
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="详情&gt;&gt;" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="F92-Za-zxw">
-                        <rect key="frame" x="25" y="93.5" width="315" height="22"/>
-                        <fontDescription key="fontDescription" type="system" pointSize="12"/>
-                        <nil key="textColor"/>
-                        <nil key="highlightedColor"/>
-                    </label>
+                    <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" scrollEnabled="NO" editable="NO" text="注意安全" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2kQ-ms-EOJ">
+                        <rect key="frame" x="20" y="45" width="330" height="63"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                        <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                        <connections>
+                            <outlet property="delegate" destination="KGk-i7-Jjw" id="mvp-OP-B06"/>
+                        </connections>
+                    </textView>
                 </subviews>
                 <constraints>
-                    <constraint firstAttribute="bottom" secondItem="F92-Za-zxw" secondAttribute="bottom" constant="3" id="0kc-ds-15N"/>
-                    <constraint firstItem="xiz-gV-Bsx" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="5" id="F56-2L-hxT"/>
-                    <constraint firstAttribute="trailing" secondItem="kYN-Xf-HeA" secondAttribute="trailing" constant="80" id="GNR-hX-k8E"/>
+                    <constraint firstAttribute="bottom" secondItem="2kQ-ms-EOJ" secondAttribute="bottom" constant="10" id="5KN-w6-GEV"/>
+                    <constraint firstItem="xiz-gV-Bsx" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="8" id="F56-2L-hxT"/>
+                    <constraint firstAttribute="trailing" secondItem="2kQ-ms-EOJ" secondAttribute="trailing" constant="10" id="Fhj-wy-BbR"/>
+                    <constraint firstAttribute="trailing" secondItem="kYN-Xf-HeA" secondAttribute="trailing" constant="150" id="GNR-hX-k8E"/>
                     <constraint firstItem="kYN-Xf-HeA" firstAttribute="leading" secondItem="xiz-gV-Bsx" secondAttribute="trailing" constant="5" id="Jt8-hL-G8y"/>
-                    <constraint firstItem="kYN-Xf-HeA" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="5" id="LHF-os-os3"/>
-                    <constraint firstAttribute="bottom" secondItem="ubM-eB-YZx" secondAttribute="bottom" constant="30" id="LS0-4u-NXJ"/>
+                    <constraint firstItem="kYN-Xf-HeA" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="6" id="LHF-os-os3"/>
                     <constraint firstItem="xiz-gV-Bsx" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="10" id="P1o-wt-5YV"/>
-                    <constraint firstItem="F92-Za-zxw" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="25" id="SSn-gI-BtO"/>
-                    <constraint firstAttribute="trailing" secondItem="MB2-JG-ww3" secondAttribute="trailing" constant="5" id="e8M-GL-cLH"/>
-                    <constraint firstAttribute="trailing" secondItem="ubM-eB-YZx" secondAttribute="trailing" constant="10" id="mj2-kH-eEf"/>
-                    <constraint firstAttribute="trailing" secondItem="F92-Za-zxw" secondAttribute="trailing" constant="20" id="pFW-L7-OoC"/>
+                    <constraint firstItem="2kQ-ms-EOJ" firstAttribute="top" secondItem="MB2-JG-ww3" secondAttribute="bottom" constant="15" id="Zk5-R4-J65"/>
+                    <constraint firstAttribute="trailing" secondItem="MB2-JG-ww3" secondAttribute="trailing" constant="15" id="e8M-GL-cLH"/>
+                    <constraint firstItem="2kQ-ms-EOJ" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="20" id="gFF-L4-tMu"/>
                     <constraint firstItem="MB2-JG-ww3" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="5" id="vd9-NF-y40"/>
                     <constraint firstItem="MB2-JG-ww3" firstAttribute="leading" secondItem="kYN-Xf-HeA" secondAttribute="trailing" constant="5" id="wkd-Jc-tRc"/>
-                    <constraint firstItem="F92-Za-zxw" firstAttribute="top" secondItem="ubM-eB-YZx" secondAttribute="bottom" constant="5" id="y3S-Lr-lia"/>
-                    <constraint firstItem="ubM-eB-YZx" firstAttribute="top" secondItem="kYN-Xf-HeA" secondAttribute="bottom" constant="10" id="y5V-k9-XT2"/>
-                    <constraint firstItem="ubM-eB-YZx" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="25" id="ykL-f1-vHI"/>
                 </constraints>
             </tableViewCellContentView>
-            <point key="canvasLocation" x="-57" y="28.5"/>
+            <connections>
+                <outlet property="noteContent" destination="2kQ-ms-EOJ" id="P0z-yc-NyS"/>
+                <outlet property="noticeName" destination="kYN-Xf-HeA" id="cZW-Xt-H8i"/>
+                <outlet property="noticeTime" destination="MB2-JG-ww3" id="Y4N-Ix-eXH"/>
+            </connections>
+            <point key="canvasLocation" x="-126" y="10.5"/>
         </tableViewCell>
     </objects>
     <resources>

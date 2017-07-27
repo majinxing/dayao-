@@ -195,6 +195,7 @@
 		8BE9139D1EEFB7C500000282 /* UIViewController+HUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BE9139C1EEFB7C500000282 /* UIViewController+HUD.m */; };
 		8BE913A31EEFB80000000282 /* MBProgressHUD+Add.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BE913A01EEFB80000000282 /* MBProgressHUD+Add.m */; };
 		8BE913A41EEFB80000000282 /* MBProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BE913A21EEFB80000000282 /* MBProgressHUD.m */; };
+		8BEE943B1F29DBF900488651 /* NoticeModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BEE943A1F29DBF900488651 /* NoticeModel.m */; };
 		8BF82D721EDEC50E00D33473 /* DiscussViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BF82D701EDEC50E00D33473 /* DiscussViewController.m */; };
 		8BF82D731EDEC50E00D33473 /* DiscussViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8BF82D711EDEC50E00D33473 /* DiscussViewController.xib */; };
 		8BF82D771EDFB32500D33473 /* CollectionHeadView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BF82D761EDFB32500D33473 /* CollectionHeadView.m */; };
@@ -751,6 +752,8 @@
 		8BE913A01EEFB80000000282 /* MBProgressHUD+Add.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "MBProgressHUD+Add.m"; sourceTree = "<group>"; };
 		8BE913A11EEFB80000000282 /* MBProgressHUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MBProgressHUD.h; sourceTree = "<group>"; };
 		8BE913A21EEFB80000000282 /* MBProgressHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MBProgressHUD.m; sourceTree = "<group>"; };
+		8BEE94391F29DBF900488651 /* NoticeModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NoticeModel.h; sourceTree = "<group>"; };
+		8BEE943A1F29DBF900488651 /* NoticeModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NoticeModel.m; sourceTree = "<group>"; };
 		8BF82D6F1EDEC50E00D33473 /* DiscussViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DiscussViewController.h; sourceTree = "<group>"; };
 		8BF82D701EDEC50E00D33473 /* DiscussViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DiscussViewController.m; sourceTree = "<group>"; };
 		8BF82D711EDEC50E00D33473 /* DiscussViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DiscussViewController.xib; sourceTree = "<group>"; };
@@ -1345,6 +1348,8 @@
 				8B081E161F0CBA8900493B81 /* ClassRoomModel.m */,
 				8B081E181F0E0FA400493B81 /* SignPeople.h */,
 				8B081E191F0E0FA400493B81 /* SignPeople.m */,
+				8BEE94391F29DBF900488651 /* NoticeModel.h */,
+				8BEE943A1F29DBF900488651 /* NoticeModel.m */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -2125,6 +2130,7 @@
 				8B1737181EC2F84900BE3C8F /* NoticeTableViewCell.m in Sources */,
 				8B081DE11F06238E00493B81 /* DefinitionPersonalTableViewCell.m in Sources */,
 				8BB56D8C1EB31C110023DAFF /* SystemSettingsViewController.m in Sources */,
+				8BEE943B1F29DBF900488651 /* NoticeModel.m in Sources */,
 				8BCE7CAD1F033AE100FE261B /* HYDelegate.m in Sources */,
 				8BB56D6A1EB037410023DAFF /* UIUtils.m in Sources */,
 				8B8C3D171ECD7A6700E9FB56 /* TextModel.m in Sources */,

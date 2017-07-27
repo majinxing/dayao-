@@ -57,6 +57,8 @@
 
 #define CONTACT_TABLE_NAME     @"contactTable"//试卷和题目联系的表格
 
+#define NOTICE_TABLE_NAME      @"noticeTable"//通知表
+
 //接口116.62.161.250:8080 192.168.1.81:8080
 #define BaseURL @"http://api.dayaokeji.com/"
 

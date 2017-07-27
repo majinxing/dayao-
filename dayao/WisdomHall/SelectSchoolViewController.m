@@ -75,6 +75,8 @@
                 [_allSchoolAry addObject:s];
                 [_allSchoolNameAry addObject:s.department];
             }
+            _selectSchoolAry = _allSchoolNameAry;
+            [_tableView reloadData];
             
         } failure:^(NSError *error) {
             NSLog(@"失败 %@",error);
@@ -91,7 +93,8 @@
                 [_allSchoolAry addObject:s];
                 [_allSchoolNameAry addObject:s.major];
             }
-            
+            _selectSchoolAry = _allSchoolNameAry;
+            [_tableView reloadData];
         } failure:^(NSError *error) {
             NSLog(@"失败 %@",error);
         }];
@@ -108,7 +111,8 @@
                 [_allSchoolAry addObject:s];
                 [_allSchoolNameAry addObject:s.sclass];
             }
-            
+            _selectSchoolAry = _allSchoolNameAry;
+            [_tableView reloadData];
         } failure:^(NSError *error) {
             NSLog(@"失败 %@",error);
         }];

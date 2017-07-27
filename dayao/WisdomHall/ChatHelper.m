@@ -10,11 +10,14 @@
 #import <Hyphenate/Hyphenate.h>
 #import "ConversationVC.h"
 #import "DYHeader.h"
+#import "FMDBTool.h"
 
 static ChatHelper *helper = nil;
 static dispatch_once_t onceToken;
 
 @interface ChatHelper ()<EMClientDelegate,EMChatManagerDelegate,EMContactManagerDelegate,EMGroupManagerDelegate,EMChatroomManagerDelegate,EMCallManagerDelegate>
+@property (nonatomic,strong)FMDatabase * db;
+
 
 @end
 @implementation ChatHelper
@@ -141,6 +144,8 @@ static dispatch_once_t onceToken;
                 UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:strUrl message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: nil];
                 [alertView show];
             }
+            NSString * time = [UIUtils getTime];
+            [self insertedIntoNoticeTable:time noticeContent:strUrl];
             
         }
     }
@@ -219,6 +224,43 @@ static dispatch_once_t onceToken;
                                         attributes:dic
                                            context:nil].size.height;
     return curheight;
+}
+
+-(void)insertedIntoNoticeTable:(NSString *)noticeTime noticeContent:(NSString *)content{
+    
+    _db = [FMDBTool createDBWithName:SQLITE_NAME];
+    
+    [self creatTextTable:NOTICE_TABLE_NAME];
+    
+    if ([_db open]) {
+        NSString * sql = [NSString stringWithFormat:@"insert into %@ (noticeTime, noticeContent) values ('%@', '%@')",NOTICE_TABLE_NAME,noticeTime,content];
+        
+        BOOL rs = [FMDBTool insertWithDB:_db tableName:NOTICE_TABLE_NAME withSqlStr:sql];
+        
+        if (!rs) {
+            NSLog(@"失败");
+        }
+        
+    }
+    [_db close];
+}
+-(void)creatTextTable:(NSString *)tableName{
+    if ([_db open]) {
+        BOOL result = [FMDBTool createTableWithDB:_db tableName:tableName
+                                       parameters:@{
+                                                    @"noticeTime" : @"text",
+                                                    @"noticeContent" : @"text",
+                                                    }];
+        if (result)
+        {
+            NSLog(@"建表成功");
+        }
+        else
+        {
+            NSLog(@"建表失败");
+        }
+    }
+    [_db close];
 }
 
 @end

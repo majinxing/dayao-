@@ -182,6 +182,8 @@
     
 }
 - (IBAction)signInBtnPressed:(id)sender {
+    [self showHudInView:self.view hint:NSLocalizedString(@"正在签到", @"Load data...")];
+
     if ([[NSString stringWithFormat:@"%@",_c.teacherWorkNo] isEqualToString:[NSString stringWithFormat:@"%@",_user.studentId]]) {
         
         SignListViewController * signListVC = [[SignListViewController alloc] init];
@@ -190,6 +192,7 @@
         signListVC.ary = [NSMutableArray arrayWithCapacity:1];
         signListVC.ary = _notSignAry;
         [self.navigationController pushViewController:signListVC animated:YES];
+        [self hideHud];
         return;
         
     }
@@ -197,11 +200,13 @@
     
     if ([[NSString stringWithFormat:@"%@",_c.signStatus] isEqualToString:@"2"]) {
         UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:[NSString stringWithFormat:@"已签到"] message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil];
+        [self hideHud];
         [alertView show];
         return;
     }else{
         if (![UIUtils validateWithStartTime:_c.actStarTime withExpireTime:nil]) {
             UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:[NSString stringWithFormat:@"不在时间段内"] message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil];
+            [self hideHud];
             [alertView show];
             return;
         }
@@ -215,7 +220,7 @@
         NSString * bssid  = [UIUtils specificationMCKAddress:[dictWifi objectForKey:@"BSSID"]];
         
         if ([bssid isEqualToString:_c.mck]) {
-            
+            [self hideHud];
             UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:[NSString stringWithFormat:@"已检测到WiFi，请连接网络数据以便签到"] message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: @"取消", nil];
             alertView.delegate = self;
             alertView.tag = 2;
@@ -224,9 +229,10 @@
         }else{
             NSString * s = [_c.mck substringWithRange:NSMakeRange(_c.mck.length-4, 4)];
             s = [NSString stringWithFormat:@"DAYAO_%@",s];
-            UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:[NSString stringWithFormat:@"请到WiFi列表连接指定WiFi:%@,再点击签到",s] message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: @"取消", nil];
+            UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:[NSString stringWithFormat:@"请到WiFi列表连接指定WiFi:%@,再点击签到，若不能跳转请主动在WiFi页面链接无线信号",s] message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: @"取消", nil];
             alertView.delegate = self;
             alertView.tag = 1;
+            [self hideHud];
             [alertView show];
         }
         
@@ -236,11 +242,13 @@
         UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:[NSString stringWithFormat:@"请到WiFi列表连接指定WiFi:%@,再点击签到",s] message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: @"取消", nil];
         alertView.delegate = self;
         alertView.tag = 1;
+        [self hideHud];
         [alertView show];
     }
     
 }
 -(void)alter:(NSString *) str{
+    [self hideHud];
     if ([str isEqualToString:@"1002"]) {
         UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"现在还不能签到" message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: nil];
         [_timeRun invalidate];
