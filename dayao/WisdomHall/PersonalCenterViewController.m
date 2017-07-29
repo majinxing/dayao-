@@ -11,6 +11,7 @@
 #import "SystemSetingTableViewCell.h"
 #import "PersonalInfoViewController.h"
 #import "NoticeViewController.h"
+#import "CompanyProfileViewController.h"
 #import "DYHeader.h"
 
 @interface PersonalCenterViewController ()<UITableViewDelegate,UITableViewDataSource>
@@ -89,8 +90,12 @@
             [self.navigationController pushViewController:systemVC animated:YES];
             self.hidesBottomBarWhenPushed = NO;
         }else if (indexPath.row == 3){
-            UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"暂无简介" message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: nil];
-            [alertView show];
+//            UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"暂无简介" message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: nil];
+//            [alertView show];
+            CompanyProfileViewController *cVC = [[CompanyProfileViewController alloc] init];
+            self.hidesBottomBarWhenPushed = YES;
+            [self.navigationController pushViewController:cVC animated:YES];
+            self.hidesBottomBarWhenPushed = NO;
         }
     }
 }

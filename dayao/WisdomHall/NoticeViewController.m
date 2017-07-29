@@ -75,8 +75,12 @@
         cell = [[[NSBundle mainBundle] loadNibNamed:@"NoticeTableViewCell" owner:self options:nil] objectAtIndex:0];
     }
     cell.backgroundColor = [UIColor clearColor];
-    NoticeModel * notice = _noticeAry[indexPath.row];
-    [cell setContentView:notice.noticeTime withNoticContent:notice.noticeContent];
+    if ((_noticeAry.count-indexPath.row-1)<_noticeAry.count) {
+        NoticeModel * notice = _noticeAry[_noticeAry.count-indexPath.row-1];
+        [cell setContentView:notice.noticeTime withNoticContent:notice.noticeContent];
+    }
+    
+    
     return cell;
 }
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
@@ -89,13 +93,13 @@
     return 10;
 }
 /*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
+ #pragma mark - Navigation
+ 
+ // In a storyboard-based application, you will often want to do a little preparation before navigation
+ - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+ // Get the new view controller using [segue destinationViewController].
+ // Pass the selected object to the new view controller.
+ }
+ */
 
 @end

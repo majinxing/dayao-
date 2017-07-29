@@ -33,7 +33,7 @@
     NSDictionary * dict = [[NSDictionary alloc] initWithObjectsAndKeys:_user.peopleId,@"id", nil];
     
     [[NetworkRequest sharedInstance] GET:QuerySelfInfo dict:dict succeed:^(id data) {
-        NSLog(@"%@",data);
+//        NSLog(@"%@",data);
         NSDictionary * dict = [data objectForKey:@"body"];
         [[Appsetting sharedInstance] saveUserOtherInfo:dict];
         _user = [[Appsetting sharedInstance] getUsetInfo];

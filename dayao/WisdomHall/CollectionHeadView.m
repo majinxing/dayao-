@@ -19,8 +19,16 @@
     if (self) {
         self.backgroundColor = [UIColor clearColor];
         [self addScrollView];
+        [self getData];
     }
     return self;
+}
+-(void)getData{
+    [[NetworkRequest sharedInstance] GET:QueryAdvertising dict:nil succeed:^(id data) {
+//        NSLog(@"%@",data);
+    } failure:^(NSError *error) {
+        
+    }];
 }
 -(void)addScrollView{
     UIScrollView * s = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 0,APPLICATION_WIDTH, APPLICATION_HEIGHT/4)];

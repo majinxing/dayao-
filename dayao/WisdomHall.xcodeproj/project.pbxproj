@@ -196,6 +196,8 @@
 		8BE913A31EEFB80000000282 /* MBProgressHUD+Add.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BE913A01EEFB80000000282 /* MBProgressHUD+Add.m */; };
 		8BE913A41EEFB80000000282 /* MBProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BE913A21EEFB80000000282 /* MBProgressHUD.m */; };
 		8BEE943B1F29DBF900488651 /* NoticeModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BEE943A1F29DBF900488651 /* NoticeModel.m */; };
+		8BEE94481F2C780500488651 /* CompanyProfileViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BEE94461F2C780500488651 /* CompanyProfileViewController.m */; };
+		8BEE94491F2C780500488651 /* CompanyProfileViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8BEE94471F2C780500488651 /* CompanyProfileViewController.xib */; };
 		8BF82D721EDEC50E00D33473 /* DiscussViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BF82D701EDEC50E00D33473 /* DiscussViewController.m */; };
 		8BF82D731EDEC50E00D33473 /* DiscussViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8BF82D711EDEC50E00D33473 /* DiscussViewController.xib */; };
 		8BF82D771EDFB32500D33473 /* CollectionHeadView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BF82D761EDFB32500D33473 /* CollectionHeadView.m */; };
@@ -754,6 +756,9 @@
 		8BE913A21EEFB80000000282 /* MBProgressHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MBProgressHUD.m; sourceTree = "<group>"; };
 		8BEE94391F29DBF900488651 /* NoticeModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NoticeModel.h; sourceTree = "<group>"; };
 		8BEE943A1F29DBF900488651 /* NoticeModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NoticeModel.m; sourceTree = "<group>"; };
+		8BEE94451F2C780500488651 /* CompanyProfileViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CompanyProfileViewController.h; sourceTree = "<group>"; };
+		8BEE94461F2C780500488651 /* CompanyProfileViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CompanyProfileViewController.m; sourceTree = "<group>"; };
+		8BEE94471F2C780500488651 /* CompanyProfileViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CompanyProfileViewController.xib; sourceTree = "<group>"; };
 		8BF82D6F1EDEC50E00D33473 /* DiscussViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DiscussViewController.h; sourceTree = "<group>"; };
 		8BF82D701EDEC50E00D33473 /* DiscussViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DiscussViewController.m; sourceTree = "<group>"; };
 		8BF82D711EDEC50E00D33473 /* DiscussViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DiscussViewController.xib; sourceTree = "<group>"; };
@@ -1318,6 +1323,9 @@
 				8BB56D891EB31C110023DAFF /* SystemSettingsViewController.h */,
 				8BB56D8A1EB31C110023DAFF /* SystemSettingsViewController.m */,
 				8BB56D8B1EB31C110023DAFF /* SystemSettingsViewController.xib */,
+				8BEE94451F2C780500488651 /* CompanyProfileViewController.h */,
+				8BEE94461F2C780500488651 /* CompanyProfileViewController.m */,
+				8BEE94471F2C780500488651 /* CompanyProfileViewController.xib */,
 				8B05CB721EC06FD60063EC20 /* Cell */,
 			);
 			name = PersonalCenter;
@@ -1911,6 +1919,7 @@
 				8B027A2A1EFB4E0000600E18 /* DataDownloadTableViewCell.xib in Resources */,
 				8BF82D821EE001D600D33473 /* VoteTableViewCell.xib in Resources */,
 				8BA2246C1EADF68500627A1B /* LaunchScreen.storyboard in Resources */,
+				8BEE94491F2C780500488651 /* CompanyProfileViewController.xib in Resources */,
 				8B081E0F1F0B766D00493B81 /* SelectMeetingOrClassViewController.xib in Resources */,
 				8B05CB6C1EC0056B0063EC20 /* TextsTableViewCell.xib in Resources */,
 				8BFB946C1EE7F7F1004BB963 /* ResultsOfVoteViewController.xib in Resources */,
@@ -2040,6 +2049,7 @@
 				8B05CB6B1EC0056B0063EC20 /* TextsTableViewCell.m in Sources */,
 				8B081E0E1F0B766D00493B81 /* SelectMeetingOrClassViewController.m in Sources */,
 				8B05CB761EC070060063EC20 /* SystemSetingTableViewCell.m in Sources */,
+				8BEE94481F2C780500488651 /* CompanyProfileViewController.m in Sources */,
 				8BCE7CBD1F04E0EA00FE261B /* NetworkRequest.m in Sources */,
 				8B9171CB1ED41BC7009686FD /* QuestionsTableViewCell.m in Sources */,
 				8B17374E1EC5AC3600BE3C8F /* CreateTextTableViewCell.m in Sources */,

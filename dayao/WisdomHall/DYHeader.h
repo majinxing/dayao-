@@ -59,7 +59,7 @@
 
 #define NOTICE_TABLE_NAME      @"noticeTable"//通知表
 
-//接口116.62.161.250:8080 192.168.1.81:8080
+//接口116.62.161.250:8080 192.168.1.81:8080 api.dayaokeji.com
 #define BaseURL @"http://api.dayaokeji.com/"
 
 #define Login            @"course/user/login"       //登录
@@ -106,4 +106,6 @@
 
 #define QueryApp         @"course/app/select"         //查询版本号
 
-#define QuertPeople      @"course/meeting/member"
+#define QuertPeople      @"course/meeting/member"   //查询与会者信息
+
+#define QueryAdvertising @"course/resource/select"  //查询广告
