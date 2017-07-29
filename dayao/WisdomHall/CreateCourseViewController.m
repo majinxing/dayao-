@@ -85,9 +85,10 @@
 -(void)addTabelView{
     _labelAry = [[NSMutableArray alloc] initWithObjects:@"课堂封面",@"课  程  名",@"老师姓名",@"签到方式",@"上课的人",@"教      室", @"课程周期",@"第一周星期一日期",@"上课时间列表",nil];
     _textFileAry = [NSMutableArray arrayWithCapacity:4];
-    for (int i = 0; i<10; i++) {
+    for (int i = 0; i<9; i++) {
         [_textFileAry addObject:@""];
     }
+    [_textFileAry setObject:@"头像" atIndexedSubscript:0];
     
     _tabelView = [[UITableView alloc] initWithFrame:CGRectMake(0, 64, APPLICATION_WIDTH, APPLICATION_HEIGHT-64) style:UITableViewStylePlain];
     self.automaticallyAdjustsScrollViewInsets = NO;
@@ -134,10 +135,17 @@
     
     [[NetworkRequest sharedInstance] POST:CreateCoures dict:dict succeed:^(id data) {
         NSLog(@"%@",data);
-        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"创建成功" message:nil delegate:nil cancelButtonTitle:nil otherButtonTitles: nil];
-        [alertView show];
-        [alertView setHidden:YES];
-        [self.navigationController popViewControllerAnimated:YES];
+        NSString * str = [[data objectForKey:@"header"] objectForKey:@"message"];
+        if ([str isEqualToString:@"成功"]) {
+            UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"创建成功" message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: nil];
+            [alertView show];
+            [alertView setHidden:YES];
+            [self.navigationController popViewControllerAnimated:YES];
+        }else{
+            UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"创建失败，请填写完整课堂信息并且按照提示的格式" message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: nil];
+            [alertView show];
+        }
+       
     } failure:^(NSError *error) {
         NSLog(@"%@",error);
         UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"创建失败，请填写完整课堂信息并且按照提示的格式" message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: nil];

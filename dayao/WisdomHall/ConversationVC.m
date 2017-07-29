@@ -56,11 +56,11 @@
 
         NSString * string = ([[[EMClient sharedClient] currentUsername] isEqualToString:@"aaaaa111"])?@"aaaaa1111":@"aaaaa111";
         
-        NSLog(@"currentUsername = %@  ,  string = %@",[[EMClient sharedClient] currentUsername],string);
+//        NSLog(@"currentUsername = %@  ,  string = %@",[[EMClient sharedClient] currentUsername],string);
         //15243670131"
         [[EMClient sharedClient].callManager startCall:EMCallTypeVoice remoteName:_HyNumaber ext:nil completion:^(EMCallSession *aCallSession, EMError *aError) {
             
-            NSLog(@"startCall : errorDescription = %@",aError.errorDescription);
+//            NSLog(@"startCall : errorDescription = %@",aError.errorDescription);
             
             if (!aError) {
                 _callSession = aCallSession;

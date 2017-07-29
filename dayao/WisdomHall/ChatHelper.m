@@ -160,15 +160,15 @@ static dispatch_once_t onceToken;
     //    [alertView show];
     //
 }
-//接收语音聊天
+//接收语音聊天 mjx
 -(void)callDidReceive:(EMCallSession *)aSession{
     
-    NSLog(@"%s",__func__);
-    ConversationVC * c  = [[ConversationVC alloc] init];
-    c.callSession = aSession;
-    [UIApplication sharedApplication].keyWindow.rootViewController = [[UINavigationController alloc]initWithRootViewController:c];
-    //    调用:
-    EMError *error = nil;
+//    NSLog(@"%s",__func__);
+//    ConversationVC * c  = [[ConversationVC alloc] init];
+//    c.callSession = aSession;
+//    [UIApplication sharedApplication].keyWindow.rootViewController = [[UINavigationController alloc]initWithRootViewController:c];
+//    //    调用:
+//    EMError *error = nil;
 }
 -(EMMessage *)sendTextMessage:(NSString *)text withReceiver:(NSString *)receiver{
     EMTextMessageBody *body = [[EMTextMessageBody alloc] initWithText:text];

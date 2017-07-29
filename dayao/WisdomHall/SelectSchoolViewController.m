@@ -37,7 +37,18 @@
    // [self addAllSchool];
     
     [self addData];
+    
+    [self keyboardNotification];
     // Do any additional setup after loading the view from its nib.
+}
+/**
+ * 键盘监听
+ **/
+-(void)keyboardNotification{
+    //监听键盘出现和消失
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(keyboardWillShow:) name:UIKeyboardWillShowNotification object:nil];
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(keyboardWillHide:) name:UIKeyboardWillHideNotification object:nil];
+    
 }
 - (void)returnText:(ReturnTextBlock)block {
     self.returnTextBlock = block;
@@ -66,7 +77,7 @@
     }else if (_selectType == SelectDepartment){
         NSDictionary * dict = [[NSDictionary alloc] initWithObjectsAndKeys:@"",@"level",_s.schoolId,@"parentId",@"",@"name", nil];
         [[NetworkRequest sharedInstance] GET:SchoolDepartMent dict:dict succeed:^(id data) {
-            NSLog(@"succeed %@",data);
+//            NSLog(@"succeed %@",data);
             NSArray * ary = [data objectForKey:@"body"];
             for (int i = 0; i<ary.count; i++ ) {
                 SchoolModel * s = [[SchoolModel alloc] init];
@@ -84,7 +95,7 @@
     }else if (_selectType == SelectMajor){
         NSDictionary * dict = [[NSDictionary alloc] initWithObjectsAndKeys:@"",@"level",_s.departmentId,@"parentId",@"",@"name", nil];
         [[NetworkRequest sharedInstance] GET:SchoolDepartMent dict:dict succeed:^(id data) {
-            NSLog(@"succeed %@",data);
+//            NSLog(@"succeed %@",data);
             NSArray * ary = [data objectForKey:@"body"];
             for (int i = 0; i<ary.count; i++ ) {
                 SchoolModel * s = [[SchoolModel alloc] init];
@@ -102,7 +113,7 @@
     }else if (_selectType == SelectClass){
         NSDictionary * dict = [[NSDictionary alloc] initWithObjectsAndKeys:@"",@"level",_s.majorId,@"parentId",@"",@"name", nil];
         [[NetworkRequest sharedInstance] GET:SchoolDepartMent dict:dict succeed:^(id data) {
-            NSLog(@"succeed %@",data);
+//            NSLog(@"succeed %@",data);
             NSArray * ary = [data objectForKey:@"body"];
             for (int i = 0; i<ary.count; i++ ) {
                 SchoolModel * s = [[SchoolModel alloc] init];
@@ -158,7 +169,7 @@
     //    [_mySearchBar sizeToFit];
     //_mySearchBar.hidden = YES;  ///隐藏搜索框
     [self.view addSubview:self.mySearchBar];
-    [self.mySearchBar becomeFirstResponder];
+//    [self.mySearchBar becomeFirstResponder];
 }
 -(void)addTableView{
     _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0,64+54, APPLICATION_WIDTH, APPLICATION_HEIGHT-64-54) style:UITableViewStylePlain];
@@ -252,6 +263,17 @@
     
     return searchArr;
 }
+#pragma mark 键盘出现
+-(void)keyboardWillShow:(NSNotification *)note
+{
+    CGRect keyBoardRect=[note.userInfo[UIKeyboardFrameEndUserInfoKey] CGRectValue];
+    self.tableView.contentInset = UIEdgeInsetsMake(0, 0, keyBoardRect.size.height, 0);
+}
+#pragma mark 键盘消失
+-(void)keyboardWillHide:(NSNotification *)note
+{
+    self.tableView.contentInset = UIEdgeInsetsZero;
+}
 #pragma mark - UISearchDisplayDelegate
 - (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText
 {
@@ -287,6 +309,7 @@
 }
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    [self.view endEditing:YES];
     NSString * str = _selectSchoolAry[indexPath.row];
     [self.view endEditing:YES];
 

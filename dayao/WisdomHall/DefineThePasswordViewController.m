@@ -71,8 +71,10 @@
                 [alertView show];
                 return;
             }
-        }else if (i == 2){
-            [dict setObject:_phoneNumber forKey:@"phone"];
+        }
+        
+        if (i == 2){
+            [dict setObject:[NSString stringWithFormat:@"%@",_phoneNumber] forKey:@"phone"];
         }else if(i == 5){
             [dict setObject:_s.schoolId forKey:@"universityId"];
         }else if (i == 3){
@@ -259,16 +261,11 @@
 
 #pragma mark UITextFileDelegae DefinitionPersonalTableViewCellDelegate
 -(void)gggDelegate:(UIButton *)btn{
-    _temp = 4;
-    [self addPickView];
-    [self.view endEditing:YES];
-}
--(void)textFileDidChangeForDPTableViewCellDelegate:(UITextField *)textFile{
-    [_textFileAry setObject:textFile.text atIndexedSubscript:textFile.tag];
-}
--(void)textFieldDidBeginEditingDPTableViewCellDelegate:(UITextField *)textFile{
-    if (textFile.tag == 5) {
-        [textFile endEditing:YES];
+    if (btn.tag == 3) {
+        _temp = 4;
+        [self addPickView];
+        [self.view endEditing:YES];
+    }else if (btn.tag == 5){
         SelectSchoolViewController * s = [[SelectSchoolViewController alloc] init];
         s.selectType = SelectSchool;
         self.hidesBottomBarWhenPushed = YES;
@@ -278,18 +275,17 @@
                 [self.view endEditing:YES];
                 if (![UIUtils isBlankString:[NSString stringWithFormat:@"%@",returnText.schoolId]]) {
                     _s = returnText;
-                    [_textFileAry setObject:_s.schoolName atIndexedSubscript:textFile.tag];
+                    [_textFileAry setObject:_s.schoolName atIndexedSubscript:btn.tag];
                     [_tableView reloadData];
                 }
                 
             }
         }];
-    }else if (textFile.tag == 6){
+    }else if (btn.tag == 6){
         if ([UIUtils isBlankString:[NSString stringWithFormat:@"%@",_s.schoolId]]) {
             UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"请先选择学校" message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: nil];
             [alertView show];
         }else{
-            [textFile endEditing:YES];
             SelectSchoolViewController * s = [[SelectSchoolViewController alloc] init];
             s.selectType = SelectDepartment;
             s.s = [[SchoolModel alloc] init];
@@ -302,18 +298,17 @@
                     if (![UIUtils isBlankString:[NSString stringWithFormat:@"%@",returnText.departmentId]]) {
                         _s.department = returnText.department;
                         _s.departmentId = returnText.departmentId;
-                        [_textFileAry setObject:_s.department atIndexedSubscript:textFile.tag];
+                        [_textFileAry setObject:_s.department atIndexedSubscript:btn.tag];
                         [_tableView reloadData];
                     }
                 }
             }];
         }
-    }else if (textFile.tag == 7){
+    }else if (btn.tag == 7){
         if ([UIUtils isBlankString:[NSString stringWithFormat:@"%@",_s.departmentId]]) {
             UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"请先选择院系" message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: nil];
             [alertView show];
         }else{
-            [textFile endEditing:YES];
             SelectSchoolViewController * s = [[SelectSchoolViewController alloc] init];
             s.selectType = SelectMajor;
             s.s = [[SchoolModel alloc] init];
@@ -326,24 +321,23 @@
                     if (![UIUtils isBlankString:returnText.major]) {
                         _s.major = returnText.major;
                         _s.majorId = returnText.majorId;
-                        [_textFileAry setObject:_s.major atIndexedSubscript:textFile.tag];
+                        [_textFileAry setObject:_s.major atIndexedSubscript:btn.tag];
                         [_tableView reloadData];
                     }else{
                         _s.major = @"";
                         _s.majorId = @"";
-                        [_textFileAry setObject:_s.major atIndexedSubscript:textFile.tag];
+                        [_textFileAry setObject:_s.major atIndexedSubscript:btn.tag];
                         [_tableView reloadData];
                     }
                 }
             }];
         }
-        
-    }else if (textFile.tag == 8){
-        if ([UIUtils isBlankString:[NSString stringWithFormat:@"%@",_s.departmentId]]) {
+
+    }else if (btn.tag == 8){
+        if ([UIUtils isBlankString:[NSString stringWithFormat:@"%@",_s.majorId]]) {
             UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"请先选择专业" message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: nil];
             [alertView show];
         }else{
-            [textFile endEditing:YES];
             SelectSchoolViewController * s = [[SelectSchoolViewController alloc] init];
             s.selectType = SelectClass;
             s.s = [[SchoolModel alloc] init];
@@ -356,19 +350,26 @@
                     if (![UIUtils isBlankString:[NSString stringWithFormat:@"%@",returnText.sclassId]]) {
                         _s.sclass = returnText.sclass;
                         _s.sclassId = returnText.sclassId;
-                        [_textFileAry setObject:_s.sclass atIndexedSubscript:textFile.tag];
+                        [_textFileAry setObject:_s.sclass atIndexedSubscript:btn.tag];
                         [_tableView reloadData];
                     }else{
                         _s.sclass = @"";
                         _s.sclassId = @"";
-                        [_textFileAry setObject:_s.sclass atIndexedSubscript:textFile.tag];
+                        [_textFileAry setObject:_s.sclass atIndexedSubscript:btn.tag];
                         [_tableView reloadData];
                     }
                 }
             }];
         }
-        
+
     }
+  
+}
+-(void)textFileDidChangeForDPTableViewCellDelegate:(UITextField *)textFile{
+    [_textFileAry setObject:textFile.text atIndexedSubscript:textFile.tag];
+}
+-(void)textFieldDidBeginEditingDPTableViewCellDelegate:(UITextField *)textFile{
+ 
 }
 #pragma mark UITableViewdelegate
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
@@ -393,7 +394,7 @@
     [self.view endEditing:YES];
 }
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
-    return 50;
+    return 60;
 }
 -(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
     return 10;

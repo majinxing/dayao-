@@ -79,9 +79,10 @@
 -(void)addTabelView{
     _labelAry = [[NSMutableArray alloc] initWithObjects:@"课堂封面",@"课  程  名",@"老师姓名",@"签到方式",@"上课的人",@"教      室",@"上课时间列表",@"上课的时间",nil];
     _textFileAry = [NSMutableArray arrayWithCapacity:4];
-    for (int i = 0; i<10; i++) {
+    for (int i = 0; i<8; i++) {
         [_textFileAry addObject:@""];
     }
+    [_textFileAry setObject:@"头像" atIndexedSubscript:0];
     
     _tabelView = [[UITableView alloc] initWithFrame:CGRectMake(0, 64, APPLICATION_WIDTH, APPLICATION_HEIGHT-64) style:UITableViewStylePlain];
     self.automaticallyAdjustsScrollViewInsets = NO;

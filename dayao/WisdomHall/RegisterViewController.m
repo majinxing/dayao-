@@ -74,6 +74,8 @@
         else
         {
             NSLog(@"失败");
+            UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"短信验证码发送失败" message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: nil];
+            [alertView show];
         }
     }];
 

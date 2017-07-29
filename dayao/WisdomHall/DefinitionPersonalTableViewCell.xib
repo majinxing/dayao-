@@ -24,7 +24,7 @@
                         <constraints>
                             <constraint firstAttribute="width" constant="100" id="WOG-43-vd9"/>
                         </constraints>
-                        <fontDescription key="fontDescription" type="system" pointSize="11"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="13"/>
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
                     </label>

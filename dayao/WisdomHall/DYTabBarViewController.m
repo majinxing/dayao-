@@ -47,17 +47,23 @@
     
     NSString *app_Version = [infoDictionary objectForKey:@"CFBundleShortVersionString"];
     NSString *app_build = [infoDictionary objectForKey:@"CFBundleVersion"];
-    NSLog(@"%@-------%@",app_Version,app_build);
+//    NSLog(@"%@-------%@",app_Version,app_build);
     
     NSDictionary * dict = [[NSDictionary alloc] initWithObjectsAndKeys:@"2",@"type", nil];
     [[NetworkRequest sharedInstance] GET:QueryApp dict:dict succeed:^(id data) {
-        NSLog(@"%@",data);
+//        NSLog(@"%@",data);
         NSString * str = [[data objectForKey:@"body"] objectForKey:@"version"];
         NSString * q = [[data objectForKey:@"body"] objectForKey:@"isAutoUpdate"];
+        
         if (![[NSString stringWithFormat:@"%@",str] isEqualToString:app_build]) {
-            if ([[NSString stringWithFormat:@"%@",q] isEqualToString:@"0"]) {
+            BOOL b =  [UIUtils compareTheVersionNumber:str withLocal:app_build];
+            if (!b) {
+                return ;
+            }
+            
+            if ([[NSString stringWithFormat:@"%@",q] isEqualToString:@"0"]) {//0非强制更新
                 _url = [[data objectForKey:@"body"] objectForKey:@"downloadUrl"];
-
+                
                 UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"请更新最新版本" message:nil delegate:nil cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
                 alertView.delegate = self;
                 alertView.tag = 1;
@@ -89,12 +95,12 @@
     if (alertView.tag == 2) {
         [[UIApplication sharedApplication] openURL:[NSURL URLWithString:_url]];
         UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"请更新最新版本" message:nil delegate:nil cancelButtonTitle:nil otherButtonTitles:nil];
-//        alertView.delegate = self;
-//        alertView.tag = 3;
+        //        alertView.delegate = self;
+        //        alertView.tag = 3;
         [alertView show];
     }else if(alertView.tag == 1){
         if (buttonIndex == 1) {
-             [[UIApplication sharedApplication] openURL:[NSURL URLWithString:_url]];
+            [[UIApplication sharedApplication] openURL:[NSURL URLWithString:_url]];
         }
         
     }

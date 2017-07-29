@@ -54,6 +54,7 @@
     _imageH.image = [UIImage imageNamed:@"meet"];
     
     [strUrl deleteCharactersInRange:NSMakeRange(0,5)];
+    
 
     _time.text = [NSString stringWithFormat:@"时  间：%@",strUrl];
 }
@@ -64,10 +65,14 @@
     _hostName.text = [NSString stringWithFormat:@"老师：%@",classModel.teacherName];
     
     _place.text = [NSString stringWithFormat:@"上课地点：%@",classModel.typeRoom];
+    
     NSMutableString *strUrl = [NSMutableString stringWithFormat:@"%@",classModel.actStarTime];
+    
     _imageH.image = [UIImage imageNamed:@"index_user_left"];
     
     [strUrl deleteCharactersInRange:NSMakeRange(0,5)];
+    
+    [strUrl deleteCharactersInRange:NSMakeRange(strUrl.length-3, 3)];
     
     _time.text = [NSString stringWithFormat:@"时  间：%@",strUrl];
 }

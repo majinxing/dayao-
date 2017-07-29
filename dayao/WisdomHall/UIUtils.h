@@ -58,5 +58,7 @@
 +(NSMutableArray *)returnAry:(UserModel *)user;
 //查询是否是周一
 + (NSString*)weekdayStringFromDate:(NSString *)startTime;
+//版本号比较
++(BOOL)compareTheVersionNumber:(NSString *)netVersion withLocal:(NSString *)localVersion;
 @end
 

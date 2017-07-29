@@ -32,10 +32,21 @@
     _textFile.placeholder = infoLabelText;
     _textFile.text = textFile;
     _textFile.delegate = self;
-    if (n==5||n==8) {
-        _textFile.keyboardType = UIKeyboardTypeNumberPad;
-    }else if (n==3){
-        _g.frame = CGRectMake(CGRectGetMaxX(_infoLabel.frame), 0,400, 40);
+    if (n==3){
+        _g.frame = CGRectMake(CGRectGetMaxX(_infoLabel.frame), 0,400, 60);
+        _g.tag = 3;
+    }else if(n==5){
+        _g.frame = CGRectMake(CGRectGetMaxX(_infoLabel.frame), 0,400, 60);
+        _g.tag = 5;
+    }else if(n==6){
+        _g.frame = CGRectMake(CGRectGetMaxX(_infoLabel.frame), 0,400, 60);
+        _g.tag = 6;
+    }else if(n==7){
+        _g.frame = CGRectMake(CGRectGetMaxX(_infoLabel.frame), 0,400, 60);
+        _g.tag = 7;
+    }else if(n==8){
+        _g.frame = CGRectMake(CGRectGetMaxX(_infoLabel.frame), 0,400, 60);
+        _g.tag = 8;
     }
     [_textFile addTarget:self action:@selector(textFileDidChange:) forControlEvents:UIControlEventEditingChanged];
 }

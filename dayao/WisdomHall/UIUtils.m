@@ -14,18 +14,18 @@
 
 @implementation UIUtils
 +(void)addNavigationWithView:(UIView *)view withTitle:(NSString *)str{
-//    UIView *navigation = [[UIView alloc] initWithFrame:CGRectMake(0, 0,APPLICATION_WIDTH, 65)];
-//    navigation.backgroundColor=[UIColor whiteColor];
-//    [view addSubview:navigation];
-//    UILabel *title=[[UILabel alloc] initWithFrame:CGRectMake(APPLICATION_WIDTH/2.0-100,34,200, 20)];
-//    title.text=str;
-//    title.textColor=[UIColor colorWithHexString:@"#333333"];
-//    title.font=[UIFont systemFontOfSize:17];
-//    title.textAlignment=NSTextAlignmentCenter;
-//    UIView *line=[[UIView alloc] initWithFrame:CGRectMake(0, 64, APPLICATION_WIDTH, 1)];
-//    line.backgroundColor=[UIColor colorWithHexString:@"#e5e5e5"];
-//    [view addSubview:line];
-//    [view addSubview:title];
+    //    UIView *navigation = [[UIView alloc] initWithFrame:CGRectMake(0, 0,APPLICATION_WIDTH, 65)];
+    //    navigation.backgroundColor=[UIColor whiteColor];
+    //    [view addSubview:navigation];
+    //    UILabel *title=[[UILabel alloc] initWithFrame:CGRectMake(APPLICATION_WIDTH/2.0-100,34,200, 20)];
+    //    title.text=str;
+    //    title.textColor=[UIColor colorWithHexString:@"#333333"];
+    //    title.font=[UIFont systemFontOfSize:17];
+    //    title.textAlignment=NSTextAlignmentCenter;
+    //    UIView *line=[[UIView alloc] initWithFrame:CGRectMake(0, 64, APPLICATION_WIDTH, 1)];
+    //    line.backgroundColor=[UIColor colorWithHexString:@"#e5e5e5"];
+    //    [view addSubview:line];
+    //    [view addSubview:title];
 }
 /**
  *  获取当地日期
@@ -94,18 +94,18 @@
     if (string == nil)
     {
         return YES;
-    }
-    if (string == NULL)
+    }else if (string == NULL)
     {
         return YES;
-    }
-    if ([string isEqualToString:@"(null)"]) {
+    }else if ([string isEqualToString:@"(null)"]) {
         return YES;
+    }else if ([string isKindOfClass:[NSNull class]]) {
+        return YES;
+    }else if([[string stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]] length]==0) {
+        
+                return YES;
+        
     }
-//    if (string.length == 0)
-//    {
-//        return YES;
-//    }
     return NO;
 }
 //电话正则表达式
@@ -194,7 +194,7 @@
             
             NSDictionary *networkInfo = (__bridge NSDictionary *)dictRef;
             
-           // NSLog(@"network info -> %@", networkInfo);
+            // NSLog(@"network info -> %@", networkInfo);
             dict = networkInfo;
             wifiName = [networkInfo objectForKey:(__bridge NSString*)kCNNetworkInfoKeySSID];
             
@@ -300,7 +300,7 @@
         case NSOrderedSame:
             ci=@"0"; break;
         default:
-             break;
+            break;
     }
     return ci;
 }
@@ -447,7 +447,7 @@
     NSScanner* scan = [NSScanner scannerWithString:string];
     int val;
     return [scan scanInt:&val] && [scan isAtEnd];
-
+    
 }
 
 +(NSMutableArray *)returnAry:(UserModel *)user{
@@ -458,10 +458,10 @@
     [ary addObject:[NSString stringWithFormat:@"%@",user.departmentsName]];
     [ary addObject:[NSString stringWithFormat:@"%@",user.professionalName]];
     [ary addObject:[NSString stringWithFormat:@"%@",user.userPhone]];
-
+    
     if ([UIUtils isBlankString:[NSString stringWithFormat:@"%@",user.email]]) {
         [ary addObject:[NSString stringWithFormat:@""]];
-
+        
     }else{
         [ary addObject:[NSString stringWithFormat:@"%@",user.email]];
     }
@@ -489,7 +489,7 @@
     }else{
         [ary addObject:[NSString stringWithFormat:@"%@",user.sign]];
     }
-
+    
     return ary;
 }
 + (NSString*)weekdayStringFromDate:(NSString *)startTime {
@@ -514,7 +514,20 @@
     
     return [weekdays objectAtIndex:theComponents.weekday];
 }
-
++(BOOL)compareTheVersionNumber:(NSString *)netVersion withLocal:(NSString *)localVersion{
+    NSArray *netAry = [netVersion componentsSeparatedByString:@"."];
+    NSArray *localAry = [localVersion componentsSeparatedByString:@"."];
+    if (netAry.count == localAry.count) {
+        for (int i = 0; i<netAry.count; i++) {
+            int n = [netAry[i] intValue];
+            int m = [localAry[i] intValue];
+            if (m<n) {
+                return YES;
+            }
+        }
+    }
+    return NO;
+}
 @end
 
 
