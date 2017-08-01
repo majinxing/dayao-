@@ -114,7 +114,6 @@ static NSString * cellIdentifier = @"cellIdentifier";
         if (weakSelf) {
             AllTheMeetingViewController * strongSelf = weakSelf;
             dispatch_async(dispatch_get_main_queue(), ^{
-                [strongSelf hideHud];
                 [strongSelf getDataWithPage:aPage isHeader:aIsHeader];
             });
             if (aIsHeader) {
@@ -125,6 +124,7 @@ static NSString * cellIdentifier = @"cellIdentifier";
         }
     });
 }
+#pragma mark 获取数据
 -(void)getDataWithPage:(NSInteger)page isHeader:(BOOL)isHeader{
     _userModel = [[Appsetting sharedInstance] getUsetInfo];
     
@@ -147,10 +147,12 @@ static NSString * cellIdentifier = @"cellIdentifier";
         
     } failure:^(NSError *error) {
         NSLog(@"error %@",error);
+        [self hideHud];
+        
     }];
 }
 -(void)getSelfCreateMeetingList:(NSInteger)page{
-    UserModel * user = [[Appsetting sharedInstance] getUsetInfo];
+    // UserModel * user = [[Appsetting sharedInstance] getUsetInfo];
     
     NSDictionary * dict = [[NSDictionary alloc] initWithObjectsAndKeys:_userModel.peopleId,@"userId",[UIUtils getTime],@"startTime",@"",@"endTime",[NSString stringWithFormat:@"%ld",(long)page],@"start",nil];
     [[NetworkRequest sharedInstance] GET:QueryMeeting dict:dict succeed:^(id data) {
@@ -172,11 +174,20 @@ static NSString * cellIdentifier = @"cellIdentifier";
                 [_meetingModelAry addObject:m];
             }
             
-            
         }
+        [self hideHud];
+        
         [_collection reloadData];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            if (_meetingModelAry.count == 0) {
+                UIAlertView * alter = [[UIAlertView alloc] initWithTitle:nil message:@"暂无会议" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil];
+                [alter show];
+            }
+        });
     } failure:^(NSError *error) {
         NSLog(@"失败%@",error);
+        [self hideHud];
+        
     }];
     
 }

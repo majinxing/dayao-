@@ -42,9 +42,12 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
     _user = [[Appsetting sharedInstance] getUsetInfo];
 
     self.view.backgroundColor = [UIColor whiteColor];
+    
+    //[self getData];
     
     [self addContentView];
     
@@ -54,6 +57,14 @@
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(changeSignNumber) name:@"SignSucceed" object:nil];
     // Do any additional setup after loading the view from its nib.
+}
+-(void)getData{
+    NSDictionary * dict = [[NSDictionary alloc] initWithObjectsAndKeys:_meetingModel.meetingId,@" meetingId", nil];
+    [[NetworkRequest sharedInstance] GET:QueryMeetingPeople dict:dict succeed:^(id data) {
+        NSLog(@"%@",data);
+    } failure:^(NSError *error) {
+        
+    }];
 }
 //更新签到数据
 -(void)changeSignNumber{
@@ -167,7 +178,7 @@
             return;
         }else{
             if (![UIUtils validateWithStartTime:_meetingModel.meetingTime withExpireTime:nil]) {
-                UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:[NSString stringWithFormat:@"不在时间段内"] message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil];
+                UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:[NSString stringWithFormat:@"会议开始之后才可以签到"] message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil];
                 [alertView show];
                 return;
             }
@@ -190,7 +201,7 @@
             }else{
                 NSString * s = [_meetingModel.mck substringWithRange:NSMakeRange(_meetingModel.mck.length-4, 4)];
                 s = [NSString stringWithFormat:@"DAYAO_%@",s];
-                UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:[NSString stringWithFormat:@"请到WiFi列表连接指定WiFi:%@,再点击签到",s] message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: @"取消", nil];
+                UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:[NSString stringWithFormat:@"请到WiFi列表连接指定WiFi:%@,再点击签到，若不能跳转请主动在WiFi页面链接无线信号再返回app进行签到，签到完成之后请链接数据流量保证数据传输",s] message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: @"取消", nil];
                 alertView.delegate = self;
                 alertView.tag = 1;
                 [alertView show];

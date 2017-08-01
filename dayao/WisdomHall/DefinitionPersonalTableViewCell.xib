@@ -16,20 +16,20 @@
             <rect key="frame" x="0.0" y="0.0" width="400" height="77"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
-                <rect key="frame" x="0.0" y="0.0" width="400" height="76.5"/>
+                <rect key="frame" x="0.0" y="0.0" width="400" height="76"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Bld-V0-Zjc">
-                        <rect key="frame" x="15" y="10" width="100" height="56.5"/>
+                        <rect key="frame" x="15" y="10" width="100" height="56"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="100" id="WOG-43-vd9"/>
                         </constraints>
-                        <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="12"/>
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="学校" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="sBb-e1-lMm">
-                        <rect key="frame" x="125" y="10" width="245" height="56.5"/>
+                        <rect key="frame" x="125" y="10" width="245" height="56"/>
                         <nil key="textColor"/>
                         <fontDescription key="fontDescription" type="system" pointSize="13"/>
                         <textInputTraits key="textInputTraits"/>
@@ -56,11 +56,11 @@
             <rect key="frame" x="0.0" y="0.0" width="399" height="131"/>
             <autoresizingMask key="autoresizingMask"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="hqP-fB-chr" id="7yn-SP-8jP">
-                <rect key="frame" x="0.0" y="0.0" width="399" height="130.5"/>
+                <rect key="frame" x="0.0" y="0.0" width="399" height="130"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="课程封面" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="j4y-8q-XNr">
-                        <rect key="frame" x="15" y="10" width="100" height="110.5"/>
+                        <rect key="frame" x="15" y="10" width="100" height="111"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="100" id="SKW-BI-Sxh"/>
                         </constraints>
@@ -69,7 +69,7 @@
                         <nil key="highlightedColor"/>
                     </label>
                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="18r-1i-FuI">
-                        <rect key="frame" x="125" y="18" width="60" height="94.5"/>
+                        <rect key="frame" x="125" y="18" width="60" height="95"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="60" id="Nse-dF-vtD"/>
                         </constraints>

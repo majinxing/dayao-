@@ -84,6 +84,7 @@
     if ([[NSString stringWithFormat:@"%@",_c.teacherWorkNo] isEqualToString:[NSString stringWithFormat:@"%@",_user.studentId]]) {
         [_classManage setTitle:@"班级管理" forState:UIControlStateNormal];
         _classManage.backgroundColor = [UIColor colorWithHexString:@"#29a7e1"];
+        [_classManage setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
         
     }
     //    [_classManage setTitle:@"班级管理" forState:UIControlStateNormal];
@@ -105,14 +106,16 @@
             if ([[NSString stringWithFormat:@"%@",s.userId] isEqualToString:[NSString stringWithFormat:@"%@",_user.peopleId]]) {
                 if ([[NSString stringWithFormat:@"%@",s.signStatus] isEqualToString:@"1"]) {
                     _selfSignStatus = @"签到状态：未签到";
+                    _c.signStatus = @"1";
                 }else if ([[NSString stringWithFormat:@"%@",s.signStatus] isEqualToString:@"2"]){
                     _selfSignStatus = @"签到状态：已签到";
+                    _c.signStatus = @"2";
                 }
             }
             [_signAry addObject:s];
         }
         if ([[NSString stringWithFormat:@"%@",_c.teacherWorkNo] isEqualToString:[NSString stringWithFormat:@"%@",_user.studentId]]) {
-            _classSign.text = [NSString stringWithFormat:@"签到人：%ld/%ld",_n,(_m+_n)];
+            _classSign.text = [NSString stringWithFormat:@"签到人：%d/%d",_n,(_m+_n)];
         }else{
             _classSign.text = _selfSignStatus;
         }
@@ -205,7 +208,7 @@
         return;
     }else{
         if (![UIUtils validateWithStartTime:_c.actStarTime withExpireTime:nil]) {
-            UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:[NSString stringWithFormat:@"不在时间段内"] message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil];
+            UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:[NSString stringWithFormat:@"课程开始之后才可以签到"] message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil];
             [self hideHud];
             [alertView show];
             return;
@@ -229,7 +232,7 @@
         }else{
             NSString * s = [_c.mck substringWithRange:NSMakeRange(_c.mck.length-4, 4)];
             s = [NSString stringWithFormat:@"DAYAO_%@",s];
-            UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:[NSString stringWithFormat:@"请到WiFi列表连接指定WiFi:%@,再点击签到，若不能跳转请主动在WiFi页面链接无线信号",s] message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: @"取消", nil];
+            UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:[NSString stringWithFormat:@"请到WiFi列表连接指定WiFi:%@,再点击签到，若不能跳转请主动在WiFi页面链接无线信号再返回app进行签到，签到完成之后请链接数据流量保证数据传输",s] message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: @"取消", nil];
             alertView.delegate = self;
             alertView.tag = 1;
             [self hideHud];
@@ -266,6 +269,7 @@
         _timeRun = nil;
     }else if ([str isEqualToString:@"0000"]){
         UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"签到成功" message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: nil];
+        _c.signStatus = @"2";
         // [_signBtn setTitle:@"已签到" forState:UIControlStateNormal];
         [alertView show];
         [_timeRun invalidate];

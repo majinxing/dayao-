@@ -106,6 +106,6 @@
 
 #define QueryApp         @"course/app/select"         //查询版本号
 
-#define QuertPeople      @"course/meeting/member"   //查询与会者信息
+#define QueryMeetingPeople      @"course/meeting/member"   //查询与会者信息
 
 #define QueryAdvertising @"course/resource/select"  //查询广告

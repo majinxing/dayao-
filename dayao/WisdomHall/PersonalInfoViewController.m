@@ -85,7 +85,7 @@
         [_tableView reloadData];
         NSDictionary * dict = [[NSDictionary alloc] initWithObjectsAndKeys:_user.peopleId,@"id",_textAry[6],@"email",_textAry[7],@"region",_textAry[8],@"sex",_textAry[9],@"birthday",_textAry[10],@"sign",nil];
         [[NetworkRequest sharedInstance] POST:ChangeSelfInfo dict:dict succeed:^(id data) {
-            NSLog(@"%@",data);
+//            NSLog(@"%@",data);
         } failure:^(NSError *error) {
             
         }];
@@ -119,7 +119,6 @@
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     PersonalDataTableViewCell * cell = [PersonalDataTableViewCell tempTableViewCellWith:tableView indexPath:indexPath];
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
-//    cell.textFilePh.delegate = self;
     cell.delegate = self;
     if (indexPath.section == 1) {
         [cell setInfo:_labelAry[indexPath.row] withTextAry:_textAry[indexPath.row] isEdictor:_isEdictor withRow:indexPath.row];
@@ -131,7 +130,7 @@
     [self.view endEditing:YES];
 }
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
-    return 40;
+    return 50;
 }
 -(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
     return 10;

@@ -37,6 +37,8 @@ static NSString *cellIdentifier = @"cellIdentifierPersonal";
     _collection.showsHorizontalScrollIndicator = NO;
     //取消滑动的滚动条
     _collection.decelerationRate = UIScrollViewDecelerationRateNormal;
+    self.collection.alwaysBounceVertical = YES; //垂直方向遇到边框是否总是反弹
+
     _collection.backgroundColor = [UIColor clearColor];
     [self.view addSubview:_collection];
 

@@ -146,6 +146,7 @@ static NSString *cellIdentifier = @"cellIdentifier";
 //        [_collection reloadData];
         [self getSelfJoinClass:page];
     } failure:^(NSError *error) {
+        [self hideHud];
         NSLog(@"%@",error);
     }];
 }
@@ -166,6 +167,8 @@ static NSString *cellIdentifier = @"cellIdentifier";
 //        [_collection reloadData];
         [self getSelfCreateClassType:page];
     } failure:^(NSError *error) {
+        [self hideHud];
+
         NSLog(@"%@",error);
     }];
 }
@@ -186,6 +189,8 @@ static NSString *cellIdentifier = @"cellIdentifier";
 //        [_collection reloadData];
         [self getSelfJoinClassType:page];
     } failure:^(NSError *error) {
+        [self hideHud];
+
         NSLog(@"%@",error);
     }];
 }
@@ -220,10 +225,17 @@ static NSString *cellIdentifier = @"cellIdentifier";
             }
         }
         dispatch_async(dispatch_get_main_queue(), ^{
+            [self hideHud];
             [_collection reloadData];
+            if (_classAry.count==0) {
+                UIAlertView * alter = [[UIAlertView alloc] initWithTitle:nil message:@"今天暂无课" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil];
+                [alter show];
+            }
         });
         
     } failure:^(NSError *error) {
+        [self hideHud];
+
         NSLog(@"%@",error);
     }];
 
@@ -237,7 +249,7 @@ static NSString *cellIdentifier = @"cellIdentifier";
     [self.navigationController.navigationBar setTitleTextAttributes:@{
                                                                       NSFontAttributeName:[UIFont systemFontOfSize:17],
                                                                       NSForegroundColorAttributeName:[UIColor blackColor]}];
-    self.title = @"课堂";
+    self.title = @"当天课程";
     
     UIBarButtonItem *myButton = [[UIBarButtonItem alloc] initWithTitle:@"创建" style:UIBarButtonItemStylePlain target:self action:@selector(createAcourse)];
     self.navigationItem.rightBarButtonItem = myButton;

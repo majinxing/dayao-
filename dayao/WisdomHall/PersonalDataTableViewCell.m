@@ -51,19 +51,22 @@
     _textFilePh.delegate = self;
     _textFilePh.tag = n;
     [_textFilePh addTarget:self action:@selector(textFileDidChange:) forControlEvents:UIControlEventEditingChanged];
+    
     if (edictor) {
         if (n<6) {
             _dataLabel.alpha = 0.5;
             _textFilePh.alpha = 0.5;
         }else{
             _textFilePh.enabled = YES ;
+            _dataLabel.textColor = [UIColor blueColor];
         }
     }else{
         _dataLabel.alpha = 1;
         _textFilePh.alpha = 1;
         _textFilePh.enabled = NO ;
-        
+        _dataLabel.textColor = [UIColor blackColor];
     }
+    
 }
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
     [super setSelected:selected animated:animated];

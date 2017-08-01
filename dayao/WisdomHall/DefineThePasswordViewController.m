@@ -25,7 +25,7 @@
 @property (nonatomic,strong)UIView * pickerView;
 @property (nonatomic,assign)int temp;//标志位判断选择的是哪一个滚轮
 @property (nonatomic,assign) int n;
-
+@property (nonatomic,assign) int m ;//控制cell的行数
 @end
 
 @implementation DefineThePasswordViewController
@@ -33,6 +33,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     _n = 0;
+    _m = 9;
     self.view.backgroundColor = [UIColor whiteColor];
     
     [self setNavigationTitle];
@@ -200,8 +201,10 @@
     [self.pickerView removeFromSuperview];
     if (_n==0) {
         [_textFileAry setObject:@"老师" atIndexedSubscript:3];
+        _m = 7;
     }else if(_n==1){
         [_textFileAry setObject:@"学生" atIndexedSubscript:3];
+        _m = 9;
     }
     [_tableView reloadData];
 }
@@ -376,7 +379,7 @@
     return 1;
 }
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
-    return 9;
+    return _m;
 }
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
