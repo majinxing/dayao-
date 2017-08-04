@@ -244,16 +244,42 @@
     expireTime = ary[1];
     NSMutableArray * ary1 = [expireTime componentsSeparatedByString:@":"];
     expireTime = ary1[0];
+    NSString * mm = ary1[1];
+    
     startTime = [NSString stringWithFormat:@"%@ %@:%@",ary[0],ary1[0],ary1[1]];
+    
     long n = [expireTime integerValue];
-    if (n == 12||n == 24) {
-        n = 1;
-        ary1[0] = [NSString stringWithFormat:@"%ld",n];
-    }else {
-        n = n+1;
-        ary1[0] = [NSString stringWithFormat:@"%ld",n];
+    long m = [mm integerValue];
+    if (m>=5) {
+        startTime = [NSString stringWithFormat:@"%@ %@:%ld",ary[0],ary1[0],m-5];
+    }else{
+        startTime = [NSString stringWithFormat:@"%@ %ld:%ld",ary[0],n-1,m-5+60];
     }
+    
+    if (m>=30) {
+        if (n == 12||n == 24) {
+            n = 1;
+            m = m + 30 - 60;
+            ary1[0] = [NSString stringWithFormat:@"%ld",n];
+            ary1[1] = [NSString stringWithFormat:@"%ld",m];
+
+        }else {
+            n = n+1;
+            m = m + 30 - 60;
+
+            ary1[0] = [NSString stringWithFormat:@"%ld",n];
+            ary1[1] = [NSString stringWithFormat:@"%ld",m];
+
+        }
+    }else{
+        m = m + 30;
+        ary1[1] = [NSString stringWithFormat:@"%ld",m];
+    
+    }
+    
+    
     expireTime = [NSString stringWithFormat:@"%@ %@:%@",ary[0],ary1[0],ary1[1]];
+    
     NSDate *today = [NSDate date];
     
     NSDateFormatter *dateFormat = [[NSDateFormatter alloc] init];

@@ -35,7 +35,7 @@
             UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"密码不能为空" message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: nil];
             [alertView show];
         }else{
-            NSDictionary * dict = [[NSDictionary alloc] initWithObjectsAndKeys:_phoneNumber,@"pho",_password.text,@"password",nil];
+            NSDictionary * dict = [[NSDictionary alloc] initWithObjectsAndKeys:_phoneNumber,@"phone",_password.text,@"password",nil];
             
             [[NetworkRequest sharedInstance] POST:ResetPassword dict:dict succeed:^(id data) {
                 NSLog(@"succeed%@",data);

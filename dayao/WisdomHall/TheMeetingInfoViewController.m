@@ -18,6 +18,8 @@
 #import "DataDownloadViewController.h"
 
 #import <SystemConfiguration/CaptiveNetwork.h>
+#import "ZFSeatViewController.h"
+#import "SeatIngModel.h"
 
 #define RGBA_COLOR(R, G, B, A) [UIColor colorWithRed:((R) / 255.0f) green:((G) / 255.0f) blue:((B) / 255.0f) alpha:A]
 
@@ -34,8 +36,9 @@
 @property (strong, nonatomic) IBOutlet UIButton *seatBtn;
 @property (nonatomic,strong) ShareView * interaction;
 @property (nonatomic,strong)UserModel * user;
-
+@property (nonatomic,assign)int temp;
 @property (nonatomic,strong)NSTimer * timeRun;
+@property (nonatomic,strong)SeatIngModel * seatModel;
 @end
 
 @implementation TheMeetingInfoViewController
@@ -53,7 +56,7 @@
     
     
     
-    //[self getData];
+    [self getData];
     
     [self addContentView];
     
@@ -65,9 +68,26 @@
     // Do any additional setup after loading the view from its nib.
 }
 -(void)getData{
+    
+    
+    [[NetworkRequest sharedInstance] GET:QueryMeetingRoom dict:nil succeed:^(id data) {
+//        NSLog(@"%@",data);
+        NSArray * ary = [[data objectForKey:@"body"] objectForKey:@"list"];
+        for (int i = 0; i<ary.count; i++) {
+            SeatIngModel * s = [[SeatIngModel alloc] init];
+            [s setInfoWithDict:ary[i]];
+            if ([[NSString stringWithFormat:@"%@",_meetingModel.meetingPlaceId] isEqualToString:s.seatTableId]) {
+                _seatModel = s;
+                return ;
+            }
+        }
+    } failure:^(NSError *error) {
+        
+    }];
+    
     NSDictionary * dict = [[NSDictionary alloc] initWithObjectsAndKeys:_meetingModel.meetingId,@" meetingId", nil];
     [[NetworkRequest sharedInstance] GET:QueryMeetingPeople dict:dict succeed:^(id data) {
-        NSLog(@"%@",data);
+//        NSLog(@"%@",data);
     } failure:^(NSError *error) {
         
     }];
@@ -129,16 +149,17 @@
         _signNumber.text = [NSString stringWithFormat:@"签到人数：%ld/%@",(long)_meetingModel.n,_meetingModel.meetingTotal];
         [_seatBtn setBackgroundColor:[UIColor colorWithHexString:@"#29a7e1"]];
         [_seatBtn setTitle:@"人员管理" forState:UIControlStateNormal];
+        _temp = 0;
     }else{
         if ([[NSString stringWithFormat:@"%@",_meetingModel.signStatus] isEqualToString:@"1"]) {
             _signNumber.text = [NSString stringWithFormat:@"签到状态：未签到"];
         }else if([[NSString stringWithFormat:@"%@",_meetingModel.signStatus] isEqualToString:@"2"]){
             _signNumber.text = [NSString stringWithFormat:@"签到状态：已签到"];
         }
-        [_seatBtn setTitle:[NSString stringWithFormat:@"座次：%@",_meetingModel.userSeat] forState:UIControlStateNormal];
+        [_seatBtn setTitle:[NSString stringWithFormat:@"座次：%@ （点击查看详情）",_meetingModel.userSeat] forState:UIControlStateNormal];
         [_seatBtn setBackgroundColor:[UIColor colorWithHexString:@"#29a7e1"]];
-        [_seatBtn setEnabled: NO];
-        
+//        [_seatBtn setEnabled: NO];
+        _temp = 1;
     }
     NSMutableString *strUrl = [NSMutableString stringWithFormat:@"%@",_meetingModel.meetingTime];
     
@@ -268,11 +289,21 @@
     }
 }
 - (IBAction)personnelManagement:(id)sender {
-    ClassManagementViewController * classManegeVC = [[ClassManagementViewController alloc] init];
-    self.hidesBottomBarWhenPushed = YES;
-    classManegeVC.manage = MeetingManageType;
-    classManegeVC.meeting = _meetingModel;
-    [self.navigationController pushViewController:classManegeVC animated:YES];
+    if (_temp == 0) {
+        ClassManagementViewController * classManegeVC = [[ClassManagementViewController alloc] init];
+        self.hidesBottomBarWhenPushed = YES;
+        classManegeVC.manage = MeetingManageType;
+        classManegeVC.meeting = _meetingModel;
+        [self.navigationController pushViewController:classManegeVC animated:YES];
+
+    }else{
+        ZFSeatViewController * z = [[ZFSeatViewController alloc] init];
+        z.seatTable = _seatModel.seatTable;
+        z.seat = _meetingModel.userSeat;
+        self.hidesBottomBarWhenPushed = YES;
+        [self.navigationController pushViewController:z animated:YES];
+    }
+    
 }
 
 - (void)didReceiveMemoryWarning {

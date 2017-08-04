@@ -149,12 +149,7 @@ static NSString * cellIdentifier = @"cellIdentifier";
     
     NSDictionary * dict = [[NSDictionary alloc] initWithObjectsAndKeys:[NSString stringWithFormat:@"%ld",(long)page],@"start",_userModel.peopleId,@"teacherId",[UIUtils getTime],@"startTime",@"",@"endTime", nil];
     
-    
-    [[NetworkRequest sharedInstance] GET:QueryMeetingRoom dict:nil succeed:^(id data) {
-        NSLog(@"%@",data);
-    } failure:^(NSError *error) {
-        
-    }];
+ 
     
     [[NetworkRequest sharedInstance] GET:QueryMeetingSelfCreate dict:dict succeed:^(id data) {
         NSDictionary * dict = [data objectForKey:@"header"];

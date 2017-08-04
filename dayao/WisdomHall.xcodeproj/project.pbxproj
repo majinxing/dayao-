@@ -25,6 +25,20 @@
 		8B045B771F3458820021699B /* NSObject+MJKeyValue.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B045B691F3458820021699B /* NSObject+MJKeyValue.m */; };
 		8B045B781F3458820021699B /* NSObject+MJProperty.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B045B6B1F3458820021699B /* NSObject+MJProperty.m */; };
 		8B045B791F3458820021699B /* NSString+MJExtension.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B045B6D1F3458820021699B /* NSString+MJExtension.m */; };
+		8B045B7C1F3458BB0021699B /* ZFSeatViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B045B7B1F3458BB0021699B /* ZFSeatViewController.m */; };
+		8B045B821F3458CC0021699B /* ZFSeatModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B045B7F1F3458CC0021699B /* ZFSeatModel.m */; };
+		8B045B831F3458CC0021699B /* ZFSeatsModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B045B811F3458CC0021699B /* ZFSeatsModel.m */; };
+		8B045B981F3458E40021699B /* ZFAppLogoView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B045B861F3458E40021699B /* ZFAppLogoView.m */; };
+		8B045B991F3458E40021699B /* ZFCenterLineView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B045B881F3458E40021699B /* ZFCenterLineView.m */; };
+		8B045B9A1F3458E40021699B /* ZFHallLogoView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B045B8A1F3458E40021699B /* ZFHallLogoView.m */; };
+		8B045B9B1F3458E40021699B /* ZFIndicatorView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B045B8C1F3458E40021699B /* ZFIndicatorView.m */; };
+		8B045B9C1F3458E40021699B /* ZFRowIndexView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B045B8E1F3458E40021699B /* ZFRowIndexView.m */; };
+		8B045B9D1F3458E40021699B /* ZFSeatButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B045B901F3458E40021699B /* ZFSeatButton.m */; };
+		8B045B9E1F3458E40021699B /* ZFSeatSelectionTool.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B045B931F3458E40021699B /* ZFSeatSelectionTool.m */; };
+		8B045B9F1F3458E40021699B /* ZFSeatSelectionView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B045B951F3458E40021699B /* ZFSeatSelectionView.m */; };
+		8B045BA01F3458E40021699B /* ZFSeatsView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B045B971F3458E40021699B /* ZFSeatsView.m */; };
+		8B045BA31F34595D0021699B /* UIView+Extension.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B045BA21F34595D0021699B /* UIView+Extension.m */; };
+		8B045BA61F3462640021699B /* SeatIngModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B045BA51F3462640021699B /* SeatIngModel.m */; };
 		8B05CB6B1EC0056B0063EC20 /* TextsTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B05CB691EC0056B0063EC20 /* TextsTableViewCell.m */; };
 		8B05CB6C1EC0056B0063EC20 /* TextsTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8B05CB6A1EC0056B0063EC20 /* TextsTableViewCell.xib */; };
 		8B05CB701EC015DB0063EC20 /* PersonalInfoTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B05CB6E1EC015DB0063EC20 /* PersonalInfoTableViewCell.m */; };
@@ -511,6 +525,35 @@
 		8B045B6B1F3458820021699B /* NSObject+MJProperty.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+MJProperty.m"; sourceTree = "<group>"; };
 		8B045B6C1F3458820021699B /* NSString+MJExtension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+MJExtension.h"; sourceTree = "<group>"; };
 		8B045B6D1F3458820021699B /* NSString+MJExtension.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+MJExtension.m"; sourceTree = "<group>"; };
+		8B045B7A1F3458BB0021699B /* ZFSeatViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZFSeatViewController.h; sourceTree = "<group>"; };
+		8B045B7B1F3458BB0021699B /* ZFSeatViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZFSeatViewController.m; sourceTree = "<group>"; };
+		8B045B7E1F3458CC0021699B /* ZFSeatModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZFSeatModel.h; sourceTree = "<group>"; };
+		8B045B7F1F3458CC0021699B /* ZFSeatModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZFSeatModel.m; sourceTree = "<group>"; };
+		8B045B801F3458CC0021699B /* ZFSeatsModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZFSeatsModel.h; sourceTree = "<group>"; };
+		8B045B811F3458CC0021699B /* ZFSeatsModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZFSeatsModel.m; sourceTree = "<group>"; };
+		8B045B851F3458E40021699B /* ZFAppLogoView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZFAppLogoView.h; sourceTree = "<group>"; };
+		8B045B861F3458E40021699B /* ZFAppLogoView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZFAppLogoView.m; sourceTree = "<group>"; };
+		8B045B871F3458E40021699B /* ZFCenterLineView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZFCenterLineView.h; sourceTree = "<group>"; };
+		8B045B881F3458E40021699B /* ZFCenterLineView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZFCenterLineView.m; sourceTree = "<group>"; };
+		8B045B891F3458E40021699B /* ZFHallLogoView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZFHallLogoView.h; sourceTree = "<group>"; };
+		8B045B8A1F3458E40021699B /* ZFHallLogoView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZFHallLogoView.m; sourceTree = "<group>"; };
+		8B045B8B1F3458E40021699B /* ZFIndicatorView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZFIndicatorView.h; sourceTree = "<group>"; };
+		8B045B8C1F3458E40021699B /* ZFIndicatorView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZFIndicatorView.m; sourceTree = "<group>"; };
+		8B045B8D1F3458E40021699B /* ZFRowIndexView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZFRowIndexView.h; sourceTree = "<group>"; };
+		8B045B8E1F3458E40021699B /* ZFRowIndexView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZFRowIndexView.m; sourceTree = "<group>"; };
+		8B045B8F1F3458E40021699B /* ZFSeatButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZFSeatButton.h; sourceTree = "<group>"; };
+		8B045B901F3458E40021699B /* ZFSeatButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZFSeatButton.m; sourceTree = "<group>"; };
+		8B045B911F3458E40021699B /* ZFSeatSelectionConfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZFSeatSelectionConfig.h; sourceTree = "<group>"; };
+		8B045B921F3458E40021699B /* ZFSeatSelectionTool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZFSeatSelectionTool.h; sourceTree = "<group>"; };
+		8B045B931F3458E40021699B /* ZFSeatSelectionTool.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZFSeatSelectionTool.m; sourceTree = "<group>"; };
+		8B045B941F3458E40021699B /* ZFSeatSelectionView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZFSeatSelectionView.h; sourceTree = "<group>"; };
+		8B045B951F3458E40021699B /* ZFSeatSelectionView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZFSeatSelectionView.m; sourceTree = "<group>"; };
+		8B045B961F3458E40021699B /* ZFSeatsView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZFSeatsView.h; sourceTree = "<group>"; };
+		8B045B971F3458E40021699B /* ZFSeatsView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZFSeatsView.m; sourceTree = "<group>"; };
+		8B045BA11F34595D0021699B /* UIView+Extension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+Extension.h"; sourceTree = "<group>"; };
+		8B045BA21F34595D0021699B /* UIView+Extension.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+Extension.m"; sourceTree = "<group>"; };
+		8B045BA41F3462640021699B /* SeatIngModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SeatIngModel.h; sourceTree = "<group>"; };
+		8B045BA51F3462640021699B /* SeatIngModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SeatIngModel.m; sourceTree = "<group>"; };
 		8B05CB681EC0056B0063EC20 /* TextsTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TextsTableViewCell.h; sourceTree = "<group>"; };
 		8B05CB691EC0056B0063EC20 /* TextsTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TextsTableViewCell.m; sourceTree = "<group>"; };
 		8B05CB6A1EC0056B0063EC20 /* TextsTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TextsTableViewCell.xib; sourceTree = "<group>"; };
@@ -1009,6 +1052,10 @@
 		8B045B531F3458660021699B /* seating */ = {
 			isa = PBXGroup;
 			children = (
+				8B045B841F3458E40021699B /* View */,
+				8B045B7D1F3458CC0021699B /* Model */,
+				8B045B7A1F3458BB0021699B /* ZFSeatViewController.h */,
+				8B045B7B1F3458BB0021699B /* ZFSeatViewController.m */,
 				8B045B541F3458820021699B /* Lib */,
 			);
 			name = seating;
@@ -1049,6 +1096,45 @@
 				8B045B6D1F3458820021699B /* NSString+MJExtension.m */,
 			);
 			path = MJExtension;
+			sourceTree = "<group>";
+		};
+		8B045B7D1F3458CC0021699B /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				8B045B7E1F3458CC0021699B /* ZFSeatModel.h */,
+				8B045B7F1F3458CC0021699B /* ZFSeatModel.m */,
+				8B045B801F3458CC0021699B /* ZFSeatsModel.h */,
+				8B045B811F3458CC0021699B /* ZFSeatsModel.m */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		8B045B841F3458E40021699B /* View */ = {
+			isa = PBXGroup;
+			children = (
+				8B045BA11F34595D0021699B /* UIView+Extension.h */,
+				8B045BA21F34595D0021699B /* UIView+Extension.m */,
+				8B045B851F3458E40021699B /* ZFAppLogoView.h */,
+				8B045B861F3458E40021699B /* ZFAppLogoView.m */,
+				8B045B871F3458E40021699B /* ZFCenterLineView.h */,
+				8B045B881F3458E40021699B /* ZFCenterLineView.m */,
+				8B045B891F3458E40021699B /* ZFHallLogoView.h */,
+				8B045B8A1F3458E40021699B /* ZFHallLogoView.m */,
+				8B045B8B1F3458E40021699B /* ZFIndicatorView.h */,
+				8B045B8C1F3458E40021699B /* ZFIndicatorView.m */,
+				8B045B8D1F3458E40021699B /* ZFRowIndexView.h */,
+				8B045B8E1F3458E40021699B /* ZFRowIndexView.m */,
+				8B045B8F1F3458E40021699B /* ZFSeatButton.h */,
+				8B045B901F3458E40021699B /* ZFSeatButton.m */,
+				8B045B911F3458E40021699B /* ZFSeatSelectionConfig.h */,
+				8B045B921F3458E40021699B /* ZFSeatSelectionTool.h */,
+				8B045B931F3458E40021699B /* ZFSeatSelectionTool.m */,
+				8B045B941F3458E40021699B /* ZFSeatSelectionView.h */,
+				8B045B951F3458E40021699B /* ZFSeatSelectionView.m */,
+				8B045B961F3458E40021699B /* ZFSeatsView.h */,
+				8B045B971F3458E40021699B /* ZFSeatsView.m */,
+			);
+			path = View;
 			sourceTree = "<group>";
 		};
 		8B05CB721EC06FD60063EC20 /* Cell */ = {
@@ -1458,6 +1544,8 @@
 				8BEE943A1F29DBF900488651 /* NoticeModel.m */,
 				8B77250D1F31586300D1B521 /* AlterView.h */,
 				8B77250E1F31586300D1B521 /* AlterView.m */,
+				8B045BA41F3462640021699B /* SeatIngModel.h */,
+				8B045BA51F3462640021699B /* SeatIngModel.m */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -1909,7 +1997,7 @@
 					8BA224581EADF68500627A1B = {
 						CreatedOnToolsVersion = 8.3;
 						DevelopmentTeam = AM9UTP2CL3;
-						ProvisioningStyle = Automatic;
+						ProvisioningStyle = Manual;
 						SystemCapabilities = {
 							com.apple.BackgroundModes = {
 								enabled = 1;
@@ -2116,8 +2204,10 @@
 				8B0DB13B1ED6CA4E0042DF0D /* ImportTextViewController.m in Sources */,
 				8B2E16DA1EBAB968008B7C57 /* ClassManagementViewController.m in Sources */,
 				8BF864C31ECAD97300B7EED4 /* SDWebImageManager.m in Sources */,
+				8B045B9B1F3458E40021699B /* ZFIndicatorView.m in Sources */,
 				8BB56D871EB2E2820023DAFF /* RedefineThePasswordViewController.m in Sources */,
 				8B081DFF1F06524000493B81 /* PinyinHelper.m in Sources */,
+				8B045BA01F3458E40021699B /* ZFSeatsView.m in Sources */,
 				8B081DFA1F06524000493B81 /* ChineseToPinyinResource.m in Sources */,
 				8BCE7CD11F04F07600FE261B /* AFURLSessionManager.m in Sources */,
 				8BFB94611EE6A381004BB963 /* JoinVoteViewController.m in Sources */,
@@ -2129,6 +2219,7 @@
 				8B081E081F0A4AEC00493B81 /* ClassModel.m in Sources */,
 				8B2E16E21EBACAD7008B7C57 /* PersonalCollectionViewCell.m in Sources */,
 				8B081DFC1F06524000493B81 /* NSString+PinYin4Cocoa.m in Sources */,
+				8B045B9F1F3458E40021699B /* ZFSeatSelectionView.m in Sources */,
 				8B2E16DE1EBABBC0008B7C57 /* InteractiveView.m in Sources */,
 				8BF864C71ECAD97300B7EED4 /* UIImage+MultiFormat.m in Sources */,
 				8B64EB5B1F1A2BA900BF7D0F /* SelectClassViewController.m in Sources */,
@@ -2137,12 +2228,16 @@
 				8B2E16D51EB9C1EA008B7C57 /* CourseDetailsViewController.m in Sources */,
 				8B027A181EF8F48800600E18 /* MeetingModel.m in Sources */,
 				8B05CB7B1EC2ABFD0063EC20 /* PersonalInfoViewController.m in Sources */,
+				8B045B821F3458CC0021699B /* ZFSeatModel.m in Sources */,
 				8B045B761F3458820021699B /* NSObject+MJCoding.m in Sources */,
+				8B045B9D1F3458E40021699B /* ZFSeatButton.m in Sources */,
 				8BE877851EBC2E0C00866A34 /* EndTheTestViewController.m in Sources */,
 				8B2E16F71EBADA5D008B7C57 /* TheMeetingEndedViewController.m in Sources */,
 				8BA2249D1EADFFA400627A1B /* SignInViewController.m in Sources */,
+				8B045B831F3458CC0021699B /* ZFSeatsModel.m in Sources */,
 				8BF864BF1ECAD97300B7EED4 /* SDWebImageCompat.m in Sources */,
 				8BB56D671EAF3C620023DAFF /* UserModel.m in Sources */,
+				8B045B7C1F3458BB0021699B /* ZFSeatViewController.m in Sources */,
 				8BF8648B1ECAD21200B7EED4 /* MJRefreshHeaderView.m in Sources */,
 				8B9CCC8C1F14D3B7001833FD /* RecorderView.m in Sources */,
 				8BA224641EADF68500627A1B /* ViewController.m in Sources */,
@@ -2154,10 +2249,12 @@
 				8BF864C91ECAD97300B7EED4 /* UIImageView+WebCache.m in Sources */,
 				8BA224B81EAED53D00627A1B /* UIColor+HexString.m in Sources */,
 				8B05CB6B1EC0056B0063EC20 /* TextsTableViewCell.m in Sources */,
+				8B045B981F3458E40021699B /* ZFAppLogoView.m in Sources */,
 				8B081E0E1F0B766D00493B81 /* SelectMeetingOrClassViewController.m in Sources */,
 				8B05CB761EC070060063EC20 /* SystemSetingTableViewCell.m in Sources */,
 				8BEE94481F2C780500488651 /* CompanyProfileViewController.m in Sources */,
 				8BCE7CBD1F04E0EA00FE261B /* NetworkRequest.m in Sources */,
+				8B045BA31F34595D0021699B /* UIView+Extension.m in Sources */,
 				8B9171CB1ED41BC7009686FD /* QuestionsTableViewCell.m in Sources */,
 				8B17374E1EC5AC3600BE3C8F /* CreateTextTableViewCell.m in Sources */,
 				8BCE7CCE1F04F07600FE261B /* AFSecurityPolicy.m in Sources */,
@@ -2166,6 +2263,7 @@
 				8BF864881ECAD21200B7EED4 /* MJRefreshBaseView.m in Sources */,
 				8BFB94661EE79745004BB963 /* JoinVoteTableViewCell.m in Sources */,
 				8B77250F1F31586300D1B521 /* AlterView.m in Sources */,
+				8B045BA61F3462640021699B /* SeatIngModel.m in Sources */,
 				8BF864C21ECAD97300B7EED4 /* SDWebImageDownloaderOperation.m in Sources */,
 				8BCE7CCD1F04F07600FE261B /* AFNetworkReachabilityManager.m in Sources */,
 				8BA224C11EAEF5CB00627A1B /* TheLoginViewController.m in Sources */,
@@ -2179,6 +2277,7 @@
 				8BFB947A1EE94948004BB963 /* VoteDrawView.m in Sources */,
 				8B081DFB1F06524000493B81 /* HanyuPinyinOutputFormat.m in Sources */,
 				8B064E541F00D8D80004C3D4 /* MJXChatCellTableViewCell.m in Sources */,
+				8B045B9E1F3458E40021699B /* ZFSeatSelectionTool.m in Sources */,
 				8B2E16ED1EBAD9F3008B7C57 /* InTheMeetingViewController.m in Sources */,
 				8BA224D41EAF25DC00627A1B /* RegisterViewController.m in Sources */,
 				8B17370E1EC2EDE400BE3C8F /* MeetingViewController.m in Sources */,
@@ -2217,6 +2316,7 @@
 				8B9CCC8D1F14D3B7001833FD /* PlayerButton.m in Sources */,
 				8BF82D861EE1573200D33473 /* CreateVoteViewController.m in Sources */,
 				8B081E131F0C980200493B81 /* SelectClassRoomViewController.m in Sources */,
+				8B045B991F3458E40021699B /* ZFCenterLineView.m in Sources */,
 				8BF8648E1ECAD21200B7EED4 /* UIView+MJExtension.m in Sources */,
 				8BF864C51ECAD97300B7EED4 /* UIButton+WebCache.m in Sources */,
 				8B4D91141EBDAB1000A4BE34 /* SignListViewController.m in Sources */,
@@ -2226,6 +2326,7 @@
 				8B1737491EC58BE400BE3C8F /* TestQuestionsViewController.m in Sources */,
 				8BF864BC1ECAD97300B7EED4 /* README.md in Sources */,
 				8B081DE71F063AE900493B81 /* SelectSchoolViewController.m in Sources */,
+				8B045B9C1F3458E40021699B /* ZFRowIndexView.m in Sources */,
 				8B7D5D8C1EB96C430068058E /* CollectionFlowLayout.m in Sources */,
 				8BF82D721EDEC50E00D33473 /* DiscussViewController.m in Sources */,
 				8BF864BE1ECAD97300B7EED4 /* SDImageCache.m in Sources */,
@@ -2256,6 +2357,7 @@
 				8B1737181EC2F84900BE3C8F /* NoticeTableViewCell.m in Sources */,
 				8B081DE11F06238E00493B81 /* DefinitionPersonalTableViewCell.m in Sources */,
 				8BB56D8C1EB31C110023DAFF /* SystemSettingsViewController.m in Sources */,
+				8B045B9A1F3458E40021699B /* ZFHallLogoView.m in Sources */,
 				8BEE943B1F29DBF900488651 /* NoticeModel.m in Sources */,
 				8BCE7CAD1F033AE100FE261B /* HYDelegate.m in Sources */,
 				8BB56D6A1EB037410023DAFF /* UIUtils.m in Sources */,
@@ -2467,8 +2569,8 @@
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Distribution: yao zhiqiang (AM9UTP2CL3)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				DEVELOPMENT_TEAM = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: yao zhiqiang (AM9UTP2CL3)";
+				DEVELOPMENT_TEAM = AM9UTP2CL3;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -2578,8 +2680,8 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.dayaokeji.rhythm;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "";
-				PROVISIONING_PROFILE_SPECIFIER = "";
+				PROVISIONING_PROFILE = "a08f6fcd-2414-423a-b12a-e4d45bf4812e";
+				PROVISIONING_PROFILE_SPECIFIER = rhythmPP;
 				TARGETED_DEVICE_FAMILY = 1;
 				USER_HEADER_SEARCH_PATHS = "";
 			};
@@ -2741,8 +2843,8 @@
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Distribution: yao zhiqiang (AM9UTP2CL3)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				DEVELOPMENT_TEAM = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: yao zhiqiang (AM9UTP2CL3)";
+				DEVELOPMENT_TEAM = AM9UTP2CL3;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -2852,8 +2954,8 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.dayaokeji.rhythm;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "";
-				PROVISIONING_PROFILE_SPECIFIER = "";
+				PROVISIONING_PROFILE = "a08f6fcd-2414-423a-b12a-e4d45bf4812e";
+				PROVISIONING_PROFILE_SPECIFIER = rhythmPP;
 				TARGETED_DEVICE_FAMILY = 1;
 				USER_HEADER_SEARCH_PATHS = "";
 			};
@@ -2865,8 +2967,8 @@
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Distribution: yao zhiqiang (AM9UTP2CL3)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				DEVELOPMENT_TEAM = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: yao zhiqiang (AM9UTP2CL3)";
+				DEVELOPMENT_TEAM = AM9UTP2CL3;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -2976,8 +3078,8 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.dayaokeji.rhythm;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "";
-				PROVISIONING_PROFILE_SPECIFIER = "";
+				PROVISIONING_PROFILE = "a08f6fcd-2414-423a-b12a-e4d45bf4812e";
+				PROVISIONING_PROFILE_SPECIFIER = rhythmPP;
 				TARGETED_DEVICE_FAMILY = 1;
 				USER_HEADER_SEARCH_PATHS = "";
 			};
