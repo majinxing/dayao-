@@ -245,8 +245,9 @@
         imageIndex = 9;
     }
     
-    UIImage *image = [UIImage imageNamed:[NSString stringWithFormat:@"lp_microphone_inside%d",imageIndex]];
-    [_microphoneInside setImage:image];
+//    UIImage *image = [UIImage imageNamed:[NSString stringWithFormat:@"lp_microphone_inside%d",imageIndex]];
+//    [_microphoneInside setImage:image];
+    _microphoneInside.image = [UIImage imageNamed:[NSString stringWithFormat:@"lp_microphone_inside%d",imageIndex]];
 }
 
 //倒计时

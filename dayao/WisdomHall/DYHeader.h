@@ -109,3 +109,16 @@
 #define QueryMeetingPeople      @"course/meeting/member"   //查询与会者信息
 
 #define QueryAdvertising @"course/resource/select"  //查询广告
+
+#define FeedBack         @"course/feedback/create"//意见反馈
+
+#define QueryMeetingRoom    @"course/meetingroom/select"//查询会议室
+
+
+
+
+
+
+
+
+

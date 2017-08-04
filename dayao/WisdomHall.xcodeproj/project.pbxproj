@@ -14,6 +14,17 @@
 		8B027A251EFA5FF200600E18 /* DataDownloadViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8B027A231EFA5FF200600E18 /* DataDownloadViewController.xib */; };
 		8B027A291EFB4E0000600E18 /* DataDownloadTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B027A271EFB4E0000600E18 /* DataDownloadTableViewCell.m */; };
 		8B027A2A1EFB4E0000600E18 /* DataDownloadTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8B027A281EFB4E0000600E18 /* DataDownloadTableViewCell.xib */; };
+		8B045B6F1F3458820021699B /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 8B045B581F3458820021699B /* Info.plist */; };
+		8B045B701F3458820021699B /* MJExtensionConst.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B045B5B1F3458820021699B /* MJExtensionConst.m */; };
+		8B045B711F3458820021699B /* MJFoundation.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B045B5D1F3458820021699B /* MJFoundation.m */; };
+		8B045B721F3458820021699B /* MJProperty.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B045B5F1F3458820021699B /* MJProperty.m */; };
+		8B045B731F3458820021699B /* MJPropertyKey.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B045B611F3458820021699B /* MJPropertyKey.m */; };
+		8B045B741F3458820021699B /* MJPropertyType.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B045B631F3458820021699B /* MJPropertyType.m */; };
+		8B045B751F3458820021699B /* NSObject+MJClass.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B045B651F3458820021699B /* NSObject+MJClass.m */; };
+		8B045B761F3458820021699B /* NSObject+MJCoding.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B045B671F3458820021699B /* NSObject+MJCoding.m */; };
+		8B045B771F3458820021699B /* NSObject+MJKeyValue.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B045B691F3458820021699B /* NSObject+MJKeyValue.m */; };
+		8B045B781F3458820021699B /* NSObject+MJProperty.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B045B6B1F3458820021699B /* NSObject+MJProperty.m */; };
+		8B045B791F3458820021699B /* NSString+MJExtension.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B045B6D1F3458820021699B /* NSString+MJExtension.m */; };
 		8B05CB6B1EC0056B0063EC20 /* TextsTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B05CB691EC0056B0063EC20 /* TextsTableViewCell.m */; };
 		8B05CB6C1EC0056B0063EC20 /* TextsTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8B05CB6A1EC0056B0063EC20 /* TextsTableViewCell.xib */; };
 		8B05CB701EC015DB0063EC20 /* PersonalInfoTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B05CB6E1EC015DB0063EC20 /* PersonalInfoTableViewCell.m */; };
@@ -109,6 +120,11 @@
 		8B64EB5C1F1A2BA900BF7D0F /* SelectClassViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8B64EB5A1F1A2BA900BF7D0F /* SelectClassViewController.xib */; };
 		8B6E61CB1EE292B10040FDC1 /* CreateVoteTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B6E61C91EE292B10040FDC1 /* CreateVoteTableViewCell.m */; };
 		8B6E61CC1EE292B10040FDC1 /* CreateVoteTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8B6E61CA1EE292B10040FDC1 /* CreateVoteTableViewCell.xib */; };
+		8B7725061F3029CE00D1B521 /* FeedbackViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B7725041F3029CE00D1B521 /* FeedbackViewController.m */; };
+		8B7725071F3029CE00D1B521 /* FeedbackViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8B7725051F3029CE00D1B521 /* FeedbackViewController.xib */; };
+		8B77250B1F302E6200D1B521 /* FeedBackTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B7725091F302E6200D1B521 /* FeedBackTableViewCell.m */; };
+		8B77250C1F302E6200D1B521 /* FeedBackTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8B77250A1F302E6200D1B521 /* FeedBackTableViewCell.xib */; };
+		8B77250F1F31586300D1B521 /* AlterView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B77250E1F31586300D1B521 /* AlterView.m */; };
 		8B7D5D821EB961260068058E /* CreateCourseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B7D5D801EB961260068058E /* CreateCourseViewController.m */; };
 		8B7D5D831EB961260068058E /* CreateCourseViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8B7D5D811EB961260068058E /* CreateCourseViewController.xib */; };
 		8B7D5D8C1EB96C430068058E /* CollectionFlowLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B7D5D8B1EB96C430068058E /* CollectionFlowLayout.m */; };
@@ -473,6 +489,28 @@
 		8B027A261EFB4E0000600E18 /* DataDownloadTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DataDownloadTableViewCell.h; sourceTree = "<group>"; };
 		8B027A271EFB4E0000600E18 /* DataDownloadTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DataDownloadTableViewCell.m; sourceTree = "<group>"; };
 		8B027A281EFB4E0000600E18 /* DataDownloadTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DataDownloadTableViewCell.xib; sourceTree = "<group>"; };
+		8B045B581F3458820021699B /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		8B045B591F3458820021699B /* MJExtension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MJExtension.h; sourceTree = "<group>"; };
+		8B045B5A1F3458820021699B /* MJExtensionConst.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MJExtensionConst.h; sourceTree = "<group>"; };
+		8B045B5B1F3458820021699B /* MJExtensionConst.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MJExtensionConst.m; sourceTree = "<group>"; };
+		8B045B5C1F3458820021699B /* MJFoundation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MJFoundation.h; sourceTree = "<group>"; };
+		8B045B5D1F3458820021699B /* MJFoundation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MJFoundation.m; sourceTree = "<group>"; };
+		8B045B5E1F3458820021699B /* MJProperty.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MJProperty.h; sourceTree = "<group>"; };
+		8B045B5F1F3458820021699B /* MJProperty.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MJProperty.m; sourceTree = "<group>"; };
+		8B045B601F3458820021699B /* MJPropertyKey.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MJPropertyKey.h; sourceTree = "<group>"; };
+		8B045B611F3458820021699B /* MJPropertyKey.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MJPropertyKey.m; sourceTree = "<group>"; };
+		8B045B621F3458820021699B /* MJPropertyType.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MJPropertyType.h; sourceTree = "<group>"; };
+		8B045B631F3458820021699B /* MJPropertyType.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MJPropertyType.m; sourceTree = "<group>"; };
+		8B045B641F3458820021699B /* NSObject+MJClass.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+MJClass.h"; sourceTree = "<group>"; };
+		8B045B651F3458820021699B /* NSObject+MJClass.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+MJClass.m"; sourceTree = "<group>"; };
+		8B045B661F3458820021699B /* NSObject+MJCoding.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+MJCoding.h"; sourceTree = "<group>"; };
+		8B045B671F3458820021699B /* NSObject+MJCoding.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+MJCoding.m"; sourceTree = "<group>"; };
+		8B045B681F3458820021699B /* NSObject+MJKeyValue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+MJKeyValue.h"; sourceTree = "<group>"; };
+		8B045B691F3458820021699B /* NSObject+MJKeyValue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+MJKeyValue.m"; sourceTree = "<group>"; };
+		8B045B6A1F3458820021699B /* NSObject+MJProperty.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+MJProperty.h"; sourceTree = "<group>"; };
+		8B045B6B1F3458820021699B /* NSObject+MJProperty.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+MJProperty.m"; sourceTree = "<group>"; };
+		8B045B6C1F3458820021699B /* NSString+MJExtension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+MJExtension.h"; sourceTree = "<group>"; };
+		8B045B6D1F3458820021699B /* NSString+MJExtension.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+MJExtension.m"; sourceTree = "<group>"; };
 		8B05CB681EC0056B0063EC20 /* TextsTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TextsTableViewCell.h; sourceTree = "<group>"; };
 		8B05CB691EC0056B0063EC20 /* TextsTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TextsTableViewCell.m; sourceTree = "<group>"; };
 		8B05CB6A1EC0056B0063EC20 /* TextsTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TextsTableViewCell.xib; sourceTree = "<group>"; };
@@ -613,6 +651,14 @@
 		8B6E61C81EE292B10040FDC1 /* CreateVoteTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CreateVoteTableViewCell.h; sourceTree = "<group>"; };
 		8B6E61C91EE292B10040FDC1 /* CreateVoteTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CreateVoteTableViewCell.m; sourceTree = "<group>"; };
 		8B6E61CA1EE292B10040FDC1 /* CreateVoteTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CreateVoteTableViewCell.xib; sourceTree = "<group>"; };
+		8B7725031F3029CE00D1B521 /* FeedbackViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FeedbackViewController.h; sourceTree = "<group>"; };
+		8B7725041F3029CE00D1B521 /* FeedbackViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FeedbackViewController.m; sourceTree = "<group>"; };
+		8B7725051F3029CE00D1B521 /* FeedbackViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FeedbackViewController.xib; sourceTree = "<group>"; };
+		8B7725081F302E6200D1B521 /* FeedBackTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FeedBackTableViewCell.h; sourceTree = "<group>"; };
+		8B7725091F302E6200D1B521 /* FeedBackTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FeedBackTableViewCell.m; sourceTree = "<group>"; };
+		8B77250A1F302E6200D1B521 /* FeedBackTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FeedBackTableViewCell.xib; sourceTree = "<group>"; };
+		8B77250D1F31586300D1B521 /* AlterView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AlterView.h; sourceTree = "<group>"; };
+		8B77250E1F31586300D1B521 /* AlterView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AlterView.m; sourceTree = "<group>"; };
 		8B7D5D7F1EB961260068058E /* CreateCourseViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CreateCourseViewController.h; sourceTree = "<group>"; };
 		8B7D5D801EB961260068058E /* CreateCourseViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CreateCourseViewController.m; sourceTree = "<group>"; };
 		8B7D5D811EB961260068058E /* CreateCourseViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CreateCourseViewController.xib; sourceTree = "<group>"; };
@@ -960,6 +1006,51 @@
 			name = DataDownload;
 			sourceTree = "<group>";
 		};
+		8B045B531F3458660021699B /* seating */ = {
+			isa = PBXGroup;
+			children = (
+				8B045B541F3458820021699B /* Lib */,
+			);
+			name = seating;
+			sourceTree = "<group>";
+		};
+		8B045B541F3458820021699B /* Lib */ = {
+			isa = PBXGroup;
+			children = (
+				8B045B571F3458820021699B /* MJExtension */,
+			);
+			path = Lib;
+			sourceTree = "<group>";
+		};
+		8B045B571F3458820021699B /* MJExtension */ = {
+			isa = PBXGroup;
+			children = (
+				8B045B581F3458820021699B /* Info.plist */,
+				8B045B591F3458820021699B /* MJExtension.h */,
+				8B045B5A1F3458820021699B /* MJExtensionConst.h */,
+				8B045B5B1F3458820021699B /* MJExtensionConst.m */,
+				8B045B5C1F3458820021699B /* MJFoundation.h */,
+				8B045B5D1F3458820021699B /* MJFoundation.m */,
+				8B045B5E1F3458820021699B /* MJProperty.h */,
+				8B045B5F1F3458820021699B /* MJProperty.m */,
+				8B045B601F3458820021699B /* MJPropertyKey.h */,
+				8B045B611F3458820021699B /* MJPropertyKey.m */,
+				8B045B621F3458820021699B /* MJPropertyType.h */,
+				8B045B631F3458820021699B /* MJPropertyType.m */,
+				8B045B641F3458820021699B /* NSObject+MJClass.h */,
+				8B045B651F3458820021699B /* NSObject+MJClass.m */,
+				8B045B661F3458820021699B /* NSObject+MJCoding.h */,
+				8B045B671F3458820021699B /* NSObject+MJCoding.m */,
+				8B045B681F3458820021699B /* NSObject+MJKeyValue.h */,
+				8B045B691F3458820021699B /* NSObject+MJKeyValue.m */,
+				8B045B6A1F3458820021699B /* NSObject+MJProperty.h */,
+				8B045B6B1F3458820021699B /* NSObject+MJProperty.m */,
+				8B045B6C1F3458820021699B /* NSString+MJExtension.h */,
+				8B045B6D1F3458820021699B /* NSString+MJExtension.m */,
+			);
+			path = MJExtension;
+			sourceTree = "<group>";
+		};
 		8B05CB721EC06FD60063EC20 /* Cell */ = {
 			isa = PBXGroup;
 			children = (
@@ -972,6 +1063,9 @@
 				8B1737151EC2F84900BE3C8F /* NoticeTableViewCell.h */,
 				8B1737161EC2F84900BE3C8F /* NoticeTableViewCell.m */,
 				8B1737171EC2F84900BE3C8F /* NoticeTableViewCell.xib */,
+				8B7725081F302E6200D1B521 /* FeedBackTableViewCell.h */,
+				8B7725091F302E6200D1B521 /* FeedBackTableViewCell.m */,
+				8B77250A1F302E6200D1B521 /* FeedBackTableViewCell.xib */,
 			);
 			name = Cell;
 			sourceTree = "<group>";
@@ -1172,6 +1266,7 @@
 		8BA2245B1EADF68500627A1B /* WisdomHall */ = {
 			isa = PBXGroup;
 			children = (
+				8B045B531F3458660021699B /* seating */,
 				8BA224B51EAED4DB00627A1B /* Utils */,
 				8BA224961EADFF2700627A1B /* FrameWork */,
 				8BA224951EADFF1600627A1B /* Model */,
@@ -1326,6 +1421,9 @@
 				8BEE94451F2C780500488651 /* CompanyProfileViewController.h */,
 				8BEE94461F2C780500488651 /* CompanyProfileViewController.m */,
 				8BEE94471F2C780500488651 /* CompanyProfileViewController.xib */,
+				8B7725031F3029CE00D1B521 /* FeedbackViewController.h */,
+				8B7725041F3029CE00D1B521 /* FeedbackViewController.m */,
+				8B7725051F3029CE00D1B521 /* FeedbackViewController.xib */,
 				8B05CB721EC06FD60063EC20 /* Cell */,
 			);
 			name = PersonalCenter;
@@ -1358,6 +1456,8 @@
 				8B081E191F0E0FA400493B81 /* SignPeople.m */,
 				8BEE94391F29DBF900488651 /* NoticeModel.h */,
 				8BEE943A1F29DBF900488651 /* NoticeModel.m */,
+				8B77250D1F31586300D1B521 /* AlterView.h */,
+				8B77250E1F31586300D1B521 /* AlterView.m */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -1861,6 +1961,7 @@
 			files = (
 				8BF82D7C1EDFFC6200D33473 /* VoteViewController.xib in Resources */,
 				8BF864BB1ECAD97300B7EED4 /* LICENSE in Resources */,
+				8B7725071F3029CE00D1B521 /* FeedbackViewController.xib in Resources */,
 				8B05CB771EC070060063EC20 /* SystemSetingTableViewCell.xib in Resources */,
 				8B027A151EF8F30100600E18 /* TheMeetingInfoViewController.xib in Resources */,
 				8B05CB7C1EC2ABFD0063EC20 /* PersonalInfoViewController.xib in Resources */,
@@ -1879,11 +1980,13 @@
 				8B64EB5C1F1A2BA900BF7D0F /* SelectClassViewController.xib in Resources */,
 				8B7D5D831EB961260068058E /* CreateCourseViewController.xib in Resources */,
 				8B7D5D911EB9782C0068058E /* CourseCollectionViewCell.xib in Resources */,
+				8B045B6F1F3458820021699B /* Info.plist in Resources */,
 				8B081DE21F06238E00493B81 /* DefinitionPersonalTableViewCell.xib in Resources */,
 				8B027A251EFA5FF200600E18 /* DataDownloadViewController.xib in Resources */,
 				8BB56D881EB2E2820023DAFF /* RedefineThePasswordViewController.xib in Resources */,
 				8B9CCC931F17204B001833FD /* SelectPeopleToClassViewController.xib in Resources */,
 				8BFB94671EE79745004BB963 /* JoinVoteTableViewCell.xib in Resources */,
+				8B77250C1F302E6200D1B521 /* FeedBackTableViewCell.xib in Resources */,
 				8B2E16EE1EBAD9F3008B7C57 /* InTheMeetingViewController.xib in Resources */,
 				8B05CB711EC015DB0063EC20 /* PersonalInfoTableViewCell.xib in Resources */,
 				8B2E16D61EB9C1EA008B7C57 /* CourseDetailsViewController.xib in Resources */,
@@ -2029,9 +2132,12 @@
 				8B2E16DE1EBABBC0008B7C57 /* InteractiveView.m in Sources */,
 				8BF864C71ECAD97300B7EED4 /* UIImage+MultiFormat.m in Sources */,
 				8B64EB5B1F1A2BA900BF7D0F /* SelectClassViewController.m in Sources */,
+				8B7725061F3029CE00D1B521 /* FeedbackViewController.m in Sources */,
+				8B045B701F3458820021699B /* MJExtensionConst.m in Sources */,
 				8B2E16D51EB9C1EA008B7C57 /* CourseDetailsViewController.m in Sources */,
 				8B027A181EF8F48800600E18 /* MeetingModel.m in Sources */,
 				8B05CB7B1EC2ABFD0063EC20 /* PersonalInfoViewController.m in Sources */,
+				8B045B761F3458820021699B /* NSObject+MJCoding.m in Sources */,
 				8BE877851EBC2E0C00866A34 /* EndTheTestViewController.m in Sources */,
 				8B2E16F71EBADA5D008B7C57 /* TheMeetingEndedViewController.m in Sources */,
 				8BA2249D1EADFFA400627A1B /* SignInViewController.m in Sources */,
@@ -2043,6 +2149,7 @@
 				8B0F41301EF522CF001AF4DF /* MJXChatViewController.m in Sources */,
 				8BF864C01ECAD97300B7EED4 /* SDWebImageDecoder.m in Sources */,
 				8BCE7CB01F03888D00FE261B /* EMCallOptions+NSCoding.m in Sources */,
+				8B045B721F3458820021699B /* MJProperty.m in Sources */,
 				8BA224BC1EAEE36800627A1B /* SignPromptView.m in Sources */,
 				8BF864C91ECAD97300B7EED4 /* UIImageView+WebCache.m in Sources */,
 				8BA224B81EAED53D00627A1B /* UIColor+HexString.m in Sources */,
@@ -2058,6 +2165,7 @@
 				8B9171C11ED2B7D9009686FD /* Questions.m in Sources */,
 				8BF864881ECAD21200B7EED4 /* MJRefreshBaseView.m in Sources */,
 				8BFB94661EE79745004BB963 /* JoinVoteTableViewCell.m in Sources */,
+				8B77250F1F31586300D1B521 /* AlterView.m in Sources */,
 				8BF864C21ECAD97300B7EED4 /* SDWebImageDownloaderOperation.m in Sources */,
 				8BCE7CCD1F04F07600FE261B /* AFNetworkReachabilityManager.m in Sources */,
 				8BA224C11EAEF5CB00627A1B /* TheLoginViewController.m in Sources */,
@@ -2067,6 +2175,7 @@
 				8BA224611EADF68500627A1B /* AppDelegate.m in Sources */,
 				8B0D960B1F1893A2006796E3 /* CreateCouresTableViewCell.m in Sources */,
 				8BE877901EBD69C000866A34 /* CreateTestViewController.m in Sources */,
+				8B045B781F3458820021699B /* NSObject+MJProperty.m in Sources */,
 				8BFB947A1EE94948004BB963 /* VoteDrawView.m in Sources */,
 				8B081DFB1F06524000493B81 /* HanyuPinyinOutputFormat.m in Sources */,
 				8B064E541F00D8D80004C3D4 /* MJXChatCellTableViewCell.m in Sources */,
@@ -2076,7 +2185,9 @@
 				8BF8648C1ECAD21200B7EED4 /* UIScrollView+MJExtension.m in Sources */,
 				8BF864C81ECAD97300B7EED4 /* UIImageView+HighlightedWebCache.m in Sources */,
 				8BA224A71EAE000000627A1B /* PersonalCenterViewController.m in Sources */,
+				8B77250B1F302E6200D1B521 /* FeedBackTableViewCell.m in Sources */,
 				8B1737131EC2F6A700BE3C8F /* NoticeViewController.m in Sources */,
+				8B045B741F3458820021699B /* MJPropertyType.m in Sources */,
 				8BE913991EEF7EF000000282 /* DiscussListTableViewCell.m in Sources */,
 				8BF8648A1ECAD21200B7EED4 /* MJRefreshFooterView.m in Sources */,
 				8BF82D811EE001D600D33473 /* VoteTableViewCell.m in Sources */,
@@ -2095,7 +2206,9 @@
 				8B7D5D821EB961260068058E /* CreateCourseViewController.m in Sources */,
 				8BCE7CCF1F04F07600FE261B /* AFURLRequestSerialization.m in Sources */,
 				8BFB946B1EE7F7F1004BB963 /* ResultsOfVoteViewController.m in Sources */,
+				8B045B711F3458820021699B /* MJFoundation.m in Sources */,
 				8BF864BD1ECAD97300B7EED4 /* NSData+ImageContentType.m in Sources */,
+				8B045B771F3458820021699B /* NSObject+MJKeyValue.m in Sources */,
 				8BF82D771EDFB32500D33473 /* CollectionHeadView.m in Sources */,
 				8BB56D641EAF38CA0023DAFF /* AppSetingPersongInfo.m in Sources */,
 				8B05CB701EC015DB0063EC20 /* PersonalInfoTableViewCell.m in Sources */,
@@ -2117,12 +2230,15 @@
 				8BF82D721EDEC50E00D33473 /* DiscussViewController.m in Sources */,
 				8BF864BE1ECAD97300B7EED4 /* SDImageCache.m in Sources */,
 				8BE913A41EEFB80000000282 /* MBProgressHUD.m in Sources */,
+				8B045B731F3458820021699B /* MJPropertyKey.m in Sources */,
 				8BF864711ECACAE800B7EED4 /* FMDatabaseQueue.m in Sources */,
 				8BE877691EBAF7A800866A34 /* ShareView.m in Sources */,
+				8B045B791F3458820021699B /* NSString+MJExtension.m in Sources */,
 				8B9B584F1EC998080010A1F1 /* TextListViewController.m in Sources */,
 				8BB56D6E1EB05C760023DAFF /* DefineThePasswordViewController.m in Sources */,
 				8B2E16E81EBAD9AF008B7C57 /* AllTheMeetingViewController.m in Sources */,
 				8BE877801EBC2DE000866A34 /* InTheTestViewController.m in Sources */,
+				8B045B751F3458820021699B /* NSObject+MJClass.m in Sources */,
 				8BF864C11ECAD97300B7EED4 /* SDWebImageDownloader.m in Sources */,
 				8B0DB1361ED561B80042DF0D /* AnswerModel.m in Sources */,
 				8BF864751ECACBEC00B7EED4 /* FMDBTool.m in Sources */,

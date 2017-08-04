@@ -12,6 +12,7 @@
 #import "PersonalInfoViewController.h"
 #import "NoticeViewController.h"
 #import "CompanyProfileViewController.h"
+#import "FeedbackViewController.h"
 #import "DYHeader.h"
 
 @interface PersonalCenterViewController ()<UITableViewDelegate,UITableViewDataSource>
@@ -55,7 +56,7 @@
     if (section == 0) {
         return 1;
     }else if (section == 1){
-        return 4;
+        return 5;
     }
     return 0;
 }
@@ -96,6 +97,12 @@
             self.hidesBottomBarWhenPushed = YES;
             [self.navigationController pushViewController:cVC animated:YES];
             self.hidesBottomBarWhenPushed = NO;
+        }else if (indexPath.row == 4){
+            FeedbackViewController * f = [[FeedbackViewController alloc] init];
+            self.hidesBottomBarWhenPushed = YES;
+            [self.navigationController pushViewController:f animated:YES];
+            self.hidesBottomBarWhenPushed = NO;
+            
         }
     }
 }

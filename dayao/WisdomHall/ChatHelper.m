@@ -92,11 +92,13 @@ static dispatch_once_t onceToken;
  */
 - (void)messagesDidReceive:(NSArray *)aMessages{
     NSMutableDictionary * dict = [[NSMutableDictionary alloc] initWithObjectsAndKeys:aMessages,@"messageAry", nil];
+    
     // 2.创建通知
     NSNotification *notification =[NSNotification notificationWithName:@"InfoNotification" object:nil userInfo:dict];
     // 3.通过 通知中心 发送 通知
     
     [[NSNotificationCenter defaultCenter] postNotification:notification];
+    
     [self addLocalNotificationWith:aMessages];
     
 }

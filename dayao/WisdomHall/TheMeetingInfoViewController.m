@@ -40,12 +40,18 @@
 
 @implementation TheMeetingInfoViewController
 
+-(void)dealloc{
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
 - (void)viewDidLoad {
     [super viewDidLoad];
     
     _user = [[Appsetting sharedInstance] getUsetInfo];
-
+    
     self.view.backgroundColor = [UIColor whiteColor];
+    
+    
+    
     
     //[self getData];
     
@@ -137,7 +143,7 @@
     NSMutableString *strUrl = [NSMutableString stringWithFormat:@"%@",_meetingModel.meetingTime];
     
     [strUrl deleteCharactersInRange:NSMakeRange(0,5)];
-
+    
     _meetingTime.text = [NSString stringWithFormat:@"会议时间：%@",strUrl];
     
     _interactiveBtn.layer.masksToBounds = YES;
@@ -178,7 +184,7 @@
             return;
         }else{
             if (![UIUtils validateWithStartTime:_meetingModel.meetingTime withExpireTime:nil]) {
-                UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:[NSString stringWithFormat:@"会议开始之后才可以签到"] message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil];
+                UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:[NSString stringWithFormat:@"会议开始之后一定时间范围内才可以签到"] message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil];
                 [alertView show];
                 return;
             }
@@ -187,7 +193,7 @@
         NSMutableDictionary * dictWifi =  [UIUtils getWifiName];
         
         if (![UIUtils isBlankString:[dictWifi objectForKey:@"BSSID"]]) {
-      
+            
             
             NSString * bssid  = [UIUtils specificationMCKAddress:[dictWifi objectForKey:@"BSSID"]];
             
@@ -201,7 +207,7 @@
             }else{
                 NSString * s = [_meetingModel.mck substringWithRange:NSMakeRange(_meetingModel.mck.length-4, 4)];
                 s = [NSString stringWithFormat:@"DAYAO_%@",s];
-                UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:[NSString stringWithFormat:@"请到WiFi列表连接指定WiFi:%@,再点击签到，若不能跳转请主动在WiFi页面链接无线信号再返回app进行签到，签到完成之后请链接数据流量保证数据传输",s] message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: @"取消", nil];
+                UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:[NSString stringWithFormat:@"请到WiFi列表连接指定WiFi:%@,再点击签到，若不能跳转请主动在WiFi页面连接无线信号再返回app进行签到，签到完成之后请连接数据流量保证数据传输",s] message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: @"取消", nil];
                 alertView.delegate = self;
                 alertView.tag = 1;
                 [alertView show];
@@ -221,27 +227,41 @@
 
 -(void)alter:(NSString *) str{
     if ([str isEqualToString:@"1002"]) {
+        [_timeRun invalidate];
+        
         UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"现在还不能签到" message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: nil];
         [_timeRun invalidate];
         _timeRun = nil;
         [alertView show];
     }else if ([str isEqualToString:@"1003"]){
+        [_timeRun invalidate];
+        
         UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"已经签到" message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: nil];
         [_timeRun invalidate];
         _timeRun = nil;
         [alertView show];
     }else if ([str isEqualToString:@"1004"]){
+        [_timeRun invalidate];
+        
         UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"没有参加课程" message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: nil];
         [alertView show];
         [_timeRun invalidate];
         _timeRun = nil;
     }else if ([str isEqualToString:@"0000"]){
+        [_timeRun invalidate];
+        
         UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"签到成功" message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: nil];
         [_signBtn setTitle:@"已签到" forState:UIControlStateNormal];
+        _meetingModel.signStatus = @"2";
         [alertView show];
-        [_timeRun invalidate];
         _timeRun = nil;
         _signNumber.text = @"签到状态：已签到";
+        // 2.创建通知
+        NSNotification *notification =[NSNotification notificationWithName:@"UpdateTheMeetingPage" object:nil userInfo:nil];
+        // 3.通过 通知中心 发送 通知
+        
+        [[NSNotificationCenter defaultCenter] postNotification:notification];
+        
     }else if ([str isEqualToString:@"5000"]){
         //        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"" message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: nil];
         //        [alertView show];
@@ -265,7 +285,7 @@
         if (buttonIndex == 0) {
             NSURL *url = [NSURL URLWithString:@"prefs:root=WIFI"];
             [[UIApplication sharedApplication] openURL:url];
-
+            
             if ([[UIApplication sharedApplication] canOpenURL:url])
             {
                 [[UIApplication sharedApplication] openURL:url];
@@ -275,15 +295,21 @@
         }
     }else if (alertView.tag == 2){
         if (buttonIndex == 0) {
-            [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"prefs:root=WIFI"]];
+            dispatch_after(1, dispatch_get_main_queue(), ^{
+                [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"prefs:root=WIFI"]];
+            });
+            
             //时间间隔
-            NSTimeInterval timeInterval = 1.0 ;
-            _timeRun =  [NSTimer scheduledTimerWithTimeInterval:timeInterval
-                                                         target:self
-                                                       selector:@selector(handleMaxShowTimer:)
-                                                       userInfo:nil
-                                                        repeats:YES];
-            [_timeRun fire];
+            NSTimeInterval timeInterval = 5.0 ;
+            dispatch_async(dispatch_get_global_queue(0, 0), ^{
+                _timeRun =  [NSTimer scheduledTimerWithTimeInterval:timeInterval
+                                                             target:self
+                                                           selector:@selector(handleMaxShowTimer:)
+                                                           userInfo:nil
+                                                            repeats:YES];
+                
+                [[NSRunLoop currentRunLoop] run];
+            });
         }else if(buttonIndex == 1){
             UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"若没有网络数据连接将不能签到" message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: nil];
             [alertView show];

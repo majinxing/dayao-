@@ -42,7 +42,9 @@
 @end
 
 @implementation CreateTemporaryCourseViewController
-
+-(void)dealloc{
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
 - (void)viewDidLoad {
     [super viewDidLoad];
     _n = 0;
@@ -118,14 +120,27 @@
 }
 -(void)createAcourse{
     NSDictionary * dict = [UIUtils createTemporaryCourseWith:_textFileAry ClassRoom:_classRoom joinClassPeople:_selectPeopleAry week:_week class1:_class1 class2:_class2];
-    
+    [self showHudInView:self.view hint:NSLocalizedString(@"正在创建课程", @"Load data...")];
     [[NetworkRequest sharedInstance] POST:CreateTemporaryCourse dict:dict succeed:^(id data) {
-        NSLog(@"%@",data);
-        [self.navigationController popViewControllerAnimated:YES];
+        NSString * str =[[data objectForKey:@"header"] objectForKey:@"code"];
+        if ([[NSString stringWithFormat:@"%@",str] isEqualToString:@"0000"]) {
+            // 2.创建通知
+            NSNotification *notification =[NSNotification notificationWithName:@"UpdateTheClassPage" object:nil userInfo:nil];
+            // 3.通过 通知中心 发送 通知
+            
+            [[NSNotificationCenter defaultCenter] postNotification:notification];
+            
+            [self.navigationController popViewControllerAnimated:YES];
+        }else{
+            UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"创建失败，请填写完整课堂信息并且按照提示的格式" message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: nil];
+            [alertView show];
+        }
+        [self hideHud];
     } failure:^(NSError *error) {
         NSLog(@"%@",error);
         UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"创建失败，请填写完整课堂信息并且按照提示的格式" message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: nil];
         [alertView show];
+        [self hideHud];
     }];
     
 }

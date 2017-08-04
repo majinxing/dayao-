@@ -14,22 +14,32 @@
 #import "MeetingModel.h"
 #import "MJRefresh.h"
 #import "SelectMeetingOrClassViewController.h"
+#import "AlterView.h"
 
 static NSString * cellIdentifier = @"cellIdentifier";
 
-@interface AllTheMeetingViewController ()<UICollectionViewDelegate,UICollectionViewDataSource>
+@interface AllTheMeetingViewController ()<UICollectionViewDelegate,UICollectionViewDataSource,AlterViewDelegate>
 @property (nonatomic,strong) UICollectionView * collection;
 @property (nonatomic,strong) NSMutableArray * meetingModelAry;
 @property (nonatomic,strong) UserModel * userModel;
 /** @brief 当前加载的页数 */
-@property (nonatomic) int page;
+@property (nonatomic,assign) int page;
+@property (nonatomic,assign) int temp;
+
+@property (nonatomic,strong)AlterView * alterView;
+
 @end
 
 @implementation AllTheMeetingViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
     _meetingModelAry = [NSMutableArray arrayWithCapacity:12];
+    
+    _temp = 0;
+    
+    [self addAlterView];
     
     [self setNavigationTitle];
     
@@ -42,9 +52,11 @@ static NSString * cellIdentifier = @"cellIdentifier";
     // Do any additional setup after loading the view from its nib.
 }
 -(void)viewWillAppear:(BOOL)animated{
-    if (_page>0) {
-        [self fetchChatRoomsWithPage:1 isHeader:YES];
-    }
+//    if (_temp==0) {
+//        _temp = 1;
+//    }else{
+//        [self fetchChatRoomsWithPage:1 isHeader:YES];
+//    }
 }
 /**
  *  显示navigation的标题
@@ -67,6 +79,13 @@ static NSString * cellIdentifier = @"cellIdentifier";
     self.hidesBottomBarWhenPushed = YES;
     [self.navigationController pushViewController:s animated:YES];
     self.hidesBottomBarWhenPushed = NO;
+}
+-(void)addAlterView{
+    _alterView = [[AlterView alloc] initWithFrame:CGRectMake(60, 200, APPLICATION_WIDTH-120, 120) withLabelText:@"暂无会议"];
+    _alterView.layer.masksToBounds = YES;
+    _alterView.layer.cornerRadius = 10;
+    _alterView.delegate = self;
+
 }
 /**
  * 添加collection
@@ -129,6 +148,14 @@ static NSString * cellIdentifier = @"cellIdentifier";
     _userModel = [[Appsetting sharedInstance] getUsetInfo];
     
     NSDictionary * dict = [[NSDictionary alloc] initWithObjectsAndKeys:[NSString stringWithFormat:@"%ld",(long)page],@"start",_userModel.peopleId,@"teacherId",[UIUtils getTime],@"startTime",@"",@"endTime", nil];
+    
+    
+    [[NetworkRequest sharedInstance] GET:QueryMeetingRoom dict:nil succeed:^(id data) {
+        NSLog(@"%@",data);
+    } failure:^(NSError *error) {
+        
+    }];
+    
     [[NetworkRequest sharedInstance] GET:QueryMeetingSelfCreate dict:dict succeed:^(id data) {
         NSDictionary * dict = [data objectForKey:@"header"];
         if ([[dict objectForKey:@"code"] isEqualToString:@"0000"]) {
@@ -147,7 +174,7 @@ static NSString * cellIdentifier = @"cellIdentifier";
         
     } failure:^(NSError *error) {
         NSLog(@"error %@",error);
-        [self hideHud];
+//        [self hideHud];
         
     }];
 }
@@ -178,12 +205,6 @@ static NSString * cellIdentifier = @"cellIdentifier";
         [self hideHud];
         
         [_collection reloadData];
-        dispatch_async(dispatch_get_main_queue(), ^{
-            if (_meetingModelAry.count == 0) {
-                UIAlertView * alter = [[UIAlertView alloc] initWithTitle:nil message:@"暂无会议" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil];
-                [alter show];
-            }
-        });
     } failure:^(NSError *error) {
         NSLog(@"失败%@",error);
         [self hideHud];
@@ -195,6 +216,10 @@ static NSString * cellIdentifier = @"cellIdentifier";
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
+#pragma mark AlterViewDelegate
+-(void)alterViewDeleageRemove{
+    [_alterView removeFromSuperview];
+}
 #pragma mark UICollectionViewDataSource
 //定义每个Section的四边间距
 -(UIEdgeInsets)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout insetForSectionAtIndex:(NSInteger)section
@@ -204,7 +229,10 @@ static NSString * cellIdentifier = @"cellIdentifier";
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
 {
     if (_meetingModelAry.count>0) {
+        [_alterView removeFromSuperview];
         return _meetingModelAry.count;
+    }else{
+        [self.view addSubview:_alterView];
     }
     return 0;
 }

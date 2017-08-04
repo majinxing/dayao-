@@ -170,7 +170,7 @@
     //    [_mySearchBar sizeToFit];
     //_mySearchBar.hidden = YES;  ///隐藏搜索框
     [self.view addSubview:self.mySearchBar];
-//    [self.mySearchBar becomeFirstResponder];
+    //    [self.mySearchBar becomeFirstResponder];
     [_mySearchBar setHidden:YES];
 }
 
@@ -227,7 +227,7 @@
     [self.bView removeFromSuperview];
     [self.pickerView removeFromSuperview];
     self.pickerView = nil;
-
+    
 }
 -(void)leftButton{
     [self.bView removeFromSuperview];
@@ -238,22 +238,29 @@
     [self.bView removeFromSuperview];
     [self.pickerView removeFromSuperview];
     self.pickerView = nil;
-
+    
     if (_temp == 1) {
-        SchoolModel * s = _pickAry[_n];
-        _school.department = s.department;
-        _school.departmentId = s.departmentId;
-        [_departments setTitle:_school.department forState:UIControlStateNormal];
+        if (_n<_pickAry.count) {
+            SchoolModel * s = _pickAry[_n];
+            _school.department = s.department;
+            _school.departmentId = s.departmentId;
+            [_departments setTitle:_school.department forState:UIControlStateNormal];
+        }
+        
     }else if (_temp == 2){
-        SchoolModel * s = _pickAry[_n];
-        _school.major = s.major;
-        _school.majorId = s.majorId;
-        [_professional setTitle:_school.major forState:UIControlStateNormal];
+        if (_n<_pickAry.count) {
+            SchoolModel * s = _pickAry[_n];
+            _school.major = s.major;
+            _school.majorId = s.majorId;
+            [_professional setTitle:_school.major forState:UIControlStateNormal];
+        }
     }else if (_temp == 3){
-        SchoolModel * s = _pickAry[_n];
-        _school.sclass = s.sclass;
-        _school.sclassId = s.sclassId;
-        [_theClass setTitle:_school.sclass forState:UIControlStateNormal];
+        if (_n<_pickAry.count) {
+            SchoolModel * s = _pickAry[_n];
+            _school.sclass = s.sclass;
+            _school.sclassId = s.sclassId;
+            [_theClass setTitle:_school.sclass forState:UIControlStateNormal];
+        }
     }
 }
 -(void)searchType:(UIButton *)btn{
@@ -300,7 +307,7 @@
     if (sender.tag == 1) {
         NSDictionary * dict = [[NSDictionary alloc] initWithObjectsAndKeys:_user.school,@"parentId",@"",@"level",@"",@"name", nil];
         [[NetworkRequest sharedInstance] GET:SchoolDepartMent dict:dict succeed:^(id data) {
-//            NSLog(@"%@",data);
+            //            NSLog(@"%@",data);
             NSArray * ary = [data objectForKey:@"body"];
             for (int i = 0; i<ary.count; i++) {
                 SchoolModel * s = [[SchoolModel alloc] init];
@@ -324,7 +331,7 @@
         }
         NSDictionary * dict = [[NSDictionary alloc] initWithObjectsAndKeys:[NSString stringWithFormat:@"%@",_school.departmentId],@"parentId",@"",@"level",@"",@"name", nil];
         [[NetworkRequest sharedInstance] GET:SchoolDepartMent dict:dict succeed:^(id data) {
-//            NSLog(@"%@",data);
+            //            NSLog(@"%@",data);
             NSArray * ary = [data objectForKey:@"body"];
             [_pickAry removeAllObjects];
             for (int i = 0; i<ary.count; i++) {
@@ -349,7 +356,7 @@
         }
         NSDictionary * dict = [[NSDictionary alloc] initWithObjectsAndKeys:[NSString stringWithFormat:@"%@",_school.majorId],@"parentId",@"",@"level",@"",@"name", nil];
         [[NetworkRequest sharedInstance] GET:SchoolDepartMent dict:dict succeed:^(id data) {
-//            NSLog(@"%@",data);
+            //            NSLog(@"%@",data);
             NSArray * ary = [data objectForKey:@"body"];
             [_pickAry removeAllObjects];
             for (int i = 0; i<ary.count; i++) {
@@ -426,7 +433,7 @@
             
         }];
     }else{
-         NSDictionary * dict = [[NSDictionary alloc] initWithObjectsAndKeys:[NSString stringWithFormat:@"%@",searchBar.text],@"name",@"1",@"start",@"1000",@"length", nil];
+        NSDictionary * dict = [[NSDictionary alloc] initWithObjectsAndKeys:[NSString stringWithFormat:@"%@",searchBar.text],@"name",@"1",@"start",@"1000",@"length", nil];
         [[NetworkRequest sharedInstance] GET:QueryPeople dict:dict succeed:^(id data) {
             NSArray * aty = [[data objectForKey:@"body"] objectForKey:@"list"];
             [_dataAry removeAllObjects];
@@ -448,12 +455,12 @@
         } failure:^(NSError *error) {
             
         }];
-
+        
     }
     
     
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-
+        
         dispatch_async(dispatch_get_main_queue(), ^{
             [_tableView reloadData];
         });
@@ -463,7 +470,7 @@
 #pragma mark UIPickViewDelegate
 
 -(NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView{
-  
+    
     return 1;
 }
 - (NSInteger)pickerView:(UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component
@@ -539,13 +546,13 @@
     return 10;
 }
 /*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
+ #pragma mark - Navigation
+ 
+ // In a storyboard-based application, you will often want to do a little preparation before navigation
+ - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+ // Get the new view controller using [segue destinationViewController].
+ // Pass the selected object to the new view controller.
+ }
+ */
 
 @end

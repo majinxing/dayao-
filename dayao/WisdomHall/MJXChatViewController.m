@@ -135,15 +135,30 @@
     _sendVoice.layer.masksToBounds = YES;
     _sendVoice.layer.borderWidth = 1;
     _sendVoice.layer.borderColor = RGBA_COLOR(214, 214, 214, 1).CGColor;
-    [_sendVoice addTarget:self action:@selector(sendVoicrPressed) forControlEvents:UIControlEventTouchUpInside];
+    //[_sendVoice addTarget:self action:@selector(sendVoicrPressed) forControlEvents:UIControlEventTouchUpInside];
+    [_sendVoice addTarget:self action:@selector(buttonAction:forEvent:) forControlEvents:UIControlEventAllTouchEvents];
     [_sendVoice setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
     [_btoView addSubview:_sendVoice];
 }
+#pragma mark 发送语音
+- (void)buttonAction:(id)sender forEvent:(UIEvent *)event{
+    UITouchPhase phase = event.allTouches.anyObject.phase;
+    if (phase == UITouchPhaseBegan) {
+        NSLog(@"press");
+        _recorderView = [[RecorderView alloc] initWithFrame:self.view.frame];
+        [_recorderView showInView:self.view];
+    }
+    else if(phase == UITouchPhaseEnded){
+        NSLog(@"release");
+        [_recorderView hide];
+
+    }
+}
 -(void)sendVoicrPressed{
-     _recorderView = [[RecorderView alloc] initWithFrame:self.view.frame];
-    [_recorderView showInView:self.view];
+    
 
 }
+#pragma mark 发送语音按钮
 -(void)sendVoice:(UIButton *)btn{
     if (_sendVoice.frame.size.height == 0) {
         _rect = _btoView.frame;

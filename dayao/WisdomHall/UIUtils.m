@@ -432,15 +432,16 @@
     NSString * time = [UIUtils getTime];
     NSString * year = [time substringWithRange:NSMakeRange(0, 4)];
     NSString * month = [time substringWithRange:NSMakeRange(5, 2)];
-    int y = [year intValue];
-    int m = [month intValue];
-    int  n = (y - 2017)*2;
-    if (m>8) {
+    NSInteger y = [year integerValue];
+    NSInteger m = [month integerValue];
+    NSInteger  n = 0;
+    n = (y-2017)*2;
+    if (m>=8) {
         n = n + 1;
     }else{
         n = n + 0;
     }
-    return n;
+    return (int)n;
 }
 +(BOOL)isPureInt:(NSString *)string{
     

@@ -23,10 +23,11 @@
 #import "MJRefresh.h"
 #import "CreateTemporaryCourseViewController.h"
 #import "SelectClassViewController.h"
+#import "AlterView.h"
 
 static NSString *cellIdentifier = @"cellIdentifier";
 
-@interface SignInViewController ()<UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout>
+@interface SignInViewController ()<UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout,AlterViewDelegate>
 @property (nonatomic,strong) UICollectionView * collection;
 @property (nonatomic,strong) UserModel * userModel;
 @property (nonatomic,strong) NSMutableArray * classAry;
@@ -34,6 +35,8 @@ static NSString *cellIdentifier = @"cellIdentifier";
 @property (nonatomic,assign) int page;
 
 @property (nonatomic,assign) int temp;
+
+@property (nonatomic,strong)AlterView * alterView;
 
 @end
 
@@ -47,19 +50,34 @@ static NSString *cellIdentifier = @"cellIdentifier";
     
     _classAry = [NSMutableArray arrayWithCapacity:10];
     
+    [self addAlterView];
+    
     [self setNavigationTitle];
     
     [self addCollection];
     
+    // 1.注册通知
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(UpdateTheClassPage) name:@"UpdateTheClassPage" object:nil];
     // Do any additional setup after loading the view from its nib.
 }
--(void)viewWillAppear:(BOOL)animated{
-    if (self.temp>1) {
-        [self headerRereshing];
-    }else{
-        _temp = 2;
-    }
+-(void)UpdateTheClassPage{
+    [self headerRereshing];
 }
+-(void)viewWillAppear:(BOOL)animated{
+    //    if (self.temp>1) {
+    //       // [self headerRereshing];
+    //    }else{
+    //        _temp = 2;
+    //    }
+}
+-(void)addAlterView{
+    _alterView = [[AlterView alloc] initWithFrame:CGRectMake(60, 200, APPLICATION_WIDTH-120, 120) withLabelText:@"暂无课程"];
+    _alterView.layer.masksToBounds = YES;
+    _alterView.layer.cornerRadius = 10;
+    _alterView.delegate = self;
+}
+
 -(void)addCollection{
     CollectionFlowLayout * flowLayout = [[CollectionFlowLayout alloc] init];
     _collection = [[UICollectionView alloc] initWithFrame:CGRectMake(0, 64,APPLICATION_WIDTH,APPLICATION_HEIGHT-48-64) collectionViewLayout:flowLayout];
@@ -115,7 +133,7 @@ static NSString *cellIdentifier = @"cellIdentifier";
                 [strongSelf hideHud];
                 [strongSelf getDataWithPage:aPage];
             });
-           
+            
             if (aIsHeader) {
                 [strongSelf.collection headerEndRefreshing];
             }else{
@@ -132,7 +150,7 @@ static NSString *cellIdentifier = @"cellIdentifier";
     NSDictionary * dict = [[NSDictionary alloc] initWithObjectsAndKeys:[NSString stringWithFormat:@"%ld",(long)page],@"start",_userModel.peopleId,@"teacherId",[UIUtils getTime],@"actStartTime",[UIUtils getMoreMonthTime],@"actEndTime",@"1000",@"length",_userModel.school,@"universityId",@"2",@"type",[NSString stringWithFormat:@"%d",[UIUtils getTermId]],@"termId",@"1",@"courseType",nil];
     
     [[NetworkRequest sharedInstance] GET:QueryCourse dict:dict succeed:^(id data) {
-//        NSLog(@"1");
+        //        NSLog(@"1");
         NSString * str = [[data objectForKey:@"header"] objectForKey:@"message"];
         if ([str isEqualToString:@"成功"]) {
             NSArray * ary = [[data objectForKey:@"body"] objectForKey:@"list"];
@@ -143,7 +161,7 @@ static NSString *cellIdentifier = @"cellIdentifier";
                 [_classAry addObject:c];
             }
         }
-//        [_collection reloadData];
+        //        [_collection reloadData];
         [self getSelfJoinClass:page];
     } failure:^(NSError *error) {
         [self hideHud];
@@ -154,7 +172,7 @@ static NSString *cellIdentifier = @"cellIdentifier";
     NSDictionary * dict = [[NSDictionary alloc] initWithObjectsAndKeys:[NSString stringWithFormat:@"%ld",(long)page],@"start",_userModel.peopleId,@"studentId",[UIUtils getTime],@"actStartTime",[UIUtils getMoreMonthTime],@"actEndTime",@"1000",@"length",_userModel.school,@"universityId",@"1",@"type",[NSString stringWithFormat:@"%d",[UIUtils getTermId]],@"termId",@"1",@"courseType",nil];
     
     [[NetworkRequest sharedInstance] GET:QueryCourse dict:dict succeed:^(id data) {
-//        NSLog(@"2");
+        //        NSLog(@"2");
         NSString * str = [[data objectForKey:@"header"] objectForKey:@"message"];
         if ([str isEqualToString:@"成功"]) {
             NSArray * ary = [[data objectForKey:@"body"] objectForKey:@"list"];
@@ -164,11 +182,10 @@ static NSString *cellIdentifier = @"cellIdentifier";
                 [_classAry addObject:c];
             }
         }
-//        [_collection reloadData];
+        //        [_collection reloadData];
         [self getSelfCreateClassType:page];
     } failure:^(NSError *error) {
         [self hideHud];
-
         NSLog(@"%@",error);
     }];
 }
@@ -176,7 +193,7 @@ static NSString *cellIdentifier = @"cellIdentifier";
 -(void)getSelfCreateClassType:(NSInteger)page{
     NSDictionary * dict = [[NSDictionary alloc] initWithObjectsAndKeys:[NSString stringWithFormat:@"%ld",(long)page],@"start",_userModel.peopleId,@"teacherId",[UIUtils getTime],@"actStartTime",[UIUtils getMoreMonthTime],@"actEndTime",@"1000",@"length",_userModel.school,@"universityId",@"2",@"type",@"2",@"courseType",nil];
     [[NetworkRequest sharedInstance] GET:QueryCourse dict:dict succeed:^(id data) {
-//        NSLog(@"3");
+        //        NSLog(@"3");
         NSString * str = [[data objectForKey:@"header"] objectForKey:@"message"];
         if ([str isEqualToString:@"成功"]) {
             NSArray * ary = [[data objectForKey:@"body"] objectForKey:@"list"];
@@ -186,11 +203,10 @@ static NSString *cellIdentifier = @"cellIdentifier";
                 [_classAry addObject:c];
             }
         }
-//        [_collection reloadData];
+        //        [_collection reloadData];
         [self getSelfJoinClassType:page];
     } failure:^(NSError *error) {
-        [self hideHud];
-
+       [self hideHud];
         NSLog(@"%@",error);
     }];
 }
@@ -198,7 +214,7 @@ static NSString *cellIdentifier = @"cellIdentifier";
 -(void)getSelfJoinClassType:(NSInteger)page{
     NSDictionary * dict = [[NSDictionary alloc] initWithObjectsAndKeys:[NSString stringWithFormat:@"%ld",(long)page],@"start",_userModel.peopleId,@"studentId",[UIUtils getTime],@"actStartTime",[UIUtils getMoreMonthTime],@"actEndTime",@"1000",@"length",_userModel.school,@"universityId",@"1",@"type",@"2",@"courseType",nil];
     [[NetworkRequest sharedInstance] GET:QueryCourse dict:dict succeed:^(id data) {
-//        NSLog(@"4");
+        //        NSLog(@"4");
         NSString * str = [[data objectForKey:@"header"] objectForKey:@"message"];
         if ([str isEqualToString:@"成功"]) {
             NSArray * ary = [[data objectForKey:@"body"] objectForKey:@"list"];
@@ -210,12 +226,12 @@ static NSString *cellIdentifier = @"cellIdentifier";
         }
         for (int i = 0 ; i<_classAry.count; i++) {
             ClassModel * c = _classAry[i];
-
+            
             for (int j = i; j<_classAry.count; j++) {
                 ClassModel * c1 = _classAry[j];
                 //date02比date01小
                 if ([[UIUtils compareTimeStartTime:c.actStarTime withExpireTime:c1.actStarTime] isEqualToString:@"-1"]) {
-//                    c2 = c1;
+                    //                    c2 = c1;
                     ClassModel *c2 = [[ClassModel alloc] init];
                     c2 = c;
                     [_classAry setObject:c1 atIndexedSubscript:i];
@@ -227,18 +243,15 @@ static NSString *cellIdentifier = @"cellIdentifier";
         dispatch_async(dispatch_get_main_queue(), ^{
             [self hideHud];
             [_collection reloadData];
-            if (_classAry.count==0) {
-                UIAlertView * alter = [[UIAlertView alloc] initWithTitle:nil message:@"今天暂无课" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil];
-                [alter show];
-            }
+            
         });
         
     } failure:^(NSError *error) {
         [self hideHud];
-
+        
         NSLog(@"%@",error);
     }];
-
+    
 }
 /**
  *  显示navigation的标题
@@ -300,6 +313,10 @@ static NSString *cellIdentifier = @"cellIdentifier";
     //弹出提示框；
     [self presentViewController:alert animated:true completion:nil];
 }
+#pragma mark AlterViewDelegate
+-(void)alterViewDeleageRemove{
+    [_alterView removeFromSuperview];
+}
 #pragma mark ---- UIAlterAction
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
@@ -314,8 +331,12 @@ static NSString *cellIdentifier = @"cellIdentifier";
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
 {
     if (_classAry.count>0) {
+        [_alterView removeFromSuperview];
         return _classAry.count;
+    }else if(_classAry.count == 0) {
+        [self.view addSubview:_alterView];
     }
+    
     return 0;
 }
 
@@ -346,21 +367,24 @@ static NSString *cellIdentifier = @"cellIdentifier";
 //初次点击走
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    self.hidesBottomBarWhenPushed = YES;
-    CourseDetailsViewController * cdetailVC = [[CourseDetailsViewController alloc] init];
-    cdetailVC.c = _classAry[indexPath.row];
-    [self.navigationController pushViewController:cdetailVC animated:YES];
-    self.hidesBottomBarWhenPushed=NO;
+    if (indexPath.row<_classAry.count) {
+        self.hidesBottomBarWhenPushed = YES;
+        CourseDetailsViewController * cdetailVC = [[CourseDetailsViewController alloc] init];
+        cdetailVC.c = _classAry[indexPath.row];
+        [self.navigationController pushViewController:cdetailVC animated:YES];
+        self.hidesBottomBarWhenPushed=NO;
+    }
 }
 //有了初次点击再走这个
 - (void)collectionView:(UICollectionView *)collectionView didDeselectItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    self.hidesBottomBarWhenPushed = YES;
-    CourseDetailsViewController * cdetailVC = [[CourseDetailsViewController alloc] init];
-    cdetailVC.c = _classAry[indexPath.row];
-    
-    [self.navigationController pushViewController:cdetailVC animated:YES];
-    self.hidesBottomBarWhenPushed=NO;
+    if (indexPath.row<_classAry.count) {
+        self.hidesBottomBarWhenPushed = YES;
+        CourseDetailsViewController * cdetailVC = [[CourseDetailsViewController alloc] init];
+        cdetailVC.c = _classAry[indexPath.row];
+        [self.navigationController pushViewController:cdetailVC animated:YES];
+        self.hidesBottomBarWhenPushed=NO;
+    }
 }
 #pragma mark UICollectionViewDelegateFlowLayout
 - (CGSize)collectionView:(nonnull UICollectionView *)collectionView layout:(nonnull UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(nonnull NSIndexPath *)indexPath{

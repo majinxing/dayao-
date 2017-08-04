@@ -143,7 +143,6 @@ static NSString * cellIdentifier = @"cellIdentifier";
                 [_classModelAry removeAllObjects];
             }
             dispatch_async(dispatch_get_main_queue(), ^{
-                [strongSelf hideHud];
                 [strongSelf getDataWithPage:aPage];
             });
             
@@ -174,9 +173,10 @@ static NSString * cellIdentifier = @"cellIdentifier";
                 [_classModelAry addObject:c];
             }
         }
-//        [_collection reloadData];
         [self getSelfJoinClass:page];
     } failure:^(NSError *error) {
+        [self hideHud];
+
         NSLog(@"%@",error);
     }];
 }
@@ -193,10 +193,11 @@ static NSString * cellIdentifier = @"cellIdentifier";
                 [_classModelAry addObject:c];
             }
         }
-//        [_collection reloadData];
         [self getSelfCreateClassType:page];
     } failure:^(NSError *error) {
         NSLog(@"%@",error);
+        [self hideHud];
+
     }];
 }
 //临时
@@ -213,10 +214,11 @@ static NSString * cellIdentifier = @"cellIdentifier";
                 [_classModelAry addObject:c];
             }
         }
-//        [_collection reloadData];
         [self getSelfJoinClassType:page];
     } failure:^(NSError *error) {
         NSLog(@"%@",error);
+        [self hideHud];
+
     }];
 }
 //临时
@@ -233,11 +235,22 @@ static NSString * cellIdentifier = @"cellIdentifier";
                 [_classModelAry addObject:c];
             }
         }
+        
         dispatch_async(dispatch_get_main_queue(), ^{
             [_collection reloadData];
+            if (_classModelAry.count>0) {
+                
+            }else{
+                UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"没有搜索到对应的课程" message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: nil];
+                [alertView show];
+            }
+            [self hideHud];
+
         });
     } failure:^(NSError *error) {
         NSLog(@"%@",error);
+        [self hideHud];
+
     }];
     
 }
