@@ -165,11 +165,13 @@ static NSString * cellIdentifier = @"cellIdentifier";
             }
             [self getSelfCreateMeetingList:page];
             [_collection reloadData];
+        }else{
+            [self hideHud];
         }
         
     } failure:^(NSError *error) {
         NSLog(@"error %@",error);
-//        [self hideHud];
+        [self hideHud];
         
     }];
 }

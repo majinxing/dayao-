@@ -24,6 +24,9 @@
 #import "CreateTemporaryCourseViewController.h"
 #import "SelectClassViewController.h"
 #import "AlterView.h"
+#import "DYTabBarViewController.h"
+#import "ChatHelper.h"
+#import "TheLoginViewController.h"
 
 static NSString *cellIdentifier = @"cellIdentifier";
 
@@ -65,11 +68,18 @@ static NSString *cellIdentifier = @"cellIdentifier";
     [self headerRereshing];
 }
 -(void)viewWillAppear:(BOOL)animated{
-    //    if (self.temp>1) {
-    //       // [self headerRereshing];
-    //    }else{
-    //        _temp = 2;
-    //    }
+    BOOL B = [UIUtils tokenThePeriodOfValidity];
+    if (B) {
+        UIAlertView * alter = [[UIAlertView alloc] initWithTitle:nil message:@"登录过期请重新登录" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil];
+        [alter show];
+        [[Appsetting sharedInstance] getOut];
+        DYTabBarViewController *rootVC = [DYTabBarViewController sharedInstance];
+        rootVC = nil;
+        ChatHelper * c =[ChatHelper shareHelper];
+        [c getOut];
+        TheLoginViewController * userLogin = [[TheLoginViewController alloc] init];
+        [UIApplication sharedApplication].keyWindow.rootViewController =[[UINavigationController alloc] initWithRootViewController:userLogin];
+    }
 }
 -(void)addAlterView{
     _alterView = [[AlterView alloc] initWithFrame:CGRectMake(60, 200, APPLICATION_WIDTH-120, 120) withLabelText:@"暂无课程"];

@@ -29,5 +29,6 @@
 @property (nonatomic,copy) NSString * sex;
 @property (nonatomic,copy) NSString * region;
 @property (nonatomic,copy) NSString * sign;//个性签名
+@property (nonatomic,copy) NSString * token;
 
 @end

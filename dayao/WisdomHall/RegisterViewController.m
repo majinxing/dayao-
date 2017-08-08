@@ -48,7 +48,7 @@
  **/
 -(void)setNavigationTitle{
     [UIApplication sharedApplication].statusBarStyle = UIStatusBarStyleLightContent;
-   // [self.navigationController.navigationBar setBarTintColor:[UIColor blackColor]];
+    // [self.navigationController.navigationBar setBarTintColor:[UIColor blackColor]];
     [self.navigationController.navigationBar setTitleTextAttributes:@{
                                                                       NSFontAttributeName:[UIFont systemFontOfSize:17],
                                                                       NSForegroundColorAttributeName:[UIColor blackColor]}];
@@ -78,7 +78,7 @@
             [alertView show];
         }
     }];
-
+    
     [_getVerificationCodeBtn setEnabled:NO];
     //时间间隔
     NSTimeInterval timeInterval = 1.0 ;
@@ -118,9 +118,12 @@
     }
 }
 - (IBAction)registerButtonPressed:(id)sender {
-//    DefineThePasswordViewController * definePWVC = [[DefineThePasswordViewController alloc] init];
-//    definePWVC.phoneNumber = _phoneNumber;
-//    [self.navigationController pushViewController:definePWVC animated:YES];
+    if ([[NSString stringWithFormat:@"%@",_Verification] isEqualToString:@"0"]) {
+        DefineThePasswordViewController * definePWVC = [[DefineThePasswordViewController alloc] init];
+        definePWVC.phoneNumber = _phoneNumber;
+        [self.navigationController pushViewController:definePWVC animated:YES];
+    }
+    
     
     [SMSSDK commitVerificationCode:_Verification phoneNumber:_phoneNumber zone:@"86" result:^(NSError *error) {
         
@@ -137,7 +140,7 @@
             NSLog(@"失败");
         }
     }];
-  
+    
 }
 
 - (void)didReceiveMemoryWarning {
@@ -153,13 +156,13 @@
     }
 }
 /*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
+ #pragma mark - Navigation
+ 
+ // In a storyboard-based application, you will often want to do a little preparation before navigation
+ - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+ // Get the new view controller using [segue destinationViewController].
+ // Pass the selected object to the new view controller.
+ }
+ */
 
 @end

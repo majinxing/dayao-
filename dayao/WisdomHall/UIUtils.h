@@ -60,5 +60,7 @@
 + (NSString*)weekdayStringFromDate:(NSString *)startTime;
 //版本号比较
 +(BOOL)compareTheVersionNumber:(NSString *)netVersion withLocal:(NSString *)localVersion;
+//显示token是否过期
++(BOOL)tokenThePeriodOfValidity;
 @end
 

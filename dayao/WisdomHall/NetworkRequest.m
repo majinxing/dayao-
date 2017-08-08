@@ -63,6 +63,15 @@
     manager.responseSerializer.acceptableContentTypes = [NSSet setWithObjects:@"text/html",@"application/json", @"text/json", nil];
     manager.requestSerializer = [AFJSONRequestSerializer serializer];
     [manager.requestSerializer setValue:@"application/json"forHTTPHeaderField:@"Content-Type"];
+    //调出请求头
+    
+    manager.requestSerializer = [AFJSONRequestSerializer serializer];
+    
+    //将token封装入请求头
+    
+    UserModel * user = [[Appsetting sharedInstance] getUsetInfo];
+    [manager.requestSerializer setValue:[NSString stringWithFormat:@"Bearer %@",user.token] forHTTPHeaderField:@"token"];
+
 //    manager.responseSerializer.acceptableContentTypes = [NSSet setWithObject:@"application/json"];
     //发送网络请求(请求方式为POST)
     URLString = [NSString stringWithFormat:@"%@%@",BaseURL,URLString];
@@ -95,6 +104,15 @@
     //如果报接受类型不一致请替换一致text/html或别的
 //    manager.responseSerializer.acceptableContentTypes = [NSSet setWithObjects:@"text/html",nil];
     [ manager.requestSerializer setValue:@"application/json"forHTTPHeaderField:@"Content-Type"];
+    //调出请求头
+    
+    manager.requestSerializer = [AFJSONRequestSerializer serializer];
+    
+    //将token封装入请求头
+    
+    UserModel * user = [[Appsetting sharedInstance] getUsetInfo];
+    
+    [manager.requestSerializer setValue:[NSString stringWithFormat:@"Bearer %@",user.token] forHTTPHeaderField:@"token"];
     
 //    manager.responseSerializer.acceptableContentTypes = [NSSet setWithObject:@"application/json"];
     //发送网络请求(请求方式为GET)

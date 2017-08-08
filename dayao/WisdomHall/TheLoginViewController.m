@@ -43,6 +43,7 @@
 }
 - (IBAction)LoginButtonPressed:(id)sender {
     //15243670131
+    [self showHudInView:self.view hint:NSLocalizedString(@"正在加载", @"Load data...")];
     if ([UIUtils isSimplePhone:_personalAccount.text]) {
         
         NSDictionary * dict = [[NSDictionary alloc] initWithObjectsAndKeys:_personalAccount.text,@"phone",_personalPassword.text,@"password", nil];
@@ -51,8 +52,11 @@
             NSLog(@"%@",data);
             NSDictionary * d = [data objectForKey:@"header"];
             if ([[d objectForKey:@"code"] isEqualToString:@"0000"]) {
+                [self hideHud];
+
                 NSMutableDictionary * dict = [[NSMutableDictionary alloc] init];
                 dict = [data objectForKey:@"body"];
+                
                 [[Appsetting sharedInstance] sevaUserInfoWithDict:dict withStr:str];
                 
                 ChatHelper * c =[ChatHelper shareHelper];
@@ -63,18 +67,23 @@
                 
                 
             }else{
+                [self hideHud];
+
                 UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"密码错误" message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: nil];
                 [alertView show];
             }
             
         } failure:^(NSError *error) {
-            
+            [self hideHud];
+
             NSLog(@"%@",error);
             UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"服务器连接失败" message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: nil];
             [alertView show];
             
         }];
     }else{
+        [self hideHud];
+
         UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"请输入正确的手机号" message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: nil];
         [alertView show];
     }

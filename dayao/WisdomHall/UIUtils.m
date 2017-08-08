@@ -11,7 +11,13 @@
 #import "DYHeader.h"
 #import "ClassRoomModel.h"
 #import "SignPeople.h"
+#import "FMDBTool.h"
 
+@interface UIUtils()
+
+@property (nonatomic,strong)FMDatabase * db;
+
+@end
 @implementation UIUtils
 +(void)addNavigationWithView:(UIView *)view withTitle:(NSString *)str{
     //    UIView *navigation = [[UIView alloc] initWithFrame:CGRectMake(0, 0,APPLICATION_WIDTH, 65)];
@@ -553,6 +559,36 @@
             }
         }
     }
+    return NO;
+}
++(BOOL)tokenThePeriodOfValidity{
+    FMDatabase * db = [FMDBTool createDBWithName:SQLITE_NAME];
+    if ([db open]) {
+        NSString * sql = [NSString stringWithFormat:@"select * from %@",TOKENTIME_TABLE_NAME];
+        FMResultSet * rs = [FMDBTool queryWithDB:db withSqlStr:sql];
+        while (rs.next) {
+            
+            NSString * tokenTime = [rs stringForColumn:@"tokenTime"];
+            NSString * todayTime = [UIUtils getTime];
+            
+            NSDateFormatter *dateFomatter = [[NSDateFormatter alloc] init];
+            dateFomatter.dateFormat = @"yyyy-MM-dd";
+            
+            NSDate * tokenStr = [dateFomatter dateFromString:tokenTime];
+            NSDate * todayStr = [dateFomatter dateFromString:todayTime];
+            // 当前日历
+            NSCalendar *calendar = [NSCalendar currentCalendar]; // 需要对比的时间数据
+            
+            NSCalendarUnit unit = NSCalendarUnitYear | NSCalendarUnitMonth | NSCalendarUnitDay | NSCalendarUnitHour | NSCalendarUnitMinute | NSCalendarUnitSecond;
+            
+            // 对比时间差
+            NSDateComponents *dateCom = [calendar components:unit fromDate:tokenStr toDate:todayStr options:0];
+            if (dateCom.day>=6) {
+                return YES;
+            }
+        }
+    }
+    [db close];
     return NO;
 }
 @end

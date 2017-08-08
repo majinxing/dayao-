@@ -8,6 +8,13 @@
 
 #import "Appsetting.h"
 #import "UserModel.h"
+#import "FMDBTool.h"
+#import "DYHeader.h"
+
+@interface Appsetting()
+@property (nonatomic,strong)FMDatabase * db;
+
+@end
 
 @implementation Appsetting
 +(Appsetting *)sharedInstance{
@@ -41,6 +48,9 @@
     [_mySettingData setValue:[dict objectForKey:@"universityName"] forKey:@"user_universityName"];
     [_mySettingData setValue:[dict objectForKey:@"imPswd"] forKey:@"user_password"];
     [_mySettingData setValue:@"1" forKey:@"is_Login"];
+    [_mySettingData setValue:[dict objectForKey:@"token"] forKey:@"user_token"];
+    NSString * time = [UIUtils getTime];
+    [self insertedIntoNoticeTable:time];
     [_mySettingData synchronize];
 }
 -(void)saveUserOtherInfo:(NSDictionary *)dict{
@@ -73,7 +83,7 @@
     userInfo.sex = [_mySettingData objectForKey:@"user_sex"];
     userInfo.region = [_mySettingData objectForKey:@"user_region"];
     userInfo.sign = [_mySettingData objectForKey:@"user_sign"];
-    
+    userInfo.token = [_mySettingData objectForKey:@"user_token"];
     return userInfo;
 }
 -(BOOL)isLogin{
@@ -90,10 +100,51 @@
 -(void)getOut{
     [_mySettingData setValue:@"0" forKey:@"is_Login"];
     [_mySettingData synchronize];
-
+    
 }
-
-
+-(void)insertedIntoNoticeTable:(NSString *)noticeTime{
+    
+    _db = [FMDBTool createDBWithName:SQLITE_NAME];
+    
+    if ([_db open]) {
+        
+        [FMDBTool deleteTable:TOKENTIME_TABLE_NAME withDB:_db];
+        
+    }
+    [_db close];
+    
+    [self creatTextTable:TOKENTIME_TABLE_NAME];
+    
+    
+    if ([_db open]) {
+        NSString * sql = [NSString stringWithFormat:@"insert into %@ (tokenTime) values ('%@')",TOKENTIME_TABLE_NAME,noticeTime];
+        
+        BOOL rs = [FMDBTool insertWithDB:_db tableName:TOKENTIME_TABLE_NAME withSqlStr:sql];
+        
+        if (!rs) {
+            NSLog(@"失败");
+        }
+        
+    }
+    [_db close];
+}
+-(void)creatTextTable:(NSString *)tableName{
+    if ([_db open]) {
+        BOOL result = [FMDBTool createTableWithDB:_db tableName:tableName
+                                       parameters:@{
+                                                    @"tokenTime" : @"text",
+                                                    }];
+        if (result)
+        {
+            NSLog(@"建表成功");
+        }
+        else
+        {
+            NSLog(@"建表失败");
+        }
+    }
+    [_db close];
+}
 
 
 @end
