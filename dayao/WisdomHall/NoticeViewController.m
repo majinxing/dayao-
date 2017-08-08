@@ -11,6 +11,9 @@
 #import "DYHeader.h"
 #import "FMDBTool.h"
 #import "NoticeModel.h"
+#import "DYTabBarViewController.h"
+#import "ChatHelper.h"
+
 @interface NoticeViewController ()<UITableViewDelegate,UITableViewDataSource>
 @property (nonatomic,strong)UITableView * tableView;
 @property (nonatomic,strong)FMDatabase * db;
@@ -22,14 +25,46 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     _noticeAry = [NSMutableArray arrayWithCapacity:1];
+    
     [self selectFMDBTable];
+    
+    [self addTableView];
+    
+    [self setNavigationTitle];
+    // Do any additional setup after loading the view from its nib.
+}
+-(void)addTableView{
     _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 64, APPLICATION_WIDTH, APPLICATION_HEIGHT-64) style:UITableViewStylePlain];
     _tableView.delegate = self;
     _tableView.dataSource = self;
     _tableView.estimatedRowHeight = 80;
     _tableView.rowHeight = UITableViewAutomaticDimension;
     [self.view addSubview:_tableView];
-    // Do any additional setup after loading the view from its nib.
+}
+/**
+ *  显示navigation的标题
+ **/
+-(void)setNavigationTitle{
+    [UIApplication sharedApplication].statusBarStyle = UIStatusBarStyleLightContent;
+    //[self.navigationController.navigationBar setBarTintColor:[UIColor blackColor]];
+    [self.navigationController.navigationBar setTitleTextAttributes:@{
+                                                                      NSFontAttributeName:[UIFont systemFontOfSize:17],
+                                                                      NSForegroundColorAttributeName:[UIColor blackColor]}];
+    self.title = @"个人资料";
+   UIBarButtonItem * myButton = [[UIBarButtonItem alloc] initWithTitle:@"< 返回" style:UIBarButtonItemStylePlain target:self action:@selector(back)];
+    self.navigationItem.leftBarButtonItem = myButton;
+}
+-(void)back{
+    if ([_backType isEqualToString:@"TabBar"]) {
+        ChatHelper * c =[ChatHelper shareHelper];
+        
+        DYTabBarViewController *rootVC = [[DYTabBarViewController alloc] init];
+        
+        [UIApplication sharedApplication].keyWindow.rootViewController = rootVC;
+    }else{
+        [self.navigationController popViewControllerAnimated:YES];
+    }
+    
 }
 -(void)selectFMDBTable{
     _db = [FMDBTool createDBWithName:SQLITE_NAME];

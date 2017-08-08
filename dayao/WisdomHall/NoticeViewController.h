@@ -9,5 +9,5 @@
 #import <UIKit/UIKit.h>
 
 @interface NoticeViewController : UIViewController
-
+@property  (nonatomic,copy)NSString * backType;
 @end

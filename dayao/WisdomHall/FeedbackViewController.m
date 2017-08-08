@@ -63,7 +63,7 @@
     NSDictionary *infoDictionary = [[NSBundle mainBundle] infoDictionary];
     NSString *app_build = [infoDictionary objectForKey:@"CFBundleVersion"];
     UserModel * user = [[Appsetting sharedInstance] getUsetInfo];
-    NSDictionary * dict = [[NSDictionary alloc] initWithObjectsAndKeys:[NSString stringWithFormat:@"%@",_textAry[0]],@"contact",[NSString stringWithFormat:@"%@",_textAry[1]],@"describe",phoneModel,@"phoneModels",app_build,@"version",user.peopleId,@"userId",nil];
+    NSDictionary * dict = [[NSDictionary alloc] initWithObjectsAndKeys:[NSString stringWithFormat:@"%@",_textAry[0]],@"contact",[NSString stringWithFormat:@"%@",_textAry[1]],@"retroaction",phoneModel,@"phoneModels",app_build,@"version",user.peopleId,@"userId",nil];
     
     [[NetworkRequest sharedInstance] POST:FeedBack dict:dict succeed:^(id data) {
         NSLog(@"%@",data);

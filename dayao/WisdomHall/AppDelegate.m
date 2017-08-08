@@ -14,6 +14,7 @@
 #import "ConversationVC.h"
 #import <SystemConfiguration/CaptiveNetwork.h>
 #import "DYHeader.h"
+#import "NoticeViewController.h"
 
 @interface AppDelegate ()<EMCallManagerDelegate,EMChatManagerDelegate,EMChatroomManagerDelegate>
 @property(nonatomic,strong)ChatHelper * chat;
@@ -140,15 +141,14 @@
     return wifiName;
     
 }
-//-(void)callDidReceive:(EMCallSession *)aSession{
-//    
-//    NSLog(@"%s",__func__);
-//    ConversationVC * c  = [[ConversationVC alloc] init];
-//    c.callSession = aSession;
-//    self.window.rootViewController = [[UINavigationController alloc]initWithRootViewController:c];
-//    //    调用:
-//    EMError *error = nil;
-//}
+-(void)application:(UIApplication *)application didReceiveLocalNotification:(UILocalNotification *)notification{
+    NoticeViewController * n = [[NoticeViewController alloc] init];
+    _chat = [[ChatHelper alloc] init];
+    n.backType = @"TabBar";
+    self.window.rootViewController = [[UINavigationController alloc]initWithRootViewController:n];
+    
+        NSLog(@"%s",__func__);
+}
 - (void)applicationWillResignActive:(UIApplication *)application {
     // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
     // Use this method to pause ongoing tasks, disable timers, and invalidate graphics rendering callbacks. Games should use this method to pause the game.
