@@ -30,6 +30,10 @@ static dispatch_once_t onceToken;
 }
 -(void)getOut{
     onceToken = 0;
+    EMError *error = [[EMClient sharedClient] logout:YES];
+    if (!error) {
+        NSLog(@"退出成功");
+    }
 }
 - (void)dealloc
 {

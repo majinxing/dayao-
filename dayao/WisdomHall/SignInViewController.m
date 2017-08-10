@@ -68,18 +68,7 @@ static NSString *cellIdentifier = @"cellIdentifier";
     [self headerRereshing];
 }
 -(void)viewWillAppear:(BOOL)animated{
-    BOOL B = [UIUtils tokenThePeriodOfValidity];
-    if (B) {
-        UIAlertView * alter = [[UIAlertView alloc] initWithTitle:nil message:@"登录过期请重新登录" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil];
-        [alter show];
-        [[Appsetting sharedInstance] getOut];
-        DYTabBarViewController *rootVC = [DYTabBarViewController sharedInstance];
-        rootVC = nil;
-        ChatHelper * c =[ChatHelper shareHelper];
-        [c getOut];
-        TheLoginViewController * userLogin = [[TheLoginViewController alloc] init];
-        [UIApplication sharedApplication].keyWindow.rootViewController =[[UINavigationController alloc] initWithRootViewController:userLogin];
-    }
+    [UIUtils tokenThePeriodOfValidity];
 }
 -(void)addAlterView{
     _alterView = [[AlterView alloc] initWithFrame:CGRectMake(60, 200, APPLICATION_WIDTH-120, 120) withLabelText:@"暂无课程"];
@@ -170,9 +159,13 @@ static NSString *cellIdentifier = @"cellIdentifier";
                 [c setInfoWithDict:ary[i]];
                 [_classAry addObject:c];
             }
+            [self getSelfJoinClass:page];
+        }else if ([str isEqualToString:@"无效token"]){
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [UIUtils accountWasUnderTheRoof];
+                
+            });
         }
-        //        [_collection reloadData];
-        [self getSelfJoinClass:page];
     } failure:^(NSError *error) {
         [self hideHud];
         NSLog(@"%@",error);
@@ -216,7 +209,7 @@ static NSString *cellIdentifier = @"cellIdentifier";
         //        [_collection reloadData];
         [self getSelfJoinClassType:page];
     } failure:^(NSError *error) {
-       [self hideHud];
+        [self hideHud];
         NSLog(@"%@",error);
     }];
 }
@@ -327,7 +320,6 @@ static NSString *cellIdentifier = @"cellIdentifier";
 -(void)alterViewDeleageRemove{
     [_alterView removeFromSuperview];
 }
-#pragma mark ---- UIAlterAction
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.

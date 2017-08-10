@@ -12,6 +12,9 @@
 #import "ClassRoomModel.h"
 #import "SignPeople.h"
 #import "FMDBTool.h"
+#import "DYTabBarViewController.h"
+#import "ChatHelper.h"
+#import "TheLoginViewController.h"
 
 @interface UIUtils()
 
@@ -561,7 +564,7 @@
     }
     return NO;
 }
-+(BOOL)tokenThePeriodOfValidity{
++(void)tokenThePeriodOfValidity{
     FMDatabase * db = [FMDBTool createDBWithName:SQLITE_NAME];
     if ([db open]) {
         NSString * sql = [NSString stringWithFormat:@"select * from %@",TOKENTIME_TABLE_NAME];
@@ -584,12 +587,35 @@
             // 对比时间差
             NSDateComponents *dateCom = [calendar components:unit fromDate:tokenStr toDate:todayStr options:0];
             if (dateCom.day>=6) {
-                return YES;
+               
+                [[Appsetting sharedInstance] getOut];
+                DYTabBarViewController *rootVC = [DYTabBarViewController sharedInstance];
+                rootVC = nil;
+                ChatHelper * c =[ChatHelper shareHelper];
+                [c getOut];
+                TheLoginViewController * userLogin = [[TheLoginViewController alloc] init];
+                [UIApplication sharedApplication].keyWindow.rootViewController =[[UINavigationController alloc] initWithRootViewController:userLogin];
+                UIAlertView * alter = [[UIAlertView alloc] initWithTitle:nil message:@"登录过期请重新登录" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil];
+                [alter show];
+                return ;
             }
         }
     }
     [db close];
-    return NO;
+}
++(void)accountWasUnderTheRoof{
+    
+    [[Appsetting sharedInstance] getOut];
+    DYTabBarViewController *rootVC = [DYTabBarViewController sharedInstance];
+    rootVC = nil;
+    ChatHelper * c =[ChatHelper shareHelper];
+    [c getOut];
+    TheLoginViewController * userLogin = [[TheLoginViewController alloc] init];
+    [UIApplication sharedApplication].keyWindow.rootViewController =[[UINavigationController alloc] initWithRootViewController:userLogin];
+    UIAlertView * alter = [[UIAlertView alloc] initWithTitle:nil message:@"账号在另一台设备登录，请重新登录或修改密码" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil];
+    [alter show];
+    return ;
+
 }
 @end
 

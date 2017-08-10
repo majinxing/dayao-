@@ -62,7 +62,7 @@
 #define TOKENTIME_TABLE_NAME   @"tokenTimeTable"//记录token有效期的
 
 //接口116.62.161.250:8080 192.168.1.81:8080 api.dayaokeji.com
-#define BaseURL @"http://192.168.1.81:8080/"
+#define BaseURL @"http://api.dayaokeji.com/"
 
 #define Login            @"course/user/login"       //登录
 

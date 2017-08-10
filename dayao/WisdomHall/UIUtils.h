@@ -61,6 +61,8 @@
 //版本号比较
 +(BOOL)compareTheVersionNumber:(NSString *)netVersion withLocal:(NSString *)localVersion;
 //显示token是否过期
-+(BOOL)tokenThePeriodOfValidity;
++(void)tokenThePeriodOfValidity;
+//账号被顶下
++(void)accountWasUnderTheRoof;
 @end
 

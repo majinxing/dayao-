@@ -260,6 +260,8 @@
         UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"已经签到" message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: nil];
         [_timeRun invalidate];
         _timeRun = nil;
+        _signNumber.text = @"签到状态：已签到";
+
         [alertView show];
     }else if ([str isEqualToString:@"1004"]){
         [_timeRun invalidate];
@@ -270,13 +272,13 @@
         _timeRun = nil;
     }else if ([str isEqualToString:@"0000"]){
         [_timeRun invalidate];
-        
+        _signNumber.text = @"签到状态：已签到";
+        _meetingModel.signStatus = @"2";
+
         UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"签到成功" message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: nil];
         [_signBtn setTitle:@"已签到" forState:UIControlStateNormal];
-        _meetingModel.signStatus = @"2";
         [alertView show];
         _timeRun = nil;
-        _signNumber.text = @"签到状态：已签到";
         // 2.创建通知
         NSNotification *notification =[NSNotification notificationWithName:@"UpdateTheMeetingPage" object:nil userInfo:nil];
         // 3.通过 通知中心 发送 通知

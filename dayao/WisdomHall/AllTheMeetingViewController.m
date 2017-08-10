@@ -165,6 +165,10 @@ static NSString * cellIdentifier = @"cellIdentifier";
             }
             [self getSelfCreateMeetingList:page];
             [_collection reloadData];
+        }else if ([[dict objectForKey:@"code"] isEqualToString:@"401"]){
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [UIUtils accountWasUnderTheRoof];
+            });
         }else{
             [self hideHud];
         }
