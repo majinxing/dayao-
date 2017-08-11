@@ -228,6 +228,10 @@
 		8BEE943B1F29DBF900488651 /* NoticeModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BEE943A1F29DBF900488651 /* NoticeModel.m */; };
 		8BEE94481F2C780500488651 /* CompanyProfileViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BEE94461F2C780500488651 /* CompanyProfileViewController.m */; };
 		8BEE94491F2C780500488651 /* CompanyProfileViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8BEE94471F2C780500488651 /* CompanyProfileViewController.xib */; };
+		8BF7D3651F3D7D700087D35D /* CreateMeetingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BF7D3631F3D7D700087D35D /* CreateMeetingViewController.m */; };
+		8BF7D3661F3D7D700087D35D /* CreateMeetingViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8BF7D3641F3D7D700087D35D /* CreateMeetingViewController.xib */; };
+		8BF7D36A1F3DA6BF0087D35D /* QueryMeetingRoomViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BF7D3681F3DA6BF0087D35D /* QueryMeetingRoomViewController.m */; };
+		8BF7D36B1F3DA6BF0087D35D /* QueryMeetingRoomViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8BF7D3691F3DA6BF0087D35D /* QueryMeetingRoomViewController.xib */; };
 		8BF82D721EDEC50E00D33473 /* DiscussViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BF82D701EDEC50E00D33473 /* DiscussViewController.m */; };
 		8BF82D731EDEC50E00D33473 /* DiscussViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8BF82D711EDEC50E00D33473 /* DiscussViewController.xib */; };
 		8BF82D771EDFB32500D33473 /* CollectionHeadView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BF82D761EDFB32500D33473 /* CollectionHeadView.m */; };
@@ -848,6 +852,12 @@
 		8BEE94451F2C780500488651 /* CompanyProfileViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CompanyProfileViewController.h; sourceTree = "<group>"; };
 		8BEE94461F2C780500488651 /* CompanyProfileViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CompanyProfileViewController.m; sourceTree = "<group>"; };
 		8BEE94471F2C780500488651 /* CompanyProfileViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CompanyProfileViewController.xib; sourceTree = "<group>"; };
+		8BF7D3621F3D7D700087D35D /* CreateMeetingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CreateMeetingViewController.h; sourceTree = "<group>"; };
+		8BF7D3631F3D7D700087D35D /* CreateMeetingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CreateMeetingViewController.m; sourceTree = "<group>"; };
+		8BF7D3641F3D7D700087D35D /* CreateMeetingViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CreateMeetingViewController.xib; sourceTree = "<group>"; };
+		8BF7D3671F3DA6BF0087D35D /* QueryMeetingRoomViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QueryMeetingRoomViewController.h; sourceTree = "<group>"; };
+		8BF7D3681F3DA6BF0087D35D /* QueryMeetingRoomViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QueryMeetingRoomViewController.m; sourceTree = "<group>"; };
+		8BF7D3691F3DA6BF0087D35D /* QueryMeetingRoomViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = QueryMeetingRoomViewController.xib; sourceTree = "<group>"; };
 		8BF82D6F1EDEC50E00D33473 /* DiscussViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DiscussViewController.h; sourceTree = "<group>"; };
 		8BF82D701EDEC50E00D33473 /* DiscussViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DiscussViewController.m; sourceTree = "<group>"; };
 		8BF82D711EDEC50E00D33473 /* DiscussViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DiscussViewController.xib; sourceTree = "<group>"; };
@@ -1224,6 +1234,15 @@
 		8B081E091F0B763400493B81 /* delect */ = {
 			isa = PBXGroup;
 			children = (
+				8B2E16EA1EBAD9F3008B7C57 /* InTheMeetingViewController.h */,
+				8B2E16EB1EBAD9F3008B7C57 /* InTheMeetingViewController.m */,
+				8B2E16EC1EBAD9F3008B7C57 /* InTheMeetingViewController.xib */,
+				8B2E16EF1EBADA2F008B7C57 /* TheMeetingNotStartViewController.h */,
+				8B2E16F01EBADA2F008B7C57 /* TheMeetingNotStartViewController.m */,
+				8B2E16F11EBADA2F008B7C57 /* TheMeetingNotStartViewController.xib */,
+				8B2E16F41EBADA5D008B7C57 /* TheMeetingEndedViewController.h */,
+				8B2E16F51EBADA5D008B7C57 /* TheMeetingEndedViewController.m */,
+				8B2E16F61EBADA5D008B7C57 /* TheMeetingEndedViewController.xib */,
 				8B17370B1EC2EDE400BE3C8F /* MeetingViewController.h */,
 				8B17370C1EC2EDE400BE3C8F /* MeetingViewController.m */,
 				8B17370D1EC2EDE400BE3C8F /* MeetingViewController.xib */,
@@ -1265,15 +1284,6 @@
 				8B2E16E51EBAD9AF008B7C57 /* AllTheMeetingViewController.h */,
 				8B2E16E61EBAD9AF008B7C57 /* AllTheMeetingViewController.m */,
 				8B2E16E71EBAD9AF008B7C57 /* AllTheMeetingViewController.xib */,
-				8B2E16EA1EBAD9F3008B7C57 /* InTheMeetingViewController.h */,
-				8B2E16EB1EBAD9F3008B7C57 /* InTheMeetingViewController.m */,
-				8B2E16EC1EBAD9F3008B7C57 /* InTheMeetingViewController.xib */,
-				8B2E16EF1EBADA2F008B7C57 /* TheMeetingNotStartViewController.h */,
-				8B2E16F01EBADA2F008B7C57 /* TheMeetingNotStartViewController.m */,
-				8B2E16F11EBADA2F008B7C57 /* TheMeetingNotStartViewController.xib */,
-				8B2E16F41EBADA5D008B7C57 /* TheMeetingEndedViewController.h */,
-				8B2E16F51EBADA5D008B7C57 /* TheMeetingEndedViewController.m */,
-				8B2E16F61EBADA5D008B7C57 /* TheMeetingEndedViewController.xib */,
 				8B027A111EF8F30100600E18 /* TheMeetingInfoViewController.h */,
 				8B027A121EF8F30100600E18 /* TheMeetingInfoViewController.m */,
 				8B027A131EF8F30100600E18 /* TheMeetingInfoViewController.xib */,
@@ -1480,11 +1490,10 @@
 		8BA224931EADFEB500627A1B /* Interactive */ = {
 			isa = PBXGroup;
 			children = (
-				8B081E0B1F0B766D00493B81 /* SelectMeetingOrClassViewController.h */,
-				8B081E0C1F0B766D00493B81 /* SelectMeetingOrClassViewController.m */,
-				8B081E0D1F0B766D00493B81 /* SelectMeetingOrClassViewController.xib */,
-				8B081E091F0B763400493B81 /* delect */,
+				8BF7D3611F3D7D490087D35D /* CreateMeeting */,
+				8BF7D3601F3D7D320087D35D /* SelecteMeeting */,
 				8B2E16E41EBAD95A008B7C57 /* TheMeetingType */,
+				8B081E091F0B763400493B81 /* delect */,
 			);
 			name = Interactive;
 			sourceTree = "<group>";
@@ -1764,6 +1773,29 @@
 				8BE913A21EEFB80000000282 /* MBProgressHUD.m */,
 			);
 			path = MBProgressHUD;
+			sourceTree = "<group>";
+		};
+		8BF7D3601F3D7D320087D35D /* SelecteMeeting */ = {
+			isa = PBXGroup;
+			children = (
+				8B081E0B1F0B766D00493B81 /* SelectMeetingOrClassViewController.h */,
+				8B081E0C1F0B766D00493B81 /* SelectMeetingOrClassViewController.m */,
+				8B081E0D1F0B766D00493B81 /* SelectMeetingOrClassViewController.xib */,
+			);
+			name = SelecteMeeting;
+			sourceTree = "<group>";
+		};
+		8BF7D3611F3D7D490087D35D /* CreateMeeting */ = {
+			isa = PBXGroup;
+			children = (
+				8BF7D3621F3D7D700087D35D /* CreateMeetingViewController.h */,
+				8BF7D3631F3D7D700087D35D /* CreateMeetingViewController.m */,
+				8BF7D3641F3D7D700087D35D /* CreateMeetingViewController.xib */,
+				8BF7D3671F3DA6BF0087D35D /* QueryMeetingRoomViewController.h */,
+				8BF7D3681F3DA6BF0087D35D /* QueryMeetingRoomViewController.m */,
+				8BF7D3691F3DA6BF0087D35D /* QueryMeetingRoomViewController.xib */,
+			);
+			name = CreateMeeting;
 			sourceTree = "<group>";
 		};
 		8BF82D6E1EDEC4E800D33473 /* Discuss */ = {
@@ -2059,6 +2091,7 @@
 				8BE877811EBC2DE000866A34 /* InTheTestViewController.xib in Resources */,
 				8B2E16F81EBADA5D008B7C57 /* TheMeetingEndedViewController.xib in Resources */,
 				8B64EB571F1A162F00BF7D0F /* CreateTemporaryCourseViewController.xib in Resources */,
+				8BF7D36B1F3DA6BF0087D35D /* QueryMeetingRoomViewController.xib in Resources */,
 				8BE877771EBC2D6B00866A34 /* AllTestViewController.xib in Resources */,
 				8BA224AE1EAE00B000627A1B /* DYTabBarViewController.xib in Resources */,
 				8B0DB13C1ED6CA4E0042DF0D /* ImportTextViewController.xib in Resources */,
@@ -2077,6 +2110,7 @@
 				8B77250C1F302E6200D1B521 /* FeedBackTableViewCell.xib in Resources */,
 				8B2E16EE1EBAD9F3008B7C57 /* InTheMeetingViewController.xib in Resources */,
 				8B05CB711EC015DB0063EC20 /* PersonalInfoTableViewCell.xib in Resources */,
+				8BF7D3661F3D7D700087D35D /* CreateMeetingViewController.xib in Resources */,
 				8B2E16D61EB9C1EA008B7C57 /* CourseDetailsViewController.xib in Resources */,
 				8BFB94621EE6A381004BB963 /* JoinVoteViewController.xib in Resources */,
 				8B9CCB891F1468D6001833FD /* Hyphenate.podspec in Resources */,
@@ -2300,6 +2334,7 @@
 				8B9CCC921F17204B001833FD /* SelectPeopleToClassViewController.m in Sources */,
 				8BE877701EBC1CA800866A34 /* TextViewController.m in Sources */,
 				8BA224AD1EAE00B000627A1B /* DYTabBarViewController.m in Sources */,
+				8BF7D3651F3D7D700087D35D /* CreateMeetingViewController.m in Sources */,
 				8BF864CA1ECAD97300B7EED4 /* UIView+WebCacheOperation.m in Sources */,
 				8B1737091EC2BE2B00BE3C8F /* PersonalDataTableViewCell.m in Sources */,
 				8B7D5D821EB961260068058E /* CreateCourseViewController.m in Sources */,
@@ -2313,6 +2348,7 @@
 				8B05CB701EC015DB0063EC20 /* PersonalInfoTableViewCell.m in Sources */,
 				8BCE7CCC1F04F07600FE261B /* AFHTTPSessionManager.m in Sources */,
 				8B081E171F0CBA8900493B81 /* ClassRoomModel.m in Sources */,
+				8BF7D36A1F3DA6BF0087D35D /* QueryMeetingRoomViewController.m in Sources */,
 				8B9CCC8D1F14D3B7001833FD /* PlayerButton.m in Sources */,
 				8BF82D861EE1573200D33473 /* CreateVoteViewController.m in Sources */,
 				8B081E131F0C980200493B81 /* SelectClassRoomViewController.m in Sources */,

@@ -200,6 +200,7 @@
         }else if(_n==1){
             [_textFileAry setObject:@"头像签到" atIndexedSubscript:3];
         }
+        _n = 0;
     }else if (_temp == 6){
         [_textFileAry setObject:[NSString stringWithFormat:@"第%d节-第%d节",_class1+1,_class2+1] atIndexedSubscript:6];
     }else if (_temp == 7){
@@ -217,6 +218,9 @@
             day = [NSString stringWithFormat:@"%d",_day+1];
         }
         [_textFileAry setObject:[NSString stringWithFormat:@"%d-%@-%@",2017+_year,month,day] atIndexedSubscript:7];
+        _year = 0;
+        _month = 0;
+        _day = 0;
     }
     
     

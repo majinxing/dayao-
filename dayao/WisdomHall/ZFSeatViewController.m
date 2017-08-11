@@ -63,7 +63,6 @@
         NSDictionary *seatsDic = [NSDictionary dictionaryWithContentsOfFile:path];
         
         NSMutableString *strUrl = [NSMutableString stringWithFormat:@"%@",_seatTable];
-        //        NSString * str = [NSString stringWithFormat:@"++++++++++++@@@@@@+@@@@@@+@@@@@@++++++++++++/n+++++++++++@@@@@@@+@@@@@@@+@@@@@@@++++++++++/n+++++++++@@@@@@@@+@@@@@@@@+@@@@@@@@+++++++++/n++++++++@@@@@@@@@+@@@@@@@@@+@@@@@@@@@+++++++/n++++++@@@@@@@@@@+@@@@@@@@@@+@@@@@@@@@@++++++/n+++++@@@@@@@@@@@+@@@@@@@@@@@+@@@@@@@@@@@++++/n+++@@@@@@@@@@@@+@@@@@@@@@@@@+@@@@@@@@@@@@+++/n++@@@@@@@@@@@@@+@@@@@@@@@@@@@+@@@@@@@@@@@@@+/n@@@@@@@@@@@@@@+@@@@@@@@@@@@@@+@@@@@@@@@@@@@@"];
         NSArray * ary = [strUrl componentsSeparatedByString:@"\n"];
         NSMutableArray * a = [NSMutableArray arrayWithCapacity:1];
         

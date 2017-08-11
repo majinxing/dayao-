@@ -22,4 +22,5 @@
 -(void)addContentView:(NSString *)infoLabelText withTextFileText:(NSString *)textFile withIndex:(int)n;
 -(void)addCourseContentView:(NSString *)infoLabelText withTextFileText:(NSString *)textFile withIndex:(int)n;
 -(void)addTemporaryCourseContentView:(NSString *)infoLabelText withTextFileText:(NSString *)textFile withIndex:(int)n;
+-(void)addMeetingContentView:(NSString *)infoLabelText withTextFileText:(NSString *)textFile withIndex:(int)n;
 @end

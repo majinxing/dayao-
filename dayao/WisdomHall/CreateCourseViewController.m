@@ -219,6 +219,7 @@
         }else if(_n==1){
             [_textFileAry setObject:@"头像签到" atIndexedSubscript:3];
         }
+        _n = 0;
     }else if (_temp == 6){
         NSString * str1;
         NSString * str2;
@@ -228,6 +229,7 @@
         }else if(_m1!=0){
             str1 =  [NSString stringWithFormat:@"%d",_m1];
         }
+     
         if (_m2 == 0) {
             str2 = [NSString stringWithFormat:@"1"];
         }else if(_m2!=0){
@@ -240,6 +242,9 @@
         }else if(_m3==2){
             str3 =  [NSString stringWithFormat:@"双周"];
         }
+        _m1 = 0;
+        _m2 = 0;
+        _m3 = 0;
         [_textFileAry setObject:[NSString stringWithFormat:@"第%@周-到%@周-%@上课",str1,str2,str3] atIndexedSubscript:6];
     }else if (_temp == 8){
         [_textFileAry setObject:[NSString stringWithFormat:@"周%d-第%d节-第%d节",_week+1,_class1+1,_class2+1] atIndexedSubscript:8];
@@ -267,8 +272,6 @@
             _month = 0;
             _day = 0;
         }
-        
-        
     }
     
     [_tabelView reloadData];

@@ -15,7 +15,7 @@
 #import "MJRefresh.h"
 #import "SelectMeetingOrClassViewController.h"
 #import "AlterView.h"
-
+#import "CreateMeetingViewController.h"
 static NSString * cellIdentifier = @"cellIdentifier";
 
 @interface AllTheMeetingViewController ()<UICollectionViewDelegate,UICollectionViewDataSource,AlterViewDelegate>
@@ -52,11 +52,7 @@ static NSString * cellIdentifier = @"cellIdentifier";
     // Do any additional setup after loading the view from its nib.
 }
 -(void)viewWillAppear:(BOOL)animated{
-//    if (_temp==0) {
-//        _temp = 1;
-//    }else{
-//        [self fetchChatRoomsWithPage:1 isHeader:YES];
-//    }
+
 }
 /**
  *  显示navigation的标题
@@ -71,9 +67,15 @@ static NSString * cellIdentifier = @"cellIdentifier";
     
     UIBarButtonItem * selection = [[UIBarButtonItem alloc] initWithTitle:@"搜索" style:UIBarButtonItemStylePlain target:self action:@selector(selectionBtnPressed)];
     self.navigationItem.leftBarButtonItem = selection;
-    
+    UIBarButtonItem * createMeeting = [[UIBarButtonItem alloc] initWithTitle:@"创建会议" style:UIBarButtonItemStylePlain target:self action:@selector(createMeeting)];
+    self.navigationItem.rightBarButtonItem = createMeeting;
 }
-
+-(void)createMeeting{
+    CreateMeetingViewController * c = [[CreateMeetingViewController alloc] init];
+    self.hidesBottomBarWhenPushed = YES;
+    [self.navigationController pushViewController:c animated:YES];
+    self.hidesBottomBarWhenPushed = NO;
+}
 -(void)selectionBtnPressed{
     SelectMeetingOrClassViewController * s = [[SelectMeetingOrClassViewController alloc] init];
     self.hidesBottomBarWhenPushed = YES;

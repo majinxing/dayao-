@@ -206,6 +206,7 @@
         [_textFileAry setObject:@"学生" atIndexedSubscript:3];
         _m = 9;
     }
+    _n = 0;
     [_tableView reloadData];
 }
 - (void)didReceiveMemoryWarning {
