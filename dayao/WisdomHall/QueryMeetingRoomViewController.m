@@ -13,6 +13,7 @@
 @interface QueryMeetingRoomViewController ()<UITableViewDelegate,UITableViewDataSource>
 @property (nonatomic,strong)UITableView * tableView;
 @property (nonatomic,strong)NSMutableArray * meetingRoomAry;
+@property (nonatomic,strong)SeatIngModel * seat;
 @end
 
 @implementation QueryMeetingRoomViewController
@@ -30,6 +31,15 @@
     
     // Do any additional setup after loading the view from its nib.
 }
+- (void)returnText:(ReturnTextBlock)block {
+    self.returnTextBlock = block;
+}
+- (void)viewWillDisappear:(BOOL)animated {
+    
+    if (self.returnTextBlock != nil) {
+        self.returnTextBlock(_seat);
+    }
+}
 -(void)addTableView{
     _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 64, APPLICATION_WIDTH, APPLICATION_HEIGHT-64) style:UITableViewStylePlain];
     _tableView.delegate = self;
@@ -40,18 +50,26 @@
 -(void)getData{
     [[NetworkRequest sharedInstance] GET:QueryMeetingRoom dict:nil succeed:^(id data) {
         NSArray * ary = [[data objectForKey:@"body"] objectForKey:@"list"];
+        
         for (int i = 0; i<ary.count; i++) {
+            
             SeatIngModel * s = [[SeatIngModel alloc] init];
+            
             [s setInfoWithDict:ary[i]];
+            
             [_meetingRoomAry addObject:s];
+            
         }
+        
         [_tableView reloadData];
+        
         if (_meetingRoomAry.count>0) {
             
         }else{
             UIAlertView * alter = [[UIAlertView alloc] initWithTitle:nil message:@"暂时没有会议室" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil];
             [alter show];
         }
+        
     } failure:^(NSError *error) {
         
     }];
@@ -77,16 +95,26 @@
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:@"querMeetingCell"];;
     }
     SeatIngModel * s = _meetingRoomAry[indexPath.row];
+    
     cell.textLabel.text = s.seatTableNamel;
+    
     return cell;
 }
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+    
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    
+    _seat = _meetingRoomAry[indexPath.row];
+    
+    [self.navigationController popViewControllerAnimated:YES];
+    
 }
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
+    
     return 60;
 }
 -(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
+    
     return 10;
 }
 /*

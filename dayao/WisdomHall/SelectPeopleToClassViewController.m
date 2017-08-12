@@ -49,7 +49,7 @@
     _selectPeople = [NSMutableArray arrayWithCapacity:1];
     _user = [[Appsetting sharedInstance] getUsetInfo];
     _school = [[SchoolModel alloc] init];
-    
+    _school.schoolId = _user.school;
     [self addTableView];
     [self addButton];
     // Do any additional setup after loading the view from its nib.
@@ -329,7 +329,9 @@
             [alertView show];
             return;
         }
+        
         NSDictionary * dict = [[NSDictionary alloc] initWithObjectsAndKeys:[NSString stringWithFormat:@"%@",_school.departmentId],@"parentId",@"",@"level",@"",@"name", nil];
+        
         [[NetworkRequest sharedInstance] GET:SchoolDepartMent dict:dict succeed:^(id data) {
             //            NSLog(@"%@",data);
             NSArray * ary = [data objectForKey:@"body"];
@@ -373,9 +375,31 @@
             UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"查询失败" message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: nil];
             [alertView show];
         }];
+        
     }else if (sender.tag == 4){
-        NSDictionary * dict = [[NSDictionary alloc] initWithObjectsAndKeys:_school.schoolId,@"universityId",_school.departmentId,@"facultyId", _school.majorId,@"majorId",_school.schoolId,@"classId",@"1",@"start",@"100000",@"length",nil];
-        [[NetworkRequest sharedInstance] GET:QueryPeople dict:dict succeed:^(id data) {
+        
+        NSMutableDictionary * d = [[NSMutableDictionary alloc] init];
+        
+        [d setObject:[NSString stringWithFormat:@"%@",_school.schoolId] forKey:@"universityId"];
+        [d setObject:@"1" forKey:@"start"];
+        [d setObject:@"100000" forKey:@"length"];
+        
+        if (![UIUtils isBlankString:[NSString stringWithFormat:@"%@",_school.departmentId]]) {
+            
+            [d setObject:[NSString stringWithFormat:@"%@",_school.departmentId] forKey:@"facultyId"];
+            
+        }
+        if (![UIUtils isBlankString:[NSString stringWithFormat:@"%@",_school.majorId]]){
+            
+            [d setObject:[NSString stringWithFormat:@"%@",_school.majorId] forKey:@"majorId"];
+            
+        }
+        if (![UIUtils isBlankString:[NSString stringWithFormat:@"%@",[NSString stringWithFormat:@"%@",_school.sclassId]]]){
+            [d setObject:[NSString stringWithFormat:@"%@",_school.sclassId] forKey:@"classId"];
+        }
+        
+        
+        [[NetworkRequest sharedInstance] GET:QueryPeople dict:d succeed:^(id data) {
             NSArray * aty = [[data objectForKey:@"body"] objectForKey:@"list"];
             [_dataAry removeAllObjects];
             for (int i = 0; i<aty.count; i++) {
@@ -538,6 +562,7 @@
 }
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    [self.view endEditing:YES];
 }
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
     return 60;

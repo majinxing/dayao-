@@ -10,16 +10,23 @@
 #import "DYHeader.h"
 #import "DefinitionPersonalTableViewCell.h"
 #import "QueryMeetingRoomViewController.h"
+#import "SelectPeopleToClassViewController.h"
+#import "SignPeople.h"
+#import "MeetingChooseSeatViewController.h"
+
 @interface CreateMeetingViewController ()<UITableViewDelegate,UITableViewDataSource,UIPickerViewDelegate,UIPickerViewDataSource,DefinitionPersonalTableViewCellDelegate>
 @property (nonatomic,strong)UITableView * tableView;
 @property (nonatomic,strong)NSArray * labelAry;
 @property (nonatomic,strong)NSMutableArray * textFileAry;
 @property (nonatomic,strong)UIButton * bView;//滚轮的背景
 @property (nonatomic,strong)UIView * pickerView;
+@property (nonatomic,strong) NSMutableArray * selectPeopleAry;
+@property (nonatomic,strong)SeatIngModel * seat;
 @property (nonatomic,assign)int temp;//标志位判断选择的是哪一个滚轮
 @property (nonatomic,assign)int year;
 @property (nonatomic,assign)int month;
 @property (nonatomic,assign)int day;
+@property (nonatomic,assign)int n;
 @end
 
 @implementation CreateMeetingViewController
@@ -30,8 +37,14 @@
     self.view.backgroundColor = [UIColor whiteColor];
     
     _year = 0;
+    
     _month = 0;
+    
     _day = 0;
+    
+    _n = 0;
+    
+    _selectPeopleAry = [NSMutableArray arrayWithCapacity:1];
     
     [self setNavigationTitle];
     
@@ -56,8 +69,8 @@
     UIBarButtonItem *myButton = [[UIBarButtonItem alloc] initWithTitle:@"保存" style:UIBarButtonItemStylePlain target:self action:@selector(saveMeeting)];
     self.navigationItem.rightBarButtonItem = myButton;
     
-//    UIBarButtonItem * selection = [[UIBarButtonItem alloc] initWithTitle:@"搜索" style:UIBarButtonItemStylePlain target:self action:@selector(selectionBtnPressed)];
-//    self.navigationItem.leftBarButtonItem = selection;
+    //    UIBarButtonItem * selection = [[UIBarButtonItem alloc] initWithTitle:@"搜索" style:UIBarButtonItemStylePlain target:self action:@selector(selectionBtnPressed)];
+    //    self.navigationItem.leftBarButtonItem = selection;
 }
 -(void)saveMeeting{
     
@@ -132,6 +145,14 @@
         _month = 0;
         _day = 0;
         [_tableView reloadData];
+    }else if (_temp == 3){
+        if (_n == 0) {
+            [_textFileAry setObject:@"一键签到" atIndexedSubscript:3];
+        }else{
+            [_textFileAry setObject:@"照片签到" atIndexedSubscript:3];
+        }
+        _n = 0;
+        [_tableView reloadData];
     }
 }
 /**
@@ -162,6 +183,8 @@
 -(NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView{
     if (_temp == 1) {
         return 3;
+    }else if (_temp == 3){
+        return 1;
     }
     return 0;
 }
@@ -175,6 +198,8 @@
         }else if (component == 2){
             return 31;
         }
+    }else if (_temp == 3){
+        return 2;
     }
     return 0;
 }
@@ -187,6 +212,12 @@
             return [NSString stringWithFormat:@"%ld月",1+row];
         }else if (component == 2){
             return [NSString stringWithFormat:@"%ld日",1+row];
+        }
+    }else if (_temp == 3){
+        if (row == 0) {
+            return @"一键签到";
+        }else if (row == 1){
+            return @"照片签到";
         }
     }
     return @"2016";
@@ -201,6 +232,8 @@
         }else if (component == 2){
             _day = (int)row;
         }
+    }else if (_temp == 3){
+        _n = (int)row;
     }
 }
 #pragma mark DefinitionPersonalTableViewCellDelegate
@@ -213,8 +246,90 @@
         QueryMeetingRoomViewController * q = [[QueryMeetingRoomViewController alloc] init];
         self.hidesBottomBarWhenPushed = YES;
         [self.navigationController pushViewController:q animated:YES];
+        
+        [q returnText:^(SeatIngModel *returnText) {
+            
+            if (returnText) {
+                if (![UIUtils isBlankString:returnText.seatTableNamel]) {
+                    
+                    [_textFileAry setObject:returnText.seatTableNamel atIndexedSubscript:2];
+                    
+                    _seat = returnText;
+                    
+                    if (![UIUtils isBlankString:_textFileAry[4]]) {
+                        int allpeople = 0;
+                        for (int i = 0; i<_seat.seatColumn.count; i++) {
+                            allpeople = [_seat.seatColumn[i] intValue]+allpeople;
+                        }
+                        if (_selectPeopleAry.count>allpeople) {
+                            UIAlertView * alter = [[UIAlertView alloc] initWithTitle:@"会议室座次不够" message:@"您选择的会议室的座位数少于参加会议的人数" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil];
+                            [alter show];
+                        }
+                    }
+                    
+                    [_tableView reloadData];
+                }
+            }
+        }];
+    }else if (btn.tag == 3){
+        _temp = 3;
+        [self addPickView];
+    }else if (btn.tag == 4){
+        SelectPeopleToClassViewController * s = [[SelectPeopleToClassViewController alloc] init];
+        self.hidesBottomBarWhenPushed = YES;
+        [self.navigationController pushViewController:s animated:YES];
+        
+        [s returnText:^(NSMutableArray *returnText) {
+            for (int i = 0; i<returnText.count; i++) {
+                SignPeople * s = returnText[i];
+                int n = 0;
+                for (int j = 0; j<_selectPeopleAry.count; j++) {
+                    SignPeople * sp = _selectPeopleAry[j];
+                    if ([[NSString stringWithFormat:@"%@",s.userId] isEqualToString:[NSString stringWithFormat:@"%@",sp.userId]]) {
+                        n = 1;
+                        break;
+                    }
+                }
+                if (n == 0) {
+                    [_selectPeopleAry addObject:s];
+                }
+            }
+            if (_selectPeopleAry.count>0) {
+                
+                [_textFileAry setObject:[NSString stringWithFormat:@"已选择%ld人",_selectPeopleAry.count] atIndexedSubscript:btn.tag];
+                
+                if (![UIUtils isBlankString:_textFileAry[2]]) {
+                    int allpeople = 0;
+                    for (int i = 0; i<_seat.seatColumn.count; i++) {
+                        allpeople = [_seat.seatColumn[i] intValue]+allpeople;
+                    }
+                    if (_selectPeopleAry.count>allpeople) {
+                        UIAlertView * alter = [[UIAlertView alloc] initWithTitle:@"会议室座次不够" message:@"您选择的会议室的座位数少于参加会议的人数" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil];
+                        [alter show];
+                    }
+                }
+
+                [_tableView reloadData];
+            }
+            
+        }];
+    }else if (btn.tag == 5){
+        if ([UIUtils isBlankString:_seat.seatTable]) {
+            UIAlertView * alter = [[UIAlertView alloc] initWithTitle:nil message:@"请先选择会议室" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil];
+            [alter show];
+        }else if ([UIUtils isBlankString:_textFileAry[4]]){
+            UIAlertView * alter = [[UIAlertView alloc] initWithTitle:nil message:@"请先选择参加会议的人员" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil];
+            [alter show];
+        }else{
+            MeetingChooseSeatViewController * z = [[MeetingChooseSeatViewController alloc] init];
+            z.seatTable = _seat.seatTable;
+            //        z.seat = _meetingModel.userSeat;
+            self.hidesBottomBarWhenPushed = YES;
+            [self.navigationController pushViewController:z animated:YES];
+        }
     }
 }
+
 #pragma mark UITableViewdelegate
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
     return 1;

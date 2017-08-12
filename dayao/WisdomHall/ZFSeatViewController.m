@@ -60,7 +60,7 @@
         
         //模拟网络加载数据
         
-        NSDictionary *seatsDic = [NSDictionary dictionaryWithContentsOfFile:path];
+      //  NSDictionary *seatsDic = [NSDictionary dictionaryWithContentsOfFile:path];
         
         NSMutableString *strUrl = [NSMutableString stringWithFormat:@"%@",_seatTable];
         NSArray * ary = [strUrl componentsSeparatedByString:@"\n"];
@@ -87,6 +87,8 @@
                     if ([[NSString stringWithFormat:@"%d",j+1] isEqualToString:seatM]&&[[NSString stringWithFormat:@"%d",_temp] isEqualToString:seatN]) {
                         _temp = _temp + 1;
                         NSDictionary * dict = [[NSDictionary alloc] initWithObjectsAndKeys:[NSString stringWithFormat:@"0%d",j+1],@"columnId",[NSString stringWithFormat:@"%d,%d",j,i],@"seatNo",@"LK",@"st",nil];
+                        /**座位状态 N/表示可以购票 LK／座位已售出 E/表示过道 */
+
                         [aa addObject:dict];
                     }else{
                         if ([[NSString stringWithFormat:@"%d",j+1] isEqualToString:seatM]) {

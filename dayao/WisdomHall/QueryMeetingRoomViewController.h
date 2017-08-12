@@ -7,7 +7,14 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "SeatIngModel.h"
+
+typedef void (^ReturnTextBlock)(SeatIngModel *returnText);
 
 @interface QueryMeetingRoomViewController : UIViewController
+
+@property (nonatomic, copy) ReturnTextBlock returnTextBlock;
+
+- (void)returnText:(ReturnTextBlock)block;
 
 @end

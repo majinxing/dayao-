@@ -68,7 +68,7 @@ static NSString * cellIdentifier = @"cellIdentifier";
     UIBarButtonItem * selection = [[UIBarButtonItem alloc] initWithTitle:@"搜索" style:UIBarButtonItemStylePlain target:self action:@selector(selectionBtnPressed)];
     self.navigationItem.leftBarButtonItem = selection;
     UIBarButtonItem * createMeeting = [[UIBarButtonItem alloc] initWithTitle:@"创建会议" style:UIBarButtonItemStylePlain target:self action:@selector(createMeeting)];
-    self.navigationItem.rightBarButtonItem = createMeeting;
+//    self.navigationItem.rightBarButtonItem = createMeeting;
 }
 -(void)createMeeting{
     CreateMeetingViewController * c = [[CreateMeetingViewController alloc] init];

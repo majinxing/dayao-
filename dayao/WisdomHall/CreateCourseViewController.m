@@ -217,7 +217,7 @@
         if (_n==0) {
             [_textFileAry setObject:@"一键签到" atIndexedSubscript:3];
         }else if(_n==1){
-            [_textFileAry setObject:@"头像签到" atIndexedSubscript:3];
+            [_textFileAry setObject:@"照片签到" atIndexedSubscript:3];
         }
         _n = 0;
     }else if (_temp == 6){
@@ -427,6 +427,7 @@
         SelectClassRoomViewController * s = [[SelectClassRoomViewController alloc] init];
         self.hidesBottomBarWhenPushed = YES;
         [self.navigationController pushViewController:s animated:YES];
+        
         [s returnText:^(ClassRoomModel *returnText) {
             if (returnText) {
                 [self.view endEditing:YES];
