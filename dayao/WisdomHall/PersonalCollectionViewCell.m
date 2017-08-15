@@ -34,7 +34,7 @@
 -(void)setPersonalInfo:(SignPeople *)sign{
     SignPeople * s = sign;
     _nameLabel.text = [NSString stringWithFormat:@"姓名：%@",s.name];
-    _workNo.text = [NSString stringWithFormat:@"工号：%@",s.workNo];
+    _workNo.text = [NSString stringWithFormat:@"学号：%@",s.workNo];
     _workNo.font = [UIFont systemFontOfSize:11];
     _workNo.textAlignment = NSTextAlignmentLeft;
 }

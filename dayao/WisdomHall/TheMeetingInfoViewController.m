@@ -123,7 +123,14 @@
         NSLog(@"%@",data);
         NSString * str = [[data objectForKey:@"header"] objectForKey:@"message"];
         if ([str isEqualToString:@"成功"]) {
+            // 2.创建通知
+            NSNotification *notification =[NSNotification notificationWithName:@"UpdateTheMeetingPage" object:nil userInfo:nil];
+            // 3.通过 通知中心 发送 通知
+            
+            [[NSNotificationCenter defaultCenter] postNotification:notification];
+            
             [self.navigationController popViewControllerAnimated:YES];
+            
         }else{
             UIAlertView * alter = [[UIAlertView alloc] initWithTitle:nil message:@"删除会议失败" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil];
             [alter show];

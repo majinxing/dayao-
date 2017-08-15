@@ -11,6 +11,7 @@
 @interface SignPeople : NSObject
 @property (nonatomic,copy) NSString * name;
 @property (nonatomic,copy) NSString * seat;
+//@property (nonatomic,copy) NSString * seatNumber;
 @property (nonatomic,copy) NSString * signStatus;
 @property (nonatomic,copy) NSString * userId;
 @property (nonatomic,copy) NSString * workNo;

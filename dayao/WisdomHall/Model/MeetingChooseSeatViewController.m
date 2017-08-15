@@ -84,19 +84,25 @@
                     NSDictionary * dict = [[NSDictionary alloc] initWithObjectsAndKeys:@"",@"columnId",@"",@"seatNo",@"E",@"st",nil];
                     [aa addObject:dict];
                 }else if ([temp isEqualToString:@"@"]){
-                    if ([[NSString stringWithFormat:@"%d",j+1] isEqualToString:seatM]&&[[NSString stringWithFormat:@"%d",_temp] isEqualToString:seatN]) {
-                        _temp = _temp + 1;
-                        NSDictionary * dict = [[NSDictionary alloc] initWithObjectsAndKeys:[NSString stringWithFormat:@"0%d",j+1],@"columnId",[NSString stringWithFormat:@"%d,%d",j,i],@"seatNo",@"LK",@"st",nil];
-                        /**座位状态 N/表示可以购票 LK／座位已售出 E/表示过道 */
-                        
-                        [aa addObject:dict];
-                    }else{
-                        if ([[NSString stringWithFormat:@"%d",j+1] isEqualToString:seatM]) {
-                            _temp = _temp + 1;
-                        }
-                        NSDictionary * dict = [[NSDictionary alloc] initWithObjectsAndKeys:[NSString stringWithFormat:@"0%d",j+1],@"columnId",[NSString stringWithFormat:@"%d,%d",j,i],@"seatNo",@"N",@"st",nil];
-                        [aa addObject:dict];
-                    }
+                    NSDictionary * dict = [[NSDictionary alloc] initWithObjectsAndKeys:[NSString stringWithFormat:@"0%d",j+1],@"columnId",[NSString stringWithFormat:@"%d,%d",j,i],@"seatNo",@"N",@"st",nil];
+                    [aa addObject:dict];
+                    
+//                    if ([[NSString stringWithFormat:@"%d",j+1] isEqualToString:seatM]&&[[NSString stringWithFormat:@"%d",_temp] isEqualToString:seatN]) {
+//                        _temp = _temp + 1;
+//                        NSDictionary * dict = [[NSDictionary alloc] initWithObjectsAndKeys:[NSString stringWithFormat:@"0%d",j+1],@"columnId",[NSString stringWithFormat:@"%d,%d",j,i],@"seatNo",@"LK",@"st",nil];
+//                        /**座位状态 N/表示可以购票 LK／座位已售出 E/表示过道 */
+//                        
+//                        [aa addObject:dict];
+//                    }else{
+//                        if ([[NSString stringWithFormat:@"%d",j+1] isEqualToString:seatM]) {
+//                            _temp = _temp + 1;
+//                        }
+//                        NSDictionary * dict = [[NSDictionary alloc] initWithObjectsAndKeys:[NSString stringWithFormat:@"0%d",j+1],@"columnId",[NSString stringWithFormat:@"%d,%d",j,i],@"seatNo",@"N",@"st",nil];
+//                        [aa addObject:dict];
+//                    }
+                }else if ([temp isEqualToString:@"E"]){
+                    NSDictionary * dict = [[NSDictionary alloc] initWithObjectsAndKeys:[NSString stringWithFormat:@"0%d",j+1],@"columnId",[NSString stringWithFormat:@"%d,%d",j,i],@"seatNo",@"LK",@"st",nil];
+                    [aa addObject:dict];
                 }
                 
             }

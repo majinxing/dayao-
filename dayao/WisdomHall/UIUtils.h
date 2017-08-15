@@ -64,5 +64,12 @@
 +(void)tokenThePeriodOfValidity;
 //账号被顶下
 +(void)accountWasUnderTheRoof;
+
+//会场顺序选座
++(NSMutableDictionary *)seatingArrangements:(NSString *)seating withNumberPeople:(NSString *)numberPeople;
+//与会人员与座位匹配
++(NSDictionary *)seatWithPeople:(NSMutableArray *)peopleAry withSeat:(NSMutableArray *)seatAry;
+//发送群体会议通知
++(void)sendMeetingInfo:(NSDictionary *)dict;
 @end
 

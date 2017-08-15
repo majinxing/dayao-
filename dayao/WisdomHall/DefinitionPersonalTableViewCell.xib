@@ -47,20 +47,21 @@
             </tableViewCellContentView>
             <connections>
                 <outlet property="infoLabel" destination="Bld-V0-Zjc" id="E8N-nh-gyL"/>
+                <outlet property="seeSeat" destination="sYw-H1-lQf" id="LL4-DN-C5w"/>
                 <outlet property="textFile" destination="sBb-e1-lMm" id="gQw-Ol-Thn"/>
                 <outlet property="textLabel" destination="Bld-V0-Zjc" id="1up-av-7Tv"/>
             </connections>
             <point key="canvasLocation" x="74" y="108.5"/>
         </tableViewCell>
-        <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="DefinitionPersonalTableViewCellSecond" rowHeight="131" id="hqP-fB-chr" customClass="DefinitionPersonalTableViewCell">
-            <rect key="frame" x="0.0" y="0.0" width="399" height="131"/>
+        <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="DefinitionPersonalTableViewCellSecond" rowHeight="126" id="hqP-fB-chr" customClass="DefinitionPersonalTableViewCell">
+            <rect key="frame" x="0.0" y="0.0" width="400" height="126"/>
             <autoresizingMask key="autoresizingMask"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="hqP-fB-chr" id="7yn-SP-8jP">
-                <rect key="frame" x="0.0" y="0.0" width="399" height="130.5"/>
+                <rect key="frame" x="0.0" y="0.0" width="400" height="125.5"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="课程封面" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="j4y-8q-XNr">
-                        <rect key="frame" x="15" y="10" width="100" height="111"/>
+                        <rect key="frame" x="15" y="10" width="100" height="105.5"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="100" id="SKW-BI-Sxh"/>
                         </constraints>
@@ -69,7 +70,7 @@
                         <nil key="highlightedColor"/>
                     </label>
                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="18r-1i-FuI">
-                        <rect key="frame" x="125" y="18" width="60" height="95"/>
+                        <rect key="frame" x="125" y="18" width="60" height="89.5"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="60" id="Nse-dF-vtD"/>
                         </constraints>
@@ -85,7 +86,32 @@
                     <constraint firstAttribute="bottomMargin" secondItem="18r-1i-FuI" secondAttribute="bottom" constant="10" id="slr-7d-4ts"/>
                 </constraints>
             </tableViewCellContentView>
-            <point key="canvasLocation" x="80.5" y="267.5"/>
+            <point key="canvasLocation" x="74" y="265"/>
+        </tableViewCell>
+        <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="DefinitionPersonalTableViewCellThird" rowHeight="77" id="CdW-Wn-H1g" customClass="DefinitionPersonalTableViewCell">
+            <rect key="frame" x="0.0" y="0.0" width="400" height="77"/>
+            <autoresizingMask key="autoresizingMask"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="CdW-Wn-H1g" id="Tb2-V1-Z4C">
+                <rect key="frame" x="0.0" y="0.0" width="400" height="76.5"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="sYw-H1-lQf">
+                        <rect key="frame" x="20" y="10" width="360" height="56.5"/>
+                        <color key="backgroundColor" red="0.49281876045629647" green="0.91311861668161887" blue="1" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                        <state key="normal" title="查看座次安排"/>
+                        <connections>
+                            <action selector="seeSeatPressed:" destination="CdW-Wn-H1g" eventType="touchUpInside" id="wgd-xd-JO6"/>
+                        </connections>
+                    </button>
+                </subviews>
+                <constraints>
+                    <constraint firstAttribute="bottom" secondItem="sYw-H1-lQf" secondAttribute="bottom" constant="10" id="RO0-Pk-HL1"/>
+                    <constraint firstItem="sYw-H1-lQf" firstAttribute="leading" secondItem="Tb2-V1-Z4C" secondAttribute="leading" constant="20" id="amk-ZR-ofF"/>
+                    <constraint firstItem="sYw-H1-lQf" firstAttribute="top" secondItem="Tb2-V1-Z4C" secondAttribute="top" constant="10" id="d4t-TW-bve"/>
+                    <constraint firstAttribute="trailing" secondItem="sYw-H1-lQf" secondAttribute="trailing" constant="20" id="jLV-Qw-xQ5"/>
+                </constraints>
+            </tableViewCellContentView>
+            <point key="canvasLocation" x="74" y="426.5"/>
         </tableViewCell>
     </objects>
     <resources>

@@ -15,7 +15,7 @@
 #import "DYTabBarViewController.h"
 #import "ChatHelper.h"
 #import "TheLoginViewController.h"
-
+#import <UIKit/UIKit.h>
 @interface UIUtils()
 
 @property (nonatomic,strong)FMDatabase * db;
@@ -112,7 +112,7 @@
         return YES;
     }else if([[string stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]] length]==0) {
         
-                return YES;
+        return YES;
         
     }
     return NO;
@@ -271,19 +271,19 @@
             m = m + 30 - 60;
             ary1[0] = [NSString stringWithFormat:@"%ld",n];
             ary1[1] = [NSString stringWithFormat:@"%ld",m];
-
+            
         }else {
             n = n+1;
             m = m + 30 - 60;
-
+            
             ary1[0] = [NSString stringWithFormat:@"%ld",n];
             ary1[1] = [NSString stringWithFormat:@"%ld",m];
-
+            
         }
     }else{
         m = m + 30;
         ary1[1] = [NSString stringWithFormat:@"%ld",m];
-    
+        
     }
     
     
@@ -587,7 +587,7 @@
             // 对比时间差
             NSDateComponents *dateCom = [calendar components:unit fromDate:tokenStr toDate:todayStr options:0];
             if (dateCom.day>=6) {
-               
+                
                 [[Appsetting sharedInstance] getOut];
                 DYTabBarViewController *rootVC = [DYTabBarViewController sharedInstance];
                 rootVC = nil;
@@ -615,7 +615,115 @@
     UIAlertView * alter = [[UIAlertView alloc] initWithTitle:nil message:@"账号在另一台设备登录，请重新登录或修改密码" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil];
     [alter show];
     return ;
+    
+}
 
++(NSMutableDictionary *)seatingArrangements:(NSString *)seating withNumberPeople:(NSString *)numberPeople{
+    
+    NSMutableDictionary * dict = [[NSMutableDictionary alloc] init];
+
+    if (![UIUtils isBlankString:seating]) {
+        
+        NSMutableString * str = [NSMutableString stringWithFormat:@"%@",seating];
+        
+        NSMutableArray * seatAry = [[NSMutableArray alloc] initWithArray:[str componentsSeparatedByString:@"\n"]];
+        
+        int all = 1;//记录一共选了多少座次
+        
+        NSMutableArray * seatNmber = [NSMutableArray arrayWithCapacity:1];//记录座次号几排几座
+        
+        for (int j = 0; j<seatAry.count; j++) {
+            int n = 1;
+            for(int i =0; i < [seatAry[j] length]; i++)
+            {
+                NSString * newStr = seatAry[j];
+                
+                NSString * temp = [newStr substringWithRange:NSMakeRange(i,1)];
+                
+                if ([temp isEqualToString:@"@"]) {
+                    
+                    if (all<=[numberPeople intValue]) {
+                        
+                        [seatNmber addObject:[NSString stringWithFormat:@"%d排%d座",j+1,n]];
+                        
+                        n++;
+                        
+                        temp = [newStr stringByReplacingCharactersInRange:NSMakeRange(i, 1) withString:@"E"];
+                        
+                        [seatAry setObject:temp atIndexedSubscript:j];
+                        
+                        all++;
+                        
+                    }else{
+                        
+                        break;
+                        
+                    }
+                }
+                
+            }
+            if (all>[numberPeople intValue]) {
+                
+                break;
+                
+            }
+        }
+        
+        NSString * newStr = [[NSString alloc] init];
+        for (int i = 0; i<seatAry.count; i++) {
+            if (i == 0) {
+                newStr = [NSString stringWithFormat:@"%@",seatAry[i]];
+            }else{
+                newStr = [NSString stringWithFormat:@"%@\n%@",newStr,seatAry[i]];
+            }
+        }
+        [dict setObject:newStr forKey:@"newSeat"];
+        
+        [dict setObject:seatNmber forKey:@"seatAry"];
+    }
+    
+    return dict;
+}
+
++(NSDictionary *)seatWithPeople:(NSMutableArray *)peopleAry withSeat:(NSMutableArray *)seatAry{
+    
+    NSMutableArray * ary = [NSMutableArray arrayWithCapacity:1];
+    
+    NSMutableArray * seatPeo = [NSMutableArray arrayWithCapacity:1];
+    
+    for (int i = 0; i<seatAry.count&&i<peopleAry.count; i++) {
+        
+        SignPeople * s = peopleAry[i];
+        
+        s.seat = seatAry[i];
+        
+        NSDictionary * dict = [[NSDictionary alloc] initWithObjectsAndKeys:[NSString stringWithFormat:@"%@",s.userId],@"userId",seatAry[i],@"seat", nil];
+        
+        [ary addObject:dict];
+        
+        [seatPeo addObject:s];
+    }
+    NSDictionary * dict = [[NSDictionary alloc] initWithObjectsAndKeys:ary,@"peopleWithSeat",seatPeo,@"seatPeople", nil];
+    
+    return dict;
+}
++(void)sendMeetingInfo:(NSDictionary *)dict{
+    
+    NSMutableArray * seatAry = [dict objectForKey:@"seatPeople"];
+    
+    ChatHelper * c = [ChatHelper shareHelper];
+    
+    UserModel * user = [[Appsetting sharedInstance] getUsetInfo];
+    
+    for (int i = 0; i<seatAry.count; i++) {
+        
+        SignPeople * s = seatAry[i];
+        
+        NSString * str = [NSString stringWithFormat:@"{\"Project\":\"LvDongKeTang\",\"MessageType\":\"Notification\",\"From\":\"Admin\",\"Content\":\"会议通知：主题：%@，地址：%@，时间：%@，您的座次：%@\"}",[dict objectForKey:@"name"],[dict objectForKey:@"address"],[dict objectForKey:@"time"],s.seat];
+        
+        [c sendTextMessageToPeople:str withReceiver:[NSString stringWithFormat:@"%@%@",user.school,s.workNo]];
+    }
+    
 }
 @end
 

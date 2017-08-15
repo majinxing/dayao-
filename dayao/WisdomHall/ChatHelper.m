@@ -73,8 +73,10 @@ static dispatch_once_t onceToken;
     
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         //环信注册
-        EMOptions  * options = [EMOptions optionsWithAppkey:@"1161170505178076#college-sign"];
+        EMOptions  * options = [EMOptions optionsWithAppkey:@"1137170815115624#smartclassroom"];
+        
         [[EMClient sharedClient] initializeSDKWithOptions:options];
+        
         UserModel * user = [[Appsetting sharedInstance] getUsetInfo];
         
         EMError *error = [[EMClient sharedClient] registerWithUsername:[NSString stringWithFormat:@"%@%@",user.school,user.studentId] password:user.userPassword];
@@ -177,6 +179,7 @@ static dispatch_once_t onceToken;
 //    EMError *error = nil;
 }
 -(EMMessage *)sendTextMessage:(NSString *)text withReceiver:(NSString *)receiver{
+    
     EMTextMessageBody *body = [[EMTextMessageBody alloc] initWithText:text];
     
     NSString * from = [[EMClient sharedClient] currentUsername];
@@ -189,14 +192,37 @@ static dispatch_once_t onceToken;
         
     } completion:^(EMMessage *message, EMError *error) {
         if (!error) {
-            NSLog(@"成功");
+//            NSLog(@"成功");
         }else{
-            NSLog(@"失败");
+//            NSLog(@"失败");
         }
     }];
     
     return message;
 }
+-(EMMessage *)sendTextMessageToPeople:(NSString *)text withReceiver:(NSString *)receiver{
+    
+    EMTextMessageBody *body = [[EMTextMessageBody alloc] initWithText:text];
+    
+    NSString * from = [[EMClient sharedClient] currentUsername];
+    
+    EMMessage * message = [[EMMessage alloc] initWithConversationID:receiver from:from to:receiver body:body ext:@{@"em_apns_ext":@{@"em_push_title":text}}];
+    
+    message.chatType =  EMChatTypeChat;
+    
+    [[EMClient sharedClient].chatManager sendMessage:message progress:^(int progress) {
+        
+    } completion:^(EMMessage *message, EMError *error) {
+        if (!error) {
+//            NSLog(@"成功");
+        }else{
+//            NSLog(@"失败");
+        }
+    }];
+    
+    return message;
+}
+
 -(float)returnMessageInfoHeight:(EMMessage *)message{
     switch (message.body.type) {
         case EMMessageBodyTypeText: //文字

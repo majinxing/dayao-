@@ -26,7 +26,12 @@
 @property (nonatomic,assign)int year;
 @property (nonatomic,assign)int month;
 @property (nonatomic,assign)int day;
+@property (nonatomic,assign)int hours;
+@property (nonatomic,assign)int minutes;
 @property (nonatomic,assign)int n;
+@property (nonatomic,strong)NSMutableArray * searAry;
+@property (nonatomic,copy)NSString * seatTable;
+
 @end
 
 @implementation CreateMeetingViewController
@@ -44,7 +49,13 @@
     
     _n = 0;
     
+    _hours = 0;
+    
+    _minutes = 0;
+    
     _selectPeopleAry = [NSMutableArray arrayWithCapacity:1];
+    
+    _searAry = [NSMutableArray arrayWithCapacity:1];
     
     [self setNavigationTitle];
     
@@ -74,11 +85,78 @@
 }
 -(void)saveMeeting{
     
+    for (int i = 0; i<_textFileAry.count; i++) {
+        if ([UIUtils isBlankString:_textFileAry[i]]) {
+            UIAlertView * alter = [[UIAlertView alloc] initWithTitle:nil message:@"请填写完整会议信息" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil];
+            [alter show];
+            return;
+        }
+    }
+    NSMutableDictionary * dict = [[NSMutableDictionary alloc] init];
+    
+    UserModel  * user = [[Appsetting sharedInstance] getUsetInfo];
+    
+    [dict setObject:_textFileAry[0] forKey:@"name"];
+    
+    [dict setObject:_textFileAry[1] forKey:@"time"];
+    
+    [dict setObject:user.peopleId forKey:@"teacherId"];
+    
+    [dict setObject:[NSString stringWithFormat:@"%ld",_selectPeopleAry.count] forKey:@"total"];
+    
+    [dict setObject:@"1" forKey:@"signType"];
+    
+    [dict setObject:@"0" forKey:@"pictureId"];
+    
+    [dict setObject:[UIUtils getTime] forKey:@"createTime"];
+    
+    //    [dict setObject:@"0" forKey:@"status"];
+    
+    [dict setObject:[NSString stringWithFormat:@"%@",_seat.seatTableId] forKey:@"roomId"];
+    
+    [dict setObject:@"1" forKey:@"type"];
+    
+    [dict setObject:_seat.seatTableNamel forKey:@"address"];
+    
+    
+    NSDictionary * d = [UIUtils seatWithPeople:_selectPeopleAry withSeat:_searAry];
+    
+    NSMutableArray * ary = [d objectForKey:@"peopleWithSeat"];
+
+    [dict setObject:ary forKey:@"userSeatList"];
+    
+    NSDictionary * sendDict = [[NSDictionary alloc] initWithObjectsAndKeys:[d objectForKey:@"seatPeople"],@"seatPeople",_textFileAry[0],@"name",_seat.seatTableNamel,@"address",_textFileAry[1],@"time",nil];
+    
+    [[NetworkRequest sharedInstance] POST:CreateMeeting dict:dict succeed:^(id data) {
+        NSString * str = [[data objectForKey:@"header"] objectForKey:@"message"];
+        if ([str isEqualToString:@"成功"]) {
+            // 2.创建通知
+            NSNotification *notification =[NSNotification notificationWithName:@"UpdateTheMeetingPage" object:nil userInfo:nil];
+            // 3.通过 通知中心 发送 通知
+            
+            [[NSNotificationCenter defaultCenter] postNotification:notification];
+            
+            UIAlertView * alter = [[UIAlertView alloc] initWithTitle:nil message:@"会议创建成功" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil];
+            
+            [alter show];
+            
+            [UIUtils sendMeetingInfo:sendDict];
+            
+            
+            [self.navigationController popViewControllerAnimated:YES];
+        }
+        
+        
+        NSLog(@"s");
+    } failure:^(NSError *error) {
+        NSLog(@"失败");
+    }];
+    
 }
 -(void)addTableView{
-    _labelAry = [[NSArray alloc] initWithObjects:@"会议主题",@"会议时间",@"会议室",@"签到方式",@"参加人员",@"座次安排", nil];//2
+    _labelAry = [[NSArray alloc] initWithObjects:@"会议主题",@"会议时间",@"会议室",@"签到方式",@"参加人员",nil];//2
     _textFileAry = [NSMutableArray arrayWithCapacity:1];
-    for (int i = 0; i<6; i++) {
+    for (int i = 0; i<5; i++) {
         [_textFileAry addObject:@""];
     }
     _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 64, APPLICATION_WIDTH, APPLICATION_HEIGHT-64) style:UITableViewStylePlain];
@@ -138,12 +216,37 @@
     [self.pickerView removeFromSuperview];
     self.pickerView = nil;
     if (_temp == 1) {
-        
-        [_textFileAry setObject:[NSString stringWithFormat:@"%d-%d-%d",_year+2017,_month+1,_day+1] atIndexedSubscript:1];
+        NSString * m;
+        if (_month<9) {
+            m = [NSString stringWithFormat:@"0%d",_month+1];
+        }else{
+            m = [NSString stringWithFormat:@"%d",_month+1];
+        }
+        NSString * d;
+        if (_day<9) {
+            d = [NSString stringWithFormat:@"0%d",_day+1];
+        }else{
+            d = [NSString stringWithFormat:@"%d",_day+1];
+        }
+        NSString * h;
+        if (_hours<9) {
+            h = [NSString stringWithFormat:@"0%d",_hours+1];
+        }else{
+            h = [NSString stringWithFormat:@"%d",_hours+1];
+        }
+        NSString * ms;
+        if (_minutes<9) {
+            ms = [NSString stringWithFormat:@"0%d",_minutes];
+        }else{
+            ms = [NSString stringWithFormat:@"%d",_minutes];
+        }
+        [_textFileAry setObject:[NSString stringWithFormat:@"%d-%@-%@ %@:%@",_year+2017,m,d,h,ms] atIndexedSubscript:1];
         
         _year = 0;
         _month = 0;
         _day = 0;
+        _hours = 0;
+        _minutes = 0;
         [_tableView reloadData];
     }else if (_temp == 3){
         if (_n == 0) {
@@ -182,7 +285,7 @@
 #pragma mark UIPickView
 -(NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView{
     if (_temp == 1) {
-        return 3;
+        return 5;
     }else if (_temp == 3){
         return 1;
     }
@@ -197,6 +300,10 @@
             return 12;
         }else if (component == 2){
             return 31;
+        }else if (component == 3){
+            return 24;
+        }else if (component == 4){
+            return 59;
         }
     }else if (_temp == 3){
         return 2;
@@ -212,6 +319,10 @@
             return [NSString stringWithFormat:@"%ld月",1+row];
         }else if (component == 2){
             return [NSString stringWithFormat:@"%ld日",1+row];
+        }else if (component == 3){
+            return [NSString stringWithFormat:@"%ld点",1+row];
+        }else if (component == 4){
+            return [NSString stringWithFormat:@"%ld分",1+row];
         }
     }else if (_temp == 3){
         if (row == 0) {
@@ -231,12 +342,21 @@
             _month = (int)row;
         }else if (component == 2){
             _day = (int)row;
+        }else if (component == 3){
+            _hours = (int)row;
+        }else if (component == 4){
+            _minutes = (int)row;
         }
     }else if (_temp == 3){
         _n = (int)row;
     }
 }
 #pragma mark DefinitionPersonalTableViewCellDelegate
+-(void)textFileDidChangeForDPTableViewCellDelegate:(UITextField *)textFile{
+    if (textFile.tag == 0) {
+        [_textFileAry setObject:textFile.text atIndexedSubscript:textFile.tag];
+    }
+};
 -(void)gggDelegate:(UIButton *)btn{
     [self.view endEditing:YES];
     if (btn.tag == 1) {
@@ -257,14 +377,22 @@
                     _seat = returnText;
                     
                     if (![UIUtils isBlankString:_textFileAry[4]]) {
+                        
+                        NSMutableDictionary * dict = [UIUtils seatingArrangements:_seat.seatTable  withNumberPeople:[NSString stringWithFormat:@"%ld",(unsigned long)_selectPeopleAry.count]];
+                        _seatTable = [dict objectForKey:@"newSeat"];
+                        _searAry = [dict objectForKey:@"seatAry"];
+                        
                         int allpeople = 0;
+                        
                         for (int i = 0; i<_seat.seatColumn.count; i++) {
                             allpeople = [_seat.seatColumn[i] intValue]+allpeople;
                         }
+                        
                         if (_selectPeopleAry.count>allpeople) {
                             UIAlertView * alter = [[UIAlertView alloc] initWithTitle:@"会议室座次不够" message:@"您选择的会议室的座位数少于参加会议的人数" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil];
                             [alter show];
                         }
+                        
                     }
                     
                     [_tableView reloadData];
@@ -296,10 +424,16 @@
             }
             if (_selectPeopleAry.count>0) {
                 
-                [_textFileAry setObject:[NSString stringWithFormat:@"已选择%ld人",_selectPeopleAry.count] atIndexedSubscript:btn.tag];
+                [_textFileAry setObject:[NSString stringWithFormat:@"已选择%ld人",(unsigned long)_selectPeopleAry.count] atIndexedSubscript:btn.tag];
                 
                 if (![UIUtils isBlankString:_textFileAry[2]]) {
+                    
+                    NSMutableDictionary * dict = [UIUtils seatingArrangements:_seat.seatTable  withNumberPeople:[NSString stringWithFormat:@"%ld",(unsigned long)_selectPeopleAry.count]];
+                    _seatTable = [dict objectForKey:@"newSeat"];
+                    _searAry = [dict objectForKey:@"seatAry"];
+                    
                     int allpeople = 0;
+                    
                     for (int i = 0; i<_seat.seatColumn.count; i++) {
                         allpeople = [_seat.seatColumn[i] intValue]+allpeople;
                     }
@@ -308,26 +442,31 @@
                         [alter show];
                     }
                 }
-
+                
                 [_tableView reloadData];
             }
             
         }];
-    }else if (btn.tag == 5){
-        if ([UIUtils isBlankString:_seat.seatTable]) {
-            UIAlertView * alter = [[UIAlertView alloc] initWithTitle:nil message:@"请先选择会议室" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil];
-            [alter show];
-        }else if ([UIUtils isBlankString:_textFileAry[4]]){
-            UIAlertView * alter = [[UIAlertView alloc] initWithTitle:nil message:@"请先选择参加会议的人员" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil];
-            [alter show];
-        }else{
-            MeetingChooseSeatViewController * z = [[MeetingChooseSeatViewController alloc] init];
-            z.seatTable = _seat.seatTable;
-            //        z.seat = _meetingModel.userSeat;
-            self.hidesBottomBarWhenPushed = YES;
-            [self.navigationController pushViewController:z animated:YES];
-        }
+        
     }
+}
+-(void)seeSaetPressedDelegate{
+    if ([UIUtils isBlankString:_seat.seatTable]) {
+        UIAlertView * alter = [[UIAlertView alloc] initWithTitle:nil message:@"请先选择会议室" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil];
+        [alter show];
+    }else if ([UIUtils isBlankString:_textFileAry[4]]){
+        UIAlertView * alter = [[UIAlertView alloc] initWithTitle:nil message:@"请先选择参加会议的人员" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil];
+        [alter show];
+    }else{
+        MeetingChooseSeatViewController * z = [[MeetingChooseSeatViewController alloc] init];
+        
+        z.seatTable = _seatTable;
+        
+        self.hidesBottomBarWhenPushed = YES;
+        
+        [self.navigationController pushViewController:z animated:YES];
+    }
+    
 }
 
 #pragma mark UITableViewdelegate
@@ -340,14 +479,20 @@
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     DefinitionPersonalTableViewCell * cell ;
-    
-    cell = [tableView dequeueReusableCellWithIdentifier:@"DefinitionPersonalTableViewCellFirst"];
-    
-    cell = [[[NSBundle mainBundle] loadNibNamed:@"DefinitionPersonalTableViewCell" owner:self options:nil] objectAtIndex:0];
-    
+    if (indexPath.row<5) {
+        cell = [tableView dequeueReusableCellWithIdentifier:@"DefinitionPersonalTableViewCellFirst"];
+        
+        cell = [[[NSBundle mainBundle] loadNibNamed:@"DefinitionPersonalTableViewCell" owner:self options:nil] objectAtIndex:0];
+        
+        [cell addMeetingContentView:_labelAry[indexPath.row] withTextFileText:_textFileAry[indexPath.row] withIndex:(int)indexPath.row];
+        
+    }else if (indexPath.row == 5){
+        cell = [tableView dequeueReusableCellWithIdentifier:@"DefinitionPersonalTableViewCellThird"];
+        
+        cell = [[[NSBundle mainBundle] loadNibNamed:@"DefinitionPersonalTableViewCell" owner:self options:nil] objectAtIndex:2];
+    }
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     
-    [cell addMeetingContentView:_labelAry[indexPath.row] withTextFileText:_textFileAry[indexPath.row] withIndex:(int)indexPath.row];
     cell.delegate = self;
     return cell;
 }

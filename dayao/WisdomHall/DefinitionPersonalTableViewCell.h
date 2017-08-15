@@ -13,6 +13,7 @@
 -(void)textFieldDidBeginEditingDPTableViewCellDelegate:(UITextField *)textFile;
 @optional
 -(void)gggDelegate:(UIButton *)btn;
+-(void)seeSaetPressedDelegate;
 @end
 
 @interface DefinitionPersonalTableViewCell : UITableViewCell

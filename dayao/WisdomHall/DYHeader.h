@@ -116,6 +116,8 @@
 
 #define QueryMeetingRoom    @"course/meetingroom/select"//查询会议室
 
+#define CreateMeeting       @"course/meeting/create" //创建会议
+
 
 
 

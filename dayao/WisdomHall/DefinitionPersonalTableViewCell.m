@@ -10,6 +10,7 @@
 
 
 @interface DefinitionPersonalTableViewCell ()<UITextFieldDelegate>
+@property (weak, nonatomic) IBOutlet UIButton *seeSeat;
 
 @property (strong, nonatomic) IBOutlet UILabel *infoLabel;
 @property (nonatomic,assign)int temp;
@@ -141,6 +142,11 @@
 -(void)ggg:(UIButton *)btn{
     if (self.delegate&&[self.delegate respondsToSelector:@selector(gggDelegate:)]) {
         [self.delegate gggDelegate:btn];
+    }
+}
+- (IBAction)seeSeatPressed:(id)sender {
+    if (self.delegate&&[self.delegate respondsToSelector:@selector(seeSaetPressedDelegate)]) {
+        [self.delegate seeSaetPressedDelegate];
     }
 }
 #pragma mark UITextFileDelegae

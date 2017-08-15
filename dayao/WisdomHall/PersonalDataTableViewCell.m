@@ -47,7 +47,12 @@
 -(void)setInfo:(NSString *)labelText withTextAry:(NSString *)textText isEdictor:(BOOL)edictor withRow:(NSInteger)n{
     _dataLabel.text = labelText;
     _textFilePh.placeholder = labelText;
-    _textFilePh.text = textText;
+    if ([UIUtils isBlankString:textText]) {
+//        _textFilePh.text = @"未填写";
+//        _textFilePh.alpha = 0.2;
+    }else{
+        _textFilePh.text = textText;
+    }
     _textFilePh.delegate = self;
     _textFilePh.tag = n;
     [_textFilePh addTarget:self action:@selector(textFileDidChange:) forControlEvents:UIControlEventEditingChanged];
