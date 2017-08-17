@@ -71,5 +71,7 @@
 +(NSDictionary *)seatWithPeople:(NSMutableArray *)peopleAry withSeat:(NSMutableArray *)seatAry;
 //发送群体会议通知
 +(void)sendMeetingInfo:(NSDictionary *)dict;
+//显示信息
++(void)showInfoMessage:(NSString *)str;
 @end
 

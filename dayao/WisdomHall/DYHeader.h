@@ -118,6 +118,8 @@
 
 #define CreateMeeting       @"course/meeting/create" //创建会议
 
+#define JoinCourse          @"course/course/addMember" //个人加入课程
+
 
 
 

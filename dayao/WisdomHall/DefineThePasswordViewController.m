@@ -79,7 +79,13 @@
         }else if(i == 5){
             [dict setObject:_s.schoolId forKey:@"universityId"];
         }else if (i == 3){
-            [dict setObject:[NSString stringWithFormat:@"%d",_n] forKey:@"type"];
+            if ([_textFileAry[3] isEqualToString:@"老师"]) {
+                [dict setObject:[NSString stringWithFormat:@"1"] forKey:@"type"];
+            }else{
+                [dict setObject:[NSString stringWithFormat:@"2"] forKey:@"type"];
+            }
+            
+            
         }else if(i == 6){
             [dict setObject:[NSString stringWithFormat:@"%@",_s.departmentId] forKey:@"facultyId"];
         }else if (i == 7){

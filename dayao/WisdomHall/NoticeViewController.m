@@ -56,6 +56,7 @@
 }
 -(void)back{
     if ([_backType isEqualToString:@"TabBar"]) {
+        
         ChatHelper * c =[ChatHelper shareHelper];
         
         DYTabBarViewController *rootVC = [[DYTabBarViewController alloc] init];

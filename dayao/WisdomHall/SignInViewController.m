@@ -27,10 +27,11 @@
 #import "DYTabBarViewController.h"
 #import "ChatHelper.h"
 #import "TheLoginViewController.h"
+#import "JoinCours.h"
 
 static NSString *cellIdentifier = @"cellIdentifier";
 
-@interface SignInViewController ()<UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout,AlterViewDelegate>
+@interface SignInViewController ()<UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout,AlterViewDelegate,JoinCoursDelegate>
 @property (nonatomic,strong) UICollectionView * collection;
 @property (nonatomic,strong) UserModel * userModel;
 @property (nonatomic,strong) NSMutableArray * classAry;
@@ -40,6 +41,8 @@ static NSString *cellIdentifier = @"cellIdentifier";
 @property (nonatomic,assign) int temp;
 
 @property (nonatomic,strong)AlterView * alterView;
+
+@property (nonatomic,strong)JoinCours * join;
 
 @end
 
@@ -53,6 +56,8 @@ static NSString *cellIdentifier = @"cellIdentifier";
     
     _classAry = [NSMutableArray arrayWithCapacity:10];
     
+    _userModel = [[Appsetting sharedInstance] getUsetInfo];
+
     [self addAlterView];
     
     [self setNavigationTitle];
@@ -66,6 +71,9 @@ static NSString *cellIdentifier = @"cellIdentifier";
 }
 -(void)UpdateTheClassPage{
     [self headerRereshing];
+}
+-(void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event{
+    [self.view endEditing:YES];
 }
 -(void)viewWillAppear:(BOOL)animated{
     [UIUtils tokenThePeriodOfValidity];
@@ -144,7 +152,6 @@ static NSString *cellIdentifier = @"cellIdentifier";
 #pragma mark 获取数据
 -(void)getDataWithPage:(NSInteger)page{
     
-    _userModel = [[Appsetting sharedInstance] getUsetInfo];
     
     NSDictionary * dict = [[NSDictionary alloc] initWithObjectsAndKeys:[NSString stringWithFormat:@"%ld",(long)page],@"start",_userModel.peopleId,@"teacherId",[UIUtils getTime],@"actStartTime",[UIUtils getMoreMonthTime],@"actEndTime",@"1000",@"length",_userModel.school,@"universityId",@"2",@"type",[NSString stringWithFormat:@"%d",[UIUtils getTermId]],@"termId",@"1",@"courseType",nil];
     
@@ -194,7 +201,9 @@ static NSString *cellIdentifier = @"cellIdentifier";
 }
 //临时
 -(void)getSelfCreateClassType:(NSInteger)page{
+    
     NSDictionary * dict = [[NSDictionary alloc] initWithObjectsAndKeys:[NSString stringWithFormat:@"%ld",(long)page],@"start",_userModel.peopleId,@"teacherId",[UIUtils getTime],@"actStartTime",[UIUtils getMoreMonthTime],@"actEndTime",@"1000",@"length",_userModel.school,@"universityId",@"2",@"type",@"2",@"courseType",nil];
+    
     [[NetworkRequest sharedInstance] GET:QueryCourse dict:dict succeed:^(id data) {
         //        NSLog(@"3");
         NSString * str = [[data objectForKey:@"header"] objectForKey:@"message"];
@@ -266,9 +275,15 @@ static NSString *cellIdentifier = @"cellIdentifier";
                                                                       NSFontAttributeName:[UIFont systemFontOfSize:17],
                                                                       NSForegroundColorAttributeName:[UIColor blackColor]}];
     self.title = @"当天课程";
+    if ([[NSString stringWithFormat:@"%@",_userModel.identity] isEqualToString:@"1"]) {
+        UIBarButtonItem *myButton = [[UIBarButtonItem alloc] initWithTitle:@"创建课程" style:UIBarButtonItemStylePlain target:self action:@selector(createAcourse)];
+        self.navigationItem.rightBarButtonItem = myButton;
+    }else if ([[NSString stringWithFormat:@"%@",_userModel.identity] isEqualToString:@"2"]){
+        UIBarButtonItem *myButton = [[UIBarButtonItem alloc] initWithTitle:@"加入课程" style:UIBarButtonItemStylePlain target:self action:@selector(joinCourse)];
+        self.navigationItem.rightBarButtonItem = myButton;
+    }
     
-    UIBarButtonItem *myButton = [[UIBarButtonItem alloc] initWithTitle:@"创建" style:UIBarButtonItemStylePlain target:self action:@selector(createAcourse)];
-    self.navigationItem.rightBarButtonItem = myButton;
+    
     
     UIBarButtonItem * selection = [[UIBarButtonItem alloc] initWithTitle:@"搜索" style:UIBarButtonItemStylePlain target:self action:@selector(selectionBtnPressed)];
     self.navigationItem.leftBarButtonItem = selection;
@@ -282,6 +297,19 @@ static NSString *cellIdentifier = @"cellIdentifier";
     self.hidesBottomBarWhenPushed = YES;
     [self.navigationController pushViewController:s animated:YES];
     self.hidesBottomBarWhenPushed = NO;
+}
+/**
+ *
+ **/
+-(void)joinCourse{
+    if (_join==nil) {
+        _join = [[JoinCours alloc] init];
+        _join.delegate = self;
+        _join.frame = CGRectMake(0, 0, APPLICATION_WIDTH, APPLICATION_HEIGHT);
+        [self.view addSubview:_join];
+    }
+    
+    
 }
 /**
  *  创建课程
@@ -315,6 +343,30 @@ static NSString *cellIdentifier = @"cellIdentifier";
     }]];
     //弹出提示框；
     [self presentViewController:alert animated:true completion:nil];
+}
+#pragma mark JoinCoursDelegate
+-(void)joinCourseDelegete:(UIButton *)btn{
+    [self.view endEditing:YES];
+    if (btn.tag == 1) {
+        [_join removeFromSuperview];
+        _join = nil;
+    }else if (btn.tag == 2){
+        NSDictionary * dict = [[NSDictionary alloc] initWithObjectsAndKeys:[NSString stringWithFormat:@"%@",_join.courseNumber.text],@"id",_userModel.peopleId,@"studentId", nil];
+        [[NetworkRequest sharedInstance] POST:JoinCourse dict:dict succeed:^(id data) {
+            NSString * str = [[data objectForKey:@"header"] objectForKey:@"code"];
+            if ([[NSString stringWithFormat:@"%@",str] isEqualToString:@"6680"]) {
+                [UIUtils showInfoMessage:@"该用户已经添加,不能重复添加"];
+            }else{
+                [UIUtils showInfoMessage:@"加入成功"];
+                [self headerRereshing];
+                [_join removeFromSuperview];
+                _join = nil;
+
+            }
+        } failure:^(NSError *error) {
+            [UIUtils showInfoMessage:@"加入失败"];
+        }];
+    }
 }
 #pragma mark AlterViewDelegate
 -(void)alterViewDeleageRemove{
