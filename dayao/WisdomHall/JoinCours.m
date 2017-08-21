@@ -34,13 +34,13 @@
     
     UILabel * label = [[UILabel alloc] initWithFrame:CGRectMake(10,5, 200-40, 20)];
     label.textColor = [UIColor blackColor];
-    label.text = @"输入课程号:";
+    label.text = @"请输入邀请码:";
     label.font = [UIFont systemFontOfSize:12];
     [father addSubview:label];
     
     _courseNumber = [[UITextField alloc] initWithFrame:CGRectMake(10,30, 200-20, 30)];
     _courseNumber.font = [UIFont systemFontOfSize:14];
-    _courseNumber.placeholder = @"请输入课程号";
+    _courseNumber.placeholder = @"请输入邀请码";
     _courseNumber.keyboardType = UIKeyboardTypeNumberPad;
     _courseNumber.textColor = [UIColor colorWithHexString:@"#29a7e1"];
     [father addSubview:_courseNumber];

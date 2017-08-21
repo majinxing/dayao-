@@ -16,6 +16,8 @@
 #import "SelectMeetingOrClassViewController.h"
 #import "AlterView.h"
 #import "CreateMeetingViewController.h"
+#import "JoinCours.h"
+
 static NSString * cellIdentifier = @"cellIdentifier";
 
 @interface AllTheMeetingViewController ()<UICollectionViewDelegate,UICollectionViewDataSource,AlterViewDelegate>
@@ -27,6 +29,8 @@ static NSString * cellIdentifier = @"cellIdentifier";
 @property (nonatomic,assign) int temp;
 
 @property (nonatomic,strong)AlterView * alterView;
+
+@property (nonatomic,strong)JoinCours * join;
 
 @end
 
@@ -51,6 +55,9 @@ static NSString * cellIdentifier = @"cellIdentifier";
     
     // Do any additional setup after loading the view from its nib.
 }
+-(void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event{
+    [self.view endEditing:YES];
+}
 -(void)viewWillAppear:(BOOL)animated{
 
 }
@@ -67,14 +74,38 @@ static NSString * cellIdentifier = @"cellIdentifier";
     
     UIBarButtonItem * selection = [[UIBarButtonItem alloc] initWithTitle:@"搜索" style:UIBarButtonItemStylePlain target:self action:@selector(selectionBtnPressed)];
     self.navigationItem.leftBarButtonItem = selection;
-    UIBarButtonItem * createMeeting = [[UIBarButtonItem alloc] initWithTitle:@"创建会议" style:UIBarButtonItemStylePlain target:self action:@selector(createMeeting)];
+    UIBarButtonItem * createMeeting = [[UIBarButtonItem alloc] initWithTitle:@"创建/加入会议" style:UIBarButtonItemStylePlain target:self action:@selector(createMeeting)];
     self.navigationItem.rightBarButtonItem = createMeeting;
 }
 -(void)createMeeting{
-    CreateMeetingViewController * c = [[CreateMeetingViewController alloc] init];
-    self.hidesBottomBarWhenPushed = YES;
-    [self.navigationController pushViewController:c animated:YES];
-    self.hidesBottomBarWhenPushed = NO;
+    
+    UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"提示" message:nil preferredStyle:  UIAlertControllerStyleActionSheet];
+    //分别按顺序放入每个按钮；
+    [alert addAction:[UIAlertAction actionWithTitle:@"创建会议" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        //点击按钮的响应事件；
+        CreateMeetingViewController * c = [[CreateMeetingViewController alloc] init];
+        self.hidesBottomBarWhenPushed = YES;
+        [self.navigationController pushViewController:c animated:YES];
+        self.hidesBottomBarWhenPushed = NO;    }]];
+    
+    [alert addAction:[UIAlertAction actionWithTitle:@"加入会议" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        if (_join==nil) {
+            _join = [[JoinCours alloc] init];
+            _join.delegate = self;
+            _join.frame = CGRectMake(0, 0, APPLICATION_WIDTH, APPLICATION_HEIGHT);
+            [self.view addSubview:_join];
+        }
+
+        
+           }]];
+    
+    [alert addAction:[UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleDestructive handler:^(UIAlertAction * _Nonnull action) {
+        //点击按钮的响应事件；
+    }]];
+    
+    //弹出提示框；
+    [self presentViewController:alert animated:true completion:nil];
+   
 }
 -(void)selectionBtnPressed{
     SelectMeetingOrClassViewController * s = [[SelectMeetingOrClassViewController alloc] init];
@@ -144,6 +175,30 @@ static NSString * cellIdentifier = @"cellIdentifier";
             }
         }
     });
+}
+#pragma mark JoinCoursDelegate
+-(void)joinCourseDelegete:(UIButton *)btn{
+    [self.view endEditing:YES];
+    if (btn.tag == 1) {
+        [_join removeFromSuperview];
+        _join = nil;
+    }else if (btn.tag == 2){
+        NSDictionary * dict = [[NSDictionary alloc] initWithObjectsAndKeys:[NSString stringWithFormat:@"%@",_join.courseNumber.text],@"id",_userModel.peopleId,@"userId", nil];
+        [[NetworkRequest sharedInstance] POST:JoinMeeting dict:dict succeed:^(id data) {
+            NSString * str = [[data objectForKey:@"header"] objectForKey:@"code"];
+            if ([[NSString stringWithFormat:@"%@",str] isEqualToString:@"6680"]) {
+                [UIUtils showInfoMessage:@"该用户已经添加,不能重复添加"];
+            }else{
+                [UIUtils showInfoMessage:@"加入成功"];
+                [self headerRereshing];
+                [_join removeFromSuperview];
+                _join = nil;
+                
+            }
+        } failure:^(NSError *error) {
+            [UIUtils showInfoMessage:@"加入失败"];
+        }];
+    }
 }
 #pragma mark 获取数据
 -(void)getDataWithPage:(NSInteger)page isHeader:(BOOL)isHeader{

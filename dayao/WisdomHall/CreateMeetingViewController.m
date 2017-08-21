@@ -236,9 +236,9 @@
         }
         NSString * ms;
         if (_minutes<9) {
-            ms = [NSString stringWithFormat:@"0%d",_minutes];
+            ms = [NSString stringWithFormat:@"0%d",_minutes+1];
         }else{
-            ms = [NSString stringWithFormat:@"%d",_minutes];
+            ms = [NSString stringWithFormat:@"%d",_minutes+1];
         }
         [_textFileAry setObject:[NSString stringWithFormat:@"%d-%@-%@ %@:%@",_year+2017,m,d,h,ms] atIndexedSubscript:1];
         

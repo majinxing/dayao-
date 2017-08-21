@@ -120,6 +120,8 @@
 
 #define JoinCourse          @"course/course/addMember" //个人加入课程
 
+#define JoinMeeting         @"course/meeting/addMember" //个人加入会议
+
 
 
 

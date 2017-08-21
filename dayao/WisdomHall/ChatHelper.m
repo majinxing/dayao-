@@ -177,6 +177,13 @@ static dispatch_once_t onceToken;
 //    [UIApplication sharedApplication].keyWindow.rootViewController = [[UINavigationController alloc]initWithRootViewController:c];
 //    //    调用:
 //    EMError *error = nil;
+    
+    NSDictionary * dict = [[NSDictionary alloc] initWithObjectsAndKeys:aSession,@"session", nil];
+    // 2.创建通知
+    NSNotification *notification =[NSNotification notificationWithName:@"VoiceCalls" object:nil userInfo:dict];
+    // 3.通过 通知中心 发送 通知
+    
+    [[NSNotificationCenter defaultCenter] postNotification:notification];
 }
 -(EMMessage *)sendTextMessage:(NSString *)text withReceiver:(NSString *)receiver{
     

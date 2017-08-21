@@ -52,7 +52,10 @@
         options.isSendPushIfOffline = YES;
         
         [[EMClient sharedClient].callManager setCallOptions:options];
-        
+        if (_call == CALLED) {
+            [self createUI];
+            return;
+        }
 
         NSString * string = ([[[EMClient sharedClient] currentUsername] isEqualToString:@"aaaaa111"])?@"aaaaa1111":@"aaaaa111";
         
@@ -100,15 +103,22 @@
     [[UIApplication sharedApplication] setIdleTimerDisabled:YES];//休眠关闭
 
     if (!_hangupBtn) {
+        
         _hangupBtn = [UIButton buttonWithType:UIButtonTypeCustom];
         
         _hangupBtn.frame = CGRectMake(30, APPLICATION_HEIGHT-60, APPLICATION_WIDTH-60, 40);
         
         _hangupBtn.backgroundColor = [UIColor redColor];
+        if (_call == CALLED) {
+            [_hangupBtn setTitle:@"接受" forState:UIControlStateNormal];
+            
+            [_hangupBtn addTarget:self action:@selector(receiveBtnClick:) forControlEvents:UIControlEventTouchUpInside];
+        }else{
+            [_hangupBtn setTitle:@"挂断" forState:UIControlStateNormal];
+            
+            [_hangupBtn addTarget:self action:@selector(hangupBtnClick) forControlEvents:UIControlEventTouchUpInside];
+        }
         
-        [_hangupBtn setTitle:@"挂断" forState:UIControlStateNormal];
-        
-        [_hangupBtn addTarget:self action:@selector(hangupBtnClick) forControlEvents:UIControlEventTouchUpInside];
         
         [self.view addSubview:_hangupBtn];
     }
@@ -406,7 +416,9 @@
         NSLog(@"receiveBtnClick errorDescription = %@",error.errorDescription);
         [[EMClient sharedClient].callManager endCall:_callSession.callId reason:EMCallEndReasonFailed];
     }else{
-        btn.hidden = YES;
+        [_hangupBtn setTitle:@"挂断" forState:UIControlStateNormal];
+        
+        [_hangupBtn addTarget:self action:@selector(hangupBtnClick) forControlEvents:UIControlEventTouchUpInside];
     }
     
 }

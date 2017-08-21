@@ -44,8 +44,12 @@
 }
 -(void)setInfoForContentView:(MeetingModel *)meetingModel{
     _classOrMeetingName.text = [NSString stringWithFormat:@"会议名：%@",meetingModel.meetingName];
-    
-    _hostName.text = [NSString stringWithFormat:@"主持人：%@",meetingModel.meetingHost];
+    if ([UIUtils isBlankString:meetingModel.meetingHost]) {
+        _hostName.text = [NSString stringWithFormat:@"主持人："];
+
+    }else{
+        _hostName.text = [NSString stringWithFormat:@"主持人：%@",meetingModel.meetingHost];
+    }
     
     _place.text = [NSString stringWithFormat:@"会议地点：%@",meetingModel.meetingPlace];
     
@@ -61,8 +65,11 @@
 
 -(void)setClassInfoForContentView:(ClassModel *)classModel{
     _classOrMeetingName.text = [NSString stringWithFormat:@"课程名：%@",classModel.name];
-    
-    _hostName.text = [NSString stringWithFormat:@"老师：%@",classModel.teacherName];
+    if ([UIUtils isBlankString:classModel.teacherName]) {
+        _hostName.text = [NSString stringWithFormat:@"老师："];
+    }else{
+        _hostName.text = [NSString stringWithFormat:@"老师：%@",classModel.teacherName];
+    }
     
     _place.text = [NSString stringWithFormat:@"上课地点：%@",classModel.typeRoom];
     

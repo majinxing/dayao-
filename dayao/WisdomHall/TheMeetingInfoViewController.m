@@ -30,6 +30,9 @@
 @property (strong, nonatomic) IBOutlet UILabel *meetingTime;
 @property (strong, nonatomic) IBOutlet UILabel *meetingPlace;
 @property (strong, nonatomic) IBOutlet UILabel *host;
+@property (strong, nonatomic) IBOutlet UILabel *meetingId;
+
+
 @property (strong, nonatomic) IBOutlet UIButton *interactiveBtn;
 @property (strong, nonatomic) IBOutlet UIButton *signBtn;
 
@@ -65,7 +68,27 @@
     // 1.注册通知
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(changeSignNumber) name:@"SignSucceed" object:nil];
+    
+    // 1.注册通知
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(voiceCalls:) name:@"VoiceCalls" object:nil];
+    
     // Do any additional setup after loading the view from its nib.
+}
+-(void)voiceCalls:(NSNotification *)dict{
+    NSLog(@"%@",dict);
+    NSLog(@"%s",__func__);
+    EMCallSession * aSession = [dict.userInfo objectForKey:@"session"];
+    ConversationVC * c  = [[ConversationVC alloc] init];
+    c.callSession = aSession;
+    int n = (int)[NSString stringWithFormat:@"%@",_user.school].length;
+    NSMutableString * str = [NSMutableString stringWithFormat:@"%@",aSession.remoteName];
+    [str deleteCharactersInRange:NSMakeRange(0,n)];
+    c.teacherName = str;
+    c.call = CALLED;
+    self.hidesBottomBarWhenPushed = YES;
+    [self.navigationController pushViewController:c animated:YES];
+    //    调用:
 }
 -(void)getData{
     
@@ -85,7 +108,7 @@
         
     }];
     
-    NSDictionary * dict = [[NSDictionary alloc] initWithObjectsAndKeys:_meetingModel.meetingId,@" meetingId", nil];
+    NSDictionary * dict = [[NSDictionary alloc] initWithObjectsAndKeys:_meetingModel.meetingId,@"meetingId", nil];
     [[NetworkRequest sharedInstance] GET:QueryMeetingPeople dict:dict succeed:^(id data) {
 //        NSLog(@"%@",data);
     } failure:^(NSError *error) {
@@ -144,16 +167,22 @@
 -(void)back{
     [self.navigationController popViewControllerAnimated:YES];
 }
+#pragma mark View
 -(void)addContentView{
     _meetingName.text = [NSString stringWithFormat:@"会议名称：%@",_meetingModel.meetingName];
+    if ([UIUtils isBlankString:_meetingModel.meetingHost]) {
+        _host.text = [NSString stringWithFormat:@"主  持  人："];
+    }else{
+        _host.text = [NSString stringWithFormat:@"主  持  人：%@",_meetingModel.meetingHost];
+    }
     
-    _host.text = [NSString stringWithFormat:@"主  持  人：%@",_meetingModel.meetingHost];
     
     _meetingPlace.text = [NSString stringWithFormat:@"会议地点：%@",_meetingModel.meetingPlace];
     
+    _meetingId.text = [NSString stringWithFormat:@"会议邀请码：%@",_meetingModel.meetingId];
     
     if ([[NSString stringWithFormat:@"%@",_user.peopleId] isEqualToString:[NSString stringWithFormat:@"%@",_meetingModel.meetingHostId]]) {
-        _signNumber.text = [NSString stringWithFormat:@"签到人数：%ld/%@",(long)_meetingModel.n,_meetingModel.meetingTotal];
+        _signNumber.text = [NSString stringWithFormat:@"签到人数：%ld/%ld",(long)_meetingModel.n,(long)_meetingModel.m];
         [_seatBtn setBackgroundColor:[UIColor colorWithHexString:@"#29a7e1"]];
         [_seatBtn setTitle:@"人员管理" forState:UIControlStateNormal];
         _temp = 0;
@@ -163,8 +192,15 @@
         }else if([[NSString stringWithFormat:@"%@",_meetingModel.signStatus] isEqualToString:@"2"]){
             _signNumber.text = [NSString stringWithFormat:@"签到状态：已签到"];
         }
-        [_seatBtn setTitle:[NSString stringWithFormat:@"座次：%@ （点击查看详情）",_meetingModel.userSeat] forState:UIControlStateNormal];
+        if (![UIUtils isBlankString:[NSString stringWithFormat:@"%@",_meetingModel.userSeat]]) {
+            [_seatBtn setTitle:[NSString stringWithFormat:@"座次：%@ （点击查看详情）",_meetingModel.userSeat] forState:UIControlStateNormal];
+
+        }else{
+            [_seatBtn setTitle:[NSString stringWithFormat:@"座次：暂未安排（点击查看详情）"] forState:UIControlStateNormal];
+
+        }
         [_seatBtn setBackgroundColor:[UIColor colorWithHexString:@"#29a7e1"]];
+        
 //        [_seatBtn setEnabled: NO];
         _temp = 1;
     }
@@ -244,7 +280,7 @@
         }else{
             NSString * s = [_meetingModel.mck substringWithRange:NSMakeRange(_meetingModel.mck.length-4, 4)];
             s = [NSString stringWithFormat:@"DAYAO_%@",s];
-            UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:[NSString stringWithFormat:@"请到WiFi列表连接指定WiFi:%@,再点击签到",s] message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: @"取消", nil];
+            UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:[NSString stringWithFormat:@"请到WiFi列表连接指定WiFi:%@,再点击签到，若不能跳转请主动在WiFi页面连接无线信号再返回app进行签到，签到完成之后请连接数据流量保证数据传输",s] message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: @"取消", nil];
             alertView.delegate = self;
             alertView.tag = 1;
             [alertView show];
