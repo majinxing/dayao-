@@ -25,8 +25,8 @@
     // Initialization code
 }
 -(void)setTileOrdescribe:(NSString *)title withLableText:(NSString *)labelText{
-    _firstTextView.text = title;
-    _firstLabel.text = labelText;
+    _firstTextView.text = [NSString stringWithFormat:@"%@",title];
+    _firstLabel.text = [NSString stringWithFormat:@"%@",labelText];
 }
 -(void)setSelectText:(NSString *)selectText withTag:(int)tag{
     _secondTextVIew.text = selectText;

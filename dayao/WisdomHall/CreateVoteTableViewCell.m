@@ -14,7 +14,10 @@
 @property (nonatomic,strong) NSString * lableText;
 @property (strong, nonatomic) IBOutlet UITextView *textFile;
 
-@property (strong, nonatomic) IBOutlet UITextView *selectNumTextView;
+@property (strong, nonatomic) IBOutlet UITextField *selectNumTextView;
+
+@property (strong, nonatomic) IBOutlet UILabel *selectLabel;
+@property (weak, nonatomic) IBOutlet UITextView *selectTextView;
 
 
 @end
@@ -28,7 +31,19 @@
 }
 -(void)addSelectNumeberWithNumer:(NSString *)number withTag:(int)tag{
     _selectNumTextView.text = number;
+    _selectNumTextView.keyboardType = UIKeyboardTypeNumberPad;
+    _selectNumTextView.placeholder = @"输入投票的最多选项输如：1";
     _selectNumTextView.tag = tag;
+    [_selectNumTextView addTarget:self action:@selector(textFieldDidChange:) forControlEvents:UIControlEventEditingChanged];
+}
+-(void)addSelectInfo:(NSString *)selectNumber withSelectText:(NSString *)selectText withTag:(int)tag{
+    _selectLabel.text = selectNumber;
+    _selectTextView.text = selectText;
+    _selectTextView.tag = tag;
+    _selectTextView.layer.masksToBounds = YES;
+    _selectTextView.layer.cornerRadius = 5;
+    _selectTextView.layer.borderWidth = 1;
+    _selectTextView.layer.borderColor = RGBA_COLOR(224,224,224, 1).CGColor;
 }
 
 -(void)addTableTextWithTextFile:(NSString *)labelText with:(NSString *)textFile withTag:(int)tag{
@@ -46,6 +61,13 @@
 
     // Configure the view for the selected state
 }
+#pragma mark textFiledDelegate
+-(void)textFieldDidChange:(UITextField *)textFile{
+    if (self.delegate&&[self.delegate respondsToSelector:@selector(textFieldDidChangeDelegate:)]) {
+        [self.delegate textFieldDidChangeDelegate:textFile];
+    }
+}
+
 #pragma mark textViewDelegate
 
 -(BOOL)textViewShouldBeginEditing:(UITextView *)textView{

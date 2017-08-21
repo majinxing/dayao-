@@ -10,10 +10,12 @@
 #import "DYHeader.h"
 #import "JoinVoteTableViewCell.h"
 #import "ResultsOfVoteViewController.h"
+#import "VoteOption.h"
 
 @interface JoinVoteViewController ()<UITableViewDelegate,UITableViewDataSource,JoinVoteTableViewCellDelegate>
 @property (nonatomic,strong)UITableView *tableView;
 @property (nonatomic,strong)NSMutableArray * voteAnswer;
+//@property 
 @end
 
 @implementation JoinVoteViewController
@@ -24,29 +26,46 @@
     
     _voteAnswer = [NSMutableArray arrayWithCapacity:4];
     
-    [self edicateVoteModel];
+    [self getData];
+    
+//    [self edicateVoteModel];
     
     [self setNavigationTitle];
     
     [self addTableView];
     // Do any additional setup after loading the view from its nib.
 }
-
--(void)edicateVoteModel{
-    _vote = [[VoteModel alloc] init];
-    _vote.title = @"你最喜欢的游戏是什么？你最喜欢的游戏是什么？你最喜欢的游戏是什么？你最喜欢的游戏是什么？你最喜欢的游戏是什么？你最喜欢的游戏是什么？你最喜欢的游戏是什么？你最喜欢的游戏是什么？你最喜欢的游戏是什么？你最喜欢的游戏是什么？";
-    _vote.time = @"2016-23-2";
-    _vote.describe = @"那些游戏是受小伙伴们喜爱的呢你最喜欢的游戏是什么？你最喜欢的游戏是什么？你最喜欢的游戏是什么？你最喜欢的游戏是什么？";
-    _vote.largestNumbe = @"3";
-    [_vote.selectAry addObject:@"英雄联盟你最喜欢的游戏是什么？你最喜欢的游戏是什么？你最喜欢的游戏是什么？"];
-    [_vote.selectAry addObject:@"剑灵"];
-    [_vote.selectAry addObject:@"Dota"];
-    [_vote.selectAry addObject:@"穿越火线"];
-    [_vote.selectAry addObject:@"梦幻西游"];
-    [_vote.selectAry addObject:@"魔兽世界"];
-
+-(void)getData{
+    NSDictionary * dict = [[NSDictionary alloc] initWithObjectsAndKeys:_vote.voteId,@"themeId",@"1",@"start",@"10000",@"length",nil];
+    [[NetworkRequest sharedInstance] GET:QueryListOption dict:dict succeed:^(id data) {
+        NSLog(@"%@",data);
+        NSArray * ary = [[data objectForKey:@"body"] objectForKey:@"list"];
+        for (int i = 0; i<ary.count; i++) {
+            VoteOption * v = [[VoteOption alloc] init];
+            [v setInfoWithDict:ary[i]];
+            [_vote.selectAry addObject:v];
+        }
+        [_tableView reloadData];
+    } failure:^(NSError *error) {
+        
+    }];
     
 }
+
+//-(void)edicateVoteModel{
+//    _vote = [[VoteModel alloc] init];
+//    _vote.title = @"你最喜欢的游戏是什么？你最喜欢的游戏是什么？你最喜欢的游戏是什么？你最喜欢的游戏是什么？你最喜欢的游戏是什么？你最喜欢的游戏是什么？你最喜欢的游戏是什么？你最喜欢的游戏是什么？你最喜欢的游戏是什么？你最喜欢的游戏是什么？";
+//    _vote.time = @"2016-23-2";
+//    
+//    _vote.largestNumbe = @"3";
+//    
+//    [_vote.selectAry addObject:@"英雄联盟你最喜欢的游戏是什么？你最喜欢的游戏是什么？你最喜欢的游戏是什么？"];
+//    [_vote.selectAry addObject:@"剑灵"];
+//    [_vote.selectAry addObject:@"Dota"];
+//    [_vote.selectAry addObject:@"穿越火线"];
+//    [_vote.selectAry addObject:@"梦幻西游"];
+//    [_vote.selectAry addObject:@"魔兽世界"];
+//}
 /**
  *  显示navigation的标题
  **/
@@ -90,18 +109,21 @@
     return 1;
 }
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
+    if (_vote.selectAry.count>0) {
+        return 1+_vote.selectAry.count;
+    }
     
-    return 2+_vote.selectAry.count;
+    return 0;
 }
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     JoinVoteTableViewCell * cell;
-    if (indexPath.row<2) {
+    if (indexPath.row == 0) {
         cell = [_tableView dequeueReusableCellWithIdentifier:@"JoinVoteTableViewCellFirst"];
     }else{
         cell = [_tableView dequeueReusableCellWithIdentifier:@"JoinVoteTableViewCellSecond"];
     }
-    if (indexPath.row<2) {
+    if (indexPath.row==0) {
         if (!cell) {
             cell = [[[NSBundle mainBundle] loadNibNamed:@"JoinVoteTableViewCell" owner:nil options:nil] objectAtIndex:0];
         }
@@ -112,10 +134,9 @@
     }
     if (indexPath.row == 0) {
         [cell setTileOrdescribe:_vote.title withLableText:_vote.time];
-    }else if (indexPath.row == 1){
-        [cell setTileOrdescribe:_vote.describe withLableText:[NSString stringWithFormat:@"最多可以选%@项",_vote.largestNumbe]];
     }else{
-        [cell setSelectText:_vote.selectAry[indexPath.row-2] withTag:(int)indexPath.row];
+        VoteOption * v = _vote.selectAry[indexPath.row-1];
+        [cell setSelectText:v.content withTag:(int)indexPath.row];
     }
     cell.delegate = self;
     return cell;

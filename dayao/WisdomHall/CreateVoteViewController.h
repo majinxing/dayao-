@@ -7,7 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-
+#import "MeetingModel.h"
 @interface CreateVoteViewController : UIViewController
-
+@property (nonatomic,strong)MeetingModel * meetModel;
 @end

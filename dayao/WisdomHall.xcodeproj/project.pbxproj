@@ -410,6 +410,7 @@
 		8BF82E3A1EE167C300D33473 /* EndTheTestViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8BE877841EBC2E0C00866A34 /* EndTheTestViewController.xib */; };
 		8BF82E3B1EE167C300D33473 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8BA224651EADF68500627A1B /* Main.storyboard */; };
 		8BF82E3C1EE167C300D33473 /* TheMeetingNotStartViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8B2E16F11EBADA2F008B7C57 /* TheMeetingNotStartViewController.xib */; };
+		8BF833F11F4AE086000F13E1 /* VoteOption.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BF833F01F4AE085000F13E1 /* VoteOption.m */; };
 		8BF8646E1ECACAE800B7EED4 /* FMDatabase.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BF864641ECACAE800B7EED4 /* FMDatabase.m */; };
 		8BF8646F1ECACAE800B7EED4 /* FMDatabaseAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BF864661ECACAE800B7EED4 /* FMDatabaseAdditions.m */; };
 		8BF864701ECACAE800B7EED4 /* FMDatabasePool.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BF864681ECACAE800B7EED4 /* FMDatabasePool.m */; };
@@ -879,6 +880,8 @@
 		8BF82D841EE1573200D33473 /* CreateVoteViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CreateVoteViewController.m; sourceTree = "<group>"; };
 		8BF82D851EE1573200D33473 /* CreateVoteViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CreateVoteViewController.xib; sourceTree = "<group>"; };
 		8BF82E421EE167C300D33473 /* WisdomHall copy.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "WisdomHall copy.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		8BF833EF1F4AE085000F13E1 /* VoteOption.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VoteOption.h; sourceTree = "<group>"; };
+		8BF833F01F4AE085000F13E1 /* VoteOption.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VoteOption.m; sourceTree = "<group>"; };
 		8BF864631ECACAE800B7EED4 /* FMDatabase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FMDatabase.h; sourceTree = "<group>"; };
 		8BF864641ECACAE800B7EED4 /* FMDatabase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FMDatabase.m; sourceTree = "<group>"; };
 		8BF864651ECACAE800B7EED4 /* FMDatabaseAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FMDatabaseAdditions.h; sourceTree = "<group>"; };
@@ -1550,6 +1553,8 @@
 				8B0DB1351ED561B80042DF0D /* AnswerModel.m */,
 				8BFB945B1EE53B2D004BB963 /* VoteModel.h */,
 				8BFB945C1EE53B2D004BB963 /* VoteModel.m */,
+				8BF833EF1F4AE085000F13E1 /* VoteOption.h */,
+				8BF833F01F4AE085000F13E1 /* VoteOption.m */,
 				8B027A161EF8F48800600E18 /* MeetingModel.h */,
 				8B027A171EF8F48800600E18 /* MeetingModel.m */,
 				8B081DE91F0645E600493B81 /* SchoolModel.h */,
@@ -2410,6 +2415,7 @@
 				8BB56D8C1EB31C110023DAFF /* SystemSettingsViewController.m in Sources */,
 				8BFC79741F457E760052C088 /* JoinCours.m in Sources */,
 				8B045B9A1F3458E40021699B /* ZFHallLogoView.m in Sources */,
+				8BF833F11F4AE086000F13E1 /* VoteOption.m in Sources */,
 				8BEE943B1F29DBF900488651 /* NoticeModel.m in Sources */,
 				8BCE7CAD1F033AE100FE261B /* HYDelegate.m in Sources */,
 				8BB56D6A1EB037410023DAFF /* UIUtils.m in Sources */,

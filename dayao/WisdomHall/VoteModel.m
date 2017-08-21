@@ -21,12 +21,19 @@
     if (textView.tag == 0) {
         self.title = textView.text;
     }else if (textView.tag == 1){
-        self.describe = textView.text;
-    }else if (textView.tag == 2){
         self.largestNumbe = textView.text;
-    }else if (textView.tag>2){
-        [self.selectAry setObject:textView.text atIndexedSubscript:textView.tag-3];
+    }else if (textView.tag>1){
+        if (textView.tag-2<self.selectAry.count) {
+            [self.selectAry setObject:textView.text atIndexedSubscript:textView.tag-2];
+        }
     }
 
+}
+-(void)setInfo:(NSDictionary *)dict{
+    _voteState = [dict objectForKey:@"status"];
+    _title = [dict objectForKey:@"title"];
+    _largestNumbe = [dict objectForKey:@"type"];
+    _voteId = [dict objectForKey:@"id"];
+    _time = [dict objectForKey:@"createTimeStr"];
 }
 @end

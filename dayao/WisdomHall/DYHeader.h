@@ -12,8 +12,10 @@
 #define APPLICATION_WIDTH [UIScreen mainScreen].bounds.size.width
 
 #define APPLICATION_HEIGHT ([UIScreen mainScreen].bounds.size.height)
+
 #define MAIN_SCREEN_FRAME     [[UIScreen mainScreen] bounds]
 
+#define RGBA_COLOR(R, G, B, A) [UIColor colorWithRed:((R) / 255.0f) green:((G) / 255.0f) blue:((B) / 255.0f) alpha:A]
 #ifdef __OBJC__
     @import UIKit;
     @import Foundation;
@@ -121,6 +123,12 @@
 #define JoinCourse          @"course/course/addMember" //个人加入课程
 
 #define JoinMeeting         @"course/meeting/addMember" //个人加入会议
+
+#define CreateVote          @"course/vote/create" //创建投票
+
+#define QueryVote           @"course/vote/list"//查询投票
+
+#define QueryListOption     @"course/vote/listOption"//查询投票选项
 
 
 

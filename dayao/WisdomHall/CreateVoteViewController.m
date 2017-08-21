@@ -11,7 +11,7 @@
 #import "CreateVoteTableViewCell.h"
 #import "VoteModel.h"
 
-#define RGBA_COLOR(R, G, B, A) [UIColor colorWithRed:((R) / 255.0f) green:((G) / 255.0f) blue:((B) / 255.0f) alpha:A]
+
 
 @interface CreateVoteViewController ()<UITableViewDataSource,UITableViewDelegate,CreateVoteTableViewCellDelegate>
 @property (nonatomic,strong)UITableView * tableView;
@@ -39,6 +39,9 @@
     [self keyboardNotification];
     // Do any additional setup after loading the view from its nib.
 }
+-(void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event{
+    [self.view endEditing:YES];
+}
 /**
  *  显示navigation的标题
  **/
@@ -55,7 +58,12 @@
 //    self.navigationItem.leftBarButtonItem = backbtn;
 }
 -(void)saveVote{
-    
+    NSDictionary * dict = [[NSDictionary alloc] initWithObjectsAndKeys:_voteModel.title,@"title",_voteModel.largestNumbe,@"type",_voteModel.selectAry,@"contentList",_meetModel.meetingId,@"relId",@"2",@"relType",nil];
+    [[NetworkRequest sharedInstance] POST:CreateVote dict:dict succeed:^(id data) {
+        NSLog(@"%@",data);
+    } failure:^(NSError *error) {
+        NSLog(@"%@",error);
+    }];
 }
 /**
  * 键盘监听
@@ -71,11 +79,11 @@
     
     _labeAry = [NSMutableArray arrayWithCapacity:4];
     
-    [_labeAry addObject:@"请输入主题"];
+    [_labeAry addObject:@"请输入投票主题"];
     
     [_labeAry addObject:@"请输入描述"];
     
-    _rowNumber = 3;
+    _rowNumber = 2;
 }
 -(void)addSelect{
     UIButton * btn = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -129,28 +137,30 @@
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     CreateVoteTableViewCell * cell;
-    if (indexPath.row == 2) {
+    if (indexPath.row == 1) {
         cell = [_tableView dequeueReusableCellWithIdentifier:@"CreateVoteTableViewCellSecond"];
-    }else{
+    }else if(indexPath.row == 0){
         cell = [_tableView dequeueReusableCellWithIdentifier:@"CreateVoteTableViewCellFirst"];
+    }else if (indexPath.row >1){
+        cell = [_tableView dequeueReusableCellWithIdentifier:@"CreateVoteTableViewCellThird"];
     }
     if (!cell) {
-        if (indexPath.row == 2) {
+        if (indexPath.row == 1) {
             cell = [[[NSBundle mainBundle] loadNibNamed:@"CreateVoteTableViewCell" owner:nil options:nil] objectAtIndex:1];
-        }else{
+        }else if(indexPath.row == 0){
             cell = [[[NSBundle mainBundle] loadNibNamed:@"CreateVoteTableViewCell" owner:nil options:nil] objectAtIndex:0];
+        }else if (indexPath.row>1){
+         cell = [[[NSBundle mainBundle] loadNibNamed:@"CreateVoteTableViewCell" owner:nil options:nil] objectAtIndex:2];
         }
     }
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     
     if (indexPath.row == 0) {
         [cell addTableTextWithTextFile:_labeAry[indexPath.row] with:_voteModel.title withTag:(int)indexPath.row];
-    }else if(indexPath.row == 1){
-        [cell addTableTextWithTextFile:_labeAry[indexPath.row] with:_voteModel.describe withTag:(int)indexPath.row];
-    }else if (indexPath.row == 2){
+    }else if (indexPath.row == 1){
         [cell addSelectNumeberWithNumer:_voteModel.largestNumbe withTag:(int)indexPath.row];
-    }else if (indexPath.row>2){
-        [cell addTableTextWithTextFile:@"输入选项内容" with:_voteModel.selectAry[indexPath.row-3] withTag:(int)indexPath.row];
+    }else if (indexPath.row>1){
+        [cell addSelectInfo:[NSString stringWithFormat:@"选项%ld：",indexPath.row-1] withSelectText:_voteModel.selectAry[indexPath.row-2] withTag:(int)indexPath.row];
     }
     cell.delegate = self;
     return cell;
@@ -158,6 +168,7 @@
 }
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    [self.view endEditing:YES];
 }
 
 -(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
@@ -165,8 +176,10 @@
 }
 #pragma mark textFileTextChangeDelegate
 -(void)textFileTextChangeDelegate:(UITextView *)textFile{
-    NSLog(@"%ld",(long)textFile.tag);
     [_voteModel changeText:textFile];
+}
+-(void)textFieldDidChangeDelegate:(UITextField *)textFile{
+    _voteModel.largestNumbe = textFile.text;
 }
 /*
 #pragma mark - Navigation

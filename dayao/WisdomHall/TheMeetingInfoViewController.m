@@ -407,11 +407,11 @@
 
 - (void)shareViewButtonClick:(NSString *)platform
 {
-    if (![platform isEqualToString:InteractionType_Responder]) {
-        UIAlertView * later = [[UIAlertView alloc] initWithTitle:nil message:@"未完待续" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil];
-        [later show];
-        return;
-    }//mjx
+//    if (![platform isEqualToString:InteractionType_Responder]) {
+//        UIAlertView * later = [[UIAlertView alloc] initWithTitle:nil message:@"未完待续" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil];
+//        [later show];
+//        return;
+//    }//mjx
     
     if ([platform isEqualToString:InteractionType_Discuss]){
         DiscussViewController * d = [[DiscussViewController alloc] init];
@@ -422,6 +422,7 @@
     else if ([platform isEqualToString:InteractionType_Vote]){
         VoteViewController * v = [[VoteViewController alloc] init];
         self.hidesBottomBarWhenPushed = YES;
+        v.meetModel = _meetingModel;
         [self.navigationController pushViewController:v animated:YES];
         NSLog(@"投票");
     }

@@ -9,5 +9,5 @@
 #import <UIKit/UIKit.h>
 
 @interface VoteTableViewCell : UITableViewCell
-
+-(void)voteTitle:(NSString *)title withCreateTime:(NSString *)time withState:(NSString *)state;
 @end

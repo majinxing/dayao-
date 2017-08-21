@@ -37,7 +37,9 @@
 }
 
 -(void)afnetwroingPostWithUrl:(NSString *)url withDict:(NSDictionary *)dict{
+    
     NSString * str = [NSString stringWithFormat:@"%@%@",BaseURL,url];
+    
     AFHTTPSessionManager * manager = [AFHTTPSessionManager manager];
     
     [manager POST:str parameters:dict progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {

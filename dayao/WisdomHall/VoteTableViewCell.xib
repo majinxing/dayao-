@@ -39,7 +39,7 @@
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="状态：进行中" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="14w-2H-3wW">
                         <rect key="frame" x="305" y="48" width="100" height="20"/>
-                        <color key="backgroundColor" red="0.21220901741861142" green="0.87916402451739195" blue="1" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                        <color key="backgroundColor" red="0.13257824505818494" green="0.86797059866667714" blue="1" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="100" id="STF-Fd-SgF"/>
                             <constraint firstAttribute="height" constant="20" id="dNz-Zo-dua"/>
@@ -59,6 +59,11 @@
                     <constraint firstItem="m8l-dJ-X2f" firstAttribute="top" secondItem="4DK-Dy-PU6" secondAttribute="bottom" constant="10" id="xxy-Ry-lY9"/>
                 </constraints>
             </tableViewCellContentView>
+            <connections>
+                <outlet property="voteCreateTime" destination="m8l-dJ-X2f" id="nzp-9d-uFX"/>
+                <outlet property="voteState" destination="14w-2H-3wW" id="J0r-bn-3u2"/>
+                <outlet property="voteTitle" destination="4DK-Dy-PU6" id="VnN-aE-i6J"/>
+            </connections>
             <point key="canvasLocation" x="17.5" y="-29"/>
         </tableViewCell>
     </objects>

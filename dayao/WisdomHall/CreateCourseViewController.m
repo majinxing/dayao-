@@ -23,14 +23,23 @@
 @property (nonatomic,assign)int temp;//标志位判断选择的是哪一个滚轮
 @property (nonatomic,assign) int n;
 @property (nonatomic,assign) int m1;
+@property (nonatomic,assign) int m11;
 @property (nonatomic,assign) int m2;
+@property (nonatomic,assign) int m22;
 @property (nonatomic,assign) int m3;
+@property (nonatomic,assign) int m33;
 @property (nonatomic,assign) int week;
+@property (nonatomic,assign) int week1;
 @property (nonatomic,assign) int class1;
+@property (nonatomic,assign) int class11;
 @property (nonatomic,assign) int class2;
+@property (nonatomic,assign) int class22;
 @property (nonatomic,assign) int year;
+@property (nonatomic,assign) int year1;
 @property (nonatomic,assign) int month;
+@property (nonatomic,assign) int month1;
 @property (nonatomic,assign) int day;
+@property (nonatomic,assign) int day1;
 
 @property (nonatomic,strong) ClassRoomModel * classRoom;
 @property (nonatomic,strong) NSMutableArray * selectPeopleAry;
@@ -134,7 +143,7 @@
     self.navigationItem.rightBarButtonItem = myButton;
 }
 -(void)createAcourse{
-   NSDictionary * dict = [UIUtils createCourseWith:_textFileAry ClassRoom:_classRoom joinClassPeople:_selectPeopleAry m1:_m1 m2:_m2 m3:_m3 week:_week class1:_class1 class2:_class2];
+   NSDictionary * dict = [UIUtils createCourseWith:_textFileAry ClassRoom:_classRoom joinClassPeople:_selectPeopleAry m1:_m11 m2:_m22 m3:_m33 week:_week class1:_class1 class2:_class2];
     [self showHudInView:self.view hint:NSLocalizedString(@"正在创建课程", @"Load data...")];
     [[NetworkRequest sharedInstance] POST:CreateCoures dict:dict succeed:^(id data) {
         NSLog(@"%@",data);
@@ -227,13 +236,13 @@
         if (_m1 == 0) {
             str1 = [NSString stringWithFormat:@"1"];
         }else if(_m1!=0){
-            str1 =  [NSString stringWithFormat:@"%d",_m1];
+            str1 =  [NSString stringWithFormat:@"%d",_m1+1];
         }
      
         if (_m2 == 0) {
             str2 = [NSString stringWithFormat:@"1"];
         }else if(_m2!=0){
-            str2 =  [NSString stringWithFormat:@"%d",_m2];
+            str2 =  [NSString stringWithFormat:@"%d",_m2+1];
         }
         if (_m3 == 0) {
             str3 = [NSString stringWithFormat:@"全"];
@@ -242,6 +251,9 @@
         }else if(_m3==2){
             str3 =  [NSString stringWithFormat:@"双周"];
         }
+        _m11 = _m1;
+        _m22 = _m2;
+        _m33 = _m3;
         _m1 = 0;
         _m2 = 0;
         _m3 = 0;
@@ -268,10 +280,15 @@
         }else{
             UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"选择的日期并不是周一，请重新选择日期" message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: nil];
             [alertView show];
-            _year = 0;
-            _month = 0;
-            _day = 0;
+            
         }
+        _year1 = _year;
+        _month1 = _month;
+        _day1 = _day;
+        
+        _year = 0;
+        _month = 0;
+        _day = 0;
     }
     
     [_tabelView reloadData];
