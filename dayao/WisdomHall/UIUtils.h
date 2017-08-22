@@ -73,5 +73,6 @@
 +(void)sendMeetingInfo:(NSDictionary *)dict;
 //显示信息
 +(void)showInfoMessage:(NSString *)str;
++(NSString *)timeWithTimeIntervalString:(NSString *)timeString;
 @end
 

@@ -33,7 +33,7 @@
 -(void)getData{
     NSDictionary * dict = [[NSDictionary alloc] initWithObjectsAndKeys:[NSString stringWithFormat:@"%@",_user.peopleId],@"createUser",[NSString stringWithFormat:@"%@",_meetModel.meetingId],@"relId",@"1",@"start",@"10000",@"length",nil];
     [[NetworkRequest sharedInstance] GET:QueryVote dict:dict succeed:^(id data) {
-        NSLog(@"%@",data);
+//        NSLog(@"%@",data);
         NSArray * ary = [[data objectForKey:@"body"] objectForKey:@"list"];
         for (int i = 0; i<ary.count; i++) {
             VoteModel * v = [[VoteModel alloc] init];
@@ -49,6 +49,9 @@
     _tableview = [[UITableView alloc] initWithFrame:CGRectMake(0, 64, APPLICATION_WIDTH, APPLICATION_HEIGHT-64) style:UITableViewStylePlain];
     _tableview.delegate = self;
     _tableview.dataSource = self;
+    _tableview.estimatedRowHeight = 70;
+    _tableview.rowHeight = UITableViewAutomaticDimension;
+    _tableview.separatorStyle = UITableViewCellSeparatorStyleNone;
     [self.view addSubview:_tableview];
 }
 /**
@@ -104,12 +107,14 @@
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     JoinVoteViewController * j = [[JoinVoteViewController alloc] init];
     self.hidesBottomBarWhenPushed = YES;
+    
     j.vote = _dataAry[indexPath.row];
+    
     [self.navigationController pushViewController:j animated:YES];
 }
--(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
-    return 70;
-}
+//-(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
+//    return 70;
+//}
 -(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
     return 10;
 }

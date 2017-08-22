@@ -25,7 +25,7 @@
     // Initialization code
 }
 -(void)setTileOrdescribe:(NSString *)title withLableText:(NSString *)labelText{
-    _firstTextView.text = [NSString stringWithFormat:@"%@",title];
+    _firstTextView.text = [NSString stringWithFormat:@"投票标题：%@",title];
     _firstLabel.text = [NSString stringWithFormat:@"%@",labelText];
 }
 -(void)setSelectText:(NSString *)selectText withTag:(int)tag{

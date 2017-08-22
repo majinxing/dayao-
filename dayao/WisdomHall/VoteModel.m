@@ -34,6 +34,6 @@
     _title = [dict objectForKey:@"title"];
     _largestNumbe = [dict objectForKey:@"type"];
     _voteId = [dict objectForKey:@"id"];
-    _time = [dict objectForKey:@"createTimeStr"];
+    _time = [UIUtils timeWithTimeIntervalString:[dict objectForKey:@"createTimeStr"]];
 }
 @end

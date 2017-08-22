@@ -15,16 +15,21 @@
 @interface JoinVoteViewController ()<UITableViewDelegate,UITableViewDataSource,JoinVoteTableViewCellDelegate>
 @property (nonatomic,strong)UITableView *tableView;
 @property (nonatomic,strong)NSMutableArray * voteAnswer;
+@property (nonatomic,assign)int temp;//记录投票数目
 //@property 
 @end
 
 @implementation JoinVoteViewController
-
+-(void)dealloc{
+        NSLog(@"%s",__func__);
+}
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor whiteColor];
     
     _voteAnswer = [NSMutableArray arrayWithCapacity:4];
+    
+    _temp = 0;
     
     [self getData];
     
@@ -38,7 +43,7 @@
 -(void)getData{
     NSDictionary * dict = [[NSDictionary alloc] initWithObjectsAndKeys:_vote.voteId,@"themeId",@"1",@"start",@"10000",@"length",nil];
     [[NetworkRequest sharedInstance] GET:QueryListOption dict:dict succeed:^(id data) {
-        NSLog(@"%@",data);
+        [_vote.selectAry removeAllObjects];
         NSArray * ary = [[data objectForKey:@"body"] objectForKey:@"list"];
         for (int i = 0; i<ary.count; i++) {
             VoteOption * v = [[VoteOption alloc] init];
@@ -52,20 +57,6 @@
     
 }
 
-//-(void)edicateVoteModel{
-//    _vote = [[VoteModel alloc] init];
-//    _vote.title = @"你最喜欢的游戏是什么？你最喜欢的游戏是什么？你最喜欢的游戏是什么？你最喜欢的游戏是什么？你最喜欢的游戏是什么？你最喜欢的游戏是什么？你最喜欢的游戏是什么？你最喜欢的游戏是什么？你最喜欢的游戏是什么？你最喜欢的游戏是什么？";
-//    _vote.time = @"2016-23-2";
-//    
-//    _vote.largestNumbe = @"3";
-//    
-//    [_vote.selectAry addObject:@"英雄联盟你最喜欢的游戏是什么？你最喜欢的游戏是什么？你最喜欢的游戏是什么？"];
-//    [_vote.selectAry addObject:@"剑灵"];
-//    [_vote.selectAry addObject:@"Dota"];
-//    [_vote.selectAry addObject:@"穿越火线"];
-//    [_vote.selectAry addObject:@"梦幻西游"];
-//    [_vote.selectAry addObject:@"魔兽世界"];
-//}
 /**
  *  显示navigation的标题
  **/
@@ -133,7 +124,7 @@
         }
     }
     if (indexPath.row == 0) {
-        [cell setTileOrdescribe:_vote.title withLableText:_vote.time];
+        [cell setTileOrdescribe:[NSString stringWithFormat:@"%@(最多选%@票)",_vote.title,_vote.largestNumbe] withLableText:_vote.time];
     }else{
         VoteOption * v = _vote.selectAry[indexPath.row-1];
         [cell setSelectText:v.content withTag:(int)indexPath.row];
@@ -152,12 +143,13 @@
 }
 #pragma mark JoinVoteTableViewCellDelegate
 -(void)voteBtnDelegatePressed:(UIButton *)btn{
+    
     if (btn.titleLabel.textColor == [UIColor blueColor]) {
         [btn setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
     }else{
         [btn setTitleColor:[UIColor blueColor] forState:UIControlStateNormal];
     }
-    NSLog(@"%s",__func__);
+    
 }
 /*
 #pragma mark - Navigation
