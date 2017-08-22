@@ -126,6 +126,11 @@
 		8B2E16F31EBADA2F008B7C57 /* TheMeetingNotStartViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8B2E16F11EBADA2F008B7C57 /* TheMeetingNotStartViewController.xib */; };
 		8B2E16F71EBADA5D008B7C57 /* TheMeetingEndedViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B2E16F51EBADA5D008B7C57 /* TheMeetingEndedViewController.m */; };
 		8B2E16F81EBADA5D008B7C57 /* TheMeetingEndedViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8B2E16F61EBADA5D008B7C57 /* TheMeetingEndedViewController.xib */; };
+		8B32FEA51F4C038B00D9BF23 /* jcore-ios-1.1.5.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8B32FEA21F4C038B00D9BF23 /* jcore-ios-1.1.5.a */; };
+		8B32FEA61F4C038B00D9BF23 /* jpush-ios-3.0.6.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8B32FEA31F4C038B00D9BF23 /* jpush-ios-3.0.6.a */; };
+		8B32FEA81F4C03C200D9BF23 /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8B32FEA71F4C03C200D9BF23 /* CoreFoundation.framework */; };
+		8B32FEAA1F4C043000D9BF23 /* UserNotifications.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8B32FEA91F4C043000D9BF23 /* UserNotifications.framework */; };
+		8B32FEAC1F4C045900D9BF23 /* libresolv.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 8B32FEAB1F4C045900D9BF23 /* libresolv.tbd */; };
 		8B4D91141EBDAB1000A4BE34 /* SignListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B4D91121EBDAB1000A4BE34 /* SignListViewController.m */; };
 		8B4D91151EBDAB1000A4BE34 /* SignListViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8B4D91131EBDAB1000A4BE34 /* SignListViewController.xib */; };
 		8B51AAA31F3EE71900AE034E /* MeetingChooseSeatViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B51AAA11F3EE71900AE034E /* MeetingChooseSeatViewController.m */; };
@@ -690,6 +695,13 @@
 		8B2E16F41EBADA5D008B7C57 /* TheMeetingEndedViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TheMeetingEndedViewController.h; sourceTree = "<group>"; };
 		8B2E16F51EBADA5D008B7C57 /* TheMeetingEndedViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TheMeetingEndedViewController.m; sourceTree = "<group>"; };
 		8B2E16F61EBADA5D008B7C57 /* TheMeetingEndedViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TheMeetingEndedViewController.xib; sourceTree = "<group>"; };
+		8B32FEA21F4C038B00D9BF23 /* jcore-ios-1.1.5.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = "jcore-ios-1.1.5.a"; sourceTree = "<group>"; };
+		8B32FEA31F4C038B00D9BF23 /* jpush-ios-3.0.6.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = "jpush-ios-3.0.6.a"; sourceTree = "<group>"; };
+		8B32FEA41F4C038B00D9BF23 /* JPUSHService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JPUSHService.h; sourceTree = "<group>"; };
+		8B32FEA71F4C03C200D9BF23 /* CoreFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreFoundation.framework; path = System/Library/Frameworks/CoreFoundation.framework; sourceTree = SDKROOT; };
+		8B32FEA91F4C043000D9BF23 /* UserNotifications.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UserNotifications.framework; path = System/Library/Frameworks/UserNotifications.framework; sourceTree = SDKROOT; };
+		8B32FEAB1F4C045900D9BF23 /* libresolv.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libresolv.tbd; path = usr/lib/libresolv.tbd; sourceTree = SDKROOT; };
+		8B32FEAD1F4C052700D9BF23 /* WisdomHall.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = WisdomHall.entitlements; sourceTree = "<group>"; };
 		8B4D91111EBDAB1000A4BE34 /* SignListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SignListViewController.h; sourceTree = "<group>"; };
 		8B4D91121EBDAB1000A4BE34 /* SignListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SignListViewController.m; sourceTree = "<group>"; };
 		8B4D91131EBDAB1000A4BE34 /* SignListViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SignListViewController.xib; sourceTree = "<group>"; };
@@ -972,6 +984,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8B32FEAC1F4C045900D9BF23 /* libresolv.tbd in Frameworks */,
+				8B32FEAA1F4C043000D9BF23 /* UserNotifications.framework in Frameworks */,
+				8B32FEA81F4C03C200D9BF23 /* CoreFoundation.framework in Frameworks */,
 				8BF867BA1ECC272F00B7EED4 /* libstdc++.6.0.9.tbd in Frameworks */,
 				8BF867B81ECC271A00B7EED4 /* libz.tbd in Frameworks */,
 				8BF867B61ECC270C00B7EED4 /* libc++.tbd in Frameworks */,
@@ -980,11 +995,13 @@
 				8BF867B41ECC26CE00B7EED4 /* AudioToolbox.framework in Frameworks */,
 				8BF867B21ECC26C300B7EED4 /* CoreMedia.framework in Frameworks */,
 				8BF865391ECADB9F00B7EED4 /* libsqlite3.0.tbd in Frameworks */,
+				8B32FEA61F4C038B00D9BF23 /* jpush-ios-3.0.6.a in Frameworks */,
 				8B17373F1EC55B9800BE3C8F /* CoreGraphics.framework in Frameworks */,
 				8B9CCB8A1F14693B001833FD /* Hyphenate.framework in Frameworks */,
 				8B9CCB881F1468D6001833FD /* Hyphenate.framework in Frameworks */,
 				8B17373D1EC55B8500BE3C8F /* CFNetwork.framework in Frameworks */,
 				8B17373B1EC55B7A00BE3C8F /* AddressBook.framework in Frameworks */,
+				8B32FEA51F4C038B00D9BF23 /* jcore-ios-1.1.5.a in Frameworks */,
 				8B1737371EC55B2300BE3C8F /* Security.framework in Frameworks */,
 				8B1737351EC55B0600BE3C8F /* Social.framework in Frameworks */,
 				8B1737331EC55AFA00BE3C8F /* SystemConfiguration.framework in Frameworks */,
@@ -1305,6 +1322,16 @@
 			name = TheMeetingType;
 			sourceTree = "<group>";
 		};
+		8B32FEA11F4C038B00D9BF23 /* Lib */ = {
+			isa = PBXGroup;
+			children = (
+				8B32FEA21F4C038B00D9BF23 /* jcore-ios-1.1.5.a */,
+				8B32FEA31F4C038B00D9BF23 /* jpush-ios-3.0.6.a */,
+				8B32FEA41F4C038B00D9BF23 /* JPUSHService.h */,
+			);
+			path = Lib;
+			sourceTree = "<group>";
+		};
 		8B7D5D841EB969B70068058E /* Collection */ = {
 			isa = PBXGroup;
 			children = (
@@ -1376,6 +1403,7 @@
 		8BA2245B1EADF68500627A1B /* WisdomHall */ = {
 			isa = PBXGroup;
 			children = (
+				8B32FEAD1F4C052700D9BF23 /* WisdomHall.entitlements */,
 				8B045B531F3458660021699B /* seating */,
 				8BA224B51EAED4DB00627A1B /* Utils */,
 				8BA224961EADFF2700627A1B /* FrameWork */,
@@ -1604,6 +1632,10 @@
 		8BA224AF1EAED25400627A1B /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				8B32FEAB1F4C045900D9BF23 /* libresolv.tbd */,
+				8B32FEA91F4C043000D9BF23 /* UserNotifications.framework */,
+				8B32FEA71F4C03C200D9BF23 /* CoreFoundation.framework */,
+				8B32FEA11F4C038B00D9BF23 /* Lib */,
 				8B9CCB851F1468D6001833FD /* HyphenateFullSDK */,
 				8B081DD51F05FD4400493B81 /* SDK */,
 				8BF867BD1ECC275200B7EED4 /* libiconv.tbd */,
@@ -2047,9 +2079,12 @@
 					8BA224581EADF68500627A1B = {
 						CreatedOnToolsVersion = 8.3;
 						DevelopmentTeam = AM9UTP2CL3;
-						ProvisioningStyle = Manual;
+						ProvisioningStyle = Automatic;
 						SystemCapabilities = {
 							com.apple.BackgroundModes = {
+								enabled = 1;
+							};
+							com.apple.Push = {
 								enabled = 1;
 							};
 						};
@@ -2626,9 +2661,10 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = WisdomHall/WisdomHall.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Distribution: yao zhiqiang (AM9UTP2CL3)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: yao zhiqiang (AM9UTP2CL3)";
-				DEVELOPMENT_TEAM = AM9UTP2CL3;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				DEVELOPMENT_TEAM = "";
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -2735,11 +2771,12 @@
 					"$(PROJECT_DIR)/WisdomHall/EaseUI/EMUIKit/3rdparty/DeviceHelper/VoiceConvert/opencore-amrwb",
 					"$(PROJECT_DIR)/WisdomHall/HyphenateFullSDK/HyphenateFullSDK/lib",
 					"$(PROJECT_DIR)/WisdomHall/lupai/wechatSDK",
+					"$(SRCROOT)/Lib",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.dayaokeji.rhythm;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "a08f6fcd-2414-423a-b12a-e4d45bf4812e";
-				PROVISIONING_PROFILE_SPECIFIER = rhythmPP;
+				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				TARGETED_DEVICE_FAMILY = 1;
 				USER_HEADER_SEARCH_PATHS = "";
 			};
@@ -2900,9 +2937,10 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = WisdomHall/WisdomHall.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Distribution: yao zhiqiang (AM9UTP2CL3)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: yao zhiqiang (AM9UTP2CL3)";
-				DEVELOPMENT_TEAM = AM9UTP2CL3;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				DEVELOPMENT_TEAM = "";
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -3009,11 +3047,12 @@
 					"$(PROJECT_DIR)/WisdomHall/EaseUI/EMUIKit/3rdparty/DeviceHelper/VoiceConvert/opencore-amrwb",
 					"$(PROJECT_DIR)/WisdomHall/HyphenateFullSDK/HyphenateFullSDK/lib",
 					"$(PROJECT_DIR)/WisdomHall/lupai/wechatSDK",
+					"$(SRCROOT)/Lib",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.dayaokeji.rhythm;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "a08f6fcd-2414-423a-b12a-e4d45bf4812e";
-				PROVISIONING_PROFILE_SPECIFIER = rhythmPP;
+				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				TARGETED_DEVICE_FAMILY = 1;
 				USER_HEADER_SEARCH_PATHS = "";
 			};
@@ -3024,9 +3063,10 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = WisdomHall/WisdomHall.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Distribution: yao zhiqiang (AM9UTP2CL3)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: yao zhiqiang (AM9UTP2CL3)";
-				DEVELOPMENT_TEAM = AM9UTP2CL3;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				DEVELOPMENT_TEAM = "";
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -3133,11 +3173,12 @@
 					"$(PROJECT_DIR)/WisdomHall/EaseUI/EMUIKit/3rdparty/DeviceHelper/VoiceConvert/opencore-amrwb",
 					"$(PROJECT_DIR)/WisdomHall/HyphenateFullSDK/HyphenateFullSDK/lib",
 					"$(PROJECT_DIR)/WisdomHall/lupai/wechatSDK",
+					"$(SRCROOT)/Lib",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.dayaokeji.rhythm;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "a08f6fcd-2414-423a-b12a-e4d45bf4812e";
-				PROVISIONING_PROFILE_SPECIFIER = rhythmPP;
+				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				TARGETED_DEVICE_FAMILY = 1;
 				USER_HEADER_SEARCH_PATHS = "";
 			};
