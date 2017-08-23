@@ -18,6 +18,7 @@
 @property (nonatomic,copy)NSString * time;//
 @property (nonatomic,copy)NSString * voteState;
 @property (nonatomic,copy)NSString * voteId;
+@property (nonatomic,copy)NSString * selfVoteStatus;
 
 -(void)changeText:(UITextView *)textView;
 -(void)setInfo:(NSDictionary *)dict;

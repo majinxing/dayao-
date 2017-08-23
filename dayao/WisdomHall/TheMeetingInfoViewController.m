@@ -76,8 +76,6 @@
     // Do any additional setup after loading the view from its nib.
 }
 -(void)voiceCalls:(NSNotification *)dict{
-    NSLog(@"%@",dict);
-    NSLog(@"%s",__func__);
     EMCallSession * aSession = [dict.userInfo objectForKey:@"session"];
     ConversationVC * c  = [[ConversationVC alloc] init];
     c.callSession = aSession;
@@ -142,6 +140,8 @@
 }
 -(void)deleteMeeting{
     NSDictionary * dict = [[NSDictionary alloc] initWithObjectsAndKeys:_meetingModel.meetingId,@"id", nil];
+    [self showHudInView:self.view hint:NSLocalizedString(@"正在提交数据", @"Load data...")];
+
     [[NetworkRequest sharedInstance] POST:MeetingDelect dict:dict succeed:^(id data) {
         NSLog(@"%@",data);
         NSString * str = [[data objectForKey:@"header"] objectForKey:@"message"];
@@ -153,14 +153,18 @@
             [[NSNotificationCenter defaultCenter] postNotification:notification];
             
             [self.navigationController popViewControllerAnimated:YES];
+            [self hideHud];
             
         }else{
             UIAlertView * alter = [[UIAlertView alloc] initWithTitle:nil message:@"删除会议失败" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil];
             [alter show];
+            [self hideHud];
         }
     } failure:^(NSError *error) {
         UIAlertView * alter = [[UIAlertView alloc] initWithTitle:nil message:@"删除会议失败" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil];
         [alter show];
+        [self hideHud];
+
     }];
     
 }

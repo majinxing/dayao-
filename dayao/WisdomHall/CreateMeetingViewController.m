@@ -122,14 +122,16 @@
     NSDictionary * d = [UIUtils seatWithPeople:_selectPeopleAry withSeat:_searAry];
     
     NSMutableArray * ary = [d objectForKey:@"peopleWithSeat"];
-
+    
     [dict setObject:ary forKey:@"userSeatList"];
     
     NSDictionary * sendDict = [[NSDictionary alloc] initWithObjectsAndKeys:[d objectForKey:@"seatPeople"],@"seatPeople",_textFileAry[0],@"name",_seat.seatTableNamel,@"address",_textFileAry[1],@"time",nil];
+    [self showHudInView:self.view hint:NSLocalizedString(@"正在提交数据", @"Load data...")];
     
     [[NetworkRequest sharedInstance] POST:CreateMeeting dict:dict succeed:^(id data) {
         NSString * str = [[data objectForKey:@"header"] objectForKey:@"message"];
         if ([str isEqualToString:@"成功"]) {
+            [self hideHud];
             // 2.创建通知
             NSNotification *notification =[NSNotification notificationWithName:@"UpdateTheMeetingPage" object:nil userInfo:nil];
             // 3.通过 通知中心 发送 通知
@@ -145,11 +147,9 @@
             
             [self.navigationController popViewControllerAnimated:YES];
         }
-        
-        
-        NSLog(@"s");
     } failure:^(NSError *error) {
-        NSLog(@"失败");
+        [self hideHud];
+        
     }];
     
 }

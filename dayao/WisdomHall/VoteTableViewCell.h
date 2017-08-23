@@ -8,6 +8,12 @@
 
 #import <UIKit/UIKit.h>
 
+@protocol VoteTableViewCellDelegate <NSObject>
+-(void)moreVoteTableViewCellDelegate:(UIButton *)btn;
+
+
+@end
 @interface VoteTableViewCell : UITableViewCell
--(void)voteTitle:(NSString *)title withCreateTime:(NSString *)time withState:(NSString *)state;
+@property (nonatomic,weak)id<VoteTableViewCellDelegate>delegate;
+-(void)voteTitle:(NSString *)title withCreateTime:(NSString *)time withState:(NSString *)state withIndex:(int)n;
 @end

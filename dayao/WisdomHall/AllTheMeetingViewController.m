@@ -20,7 +20,7 @@
 
 static NSString * cellIdentifier = @"cellIdentifier";
 
-@interface AllTheMeetingViewController ()<UICollectionViewDelegate,UICollectionViewDataSource,AlterViewDelegate>
+@interface AllTheMeetingViewController ()<UICollectionViewDelegate,UICollectionViewDataSource,AlterViewDelegate,JoinCoursDelegate>
 @property (nonatomic,strong) UICollectionView * collection;
 @property (nonatomic,strong) NSMutableArray * meetingModelAry;
 @property (nonatomic,strong) UserModel * userModel;
@@ -59,7 +59,7 @@ static NSString * cellIdentifier = @"cellIdentifier";
     [self.view endEditing:YES];
 }
 -(void)viewWillAppear:(BOOL)animated{
-
+    
 }
 /**
  *  显示navigation的标题
@@ -95,9 +95,9 @@ static NSString * cellIdentifier = @"cellIdentifier";
             _join.frame = CGRectMake(0, 0, APPLICATION_WIDTH, APPLICATION_HEIGHT);
             [self.view addSubview:_join];
         }
-
         
-           }]];
+        
+    }]];
     
     [alert addAction:[UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleDestructive handler:^(UIAlertAction * _Nonnull action) {
         //点击按钮的响应事件；
@@ -105,7 +105,7 @@ static NSString * cellIdentifier = @"cellIdentifier";
     
     //弹出提示框；
     [self presentViewController:alert animated:true completion:nil];
-   
+    
 }
 -(void)selectionBtnPressed{
     SelectMeetingOrClassViewController * s = [[SelectMeetingOrClassViewController alloc] init];
@@ -118,7 +118,7 @@ static NSString * cellIdentifier = @"cellIdentifier";
     _alterView.layer.masksToBounds = YES;
     _alterView.layer.cornerRadius = 10;
     _alterView.delegate = self;
-
+    
 }
 /**
  * 添加collection
@@ -206,7 +206,7 @@ static NSString * cellIdentifier = @"cellIdentifier";
     
     NSDictionary * dict = [[NSDictionary alloc] initWithObjectsAndKeys:[NSString stringWithFormat:@"%ld",(long)page],@"start",_userModel.peopleId,@"teacherId",[UIUtils getTime],@"startTime",@"",@"endTime", nil];
     
- 
+    
     
     [[NetworkRequest sharedInstance] GET:QueryMeetingSelfCreate dict:dict succeed:^(id data) {
         NSDictionary * dict = [data objectForKey:@"header"];
@@ -226,6 +226,8 @@ static NSString * cellIdentifier = @"cellIdentifier";
             dispatch_async(dispatch_get_main_queue(), ^{
                 [UIUtils accountWasUnderTheRoof];
             });
+            [self hideHud];
+            
         }else{
             [self hideHud];
         }

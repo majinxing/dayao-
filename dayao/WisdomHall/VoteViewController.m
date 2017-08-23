@@ -12,11 +12,15 @@
 #import "CreateVoteViewController.h"
 #import "JoinVoteViewController.h"
 #import "VoteModel.h"
+#import "ShareView.h"
 
-@interface VoteViewController ()<UITableViewDelegate,UITableViewDataSource>
+@interface VoteViewController ()<UITableViewDelegate,UITableViewDataSource,VoteTableViewCellDelegate,ShareViewDelegate>
 @property (nonatomic,strong)UITableView * tableview;
 @property (nonatomic,strong)UserModel * user;
 @property (nonatomic,strong)NSMutableArray * dataAry;
+@property (nonatomic,strong)ShareView * vote;
+@property (nonatomic,strong)VoteModel * voteModel;
+
 @end
 
 @implementation VoteViewController
@@ -31,7 +35,9 @@
     // Do any additional setup after loading the view from its nib.
 }
 -(void)getData{
-    NSDictionary * dict = [[NSDictionary alloc] initWithObjectsAndKeys:[NSString stringWithFormat:@"%@",_user.peopleId],@"createUser",[NSString stringWithFormat:@"%@",_meetModel.meetingId],@"relId",@"1",@"start",@"10000",@"length",nil];
+    [self showHudInView:self.view hint:NSLocalizedString(@"正在加载数据", @"Load data...")];
+
+    NSDictionary * dict = [[NSDictionary alloc] initWithObjectsAndKeys:[NSString stringWithFormat:@"%@",_meetModel.meetingId],@"relId",@"1",@"start",@"10000",@"length",nil];
     [[NetworkRequest sharedInstance] GET:QueryVote dict:dict succeed:^(id data) {
 //        NSLog(@"%@",data);
         NSArray * ary = [[data objectForKey:@"body"] objectForKey:@"list"];
@@ -40,9 +46,11 @@
             [v setInfo:ary[i]];
             [_dataAry addObject:v];
         }
+        [self hideHud];
         [_tableview reloadData];
     } failure:^(NSError *error) {
         NSLog(@"%@",error);
+        [self hideHud];
     }];
 }
 -(void)addTableView{
@@ -81,6 +89,31 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
+#pragma mark VoteTableViewCellDelegate
+-(void)moreVoteTableViewCellDelegate:(UIButton *)btn{
+    VoteModel * v = _dataAry[btn.tag-1];
+    if (!_vote)
+    {
+        _vote = [[ShareView alloc] initWithFrame:self.navigationController.view.bounds withType:@"vote"];
+        _vote.delegate = self;
+    }
+    [_vote showInView:self.navigationController.view];
+
+}
+#pragma mark ShareViewDelegate
+
+- (void)shareViewButtonClick:(NSString *)platform
+{
+    if ([platform isEqualToString:Vote_delecate]){
+        
+    }else if ([platform isEqualToString:Vote_Stop]){
+    
+    }else if ([platform isEqualToString:Vote_Stare]){
+        
+    }else if ([platform isEqualToString:Vote_Modify]){
+        
+    }
+}
 #pragma mark UITableViewdelegate
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
     return 1;
@@ -99,8 +132,8 @@
     }
     VoteModel * v = _dataAry[indexPath.row];
     
-    [cell voteTitle:v.title withCreateTime:v.time withState:nil];
-    
+    [cell voteTitle:v.title withCreateTime:v.time withState:v.selfVoteStatus withIndex:(int)indexPath.row+1];
+    cell.delegate = self;
     return cell;
 }
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{

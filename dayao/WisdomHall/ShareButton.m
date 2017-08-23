@@ -84,6 +84,18 @@
     if ([type isEqualToString:InteractionType_Data]) {
         [self setImage:[UIImage imageNamed:@"form"] forState:UIControlStateNormal];
     }
+    if ([type isEqualToString:Vote_Stop]) {
+        [self setImage:[UIImage imageNamed:@"stop"] forState:UIControlStateNormal];
+    }
+    if ([type isEqualToString:Vote_Stare]) {
+        [self setImage:[UIImage imageNamed:@"start"] forState:UIControlStateNormal];
+    }
+    if ([type isEqualToString:Vote_delecate]) {
+        [self setImage:[UIImage imageNamed:@"delect"] forState:UIControlStateNormal];
+    }
+    if ([type isEqualToString:Vote_Modify]) {
+        [self setImage:[UIImage imageNamed:@"modify"] forState:UIControlStateNormal];
+    }
     [self setTitle:type forState:UIControlStateNormal];
 }
 

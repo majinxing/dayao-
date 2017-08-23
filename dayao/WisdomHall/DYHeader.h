@@ -49,6 +49,12 @@
 #define InteractionType_Data        @"资料"
 #define InteractionType_Add         @"更多"
 
+#define Vote_delecate               @"删除"
+#define Vote_Modify                 @"修改"
+#define Vote_Stare                  @"开始"
+#define Vote_Stop                   @"结束"
+
+
 
 //数据库的名字
 #define SQLITE_NAME        @"Dayao"
@@ -124,11 +130,15 @@
 
 #define JoinMeeting         @"course/meeting/addMember" //个人加入会议
 
+#define FileUpload          @"course/resource/upload"   //上传资料
+
 #define CreateVote          @"course/vote/create" //创建投票
 
 #define QueryVote           @"course/vote/list"//查询投票
 
 #define QueryListOption     @"course/vote/listOption"//查询投票选项
+
+#define PeopleVote          @"course/vote/vote"     //用户投票接口
 
 
 

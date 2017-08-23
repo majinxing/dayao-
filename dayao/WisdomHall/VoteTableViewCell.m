@@ -14,6 +14,8 @@
 @property (strong, nonatomic) IBOutlet UILabel *voteState;
 @property (strong, nonatomic) IBOutlet UITextView *voteTitle;
 @property (strong, nonatomic) IBOutlet UILabel *voteCreateTime;
+@property (strong, nonatomic) IBOutlet UIButton *moreBtn;
+@property (assign,nonatomic) int temp;
 
 @end
 @implementation VoteTableViewCell
@@ -28,12 +30,21 @@
     _voteState.layer.cornerRadius = 10;
     
 }
--(void)voteTitle:(NSString *)title withCreateTime:(NSString *)time withState:(NSString *)state{
+-(void)voteTitle:(NSString *)title withCreateTime:(NSString *)time withState:(NSString *)state withIndex:(int)n{
     _voteTitle.text = [NSString stringWithFormat:@"投票主题：%@",title];
     _voteCreateTime.text = [NSString stringWithFormat:@"创建时间：%@",time];
-    
+    _voteState.text = [NSString stringWithFormat:@"状态：%@",state];
+    _temp = n;
     
 }
+- (IBAction)more:(UIButton *)btn {
+    
+    if (self.delegate&&[self.delegate respondsToSelector:@selector(moreVoteTableViewCellDelegate:)]) {
+        btn.tag = _temp;
+        [self.delegate moreVoteTableViewCellDelegate:btn];
+    }
+}
+
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
     [super setSelected:selected animated:animated];
 

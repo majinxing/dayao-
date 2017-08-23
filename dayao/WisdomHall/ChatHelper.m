@@ -12,6 +12,19 @@
 #import "DYHeader.h"
 #import "FMDBTool.h"
 
+// 引入JPush功能所需头文件
+#import "JPUSHService.h"
+// iOS10注册APNs所需头文件
+#ifdef NSFoundationVersionNumber_iOS_9_x_Max
+
+#import <UserNotifications/UserNotifications.h>
+
+#endif
+
+// 如果需要使用idfa功能所需要引入的头文件（可选）
+#import <AdSupport/AdSupport.h>
+
+
 static ChatHelper *helper = nil;
 static dispatch_once_t onceToken;
 
@@ -35,6 +48,7 @@ static dispatch_once_t onceToken;
         NSLog(@"退出成功");
     }
 }
+
 - (void)dealloc
 {
     [[EMClient sharedClient] removeDelegate:self];
@@ -80,9 +94,18 @@ static dispatch_once_t onceToken;
         UserModel * user = [[Appsetting sharedInstance] getUsetInfo];
         
         EMError *error = [[EMClient sharedClient] registerWithUsername:[NSString stringWithFormat:@"%@%@",user.school,user.studentId] password:user.userPassword];
+        
+        
+        
+        [JPUSHService setAlias:[NSString stringWithFormat:@"%@%@",user.school,user.studentId] completion:^(NSInteger iResCode, NSString *iAlias, NSInteger seq) {
+
+        } seq:0];
+        
+        
         if (error==nil) {
             NSLog(@"注册成功");
         }
+        
         EMError *error2 = [[EMClient sharedClient] loginWithUsername:[NSString stringWithFormat:@"%@%@",user.school,user.studentId] password:user.userPassword];
         if (!error2) {
             NSLog(@"登录成功");
@@ -91,6 +114,11 @@ static dispatch_once_t onceToken;
         }
     });
 
+}
+-(void)tagsAliasCallback:(int)iResCode tags:(NSSet*)tags alias:(NSString*)alias {
+    
+    NSLog(@"rescode: %d, \ntags: %@, \nalias: %@\n", iResCode, tags , alias);
+    
 }
 /*!
  @method

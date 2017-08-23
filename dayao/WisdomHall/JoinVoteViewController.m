@@ -16,12 +16,12 @@
 @property (nonatomic,strong)UITableView *tableView;
 @property (nonatomic,strong)NSMutableArray * voteAnswer;
 @property (nonatomic,assign)int temp;//记录投票数目
-//@property 
+@property (nonatomic,strong)UIAlertView * alter;
 @end
 
 @implementation JoinVoteViewController
 -(void)dealloc{
-        NSLog(@"%s",__func__);
+    NSLog(@"%s",__func__);
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -33,7 +33,7 @@
     
     [self getData];
     
-//    [self edicateVoteModel];
+    //    [self edicateVoteModel];
     
     [self setNavigationTitle];
     
@@ -41,6 +41,8 @@
     // Do any additional setup after loading the view from its nib.
 }
 -(void)getData{
+    [self showHudInView:self.view hint:NSLocalizedString(@"正在加载数据", @"Load data...")];
+    
     NSDictionary * dict = [[NSDictionary alloc] initWithObjectsAndKeys:_vote.voteId,@"themeId",@"1",@"start",@"10000",@"length",nil];
     [[NetworkRequest sharedInstance] GET:QueryListOption dict:dict succeed:^(id data) {
         [_vote.selectAry removeAllObjects];
@@ -50,9 +52,10 @@
             [v setInfoWithDict:ary[i]];
             [_vote.selectAry addObject:v];
         }
+        [self hideHud];
         [_tableView reloadData];
     } failure:^(NSError *error) {
-        
+        [self hideHud];
     }];
     
 }
@@ -73,7 +76,17 @@
     //    self.navigationItem.leftBarButtonItem = backbtn;
 }
 -(void)saveVote{
-
+    if (_voteAnswer.count>0) {
+        NSDictionary * dict = [[NSDictionary alloc] initWithObjectsAndKeys:_vote.voteId,@"id",_voteAnswer,@" optionList", nil];
+        [[NetworkRequest sharedInstance] POST:PeopleVote dict:dict succeed:^(id data) {
+            NSLog(@"%@",data);
+        } failure:^(NSError *error) {
+            NSLog(@"%@",error);
+        }];
+    }else{
+        [UIUtils showInfoMessage:@"请先投票在提交"];
+    }
+    
 }
 -(void)addTableView{
     _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 64, APPLICATION_WIDTH,APPLICATION_HEIGHT-50-64) style:UITableViewStylePlain];
@@ -130,6 +143,7 @@
         [cell setSelectText:v.content withTag:(int)indexPath.row];
     }
     cell.delegate = self;
+    cell.selectionStyle = UITableViewCellSelectionStyleNone;
     return cell;
 }
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
@@ -145,20 +159,54 @@
 -(void)voteBtnDelegatePressed:(UIButton *)btn{
     
     if (btn.titleLabel.textColor == [UIColor blueColor]) {
-        [btn setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
+        if (_temp<[_vote.largestNumbe intValue]) {
+            if (btn.tag<(_vote.selectAry.count+1)) {
+                VoteOption * v = _vote.selectAry[btn.tag-1];
+                [_voteAnswer addObject:v.optionId];
+            }
+            
+            
+            _temp++;
+            [btn setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
+        }else{
+            _alter = [[UIAlertView alloc] initWithTitle:nil message:[NSString stringWithFormat:@"最多投%@票",_vote.largestNumbe] delegate:nil cancelButtonTitle:nil otherButtonTitles:nil];
+            [_alter show];
+            
+            NSTimer *timer;
+            
+            timer = [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(doTime) userInfo:nil repeats:NO];
+        }
     }else{
         [btn setTitleColor:[UIColor blueColor] forState:UIControlStateNormal];
+        VoteOption * v = _vote.selectAry[btn.tag-1];
+        
+        for (int i = 0; i<_voteAnswer.count; i++) {
+            NSString * str = [NSString stringWithFormat:@"%@",_voteAnswer[i]];
+            if ([str isEqualToString:[NSString stringWithFormat:@"%@",v.optionId]]) {
+                [_voteAnswer removeObjectAtIndex:i];
+                break;
+            }
+        }
+        _temp--;
     }
     
 }
-/*
-#pragma mark - Navigation
+-(void)doTime
 
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
+{
+    
+    //alert过1秒自动消失
+    
+    [_alter dismissWithClickedButtonIndex:0 animated:YES];
 }
-*/
+/*
+ #pragma mark - Navigation
+ 
+ // In a storyboard-based application, you will often want to do a little preparation before navigation
+ - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+ // Get the new view controller using [segue destinationViewController].
+ // Pass the selected object to the new view controller.
+ }
+ */
 
 @end
