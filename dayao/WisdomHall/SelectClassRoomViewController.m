@@ -24,6 +24,10 @@
     // Do any additional setup after loading the view from its nib.
 }
 -(void)getData{
+    dispatch_async(dispatch_get_main_queue(), ^{
+        //获取主线程
+        [self showHudInView:self.view hint:NSLocalizedString(@"正在加载数据", @"Load data...")];
+    });
     _dataAry = [NSMutableArray arrayWithCapacity:1];
     UserModel * user = [[Appsetting sharedInstance] getUsetInfo];
     NSDictionary * dict = [[NSDictionary alloc] initWithObjectsAndKeys:user.school,@"universityId",@"1",@"start",@"10000",@"length", nil];
@@ -35,8 +39,12 @@
             [_dataAry addObject:c];
         }
         [_tableView reloadData];
+        [self hideHud];
     } failure:^(NSError *error) {
         NSLog(@"失败%@",error);
+        [UIUtils showInfoMessage:@"暂无数据"];
+        [self hideHud];
+
 
     }];
 }

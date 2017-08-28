@@ -48,6 +48,12 @@
     self.automaticallyAdjustsScrollViewInsets = NO;
 }
 -(void)getData{
+    
+    dispatch_async(dispatch_get_main_queue(), ^{
+        //获取主线程
+        [self showHudInView:self.view hint:NSLocalizedString(@"正在加载数据", @"Load data...")];
+    });
+    
     [[NetworkRequest sharedInstance] GET:QueryMeetingRoom dict:nil succeed:^(id data) {
         NSArray * ary = [[data objectForKey:@"body"] objectForKey:@"list"];
         
@@ -69,9 +75,12 @@
             UIAlertView * alter = [[UIAlertView alloc] initWithTitle:nil message:@"暂时没有会议室" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil];
             [alter show];
         }
-        
+        [self hideHud];
     } failure:^(NSError *error) {
-        
+        UIAlertView * alter = [[UIAlertView alloc] initWithTitle:nil message:@"暂时没有会议室" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil];
+        [alter show];
+        [self hideHud];
+
     }];
 }
 - (void)didReceiveMemoryWarning {

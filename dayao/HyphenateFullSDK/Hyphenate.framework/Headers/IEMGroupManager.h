@@ -45,7 +45,7 @@
  *  Add delegate
  *
  *  @param aDelegate  Delegate
- *  @param aQueue     The queue of call delegate method
+ *  @param aQueue     (optional) The queue of calling delegate methods. Pass in nil to run on main thread.
  */
 - (void)addDelegate:(id<EMGroupManagerDelegate>)aDelegate
       delegateQueue:(dispatch_queue_t)aQueue;
@@ -62,6 +62,7 @@
  *  @param aDelegate  Delegate
  */
 - (void)removeDelegate:(id)aDelegate;
+
 
 #pragma mark - Get Group
 
@@ -92,22 +93,23 @@
  */
 - (NSArray *)getGroupsWithoutPushNotification:(EMError **)pError;
 
+
 #pragma mark - Get group from server
 
 /*!
  *  \~chinese
- *  从服务器获取指定数目的群组
+ *  按数目从服务器获取自己加入的群组
  *
  *  同步方法，会阻塞当前线程
  *
- *  @param aPageNum  获取公开群的cursor，首次调用传空
+ *  @param aPageNum  获取自己加入群的cursor，首次调用传空
  *  @param aPageSize 期望返回结果的数量, 如果 < 0 则一次返回所有结果
  *  @param pError    出错信息
  *
  *  @return 群组列表<EMGroup>
  *
  *  \~english
- *  Get pagesize number group from server.
+ *  Get pagesize number group you joined from the server.
  *
  *  Synchronization method will block the current thread
  *
@@ -123,14 +125,14 @@
 
 /*!
  *  \~chinese
- *  从服务器获取所有的群组
+ *  按数目从服务器获取自己加入的群组
  *
- *  @param aPageNum  获取公开群的cursor，首次调用传空
+ *  @param aPageNum  获取自己加入群的cursor，首次调用传空
  *  @param aPageSize 期望返回结果的数量, 如果 < 0 则一次返回所有结果
  *  @param aCompletionBlock      完成的回调
  *
  *  \~english
- *  Get all the groups from server
+ *  Get pagesize number group you joined from the server.
  *
  *  @param aPageNum             Page number
  *  @param aPageSize            Page size
@@ -335,13 +337,13 @@
  *
  *
  *  \~english
- *  Fetch group specification，include ID, name, description，setting, owner, admins
+ *  Fetch group specification, including: ID, name, description, setting, owner, admins
  *
  *  @param aGroupId              Group id
  *  @param aCompletionBlock      The callback block of completion
  *
  */
-- (void)getGroupSpecificationFromServerWithId:(NSString *)aGroupID
+- (void)getGroupSpecificationFromServerWithId:(NSString *)aGroupId
                                    completion:(void (^)(EMGroup *aGroup, EMError *aError))aCompletionBlock;
 
 /*!
@@ -1093,8 +1095,7 @@
  *  @param aAdmin     要添加的群组管理员
  *  @param aGroupId   群ID
  *  @param pError     错误信息
- *
- *  @result    返回群组实例
+ *  @result           返回群组实例
  *
  *  \~english
  *  Add group admin, need Owner permissions
@@ -1104,8 +1105,7 @@
  *  @param aAdmin     Admin
  *  @param aGroupId   Group id
  *  @param pError     Error
- *
- *  @result    Group instance
+ *  @result           Group instance
  */
 - (EMGroup *)addAdmin:(NSString *)aAdmin
               toGroup:(NSString *)aGroupId
@@ -1163,7 +1163,7 @@
  *  \~chinese
  *  移除群组管理员，需要Owner权限
  *
- *  @param aAdmin     要添加的群组管理员
+ *  @param aAdmin     要移除的群组管理员
  *  @param aGroupId   群ID
  *  @param aCompletionBlock 完成的回调
  *
@@ -1329,7 +1329,7 @@
  *  @param aCompletionBlock The callback block of completion
  */
 - (void)downloadGroupSharedFileWithId:(NSString *)aGroupId
-                             filePath:(NSString *)aFilePat
+                             filePath:(NSString *)aFilePath
                          sharedFileId:(NSString *)aSharedFileId
                              progress:(void (^)(int progress))aProgressBlock
                            completion:(void (^)(EMGroup *aGroup, EMError *aError))aCompletionBlock;
@@ -1674,9 +1674,9 @@
  *
  *  Synchronization method will block the current thread
  *
- *  @param groupId     Group id
- *  @param aUsername   Inviter
- *  @param pError      Error
+ *  @param aGroupId     Group id
+ *  @param aUsername    Inviter
+ *  @param pError       Error
  *
  *  @result Joined group instance
  */
@@ -1697,7 +1697,7 @@
  *  \~english
  *  Accept a group invitation
  *
- *  @param groupId          Group id
+ *  @param aGroupId         Group id
  *  @param aUsername        Inviter
  *  @param aCompletionBlock The callback block of completion
  *
@@ -1771,12 +1771,12 @@
  *  @result 错误信息
  *
  *  \~english
- *  Block / unblock group message‘s push notification
+ *  Block/unblock group message‘s push notification
  *
  *  Synchronization method will block the current thread
  *
- *  @param aGroupId    Group id
- *  @param aIgnore     Whether block
+ *  @param aGroupId     Group id
+ *  @param aIsIgnore    Show/ignore push notificatino
  *
  *  @result Error
  */
@@ -1796,12 +1796,12 @@
  *  @result 错误信息
  *
  *  \~english
- *  Block / unblock group message‘s push notification
+ *  Block/unblock group message‘s push notification
  *
  *  Synchronization method will block the current thread
  *
- *  @param aGroupIDs   Group ids list
- *  @param aIgnore     Whether block
+ *  @param aGroupIDs    Group ids list
+ *  @param aIsIgnore    Show or ignore push notification
  *
  *  @result Error
  */
@@ -1818,14 +1818,14 @@
  *
  *
  *  \~english
- *  Block / unblock group message‘s push notification
+ *  Block/unblock group message‘s push notification
  *
  *  @param aGroupId          Group id
  *  @param aIsEnable         Whether enable
  *  @param aCompletionBlock  The callback block of completion
  *
  */
-- (void)updatePushServiceForGroup:(NSString *)aGroupID
+- (void)updatePushServiceForGroup:(NSString *)aGroupId
                     isPushEnabled:(BOOL)aIsEnable
                        completion:(void (^)(EMGroup *aGroup, EMError *aError))aCompletionBlock;
 
@@ -1839,7 +1839,7 @@
  *
  *
  *  \~english
- *  Block / unblock group message‘s push notification
+ *  Block/unblock group message‘s push notification
  *
  *  @param aGroupIDs         Group ids list
  *  @param aIsEnable         Whether enable

@@ -14,6 +14,8 @@
 
 @end
 @interface VoteTableViewCell : UITableViewCell
+@property (strong, nonatomic) IBOutlet UIImageView *moreImage;
+@property (strong, nonatomic) IBOutlet UIButton *moreBtn;
 @property (nonatomic,weak)id<VoteTableViewCellDelegate>delegate;
--(void)voteTitle:(NSString *)title withCreateTime:(NSString *)time withState:(NSString *)state withIndex:(int)n;
+-(void)voteTitle:(NSString *)title withCreateTime:(NSString *)time withState:(NSString *)state withIndex:(int)n withVoteStatus:(NSString *)voteStatus;
 @end

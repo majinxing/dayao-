@@ -8,6 +8,9 @@
 
 #import <UIKit/UIKit.h>
 #import "MeetingModel.h"
+#import "ClassModel.h"
 @interface CreateVoteViewController : UIViewController
 @property (nonatomic,strong)MeetingModel * meetModel;
+@property (nonatomic,strong)ClassModel  *classModel;
+@property (nonatomic,copy)NSString * type;
 @end

@@ -74,6 +74,11 @@
 		8B081E141F0C980200493B81 /* SelectClassRoomViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8B081E121F0C980200493B81 /* SelectClassRoomViewController.xib */; };
 		8B081E171F0CBA8900493B81 /* ClassRoomModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B081E161F0CBA8900493B81 /* ClassRoomModel.m */; };
 		8B081E1A1F0E0FA400493B81 /* SignPeople.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B081E191F0E0FA400493B81 /* SignPeople.m */; };
+		8B0AF7591F4FAF53003858A4 /* UploadFileViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B0AF7571F4FAF53003858A4 /* UploadFileViewController.m */; };
+		8B0AF75A1F4FAF53003858A4 /* UploadFileViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8B0AF7581F4FAF53003858A4 /* UploadFileViewController.xib */; };
+		8B0AF75E1F511AA2003858A4 /* VoteResultTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B0AF75C1F511AA2003858A4 /* VoteResultTableViewCell.m */; };
+		8B0AF75F1F511AA2003858A4 /* VoteResultTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8B0AF75D1F511AA2003858A4 /* VoteResultTableViewCell.xib */; };
+		8B0AF7621F5179F2003858A4 /* FileDowan.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B0AF7611F5179F2003858A4 /* FileDowan.m */; };
 		8B0D960B1F1893A2006796E3 /* CreateCouresTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B0D96091F1893A2006796E3 /* CreateCouresTableViewCell.m */; };
 		8B0D960C1F1893A2006796E3 /* CreateCouresTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8B0D960A1F1893A2006796E3 /* CreateCouresTableViewCell.xib */; };
 		8B0DB1331ED5188C0042DF0D /* ContactModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B0DB1321ED5188C0042DF0D /* ContactModel.m */; };
@@ -82,6 +87,8 @@
 		8B0DB13C1ED6CA4E0042DF0D /* ImportTextViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8B0DB13A1ED6CA4E0042DF0D /* ImportTextViewController.xib */; };
 		8B0F41301EF522CF001AF4DF /* MJXChatViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B0F412E1EF522CF001AF4DF /* MJXChatViewController.m */; };
 		8B0F41311EF522CF001AF4DF /* MJXChatViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8B0F412F1EF522CF001AF4DF /* MJXChatViewController.xib */; };
+		8B1509821F4E7A6F000127AF /* TFFileUploadManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B1509811F4E7A6F000127AF /* TFFileUploadManager.m */; };
+		8B1509851F4EA823000127AF /* FileModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B1509841F4EA823000127AF /* FileModel.m */; };
 		8B1737091EC2BE2B00BE3C8F /* PersonalDataTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B1737071EC2BE2B00BE3C8F /* PersonalDataTableViewCell.m */; };
 		8B17370A1EC2BE2B00BE3C8F /* PersonalDataTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8B1737081EC2BE2B00BE3C8F /* PersonalDataTableViewCell.xib */; };
 		8B17370E1EC2EDE400BE3C8F /* MeetingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B17370C1EC2EDE400BE3C8F /* MeetingViewController.m */; };
@@ -622,6 +629,14 @@
 		8B081E161F0CBA8900493B81 /* ClassRoomModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ClassRoomModel.m; sourceTree = "<group>"; };
 		8B081E181F0E0FA400493B81 /* SignPeople.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SignPeople.h; sourceTree = "<group>"; };
 		8B081E191F0E0FA400493B81 /* SignPeople.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SignPeople.m; sourceTree = "<group>"; };
+		8B0AF7561F4FAF53003858A4 /* UploadFileViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UploadFileViewController.h; sourceTree = "<group>"; };
+		8B0AF7571F4FAF53003858A4 /* UploadFileViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UploadFileViewController.m; sourceTree = "<group>"; };
+		8B0AF7581F4FAF53003858A4 /* UploadFileViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = UploadFileViewController.xib; sourceTree = "<group>"; };
+		8B0AF75B1F511AA2003858A4 /* VoteResultTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VoteResultTableViewCell.h; sourceTree = "<group>"; };
+		8B0AF75C1F511AA2003858A4 /* VoteResultTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VoteResultTableViewCell.m; sourceTree = "<group>"; };
+		8B0AF75D1F511AA2003858A4 /* VoteResultTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = VoteResultTableViewCell.xib; sourceTree = "<group>"; };
+		8B0AF7601F5179F2003858A4 /* FileDowan.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FileDowan.h; sourceTree = "<group>"; };
+		8B0AF7611F5179F2003858A4 /* FileDowan.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FileDowan.m; sourceTree = "<group>"; };
 		8B0D96081F1893A2006796E3 /* CreateCouresTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CreateCouresTableViewCell.h; sourceTree = "<group>"; };
 		8B0D96091F1893A2006796E3 /* CreateCouresTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CreateCouresTableViewCell.m; sourceTree = "<group>"; };
 		8B0D960A1F1893A2006796E3 /* CreateCouresTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CreateCouresTableViewCell.xib; sourceTree = "<group>"; };
@@ -635,6 +650,10 @@
 		8B0F412D1EF522CF001AF4DF /* MJXChatViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MJXChatViewController.h; sourceTree = "<group>"; };
 		8B0F412E1EF522CF001AF4DF /* MJXChatViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MJXChatViewController.m; sourceTree = "<group>"; };
 		8B0F412F1EF522CF001AF4DF /* MJXChatViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MJXChatViewController.xib; sourceTree = "<group>"; };
+		8B1509801F4E7A6F000127AF /* TFFileUploadManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TFFileUploadManager.h; sourceTree = "<group>"; };
+		8B1509811F4E7A6F000127AF /* TFFileUploadManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TFFileUploadManager.m; sourceTree = "<group>"; };
+		8B1509831F4EA823000127AF /* FileModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FileModel.h; sourceTree = "<group>"; };
+		8B1509841F4EA823000127AF /* FileModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FileModel.m; sourceTree = "<group>"; };
 		8B1737061EC2BE2B00BE3C8F /* PersonalDataTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PersonalDataTableViewCell.h; sourceTree = "<group>"; };
 		8B1737071EC2BE2B00BE3C8F /* PersonalDataTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PersonalDataTableViewCell.m; sourceTree = "<group>"; };
 		8B1737081EC2BE2B00BE3C8F /* PersonalDataTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PersonalDataTableViewCell.xib; sourceTree = "<group>"; };
@@ -1077,9 +1096,14 @@
 		8B027A201EFA5FB600600E18 /* DataDownload */ = {
 			isa = PBXGroup;
 			children = (
+				8B1509801F4E7A6F000127AF /* TFFileUploadManager.h */,
+				8B1509811F4E7A6F000127AF /* TFFileUploadManager.m */,
 				8B027A211EFA5FF200600E18 /* DataDownloadViewController.h */,
 				8B027A221EFA5FF200600E18 /* DataDownloadViewController.m */,
 				8B027A231EFA5FF200600E18 /* DataDownloadViewController.xib */,
+				8B0AF7561F4FAF53003858A4 /* UploadFileViewController.h */,
+				8B0AF7571F4FAF53003858A4 /* UploadFileViewController.m */,
+				8B0AF7581F4FAF53003858A4 /* UploadFileViewController.xib */,
 				8B027A261EFB4E0000600E18 /* DataDownloadTableViewCell.h */,
 				8B027A271EFB4E0000600E18 /* DataDownloadTableViewCell.m */,
 				8B027A281EFB4E0000600E18 /* DataDownloadTableViewCell.xib */,
@@ -1599,6 +1623,8 @@
 				8B77250E1F31586300D1B521 /* AlterView.m */,
 				8B045BA41F3462640021699B /* SeatIngModel.h */,
 				8B045BA51F3462640021699B /* SeatIngModel.m */,
+				8B1509831F4EA823000127AF /* FileModel.h */,
+				8B1509841F4EA823000127AF /* FileModel.m */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -1692,6 +1718,8 @@
 				8B9171C61ED3D9D8009686FD /* contactTool.m */,
 				8BCE7CBB1F04E0EA00FE261B /* NetworkRequest.h */,
 				8BCE7CBC1F04E0EA00FE261B /* NetworkRequest.m */,
+				8B0AF7601F5179F2003858A4 /* FileDowan.h */,
+				8B0AF7611F5179F2003858A4 /* FileDowan.m */,
 			);
 			name = Utils;
 			sourceTree = "<group>";
@@ -1892,6 +1920,9 @@
 				8BFB94631EE79745004BB963 /* JoinVoteTableViewCell.h */,
 				8BFB94641EE79745004BB963 /* JoinVoteTableViewCell.m */,
 				8BFB94651EE79745004BB963 /* JoinVoteTableViewCell.xib */,
+				8B0AF75B1F511AA2003858A4 /* VoteResultTableViewCell.h */,
+				8B0AF75C1F511AA2003858A4 /* VoteResultTableViewCell.m */,
+				8B0AF75D1F511AA2003858A4 /* VoteResultTableViewCell.xib */,
 			);
 			name = VoteCell;
 			sourceTree = "<group>";
@@ -2091,7 +2122,7 @@
 					};
 					8BA224711EADF68500627A1B = {
 						CreatedOnToolsVersion = 8.3;
-						DevelopmentTeam = JTL23C2M8H;
+						DevelopmentTeam = AM9UTP2CL3;
 						ProvisioningStyle = Automatic;
 						TestTargetID = 8BA224581EADF68500627A1B;
 					};
@@ -2138,6 +2169,7 @@
 				8B05CB771EC070060063EC20 /* SystemSetingTableViewCell.xib in Resources */,
 				8B027A151EF8F30100600E18 /* TheMeetingInfoViewController.xib in Resources */,
 				8B05CB7C1EC2ABFD0063EC20 /* PersonalInfoViewController.xib in Resources */,
+				8B0AF75F1F511AA2003858A4 /* VoteResultTableViewCell.xib in Resources */,
 				8B2E16E31EBACAD7008B7C57 /* PersonalCollectionViewCell.xib in Resources */,
 				8B9B58501EC998080010A1F1 /* TextListViewController.xib in Resources */,
 				8B17370A1EC2BE2B00BE3C8F /* PersonalDataTableViewCell.xib in Resources */,
@@ -2155,6 +2187,7 @@
 				8B7D5D831EB961260068058E /* CreateCourseViewController.xib in Resources */,
 				8B7D5D911EB9782C0068058E /* CourseCollectionViewCell.xib in Resources */,
 				8B045B6F1F3458820021699B /* Info.plist in Resources */,
+				8B0AF75A1F4FAF53003858A4 /* UploadFileViewController.xib in Resources */,
 				8B081DE21F06238E00493B81 /* DefinitionPersonalTableViewCell.xib in Resources */,
 				8B027A251EFA5FF200600E18 /* DataDownloadViewController.xib in Resources */,
 				8BB56D881EB2E2820023DAFF /* RedefineThePasswordViewController.xib in Resources */,
@@ -2308,6 +2341,7 @@
 				8B2E16E21EBACAD7008B7C57 /* PersonalCollectionViewCell.m in Sources */,
 				8B081DFC1F06524000493B81 /* NSString+PinYin4Cocoa.m in Sources */,
 				8B045B9F1F3458E40021699B /* ZFSeatSelectionView.m in Sources */,
+				8B0AF75E1F511AA2003858A4 /* VoteResultTableViewCell.m in Sources */,
 				8B2E16DE1EBABBC0008B7C57 /* InteractiveView.m in Sources */,
 				8BF864C71ECAD97300B7EED4 /* UIImage+MultiFormat.m in Sources */,
 				8B64EB5B1F1A2BA900BF7D0F /* SelectClassViewController.m in Sources */,
@@ -2327,6 +2361,7 @@
 				8BB56D671EAF3C620023DAFF /* UserModel.m in Sources */,
 				8B045B7C1F3458BB0021699B /* ZFSeatViewController.m in Sources */,
 				8BF8648B1ECAD21200B7EED4 /* MJRefreshHeaderView.m in Sources */,
+				8B1509851F4EA823000127AF /* FileModel.m in Sources */,
 				8B9CCC8C1F14D3B7001833FD /* RecorderView.m in Sources */,
 				8BA224641EADF68500627A1B /* ViewController.m in Sources */,
 				8B0F41301EF522CF001AF4DF /* MJXChatViewController.m in Sources */,
@@ -2336,6 +2371,7 @@
 				8BA224BC1EAEE36800627A1B /* SignPromptView.m in Sources */,
 				8BF864C91ECAD97300B7EED4 /* UIImageView+WebCache.m in Sources */,
 				8BA224B81EAED53D00627A1B /* UIColor+HexString.m in Sources */,
+				8B1509821F4E7A6F000127AF /* TFFileUploadManager.m in Sources */,
 				8B05CB6B1EC0056B0063EC20 /* TextsTableViewCell.m in Sources */,
 				8B045B981F3458E40021699B /* ZFAppLogoView.m in Sources */,
 				8B081E0E1F0B766D00493B81 /* SelectMeetingOrClassViewController.m in Sources */,
@@ -2343,6 +2379,7 @@
 				8BEE94481F2C780500488651 /* CompanyProfileViewController.m in Sources */,
 				8BCE7CBD1F04E0EA00FE261B /* NetworkRequest.m in Sources */,
 				8B045BA31F34595D0021699B /* UIView+Extension.m in Sources */,
+				8B0AF7591F4FAF53003858A4 /* UploadFileViewController.m in Sources */,
 				8B9171CB1ED41BC7009686FD /* QuestionsTableViewCell.m in Sources */,
 				8B17374E1EC5AC3600BE3C8F /* CreateTextTableViewCell.m in Sources */,
 				8BCE7CCE1F04F07600FE261B /* AFSecurityPolicy.m in Sources */,
@@ -2359,6 +2396,7 @@
 				8BFB945D1EE53B2D004BB963 /* VoteModel.m in Sources */,
 				8BE8776C1EBAF82E00866A34 /* ShareButton.m in Sources */,
 				8BA224611EADF68500627A1B /* AppDelegate.m in Sources */,
+				8B0AF7621F5179F2003858A4 /* FileDowan.m in Sources */,
 				8B0D960B1F1893A2006796E3 /* CreateCouresTableViewCell.m in Sources */,
 				8BE877901EBD69C000866A34 /* CreateTestViewController.m in Sources */,
 				8B045B781F3458820021699B /* NSObject+MJProperty.m in Sources */,
@@ -2634,6 +2672,7 @@
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: yao zhiqiang (5YNWGV42D6)";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
@@ -2662,9 +2701,9 @@
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = WisdomHall/WisdomHall.entitlements;
-				CODE_SIGN_IDENTITY = "iPhone Distribution: yao zhiqiang (AM9UTP2CL3)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = AM9UTP2CL3;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -2786,7 +2825,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
-				DEVELOPMENT_TEAM = JTL23C2M8H;
+				DEVELOPMENT_TEAM = AM9UTP2CL3;
 				INFOPLIST_FILE = WisdomHallTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.dayao.WisdomHallTests;
@@ -2860,6 +2899,7 @@
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: yao zhiqiang (5YNWGV42D6)";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = dwarf;
@@ -2910,6 +2950,7 @@
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: yao zhiqiang (5YNWGV42D6)";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
@@ -2938,9 +2979,9 @@
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = WisdomHall/WisdomHall.entitlements;
-				CODE_SIGN_IDENTITY = "iPhone Distribution: yao zhiqiang (AM9UTP2CL3)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = AM9UTP2CL3;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -3064,9 +3105,9 @@
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = WisdomHall/WisdomHall.entitlements;
-				CODE_SIGN_IDENTITY = "iPhone Distribution: yao zhiqiang (AM9UTP2CL3)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = AM9UTP2CL3;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -3188,7 +3229,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
-				DEVELOPMENT_TEAM = JTL23C2M8H;
+				DEVELOPMENT_TEAM = AM9UTP2CL3;
 				INFOPLIST_FILE = WisdomHallTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.dayao.WisdomHallTests;
@@ -3201,7 +3242,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
-				DEVELOPMENT_TEAM = JTL23C2M8H;
+				DEVELOPMENT_TEAM = AM9UTP2CL3;
 				INFOPLIST_FILE = WisdomHallTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.dayao.WisdomHallTests;

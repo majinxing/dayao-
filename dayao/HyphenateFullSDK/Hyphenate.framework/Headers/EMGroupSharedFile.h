@@ -53,6 +53,15 @@
 
 /*!
  *  \~chinese
+ *  文件大小
+ *
+ *  \~english
+ *  Size of File
+ */
+@property (nonatomic) long long fileSize;
+
+/*!
+ *  \~chinese
  *  获取群共享实例
  *
  *  @param aFileId    文件ID

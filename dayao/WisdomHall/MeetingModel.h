@@ -18,7 +18,7 @@
 @property (nonatomic,copy) NSString * meetingImage;//会议图片
 @property (nonatomic,copy) NSString * peopleNumber;//会议人数
 @property (nonatomic,copy) NSString * meetingId;//会议id
-@property (nonatomic,copy) NSString * mck;//路由器的mac地址
+@property (nonatomic,strong) NSMutableArray * mck;//路由器的mac地址
 @property (nonatomic,copy) NSString * createTime;//创建时间
 @property (nonatomic,copy) NSString * imageUrl;//图片
 @property (nonatomic,copy) NSString * meetingTotal;//总人数

@@ -10,6 +10,7 @@
 
 @implementation ClassModel
 -(void)setInfoWithDict:(NSDictionary *)dict{
+    
     self.sclassId = [dict objectForKey:@"id"];
     self.signWay = [dict objectForKey:@"signWay"];
     self.typeRoom = [dict objectForKey:@"roomName"];

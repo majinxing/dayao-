@@ -21,7 +21,7 @@
 }
 -(void)setMeetingInfoWithDict:(NSDictionary *)dict{
     self.meetingId = [dict objectForKey:@"id"];
-    self.mck = [dict objectForKey:@"mck"];
+    self.mck = [[NSMutableArray alloc] initWithArray:[[dict objectForKey:@"mck"] componentsSeparatedByString:@";"]];
     self.meetingHostId = [dict objectForKey:@"teacherId"];
     self.meetingHost = [dict objectForKey:@"userName"];
     self.meetingTime = [dict objectForKey:@"time"];

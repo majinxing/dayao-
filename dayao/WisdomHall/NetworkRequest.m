@@ -11,6 +11,7 @@
 #import "AFNetworking.h"
 #import "AppDelegate.h"
 #import <UIKit/UIKit.h>
+
 @implementation NetworkRequest
 +(instancetype)sharedInstance{
     static NetworkRequest *tools;
@@ -72,6 +73,7 @@
     //将token封装入请求头
     
     UserModel * user = [[Appsetting sharedInstance] getUsetInfo];
+    
     [manager.requestSerializer setValue:[NSString stringWithFormat:@"Bearer %@",user.token] forHTTPHeaderField:@"token"];
 
 //    manager.responseSerializer.acceptableContentTypes = [NSSet setWithObject:@"application/json"];

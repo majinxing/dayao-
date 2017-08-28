@@ -59,25 +59,50 @@
 }
 -(void)saveVote{
     [self showHudInView:self.view hint:NSLocalizedString(@"正在加载数据", @"Load data...")];
-    NSDictionary * dict = [[NSDictionary alloc] initWithObjectsAndKeys:_voteModel.title,@"title",_voteModel.largestNumbe,@"type",_voteModel.selectAry,@"contentList",_meetModel.meetingId,@"relId",@"2",@"relType",nil];
-    
-    [[NetworkRequest sharedInstance] POST:CreateVote dict:dict succeed:^(id data) {
-        NSString *str = [[data objectForKey:@"header"] objectForKey:@"message"];
-        if ([str isEqualToString:@"成功"]) {
-            [UIUtils showInfoMessage:@"创建成功"];
-            [self.navigationController popViewControllerAnimated:YES];
-        }else{
+    if ([_type isEqualToString:@"meeting"]) {
+        NSDictionary * dict = [[NSDictionary alloc] initWithObjectsAndKeys:_voteModel.title,@"title",_voteModel.largestNumbe,@"type",_voteModel.selectAry,@"contentList",_meetModel.meetingId,@"relId",@"2",@"relType",nil];
+        
+        [[NetworkRequest sharedInstance] POST:CreateVote dict:dict succeed:^(id data) {
+            NSString *str = [[data objectForKey:@"header"] objectForKey:@"message"];
+            if ([str isEqualToString:@"成功"]) {
+                [UIUtils showInfoMessage:@"创建成功"];
+                [self.navigationController popViewControllerAnimated:YES];
+            }else{
+                [UIUtils showInfoMessage:@"创建失败"];
+                
+            }
+            [self hideHud];
+            NSLog(@"%@",data);
+        } failure:^(NSError *error) {
             [UIUtils showInfoMessage:@"创建失败"];
+            
+            [self hideHud];
+            NSLog(@"%@",error);
+        }];
 
-        }
-        [self hideHud];
-        NSLog(@"%@",data);
-    } failure:^(NSError *error) {
-        [UIUtils showInfoMessage:@"创建失败"];
+    }else{
+        NSDictionary * dict = [[NSDictionary alloc] initWithObjectsAndKeys:_voteModel.title,@"title",_voteModel.largestNumbe,@"type",_voteModel.selectAry,@"contentList",_classModel.sclassId,@"relId",@"1",@"relType",nil];
+        
+        [[NetworkRequest sharedInstance] POST:CreateVote dict:dict succeed:^(id data) {
+            NSString *str = [[data objectForKey:@"header"] objectForKey:@"message"];
+            if ([str isEqualToString:@"成功"]) {
+                [UIUtils showInfoMessage:@"创建成功"];
+                [self.navigationController popViewControllerAnimated:YES];
+            }else{
+                [UIUtils showInfoMessage:@"创建失败"];
+                
+            }
+            [self hideHud];
+            NSLog(@"%@",data);
+        } failure:^(NSError *error) {
+            [UIUtils showInfoMessage:@"创建失败"];
+            
+            [self hideHud];
+            NSLog(@"%@",error);
+        }];
 
-        [self hideHud];
-        NSLog(@"%@",error);
-    }];
+    }
+  
 }
 /**
  * 键盘监听

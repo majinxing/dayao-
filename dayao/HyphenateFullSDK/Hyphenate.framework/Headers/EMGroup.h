@@ -149,7 +149,7 @@ typedef enum{
  *  群共享文件列表
  *
  *  \~english
- *  List of share file
+ *  List of shared file
  */
 @property (nonatomic, strong, readonly) NSArray *sharedFileList;
 

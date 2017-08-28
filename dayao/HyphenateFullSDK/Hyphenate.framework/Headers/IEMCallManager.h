@@ -45,7 +45,7 @@
  *  Add delegate
  *
  *  @param aDelegate  Delegate
- *  @param aQueue     The queue of call delegate method
+ *  @param aQueue     (optional) The queue of calling delegate methods. Pass in nil to run on main thread.
  */
 - (void)addDelegate:(id<EMCallManagerDelegate>)aDelegate
       delegateQueue:(dispatch_queue_t)aQueue;
@@ -74,7 +74,7 @@
  *
  *  @param aDelegate  Delegate
  */
-- (void)setBuilderDelegate:(__weak id<EMCallBuilderDelegate>)aDelegate;
+- (void)setBuilderDelegate:(id<EMCallBuilderDelegate>)aDelegate;
 
 #pragma mark - Options
 

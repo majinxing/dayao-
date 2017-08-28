@@ -30,7 +30,7 @@
 
 }
 -(void)setInfo:(NSDictionary *)dict{
-    _voteState = [dict objectForKey:@"status"];
+    _voteState = [dict objectForKey:@"statusName"];
     _title = [dict objectForKey:@"title"];
     _largestNumbe = [dict objectForKey:@"type"];
     _voteId = [dict objectForKey:@"id"];

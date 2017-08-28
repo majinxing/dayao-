@@ -7,7 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "VoteModel.h"
 
 @interface ResultsOfVoteViewController : UIViewController
-
+@property (nonatomic,strong)VoteModel * voteModel;
 @end

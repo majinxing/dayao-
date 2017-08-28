@@ -19,6 +19,8 @@
 #import "VoteViewController.h"
 #import "DataDownloadViewController.h"
 #import "SignPeople.h"
+#import "AFHTTPSessionManager.h"
+
 
 @interface CourseDetailsViewController ()<UIActionSheetDelegate,ShareViewDelegate,UIAlertViewDelegate>
 @property (strong, nonatomic) IBOutlet UIButton *interactive;
@@ -26,6 +28,8 @@
 @property (nonatomic,strong) InteractiveView * interactiveView;
 @property (nonatomic,strong) ShareView * shareView;
 @property (nonatomic,strong) ShareView * interaction;
+@property (nonatomic,strong)AFHTTPSessionManager * Af;
+
 
 @property (strong, nonatomic, readonly) EMCallSession *callSession;
 @property (strong, nonatomic) IBOutlet UILabel *className;
@@ -42,7 +46,6 @@
 @property (strong, nonatomic)UserModel * user;
 @property (strong, nonatomic) NSMutableArray * signAry;
 @property (strong, nonatomic) NSMutableArray * notSignAry;
-@property (nonatomic,strong)NSTimer * timeRun;
 
 @property (nonatomic,assign)NSInteger n;//签到人数
 @property (nonatomic,assign)NSInteger m;//未签到人数
@@ -53,12 +56,10 @@
 @implementation CourseDetailsViewController
 
 -(void)dealloc{
-    [_timeRun invalidate];
+    
     [[NSNotificationCenter defaultCenter] removeObserver:self];
-    //    _timeRun = nil;
 }
 -(void)viewWillDisappear:(BOOL)animated{
-    [_timeRun invalidate];
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -263,7 +264,7 @@
         
         if ([bssid isEqualToString:_c.mck]) {
             [self hideHud];
-            UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:[NSString stringWithFormat:@"已检测到WiFi，请连接网络数据以便签到"] message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: @"取消", nil];
+            UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:[NSString stringWithFormat:@"已检测到WiFi，请连接网络数据以便传输签到数据"] message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil];
             alertView.delegate = self;
             alertView.tag = 2;
             [alertView show];
@@ -295,23 +296,23 @@
         [self hideHud];
         
         UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"现在还不能签到" message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: nil];
-        [_timeRun invalidate];
-        _timeRun = nil;
+        [_Af.reachabilityManager stopMonitoring];
+
         [alertView show];
     }else if ([str isEqualToString:@"1003"]){
         [self hideHud];
         
         UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"已经签到" message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: nil];
-        [_timeRun invalidate];
-        _timeRun = nil;
+        [_Af.reachabilityManager stopMonitoring];
+
         [alertView show];
     }else if ([str isEqualToString:@"1004"]){
         [self hideHud];
         
         UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"没有参加课程" message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: nil];
         [alertView show];
-        [_timeRun invalidate];
-        _timeRun = nil;
+        [_Af.reachabilityManager stopMonitoring];
+
     }else if ([str isEqualToString:@"0000"]){
         [self hideHud];
         
@@ -320,8 +321,8 @@
         _selfSignStatus = @"签到状态：已签到";
         _classSign.text = @"签到状态：已签到";
         [alertView show];
-        [_timeRun invalidate];
-        _timeRun = nil;
+        [_Af.reachabilityManager stopMonitoring];
+
         
         // 2.创建通知
         NSNotification *notification =[NSNotification notificationWithName:@"UpdateTheClassPage" object:nil userInfo:nil];
@@ -338,8 +339,8 @@
         
         UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"进行中状态的课程不能进行签到" message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: nil];
         [alertView show];
-        [_timeRun invalidate];
-        _timeRun = nil;
+        [_Af.reachabilityManager stopMonitoring];
+
     }
 }
 #pragma mark ALter
@@ -352,28 +353,7 @@
         }
     }else if (alertView.tag == 2){
         if (buttonIndex == 0) {
-            [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"prefs:root=WIFI"]];
-            [self showHudInView:self.view hint:NSLocalizedString(@"正在传送签到数据,请保证数据连接", @"Load data...")];
-            
-            //时间间隔
-            NSTimeInterval timeInterval = 5.0 ;
-            dispatch_async(dispatch_get_global_queue(0, 0), ^{
-                _timeRun =  [NSTimer scheduledTimerWithTimeInterval:timeInterval
-                                                             target:self
-                                                           selector:@selector(handleMaxShowTimer:)
-                                                           userInfo:nil
-                                                            repeats:YES];
-                
-                [[NSRunLoop currentRunLoop] run];
-                
-            });
-            
-            
-            
-            //            [_timeRun fire];
-        }else if(buttonIndex == 1){
-            UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"若没有网络数据连接将不能签到" message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: nil];
-            [alertView show];
+            [self AFNetworkReachability];
         }
     }else if (alertView.tag == 1001){
         if (buttonIndex == 1) {
@@ -457,7 +437,37 @@
         }
     }
 }
--(void)handleMaxShowTimer:(NSTimer *)theTimer{
+-(void)AFNetworkReachability{
+    _Af = [[AFHTTPSessionManager alloc] init];
+    // 设置超时时间，afn默认是60s
+    _Af.requestSerializer.timeoutInterval = 5;
+    // 响应格式添加text/plain
+    _Af.responseSerializer.acceptableContentTypes = [NSSet setWithObjects:@"application/json", @"text/json", @"text/javascript", @"text/plain", nil];
+    __weak CourseDetailsViewController * weekSelf = self;
+    // 监听网络状态,每当网络状态发生变化就会调用此block
+    [_Af.reachabilityManager setReachabilityStatusChangeBlock:^(AFNetworkReachabilityStatus status) {
+        switch (status) {
+            case AFNetworkReachabilityStatusNotReachable:     // 无连线
+                NSLog(@"AFNetworkReachability Not Reachable");
+                break;
+            case AFNetworkReachabilityStatusReachableViaWWAN: // 手机自带网络
+                [weekSelf sendSignInfo];
+                NSLog(@"AFNetworkReachability Reachable via WWAN");
+                break;
+            case AFNetworkReachabilityStatusReachableViaWiFi: // WiFi
+                [weekSelf sendSignInfo];
+                NSLog(@"AFNetworkReachability Reachable via WiFi");
+                break;
+            case AFNetworkReachabilityStatusUnknown:          // 未知网络
+            default:
+                NSLog(@"AFNetworkReachability Unknown");
+                break;
+        }
+    }];
+    // 开始监听
+    [_Af.reachabilityManager startMonitoring];
+}
+-(void)sendSignInfo{
     NSString *idfv = [[[UIDevice currentDevice] identifierForVendor] UUIDString];
     
     NSDictionary * dict = [[NSDictionary alloc] initWithObjectsAndKeys:_c.sclassId,@"Id",_c.courseDetailId,@"courseDetailId",_user.peopleId,@"userId" ,idfv,@"mck",@"2",@"status",nil];
@@ -498,10 +508,40 @@
 
 - (void)shareViewButtonClick:(NSString *)platform
 {
-    if (![platform isEqualToString:InteractionType_Responder]) {
+    //    if (![platform isEqualToString:InteractionType_Responder]||![platform isEqualToString:InteractionType_Data]) {
+    //        UIAlertView * later = [[UIAlertView alloc] initWithTitle:nil message:@"未完待续" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil];
+    //        [later show];
+    //        return;
+    //    }
+    
+    if ([platform isEqualToString:InteractionType_Vote]){
+        VoteViewController * v = [[VoteViewController alloc] init];
+        self.hidesBottomBarWhenPushed = YES;
+        v.classModel = _c;
+        v.type = @"classModel";
+        [self.navigationController pushViewController:v animated:YES];
+        NSLog(@"投票");
+    }else if ([platform isEqualToString:InteractionType_Data]){
+        NSLog(@"资料");
+        DataDownloadViewController * d = [[DataDownloadViewController alloc] init];
+        d.classModel = _c;
+        d.type = @"classModel";
+        self.hidesBottomBarWhenPushed = YES;
+        [self.navigationController pushViewController: d animated:YES];
+    }else if ([platform isEqualToString:InteractionType_Responder]){
+        NSLog(@"抢答");
+        ConversationVC * c =[[ConversationVC alloc] init];
+        self.hidesBottomBarWhenPushed = YES;
+        UserModel * s = [[Appsetting sharedInstance] getUsetInfo];
+        c.HyNumaber = [NSString stringWithFormat:@"%@%@",s.school,_c.teacherWorkNo];
+        c.call = CALLING;
+        c.teacherName = _c.teacherName;
+        [self.navigationController pushViewController:c animated:YES];
+    }else{
         UIAlertView * later = [[UIAlertView alloc] initWithTitle:nil message:@"未完待续" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil];
         [later show];
         return;
+        
     }
     
     if ([platform isEqualToString:InteractionType_Test]){
@@ -518,32 +558,11 @@
         [self.navigationController pushViewController:d animated:YES];
         NSLog(@"讨论");
     }
-    else if ([platform isEqualToString:InteractionType_Vote]){
-        VoteViewController * v = [[VoteViewController alloc] init];
-        self.hidesBottomBarWhenPushed = YES;
-        [self.navigationController pushViewController:v animated:YES];
-        NSLog(@"投票");
-    }
-    else if ([platform isEqualToString:InteractionType_Responder]){
-        NSLog(@"抢答");
-        ConversationVC * c =[[ConversationVC alloc] init];
-        self.hidesBottomBarWhenPushed = YES;
-        UserModel * s = [[Appsetting sharedInstance] getUsetInfo];
-        c.HyNumaber = [NSString stringWithFormat:@"%@%@",s.school,_c.teacherWorkNo];
-        c.call = CALLING;
-        c.teacherName = _c.teacherName;
-        [self.navigationController pushViewController:c animated:YES];
-    }
     else if ([platform isEqualToString:InteractionType_Test]){
         NSLog(@"测试");
     }
     else if ([platform isEqualToString:InteractionType_Add]){
         NSLog(@"更多");
-    }else if ([platform isEqualToString:InteractionType_Data]){
-        NSLog(@"资料");
-        DataDownloadViewController * d = [[DataDownloadViewController alloc] init];
-        self.hidesBottomBarWhenPushed = YES;
-        [self.navigationController pushViewController: d animated:YES];
     }
 }
 

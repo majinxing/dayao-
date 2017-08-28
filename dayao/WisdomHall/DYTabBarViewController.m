@@ -40,6 +40,7 @@
     // Do any additional setup after loading the view from its nib.
 }
 -(void)selectApp{
+    
     NSDictionary *infoDictionary = [[NSBundle mainBundle] infoDictionary];
     
     //    CFShow((__bridge CFTypeRef)(infoDictionary));

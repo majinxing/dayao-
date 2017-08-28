@@ -9,41 +9,208 @@
 #import "DataDownloadViewController.h"
 #import "DataDownloadTableViewCell.h"
 #import "DYHeader.h"
+#import "TFFileUploadManager.h"
+#import "FileModel.h"
+#import "UploadFileViewController.h"
+#import "MJRefresh.h"
 
-@interface DataDownloadViewController ()<UITableViewDelegate,UITableViewDataSource,UIDocumentInteractionControllerDelegate>
+@interface DataDownloadViewController ()<UITableViewDelegate,UITableViewDataSource,UIDocumentInteractionControllerDelegate,DataDownloadTableViewCellDelegate,NSURLSessionDelegate>
 @property (nonatomic,strong)UITableView * tableView;
-
+@property  (nonatomic,strong)NSMutableArray * fileAry;
+@property (nonatomic,strong)FileModel * f;
 @end
 
 @implementation DataDownloadViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
     self.view.backgroundColor = [UIColor whiteColor];
-    [self a];
+    
+    _fileAry = [NSMutableArray arrayWithCapacity:1];
+    
+    [self setNavigationTitle];
+    
+    //    [self getData];
+    
     [self addTableView];
+    
+    
     // Do any additional setup after loading the view from its nib.
 }
+-(void)viewWillAppear:(BOOL)animated{
+    [self getData];
+}
+-(void)getData{
+    dispatch_async(dispatch_get_main_queue(), ^{
+        //获取主线程
+        [self hideHud];
+        [self showHudInView:self.view hint:NSLocalizedString(@"正在加载数据", @"Load data...")];
+    });
+    
+    if ([_type isEqualToString:@"meeting"]) {
+        
+        NSDictionary * dict = [[NSDictionary alloc] initWithObjectsAndKeys:@"2",@"relType",_meeting.meetingId,@"relId",nil];
+        [[NetworkRequest sharedInstance] GET:FileList dict:dict succeed:^(id data) {
+            //            NSLog(@"%@",data);
+            [_fileAry removeAllObjects];
+            NSArray * ary = [[data objectForKey:@"body"] objectForKey:@"list"];
+            
+            for (int i = 0; i<ary.count; i++) {
+                
+                FileModel * f = [[FileModel alloc] init];
+                [f setInfoWithDict:ary[i]];
+                [_fileAry addObject:f];
+                
+            }
+            [self checkTheLocalFile:_fileAry];
+            
+            if (_fileAry.count>0) {
+                
+            }else{
+                [UIUtils showInfoMessage:@"暂无数据"];
+            }
+            
+        } failure:^(NSError *error) {
+            
+            [UIUtils showInfoMessage:@"暂无数据"];
+            
+            [self hideHud];
+        }];
+    }else if ([_type isEqualToString:@"classModel"]){
+        
+        NSDictionary * dict = [[NSDictionary alloc] initWithObjectsAndKeys:@"1",@"relType",_classModel.sclassId,@"relId",nil];
+        
+        [[NetworkRequest sharedInstance] GET:FileList dict:dict succeed:^(id data) {
+            NSLog(@"%@",data);
+            [_fileAry removeAllObjects];
+            
+            NSArray * ary = [[data objectForKey:@"body"] objectForKey:@"list"];
+            
+            for (int i = 0; i<ary.count; i++) {
+                
+                FileModel * f = [[FileModel alloc] init];
+                [f setInfoWithDict:ary[i]];
+                [_fileAry addObject:f];
+                
+            }
+            [self checkTheLocalFile:_fileAry];
+            
+            if (_fileAry.count>0) {
+                
+            }else{
+                [UIUtils showInfoMessage:@"暂无数据"];
+            }
+            
+        } failure:^(NSError *error) {
+            [self hideHud];
+        }];
+    }
+    [_tableView headerEndRefreshing];
+    [_tableView footerEndRefreshing];
+}
+/**
+ *  显示navigation的标题
+ **/
+-(void)setNavigationTitle{
+    [UIApplication sharedApplication].statusBarStyle = UIStatusBarStyleLightContent;
+    //[self.navigationController.navigationBar setBarTintColor:[UIColor blackColor]];
+    [self.navigationController.navigationBar setTitleTextAttributes:@{
+                                                                      NSFontAttributeName:[UIFont systemFontOfSize:17],
+                                                                      NSForegroundColorAttributeName:[UIColor blackColor]}];
+    self.title = @"资料";
+    
+    UserModel * user = [[Appsetting sharedInstance] getUsetInfo];
+    
+    if ([[NSString stringWithFormat:@"%@",_meeting.meetingHostId] isEqualToString:[NSString stringWithFormat:@"%@",user.peopleId]]) {
+        
+        UIBarButtonItem * createMeeting = [[UIBarButtonItem alloc] initWithTitle:@"上传资料" style:UIBarButtonItemStylePlain target:self action:@selector(uploadLocalFile)];
+        
+        self.navigationItem.rightBarButtonItem = createMeeting;
+        
+    }
+    if ([[NSString stringWithFormat:@"%@",_classModel.teacherWorkNo] isEqualToString:[NSString stringWithFormat:@"%@",user.studentId]]) {
+        
+        UIBarButtonItem * createMeeting = [[UIBarButtonItem alloc] initWithTitle:@"上传资料" style:UIBarButtonItemStylePlain target:self action:@selector(uploadLocalFile)];
+        
+        self.navigationItem.rightBarButtonItem = createMeeting;
+    }
+    
+}
+-(void)uploadLocalFile{
+    UploadFileViewController * upload = [[UploadFileViewController alloc] init];
+    self.hidesBottomBarWhenPushed = YES;
+    if ([_type isEqualToString:@"meeting"]) {
+        upload.type = @"meeting";
+        upload.meeting = _meeting;
+    }else{
+        upload.type = @"classModel";
+        upload.classModel = _classModel;
+    }
+    [self.navigationController pushViewController:upload animated:YES];
+    
+}
 -(void)addTableView{
-    _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0,0, APPLICATION_WIDTH, APPLICATION_HEIGHT-64) style:UITableViewStylePlain];
+    _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0,64, APPLICATION_WIDTH, APPLICATION_HEIGHT-64) style:UITableViewStylePlain];
     _tableView.delegate = self;
     _tableView.dataSource = self;
+    self.automaticallyAdjustsScrollViewInsets = NO;
     [self.view addSubview:_tableView];
+    __weak DataDownloadViewController * weakSelf = self;
+    [self.tableView addHeaderWithCallback:^{
+        [weakSelf getData];
+    }];
+    
+    [self.tableView addFooterWithCallback:^{
+        [weakSelf getData];
+    }];
 }
--(void)a{
+-(void)checkTheLocalFile:(NSMutableArray *)ary{
     NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
     
     NSString *documentsDirectory = [paths lastObject];
     
-    NSLog(@"app_home_doc: %@",documentsDirectory);
+    //    NSLog(@"app_home_doc: %@",documentsDirectory);
+    
     NSFileManager *fileManager = [NSFileManager defaultManager];
-    NSString *filePath = [documentsDirectory stringByAppendingPathComponent:@"1"]; //docPath为文件名
-    if ([fileManager fileExistsAtPath:filePath]) {
     
-    }else{
+    NSString *filePath = [documentsDirectory stringByAppendingPathComponent:@"File"]; //docPath为文件名
     
+    //判断文件夹是否存在，若不存在创建路径中的文件夹
+    if (![[NSFileManager defaultManager] fileExistsAtPath:filePath])
+    {
+        [[NSFileManager defaultManager] createDirectoryAtPath:filePath withIntermediateDirectories:YES attributes:nil error:nil];
     }
+    
+    NSString *path=filePath; // 要列出来的目录
+    
+    NSFileManager *myFileManager=[NSFileManager defaultManager];
+    
+    NSDirectoryEnumerator *myDirectoryEnumerator;
+    
+    myDirectoryEnumerator=[myFileManager enumeratorAtPath:path];
+    
+    //列举目录内容，可以遍历子目录
+    NSLog(@"用enumeratorAtPath:显示目录%@的内容：",path);
+    
+    while((path=[myDirectoryEnumerator nextObject])!=nil)
+    {
+        for (int i = 0;i<ary.count; i++) {
+            FileModel * f = ary[i];
+            if ([f.fileName isEqualToString:path]) {
+                f.isLocal = YES;
+            }
+        }
+        
+        NSLog(@"%@",path);
+        
+    }
+    [self hideHud];
+    
+    [_tableView reloadData];
+    
 }
+
 /** 打开文件 @param filePath 文件路径 */
 -(void)openDocxWithPath:(NSString *)filePath {
     
@@ -52,49 +219,45 @@
     doc.delegate = self;
     
     [doc presentPreviewAnimated:YES];
-
+    
 }
-/** 下载文件 @param docPath 文件路径 @param fileName 文件名 */
--(void)downloadDocxWithDocPath:(NSString *)docPath fileName:(NSString *)fileName {
-    //[MBProgressHUD showMessage:@"正在下载文件" toView:self.view];
+//方法二：可以知道下载进度
+//
+//加载代理方法<NSURLSessionDownloadDelegate>
+//
+//把url传给这个方法
+
+- (void)downloadFileWithURL:(NSString *)urlStr{
+    dispatch_async(dispatch_get_main_queue(), ^{
+        //获取主线程
+        [self hideHud];
+        [self showHudInView:self.view hint:NSLocalizedString(@"正在加载数据", @"Load data...")];
+    });
+    //默认配置
     
-    NSString *urlString = @"http://66.6.66.111:8888/UploadFile/";
+    NSURLSessionConfiguration *configuration= [NSURLSessionConfiguration defaultSessionConfiguration];
     
-    urlString = [urlString stringByAppendingString:fileName];
+    UserModel * user = [[Appsetting sharedInstance] getUsetInfo];
     
-    NSURL *url = [NSURL URLWithString:[urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
+    configuration.HTTPAdditionalHeaders = @{@"token":[NSString stringWithFormat:@"Bearer %@",user.token]};
+    //得到session对象
     
-    NSURLRequest *request = [NSURLRequest requestWithURL:url];
+    NSURLSession* session = [NSURLSession sessionWithConfiguration:configuration delegate:self delegateQueue:[NSOperationQueue mainQueue]];
     
-    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
+    // url
     
-    NSURLSessionDownloadTask *task = [manager downloadTaskWithRequest:request progress:^(NSProgress * _Nonnull downloadProgress) {
-        
-        NSLog(@"%lld %lld",downloadProgress.completedUnitCount,downloadProgress.totalUnitCount);
-        
-    } destination:^NSURL * _Nonnull(NSURL * _Nonnull targetPath, NSURLResponse * _Nonnull response) {
-        
-        NSString *path = [docPath stringByAppendingPathComponent:fileName];
-        
-        NSLog(@"文件路径＝＝＝%@",path);
-        
-        return [NSURL fileURLWithPath:path];
-        //这里返回的是文件下载到哪里的路径 要注意的是必须是携带协议file://
-    } completionHandler:^(NSURLResponse * _Nonnull response, NSURL * _Nullable filePath, NSError * _Nullable error) {
-//        [MBProgressHUD hideHUDForView:self.view];
-//        [MBProgressHUD showSuccess:@"下载完成,正在打开" toView:self.view];
-        // if (error) { // // }else {
-        NSString *name = [filePath path];
-        
-        NSLog(@"下载完成文件路径＝＝＝%@",name);
-        
-        [self openDocxWithPath:name];
-        
-        // }
-    }];
-    [task resume];
+    urlStr = [urlStr stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
     
-    //开始下载 要不然不会进行下载的
+    NSURL *url = [NSURL URLWithString:urlStr];
+    
+    //创建任务
+    
+    NSURLSessionDownloadTask* downloadTask = [session downloadTaskWithURL:url];
+    
+    //开始任务
+    
+    [downloadTask resume];
+    
 }
 
 
@@ -121,14 +284,39 @@
     return CGRectMake(0, 30, APPLICATION_WIDTH, APPLICATION_HEIGHT);
     
 }
-
+#pragma mark DataDownloadTableViewCellDelegate
+-(void)downloadFileDelegate:(UIButton *)btn{
+    FileModel * f =_fileAry[btn.tag-1];
+    _f = _fileAry[btn.tag - 1];
+    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    
+    NSString *documentsDirectory = [paths lastObject];
+    
+    NSLog(@"app_home_doc: %@",documentsDirectory);
+    
+    //    NSFileManager *fileManager = [NSFileManager defaultManager];
+    
+    NSString *filePath = [documentsDirectory stringByAppendingPathComponent:@"File"]; //docPath为文件名
+    
+    [self showHudInView:self.view hint:NSLocalizedString(@"正在下载数据", @"Load data...")];
+    
+    
+    NSString *urlString = [NSString stringWithFormat:@"%@%@?",BaseURL,FileDownload];
+    
+    urlString = [urlString stringByAppendingString:[NSString stringWithFormat:@"resourceId=%@",f.fileId]];
+    
+    [self downloadFileWithURL:urlString];
+}
 
 #pragma mark UITableViewdelegate
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
     return 1;
 }
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
-    return 10;
+    if (_fileAry.count>0) {
+        return _fileAry.count;
+    }
+    return 0;
 }
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
@@ -136,25 +324,184 @@
     if (!cell) {
         cell = [[[NSBundle mainBundle] loadNibNamed:@"DataDownloadTableViewCell" owner:self options:nil] objectAtIndex:0];
     }
+    cell.delegate = self;
+    FileModel * f =_fileAry[indexPath.row];
+    [cell addContentView:f withIndex:(int)indexPath.row+1];
     return cell;
 }
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    
+    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    
+    FileModel * f = _fileAry[indexPath.row];
+    
+    _f = _fileAry[indexPath.row];
+
+    NSString *documentsDirectory = [paths lastObject];
+    
+    //    NSLog(@"app_home_doc: %@",documentsDirectory);
+    
+    NSFileManager *fileManager = [NSFileManager defaultManager];
+    
+    NSString *filePath = [documentsDirectory stringByAppendingPathComponent:[NSString stringWithFormat:@"File/%@",f.fileName]]; //docPath为文件名
+    
+    if (![fileManager fileExistsAtPath:filePath]) {
+        if (![UIUtils isBlankString:f.fileName]) {
+            
+            NSString *urlString = [NSString stringWithFormat:@"%@%@?",BaseURL,FileDownload];
+            
+            urlString = [urlString stringByAppendingString:[NSString stringWithFormat:@"resourceId=%@",f.fileId]];
+            
+            [self downloadFileWithURL:urlString];
+            
+        }else{
+            [UIUtils showInfoMessage:@"请先确定文件的准确性"];
+        }
+        
+    }else{
+        
+        [self openDocxWithPath:filePath];
+        
+    }
+    
 }
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
-    return 40;
+    return 60;
 }
 -(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
     return 10;
 }
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
+- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return YES;
 }
-*/
+- (NSString *)tableView:(UITableView *)tableView titleForDeleteConfirmationButtonForRowAtIndexPath:(NSIndexPath *)indexPath {
+    return @"删除";
+}
+- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
+    UserModel * user = [[Appsetting sharedInstance] getUsetInfo];
+    
+    // 从列表中删除
+    FileModel * f = _fileAry[indexPath.row];
+    
+    if ([[NSString stringWithFormat:@"%@",_meeting.meetingHostId] isEqualToString:[NSString stringWithFormat:@"%@",user.peopleId]]) {
+        NSDictionary * dict = [[NSDictionary alloc] initWithObjectsAndKeys:[NSString stringWithFormat:@"%@",f.fileId],@"id", nil];
+        
+        [[NetworkRequest sharedInstance] POST:FileDelegate dict:dict succeed:^(id data) {
+            
+        } failure:^(NSError *error) {
+            
+        }];
+    }
+    if ([[NSString stringWithFormat:@"%@",_classModel.teacherWorkNo] isEqualToString:[NSString stringWithFormat:@"%@",user.studentId]]) {
+        NSDictionary * dict = [[NSDictionary alloc] initWithObjectsAndKeys:[NSString stringWithFormat:@"%@",f.fileId],@"id", nil];
+        
+        [[NetworkRequest sharedInstance] POST:FileDelegate dict:dict succeed:^(id data) {
+            
+        } failure:^(NSError *error) {
+            
+        }];
+    }
+    
+    
+    [_fileAry removeObjectAtIndex:indexPath.row];
+    
+    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    
+    NSString *documentsDirectory = [paths lastObject];
+    
+    //    NSLog(@"app_home_doc: %@",documentsDirectory);
+    
+    NSFileManager *fileManager = [NSFileManager defaultManager];
+    
+    NSString *filePath = [documentsDirectory stringByAppendingPathComponent:[NSString stringWithFormat:@"File/%@",f.fileName]]; //docPath为文件名
+    
+    //判断文件夹是否存在，若不存在创建路径中的文件夹
+    if ([[NSFileManager defaultManager] fileExistsAtPath:filePath])
+    {
+        [[NSFileManager defaultManager] removeItemAtPath:filePath error:nil];
+    }
+    
+    [_tableView reloadData];
+}
+
+
+
+#pragma mark -- NSURLSessionDownloadDelegate
+
+- (void)URLSession:(NSURLSession *)session downloadTask:(NSURLSessionDownloadTask *)downloadTask didFinishDownloadingToURL:(NSURL *)location{
+    
+    NSError *saveError;
+    
+    NSString *cachePath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject];
+    
+    NSString *savePath = [cachePath stringByAppendingPathComponent:[NSString stringWithFormat:@"%@", [NSString stringWithFormat:@"File/%@",_f.fileName]]];
+    
+    NSURL *saveUrl = [NSURL fileURLWithPath:savePath];
+    
+    //把下载的内容从cache复制到document下
+    
+    [[NSFileManager defaultManager] copyItemAtURL:location toURL:saveUrl error:&saveError];
+    
+    if (!saveError) {
+        
+        NSLog(@"save success");
+        
+        [self checkTheLocalFile:_fileAry];
+        
+        [_tableView reloadData];
+        
+        [self openDocxWithPath:savePath];
+        
+    }else{
+        
+        NSLog(@"save error:%@",saveError.localizedDescription);
+        
+    }
+    [self hideHud];
+    
+}
+
+/** * 写数据 * * @param session 会话对象 * @param downloadTask 下载任务 * @param bytesWritten 本次写入的数据大小 * @param totalBytesWritten 下载的数据总大小 * @param totalBytesExpectedToWrite 文件的总大小 */
+-(void)URLSession:(NSURLSession *)session downloadTask:(NSURLSessionDownloadTask *)downloadTask didWriteData:(int64_t)bytesWritten totalBytesWritten:(int64_t)totalBytesWritten totalBytesExpectedToWrite:(int64_t)totalBytesExpectedToWrite {
+    //获得文件的下载进度
+//    NSLog(@"%f",1.0 * totalBytesWritten/totalBytesExpectedToWrite);
+    
+}
+
+/** * 当恢复下载的时候调用该方法 * * @param fileOffset 从什么地方下载 * @param expectedTotalBytes 文件的总大小 */
+-(void)URLSession:(NSURLSession *)session downloadTask:(NSURLSessionDownloadTask *)downloadTask didResumeAtOffset:(int64_t)fileOffset expectedTotalBytes:(int64_t)expectedTotalBytes {
+
+}
+///** * 当下载完成的时候调用 * * @param location 文件的临时存储路径 */
+//-(void)URLSession:(NSURLSession *)session downloadTask:(NSURLSessionDownloadTask *)downloadTask didFinishDownloadingToURL:(NSURL *)location {
+//
+//    NSLog(@"%@",location);
+//
+//    //1 拼接文件全路径
+//
+//    NSString *fullPath = [[NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) lastObject] stringByAppendingPathComponent:downloadTask.response.suggestedFilename];
+//
+//    //2 剪切文件
+//    [[NSFileManager defaultManager]moveItemAtURL:location toURL:[NSURL fileURLWithPath:fullPath] error:nil]; NSLog(@"%@",fullPath);
+//}
+
+/** * 请求结束 */
+-(void)URLSession:(NSURLSession *)session task:(NSURLSessionTask *)task didCompleteWithError:(NSError *)error {
+    
+}
+
+
+
+/*
+ #pragma mark - Navigation
+ 
+ // In a storyboard-based application, you will often want to do a little preparation before navigation
+ - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+ // Get the new view controller using [segue destinationViewController].
+ // Pass the selected object to the new view controller.
+ }
+ */
 
 @end

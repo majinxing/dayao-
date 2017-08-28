@@ -73,6 +73,13 @@
 +(void)sendMeetingInfo:(NSDictionary *)dict;
 //显示信息
 +(void)showInfoMessage:(NSString *)str;
+
 +(NSString *)timeWithTimeIntervalString:(NSString *)timeString;
+//转换显示出mac
++(NSString *)returnMac:(NSMutableArray *)ary;
+//比较mac地址
++(BOOL)matchingMacWith:(NSMutableArray *)ary withMac:(NSString *)mac;
+/// 服务器可达返回true
++(BOOL)socketReachabilityTest;
 @end
 

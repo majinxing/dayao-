@@ -80,6 +80,7 @@
             </tableViewCellContentView>
             <connections>
                 <outlet property="moreBtn" destination="Hwk-Xl-MIR" id="kti-kh-BBr"/>
+                <outlet property="moreImage" destination="owd-Vz-WAi" id="AsA-SQ-S3F"/>
                 <outlet property="voteCreateTime" destination="m8l-dJ-X2f" id="nzp-9d-uFX"/>
                 <outlet property="voteState" destination="14w-2H-3wW" id="J0r-bn-3u2"/>
                 <outlet property="voteTitle" destination="OvE-PQ-9gk" id="jup-Ps-WrJ"/>

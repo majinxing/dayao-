@@ -70,7 +70,7 @@
 #define TOKENTIME_TABLE_NAME   @"tokenTimeTable"//记录token有效期的
 
 //接口116.62.161.250:8080 192.168.1.81:8080 api.dayaokeji.com
-#define BaseURL @"http://192.168.1.81:8080/"
+#define BaseURL @"http://api.dayaokeji.com/"
 
 #define Login            @"course/user/login"       //登录
 
@@ -132,6 +132,12 @@
 
 #define FileUpload          @"course/resource/upload"   //上传资料
 
+#define FileDownload        @"course/resource/download" //资料下载
+
+#define FileList            @"course/resource/list"     //资料列表
+
+#define FileDelegate        @"course/resource/delete"   //删除
+
 #define CreateVote          @"course/vote/create" //创建投票
 
 #define QueryVote           @"course/vote/list"//查询投票
@@ -140,9 +146,11 @@
 
 #define PeopleVote          @"course/vote/vote"     //用户投票接口
 
+#define VoteEditor            @"course/vote/update"   //修改投票主题，包含投票状态
 
+#define VoteDelect             @"course/vote/delete" //删除投票
 
-
+#define QueryVoteResult        @"course/vote/listOption"    //查询投票结果
 
 
 

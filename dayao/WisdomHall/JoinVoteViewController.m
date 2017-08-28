@@ -77,30 +77,51 @@
 }
 -(void)saveVote{
     if (_voteAnswer.count>0) {
-        NSDictionary * dict = [[NSDictionary alloc] initWithObjectsAndKeys:_vote.voteId,@"id",_voteAnswer,@" optionList", nil];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            //获取主线程
+            [self hideHud];
+            [self showHudInView:self.view hint:NSLocalizedString(@"正在提交数据", @"Load data...")];
+        });
+        NSDictionary * dict = [[NSDictionary alloc] initWithObjectsAndKeys:_vote.voteId,@"id",_voteAnswer,@"optionList", nil];
+        
         [[NetworkRequest sharedInstance] POST:PeopleVote dict:dict succeed:^(id data) {
             NSLog(@"%@",data);
+            NSString * str = [[data objectForKey:@"header"] objectForKey:@"message"];
+            if ([str isEqualToString:@"成功"]) {
+                [UIUtils showInfoMessage:@"投票成功"];
+            }else if ([str isEqualToString:@"用户投票出错,已经投票"]){
+                [UIUtils showInfoMessage:@"已投票"];
+            }else{
+                [UIUtils showInfoMessage:@"投票失败"];
+            }
+            [self hideHud];
         } failure:^(NSError *error) {
             NSLog(@"%@",error);
+            [UIUtils showInfoMessage:@"投票失败"];
+            [self hideHud];
+
         }];
     }else{
         [UIUtils showInfoMessage:@"请先投票在提交"];
+        [self hideHud];
     }
     
 }
 -(void)addTableView{
-    _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 64, APPLICATION_WIDTH,APPLICATION_HEIGHT-50-64) style:UITableViewStylePlain];
+    _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 64, APPLICATION_WIDTH,APPLICATION_HEIGHT-64-50) style:UITableViewStylePlain];
     _tableView.delegate = self;
     _tableView.dataSource = self;
     _tableView.backgroundColor = [UIColor clearColor];
     _tableView.estimatedRowHeight = 50;
     _tableView.rowHeight = UITableViewAutomaticDimension;
     _tableView.separatorStyle = NO;
+    self.automaticallyAdjustsScrollViewInsets = NO;
     [self.view addSubview:_tableView];
 }
 - (IBAction)seeVoteResult:(id)sender {
     ResultsOfVoteViewController * r = [[ResultsOfVoteViewController alloc] init];
     self.hidesBottomBarWhenPushed = YES;
+    r.voteModel = _vote;
     [self.navigationController pushViewController:r animated:YES];
 }
 

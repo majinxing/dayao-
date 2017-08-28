@@ -34,12 +34,14 @@ typedef enum{
     EMErrorUserRemoved,                      /*! \~chinese 当前用户从服务器端被删掉 \~english User was removed from server */
     EMErrorUserRegisterFailed,               /*! \~chinese 用户注册失败 \~english Registration failed */
     EMErrorUpdateApnsConfigsFailed,          /*! \~chinese 更新推送设置失败 \~english Update Apple Push Notification configurations failed */
-    EMErrorUserPermissionDenied,             /*! \~chinese 用户没有权限做该操作 \~english User has no access for this operation. */
-    EMErrorUserBindDeviceTokenFailed,       /*! \~chinese 用户绑定设备token失败 \~english Bind device token failed. */
-    EMErrorUserUnbindDeviceTokenFailed,     /*! \~chinese 用户解除设备token失败 \~english Unbind device token failed. */
-    EMErrorUserBindAnotherDevice,           /*! \~chinese 用户绑定了另一个设备token \~english Bind another device and do not allow auto. */
-    EMErrorUserloginTooManyDevices,         /*! \~chinese 用户登录了太多设备 \~english User login on too many devices. */
-    EMErrorUserMuted,                       /*! \~chinese 用户在群组或聊天室中被禁言 \~english User mutes in groups or chatrooms. */
+    EMErrorUserPermissionDenied,             /*! \~chinese 用户没有权限做该操作 \~english User has no operation permission */
+    EMErrorUserBindDeviceTokenFailed,        /*! \~chinese 绑定device token失败  \~english Bind device token failed */
+    EMErrorUserUnbindDeviceTokenFailed,     /*! \~chinese 解除device token失败 \~english Unbind device token failed */
+    EMErrorUserBindAnotherDevice,           /*! \~chinese 已经在其他设备上绑定了，不允许自动登录 \~english already bound to other device and auto login is not allowed*/
+    EMErrorUserLoginTooManyDevices,         /*! \~chinese 登录的设备数达到了上限 \~english User login on too many devices */
+    EMErrorUserMuted,                       /*! \~chinese 用户在群组或聊天室中被禁言 \~english User is muted in group or chatroom */
+    EMErrorUserKickedByChangePassword,      /*! \~chinese 用户已经修改了密码 \~english User has changed the password */
+    EMErrorUserKickedByOtherDevice,         /*! \~chinese 被其他设备踢掉了 \~english User was kicked out from other device */
     
     EMErrorServerNotReachable = 300,         /*! \~chinese 服务器未连接 \~english Server is not reachable */
     EMErrorServerTimeout,                    /*! \~chinese 服务器超时 \~english Server response timeout */
@@ -59,20 +61,21 @@ typedef enum{
     EMErrorMessageIncludeIllegalContent,      /*! \~chinese 消息内容包含不合法信息 \~english Message contains invalid content */
     EMErrorMessageTrafficLimit,              /*! \~chinese 单位时间发送消息超过上限 \~english Unit time to send messages over the upper limit */
     EMErrorMessageEncryption,                /*! \~chinese 加密错误 \~english Encryption error */
+    EMErrorMessageRecallTimeLimit,           /*! \~chinese 消息撤回超过时间限制 \~english Unit time to send recall for message over the time limit */
     
     EMErrorGroupInvalidId = 600,             /*! \~chinese 群组ID无效 \~english Group Id is invalid */
     EMErrorGroupAlreadyJoined,               /*! \~chinese 已加入群组 \~english User already joined the group */
     EMErrorGroupNotJoined,                   /*! \~chinese 未加入群组 \~english User has not joined the group */
     EMErrorGroupPermissionDenied,            /*! \~chinese 没有权限进行该操作 \~english User does not have permission to access the operation */
-    EMErrorGroupMembersFull,                 /*! \~chinese 群成员个数已达到上限 \~english Group's max member reached */
+    EMErrorGroupMembersFull,                 /*! \~chinese 群成员个数已达到上限 \~english Group's max member capacity reached */
     EMErrorGroupNotExist,                    /*! \~chinese 群组不存在 \~english Group does not exist */
-    EMErrorGroupSharedFileInvalidId,         /*! \~chinese 共享文件ID无效 \~english Share file Id is invalid */
+    EMErrorGroupSharedFileInvalidId,         /*! \~chinese 共享文件ID无效 \~english Shared file Id is invalid */
     
     EMErrorChatroomInvalidId = 700,          /*! \~chinese 聊天室ID无效 \~english Chatroom id is invalid */
     EMErrorChatroomAlreadyJoined,            /*! \~chinese 已加入聊天室 \~english User already joined the chatroom */
     EMErrorChatroomNotJoined,                /*! \~chinese 未加入聊天室 \~english User has not joined the chatroom */
-    EMErrorChatroomPermissionDenied,         /*! \~chinese 没有权限进行该操作 \~english User does not have permission to access the operation */
-    EMErrorChatroomMembersFull,              /*! \~chinese 聊天室成员个数达到上限 \~english Chatroom's max member reached */
+    EMErrorChatroomPermissionDenied,         /*! \~chinese 没有权限进行该操作 \~english User does not have operation permission */
+    EMErrorChatroomMembersFull,              /*! \~chinese 聊天室成员个数达到上限 \~english Chatroom's max member capacity reached */
     EMErrorChatroomNotExist,                 /*! \~chinese 聊天室不存在 \~english Chatroom does not exist */
     
     EMErrorCallInvalidId = 800,              /*! \~chinese 实时通话ID无效 \~english Call id is invalid */

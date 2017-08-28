@@ -27,7 +27,7 @@
                     </constraints>
                     <state key="normal" title="查看结果"/>
                     <connections>
-                        <action selector="seeVoteResult:" destination="-1" eventType="touchUpInside" id="XRs-SZ-PwE"/>
+                        <action selector="seeVoteResult:" destination="-1" eventType="touchUpInside" id="h65-4S-RlE"/>
                     </connections>
                 </button>
             </subviews>

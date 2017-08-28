@@ -13,4 +13,10 @@
     _optionId = [dict objectForKey:@"id"];
     _content = [dict objectForKey:@"content"];
 }
+-(void)setInfo:(NSDictionary *)dict{
+    _optionId = [dict objectForKey:@"id"];
+    _content = [dict objectForKey:@"content"];
+    _count = [NSString stringWithFormat:@"%@",[dict objectForKey:@"count"]];
+    _voteId = [NSString stringWithFormat:@"%@",[dict objectForKey:@"themeId"]];
+}
 @end

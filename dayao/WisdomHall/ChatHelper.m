@@ -125,6 +125,7 @@ static dispatch_once_t onceToken;
  @brief 接收到一条及以上非cmd消息
  */
 - (void)messagesDidReceive:(NSArray *)aMessages{
+    
     NSMutableDictionary * dict = [[NSMutableDictionary alloc] initWithObjectsAndKeys:aMessages,@"messageAry", nil];
     
     // 2.创建通知
