@@ -79,6 +79,7 @@
                     <constraints>
                         <constraint firstAttribute="height" constant="40" id="G8u-qU-HCN"/>
                     </constraints>
+                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
                     <state key="normal" title="互动"/>
                     <connections>
                         <action selector="interactiveBtnPressed:" destination="-1" eventType="touchUpInside" id="cNj-2i-HYA"/>
@@ -89,6 +90,7 @@
                     <constraints>
                         <constraint firstAttribute="height" constant="40" id="yBX-Nb-qtv"/>
                     </constraints>
+                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
                     <state key="normal" title="签到"/>
                     <connections>
                         <action selector="signBtnPressed:" destination="-1" eventType="touchUpInside" id="PCN-kg-RZx"/>

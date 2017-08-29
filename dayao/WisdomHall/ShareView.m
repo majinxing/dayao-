@@ -65,10 +65,10 @@
 }
 -(void)addMeeting{
     _interactionTypeArray = @[
-                              InteractionType_Discuss,
                               InteractionType_Vote,
-                              InteractionType_Responder,
                               InteractionType_Data,
+                              InteractionType_Responder,
+                              InteractionType_Discuss,
                               InteractionType_Add
                               ];
     
@@ -129,11 +129,11 @@
 - (void)addInteractionButton
 {
     _interactionTypeArray = @[
-                              InteractionType_Test,
-                              InteractionType_Discuss,
+                              InteractionType_Data,
                               InteractionType_Vote,
                               InteractionType_Responder,
-                              InteractionType_Data,
+                              InteractionType_Discuss,
+                              InteractionType_Test,
                               InteractionType_Add
                               ];
     

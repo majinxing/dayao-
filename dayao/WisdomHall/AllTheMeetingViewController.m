@@ -188,12 +188,13 @@ static NSString * cellIdentifier = @"cellIdentifier";
             NSString * str = [[data objectForKey:@"header"] objectForKey:@"code"];
             if ([[NSString stringWithFormat:@"%@",str] isEqualToString:@"6680"]) {
                 [UIUtils showInfoMessage:@"该用户已经添加,不能重复添加"];
-            }else{
+            }else if([[NSString stringWithFormat:@"%@",str] isEqualToString:@"0000"]){
                 [UIUtils showInfoMessage:@"加入成功"];
                 [self headerRereshing];
                 [_join removeFromSuperview];
                 _join = nil;
-                
+            }else{
+                [UIUtils showInfoMessage:@"会议不存在或会议被删除"];
             }
         } failure:^(NSError *error) {
             [UIUtils showInfoMessage:@"加入失败"];

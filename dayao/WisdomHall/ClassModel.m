@@ -36,7 +36,9 @@
     self.creatTime = [dict objectForKey:@"createTime"];
     self.name = [dict objectForKey:@"name"];
     self.status = [dict objectForKey:@"status"];
-    self.mck = [dict objectForKey:@"mck"];
+    
+    self.mck = [[NSMutableArray alloc] initWithArray:[[dict objectForKey:@"mck"] componentsSeparatedByString:@";"]];
+    
     self.teacherWorkNo = [dict objectForKey:@"teacherWorkNo"];
     self.courseType = [dict objectForKey:@"courseType"];
     

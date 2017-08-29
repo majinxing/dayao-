@@ -197,7 +197,11 @@
             _signNumber.text = [NSString stringWithFormat:@"签到状态：未签到"];
         }else if([[NSString stringWithFormat:@"%@",_meetingModel.signStatus] isEqualToString:@"2"]){
             _signNumber.text = [NSString stringWithFormat:@"签到状态：已签到"];
+            [_signBtn setTitle:@"已签到" forState:UIControlStateNormal];
+            [_signBtn setEnabled:NO];
+            [_signBtn setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
         }
+        
         if (![UIUtils isBlankString:[NSString stringWithFormat:@"%@",_meetingModel.userSeat]]) {
             [_seatBtn setTitle:[NSString stringWithFormat:@"座次：%@ （点击查看详情）",_meetingModel.userSeat] forState:UIControlStateNormal];
             
@@ -250,28 +254,22 @@
         [self.navigationController pushViewController:signListVC animated:YES];
         
     }else{
-        
+        [self hideHud];
+
         if ([[NSString stringWithFormat:@"%@",_meetingModel.signStatus] isEqualToString:@"2"]) {
             
-            UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:[NSString stringWithFormat:@"已签到"] message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil];
-            [alertView show];
-            
-            [self hideHud];
+            [UIUtils showInfoMessage:@"已签到"];
             
             return;
             
         }else{
             if (![UIUtils validateWithStartTime:_meetingModel.meetingTime withExpireTime:nil]) {
-                UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:[NSString stringWithFormat:@"会议开始之后一定时间范围内才可以签到"] message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil];
-                [alertView show];
-                
-                [self hideHud];
+                [UIUtils showInfoMessage:@"会议开始之后一定时间范围内才可以签到"];
                 
                 return;
             }
         }
         
-        [self hideHud];
         
         NSMutableDictionary * dictWifi =  [UIUtils getWifiName];
         
@@ -281,7 +279,16 @@
             NSString * bssid  = [UIUtils specificationMCKAddress:[dictWifi objectForKey:@"BSSID"]];
             
             if ([UIUtils matchingMacWith:_meetingModel.mck withMac:bssid]) {
+                _mac = 1;
                 
+                [self signSendIng];
+
+                [self sendSignInfo];
+                
+            }else if (_mac == 1){
+                [self signSendIng];
+
+                [self sendSignInfo];
             }else{
                 
                 NSString * s = [UIUtils returnMac:_meetingModel.mck];
@@ -291,6 +298,11 @@
                 alertView.tag = 1;
                 [alertView show];
             }
+            
+        }else if (_mac == 1){
+            
+            [self signSendIng];
+            [self sendSignInfo];
             
         }else{
             NSString * s = [UIUtils returnMac:_meetingModel.mck];
@@ -302,42 +314,50 @@
         
     }
 }
-
+-(void)signSendIng{
+    [_signBtn setTitle:@"发送数据中" forState:UIControlStateNormal];
+    [_signBtn setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
+    [_signBtn setEnabled:NO];
+}
+-(void)signBtnSign{
+    [_signBtn setTitle:@"签到" forState:UIControlStateNormal];
+    [_signBtn setTitleColor:RGBA_COLOR(10, 96, 254, 1) forState:UIControlStateNormal];
+    [_signBtn setEnabled:YES];
+}
 -(void)alter:(NSString *) str{
     if ([str isEqualToString:@"1002"]) {
-        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"现在还不能签到" message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: nil];
-        [alertView show];
-        
+        [UIUtils showInfoMessage:@"暂时不能签到"];
+        [self signBtnSign];
     }else if ([str isEqualToString:@"1003"]){
         
-        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"已经签到" message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: nil];
-        
+        [UIUtils showInfoMessage:@"已签到"];
         _signNumber.text = @"签到状态：已签到";
+        [_signBtn setTitle:@"已签到" forState:UIControlStateNormal];
+        _signBtn.backgroundColor = [UIColor clearColor];
+        [_signBtn setEnabled:NO];
         
-        [alertView show];
     }else if ([str isEqualToString:@"1004"]){
-        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"没有参加课程" message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: nil];
-        [alertView show];
-        
+        [UIUtils showInfoMessage:@"未参加课程"];
+        [self signBtnSign];
     }else if ([str isEqualToString:@"0000"]){
         
         
         _signNumber.text = @"签到状态：已签到";
         _meetingModel.signStatus = @"2";
         
-        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"签到成功" message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: nil];
+        [UIUtils showInfoMessage:@"签到成功"];
         
         [_signBtn setTitle:@"已签到" forState:UIControlStateNormal];
-        
-        [alertView show];
+        _signBtn.backgroundColor = [UIColor clearColor];
+        [_signBtn setEnabled:NO];
         // 2.创建通知
         NSNotification *notification =[NSNotification notificationWithName:@"UpdateTheMeetingPage" object:nil userInfo:nil];
         // 3.通过 通知中心 发送 通知
         
         [[NSNotificationCenter defaultCenter] postNotification:notification];
     }else if ([str isEqualToString:@"5000"]){
-        //        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"" message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: nil];
-        //        [alertView show];
+        [UIUtils showInfoMessage:@"签到失败"];
+        [self signBtnSign];
     }
 }
 - (IBAction)personnelManagement:(id)sender {
@@ -358,6 +378,25 @@
     
 }
 
+-(void)sendSignInfo{
+    
+    NSString *idfv = [[[UIDevice currentDevice] identifierForVendor] UUIDString];
+    NSDictionary * dict = [[NSDictionary alloc] initWithObjectsAndKeys:_meetingModel.meetingId,@"meetingId",_user.peopleId,@"userId" ,idfv,@"mck",@"2",@"status",nil];
+    
+    [[NetworkRequest sharedInstance] POST:MeetingSign dict:dict succeed:^(id data) {
+        NSLog(@"succedd:%@",data);
+        [self alter:[[data objectForKey:@"header"] objectForKey:@"code"]];
+        
+    } failure:^(NSError *error) {
+        NSLog(@"失败：%@",error);
+        UIAlertView * alter = [[UIAlertView alloc] initWithTitle:nil message:@"签到失败请重新签到，请保证数据流量的连接" delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil];
+        alter.tag = 2;
+        [alter show];
+        [_signBtn setTitle:@"签到" forState:UIControlStateNormal];
+        [_signBtn setTitleColor:RGBA_COLOR(10, 96, 254, 1) forState:UIControlStateNormal];
+        [_signBtn setEnabled:YES];
+    }];
+}
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
@@ -382,39 +421,13 @@
     }else if (alertView.tag == 2){
         
         if (buttonIndex == 0) {
-            
-            //获取主线程
             NSURL *url = [NSURL URLWithString:@"prefs:root=WIFI"];
             [[UIApplication sharedApplication] openURL:url];
-        
         }
     }
 }
 
 
--(void)sendSignInfo{
-    dispatch_async(dispatch_get_main_queue(), ^{
-        
-        [self showHudInView:self.view hint:NSLocalizedString(@"正在加载数据", @"Load data...")];
-
-    });
-
-    NSString *idfv = [[[UIDevice currentDevice] identifierForVendor] UUIDString];
-    NSDictionary * dict = [[NSDictionary alloc] initWithObjectsAndKeys:_meetingModel.meetingId,@"meetingId",_user.peopleId,@"userId" ,idfv,@"mck",@"2",@"status",nil];
-    
-    [[NetworkRequest sharedInstance] POST:MeetingSign dict:dict succeed:^(id data) {
-        NSLog(@"succedd:%@",data);
-        [self hideHud];
-        [self alter:[[data objectForKey:@"header"] objectForKey:@"code"]];
-        
-    } failure:^(NSError *error) {
-        [self hideHud];
-        NSLog(@"失败：%@",error);
-        
-    }];
-    
-    
-}
 #pragma mark ShareViewDelegate
 
 - (void)shareViewButtonClick:(NSString *)platform
@@ -434,8 +447,7 @@
             [self.navigationController pushViewController:c animated:YES];
             
         }else{
-            UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"不能呼叫自己" message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: nil];
-            [alertView show];
+            [UIUtils showInfoMessage:@"不能呼叫自己"];
         }
         
     }else if ([platform isEqualToString:InteractionType_Vote]){
@@ -454,8 +466,7 @@
         self.hidesBottomBarWhenPushed = YES;
         [self.navigationController pushViewController: d animated:YES];
     }else {
-        UIAlertView * later = [[UIAlertView alloc] initWithTitle:nil message:@"未完待续" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil];
-        [later show];
+        [UIUtils showInfoMessage:@"未完待续"];
         return;
     }
     

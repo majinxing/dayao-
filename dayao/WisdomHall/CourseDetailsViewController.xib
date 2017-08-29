@@ -78,6 +78,7 @@
                     <constraints>
                         <constraint firstAttribute="height" constant="40" id="kzH-Z6-JXL"/>
                     </constraints>
+                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
                     <state key="normal" title="互动"/>
                     <connections>
                         <action selector="interactiveBtnPressed:" destination="-1" eventType="touchUpInside" id="rxm-7G-ZYC"/>
@@ -88,6 +89,7 @@
                     <constraints>
                         <constraint firstAttribute="height" constant="40" id="4et-GC-MAf"/>
                     </constraints>
+                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
                     <state key="normal" title="签到"/>
                     <connections>
                         <action selector="signInBtnPressed:" destination="-1" eventType="touchUpInside" id="Jys-6q-D9T"/>
@@ -112,7 +114,7 @@
                     <nil key="textColor"/>
                     <nil key="highlightedColor"/>
                 </label>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="m" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="utz-ID-wfm">
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="utz-ID-wfm">
                     <rect key="frame" x="198" y="222" width="169" height="20"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="20" id="RVb-B5-wRx"/>

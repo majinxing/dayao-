@@ -28,8 +28,6 @@
 @property (nonatomic,strong) InteractiveView * interactiveView;
 @property (nonatomic,strong) ShareView * shareView;
 @property (nonatomic,strong) ShareView * interaction;
-@property (nonatomic,strong)AFHTTPSessionManager * Af;
-
 
 @property (strong, nonatomic, readonly) EMCallSession *callSession;
 @property (strong, nonatomic) IBOutlet UILabel *className;
@@ -43,6 +41,7 @@
 @property (strong, nonatomic) IBOutlet UIButton *classManage;
 @property (strong, nonatomic) IBOutlet UILabel *classId;
 
+
 @property (strong, nonatomic)UserModel * user;
 @property (strong, nonatomic) NSMutableArray * signAry;
 @property (strong, nonatomic) NSMutableArray * notSignAry;
@@ -51,6 +50,7 @@
 @property (nonatomic,assign)NSInteger m;//未签到人数
 
 @property (nonatomic,copy)NSString * selfSignStatus;
+@property (nonatomic,assign)int temp;//记录mac不被覆盖
 @end
 
 @implementation CourseDetailsViewController
@@ -68,9 +68,14 @@
     _user = [[Appsetting sharedInstance] getUsetInfo];
     _n = 0;
     _m = 0;
+    _temp = 0;
+    
     [self setNavigationTitle];
+    
     [self xib];
+    
     [self getData];
+    
     
     // 1.注册通知
     
@@ -128,7 +133,6 @@
     }else{
         _classManage.enabled = NO;
     }
-    //    [_classManage setTitle:@"班级管理" forState:UIControlStateNormal];
 }
 -(void)getData{
     NSDictionary * dict = [[NSDictionary alloc] initWithObjectsAndKeys:_c.sclassId,@"id",_c.courseDetailId,@"courseDetailId", nil];
@@ -151,12 +155,13 @@
                 }else if ([[NSString stringWithFormat:@"%@",s.signStatus] isEqualToString:@"2"]){
                     _selfSignStatus = @"签到状态：已签到";
                     _c.signStatus = @"2";
+                    [self signBtned];
                 }
             }
             [_signAry addObject:s];
         }
         if ([[NSString stringWithFormat:@"%@",_c.teacherWorkNo] isEqualToString:[NSString stringWithFormat:@"%@",_user.studentId]]) {
-            _classSign.text = [NSString stringWithFormat:@"签到人：%d/%d",_n,(_m+_n)];
+            _classSign.text = [NSString stringWithFormat:@"签到人：%ld/%ld",(long)_n,(_m+_n)];
         }else{
             _classSign.text = _selfSignStatus;
         }
@@ -215,15 +220,22 @@
         [alertView show];
     }
 }
-- (IBAction)shareBtnPressed:(id)sender {
-    if (!_shareView)
-    {
-        _shareView = [[ShareView alloc] initWithFrame:self.navigationController.view.bounds withType:@"share"];
-        _shareView.delegate = self;
-    }
-    [_shareView showInView:self.navigationController.view];
-    
+-(void)signSendIng{
+    [_signInBtn setTitle:@"发送数据中" forState:UIControlStateNormal];
+    [_signInBtn setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
+    [_signInBtn setEnabled:NO];
 }
+-(void)signBtnSign{
+    [_signInBtn setTitle:@"签到" forState:UIControlStateNormal];
+    [_signInBtn setTitleColor:RGBA_COLOR(10, 96, 254, 1) forState:UIControlStateNormal];
+    [_signInBtn setEnabled:YES];
+}
+-(void)signBtned{
+    [_signInBtn setTitle:@"已签到" forState:UIControlStateNormal];
+    [_signInBtn setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
+    [_signInBtn setEnabled:NO];
+}
+
 - (IBAction)signInBtnPressed:(id)sender {
     [self showHudInView:self.view hint:NSLocalizedString(@"正在签到", @"Load data...")];
     
@@ -240,21 +252,18 @@
         
     }
     
+    [self hideHud];
     
     if ([[NSString stringWithFormat:@"%@",_c.signStatus] isEqualToString:@"2"]) {
-        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:[NSString stringWithFormat:@"已签到"] message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil];
-        [self hideHud];
-        [alertView show];
+        [UIUtils showInfoMessage:@"已签到"];
         return;
     }else{
         if (![UIUtils validateWithStartTime:_c.actStarTime withExpireTime:nil]) {
-            UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:[NSString stringWithFormat:@"课程开始之后一定时间范围内才可以签到"] message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil];
-            [self hideHud];
-            [alertView show];
+            [UIUtils showInfoMessage:@"课程开始之后一定时间范围内才可以签到"];
             return;
         }
-        
     }
+    
     NSMutableDictionary * dictWifi =  [UIUtils getWifiName];
     
     if (![UIUtils isBlankString:[NSString stringWithFormat:@"%@",[dictWifi objectForKey:@"BSSID"]]]) {
@@ -262,16 +271,18 @@
         
         NSString * bssid  = [UIUtils specificationMCKAddress:[dictWifi objectForKey:@"BSSID"]];
         
-        if ([bssid isEqualToString:_c.mck]) {
-            [self hideHud];
-            UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:[NSString stringWithFormat:@"已检测到WiFi，请连接网络数据以便传输签到数据"] message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil];
-            alertView.delegate = self;
-            alertView.tag = 2;
-            [alertView show];
+        if ([UIUtils matchingMacWith:_c.mck withMac:bssid]) {
+            _temp = 1;
+            [self signSendIng];
+            [self sendSignInfo];
+            
+        }else if (_temp == 1){
+            
+            [self signSendIng];
+            [self sendSignInfo];
             
         }else{
-            NSString * s = [_c.mck substringWithRange:NSMakeRange(_c.mck.length-4, 4)];
-            s = [NSString stringWithFormat:@"DAYAO_%@",s];
+            NSString * s =[UIUtils returnMac:_c.mck];
             UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:[NSString stringWithFormat:@"请到WiFi列表连接指定WiFi:%@,再点击签到，若不能跳转请主动在WiFi页面连接无线信号再返回app进行签到，签到完成之后请连接数据流量保证数据传输",s] message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: @"取消", nil];
             alertView.delegate = self;
             alertView.tag = 1;
@@ -280,8 +291,7 @@
         }
         
     }else{
-        NSString * s = [_c.mck substringWithRange:NSMakeRange(_c.mck.length-4, 4)];
-        s = [NSString stringWithFormat:@"DAYAO_%@",s];
+        NSString * s =[UIUtils returnMac:_c.mck];
         UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:[NSString stringWithFormat:@"请到WiFi列表连接指定WiFi:%@,再点击签到，若不能跳转请主动在WiFi页面连接无线信号再返回app进行签到，签到完成之后请连接数据流量保证数据传输",s] message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: @"取消", nil];
         alertView.delegate = self;
         alertView.tag = 1;
@@ -293,35 +303,21 @@
 -(void)alter:(NSString *) str{
     [self hideHud];
     if ([str isEqualToString:@"1002"]) {
-        [self hideHud];
-        
-        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"现在还不能签到" message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: nil];
-        [_Af.reachabilityManager stopMonitoring];
-
-        [alertView show];
+        [UIUtils showInfoMessage:@"暂不能签到"];
+        [self signBtnSign];
     }else if ([str isEqualToString:@"1003"]){
-        [self hideHud];
-        
-        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"已经签到" message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: nil];
-        [_Af.reachabilityManager stopMonitoring];
-
-        [alertView show];
+        [UIUtils showInfoMessage:@"已签到"];
+        [self signBtned];
     }else if ([str isEqualToString:@"1004"]){
-        [self hideHud];
-        
-        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"没有参加课程" message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: nil];
-        [alertView show];
-        [_Af.reachabilityManager stopMonitoring];
-
+        [UIUtils showInfoMessage:@"没有参加课程"];
+        [self signBtnSign];
     }else if ([str isEqualToString:@"0000"]){
-        [self hideHud];
         
-        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"签到成功" message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: nil];
+        [UIUtils showInfoMessage:@"签到成功"];
+        [self signBtned];
         _c.signStatus = @"2";
         _selfSignStatus = @"签到状态：已签到";
         _classSign.text = @"签到状态：已签到";
-        [alertView show];
-        [_Af.reachabilityManager stopMonitoring];
 
         
         // 2.创建通知
@@ -332,141 +328,15 @@
         
         //  _signNumber.text = @"签到状态：已签到";
     }else if ([str isEqualToString:@"5000"]){
-        //        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"" message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: nil];
-        //        [alertView show];
-    }else if ([str isEqualToString:@"1016"]){
-        [self hideHud];
-        
-        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"进行中状态的课程不能进行签到" message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: nil];
-        [alertView show];
-        [_Af.reachabilityManager stopMonitoring];
+        [UIUtils showInfoMessage:@"签到失败"];
+        [self signBtnSign];
 
+    }else if ([str isEqualToString:@"1016"]){
+        [UIUtils showInfoMessage:@"暂不能签到"];
+        [self signBtnSign];
     }
 }
-#pragma mark ALter
--(void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
-    if (alertView.tag == 1) {
-        if (buttonIndex == 0) {
-            [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"prefs:root=WIFI"]];
-        }else if(buttonIndex == 1){
-            [alertView setHidden:YES];
-        }
-    }else if (alertView.tag == 2){
-        if (buttonIndex == 0) {
-            [self AFNetworkReachability];
-        }
-    }else if (alertView.tag == 1001){
-        if (buttonIndex == 1) {
-            
-            NSDictionary * dict = [[NSDictionary alloc] initWithObjectsAndKeys:_c.courseDetailId,@"courseDetailId",_c.sclassId,@"id",@"2",@"courseType", nil];
-            
-            [[NetworkRequest sharedInstance] POST:DelecateCourse dict:dict succeed:^(id data) {
-                NSString * s = [NSString stringWithFormat:@"%@",[[data objectForKey:@"header"] objectForKey:@"message"]];
-                if ([s isEqualToString:@"成功"]) {
-                    // 2.创建通知
-                    NSNotification *notification =[NSNotification notificationWithName:@"UpdateTheClassPage" object:nil userInfo:nil];
-                    // 3.通过 通知中心 发送 通知
-                    
-                    [[NSNotificationCenter defaultCenter] postNotification:notification];
-                    
-                    [self.navigationController popViewControllerAnimated:YES];
-                }else{
-                    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"课程删除失败" message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: nil];
-                    [alertView show];
-                }
-                
-            } failure:^(NSError *error) {
-                UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"课程删除失败" message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: nil];
-                [alertView show];
-                
-            }];
-        }
-    }else if (alertView.tag == 1002){
-        if (buttonIndex == 1) {
-            //点击按钮的响应事件；
-            NSDictionary * dict = [[NSDictionary alloc] initWithObjectsAndKeys:_c.courseDetailId,@"courseDetailId",_c.sclassId,@"id",@"1",@"courseType", nil];
-            
-            [[NetworkRequest sharedInstance] POST:DelecateCourse dict:dict succeed:^(id data) {
-                NSString * s = [NSString stringWithFormat:@"%@",[[data objectForKey:@"header"] objectForKey:@"message"]];
-                if ([s isEqualToString:@"成功"]) {
-                    // 2.创建通知
-                    NSNotification *notification =[NSNotification notificationWithName:@"UpdateTheClassPage" object:nil userInfo:nil];
-                    // 3.通过 通知中心 发送 通知
-                    
-                    [[NSNotificationCenter defaultCenter] postNotification:notification];
-                    
-                    [self.navigationController popViewControllerAnimated:YES];
-                }else{
-                    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"课程删除失败" message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: nil];
-                    [alertView show];
-                }
-                
-            } failure:^(NSError *error) {
-                UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"课程删除失败" message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: nil];
-                [alertView show];
-                
-            }];
-        }
-    }else if (alertView.tag == 1003){
-        if (buttonIndex == 1) {
-            
-            //点击按钮的响应事件；
-            NSDictionary * dict = [[NSDictionary alloc] initWithObjectsAndKeys:_c.courseDetailId,@"courseDetailId",@"1",@"courseType", nil];
-            
-            [[NetworkRequest sharedInstance] POST:DelecateCourse dict:dict succeed:^(id data) {
-                NSString * s = [NSString stringWithFormat:@"%@",[[data objectForKey:@"header"] objectForKey:@"message"]];
-                if ([s isEqualToString:@"成功"]) {
-                    // 2.创建通知
-                    NSNotification *notification =[NSNotification notificationWithName:@"UpdateTheClassPage" object:nil userInfo:nil];
-                    // 3.通过 通知中心 发送 通知
-                    
-                    [[NSNotificationCenter defaultCenter] postNotification:notification];
-                    
-                    [self.navigationController popViewControllerAnimated:YES];
-                }else{
-                    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"课程删除失败" message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: nil];
-                    [alertView show];
-                }
-                
-            } failure:^(NSError *error) {
-                UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"课程删除失败" message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: nil];
-                [alertView show];
-                
-            }];
-            
-        }
-    }
-}
--(void)AFNetworkReachability{
-    _Af = [[AFHTTPSessionManager alloc] init];
-    // 设置超时时间，afn默认是60s
-    _Af.requestSerializer.timeoutInterval = 5;
-    // 响应格式添加text/plain
-    _Af.responseSerializer.acceptableContentTypes = [NSSet setWithObjects:@"application/json", @"text/json", @"text/javascript", @"text/plain", nil];
-    __weak CourseDetailsViewController * weekSelf = self;
-    // 监听网络状态,每当网络状态发生变化就会调用此block
-    [_Af.reachabilityManager setReachabilityStatusChangeBlock:^(AFNetworkReachabilityStatus status) {
-        switch (status) {
-            case AFNetworkReachabilityStatusNotReachable:     // 无连线
-                NSLog(@"AFNetworkReachability Not Reachable");
-                break;
-            case AFNetworkReachabilityStatusReachableViaWWAN: // 手机自带网络
-                [weekSelf sendSignInfo];
-                NSLog(@"AFNetworkReachability Reachable via WWAN");
-                break;
-            case AFNetworkReachabilityStatusReachableViaWiFi: // WiFi
-                [weekSelf sendSignInfo];
-                NSLog(@"AFNetworkReachability Reachable via WiFi");
-                break;
-            case AFNetworkReachabilityStatusUnknown:          // 未知网络
-            default:
-                NSLog(@"AFNetworkReachability Unknown");
-                break;
-        }
-    }];
-    // 开始监听
-    [_Af.reachabilityManager startMonitoring];
-}
+
 -(void)sendSignInfo{
     NSString *idfv = [[[UIDevice currentDevice] identifierForVendor] UUIDString];
     
@@ -477,7 +347,10 @@
         
     } failure:^(NSError *error) {
         NSLog(@"失败：%@",error);
-        
+        UIAlertView * alter = [[UIAlertView alloc] initWithTitle:nil message:@"签到失败请重新签到，请保证数据流量的连接" delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil];
+        alter.tag = 2;
+        [alter show];
+        [self signBtnSign];
     }];
 }
 
@@ -504,6 +377,94 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
+#pragma mark ALter
+-(void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
+    if (alertView.tag == 1) {
+        if (buttonIndex == 0) {
+            [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"prefs:root=WIFI"]];
+        }else if(buttonIndex == 1){
+            [alertView setHidden:YES];
+        }
+    }else if (alertView.tag == 2){
+        if (buttonIndex == 0) {
+            NSURL *url = [NSURL URLWithString:@"prefs:root=WIFI"];
+            [[UIApplication sharedApplication] openURL:url];
+        }
+    }else if (alertView.tag == 1001){
+        if (buttonIndex == 1) {
+            
+            NSDictionary * dict = [[NSDictionary alloc] initWithObjectsAndKeys:_c.courseDetailId,@"courseDetailId",_c.sclassId,@"id",@"2",@"courseType", nil];
+            
+            [[NetworkRequest sharedInstance] POST:DelecateCourse dict:dict succeed:^(id data) {
+                NSString * s = [NSString stringWithFormat:@"%@",[[data objectForKey:@"header"] objectForKey:@"message"]];
+                if ([s isEqualToString:@"成功"]) {
+                    // 2.创建通知
+                    NSNotification *notification =[NSNotification notificationWithName:@"UpdateTheClassPage" object:nil userInfo:nil];
+                    // 3.通过 通知中心 发送 通知
+                    
+                    [[NSNotificationCenter defaultCenter] postNotification:notification];
+                    
+                    [self.navigationController popViewControllerAnimated:YES];
+                }else{
+                    [UIUtils showInfoMessage:@"课程删除失败"];
+                }
+                
+            } failure:^(NSError *error) {
+                [UIUtils showInfoMessage:@"课程删除失败"];
+            }];
+        }
+    }else if (alertView.tag == 1002){
+        if (buttonIndex == 1) {
+            //点击按钮的响应事件；
+            NSDictionary * dict = [[NSDictionary alloc] initWithObjectsAndKeys:_c.courseDetailId,@"courseDetailId",_c.sclassId,@"id",@"1",@"courseType", nil];
+            
+            [[NetworkRequest sharedInstance] POST:DelecateCourse dict:dict succeed:^(id data) {
+                NSString * s = [NSString stringWithFormat:@"%@",[[data objectForKey:@"header"] objectForKey:@"message"]];
+                if ([s isEqualToString:@"成功"]) {
+                    // 2.创建通知
+                    NSNotification *notification =[NSNotification notificationWithName:@"UpdateTheClassPage" object:nil userInfo:nil];
+                    // 3.通过 通知中心 发送 通知
+                    
+                    [[NSNotificationCenter defaultCenter] postNotification:notification];
+                    
+                    [self.navigationController popViewControllerAnimated:YES];
+                }else{
+                    [UIUtils showInfoMessage:@"课程删除失败"];
+                }
+                
+            } failure:^(NSError *error) {
+                [UIUtils showInfoMessage:@"课程删除失败"];
+                
+            }];
+        }
+    }else if (alertView.tag == 1003){
+        if (buttonIndex == 1) {
+            
+            //点击按钮的响应事件；
+            NSDictionary * dict = [[NSDictionary alloc] initWithObjectsAndKeys:_c.courseDetailId,@"courseDetailId",@"1",@"courseType", nil];
+            
+            [[NetworkRequest sharedInstance] POST:DelecateCourse dict:dict succeed:^(id data) {
+                NSString * s = [NSString stringWithFormat:@"%@",[[data objectForKey:@"header"] objectForKey:@"message"]];
+                if ([s isEqualToString:@"成功"]) {
+                    // 2.创建通知
+                    NSNotification *notification =[NSNotification notificationWithName:@"UpdateTheClassPage" object:nil userInfo:nil];
+                    // 3.通过 通知中心 发送 通知
+                    
+                    [[NSNotificationCenter defaultCenter] postNotification:notification];
+                    
+                    [self.navigationController popViewControllerAnimated:YES];
+                }else{
+                    [UIUtils showInfoMessage:@"课程删除失败"];
+                }
+                
+            } failure:^(NSError *error) {
+                [UIUtils showInfoMessage:@"课程删除失败"];
+            }];
+            
+        }
+    }
+}
+
 #pragma mark ShareViewDelegate
 
 - (void)shareViewButtonClick:(NSString *)platform
