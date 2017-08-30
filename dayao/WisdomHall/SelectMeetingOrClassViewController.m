@@ -158,8 +158,9 @@ static NSString * cellIdentifier = @"cellIdentifier";
 }
 -(void)getDataWithPage:(NSInteger)page{
     _userModel = [[Appsetting sharedInstance] getUsetInfo];
-//    NSDictionary * dict = [[NSDictionary alloc] initWithObjectsAndKeys:_userModel.peopleId,@"teacherId",[NSString stringWithFormat:@"%ld",(long)page],@"start",_selectStr,@"keywords",@"1000",@"length",nil];
+
     NSDictionary * dict = [[NSDictionary alloc] initWithObjectsAndKeys:_userModel.peopleId,@"teacherId",_keyWord,@"keywords",[NSString stringWithFormat:@"%ld",(long)page],@"start", nil];
+    
     [[NetworkRequest sharedInstance] GET:QueryMeetingSelfCreate dict:dict succeed:^(id data) {
         NSDictionary * dict = [data objectForKey:@"header"];
         if ([[dict objectForKey:@"code"] isEqualToString:@"0000"]) {

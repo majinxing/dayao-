@@ -369,11 +369,17 @@
         [self.navigationController pushViewController:classManegeVC animated:YES];
         
     }else{
-        ZFSeatViewController * z = [[ZFSeatViewController alloc] init];
-        z.seatTable = _seatModel.seatTable;
-        z.seat = _meetingModel.userSeat;
-        self.hidesBottomBarWhenPushed = YES;
-        [self.navigationController pushViewController:z animated:YES];
+        
+        if (![UIUtils isBlankString:_seatModel.seatTable]) {
+            ZFSeatViewController * z = [[ZFSeatViewController alloc] init];
+            z.seatTable = _seatModel.seatTable;
+            z.seat = _meetingModel.userSeat;
+            self.hidesBottomBarWhenPushed = YES;
+            [self.navigationController pushViewController:z animated:YES];
+        }else{
+            [UIUtils showInfoMessage:@"未获取会场信息，请刷新会场页面信息获取"];
+        }
+       
     }
     
 }

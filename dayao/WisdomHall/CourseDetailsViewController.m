@@ -161,7 +161,7 @@
             [_signAry addObject:s];
         }
         if ([[NSString stringWithFormat:@"%@",_c.teacherWorkNo] isEqualToString:[NSString stringWithFormat:@"%@",_user.studentId]]) {
-            _classSign.text = [NSString stringWithFormat:@"签到人：%ld/%ld",(long)_n,(_m+_n)];
+            _classSign.text = [NSString stringWithFormat:@"签到人：%ld/%d",(long)_n,(_m+_n)];
         }else{
             _classSign.text = _selfSignStatus;
         }

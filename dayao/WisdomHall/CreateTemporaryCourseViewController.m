@@ -278,11 +278,11 @@
         }
     }else if (_temp == 7){
         if (component == 0) {
-            return [NSString stringWithFormat:@"%ld",row+2017];
+            return [NSString stringWithFormat:@"%d",row+2017];
         }else if (component == 1){
-            return [NSString stringWithFormat:@"%ld",row+1];
+            return [NSString stringWithFormat:@"%d",row+1];
         }else if(component == 2){
-            return [NSString stringWithFormat:@"%ld",row+1];
+            return [NSString stringWithFormat:@"%d",row+1];
         }
     }
     return @"2017";

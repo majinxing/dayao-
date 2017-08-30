@@ -22,11 +22,11 @@ typedef enum{
 
 @property (nonatomic,copy)NSString *HyNumaber;
 
-@property (nonatomic,assign)NSInteger type;
+@property (nonatomic,assign)int type;
 
 @property (nonatomic,strong)EMCallSession *callSession;
 
 @property (nonatomic,assign)BOOL isSender;
 
-@property (nonatomic,assign)CallType * call;
+@property (nonatomic,assign)CallType call;
 @end

@@ -11,26 +11,29 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
         <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="PersonalCollectionViewCell" id="gTV-IL-0wX" customClass="PersonalCollectionViewCell">
-            <rect key="frame" x="0.0" y="0.0" width="388" height="549"/>
+            <rect key="frame" x="0.0" y="0.0" width="246" height="157"/>
             <autoresizingMask key="autoresizingMask"/>
             <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
-                <rect key="frame" x="0.0" y="0.0" width="388" height="549"/>
+                <rect key="frame" x="0.0" y="0.0" width="246" height="157"/>
                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                 <subviews>
                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="headImage" translatesAutoresizingMaskIntoConstraints="NO" id="vav-eX-VKs">
-                        <rect key="frame" x="10" y="5" width="368" height="484"/>
+                        <rect key="frame" x="5" y="5" width="236" height="60"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="60" id="ac8-3m-cYd"/>
+                        </constraints>
                     </imageView>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="L7M-In-qda">
-                        <rect key="frame" x="10" y="494" width="368" height="20"/>
+                        <rect key="frame" x="2" y="68" width="242" height="15"/>
                         <constraints>
-                            <constraint firstAttribute="height" constant="20" id="uQw-OC-nPY"/>
+                            <constraint firstAttribute="height" constant="15" id="uQw-OC-nPY"/>
                         </constraints>
                         <fontDescription key="fontDescription" type="system" pointSize="11"/>
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ho0-aD-pkt">
-                        <rect key="frame" x="10" y="519" width="368" height="0.0"/>
+                        <rect key="frame" x="2" y="85" width="242" height="0.0"/>
                         <attributedString key="attributedText"/>
                         <nil key="highlightedColor"/>
                     </label>
@@ -38,23 +41,22 @@
             </view>
             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
             <constraints>
-                <constraint firstItem="L7M-In-qda" firstAttribute="top" secondItem="vav-eX-VKs" secondAttribute="bottom" constant="5" id="8m5-75-Ev4"/>
-                <constraint firstItem="ho0-aD-pkt" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" constant="10" id="HcZ-41-sff"/>
-                <constraint firstAttribute="trailing" secondItem="ho0-aD-pkt" secondAttribute="trailing" constant="10" id="Hh5-r0-19J"/>
-                <constraint firstAttribute="bottom" secondItem="vav-eX-VKs" secondAttribute="bottom" constant="60" id="JA6-2i-onh"/>
-                <constraint firstAttribute="trailing" secondItem="L7M-In-qda" secondAttribute="trailing" constant="10" id="X5k-2A-E9r"/>
-                <constraint firstItem="vav-eX-VKs" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" constant="10" id="b1s-ck-ivI"/>
-                <constraint firstItem="ho0-aD-pkt" firstAttribute="top" secondItem="L7M-In-qda" secondAttribute="bottom" constant="5" id="cBB-bF-P3z"/>
-                <constraint firstAttribute="trailing" secondItem="vav-eX-VKs" secondAttribute="trailing" constant="10" id="gjt-M7-8vd"/>
-                <constraint firstItem="L7M-In-qda" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" constant="10" id="hxq-dP-ntq"/>
-                <constraint firstItem="vav-eX-VKs" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" constant="5" id="reV-zj-k75"/>
+                <constraint firstItem="L7M-In-qda" firstAttribute="top" secondItem="vav-eX-VKs" secondAttribute="bottom" constant="3" id="3Az-cx-ngB"/>
+                <constraint firstItem="vav-eX-VKs" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" constant="5" id="8zK-je-eji"/>
+                <constraint firstItem="ho0-aD-pkt" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" constant="2" id="HcZ-41-sff"/>
+                <constraint firstAttribute="trailing" secondItem="ho0-aD-pkt" secondAttribute="trailing" constant="2" id="Hh5-r0-19J"/>
+                <constraint firstAttribute="trailing" secondItem="L7M-In-qda" secondAttribute="trailing" constant="2" id="X5k-2A-E9r"/>
+                <constraint firstAttribute="trailing" secondItem="vav-eX-VKs" secondAttribute="trailing" constant="5" id="YXC-5V-HGW"/>
+                <constraint firstItem="ho0-aD-pkt" firstAttribute="top" secondItem="L7M-In-qda" secondAttribute="bottom" constant="2" id="cBB-bF-P3z"/>
+                <constraint firstItem="L7M-In-qda" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" constant="2" id="hxq-dP-ntq"/>
+                <constraint firstItem="vav-eX-VKs" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" constant="5" id="oLH-We-oBP"/>
             </constraints>
-            <size key="customSize" width="388" height="549"/>
+            <size key="customSize" width="246" height="157"/>
             <connections>
                 <outlet property="nameLabel" destination="L7M-In-qda" id="H1x-SO-0E0"/>
                 <outlet property="workNo" destination="ho0-aD-pkt" id="gPo-Li-ART"/>
             </connections>
-            <point key="canvasLocation" x="-88" y="156.5"/>
+            <point key="canvasLocation" x="-302" y="24.5"/>
         </collectionViewCell>
     </objects>
     <resources>

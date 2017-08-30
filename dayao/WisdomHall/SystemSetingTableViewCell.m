@@ -9,7 +9,11 @@
 #import "SystemSetingTableViewCell.h"
 #import "DYHeader.h"
 @interface SystemSetingTableViewCell ()
+
+@property (strong, nonatomic) IBOutlet UILabel *workNumber;
+
 @property (weak, nonatomic) IBOutlet UIImageView *setingImage;
+
 
 @property (nonatomic,strong)NSArray * textAry;
 @end
@@ -44,9 +48,15 @@
   
     if (indexPath.section == 1) {
         cell.setingLabel.text = cell.textAry[indexPath.row];
+        
     }else if (indexPath.section == 0){
         cell.userName.text = cell.user.userName;
         cell.workNo.text = cell.user.studentId;
+        UserModel * user = [[Appsetting sharedInstance] getUsetInfo];
+        
+        if ([[NSString stringWithFormat:@"%@",user.identity] isEqualToString:@"1"]) {
+            cell.workNumber.text = @"工号";
+        }
     }
     return cell;
 }

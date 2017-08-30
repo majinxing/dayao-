@@ -15,6 +15,7 @@
 @interface JoinVoteViewController ()<UITableViewDelegate,UITableViewDataSource,JoinVoteTableViewCellDelegate>
 @property (nonatomic,strong)UITableView *tableView;
 @property (nonatomic,strong)NSMutableArray * voteAnswer;
+@property (nonatomic,strong)NSMutableArray * selectAry;
 @property (nonatomic,assign)int temp;//记录投票数目
 @property (nonatomic,strong)UIAlertView * alter;
 @end
@@ -28,6 +29,8 @@
     self.view.backgroundColor = [UIColor whiteColor];
     
     _voteAnswer = [NSMutableArray arrayWithCapacity:4];
+    
+    _selectAry = [NSMutableArray arrayWithCapacity:1];
     
     _temp = 0;
     
@@ -46,11 +49,13 @@
     NSDictionary * dict = [[NSDictionary alloc] initWithObjectsAndKeys:_vote.voteId,@"themeId",@"1",@"start",@"10000",@"length",nil];
     [[NetworkRequest sharedInstance] GET:QueryListOption dict:dict succeed:^(id data) {
         [_vote.selectAry removeAllObjects];
+        [_selectAry removeAllObjects];
         NSArray * ary = [[data objectForKey:@"body"] objectForKey:@"list"];
         for (int i = 0; i<ary.count; i++) {
             VoteOption * v = [[VoteOption alloc] init];
             [v setInfoWithDict:ary[i]];
             [_vote.selectAry addObject:v];
+            [_selectAry addObject:@"未选中"];
         }
         [self hideHud];
         [_tableView reloadData];
@@ -91,6 +96,8 @@
                 [UIUtils showInfoMessage:@"投票成功"];
             }else if ([str isEqualToString:@"用户投票出错,已经投票"]){
                 [UIUtils showInfoMessage:@"已投票"];
+            }else if ([str isEqualToString:@"用户投票出错,必须在处理中状态"]){
+                [UIUtils showInfoMessage:@"投票未开始，请老师在投票列表页面点击开始投票"];
             }else{
                 [UIUtils showInfoMessage:@"投票失败"];
             }
@@ -161,7 +168,7 @@
         [cell setTileOrdescribe:[NSString stringWithFormat:@"%@(最多选%@票)",_vote.title,_vote.largestNumbe] withLableText:_vote.time];
     }else{
         VoteOption * v = _vote.selectAry[indexPath.row-1];
-        [cell setSelectText:v.content withTag:(int)indexPath.row];
+        [cell setSelectText:v.content withTag:(int)indexPath.row withSelect:_selectAry[indexPath.row-1]];
     }
     cell.delegate = self;
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
@@ -179,7 +186,7 @@
 #pragma mark JoinVoteTableViewCellDelegate
 -(void)voteBtnDelegatePressed:(UIButton *)btn{
     
-    if (btn.titleLabel.textColor == [UIColor blueColor]) {
+    if ([_selectAry[btn.tag-1] isEqualToString:@"未选中"]) {
         if (_temp<[_vote.largestNumbe intValue]) {
             if (btn.tag<(_vote.selectAry.count+1)) {
                 VoteOption * v = _vote.selectAry[btn.tag-1];
@@ -188,7 +195,7 @@
             
             
             _temp++;
-            [btn setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
+            [_selectAry setObject:@"选中" atIndexedSubscript:btn.tag-1];
         }else{
             _alter = [[UIAlertView alloc] initWithTitle:nil message:[NSString stringWithFormat:@"最多投%@票",_vote.largestNumbe] delegate:nil cancelButtonTitle:nil otherButtonTitles:nil];
             [_alter show];
@@ -198,7 +205,8 @@
             timer = [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(doTime) userInfo:nil repeats:NO];
         }
     }else{
-        [btn setTitleColor:[UIColor blueColor] forState:UIControlStateNormal];
+        [_selectAry setObject:@"未选中" atIndexedSubscript:btn.tag-1];
+
         VoteOption * v = _vote.selectAry[btn.tag-1];
         
         for (int i = 0; i<_voteAnswer.count; i++) {
@@ -210,7 +218,7 @@
         }
         _temp--;
     }
-    
+    [_tableView reloadData];
 }
 -(void)doTime
 

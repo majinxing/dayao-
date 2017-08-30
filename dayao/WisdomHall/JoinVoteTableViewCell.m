@@ -15,6 +15,7 @@
 
 @property (strong, nonatomic) IBOutlet UITextView *secondTextVIew;
 @property (strong, nonatomic) IBOutlet UIButton *voteBtn;
+@property (strong, nonatomic) IBOutlet UIImageView *selecdImage;
 
 @end
 @implementation JoinVoteTableViewCell
@@ -28,9 +29,14 @@
     _firstTextView.text = [NSString stringWithFormat:@"投票标题：%@",title];
     _firstLabel.text = [NSString stringWithFormat:@"%@",labelText];
 }
--(void)setSelectText:(NSString *)selectText withTag:(int)tag{
+-(void)setSelectText:(NSString *)selectText withTag:(int)tag withSelect:(NSString *)select{
     _secondTextVIew.text = selectText;
     _voteBtn.tag = tag;
+    if ([select isEqualToString:@"选中"]) {
+        _selecdImage.image = [UIImage imageNamed:@"方形选中-fill"];
+    }else{
+        _selecdImage.image = [UIImage imageNamed:@"方形未选中"];
+    }
 }
 - (IBAction)voteBtnPressed:(UIButton *)btn {
     if (self.delegate&&[self.delegate respondsToSelector:@selector(voteBtnDelegatePressed:)]) {

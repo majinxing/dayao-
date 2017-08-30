@@ -199,7 +199,7 @@
     }else if (indexPath.row == 1){
         [cell addSelectNumeberWithNumer:_voteModel.largestNumbe withTag:(int)indexPath.row];
     }else if (indexPath.row>1){
-        [cell addSelectInfo:[NSString stringWithFormat:@"选项%ld：",indexPath.row-1] withSelectText:_voteModel.selectAry[indexPath.row-2] withTag:(int)indexPath.row];
+        [cell addSelectInfo:[NSString stringWithFormat:@"选项%d：",indexPath.row-1] withSelectText:_voteModel.selectAry[indexPath.row-2] withTag:(int)indexPath.row];
     }
     cell.delegate = self;
     return cell;

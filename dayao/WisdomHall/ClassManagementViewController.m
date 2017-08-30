@@ -128,7 +128,12 @@ didDeselectItemAtIndexPath:(NSIndexPath *)indexPath
 
 #pragma mark UICollectionViewDelegateFlowLayout
 - (CGSize)collectionView:(nonnull UICollectionView *)collectionView layout:(nonnull UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(nonnull NSIndexPath *)indexPath {
-    return CGSizeMake(APPLICATION_WIDTH/3-10, APPLICATION_WIDTH/3+40);
+    NSString * str = [UIUtils deviceVersion];
+    BOOL b = [str hasPrefix:@"iPhone 5"];
+    if (b) {
+        return CGSizeMake(APPLICATION_WIDTH/3-10, APPLICATION_WIDTH/3+10);
+    }else
+    return CGSizeMake(APPLICATION_WIDTH/4-10, APPLICATION_WIDTH/4+25);
 }
 
 /*

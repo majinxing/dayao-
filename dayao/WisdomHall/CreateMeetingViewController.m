@@ -102,7 +102,7 @@
     
     [dict setObject:user.peopleId forKey:@"teacherId"];
     
-    [dict setObject:[NSString stringWithFormat:@"%ld",_selectPeopleAry.count] forKey:@"total"];
+    [dict setObject:[NSString stringWithFormat:@"%ld",(unsigned long)_selectPeopleAry.count] forKey:@"total"];
     
     [dict setObject:@"1" forKey:@"signType"];
     
@@ -314,15 +314,15 @@
 {
     if (_temp == 1) {
         if (component == 0) {
-            return [NSString stringWithFormat:@"%ld",2017+row];
+            return [NSString stringWithFormat:@"%d",2017+row];
         }else if (component == 1){
-            return [NSString stringWithFormat:@"%ld月",1+row];
+            return [NSString stringWithFormat:@"%d月",1+row];
         }else if (component == 2){
-            return [NSString stringWithFormat:@"%ld日",1+row];
+            return [NSString stringWithFormat:@"%d日",1+row];
         }else if (component == 3){
-            return [NSString stringWithFormat:@"%ld点",1+row];
+            return [NSString stringWithFormat:@"%d点",1+row];
         }else if (component == 4){
-            return [NSString stringWithFormat:@"%ld分",1+row];
+            return [NSString stringWithFormat:@"%d分",1+row];
         }
     }else if (_temp == 3){
         if (row == 0) {

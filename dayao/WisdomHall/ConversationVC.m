@@ -14,6 +14,7 @@
 #import "EMCallOptions+NSCoding.h"
 
 #import <Hyphenate/Hyphenate.h>
+
 @interface ConversationVC ()<EMCallManagerDelegate>
 
 @property (nonatomic,strong)UIView * videoView;
@@ -35,7 +36,10 @@
 
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
-    
+    if (_callSession) {
+        [[EMClient sharedClient].callManager endCall:_callSession.callId reason:EMCallEndReasonDecline];
+        _callSession = nil;
+    }
     [self.navigationController setNavigationBarHidden:NO animated:YES];
 }
 
@@ -56,26 +60,16 @@
             [self createUI];
             return;
         }
-
-        NSString * string = ([[[EMClient sharedClient] currentUsername] isEqualToString:@"aaaaa111"])?@"aaaaa1111":@"aaaaa111";
+       // NSString * string = ([[[EMClient sharedClient] currentUsername] isEqualToString:@"aaaaa111"])?@"aaaaa1111":@"aaaaa111";
         
-//        NSLog(@"currentUsername = %@  ,  string = %@",[[EMClient sharedClient] currentUsername],string);
         //15243670131"
         [[EMClient sharedClient].callManager startCall:EMCallTypeVoice remoteName:_HyNumaber ext:nil completion:^(EMCallSession *aCallSession, EMError *aError) {
-            
-//            NSLog(@"startCall : errorDescription = %@",aError.errorDescription);
             
             if (!aError) {
                 _callSession = aCallSession;
                 [self createUI];
             }else{
-//                if (self.navigationController.viewControllers.count>1) {
                     [self.navigationController popViewControllerAnimated:YES];
-//                }else{
-//                    
-//                    DYTabBarViewController *rootVC = [DYTabBarViewController sharedInstance];
-//                    [UIApplication sharedApplication].keyWindow.rootViewController = rootVC;
-//                }
 
             }
             
@@ -94,7 +88,7 @@
     UIImageView * image = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, APPLICATION_WIDTH, APPLICATION_HEIGHT)];
     image.image = [UIImage imageNamed:@"callBg"];
     [self.view addSubview:image];
-    [[EMClient sharedClient].callManager addDelegate:self delegateQueue:nil];
+    [[EMClient sharedClient].callManager addDelegate:self delegateQueue:dispatch_get_main_queue()];
 
     // Do any additional setup after loading the view.
 }

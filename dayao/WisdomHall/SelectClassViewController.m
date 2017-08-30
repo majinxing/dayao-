@@ -159,7 +159,7 @@ static NSString * cellIdentifier = @"cellIdentifier";
     
     _userModel = [[Appsetting sharedInstance] getUsetInfo];
     
-    NSDictionary * dict = [[NSDictionary alloc] initWithObjectsAndKeys:[NSString stringWithFormat:@"%ld",page],@"start",_userModel.peopleId,@"teacherId",@"2017-07-01",@"actStartTime",@"1000",@"length",_userModel.school,@"universityId",@"2",@"type",[NSString stringWithFormat:@"%d",[UIUtils getTermId]],@"termId",@"1",@"courseType",_searchStr,@"keywords",nil];
+    NSDictionary * dict = [[NSDictionary alloc] initWithObjectsAndKeys:[NSString stringWithFormat:@"%ld",(long)page],@"start",_userModel.peopleId,@"teacherId",@"2017-07-01",@"actStartTime",@"1000",@"length",_userModel.school,@"universityId",@"2",@"type",[NSString stringWithFormat:@"%d",[UIUtils getTermId]],@"termId",@"1",@"courseType",_searchStr,@"keywords",nil];
     
 //    NSDictionary * dict = [[NSDictionary alloc] initWithObjectsAndKeys:@"1",@"start",_userModel.peopleId,@"studentId",@"1000",@"length",_userModel.school,@"universityId",@"1",@"type",_searchStr,@"keywords",nil];
     [[NetworkRequest sharedInstance] GET:QueryCourse dict:dict succeed:^(id data) {
@@ -181,7 +181,7 @@ static NSString * cellIdentifier = @"cellIdentifier";
     }];
 }
 -(void)getSelfJoinClass:(NSInteger)page{
-    NSDictionary * dict = [[NSDictionary alloc] initWithObjectsAndKeys:[NSString stringWithFormat:@"%ld",page],@"start",_userModel.peopleId,@"studentId",@"2017-07-01",@"actStartTime",@"1000",@"length",_userModel.school,@"universityId",@"1",@"type",[NSString stringWithFormat:@"%d",[UIUtils getTermId]],@"termId",@"1",@"courseType",_searchStr,@"keywords",nil];
+    NSDictionary * dict = [[NSDictionary alloc] initWithObjectsAndKeys:[NSString stringWithFormat:@"%ld",(long)page],@"start",_userModel.peopleId,@"studentId",@"2017-07-01",@"actStartTime",@"1000",@"length",_userModel.school,@"universityId",@"1",@"type",[NSString stringWithFormat:@"%d",[UIUtils getTermId]],@"termId",@"1",@"courseType",_searchStr,@"keywords",nil];
     [[NetworkRequest sharedInstance] GET:QueryCourse dict:dict succeed:^(id data) {
         // NSLog(@"%@",data);
         NSString * str = [[data objectForKey:@"header"] objectForKey:@"message"];
@@ -202,7 +202,7 @@ static NSString * cellIdentifier = @"cellIdentifier";
 }
 //临时
 -(void)getSelfCreateClassType:(NSInteger)page{
-    NSDictionary * dict = [[NSDictionary alloc] initWithObjectsAndKeys:[NSString stringWithFormat:@"%ld",page],@"start",_userModel.peopleId,@"teacherId",@"2017-07-01",@"actStartTime",@"1000",@"length",_userModel.school,@"universityId",@"2",@"type",@"2",@"courseType",_searchStr,@"keywords",nil];
+    NSDictionary * dict = [[NSDictionary alloc] initWithObjectsAndKeys:[NSString stringWithFormat:@"%ld",(long)page],@"start",_userModel.peopleId,@"teacherId",@"2017-07-01",@"actStartTime",@"1000",@"length",_userModel.school,@"universityId",@"2",@"type",@"2",@"courseType",_searchStr,@"keywords",nil];
     [[NetworkRequest sharedInstance] GET:QueryCourse dict:dict succeed:^(id data) {
         // NSLog(@"%@",data);
         NSString * str = [[data objectForKey:@"header"] objectForKey:@"message"];
@@ -223,7 +223,7 @@ static NSString * cellIdentifier = @"cellIdentifier";
 }
 //临时
 -(void)getSelfJoinClassType:(NSInteger)page{
-    NSDictionary * dict = [[NSDictionary alloc] initWithObjectsAndKeys:[NSString stringWithFormat:@"%ld",page],@"start",_userModel.peopleId,@"studentId",@"2017-07-01",@"actStartTime",@"1000",@"length",_userModel.school,@"universityId",@"1",@"type",@"2",@"courseType",_searchStr,@"keywords",nil];
+    NSDictionary * dict = [[NSDictionary alloc] initWithObjectsAndKeys:[NSString stringWithFormat:@"%ld",(long)page],@"start",_userModel.peopleId,@"studentId",@"2017-07-01",@"actStartTime",@"1000",@"length",_userModel.school,@"universityId",@"1",@"type",@"2",@"courseType",_searchStr,@"keywords",nil];
     [[NetworkRequest sharedInstance] GET:QueryCourse dict:dict succeed:^(id data) {
         //NSLog(@"%@",data);
         NSString * str = [[data objectForKey:@"header"] objectForKey:@"message"];

@@ -256,8 +256,8 @@
         
         [_t changeTotalNumberWithTitle:_q.score];
         
-        _t.totalNumber = [NSString stringWithFormat:@"%ld",[_t.totalNumber integerValue]+1];
-        _t.totalScore = [NSString stringWithFormat:@"%ld",[_t.totalScore integerValue]+[_q.score integerValue]];
+        _t.totalNumber = [NSString stringWithFormat:@"%d",[_t.totalNumber integerValue]+1];
+        _t.totalScore = [NSString stringWithFormat:@"%d",[_t.totalScore integerValue]+[_q.score integerValue]];
         
         //重新加载页面
         [self initBtnState];

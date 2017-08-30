@@ -114,6 +114,7 @@
             <connections>
                 <outlet property="userName" destination="6eM-UU-0sH" id="P8D-aC-UBV"/>
                 <outlet property="workNo" destination="oVy-OO-iVK" id="qBm-ZK-FFh"/>
+                <outlet property="workNumber" destination="z4W-oW-UEr" id="9hw-jb-6W0"/>
             </connections>
             <point key="canvasLocation" x="59" y="244"/>
         </tableViewCell>

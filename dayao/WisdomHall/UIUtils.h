@@ -81,5 +81,7 @@
 +(BOOL)matchingMacWith:(NSMutableArray *)ary withMac:(NSString *)mac;
 /// 服务器可达返回true
 +(BOOL)socketReachabilityTest;
+//返回手机型号
++(NSString*)deviceVersion;
 @end
 

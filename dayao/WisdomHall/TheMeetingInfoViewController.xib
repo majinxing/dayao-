@@ -122,7 +122,7 @@
                     <constraints>
                         <constraint firstAttribute="height" constant="20" id="SnG-EW-eNg"/>
                     </constraints>
-                    <fontDescription key="fontDescription" type="system" pointSize="11"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="12"/>
                     <nil key="textColor"/>
                     <nil key="highlightedColor"/>
                 </label>

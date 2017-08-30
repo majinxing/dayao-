@@ -53,12 +53,15 @@
  **/
 -(void)changeTotalNumberWithTitle:(NSString *)titleScore{
     if ([_db open]) {
-        NSString * n = [NSString stringWithFormat:@"%ld",[self.totalNumber integerValue]+1];
+        NSString * n = [NSString stringWithFormat:@"%d",[self.totalNumber integerValue]+1];
         NSString * sql = [NSString stringWithFormat:@"update %@ set totalNumber = '%@' where textId = '%@' ;",TEXT_TABLE_NAME,n,self.textId];
         BOOL rs = [FMDBTool updateWithDB:_db withSqlStr:sql];
-        NSString * score = [NSString stringWithFormat:@"%ld",[self.totalScore integerValue]+[titleScore integerValue]];
+        NSString * score = [NSString stringWithFormat:@"%d",[self.totalScore integerValue]+[titleScore integerValue]];
         NSString * sql1 = [NSString stringWithFormat:@"update %@ set totalScore = '%@' where textId = '%@' ;",TEXT_TABLE_NAME,score,self.textId];
         BOOL r = [FMDBTool updateWithDB:_db withSqlStr:sql1];
+        if (r||rs) {
+            
+        }
     }
     [_db close];
 }

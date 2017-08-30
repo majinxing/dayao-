@@ -16,5 +16,5 @@
 @interface JoinVoteTableViewCell : UITableViewCell
 @property (nonatomic,weak)id<JoinVoteTableViewCellDelegate>delegate;
 -(void)setTileOrdescribe:(NSString *)title withLableText:(NSString *)labelText;
--(void)setSelectText:(NSString *)selectText withTag:(int)tag;
+-(void)setSelectText:(NSString *)selectText withTag:(int)tag withSelect:(NSString *)select;
 @end

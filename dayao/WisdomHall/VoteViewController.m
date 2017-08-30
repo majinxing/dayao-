@@ -200,7 +200,7 @@
             [self getData];
             [_vote hide];
         } failure:^(NSError *error) {
-            
+            [UIUtils showInfoMessage:@"开始失败，请检查网络"];
         }];
         
     }else if ([platform isEqualToString:Vote_Modify]){
