@@ -6,6 +6,7 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12089"/>
+        <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -20,22 +21,36 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zqU-Zn-WfY">
-                    <rect key="frame" x="0.0" y="617" width="375" height="50"/>
+                    <rect key="frame" x="0.0" y="617" width="187.5" height="50"/>
                     <color key="backgroundColor" red="0.33977119598751132" green="0.95747652202072542" blue="0.95107732792634492" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                     <constraints>
-                        <constraint firstAttribute="height" constant="50" id="Pz6-YI-oHb"/>
+                        <constraint firstAttribute="height" constant="50" id="UBK-Bp-0sp"/>
                     </constraints>
                     <state key="normal" title="查看结果"/>
                     <connections>
                         <action selector="seeVoteResult:" destination="-1" eventType="touchUpInside" id="h65-4S-RlE"/>
                     </connections>
                 </button>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Iv6-Kh-vsf">
+                    <rect key="frame" x="187.5" y="617" width="187.5" height="50"/>
+                    <color key="backgroundColor" red="0.339771196" green="0.957476522" blue="0.95107732789999999" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="50" id="4eF-ri-TcO"/>
+                    </constraints>
+                    <state key="normal" title="提交"/>
+                    <connections>
+                        <action selector="saveVote:" destination="-1" eventType="touchUpInside" id="OJ2-aJ-xAj"/>
+                    </connections>
+                </button>
             </subviews>
             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
-                <constraint firstItem="zqU-Zn-WfY" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="EuQ-g0-8yV"/>
-                <constraint firstAttribute="bottom" secondItem="zqU-Zn-WfY" secondAttribute="bottom" id="fSr-fC-I95"/>
-                <constraint firstAttribute="trailing" secondItem="zqU-Zn-WfY" secondAttribute="trailing" id="gU9-WS-uHn"/>
+                <constraint firstItem="Iv6-Kh-vsf" firstAttribute="leading" secondItem="zqU-Zn-WfY" secondAttribute="trailing" id="05Y-KO-65V"/>
+                <constraint firstItem="zqU-Zn-WfY" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="4FN-3k-X5r"/>
+                <constraint firstAttribute="bottom" secondItem="zqU-Zn-WfY" secondAttribute="bottom" id="bmA-Hx-VcZ"/>
+                <constraint firstAttribute="bottom" secondItem="Iv6-Kh-vsf" secondAttribute="bottom" id="iB5-D5-4lf"/>
+                <constraint firstAttribute="trailing" secondItem="Iv6-Kh-vsf" secondAttribute="trailing" id="jNR-Kf-nLY"/>
+                <constraint firstItem="zqU-Zn-WfY" firstAttribute="width" secondItem="i5M-Pr-FkT" secondAttribute="width" multiplier="1/2" id="nsN-Qh-OPw"/>
             </constraints>
         </view>
     </objects>

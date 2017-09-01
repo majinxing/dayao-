@@ -64,7 +64,6 @@
     }];
     
 }
-
 /**
  *  显示navigation的标题
  **/
@@ -75,12 +74,12 @@
                                                                       NSFontAttributeName:[UIFont systemFontOfSize:17],
                                                                       NSForegroundColorAttributeName:[UIColor blackColor]}];
     self.title = @"投票";
-    UIBarButtonItem *myButton = [[UIBarButtonItem alloc] initWithTitle:@"提交" style:UIBarButtonItemStylePlain target:self action:@selector(saveVote)];
-    self.navigationItem.rightBarButtonItem = myButton;
+//    UIBarButtonItem *myButton = [[UIBarButtonItem alloc] initWithTitle:@"提交" style:UIBarButtonItemStylePlain target:self action:@selector(saveVote)];
+//    self.navigationItem.rightBarButtonItem = myButton;
     //    UIBarButtonItem * backbtn = [[UIBarButtonItem alloc] initWithTitle:nil style:UIBarButtonItemStylePlain target:self action:@selector(back)];
     //    self.navigationItem.leftBarButtonItem = backbtn;
 }
--(void)saveVote{
+- (IBAction)saveVote:(UIButton *)sender {
     if (_voteAnswer.count>0) {
         dispatch_async(dispatch_get_main_queue(), ^{
             //获取主线程
@@ -106,14 +105,16 @@
             NSLog(@"%@",error);
             [UIUtils showInfoMessage:@"投票失败"];
             [self hideHud];
-
+            
         }];
     }else{
         [UIUtils showInfoMessage:@"请先投票在提交"];
         [self hideHud];
     }
     
+
 }
+
 -(void)addTableView{
     _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 64, APPLICATION_WIDTH,APPLICATION_HEIGHT-64-50) style:UITableViewStylePlain];
     _tableView.delegate = self;

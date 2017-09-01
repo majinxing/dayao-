@@ -57,102 +57,102 @@
 
 
 //数据库的名字
-#define SQLITE_NAME        @"Dayao"
+#define SQLITE_NAME            @"Dayao"
 
-#define TEXT_TABLE_NAME        @"textTable"//试卷表名字
+#define TEXT_TABLE_NAME        @"textTable"                         //试卷表名字
 
-#define QUESTIONS_TABLE_NAME   @"questionsTable"//题目表
+#define QUESTIONS_TABLE_NAME   @"questionsTable"                    //题目表
 
-#define CONTACT_TABLE_NAME     @"contactTable"//试卷和题目联系的表格
+#define CONTACT_TABLE_NAME     @"contactTable"                      //试卷和题目联系的表格
 
-#define NOTICE_TABLE_NAME      @"noticeTable"//通知表
+#define NOTICE_TABLE_NAME      @"noticeTable"                       //通知表
 
-#define TOKENTIME_TABLE_NAME   @"tokenTimeTable"//记录token有效期的
+#define TOKENTIME_TABLE_NAME   @"tokenTimeTable"                    //记录token有效期的
 
 //接口116.62.161.250:8080 192.168.1.81:8080 api.dayaokeji.com
-#define BaseURL @"http://api.dayaokeji.com/"
+#define BaseURL                 @"http://api.dayaokeji.com/"
 
-#define Login            @"course/user/login"       //登录
+#define Login                   @"course/user/login"                //登录
 
-#define Register         @"course/user/register"    //注册
+#define Register                @"course/user/register"             //注册
 
-#define ResetPassword    @"course/user/modify"      //重置密码
+#define ResetPassword           @"course/user/modify"               //重置密码
 
-#define SchoolDepartMent @"course/department/list"  // 院系列表
+#define SchoolDepartMent        @"course/department/list"           // 院系列表
 
-#define QueryClassRoom   @"course/classroom/select" //查询教室
+#define QueryClassRoom          @"course/classroom/select"          //查询教室
 
-#define QueryCourse      @"course/course/select"    //查询课堂
+#define QueryCourse             @"course/course/select"             //查询课堂
 
-#define CreateClass      @"course/course/create"    //创建教室
+#define CreateClass             @"course/course/create"             //创建教室
 
-#define QuertyClassNumber    @"course/course/maxnum" //查询教室节数
+#define QuertyClassNumber       @"course/course/maxnum"             //查询教室节数
 
-#define CreateCoures     @"course/course/create/cycle" //创建课堂
+#define CreateCoures            @"course/course/create/cycle"       //创建课堂
 
-#define CreateTemporaryCourse @"course/course/create/once" //创建临时课堂
+#define CreateTemporaryCourse   @"course/course/create/once"        //创建临时课堂
 
-#define QueryCourseMemBer     @"course/course/member"      //查询课堂成员
+#define QueryCourseMemBer       @"course/course/member"             //查询课堂成员
 
-#define DelecateCourse         @"course/course/delete"   //删除课程
+#define DelecateCourse          @"course/course/delete"             //删除课程
 
-#define QueryMeeting     @"course/meeting/select/user"   //查询会议(参与者)
+#define QueryMeeting            @"course/meeting/select/user"       //查询会议(参与者)
 
-#define QueryMeetingSelfCreate @"course/meeting/select" //查询自己创建的会议
+#define QueryMeetingSelfCreate  @"course/meeting/select"            //查询自己创建的会议
 
-#define MeetingSign      @"course/meeting/sign"     //会议签到
+#define MeetingSign             @"course/meeting/sign"              //会议签到
 
-#define MeetingDelect    @"course/meeting/delete"    //会议删除
+#define MeetingDelect           @"course/meeting/delete"            //会议删除
 
-#define ClassSign        @"course/course/sign"       //课程签到
+#define ClassSign               @"course/course/sign"               //课程签到
 
-#define ClassSign        @"course/course/sign"      //课程签到
+#define ClassSign               @"course/course/sign"               //课程签到
 
-#define QueryPeople      @"course/user/list"         //人员条件查询
+#define QueryPeople             @"course/user/list"                 //人员条件查询
 
-#define QuerySelfInfo    @"course/user/detail"       //查询个人信息
+#define QuerySelfInfo           @"course/user/detail"               //查询个人信息
 
-#define ChangeSelfInfo   @"course/user/update"       //修改个人信息
+#define ChangeSelfInfo          @"course/user/update"               //修改个人信息
 
-#define QueryApp         @"course/app/select"         //查询版本号
+#define QueryApp                @"course/app/select"                //查询版本号
 
-#define QueryMeetingPeople      @"course/meeting/member"   //查询与会者信息
+#define QueryMeetingPeople      @"course/meeting/member"            //查询与会者信息
 
-#define QueryAdvertising @"course/resource/select"  //查询广告
+#define QueryAdvertising        @"course/resource/select"           //查询广告
 
-#define FeedBack         @"course/feedback/create"//意见反馈
+#define FeedBack                @"course/feedback/create"           //意见反馈
 
-#define QueryMeetingRoom    @"course/meetingroom/select"//查询会议室
+#define QueryMeetingRoom        @"course/meetingroom/select"        //查询会议室
 
-#define CreateMeeting       @"course/meeting/create" //创建会议
+#define CreateMeeting           @"course/meeting/create"            //创建会议
 
-#define JoinCourse          @"course/course/addMember" //个人加入课程
+#define JoinCourse              @"course/course/addMember"          //个人加入课程
 
-#define JoinMeeting         @"course/meeting/addMember" //个人加入会议
+#define JoinMeeting             @"course/meeting/addMember"         //个人加入会议
 
-#define FileUpload          @"course/resource/upload"   //上传资料
+#define FileUpload              @"course/resource/upload"           //上传资料
 
-#define FileDownload        @"course/resource/download" //资料下载
+#define FileDownload            @"course/resource/download"         //资料下载
 
-#define FileList            @"course/resource/list"     //资料列表
+#define FileList                @"course/resource/list"             //资料列表
 
-#define FileDelegate        @"course/resource/delete"   //删除
+#define FileDelegate            @"course/resource/delete"           //删除
 
-#define CreateVote          @"course/vote/create" //创建投票
+#define CreateVote              @"course/vote/create"               //创建投票
 
-#define QueryVote           @"course/vote/list"//查询投票
+#define QueryVote               @"course/vote/list"                 //查询投票
 
-#define QueryListOption     @"course/vote/listOption"//查询投票选项
+#define QueryListOption         @"course/vote/listOption"           //查询投票选项
 
-#define PeopleVote          @"course/vote/vote"     //用户投票接口
+#define PeopleVote              @"course/vote/vote"                 //用户投票接口
 
-#define VoteEditor            @"course/vote/update"   //修改投票主题，包含投票状态
+#define VoteEditor              @"course/vote/update"               //修改投票主题，包含投票状态
 
-#define VoteDelect             @"course/vote/delete" //删除投票
+#define VoteDelect              @"course/vote/delete"               //删除投票
 
-#define QueryVoteResult        @"course/vote/listOption"    //查询投票结果
+#define QueryVoteResult         @"course/vote/listOption"           //查询投票结果
 
-
+#define QueryTest               @"course/exam/queryTestExamAll"     //查询考试列表
 
 
 

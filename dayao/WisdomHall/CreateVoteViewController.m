@@ -57,6 +57,7 @@
 //    UIBarButtonItem * backbtn = [[UIBarButtonItem alloc] initWithTitle:nil style:UIBarButtonItemStylePlain target:self action:@selector(back)];
 //    self.navigationItem.leftBarButtonItem = backbtn;
 }
+
 -(void)saveVote{
     [self showHudInView:self.view hint:NSLocalizedString(@"正在加载数据", @"Load data...")];
     if ([_type isEqualToString:@"meeting"]) {

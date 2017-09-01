@@ -7,7 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "DYHeader.h"
+#import "ClassModel.h"
 
 @interface AllTestViewController : UIViewController
-
+@property (nonatomic,strong) UserModel * userModel;
+@property (nonatomic,strong) ClassModel * classModel;
 @end

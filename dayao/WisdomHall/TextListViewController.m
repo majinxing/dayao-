@@ -130,8 +130,9 @@
         [myButton setTitle:@"交卷"];
     }
     self.navigationItem.rightBarButtonItem = myButton;
-    UIBarButtonItem *leftButton = [[UIBarButtonItem alloc] initWithTitle:@"<" style:UIBarButtonItemStylePlain target:self action:@selector(back)];
-    self.navigationItem.leftBarButtonItem = leftButton;
+    
+//    UIBarButtonItem *leftButton = [[UIBarButtonItem alloc] initWithTitle:@"<" style:UIBarButtonItemStylePlain target:self action:@selector(back)];
+//    self.navigationItem.leftBarButtonItem = leftButton;
 }
 -(void)theImportQuestionBtn{
     

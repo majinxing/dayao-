@@ -14,6 +14,7 @@
 #import "DYHeader.h"
 #import "TextModel.h"
 #import "TextListViewController.h"
+#import "CreateTestViewController.h"
 
 @interface AllTestViewController ()<UITableViewDelegate,UITableViewDataSource>
 @property (nonatomic,strong) UITableView * tableView;
@@ -27,16 +28,52 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     _textArray = [NSMutableArray arrayWithCapacity:4];
-
+    
+    [self getData];
+    
     [self querTextTableData];
     
-    _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, APPLICATION_WIDTH, APPLICATION_HEIGHT-64-40) style:UITableViewStylePlain];
+    [self addTableView];
+    
+    [self setNavigationTitle];
+        // Do any additional setup after loading the view from its nib.
+}
+/**
+ *  显示navigation的标题
+ **/
+-(void)setNavigationTitle{
+    [UIApplication sharedApplication].statusBarStyle = UIStatusBarStyleLightContent;
+    //[self.navigationController.navigationBar setBarTintColor:[UIColor blackColor]];
+    [self.navigationController.navigationBar setTitleTextAttributes:@{
+                                                                      NSFontAttributeName:[UIFont systemFontOfSize:17],
+                                                                      NSForegroundColorAttributeName:[UIColor blackColor]}];
+    self.title = @"测试";
+    UIBarButtonItem *myButton = [[UIBarButtonItem alloc] initWithTitle:@"创建测试" style:UIBarButtonItemStylePlain target:self action:@selector(createText)];
+    self.navigationItem.rightBarButtonItem = myButton;
+}
+-(void)createText{
+    CreateTestViewController * c = [[CreateTestViewController alloc] init];
+    self.hidesBottomBarWhenPushed = YES;
+    [self.navigationController pushViewController:c animated:YES];
+}
+-(void)addTableView{
+
+    _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0,64, APPLICATION_WIDTH, APPLICATION_HEIGHT-64) style:UITableViewStylePlain];
     _tableView.delegate = self;
     _tableView.dataSource = self;
     _tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     _tableView.backgroundColor = [UIColor clearColor];
     [self.view addSubview:_tableView];
-    // Do any additional setup after loading the view from its nib.
+}
+-(void)getData{
+    NSDictionary * dict = [[NSDictionary alloc] initWithObjectsAndKeys:_classModel.sclassId,@"relId",@"1",@"relType",nil];
+    
+    [[NetworkRequest sharedInstance] GET:QueryTest dict:dict succeed:^(id data) {
+        NSLog(@"%@",data);
+    } failure:^(NSError *error) {
+        NSLog(@"%@",error);
+    }];
+    
 }
 -(void)viewWillAppear:(BOOL)animated{
     [self querTextTableData];

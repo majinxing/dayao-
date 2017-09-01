@@ -183,7 +183,7 @@
     }
     
     
-    _meetingPlace.text = [NSString stringWithFormat:@"会议地点：%@",_meetingModel.meetingPlace];
+    _meetingPlace.text = [NSString stringWithFormat:@"地点：%@",_meetingModel.meetingPlace];
     
     _meetingId.text = [NSString stringWithFormat:@"会议邀请码：%@",_meetingModel.meetingId];
     
@@ -218,7 +218,7 @@
     
     [strUrl deleteCharactersInRange:NSMakeRange(0,5)];
     
-    _meetingTime.text = [NSString stringWithFormat:@"会议时间：%@",strUrl];
+    _meetingTime.text = [NSString stringWithFormat:@"时间：%@",strUrl];
     
     _interactiveBtn.layer.masksToBounds = YES;
     _interactiveBtn.layer.borderColor = [UIColor whiteColor].CGColor;

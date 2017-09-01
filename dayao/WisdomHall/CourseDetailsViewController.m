@@ -20,6 +20,7 @@
 #import "DataDownloadViewController.h"
 #import "SignPeople.h"
 #import "AFHTTPSessionManager.h"
+#import "AllTestViewController.h"
 
 
 @interface CourseDetailsViewController ()<UIActionSheetDelegate,ShareViewDelegate,UIAlertViewDelegate>
@@ -114,9 +115,9 @@
     
     [strUrl deleteCharactersInRange:NSMakeRange(0,5)];
     
-    _classTime.text = [NSString stringWithFormat:@"上课时间：%@",strUrl];
+    _classTime.text = [NSString stringWithFormat:@"时间：%@",strUrl];
     
-    _classPlace.text = [NSString stringWithFormat:@"上课地点：%@",_c.typeRoom];
+    _classPlace.text = [NSString stringWithFormat:@"地点：%@",_c.typeRoom];
     if ([UIUtils isBlankString:_c.teacherName]) {
         _classTeacherName.text = [NSString stringWithFormat:@"老  师："];
     }else{
@@ -498,31 +499,29 @@
         c.call = CALLING;
         c.teacherName = _c.teacherName;
         [self.navigationController pushViewController:c animated:YES];
-    }else{
-        UIAlertView * later = [[UIAlertView alloc] initWithTitle:nil message:@"未完待续" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil];
-        [later show];
-        return;
-        
     }
-    
-    if ([platform isEqualToString:InteractionType_Test]){
+    else if ([platform isEqualToString:InteractionType_Test]){
         NSLog(@"测试");
+        
         [_interaction hide];
         self.hidesBottomBarWhenPushed = YES;
-        TextViewController * textVC = [[TextViewController alloc] init];
+        AllTestViewController * textVC = [[AllTestViewController alloc] init];
+        textVC.classModel = _c;
         [self.navigationController pushViewController:textVC animated:YES];
         
     }
-    else if ([platform isEqualToString:InteractionType_Discuss]){
+    else{
+        UIAlertView * later = [[UIAlertView alloc] initWithTitle:nil message:@"未完待续" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil];
+        [later show];
+        return;
+    }
+    
+    if ([platform isEqualToString:InteractionType_Discuss]){
         DiscussViewController * d = [[DiscussViewController alloc] init];
         self.hidesBottomBarWhenPushed = YES;
         [self.navigationController pushViewController:d animated:YES];
         NSLog(@"讨论");
-    }
-    else if ([platform isEqualToString:InteractionType_Test]){
-        NSLog(@"测试");
-    }
-    else if ([platform isEqualToString:InteractionType_Add]){
+    }else if ([platform isEqualToString:InteractionType_Add]){
         NSLog(@"更多");
     }
 }
