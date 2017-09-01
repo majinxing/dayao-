@@ -91,25 +91,13 @@
                                                                       NSFontAttributeName:[UIFont systemFontOfSize:17],
                                                                       NSForegroundColorAttributeName:[UIColor blackColor]}];
     self.title = @"试题";
-    UIBarButtonItem *myButton = [[UIBarButtonItem alloc] initWithTitle:@"添加试题" style:UIBarButtonItemStylePlain target:self action:@selector(saveQuestion)];
+    UIBarButtonItem *myButton = [[UIBarButtonItem alloc] initWithTitle:@"添加试题" style:UIBarButtonItemStylePlain target:self action:@selector(back)];
     self.navigationItem.rightBarButtonItem = myButton;
     UIBarButtonItem * backbtn = [[UIBarButtonItem alloc] initWithTitle:nil style:UIBarButtonItemStylePlain target:self action:@selector(back)];
     self.navigationItem.leftBarButtonItem = backbtn;
 }
 -(void)back{
     [self.navigationController popViewControllerAnimated:YES];
-}
--(void)saveQuestion{
-    for (int i = 0; i<_selected.count; i++) {
-        if ([_selected[i] isEqualToString:@"选中"]) {
-            Questions * q = _questionsAry[i];
-            [self insertedIntoTextTable:_t.textId questionsID:q.questionsID qid:[NSString stringWithFormat:@"%d",[_t.totalNumber integerValue]+1]];
-            [_t changeTotalNumberWithTitle:q.score];
-            _t.totalNumber = [NSString stringWithFormat:@"%d",[_t.totalNumber integerValue]+1];
-            _t.totalScore = [NSString stringWithFormat:@"%d",[_t.totalScore integerValue]+[q.score integerValue]];
-        }
-    }
-    [self back];
 }
 -(void)insertedIntoTextTable:(NSString *)textID questionsID:(NSString *)questionsID qid:(NSString *)qid{
     

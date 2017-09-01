@@ -10,25 +10,20 @@
 
 
 @interface TextsTableViewCell()
-@property (strong, nonatomic) IBOutlet UILabel *titleLabel;
-@property (strong, nonatomic) IBOutlet UILabel *stateLabel;
-@property (strong, nonatomic) IBOutlet UILabel *indexPointLabel;
-@property (strong, nonatomic) IBOutlet UILabel *typeLabel;
+@property (strong, nonatomic) IBOutlet UILabel *textName;
+@property (strong, nonatomic) IBOutlet UILabel *score;
+@property (strong, nonatomic) IBOutlet UILabel *textState;
+
 
 @end
 
 @implementation TextsTableViewCell
-- (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier {
-    if (self=[super initWithStyle:style reuseIdentifier:reuseIdentifier]) {
-        
-    }return self;
-}
--(void)addContentView:(TextModel *)t{
-    _titleLabel.text = [NSString stringWithFormat:@"标    题：%@",t.title];
-    _stateLabel.text = t.textState;
-    _typeLabel.text = t.type;
-    _indexPointLabel.text = [NSString stringWithFormat:@"指标点：%@",t.indexPoint];
-    
+
+-(void)addContentView:(TextModel *)t withIndex:(int)n{
+    _textName.text = [NSString stringWithFormat:@"测试标题：%@",t.title];
+    _score.text = [NSString stringWithFormat:@"总分：%@",t.score];
+    _textState.text = [NSString stringWithFormat:@"%@",t.statusName];
+    _moreBtn.tag = n;
 }
 - (void)awakeFromNib {
     [super awakeFromNib];

@@ -18,4 +18,6 @@
 @property (nonatomic,weak) id<CreateTextTableViewCellDelegate>delegate;
 -(void)textLabelText:(NSString *)textStr;
 -(void)textViewText:(NSString *)text;
+//创建试卷时候控件填充文字
+-(void)addContentView:(NSString *)lableStr withTextViewStr:(NSString *)textStr;
 @end

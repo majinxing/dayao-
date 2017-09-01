@@ -8,11 +8,9 @@
 
 #import "TextModel.h"
 #import "UIUtils.h"
-#import "FMDBTool.h"
-#import "FMDatabase.h"
+
 
 @interface TextModel()
-@property (nonatomic,strong)FMDatabase * db;
 
 @end
 @implementation TextModel
@@ -23,7 +21,6 @@
         self.textId = [NSString stringWithFormat:@"%@",[UIUtils getCurrentDate]];
         self.totalScore = @"0";
         self.totalNumber = @"0";
-        _db = [FMDBTool createDBWithName:SQLITE_NAME];
     }
     return self;
 }
@@ -48,24 +45,14 @@
     }
     return YES;
 }
-/**
- * 更改数据库试卷表中的题目总数和总分属性
- **/
--(void)changeTotalNumberWithTitle:(NSString *)titleScore{
-    if ([_db open]) {
-        NSString * n = [NSString stringWithFormat:@"%d",[self.totalNumber integerValue]+1];
-        NSString * sql = [NSString stringWithFormat:@"update %@ set totalNumber = '%@' where textId = '%@' ;",TEXT_TABLE_NAME,n,self.textId];
-        BOOL rs = [FMDBTool updateWithDB:_db withSqlStr:sql];
-        NSString * score = [NSString stringWithFormat:@"%d",[self.totalScore integerValue]+[titleScore integerValue]];
-        NSString * sql1 = [NSString stringWithFormat:@"update %@ set totalScore = '%@' where textId = '%@' ;",TEXT_TABLE_NAME,score,self.textId];
-        BOOL r = [FMDBTool updateWithDB:_db withSqlStr:sql1];
-        if (r||rs) {
-            
-        }
-    }
-    [_db close];
-}
--(void)selectContactTable{
+
+-(void)setSelfInfoWithDict:(NSDictionary *)dict{
+    _textId = [dict objectForKey:@"id"];
+    _createName = [dict objectForKey:@"createName"];
+    _statusName = [dict objectForKey:@"statusName"];
+    _createUserId = [dict objectForKey:@"createUser"];
+    _score = [dict objectForKey:@"score"];
+    _title = [dict objectForKey:@"name"];
     
 }
 

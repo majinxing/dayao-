@@ -84,6 +84,7 @@
 		8B0DB13C1ED6CA4E0042DF0D /* ImportTextViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8B0DB13A1ED6CA4E0042DF0D /* ImportTextViewController.xib */; };
 		8B0F41301EF522CF001AF4DF /* MJXChatViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B0F412E1EF522CF001AF4DF /* MJXChatViewController.m */; };
 		8B0F41311EF522CF001AF4DF /* MJXChatViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8B0F412F1EF522CF001AF4DF /* MJXChatViewController.xib */; };
+		8B0F8E851F59460400993B0B /* QuestionBank.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B0F8E841F59460400993B0B /* QuestionBank.m */; };
 		8B1509821F4E7A6F000127AF /* TFFileUploadManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B1509811F4E7A6F000127AF /* TFFileUploadManager.m */; };
 		8B1509851F4EA823000127AF /* FileModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B1509841F4EA823000127AF /* FileModel.m */; };
 		8B1737091EC2BE2B00BE3C8F /* PersonalDataTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B1737071EC2BE2B00BE3C8F /* PersonalDataTableViewCell.m */; };
@@ -139,8 +140,9 @@
 		8B4D91151EBDAB1000A4BE34 /* SignListViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8B4D91131EBDAB1000A4BE34 /* SignListViewController.xib */; };
 		8B51AAA31F3EE71900AE034E /* MeetingChooseSeatViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B51AAA11F3EE71900AE034E /* MeetingChooseSeatViewController.m */; };
 		8B51AAA41F3EE71900AE034E /* MeetingChooseSeatViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8B51AAA21F3EE71900AE034E /* MeetingChooseSeatViewController.xib */; };
-		8B63EFEB1F58144200888425 /* MOBFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8B63EFE81F58144200888425 /* MOBFoundation.framework */; };
-		8B63EFEC1F58144200888425 /* SMS_SDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8B63EFEA1F58144200888425 /* SMS_SDK.framework */; };
+		8B63EFF41F58F3F500888425 /* Bugly.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8B63EFF31F58F3F500888425 /* Bugly.framework */; };
+		8B63EFFA1F58FBDB00888425 /* MOBFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8B63EFF71F58FBDB00888425 /* MOBFoundation.framework */; };
+		8B63EFFB1F58FBDB00888425 /* SMS_SDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8B63EFF91F58FBDB00888425 /* SMS_SDK.framework */; };
 		8B64EB561F1A162F00BF7D0F /* CreateTemporaryCourseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B64EB541F1A162F00BF7D0F /* CreateTemporaryCourseViewController.m */; };
 		8B64EB571F1A162F00BF7D0F /* CreateTemporaryCourseViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8B64EB551F1A162F00BF7D0F /* CreateTemporaryCourseViewController.xib */; };
 		8B64EB5B1F1A2BA900BF7D0F /* SelectClassViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B64EB591F1A2BA900BF7D0F /* SelectClassViewController.m */; };
@@ -647,6 +649,8 @@
 		8B0F412D1EF522CF001AF4DF /* MJXChatViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MJXChatViewController.h; sourceTree = "<group>"; };
 		8B0F412E1EF522CF001AF4DF /* MJXChatViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MJXChatViewController.m; sourceTree = "<group>"; };
 		8B0F412F1EF522CF001AF4DF /* MJXChatViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MJXChatViewController.xib; sourceTree = "<group>"; };
+		8B0F8E831F59460400993B0B /* QuestionBank.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QuestionBank.h; sourceTree = "<group>"; };
+		8B0F8E841F59460400993B0B /* QuestionBank.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QuestionBank.m; sourceTree = "<group>"; };
 		8B1509801F4E7A6F000127AF /* TFFileUploadManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TFFileUploadManager.h; sourceTree = "<group>"; };
 		8B1509811F4E7A6F000127AF /* TFFileUploadManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TFFileUploadManager.m; sourceTree = "<group>"; };
 		8B1509831F4EA823000127AF /* FileModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FileModel.h; sourceTree = "<group>"; };
@@ -724,8 +728,9 @@
 		8B51AAA01F3EE71900AE034E /* MeetingChooseSeatViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MeetingChooseSeatViewController.h; path = Model/MeetingChooseSeatViewController.h; sourceTree = "<group>"; };
 		8B51AAA11F3EE71900AE034E /* MeetingChooseSeatViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MeetingChooseSeatViewController.m; path = Model/MeetingChooseSeatViewController.m; sourceTree = "<group>"; };
 		8B51AAA21F3EE71900AE034E /* MeetingChooseSeatViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = MeetingChooseSeatViewController.xib; path = Model/MeetingChooseSeatViewController.xib; sourceTree = "<group>"; };
-		8B63EFE81F58144200888425 /* MOBFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = MOBFoundation.framework; sourceTree = "<group>"; };
-		8B63EFEA1F58144200888425 /* SMS_SDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = SMS_SDK.framework; sourceTree = "<group>"; };
+		8B63EFF31F58F3F500888425 /* Bugly.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Bugly.framework; sourceTree = "<group>"; };
+		8B63EFF71F58FBDB00888425 /* MOBFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = MOBFoundation.framework; sourceTree = "<group>"; };
+		8B63EFF91F58FBDB00888425 /* SMS_SDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = SMS_SDK.framework; sourceTree = "<group>"; };
 		8B64EB531F1A162F00BF7D0F /* CreateTemporaryCourseViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CreateTemporaryCourseViewController.h; sourceTree = "<group>"; };
 		8B64EB541F1A162F00BF7D0F /* CreateTemporaryCourseViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CreateTemporaryCourseViewController.m; sourceTree = "<group>"; };
 		8B64EB551F1A162F00BF7D0F /* CreateTemporaryCourseViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CreateTemporaryCourseViewController.xib; sourceTree = "<group>"; };
@@ -1009,6 +1014,7 @@
 				8B32FEA81F4C03C200D9BF23 /* CoreFoundation.framework in Frameworks */,
 				8BF867BA1ECC272F00B7EED4 /* libstdc++.6.0.9.tbd in Frameworks */,
 				8BF867B81ECC271A00B7EED4 /* libz.tbd in Frameworks */,
+				8B63EFF41F58F3F500888425 /* Bugly.framework in Frameworks */,
 				8BF867B61ECC270C00B7EED4 /* libc++.tbd in Frameworks */,
 				8B17372D1EC55ACC00BE3C8F /* ImageIO.framework in Frameworks */,
 				8B1737251EC55A7400BE3C8F /* AVFoundation.framework in Frameworks */,
@@ -1023,20 +1029,20 @@
 				8B17373B1EC55B7A00BE3C8F /* AddressBook.framework in Frameworks */,
 				8B32FEA51F4C038B00D9BF23 /* jcore-ios-1.1.5.a in Frameworks */,
 				8B1737371EC55B2300BE3C8F /* Security.framework in Frameworks */,
+				8B63EFFB1F58FBDB00888425 /* SMS_SDK.framework in Frameworks */,
 				8B1737351EC55B0600BE3C8F /* Social.framework in Frameworks */,
 				8B1737331EC55AFA00BE3C8F /* SystemConfiguration.framework in Frameworks */,
 				8B1737311EC55AEA00BE3C8F /* CoreLocation.framework in Frameworks */,
 				8B17372F1EC55ADD00BE3C8F /* MapKit.framework in Frameworks */,
 				8B17372B1EC55AA600BE3C8F /* CoreText.framework in Frameworks */,
 				8B1737291EC55A8A00BE3C8F /* QuartzCore.framework in Frameworks */,
+				8B63EFFA1F58FBDB00888425 /* MOBFoundation.framework in Frameworks */,
 				8B1737271EC55A7F00BE3C8F /* CoreData.framework in Frameworks */,
 				8B1737231EC55A6700BE3C8F /* Accounts.framework in Frameworks */,
 				8B17371F1EC55A4E00BE3C8F /* MessageUI.framework in Frameworks */,
 				8B17371D1EC55A3E00BE3C8F /* CoreMotion.framework in Frameworks */,
 				8B17371B1EC55A3200BE3C8F /* CoreTelephony.framework in Frameworks */,
 				8BA224B31EAED26200627A1B /* UIKit.framework in Frameworks */,
-				8B63EFEC1F58144200888425 /* SMS_SDK.framework in Frameworks */,
-				8B63EFEB1F58144200888425 /* MOBFoundation.framework in Frameworks */,
 				8BA224B11EAED25400627A1B /* Foundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1332,27 +1338,27 @@
 			path = Lib;
 			sourceTree = "<group>";
 		};
-		8B63EFE61F58144200888425 /* SDK */ = {
+		8B63EFF51F58FBDB00888425 /* SDK */ = {
 			isa = PBXGroup;
 			children = (
-				8B63EFE71F58144200888425 /* Required */,
-				8B63EFE91F58144200888425 /* SMSSDK */,
+				8B63EFF61F58FBDB00888425 /* Required */,
+				8B63EFF81F58FBDB00888425 /* SMSSDK */,
 			);
 			path = SDK;
 			sourceTree = "<group>";
 		};
-		8B63EFE71F58144200888425 /* Required */ = {
+		8B63EFF61F58FBDB00888425 /* Required */ = {
 			isa = PBXGroup;
 			children = (
-				8B63EFE81F58144200888425 /* MOBFoundation.framework */,
+				8B63EFF71F58FBDB00888425 /* MOBFoundation.framework */,
 			);
 			path = Required;
 			sourceTree = "<group>";
 		};
-		8B63EFE91F58144200888425 /* SMSSDK */ = {
+		8B63EFF81F58FBDB00888425 /* SMSSDK */ = {
 			isa = PBXGroup;
 			children = (
-				8B63EFEA1F58144200888425 /* SMS_SDK.framework */,
+				8B63EFF91F58FBDB00888425 /* SMS_SDK.framework */,
 			);
 			path = SMSSDK;
 			sourceTree = "<group>";
@@ -1626,6 +1632,8 @@
 				8B045BA51F3462640021699B /* SeatIngModel.m */,
 				8B1509831F4EA823000127AF /* FileModel.h */,
 				8B1509841F4EA823000127AF /* FileModel.m */,
+				8B0F8E831F59460400993B0B /* QuestionBank.h */,
+				8B0F8E841F59460400993B0B /* QuestionBank.m */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -1633,6 +1641,7 @@
 		8BA224961EADFF2700627A1B /* FrameWork */ = {
 			isa = PBXGroup;
 			children = (
+				8B63EFF31F58F3F500888425 /* Bugly.framework */,
 				8B081DEC1F06524000493B81 /* PinYin */,
 				8BCE7CBE1F04F07600FE261B /* AFNetworking */,
 				8BE9139E1EEFB80000000282 /* MBProgressHUD */,
@@ -1659,7 +1668,7 @@
 		8BA224AF1EAED25400627A1B /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				8B63EFE61F58144200888425 /* SDK */,
+				8B63EFF51F58FBDB00888425 /* SDK */,
 				8BF3ADAC1F569B26002BD6DA /* libstdc++.tbd */,
 				8B32FEAB1F4C045900D9BF23 /* libresolv.tbd */,
 				8B32FEA91F4C043000D9BF23 /* UserNotifications.framework */,
@@ -2464,6 +2473,7 @@
 				8BF864BC1ECAD97300B7EED4 /* README.md in Sources */,
 				8B081DE71F063AE900493B81 /* SelectSchoolViewController.m in Sources */,
 				8B045B9C1F3458E40021699B /* ZFRowIndexView.m in Sources */,
+				8B0F8E851F59460400993B0B /* QuestionBank.m in Sources */,
 				8B7D5D8C1EB96C430068058E /* CollectionFlowLayout.m in Sources */,
 				8BF82D721EDEC50E00D33473 /* DiscussViewController.m in Sources */,
 				8BF864BE1ECAD97300B7EED4 /* SDImageCache.m in Sources */,
@@ -2720,16 +2730,13 @@
 					"$(PROJECT_DIR)/HyphenateSDK",
 					"$(PROJECT_DIR)/HyphenateFullSDK",
 					"$(PROJECT_DIR)/WisdomHall/lupai",
-					"$(PROJECT_DIR)/SMSSDK",
-					"$(PROJECT_DIR)/Required",
+					"$(PROJECT_DIR)",
+					"$(PROJECT_DIR)/WisdomHall",
 					"$(PROJECT_DIR)/SDK/Required",
 					"$(PROJECT_DIR)/SDK/SMSSDK",
 				);
 				GCC_PREFIX_HEADER = "";
-				HEADER_SEARCH_PATHS = (
-					"$(PROJECT_DIR)/Required",
-					"$(PROJECT_DIR)/SMSSDK",
-				);
+				HEADER_SEARCH_PATHS = "$(PROJECT_DIR)/WisdomHall/Bugly.framework";
 				INFOPLIST_FILE = WisdomHall/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -2740,8 +2747,6 @@
 					"$(PROJECT_DIR)/WisdomHall/HyphenateFullSDK/HyphenateFullSDK/lib",
 					"$(PROJECT_DIR)/WisdomHall/lupai/wechatSDK",
 					"$(SRCROOT)/Lib",
-					"$(PROJECT_DIR)/SMSSDK",
-					"$(PROJECT_DIR)/Required",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.dayaokeji.rhythm;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -2921,16 +2926,13 @@
 					"$(PROJECT_DIR)/HyphenateSDK",
 					"$(PROJECT_DIR)/HyphenateFullSDK",
 					"$(PROJECT_DIR)/WisdomHall/lupai",
-					"$(PROJECT_DIR)/SMSSDK",
-					"$(PROJECT_DIR)/Required",
+					"$(PROJECT_DIR)",
+					"$(PROJECT_DIR)/WisdomHall",
 					"$(PROJECT_DIR)/SDK/Required",
 					"$(PROJECT_DIR)/SDK/SMSSDK",
 				);
 				GCC_PREFIX_HEADER = "";
-				HEADER_SEARCH_PATHS = (
-					"$(PROJECT_DIR)/Required",
-					"$(PROJECT_DIR)/SMSSDK",
-				);
+				HEADER_SEARCH_PATHS = "$(PROJECT_DIR)/WisdomHall/Bugly.framework";
 				INFOPLIST_FILE = WisdomHall/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -2941,8 +2943,6 @@
 					"$(PROJECT_DIR)/WisdomHall/HyphenateFullSDK/HyphenateFullSDK/lib",
 					"$(PROJECT_DIR)/WisdomHall/lupai/wechatSDK",
 					"$(SRCROOT)/Lib",
-					"$(PROJECT_DIR)/SMSSDK",
-					"$(PROJECT_DIR)/Required",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.dayaokeji.rhythm;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -2970,16 +2970,13 @@
 					"$(PROJECT_DIR)/HyphenateSDK",
 					"$(PROJECT_DIR)/HyphenateFullSDK",
 					"$(PROJECT_DIR)/WisdomHall/lupai",
-					"$(PROJECT_DIR)/SMSSDK",
-					"$(PROJECT_DIR)/Required",
+					"$(PROJECT_DIR)",
+					"$(PROJECT_DIR)/WisdomHall",
 					"$(PROJECT_DIR)/SDK/Required",
 					"$(PROJECT_DIR)/SDK/SMSSDK",
 				);
 				GCC_PREFIX_HEADER = "";
-				HEADER_SEARCH_PATHS = (
-					"$(PROJECT_DIR)/Required",
-					"$(PROJECT_DIR)/SMSSDK",
-				);
+				HEADER_SEARCH_PATHS = "$(PROJECT_DIR)/WisdomHall/Bugly.framework";
 				INFOPLIST_FILE = WisdomHall/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -2990,8 +2987,6 @@
 					"$(PROJECT_DIR)/WisdomHall/HyphenateFullSDK/HyphenateFullSDK/lib",
 					"$(PROJECT_DIR)/WisdomHall/lupai/wechatSDK",
 					"$(SRCROOT)/Lib",
-					"$(PROJECT_DIR)/SMSSDK",
-					"$(PROJECT_DIR)/Required",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.dayaokeji.rhythm;
 				PRODUCT_NAME = "$(TARGET_NAME)";

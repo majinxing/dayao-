@@ -9,5 +9,8 @@
 #import <UIKit/UIKit.h>
 #import "TextModel.h"
 @interface TextsTableViewCell : UITableViewCell
--(void)addContentView:(TextModel *)t;
+@property (strong, nonatomic) IBOutlet UIImageView *moreImage;
+@property (strong, nonatomic) IBOutlet UIButton *moreBtn;
+
+-(void)addContentView:(TextModel *)t withIndex:(int)n;
 @end

@@ -10,7 +10,8 @@
 #import "DefineThePasswordViewController.h"
 #import "DYHeader.h"
 #import "UIUtils.h"
-#import <SMS_SDK/SMSSDK.h>
+
+#import<SMS_SDK/SMSSDK.h>
 
 @interface RegisterViewController ()<UITextFieldDelegate>
 @property (strong, nonatomic) IBOutlet UIButton *getVerificationCodeBtn;

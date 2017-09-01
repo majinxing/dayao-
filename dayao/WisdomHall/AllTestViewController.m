@@ -15,11 +15,12 @@
 #import "TextModel.h"
 #import "TextListViewController.h"
 #import "CreateTestViewController.h"
+#import "MJRefresh.h"
 
 @interface AllTestViewController ()<UITableViewDelegate,UITableViewDataSource>
-@property (nonatomic,strong) UITableView * tableView;
+@property (nonatomic,strong)UITableView * tableView;
 @property (nonatomic,strong)FMDatabase *db;
-@property (nonatomic,strong)NSMutableArray * textArray;
+@property (nonatomic,strong)NSMutableArray * dataAry;//数据源
 @property (nonatomic,assign)int temp;//标志位防止数据重复
 @end
 
@@ -27,12 +28,15 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    _textArray = [NSMutableArray arrayWithCapacity:4];
+    
+    self.view.backgroundColor = [UIColor whiteColor];
+    
+    _userModel = [[Appsetting sharedInstance] getUsetInfo];
+    
+    _dataAry = [NSMutableArray arrayWithCapacity:1];
     
     [self getData];
-    
-    [self querTextTableData];
-    
+        
     [self addTableView];
     
     [self setNavigationTitle];
@@ -48,8 +52,12 @@
                                                                       NSFontAttributeName:[UIFont systemFontOfSize:17],
                                                                       NSForegroundColorAttributeName:[UIColor blackColor]}];
     self.title = @"测试";
-    UIBarButtonItem *myButton = [[UIBarButtonItem alloc] initWithTitle:@"创建测试" style:UIBarButtonItemStylePlain target:self action:@selector(createText)];
-    self.navigationItem.rightBarButtonItem = myButton;
+    _userModel = [[Appsetting sharedInstance] getUsetInfo];
+    if ([[NSString stringWithFormat:@"%@",_classModel.teacherId] isEqualToString:[NSString stringWithFormat:@"%@",_userModel.peopleId]]) {
+        UIBarButtonItem *myButton = [[UIBarButtonItem alloc] initWithTitle:@"创建测试" style:UIBarButtonItemStylePlain target:self action:@selector(createText)];
+        self.navigationItem.rightBarButtonItem = myButton;
+    }
+    
 }
 -(void)createText{
     CreateTestViewController * c = [[CreateTestViewController alloc] init];
@@ -63,92 +71,55 @@
     _tableView.dataSource = self;
     _tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     _tableView.backgroundColor = [UIColor clearColor];
+    self.automaticallyAdjustsScrollViewInsets = NO;
     [self.view addSubview:_tableView];
+    __weak AllTestViewController * weakSelf = self;
+    [self.tableView addHeaderWithCallback:^{
+        [weakSelf getData];
+    }];
+    
+    [self.tableView addFooterWithCallback:^{
+        [weakSelf getData];
+    }];
 }
+
 -(void)getData{
+    
     NSDictionary * dict = [[NSDictionary alloc] initWithObjectsAndKeys:_classModel.sclassId,@"relId",@"1",@"relType",nil];
     
     [[NetworkRequest sharedInstance] GET:QueryTest dict:dict succeed:^(id data) {
         NSLog(@"%@",data);
+        [_dataAry removeAllObjects];
+        NSArray * ary = [data objectForKey:@"body"];
+        for (int i = 0; i<ary.count; i++) {
+            TextModel * text = [[TextModel alloc] init];
+            [text setSelfInfoWithDict:ary[i]];
+            [_dataAry addObject:text];
+        }
+        [_tableView reloadData];
     } failure:^(NSError *error) {
         NSLog(@"%@",error);
+        [UIUtils showInfoMessage:@"请求失败"];
     }];
+    [_tableView headerEndRefreshing];
+    [_tableView footerEndRefreshing];
     
 }
 -(void)viewWillAppear:(BOOL)animated{
-    [self querTextTableData];
-    [_tableView reloadData];
 }
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
-#pragma mark FMDB
-/**
- * 创建数据库
- **/
--(void)createDB{
-    if (!_db) {
-        _db = [FMDBTool createDBWithName:SQLITE_NAME];
-    }
-}
 
-//创建表
--(void)creatTextTable:(NSString *)tableName{
-    if ([_db open]) {
-        BOOL result = [FMDBTool createTableWithDB:_db tableName:tableName
-                                       parameters:@{
-                                                    @"textId" : @"text",
-                                                    @"title" : @"text",
-                                                    @"type" : @"text",
-                                                    @"indexPoint" : @"text",
-                                                    @"timeLimit" : @"text",
-                                                    @"textState" : @"text",
-                                                    @"redo" :@"text",
-                                                    @"totalScore":@"text",
-                                                    @"totalNumber" : @"text",
-                                                    }];
-        if (result)
-        {
-            NSLog(@"建表成功");
-        }
-        else
-        {
-            NSLog(@"建表失败");
-        }
-    }
-    [_db close];
-}
--(void)querTextTableData{
-    [_textArray removeAllObjects];
-    [self createDB];
-    [self creatTextTable:TEXT_TABLE_NAME];
-    if ([_db open]) {
-        NSString * sql = [NSString stringWithFormat:@"select * from %@",TEXT_TABLE_NAME];
-        FMResultSet * rs = [FMDBTool queryWithDB:_db withSqlStr:sql];
-        while (rs.next) {
-            TextModel * t =[[TextModel alloc] init];
-            t.title = [rs stringForColumn:@"title"];
-            t.indexPoint = [rs stringForColumn:@"indexPoint"];
-            t.textState = [rs stringForColumn:@"textState"];
-            t.type = [rs stringForColumn:@"type"];
-            t.textId = [rs stringForColumn:@"textId"];
-            t.timeLimit = [rs stringForColumn:@"timeLimit"];
-            t.totalScore = [rs stringForColumn:@"totalScore"];
-            t.totalNumber = [rs stringForColumn:@"totalNumber"];
-            t.redo = [rs stringForColumn:@"redo"];
-            [_textArray addObject:t];
-        }
-    }
-    [_db close];
-}
+
 #pragma mark UITableViewdelegate
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
     return 1;
 }
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
-    if (_textArray.count>0) {
-        return _textArray.count;
+    if (_dataAry.count>0) {
+        return _dataAry.count;
     }
     return 0;
 }
@@ -159,20 +130,24 @@
     TextsTableViewCell * cell = [tableView dequeueReusableCellWithIdentifier:@"TextsTableViewCell"];
     if (!cell)
     {
-        [tableView registerNib:[UINib nibWithNibName:@"TextsTableViewCell" bundle:nil] forCellReuseIdentifier:@"TextsTableViewCell"];
-        cell = [tableView dequeueReusableCellWithIdentifier:@"TextsTableViewCell"];
+        cell = [[[NSBundle mainBundle] loadNibNamed:@"TextsTableViewCell" owner:nil options:nil] objectAtIndex:0];
     }
-    [cell addContentView:_textArray[indexPath.row]];
+    TextModel * t = _dataAry[indexPath.row];
+    [cell addContentView:t withIndex:(int)indexPath.row+1];
+    if (![[NSString stringWithFormat:@"%@",_classModel.teacherId] isEqualToString:[NSString stringWithFormat:@"%@",_userModel.peopleId]]) {
+        cell.moreImage.image = [UIImage imageNamed:@""];
+        [cell.moreBtn setEnabled:NO];
+    }
     return cell;
 
 }
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     
-    TextListViewController * listVC = [[TextListViewController alloc] init];
-    listVC.t = _textArray[indexPath.row];
-    self.hidesBottomBarWhenPushed = YES;
-    [self.navigationController pushViewController:listVC animated:YES];
+//    TextListViewController * listVC = [[TextListViewController alloc] init];
+//    listVC.t = _textArray[indexPath.row];
+//    self.hidesBottomBarWhenPushed = YES;
+//    [self.navigationController pushViewController:listVC animated:YES];
     
 }
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{

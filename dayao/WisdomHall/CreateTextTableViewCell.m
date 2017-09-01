@@ -31,6 +31,10 @@
     [super awakeFromNib];
     // Initialization code
 }
+-(void)addContentView:(NSString *)lableStr withTextViewStr:(NSString *)textStr{
+    _labelText.text = lableStr;
+    _textView.text = textStr;
+}
 /**
  *  编辑label文字内容
  **/

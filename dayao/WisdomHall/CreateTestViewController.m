@@ -9,21 +9,25 @@
 #import "CreateTestViewController.h"
 #import "TextListViewController.h"
 #import "TextModel.h"
-#import "FMDBTool.h"
-#import "FMDatabase.h"
 #import "DYHeader.h"
-@interface CreateTestViewController ()<UITableViewDelegate,UITableViewDataSource>
-@property (nonatomic,strong)UITableView * tableView;
+#import "CreateTextTableViewCell.h"
+#import "QuestionBank.h"
+
+@interface CreateTestViewController ()<CreateTextTableViewCellDelegate>
+@property(nonatomic,strong)TextModel * textModel;
+@property(nonatomic,strong)QuestionBank * questionModel;
 @end
 
 @implementation CreateTestViewController
 
 - (void)viewDidLoad {
+    self.view.backgroundColor = [UIColor whiteColor];
+    
+    
     [super viewDidLoad];
     
     [self setNavigationTitle];
     
-    [self addTableView];
     // Do any additional setup after loading the view from its nib.
 }
 
@@ -37,41 +41,55 @@
                                                                       NSFontAttributeName:[UIFont systemFontOfSize:17],
                                                                       NSForegroundColorAttributeName:[UIColor blackColor]}];
     self.title = @"创建测试";
-//    UIBarButtonItem *myButton = [[UIBarButtonItem alloc] initWithTitle:@"创建测试" style:UIBarButtonItemStylePlain target:self action:@selector(createText)];
-//    self.navigationItem.rightBarButtonItem = myButton;
+    UIBarButtonItem *myButton = [[UIBarButtonItem alloc] initWithTitle:@"下一步" style:UIBarButtonItemStylePlain target:self action:@selector(createText)];
+    self.navigationItem.rightBarButtonItem = myButton;
 }
--(void)addTableView{
-    _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 64, APPLICATION_WIDTH, APPLICATION_HEIGHT-64) style:UITableViewStylePlain];
-    _tableView.delegate = self;
-    _tableView.dataSource = self;
-    self.automaticallyAdjustsScrollViewInsets = NO;
-    [self.view addSubview:_tableView];
+-(void)createText{
+    if ([UIUtils isBlankString:_titleTextFile.text]) {
+        [UIUtils showInfoMessage:@"请填写试卷名字"];
+    }else{
+        
+        NSDictionary * dict = [[NSDictionary alloc] initWithObjectsAndKeys:_titleTextFile.text,@"name",@"2",@"status", nil];
+        [[NetworkRequest sharedInstance] POST:CreateLib dict:dict succeed:^(id data) {
+            NSLog(@"%@",data);
+            [self queryLibList];
+        } failure:^(NSError *error) {
+            NSLog(@"%@",error);
+        }];
+    }
+}
+-(void)queryLibList{
+    
+    NSDictionary * dict = [[NSDictionary alloc] initWithObjectsAndKeys:@"1",@"start",@"1000",@"length",nil];
+    
+    [[NetworkRequest sharedInstance] GET:QueryLibList dict:dict succeed:^(id data) {
+        NSLog(@"%@",data);
+        NSString * str = [NSString stringWithFormat:@"%@",[[data objectForKey:@"header"] objectForKey:@"code"]];
+        if ([str isEqualToString:@"0000"]) {
+            NSArray * ary = [data objectForKey:@"body"];
+            _questionModel = [self seleCreateLib:ary];
+        }
+    } failure:^(NSError *error) {
+        [UIUtils showInfoMessage:@"创建失败"];
+    }];
+}
+-(QuestionBank *)seleCreateLib:(NSArray *)ary{
+    QuestionBank * question;
+    for (int i = 0; i<ary.count; i++) {
+        QuestionBank * q = [[QuestionBank alloc] init];
+        [q setSelfInfoWithDict:ary[i]];
+        if ([_titleTextFile.text isEqualToString:q.libName]) {
+            question = q;
+            break;
+        }
+    }
+    return question;
 }
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
-#pragma mark UITableViewdelegate
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
-    return 1;
-}
--(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
-    return 10;
-}
 
--(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
-    UITableViewCell * cell = [[UITableViewCell alloc] init];
-    return cell;
-}
--(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-    [tableView deselectRowAtIndexPath:indexPath animated:YES];
-}
--(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
-    return 60;
-}
--(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
-    return 10;
-}
 /*
 #pragma mark - Navigation
 

@@ -246,26 +246,7 @@
 #pragma mark ----------------------CreateTextTableViewCellDelegate
 -(void)createTopicPressedDelegate{
     [self.view endEditing:YES];
-    if (![_q whetherIsEmpty]) {
-        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"不能为空" message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: nil];
-        [alertView show];
-    }else{
-        [_q insertedIntoTextTable];
-        
-        [self insertedIntoTextTable:_t.textId questionsID:_q.questionsID qid:[NSString stringWithFormat:@"%d",[_t.totalNumber integerValue]+1]];
-        
-        [_t changeTotalNumberWithTitle:_q.score];
-        
-        _t.totalNumber = [NSString stringWithFormat:@"%d",[_t.totalNumber integerValue]+1];
-        _t.totalScore = [NSString stringWithFormat:@"%d",[_t.totalScore integerValue]+[_q.score integerValue]];
-        
-        //重新加载页面
-        [self initBtnState];
-        _q = nil;
-        _q = [[Questions alloc] init];
-        [_tableView reloadData];
     }
-}
 -(void)returnTextViewTextWithLabelDelegate:(NSString *)labelText withTextViewText:(NSString *)textViewText{
     [_q setAttributeFromStr:labelText withTextView:textViewText];
 }

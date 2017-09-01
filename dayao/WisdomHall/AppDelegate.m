@@ -17,6 +17,8 @@
 #import "NoticeViewController.h"
 #import "FMDBTool.h"
 
+#import <Bugly/Bugly.h>
+
 // 引入JPush功能所需头文件
 #import "JPUSHService.h"
 // iOS10注册APNs所需头文件
@@ -45,6 +47,7 @@
 }
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     
+    [Bugly startWithAppId:@"64f1536e43"];//用于崩溃统计
     
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     self.window.backgroundColor = [UIColor whiteColor];

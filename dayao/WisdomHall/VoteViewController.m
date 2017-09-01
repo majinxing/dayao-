@@ -107,6 +107,7 @@
     _tableview.rowHeight = UITableViewAutomaticDimension;
     _tableview.separatorStyle = UITableViewCellSeparatorStyleNone;
     [self.view addSubview:_tableview];
+    
     __weak VoteViewController * weakSelf = self;
     [self.tableview addHeaderWithCallback:^{
         [weakSelf getData];
