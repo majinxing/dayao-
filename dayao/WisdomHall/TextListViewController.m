@@ -43,14 +43,6 @@
     
     _teacherOrStudent = YES;
 
-    if (!_teacherOrStudent) {
-        [self timeLimit];
-    }
-
-    [self addQuestions];
-
-    _tempSecond = 0;
-
     [self setNavigationTitle];
 
     [self addTableView];
@@ -60,13 +52,7 @@
     // Do any additional setup after loading the view from its nib.
 }
 -(void)viewWillAppear:(BOOL)animated{
-    if (_tempSecond == 0) {
-        _tempSecond = 2;
-    }else if (_tempSecond == 2){
-        [self addQuestions];
-        _qNumLabel.text = [NSString stringWithFormat:@"%d/%lu",_temp+1,(unsigned long)_questionsAry.count];
-        [_tableView reloadData];
-    }
+  
 }
 -(void)viewDidAppear:(BOOL)animated{
 
@@ -76,23 +62,7 @@
 
 }
 -(void)addQuestions{
-    _db = [FMDBTool createDBWithName:SQLITE_NAME];
-    
-    _questionsAry = [NSMutableArray arrayWithCapacity:2];
-    
-    _questionsAry = [contactTool returnQuestion:_db withTextId:_t.textId];
-    
-    if (_questionsAry.count>0) {
-        _q = _questionsAry[0];
-        _temp = 0;
-    }
-    _answerAry = [NSMutableArray arrayWithCapacity:4];
-    
-    for (int i=0; i<_questionsAry.count; i++) {
-        AnswerModel * a = [[AnswerModel alloc] init];
-        [_answerAry addObject:a];
-    }
-    
+ 
 }
 -(void)addTableView{
     _op =[NSArray arrayWithObjects:@"A",@"B",@"C",@"D", nil];
@@ -146,7 +116,6 @@
     [alertView show];
     alertView.tag = 2;
     return;
-    
 }
 -(void)back{
     //    if (!_teacherOrStudent) {
@@ -215,57 +184,12 @@
     _qNumLabel.text = [NSString stringWithFormat:@"%d/%lu",_temp+1,(unsigned long)_questionsAry.count];
     
 }
--(void)timeLimit{
-    __block int timeout=(int)[_t.timeLimit integerValue]*60; //倒计时时间
-    dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
-    dispatch_source_t _timer = dispatch_source_create(DISPATCH_SOURCE_TYPE_TIMER, 0, 0,queue);
-    dispatch_source_set_timer(_timer,dispatch_walltime(NULL, 0),1.0*NSEC_PER_SEC, 0); //每秒执行
-    dispatch_source_set_event_handler(_timer, ^{
-        if(timeout<=0){ //倒计时结束，关闭
-            dispatch_source_cancel(_timer);
-            //            dispatch_release(_timer);
-            dispatch_async(dispatch_get_main_queue(), ^{
-                //设置界面的按钮显示 根据自己需求设置
-            });
-        }else{
-            int minutes = timeout / 60;
-            int seconds = timeout % 60;
-            NSString *strTime = [NSString stringWithFormat:@"%d分%.2d秒",minutes, seconds];
-            dispatch_async(dispatch_get_main_queue(), ^{
-                //设置界面的按钮显示 根据自己需求设置
-                _time.text = strTime;
-            });
-            timeout--;
-        }
-    });
-    dispatch_resume(_timer);
-}
+
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
-#pragma mark UIAlertViewDelegate
--(void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
-    if (alertView.tag == 1) {
-        if (buttonIndex == 1) {
-            [self back];
-        }
-    }else if (alertView.tag == 2){
-        if (buttonIndex == 1) {
-            TestQuestionsViewController * tqVC = [[TestQuestionsViewController alloc] init];
-            tqVC.t = self.t;
-            self.hidesBottomBarWhenPushed = YES;
-            [self.navigationController pushViewController:tqVC animated:YES];
-        }else if (buttonIndex == 0){
-            ImportTextViewController * import = [[ImportTextViewController alloc] init];
-            self.hidesBottomBarWhenPushed = YES;
-            import.t = _t;
-            [self.navigationController pushViewController:import animated:YES];
-        }
-        
-    }
-    
-}
+
 #pragma mark QuestionsTableViewCellDelegate
 //答案收集
 -(void)selectBtnPressedDelegate:(UIButton *)btn{
@@ -287,17 +211,7 @@
 }
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
-    QuestionsTableViewCell * cell = [QuestionsTableViewCell tempTableViewCellWith:tableView indexPath:indexPath];
-    cell.delegate = self;
-    NSArray * qusetions = [NSArray arrayWithObjects:_q.optionsA,_q.optionsB,_q.optionsC,_q.optionsD, nil];
-    AnswerModel * a = _answerAry[_temp];
-    
-    if (indexPath.row == 0) {
-        [cell settitleTextViewText:_q.title withAllQuestionNumber:[NSString stringWithFormat:@"%ld",(unsigned long)_questionsAry.count] withquestionNumber:[NSString stringWithFormat:@"%d",_temp+1]];
-    }else{
-        [cell setOptionsText:_op[indexPath.row-1] WithOptionsText:qusetions[indexPath.row-1] WithSelectState:a.answerAry[indexPath.row-1] indexRow:(int)indexPath.row];
-    }
-    
+    QuestionsTableViewCell * cell ;
     return cell;
 }
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{

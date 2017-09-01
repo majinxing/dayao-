@@ -27,6 +27,9 @@
 }
 - (void)awakeFromNib {
     [super awakeFromNib];
+    _textState.layer.masksToBounds = YES;
+    _textState.layer.cornerRadius = 10;
+    
     // Initialization code
 }
 

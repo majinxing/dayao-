@@ -15,27 +15,7 @@
         
     }return self;
 }
-+ (instancetype)tempTableViewCellWith:(UITableView *)tableView indexPath:(NSIndexPath *)indexPath{
-    NSString *identifier = @"QuestionsTableViewCellSecond";//对应xib中设置的identifier
-    NSInteger index = 1; //xib中第几个Cell
-    switch (indexPath.row) {
-        case 0:
-            identifier = @"QuestionsTableViewCellFirst";
-            index = 0;
-            break;
-        case 1:
-            identifier = @"QuestionsTableViewCellSecond";
-            index = 1;
-            break;
-        default:
-            break;
-    }
-    QuestionsTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:identifier];
-    if (!cell) {
-        cell = [[[NSBundle mainBundle] loadNibNamed:@"QuestionsTableViewCell" owner:nil options:nil] objectAtIndex:index];
-    }
-    return cell;
-}
+
 -(void)settitleTextViewText:(NSString *)text withAllQuestionNumber:(NSString *)allNum withquestionNumber:(NSString *)qNum{
     self.titleTextView.text = [NSString stringWithFormat:@"题目:  %@",text];
 }
