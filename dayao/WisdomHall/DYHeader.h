@@ -160,3 +160,5 @@
 
 #define QueryTextList           @"course/exam/queryExamQuestion"    //查询试题列表
 
+#define QueryQuestionList       @"course/exam/queryExamQuestion"    //查询试卷题目
+

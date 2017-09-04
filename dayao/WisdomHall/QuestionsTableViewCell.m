@@ -7,7 +7,12 @@
 //
 
 #import "QuestionsTableViewCell.h"
+#import "DYHeader.h"
 
+@interface QuestionsTableViewCell()<UITextViewDelegate>
+@property (strong, nonatomic) IBOutlet UITextView *answerText;
+
+@end
 @implementation QuestionsTableViewCell
 
 - (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier {
@@ -16,19 +21,16 @@
     }return self;
 }
 
--(void)settitleTextViewText:(NSString *)text withAllQuestionNumber:(NSString *)allNum withquestionNumber:(NSString *)qNum{
-    self.titleTextView.text = [NSString stringWithFormat:@"题目:  %@",text];
+-(void)settitleTextViewText:(NSString *)text withAllQuestionNumber:(int)questionNum{
+    self.titleTextView.text = [NSString stringWithFormat:@"%@",text];
 }
--(void)setOptionsText:(NSString *)options WithOptionsText:(NSString *)opionsText WithSelectState:(NSString *)select indexRow:(int)row{
-    _optionsLabel.text = options;
-    _optionsTextView.text = opionsText;
-    if ([select isEqualToString:@"选中"]) {
-        _selecteImage.image = [UIImage imageNamed:@"方形选中-fill"];
+-(void)setQuestionAnswer:(NSString *)answer withIndex:(int)n{
+    if ([UIUtils isBlankString:answer]) {
+        self.answerText.text = @"";
     }else{
-        _selecteImage.image = [UIImage imageNamed:@"方形未选中"];
+        self.answerText.text = answer;
     }
-    _selectBtn.tag = row;
-    
+    self.answerText.tag = n;
 }
 - (IBAction)selectBtnPressed:(UIButton*)btn {
     if (self.delegate&&[self.delegate respondsToSelector:@selector(selectBtnPressedDelegate:)]) {
@@ -37,6 +39,8 @@
 }
 - (void)awakeFromNib {
     [super awakeFromNib];
+    _answerText.layer.masksToBounds = YES;
+    _answerText.layer.cornerRadius = 5;
     // Initialization code
 }
 
@@ -45,5 +49,43 @@
 
     // Configure the view for the selected state
 }
+#pragma mark textViewDelegate
 
+-(BOOL)textViewShouldBeginEditing:(UITextView *)textView{
+    return YES;
+}
+- (void)textViewDidChange:(UITextView *)textView{
+    CGRect bounds = textView.bounds;
+    // 计算 text view 的高度
+    CGSize maxSize = CGSizeMake(bounds.size.width, CGFLOAT_MAX);
+    CGSize newSize = [textView sizeThatFits:maxSize];
+    bounds.size = newSize;
+    textView.bounds = bounds;
+    // 让 table view 重新计算高度
+    UITableView *tableView = [self tableView];
+    
+    [tableView beginUpdates];
+    [tableView endUpdates];
+    if (self.delegate&&[self.delegate respondsToSelector:@selector(textViewDidChangeDelegate:)]) {
+        [self.delegate textViewDidChangeDelegate:textView];
+    }
+    //    [self returnTextViewTithLabel:_labelText.text withTextViewText:textView.text];
+}
+
+-(BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString*)text
+{
+    if ([text isEqualToString:@"\n"]) {
+        [textView resignFirstResponder];
+        return NO;
+    }
+    return YES;
+}
+- (UITableView *)tableView
+{
+    UIView *tableView = self.superview;
+    while (![tableView isKindOfClass:[UITableView class]] && tableView) {
+        tableView = tableView.superview;
+    }
+    return (UITableView *)tableView;
+}
 @end

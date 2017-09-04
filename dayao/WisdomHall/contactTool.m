@@ -42,55 +42,11 @@
     
     NSMutableArray * ary = [NSMutableArray arrayWithCapacity:10];
     ary = [contactTool querContactTableData:db withTextId:textId];
-    
-    for (int i = 0; i<ary.count; i++) {
-        ContactModel * c = ary[i];
-        if ([db open]) {
-            NSString * sql = [NSString stringWithFormat:@"select * from %@ where questionsID = '%@'",QUESTIONS_TABLE_NAME,c.questionsID];
-            FMResultSet * rs = [FMDBTool queryWithDB:db withSqlStr:sql];
-            while (rs.next) {
-                Questions * q = [[Questions alloc] init];
-                q.questionsID = [rs stringForColumn:@"questionsID"];
-                q.title = [rs stringForColumn:@"title"];
-                q.score = [rs stringForColumn:@"score"];
-                q.difficulty = [rs stringForColumn:@"difficulty"];
-                q.optionsA = [rs stringForColumn:@"optionsA"];
-                q.optionsB = [rs stringForColumn:@"optionsB"];
-                q.optionsC = [rs stringForColumn:@"optionsC"];
-                q.optionsD = [rs stringForColumn:@"optionsD"];
-                q.answer = [rs stringForColumn:@"answer"];
-                q.multiSelect = [rs stringForColumn:@"multiSelect"];
-                q.qid = c.qid;
-                [qAry addObject:q];
-            }
-        }
-        [db close];
-    }
-    return qAry;
+        return qAry;
 }
 +(NSMutableArray *)returnQuestion:(FMDatabase *)db{
     
     NSMutableArray * qAry = [NSMutableArray arrayWithCapacity:10];
-    
-    if ([db open]) {
-        NSString * sql = [NSString stringWithFormat:@"select * from %@ ",QUESTIONS_TABLE_NAME];
-        FMResultSet * rs = [FMDBTool queryWithDB:db withSqlStr:sql];
-        while (rs.next) {
-            Questions * q = [[Questions alloc] init];
-            q.questionsID = [rs stringForColumn:@"questionsID"];
-            q.title = [rs stringForColumn:@"title"];
-            q.score = [rs stringForColumn:@"score"];
-            q.difficulty = [rs stringForColumn:@"difficulty"];
-            q.optionsA = [rs stringForColumn:@"optionsA"];
-            q.optionsB = [rs stringForColumn:@"optionsB"];
-            q.optionsC = [rs stringForColumn:@"optionsC"];
-            q.optionsD = [rs stringForColumn:@"optionsD"];
-            q.answer = [rs stringForColumn:@"answer"];
-            q.multiSelect = [rs stringForColumn:@"multiSelect"];
-            [qAry addObject:q];
-        }
-        [db close];
-    }
-    return qAry;
+        return qAry;
 }
 @end

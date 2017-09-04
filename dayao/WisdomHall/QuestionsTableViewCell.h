@@ -11,6 +11,7 @@
 
 @protocol QuestionsTableViewCellDelegate <NSObject>
 -(void)selectBtnPressedDelegate:(UIButton *)btn;
+-(void)textViewDidChangeDelegate:(UITextView *)textView;
 @end
 
 @interface QuestionsTableViewCell : UITableViewCell
@@ -21,7 +22,6 @@
 @property (strong, nonatomic) IBOutlet UIButton *selectBtn;
 @property (weak, nonatomic) id<QuestionsTableViewCellDelegate> delegate;
 
-+ (instancetype)tempTableViewCellWith:(UITableView *)tableView indexPath:(NSIndexPath *)indexPath;
--(void)settitleTextViewText:(NSString *)text withAllQuestionNumber:(NSString *)allNum withquestionNumber:(NSString *)qNum;
--(void)setOptionsText:(NSString *)options WithOptionsText:(NSString *)opionsText WithSelectState:(NSString *)select indexRow:(int)row;
+-(void)settitleTextViewText:(NSString *)text withAllQuestionNumber:(int)questionNum;
+-(void)setQuestionAnswer:(NSString *)answer withIndex:(int)n;
 @end

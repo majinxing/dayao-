@@ -131,6 +131,7 @@
 		8B2E16F31EBADA2F008B7C57 /* TheMeetingNotStartViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8B2E16F11EBADA2F008B7C57 /* TheMeetingNotStartViewController.xib */; };
 		8B2E16F71EBADA5D008B7C57 /* TheMeetingEndedViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B2E16F51EBADA5D008B7C57 /* TheMeetingEndedViewController.m */; };
 		8B2E16F81EBADA5D008B7C57 /* TheMeetingEndedViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8B2E16F61EBADA5D008B7C57 /* TheMeetingEndedViewController.xib */; };
+		8B2F144E1F5D2D1900438374 /* SelectQuestion.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B2F144D1F5D2D1900438374 /* SelectQuestion.m */; };
 		8B32FEA51F4C038B00D9BF23 /* jcore-ios-1.1.5.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8B32FEA21F4C038B00D9BF23 /* jcore-ios-1.1.5.a */; };
 		8B32FEA61F4C038B00D9BF23 /* jpush-ios-3.0.6.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8B32FEA31F4C038B00D9BF23 /* jpush-ios-3.0.6.a */; };
 		8B32FEA81F4C03C200D9BF23 /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8B32FEA71F4C03C200D9BF23 /* CoreFoundation.framework */; };
@@ -715,6 +716,8 @@
 		8B2E16F41EBADA5D008B7C57 /* TheMeetingEndedViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TheMeetingEndedViewController.h; sourceTree = "<group>"; };
 		8B2E16F51EBADA5D008B7C57 /* TheMeetingEndedViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TheMeetingEndedViewController.m; sourceTree = "<group>"; };
 		8B2E16F61EBADA5D008B7C57 /* TheMeetingEndedViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TheMeetingEndedViewController.xib; sourceTree = "<group>"; };
+		8B2F144C1F5D2D1900438374 /* SelectQuestion.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SelectQuestion.h; sourceTree = "<group>"; };
+		8B2F144D1F5D2D1900438374 /* SelectQuestion.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SelectQuestion.m; sourceTree = "<group>"; };
 		8B32FEA21F4C038B00D9BF23 /* jcore-ios-1.1.5.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = "jcore-ios-1.1.5.a"; sourceTree = "<group>"; };
 		8B32FEA31F4C038B00D9BF23 /* jpush-ios-3.0.6.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = "jpush-ios-3.0.6.a"; sourceTree = "<group>"; };
 		8B32FEA41F4C038B00D9BF23 /* JPUSHService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JPUSHService.h; sourceTree = "<group>"; };
@@ -1328,6 +1331,15 @@
 			name = TheMeetingType;
 			sourceTree = "<group>";
 		};
+		8B2F144B1F5D2C4900438374 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				8B2F144C1F5D2D1900438374 /* SelectQuestion.h */,
+				8B2F144D1F5D2D1900438374 /* SelectQuestion.m */,
+			);
+			name = View;
+			sourceTree = "<group>";
+		};
 		8B32FEA11F4C038B00D9BF23 /* Lib */ = {
 			isa = PBXGroup;
 			children = (
@@ -1795,6 +1807,7 @@
 		8BE877721EBC1CB200866A34 /* TextViewController */ = {
 			isa = PBXGroup;
 			children = (
+				8B2F144B1F5D2C4900438374 /* View */,
 				8BF3ADB51F56B9C3002BD6DA /* delectVC */,
 				8BE877871EBD579C00866A34 /* TextVCCell */,
 				8BE877731EBC2D6B00866A34 /* AllTestViewController.h */,
@@ -2483,6 +2496,7 @@
 				8BE877691EBAF7A800866A34 /* ShareView.m in Sources */,
 				8B045B791F3458820021699B /* NSString+MJExtension.m in Sources */,
 				8B9B584F1EC998080010A1F1 /* TextListViewController.m in Sources */,
+				8B2F144E1F5D2D1900438374 /* SelectQuestion.m in Sources */,
 				8BB56D6E1EB05C760023DAFF /* DefineThePasswordViewController.m in Sources */,
 				8B2E16E81EBAD9AF008B7C57 /* AllTheMeetingViewController.m in Sources */,
 				8BE877801EBC2DE000866A34 /* InTheTestViewController.m in Sources */,

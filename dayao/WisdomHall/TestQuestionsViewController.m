@@ -227,7 +227,7 @@
     cell.delegate = self;
     NSString * text = [_labelTextDict valueForKey:[NSString stringWithFormat:@"%d",(int)indexPath.section]][indexPath.row];
     [cell textLabelText:text];
-    [cell textViewText:[_q returnQuestionAttribute:text]];
+    
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     return cell;
 }
@@ -248,7 +248,7 @@
     [self.view endEditing:YES];
     }
 -(void)returnTextViewTextWithLabelDelegate:(NSString *)labelText withTextViewText:(NSString *)textViewText{
-    [_q setAttributeFromStr:labelText withTextView:textViewText];
+    
 }
 -(void)retuanAnswerDelegate{
     [self addAnswerBackView];

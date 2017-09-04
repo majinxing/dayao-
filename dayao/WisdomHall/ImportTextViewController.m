@@ -159,7 +159,6 @@
     
     Questions * q = _questionsAry[indexPath.row];
     
-    [cell setOptionsText:@"" WithOptionsText:q.title WithSelectState:_selected[indexPath.row] indexRow:(int)indexPath.row];
     
     return cell;
     
