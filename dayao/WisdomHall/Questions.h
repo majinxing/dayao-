@@ -18,4 +18,5 @@
 @property (nonatomic,copy) NSString * qid;//题号 10
 -(BOOL)whetherIsEmpty;
 -(void)setSelfInfoWithDict:(NSDictionary *)dict;
++(NSMutableArray *)returnText:(NSMutableArray *)ary;
 @end

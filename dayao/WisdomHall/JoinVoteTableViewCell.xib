@@ -18,13 +18,13 @@
                 <rect key="frame" x="0.0" y="0.0" width="378" height="121.5"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" scrollEnabled="NO" editable="NO" text="qqq12" textAlignment="natural" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qNe-gh-oeg">
+                    <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" scrollEnabled="NO" editable="NO" textAlignment="natural" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qNe-gh-oeg">
                         <rect key="frame" x="5" y="5" width="368" height="101.5"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <fontDescription key="fontDescription" type="system" pointSize="12"/>
                         <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                     </textView>
-                    <label opaque="NO" userInteractionEnabled="NO" alpha="0.59999999999999998" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="qqqqqqqqq" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7I6-KT-aYk">
+                    <label opaque="NO" userInteractionEnabled="NO" alpha="0.59999999999999998" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7I6-KT-aYk">
                         <rect key="frame" x="10" y="106.5" width="363" height="15"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="15" id="HQb-AQ-H6X"/>
@@ -57,7 +57,7 @@
                 <rect key="frame" x="0.0" y="0.0" width="406" height="136.5"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" scrollEnabled="NO" editable="NO" text="qqqqqqqqqed" textAlignment="natural" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vks-K9-0vZ">
+                    <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" scrollEnabled="NO" editable="NO" textAlignment="natural" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vks-K9-0vZ">
                         <rect key="frame" x="50" y="7" width="341" height="122.5"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
@@ -69,7 +69,7 @@
                     </imageView>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hff-Qi-MUI">
                         <rect key="frame" x="5" y="134.5" width="396" height="1"/>
-                        <color key="backgroundColor" red="0.3394033922670372" green="0.95747652202072542" blue="0.90225985195978065" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                        <color key="backgroundColor" red="0.74824901851279624" green="0.73891398858899149" blue="0.77464543411574383" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="1" id="0kc-lh-Thh"/>
                         </constraints>

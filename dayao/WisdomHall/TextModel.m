@@ -49,10 +49,22 @@
 -(void)setSelfInfoWithDict:(NSDictionary *)dict{
     _textId = [dict objectForKey:@"id"];
     _createName = [dict objectForKey:@"createName"];
-    _statusName = [dict objectForKey:@"statusName"];
     _createUserId = [dict objectForKey:@"createUser"];
     _score = [dict objectForKey:@"score"];
     _title = [dict objectForKey:@"name"];
+    
+    NSString * str = [NSString stringWithFormat:@"%@",[dict objectForKey:@"status"]];
+    if ([str isEqualToString:@"1"]) {
+        _statusName = @"考试关闭";
+    }else if ([str isEqualToString:@"2"]){
+        _statusName = @"考试未进行";
+    }else if ([str isEqualToString:@"3"]){
+        _statusName = @"考试进行中";
+    }else if ([str isEqualToString:@"4"]){
+        _statusName = @"考试已完成";
+    }else if ([str isEqualToString:@"5"]){
+        _statusName = @"考试已批阅";
+    }
     
 }
 

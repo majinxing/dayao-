@@ -12,6 +12,7 @@
 #import "DYHeader.h"
 #import "CreateTextTableViewCell.h"
 #import "QuestionBank.h"
+#import "TestQuestionsViewController.h"
 
 @interface CreateTestViewController ()<CreateTextTableViewCellDelegate>
 @property(nonatomic,strong)TextModel * textModel;
@@ -68,9 +69,18 @@
         if ([str isEqualToString:@"0000"]) {
             NSArray * ary = [data objectForKey:@"body"];
             _questionModel = [self seleCreateLib:ary];
+            TextModel * t = [[TextModel alloc] init];
+            t.title = _titleTextFile.text;
+            TestQuestionsViewController * tQVC = [[TestQuestionsViewController alloc] init];
+            tQVC.t = t;
+            tQVC.qBank = _questionModel;
+            self.hidesBottomBarWhenPushed = YES;
+            [self.navigationController pushViewController:tQVC animated:YES];
+        }else{
+            [UIUtils showInfoMessage:@"创建失败"];
         }
     } failure:^(NSError *error) {
-        [UIUtils showInfoMessage:@"创建失败"];
+        [UIUtils showInfoMessage:@"创建失败，请检查网络"];
     }];
 }
 -(QuestionBank *)seleCreateLib:(NSArray *)ary{

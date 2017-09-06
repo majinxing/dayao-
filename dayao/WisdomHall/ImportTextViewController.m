@@ -14,6 +14,7 @@
 #import "Questions.h"
 #import "QuestionsTableViewCell.h"
 #import "ContactModel.h"
+#import "QuestionBank.h"
 
 @interface ImportTextViewController ()<UITableViewDelegate,UITableViewDataSource,QuestionsTableViewCellDelegate>
 @property (nonatomic,strong)NSMutableArray * questionsAry;
@@ -29,7 +30,9 @@
     
     [super viewDidLoad];
     
-    [self addQuestion];
+    _questionsAry = [NSMutableArray arrayWithCapacity:1];
+    
+    [self getData];
     
     [self addTableView];
     
@@ -37,40 +40,19 @@
     
     // Do any additional setup after loading the view from its vnib.
 }
--(void)addQuestion{
-    //整个的数据操作都是在本地数据库完成的
-    _db = [FMDBTool createDBWithName:SQLITE_NAME];
-    
-    _questionsAry = [NSMutableArray arrayWithCapacity:4];
-    
-    _questionsAry = [contactTool returnQuestion:_db];
-    
-    _selected = [NSMutableArray arrayWithCapacity:4];
-    
-    _selectQuestiond = [NSMutableArray arrayWithCapacity:4];
-    
-    _selectQuestiond = [contactTool querContactTableData:_db withTextId:_t.textId];
-    
-    //把列表中已经被选中的题目移除
-    
-    for (int i = 0; i<_selectQuestiond.count; i++) {
-        ContactModel * c = _selectQuestiond[i];
-        for (int j = 0; j<_questionsAry.count; j++) {
-            Questions * q = _questionsAry[j];
-            if ([c.questionsID  isEqualToString:q.questionsID]) {
-                [_questionsAry removeObjectAtIndex:j];
-                break;
-            }
+-(void)getData{
+    NSDictionary * dict = [[NSDictionary alloc] initWithObjectsAndKeys:@"1",@"start",@"1000",@"length",nil];
+    [[NetworkRequest sharedInstance] GET:QuertyQusetionBank dict:dict succeed:^(id data) {
+        NSArray * ary = [data objectForKey:@"body"];
+        for (int i = 0; i<ary.count; i++) {
+            QuestionBank * q = [[QuestionBank alloc] init];
+            [q setSelfInfoWithDict:ary[i]];
+            [_questionsAry addObject:q];
         }
-    }
-    for (int i =0; i<_questionsAry.count; i++) {
-        NSString * str = @"未选中";
-        [_selected addObject:str];
-    }
-    
-        NSLog(@"%s",__func__);
+    } failure:^(NSError *error) {
+        
+    }];
 }
-
 -(void)addTableView{
     _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 64, APPLICATION_WIDTH, APPLICATION_HEIGHT-64) style:UITableViewStylePlain];
     _tableView.delegate = self;
@@ -79,6 +61,7 @@
     _tableView.estimatedRowHeight = 50;
     _tableView.rowHeight = UITableViewAutomaticDimension;
     _tableView.separatorStyle = NO;
+    self.automaticallyAdjustsScrollViewInsets = NO;
     [self.view addSubview:_tableView];
 }
 /**
@@ -96,43 +79,11 @@
     UIBarButtonItem * backbtn = [[UIBarButtonItem alloc] initWithTitle:nil style:UIBarButtonItemStylePlain target:self action:@selector(back)];
     self.navigationItem.leftBarButtonItem = backbtn;
 }
+
 -(void)back{
     [self.navigationController popViewControllerAnimated:YES];
 }
--(void)insertedIntoTextTable:(NSString *)textID questionsID:(NSString *)questionsID qid:(NSString *)qid{
-    
-    _db = [FMDBTool createDBWithName:SQLITE_NAME];
-    
-    [self creatTextTable:CONTACT_TABLE_NAME];
-    
-    if ([_db open]) {
-        NSString * sql = [NSString stringWithFormat:@"insert into %@ (questionsID, textId,qid) values ('%@', '%@','%@')",CONTACT_TABLE_NAME,questionsID,textID,qid];
-        BOOL rs = [FMDBTool insertWithDB:_db tableName:QUESTIONS_TABLE_NAME withSqlStr:sql];
-        if (!rs) {
-            NSLog(@"失败");
-        }
-    }
-    [_db close];
-}
--(void)creatTextTable:(NSString *)tableName{
-    if ([_db open]) {
-        BOOL result = [FMDBTool createTableWithDB:_db tableName:tableName
-                                       parameters:@{
-                                                    @"questionsID" : @"text",
-                                                    @"textId" : @"text",
-                                                    @"qid" : @"text",
-                                                    }];
-        if (result)
-        {
-            NSLog(@"建表成功");
-        }
-        else
-        {
-            NSLog(@"建表失败");
-        }
-    }
-    [_db close];
-}
+
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
@@ -172,15 +123,7 @@
 -(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
     return 10;
 }
-#pragma mark ---------------------QuestionsTableViewCellDelegate
--(void)selectBtnPressedDelegate:(UIButton *)btn{
-    if ([_selected[btn.tag] isEqualToString:@"未选中"]) {
-        _selected[btn.tag] = @"选中";
-    }else{
-        _selected[btn.tag] = @"未选中";
-    }
-    [_tableView reloadData];
-}
+
 /*
 #pragma mark - Navigation
 

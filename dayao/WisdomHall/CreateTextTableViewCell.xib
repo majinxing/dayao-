@@ -75,17 +75,17 @@
                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="sQl-Nu-oGF">
                         <rect key="frame" x="30" y="5" width="415" height="108.5"/>
                         <color key="backgroundColor" red="0.64912894628430884" green="1" blue="0.99957258182401565" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                        <state key="normal" title="创建测试题目"/>
+                        <state key="normal" title="创建测试题"/>
                         <connections>
                             <action selector="createTopicPressed:" destination="EkS-7z-Z8s" eventType="touchUpInside" id="paH-cf-zzC"/>
                         </connections>
                     </button>
                 </subviews>
                 <constraints>
-                    <constraint firstItem="sQl-Nu-oGF" firstAttribute="top" secondItem="2Jv-k3-Gnk" secondAttribute="top" constant="5" id="8n2-hx-mft"/>
-                    <constraint firstAttribute="trailing" secondItem="sQl-Nu-oGF" secondAttribute="trailing" constant="30" id="H2e-rC-05L"/>
-                    <constraint firstAttribute="bottom" secondItem="sQl-Nu-oGF" secondAttribute="bottom" constant="5" id="n1e-Xg-FMq"/>
-                    <constraint firstItem="sQl-Nu-oGF" firstAttribute="leading" secondItem="2Jv-k3-Gnk" secondAttribute="leading" constant="30" id="uUF-BT-B6R"/>
+                    <constraint firstAttribute="bottom" secondItem="sQl-Nu-oGF" secondAttribute="bottom" constant="5" id="Hwi-es-g1M"/>
+                    <constraint firstItem="sQl-Nu-oGF" firstAttribute="leading" secondItem="2Jv-k3-Gnk" secondAttribute="leading" constant="30" id="MFE-pq-Srd"/>
+                    <constraint firstAttribute="trailing" secondItem="sQl-Nu-oGF" secondAttribute="trailing" constant="30" id="hxS-Qy-46P"/>
+                    <constraint firstItem="sQl-Nu-oGF" firstAttribute="top" secondItem="2Jv-k3-Gnk" secondAttribute="top" constant="5" id="uGi-h6-VDr"/>
                 </constraints>
             </tableViewCellContentView>
             <connections>

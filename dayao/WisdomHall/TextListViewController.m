@@ -119,17 +119,38 @@
     //    self.navigationItem.leftBarButtonItem = leftButton;
 }
 -(void)theImportQuestionBtn{
-    //
-    //    if (!_teacherOrStudent) {
-    //        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"是否要交卷" message:nil delegate:self cancelButtonTitle:@"取消" otherButtonTitles: @"确定", nil];
-    //        [alertView show];
-    //        alertView.tag = 1;
-    //        return;
-    //    }
-    //    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"添加试题" message:nil delegate:self cancelButtonTitle:@"题库导入" otherButtonTitles: @"创建新题", nil];
-    //    [alertView show];
-    //    alertView.tag = 2;
-    //    return;
+    UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"提示" message:nil preferredStyle:  UIAlertControllerStyleActionSheet];
+    //分别按顺序放入每个按钮；
+    [alert addAction:[UIAlertAction actionWithTitle:@"我要交卷" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        
+        
+        dispatch_async(dispatch_get_main_queue(), ^{
+            //获取主线程
+            [self hideHud];
+            [self showHudInView:self.view hint:NSLocalizedString(@"正在交卷数据", @"Load data...")];
+        });
+        NSMutableArray * ary = [Questions returnText:_questionsAry];
+        NSDictionary * dict = [[NSDictionary alloc] initWithObjectsAndKeys:[NSString stringWithFormat:@"%@",_t.textId],@"id",ary,@"examAnswerList", nil];
+        [[NetworkRequest sharedInstance] POST:HandIn dict:dict succeed:^(id data) {
+            NSString * str = [NSString stringWithFormat:@"%@",[[data objectForKey:@"header"] objectForKey:@"code"]];
+            if ([str isEqualToString:@"0000"]) {
+                [UIUtils showInfoMessage:@"交卷成功"];
+            }else{
+                [UIUtils showInfoMessage:@"交卷失败"];
+            }
+            [self hideHud];
+        } failure:^(NSError *error) {
+            NSLog(@"%@",error);
+            [self hideHud];
+            [UIUtils showInfoMessage:@"交卷失败，请检查网络"];
+        }];
+       
+    }]];
+    [alert addAction:[UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleDestructive handler:^(UIAlertAction * _Nonnull action) {
+    }]];
+    
+    //弹出提示框；
+    [self presentViewController:alert animated:true completion:nil];
 }
 -(void)back{
     for (UIViewController *controller in self.navigationController.viewControllers) {
@@ -178,32 +199,32 @@
     if (!_selectQ) {
         _selectQ = [[SelectQuestion alloc] initWithFrame:CGRectMake(0, 0, APPLICATION_WIDTH, APPLICATION_HEIGHT)];
     }
-//    _selectQ.backgroundColor = [UIColor grayColor];
+    //    _selectQ.backgroundColor = [UIColor grayColor];
     
     [_selectQ addScrollViewWithBtnNumber:(int)_questionsAry.count];
     _selectQ.delegate = self;
     [self.view addSubview:_selectQ];
 }
 -(void)nextBtn:(UISwipeGestureRecognizer *)recognizer{
-        if(recognizer.direction == UISwipeGestureRecognizerDirectionLeft) {
-            if (_temp == _questionsAry.count-1) {
-    
-            }else{
-                _temp = _temp + 1;
-                _q = _questionsAry[_temp];
-                [_tableView reloadData];
-            }
+    if(recognizer.direction == UISwipeGestureRecognizerDirectionLeft) {
+        if (_temp == _questionsAry.count-1) {
+            
+        }else{
+            _temp = _temp + 1;
+            _q = _questionsAry[_temp];
+            [_tableView reloadData];
         }
-        if(recognizer.direction == UISwipeGestureRecognizerDirectionRight) {
-            if (_temp==0) {
-                _temp = 0;
-            }else{
-                _temp = _temp - 1;
-                _q = _questionsAry[_temp];
-                [_tableView reloadData];
-            }
+    }
+    if(recognizer.direction == UISwipeGestureRecognizerDirectionRight) {
+        if (_temp==0) {
+            _temp = 0;
+        }else{
+            _temp = _temp - 1;
+            _q = _questionsAry[_temp];
+            [_tableView reloadData];
         }
-        _qNumLabel.text = [NSString stringWithFormat:@"%d/%lu",_temp+1,(unsigned long)_questionsAry.count];
+    }
+    _qNumLabel.text = [NSString stringWithFormat:@"%d/%lu",_temp+1,(unsigned long)_questionsAry.count];
     
 }
 
@@ -220,7 +241,7 @@
     _temp = (int)btn.tag - 1;
     
     _qNumLabel.text = [NSString stringWithFormat:@"%d/%lu",_temp+1,(unsigned long)_questionsAry.count];
-
+    
     [_selectQ removeFromSuperview];
     
     [_tableView reloadData];

@@ -9,9 +9,13 @@
 #import <UIKit/UIKit.h>
 
 @protocol CreateTextTableViewCellDelegate <NSObject>
+
 -(void)createTopicPressedDelegate;
+
 -(void)returnTextViewTextWithLabelDelegate:(NSString *)labelText withTextViewText:(NSString *)textViewText;
+
 -(void)retuanAnswerDelegate;
+
 @end
 @interface CreateTextTableViewCell : UITableViewCell
 

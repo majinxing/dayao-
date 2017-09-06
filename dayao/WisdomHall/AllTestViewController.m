@@ -16,12 +16,18 @@
 #import "TextListViewController.h"
 #import "CreateTestViewController.h"
 #import "MJRefresh.h"
+#import "ShareView.h"
+#import "StudentSorce.h"
+#import "StudentScoreViewController.h"
 
-@interface AllTestViewController ()<UITableViewDelegate,UITableViewDataSource>
+@interface AllTestViewController ()<UITableViewDelegate,UITableViewDataSource,TextsTableViewCellDelegate,ShareViewDelegate>
 @property (nonatomic,strong)UITableView * tableView;
 @property (nonatomic,strong)FMDatabase *db;
 @property (nonatomic,strong)NSMutableArray * dataAry;//数据源
 @property (nonatomic,assign)int temp;//标志位防止数据重复
+@property (nonatomic,strong)ShareView * vote;
+@property (nonatomic,strong)TextModel * t;
+
 @end
 
 @implementation AllTestViewController
@@ -36,11 +42,11 @@
     _dataAry = [NSMutableArray arrayWithCapacity:1];
     
     [self getData];
-        
+    
     [self addTableView];
     
     [self setNavigationTitle];
-        // Do any additional setup after loading the view from its nib.
+    // Do any additional setup after loading the view from its nib.
 }
 /**
  *  显示navigation的标题
@@ -65,7 +71,7 @@
     [self.navigationController pushViewController:c animated:YES];
 }
 -(void)addTableView{
-
+    
     _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0,64, APPLICATION_WIDTH, APPLICATION_HEIGHT-64) style:UITableViewStylePlain];
     _tableView.delegate = self;
     _tableView.dataSource = self;
@@ -86,9 +92,13 @@
 -(void)getData{
     
     NSDictionary * dict = [[NSDictionary alloc] initWithObjectsAndKeys:_classModel.sclassId,@"relId",@"1",@"relType",nil];
-    
+    dispatch_async(dispatch_get_main_queue(), ^{
+        //获取主线程
+        [self hideHud];
+        [self showHudInView:self.view hint:NSLocalizedString(@"正在加载数据", @"Load data...")];
+    });
     [[NetworkRequest sharedInstance] GET:QueryTest dict:dict succeed:^(id data) {
-        NSLog(@"%@",data);
+        //        NSLog(@"%@",data);
         [_dataAry removeAllObjects];
         NSArray * ary = [data objectForKey:@"body"];
         for (int i = 0; i<ary.count; i++) {
@@ -97,8 +107,11 @@
             [_dataAry addObject:text];
         }
         [_tableView reloadData];
+        [self hideHud];
     } failure:^(NSError *error) {
         NSLog(@"%@",error);
+        [self hideHud];
+        
         [UIUtils showInfoMessage:@"请求失败"];
     }];
     [_tableView headerEndRefreshing];
@@ -111,7 +124,96 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
-
+#pragma mark TextsTableViewCellDelegate
+-(void)moreBtnPressedDelegate:(UIButton *)btn{
+    _t = _dataAry[btn.tag - 1];
+    
+    if (!_vote)
+    {
+        _vote = [[ShareView alloc] initWithFrame:self.navigationController.view.bounds withType:@"text"];
+        _vote.delegate = self;
+    }
+    
+    [_vote showInView:self.navigationController.view];
+}
+#pragma mark ShareDelegate
+- (void)shareViewButtonClick:(NSString *)platform
+{
+    if ([platform isEqualToString:Vote_delecate]){
+        
+        NSDictionary * dict = [[NSDictionary alloc] initWithObjectsAndKeys:_t.textId,@"id", nil];
+        [[NetworkRequest sharedInstance] POST:DelecateText dict:dict succeed:^(id data) {
+            NSString * str = [NSString stringWithFormat:@"%@",[[data objectForKey:@"header"] objectForKey:@"code"]];
+            if ([str isEqualToString:@"6676"]) {
+                [UIUtils showInfoMessage:@"删除考试失败，只有考试结束之后才能删除"];
+            }else{
+                [self getData];
+            }
+            [_vote hide];
+        } failure:^(NSError *error) {
+            
+        }];
+        //
+    }else if ([platform isEqualToString:Vote_Stop]){
+        
+        NSDictionary * dict = [[NSDictionary alloc] initWithObjectsAndKeys:_t.textId,@"id",nil];
+        
+        [[NetworkRequest sharedInstance] POST:StopText dict:dict succeed:^(id data) {
+            NSLog(@"%@",data);
+            NSString * str = [NSString stringWithFormat:@"%@",[[data objectForKey:@"header"] objectForKey:@"code"]];
+            if ([str isEqualToString:@"6676"]) {
+                [UIUtils showInfoMessage:@"考试已结束"];
+            }else{
+                [self getData];
+            }
+            [_vote hide];
+        } failure:^(NSError *error) {
+            
+        }];
+        
+    }else if ([platform isEqualToString:Vote_Stare]){
+        
+        NSDictionary * dict = [[NSDictionary alloc] initWithObjectsAndKeys:_t.textId,@"id",nil];
+        [[NetworkRequest sharedInstance] POST:StartText dict:dict succeed:^(id data) {
+            NSLog(@"%@",data);
+            NSString * str = [NSString stringWithFormat:@"%@",[[data objectForKey:@"header"] objectForKey:@"code"]];
+            if ([str isEqualToString:@"6676"]) {
+                [UIUtils showInfoMessage:@"考试已结束"];
+            }else{
+                [self getData];
+            }
+            [_vote hide];
+            
+        } failure:^(NSError *error) {
+            [UIUtils showInfoMessage:@"开始失败，请检查网络"];
+        }];
+        
+    }else if ([platform isEqualToString:Test_Scores_Query]){
+        NSDictionary * dict = [[NSDictionary alloc] initWithObjectsAndKeys:_t.textId,@"id", nil];
+        [[NetworkRequest sharedInstance] GET:QuertyTestScores dict:dict succeed:^(id data) {
+            NSLog(@"%@",data);
+            NSString * str = [NSString stringWithFormat:@"%@",[[data objectForKey:@"header"] objectForKey:@"code"]];
+            if ([str isEqualToString:@"0000"]) {
+                NSMutableArray * ary = [NSMutableArray arrayWithCapacity:1];
+                NSArray * a = [data objectForKey:@"body"];
+                for (int i = 0; i<a.count; i++) {
+                    StudentSorce * s = [[StudentSorce alloc] init];
+                    [s setSelfInfoWithDict:a[i]];
+                    [ary addObject:s];
+                }
+                StudentScoreViewController * s = [[StudentScoreViewController alloc] init];
+                s.ary = ary;
+                self.hidesBottomBarWhenPushed = YES;
+                [_vote hide];
+                [self.navigationController pushViewController:s animated:YES];
+            }else{
+                [UIUtils showInfoMessage:@"暂无数据"];
+            }
+        } failure:^(NSError *error) {
+            [UIUtils showInfoMessage:@"请求失败，请检查网络"];
+        }];
+    }
+}
 
 #pragma mark UITableViewdelegate
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
@@ -138,8 +240,9 @@
         cell.moreImage.image = [UIImage imageNamed:@""];
         [cell.moreBtn setEnabled:NO];
     }
+    cell.delegate = self;
     return cell;
-
+    
 }
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
@@ -158,13 +261,13 @@
 }
 
 /*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
+ #pragma mark - Navigation
+ 
+ // In a storyboard-based application, you will often want to do a little preparation before navigation
+ - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+ // Get the new view controller using [segue destinationViewController].
+ // Pass the selected object to the new view controller.
+ }
+ */
 
 @end

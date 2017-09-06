@@ -15,7 +15,7 @@
             <rect key="frame" x="0.0" y="0.0" width="452" height="189"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
-                <rect key="frame" x="0.0" y="0.0" width="452" height="189"/>
+                <rect key="frame" x="0.0" y="0.0" width="452" height="188.5"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" scrollEnabled="NO" editable="NO" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="rPC-wg-lly">
@@ -44,7 +44,7 @@
             <rect key="frame" x="0.0" y="0.0" width="461" height="191"/>
             <autoresizingMask key="autoresizingMask"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="fBC-sJ-ueR" id="RUY-TG-8Zu">
-                <rect key="frame" x="0.0" y="0.0" width="461" height="191"/>
+                <rect key="frame" x="0.0" y="0.0" width="461" height="190.5"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="答案：" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7xs-1T-Vfq">
@@ -85,7 +85,7 @@
             <rect key="frame" x="0.0" y="0.0" width="452" height="60"/>
             <autoresizingMask key="autoresizingMask"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="X80-eu-T6i" id="ogz-vQ-7Y5">
-                <rect key="frame" x="0.0" y="0.0" width="452" height="60"/>
+                <rect key="frame" x="0.0" y="0.0" width="452" height="59.5"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <imageView userInteractionEnabled="NO" alpha="0.5" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="上一题" translatesAutoresizingMaskIntoConstraints="NO" id="3wi-Yr-79C">

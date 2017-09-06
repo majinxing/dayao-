@@ -96,6 +96,9 @@
     if ([type isEqualToString:Vote_Modify]) {
         [self setImage:[UIImage imageNamed:@"modify"] forState:UIControlStateNormal];
     }
+    if ([type isEqualToString:Test_Scores_Query]) {
+        [self setImage:[UIImage imageNamed:@"查询"] forState:UIControlStateNormal];
+    }
     [self setTitle:type forState:UIControlStateNormal];
 }
 

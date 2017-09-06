@@ -20,14 +20,11 @@
 @end
 @implementation CreateTextTableViewCell
 
-- (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier {
-    if (self=[super initWithStyle:style reuseIdentifier:reuseIdentifier]) {
-        
-    }return self;
-}
 - (void)awakeFromNib {
-    _textView.keyboardDismissMode = UIScrollViewKeyboardDismissModeOnDrag;//返回按钮会报错
-    _textView.returnKeyType = UIReturnKeyDone;
+    _createBtn.layer.masksToBounds = YES;
+    
+    _createBtn.layer.cornerRadius = 5;
+    
     [super awakeFromNib];
     // Initialization code
 }
@@ -66,15 +63,7 @@
     // Configure the view for the selected state
 }
 #pragma mark textViewDelegate
--(BOOL)textViewShouldBeginEditing:(UITextView *)textView{
-    if ([_labelText.text isEqualToString:@"题目答案:"]) {
-        if (self.delegate&&[self.delegate respondsToSelector:@selector(retuanAnswerDelegate)]) {
-            [self.delegate retuanAnswerDelegate];
-        }
-        return NO;
-    }
-    return YES;
-}
+
 - (void)textViewDidChange:(UITextView *)textView{
     CGRect bounds = textView.bounds;
     // 计算 text view 的高度

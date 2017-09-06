@@ -39,5 +39,21 @@
     _questionsID = [NSString stringWithFormat:@"%@",[dict objectForKey:@"examQuestionId"]];
     _answer = [[NSString alloc] init];
 }
-
++(NSMutableArray *)returnText:(NSMutableArray *)ary{
+    NSMutableArray * a = [NSMutableArray arrayWithCapacity:1];
+    for (int i = 0; i<ary.count; i++) {
+        Questions * q = ary[i];
+        if ([q.multiSelect isEqualToString:@"单选"]||[q.multiSelect isEqualToString:@"多选"]) {
+             NSCharacterSet *set = [NSCharacterSet characterSetWithCharactersInString:@"@／：；（）¥「」＂、[]{}#%-*+=_\\|~＜＞$€^•'@#$%^&*()!@#$%^&*()<>:?【】、《》“”‘；’，。、……——！！？~· _+'\""];
+            
+             q.answer = [[q.answer componentsSeparatedByCharactersInSet:set] componentsJoinedByString:@""];
+        }
+        if ([UIUtils isBlankString:q.answer]) {
+            continue;
+        }
+        NSDictionary * dict = [[NSDictionary alloc] initWithObjectsAndKeys:[NSString stringWithFormat:@"%@",q.questionsID],@"examQuestionId",[NSString stringWithFormat:@"%@",q.answer],@"answer",nil];
+        [a addObject:dict];
+    }
+    return a;
+}
 @end

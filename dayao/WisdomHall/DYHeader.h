@@ -54,7 +54,7 @@
 #define Vote_Stare                  @"开始"
 #define Vote_Stop                   @"结束"
 
-
+#define Test_Scores_Query           @"查询成绩"
 
 //数据库的名字
 #define SQLITE_NAME            @"Dayao"
@@ -78,7 +78,7 @@
 
 #define ResetPassword           @"course/user/modify"               //重置密码
 
-#define SchoolDepartMent        @"course/department/list"           // 院系列表
+#define SchoolDepartMent        @"course/department/list"           //院系列表
 
 #define QueryClassRoom          @"course/classroom/select"          //查询教室
 
@@ -161,4 +161,21 @@
 #define QueryTextList           @"course/exam/queryExamQuestion"    //查询试题列表
 
 #define QueryQuestionList       @"course/exam/queryExamQuestion"    //查询试卷题目
+
+#define HandIn                  @"course/exam/commitExam"           //交卷
+
+#define StartText               @"course/exam/ExamUnderway"         //开始考试
+
+#define StopText                @"course/exam/ExamCompleted"        //结束考试
+
+#define DelecateText            @"course/exam/deleteExam"           //删除考试
+
+#define QuertyTestScores        @"course/exam/queryExamGradeTeacher"//查询考试成绩
+
+#define StudentStart            @"course/exam/startExam"            //学生开始考试
+
+#define QuertyQusetionBank      @"course/exam/qureyLib"             //查询题库列表
+
+
+
 

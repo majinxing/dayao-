@@ -32,6 +32,11 @@
     
     // Initialization code
 }
+- (IBAction)moreBtnPressed:(UIButton *)sender {
+    if (self.delegate&&[self.delegate respondsToSelector:@selector(moreBtnPressedDelegate:)]) {
+        [self.delegate moreBtnPressedDelegate:_moreBtn];
+    }
+}
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
     [super setSelected:selected animated:animated];

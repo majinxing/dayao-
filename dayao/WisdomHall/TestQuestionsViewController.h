@@ -8,7 +8,9 @@
 
 #import <UIKit/UIKit.h>
 #import "TextModel.h"
+#import "QuestionBank.h"
 
 @interface TestQuestionsViewController : UIViewController
 @property (nonatomic,strong)TextModel *t;
+@property (nonatomic,strong)QuestionBank * qBank;
 @end

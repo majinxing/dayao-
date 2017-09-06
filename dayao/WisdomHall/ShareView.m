@@ -58,6 +58,8 @@
         [self addMeeting];
     }else if ([type isEqualToString:@"vote"]){
         [self addVote];
+    }else if ([type isEqualToString:@"text"]){
+        [self addText];
     }
     
     //添加取消按钮
@@ -132,8 +134,8 @@
                               InteractionType_Data,
                               InteractionType_Vote,
                               InteractionType_Responder,
-                              InteractionType_Discuss,
                               InteractionType_Test,
+                              InteractionType_Discuss,
                               InteractionType_Add
                               ];
     
@@ -184,9 +186,34 @@
         [button addTarget:self action:@selector(shareButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
         [_contentView addSubview:button];
     }
-
 }
-
+//测试
+-(void)addText{
+    _shareTypeArray = @[Vote_delecate,
+                        Vote_Stare,
+                        Vote_Stop,
+                        Test_Scores_Query];
+    //水平间距
+    int marginWidth = (APPLICATION_WIDTH - buttonWH * columns) / (columns + 1);
+    //起始XY坐标
+    int oneX = marginWidth;
+    int oneY = marginHeight;
+    
+    for (int i = 0; i < _shareTypeArray.count; i++)
+    {
+        //行
+        int row = i / columns;
+        //列
+        int column = i % columns;
+        
+        int x = oneX + (buttonWH + marginWidth) * column;
+        int y = oneY + (buttonWH + marginWidth) * row;
+        
+        ShareButton * button = [[ShareButton alloc] initWithFrame:CGRectMake(x, y, buttonWH, buttonWH) andType:_shareTypeArray[i]];
+        [button addTarget:self action:@selector(shareButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
+        [_contentView addSubview:button];
+    }
+}
 - (void)addCancleButton
 {
     UIImage *footerImage = [UIImage imageNamed:@"ShareMenuFooter_light"];
