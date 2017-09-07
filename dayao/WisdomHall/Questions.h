@@ -19,4 +19,5 @@
 -(BOOL)whetherIsEmpty;
 -(void)setSelfInfoWithDict:(NSDictionary *)dict;
 +(NSMutableArray *)returnText:(NSMutableArray *)ary;
+-(void)getSelfInfo:(NSDictionary *)dict;
 @end

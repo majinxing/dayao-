@@ -45,17 +45,29 @@
                         <constraint firstAttribute="height" constant="1" id="UZf-ew-fJQ"/>
                     </constraints>
                 </view>
+                <label opaque="NO" userInteractionEnabled="NO" alpha="0.5" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="注意：起名时请不要和其他测试重名" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Gha-wF-jbo">
+                    <rect key="frame" x="30" y="217" width="315" height="30"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="30" id="MrY-Gg-dRm"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                    <nil key="textColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
             </subviews>
             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
                 <constraint firstItem="vyz-i0-EIn" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="145" id="7uk-R0-vb1"/>
                 <constraint firstItem="bcz-M5-Giq" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="149" id="EjM-Uu-w0V"/>
                 <constraint firstItem="Weo-qG-hdF" firstAttribute="top" secondItem="vyz-i0-EIn" secondAttribute="bottom" constant="21" id="M1G-qk-kbw"/>
+                <constraint firstAttribute="trailing" secondItem="Gha-wF-jbo" secondAttribute="trailing" constant="30" id="M2j-ew-jHj"/>
                 <constraint firstItem="bcz-M5-Giq" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="30" id="UIo-Wy-Vgy"/>
                 <constraint firstAttribute="trailing" secondItem="vyz-i0-EIn" secondAttribute="trailing" constant="36" id="ZWp-53-5TT"/>
                 <constraint firstAttribute="trailing" secondItem="Weo-qG-hdF" secondAttribute="trailing" constant="20" id="bXe-ri-FvE"/>
                 <constraint firstItem="vyz-i0-EIn" firstAttribute="leading" secondItem="bcz-M5-Giq" secondAttribute="trailing" id="dUI-pW-UXl"/>
                 <constraint firstItem="Weo-qG-hdF" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="20" id="go8-gD-w2q"/>
+                <constraint firstItem="Gha-wF-jbo" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="30" id="rbH-Si-qdr"/>
+                <constraint firstItem="Gha-wF-jbo" firstAttribute="top" secondItem="Weo-qG-hdF" secondAttribute="bottom" constant="20" id="xXy-En-VU6"/>
             </constraints>
             <point key="canvasLocation" x="33.5" y="54.5"/>
         </view>

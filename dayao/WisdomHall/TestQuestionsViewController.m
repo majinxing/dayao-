@@ -17,7 +17,7 @@
 #import "QuestionsTableViewCell.h"
 #import "QuestionListViewController.h"
 #import "ImportTextViewController.h"
-
+#import "AllTestViewController.h"
 
 @interface TestQuestionsViewController ()<UITableViewDelegate,UITableViewDataSource,UITextViewDelegate,CreateTextTableViewCellDelegate>
 @property (nonatomic,strong)UITableView *tableView;
@@ -25,6 +25,8 @@
 @property (nonatomic,strong)Questions * q;
 @property (nonatomic,strong)NSMutableArray * labelText;
 @property (nonatomic,strong)NSArray * ary;
+@property (strong, nonatomic) IBOutlet UILabel *questionNumber;
+
 @end
 
 @implementation TestQuestionsViewController
@@ -48,9 +50,17 @@
     
     [self keyboardNotification];
     
+    // 1.注册通知
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(selectQuestion:) name:@"selectQuestion" object:nil];
+    
     // Do any additional setup after loading the view from its nib.
 }
-
+-(void)selectQuestion:(NSNotification *)dict{
+    NSArray * ary = [dict.userInfo objectForKey:@"ary"];
+    [_questionArt setArray:ary];
+    _questionNumber.text = [NSString stringWithFormat:@"总题数：%lu",(unsigned long)_questionArt.count];
+}
 /**
  * 键盘监听
  **/
@@ -64,8 +74,7 @@
  *  添加tableView
  **/
 -(void)addTableView{
-    
-    _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 64,APPLICATION_WIDTH, APPLICATION_HEIGHT-64) style:UITableViewStylePlain];
+    _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 64,APPLICATION_WIDTH, APPLICATION_HEIGHT-64-40) style:UITableViewStylePlain];
     _tableView.delegate = self;
     _tableView.dataSource = self;
     _tableView.estimatedRowHeight = 100;
@@ -91,10 +100,43 @@
     UIBarButtonItem *myButton = [[UIBarButtonItem alloc] initWithTitle:@"更多" style:UIBarButtonItemStylePlain target:self action:@selector(more)];
     self.navigationItem.rightBarButtonItem = myButton;
 }
+-(NSMutableArray *)question{
+    NSMutableArray * ary = [NSMutableArray arrayWithCapacity:1];
+    for (int i = 0; i<_questionArt.count; i++) {
+        Questions * q = _questionArt[i];
+        NSDictionary * dict = [[NSDictionary alloc] initWithObjectsAndKeys:@"5",@"score", q.questionsID,@"questionId",[NSString stringWithFormat:@"%d",i+1],@"order",nil];
+        [ary addObject:dict];
+    }
+    return ary;
+}
 -(void)more{
     UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"提示" message:nil preferredStyle:  UIAlertControllerStyleActionSheet];
     //分别按顺序放入每个按钮；
     [alert addAction:[UIAlertAction actionWithTitle:@"提交创建试卷" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        
+        NSMutableArray * ary = [self question];
+        
+        NSDictionary * dict = [[NSDictionary alloc] initWithObjectsAndKeys:_t.title,@"name",@"1",@"status",_classModel.sclassId,@"relId",@"1",@"relType",ary,@"examQuestionList",@"0",@"startTime",nil];
+        
+        [[NetworkRequest sharedInstance] POST:CreateText dict:dict succeed:^(id data) {
+            NSLog(@"%@",data);
+            NSString * str = [[data objectForKey:@"header"] objectForKey:@"code"];
+            if ([str isEqualToString:@"0000"]) {
+                [UIUtils showInfoMessage:@"创建成功"];
+                for (UIViewController *controller in self.navigationController.viewControllers) {
+                    if ([controller isKindOfClass:[AllTestViewController class]]) {
+                        [self.navigationController popToViewController:controller animated:YES];
+                    }
+                }
+            }else if ([str isEqualToString:@"6682"]){
+                [UIUtils showInfoMessage:@"创建失败，试卷重名"];
+            }else{
+                [UIUtils showInfoMessage:@"创建失败"];
+            }
+        } failure:^(NSError *error) {
+            NSLog(@"%@",error);
+            [UIUtils showInfoMessage:@"创建失败，请检查网络"];
+        }];
         
     }]];
     [alert addAction:[UIAlertAction actionWithTitle:@"从题库导入试题" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
@@ -193,12 +235,30 @@
     
     [_questionArt addObject:q];
     
-    _q = nil;
-    
-    _q = [[Questions alloc] init];
-    
-    [_tableView reloadData];
+    NSDictionary * dict = [[NSDictionary alloc] initWithObjectsAndKeys:_qBank.libId,@"libId",@"5",@"type",q.answer,@"answer",@"5",@"difficulty",q.title,@"content", nil];
+    dispatch_async(dispatch_get_main_queue(), ^{
+        //获取主线程
+        [self hideHud];
+        [self showHudInView:self.view hint:NSLocalizedString(@"正在加载数据", @"Load data...")];
+    });
+    [[NetworkRequest sharedInstance] POST:CreateQuestion dict:dict succeed:^(id data) {
+        NSString * str = [NSString stringWithFormat:@"%@",[[data objectForKey:@"header"] objectForKey:@"code"]];
+        if ([str isEqualToString:@"0000"]) {
+            q.questionsID = [data objectForKey:@"body"];
+            _q = nil;
+            _q = [[Questions alloc] init];
+            _questionNumber.text = [NSString stringWithFormat:@"总题数：%lu",(unsigned long)_questionArt.count];
+            [_tableView reloadData];
+        }else{
+            [UIUtils showInfoMessage:@"创建失败"];
+        }
+        [self hideHud];
+    } failure:^(NSError *error) {
+        [self hideHud];
+        [UIUtils showInfoMessage:@"创建失败，请检查网络"];
+    }];
 }
+
 -(void)returnTextViewTextWithLabelDelegate:(NSString *)labelText withTextViewText:(NSString *)textViewText{
     if ([labelText isEqualToString:@"题目"]) {
         _q.title = textViewText;

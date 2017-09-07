@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "ClassModel.h"
 
 @interface CreateTestViewController : UIViewController
 
@@ -15,5 +16,5 @@
 @property (strong, nonatomic) IBOutlet UITextField *indexPoint;
 @property (strong, nonatomic) IBOutlet UITextField *timeLimitTextFile;
 @property (strong, nonatomic) IBOutlet UITextField *redoTextFile;
-
+@property (nonatomic,strong)ClassModel * classModel;
 @end

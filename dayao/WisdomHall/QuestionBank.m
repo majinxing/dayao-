@@ -14,4 +14,5 @@
     _libId = [dict objectForKey:@"id"];
     _libName = [dict objectForKey:@"name"];
 }
+
 @end

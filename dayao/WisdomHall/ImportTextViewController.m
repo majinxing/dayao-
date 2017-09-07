@@ -15,8 +15,10 @@
 #import "QuestionsTableViewCell.h"
 #import "ContactModel.h"
 #import "QuestionBank.h"
+#import "Questions.h"
+#import "QuestionListViewController.h"
 
-@interface ImportTextViewController ()<UITableViewDelegate,UITableViewDataSource,QuestionsTableViewCellDelegate>
+@interface ImportTextViewController ()<UITableViewDelegate,UITableViewDataSource>
 @property (nonatomic,strong)NSMutableArray * questionsAry;
 @property (nonatomic,strong)NSMutableArray * selected;//是否被选中的状态
 @property (nonatomic,strong)NSMutableArray * selectQuestiond;//已经选中的题，移除
@@ -49,6 +51,7 @@
             [q setSelfInfoWithDict:ary[i]];
             [_questionsAry addObject:q];
         }
+        [_tableView reloadData];
     } failure:^(NSError *error) {
         
     }];
@@ -73,11 +76,11 @@
     [self.navigationController.navigationBar setTitleTextAttributes:@{
                                                                       NSFontAttributeName:[UIFont systemFontOfSize:17],
                                                                       NSForegroundColorAttributeName:[UIColor blackColor]}];
-    self.title = @"试题";
-    UIBarButtonItem *myButton = [[UIBarButtonItem alloc] initWithTitle:@"添加试题" style:UIBarButtonItemStylePlain target:self action:@selector(back)];
-    self.navigationItem.rightBarButtonItem = myButton;
-    UIBarButtonItem * backbtn = [[UIBarButtonItem alloc] initWithTitle:nil style:UIBarButtonItemStylePlain target:self action:@selector(back)];
-    self.navigationItem.leftBarButtonItem = backbtn;
+    self.title = @"题库";
+//    UIBarButtonItem *myButton = [[UIBarButtonItem alloc] initWithTitle:@"添加试题" style:UIBarButtonItemStylePlain target:self action:@selector(back)];
+//    self.navigationItem.rightBarButtonItem = myButton;
+//    UIBarButtonItem * backbtn = [[UIBarButtonItem alloc] initWithTitle:nil style:UIBarButtonItemStylePlain target:self action:@selector(back)];
+//    self.navigationItem.leftBarButtonItem = backbtn;
 }
 
 -(void)back{
@@ -100,22 +103,42 @@
 }
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
-    
-    QuestionsTableViewCell * cell = [_tableView dequeueReusableCellWithIdentifier:@"QuestionsTableViewCellSecond"];
-    
+    UITableViewCell * cell = [tableView dequeueReusableCellWithIdentifier:@"cell"];
     if (!cell) {
-        cell = [[[NSBundle mainBundle] loadNibNamed:@"QuestionsTableViewCell" owner:nil options:nil] objectAtIndex:1];
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:@"cell"];
     }
-    cell.delegate = self;
     
-    Questions * q = _questionsAry[indexPath.row];
+    QuestionBank * q = _questionsAry[indexPath.row];
     
-    
+    cell.textLabel.text = [NSString stringWithFormat:@"题库：%@",q.libName];
     return cell;
     
 }
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    QuestionBank * q = _questionsAry[indexPath.row];
+    NSDictionary * dict = [[NSDictionary alloc] initWithObjectsAndKeys:q.libId,@"libId",@"1000",@"length",@"1",@"start",nil];
+    [[NetworkRequest sharedInstance] GET:QuertyBankQuestionList dict:dict succeed:^(id data) {
+        NSLog(@"%@",data);
+        NSString  * str = [NSString stringWithFormat:@"%@",[[data objectForKey:@"header"] objectForKey:@"code"]];
+        if ([str isEqualToString:@"0000"]) {
+            NSArray * ary = [data objectForKey:@"body"];
+            NSMutableArray * d = [NSMutableArray arrayWithCapacity:1];
+            for (int i = 0; i<ary.count; i++) {
+                Questions * q = [[Questions alloc] init];
+                [q getSelfInfo:ary[i]];
+                [d addObject:q];
+            }
+            QuestionListViewController * qVC = [[QuestionListViewController alloc] init];
+            qVC.questionAry = [[NSMutableArray alloc] initWithArray:d];
+            qVC.isSelect = YES;
+            self.hidesBottomBarWhenPushed  = YES;
+            [self.navigationController pushViewController:qVC animated:YES];
+        }
+        
+    } failure:^(NSError *error) {
+        [UIUtils showInfoMessage:@"请求失败，请检查网络"];
+    }];
 }
 //-(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
 //    return 60;

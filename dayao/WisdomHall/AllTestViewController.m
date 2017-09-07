@@ -68,6 +68,7 @@
 -(void)createText{
     CreateTestViewController * c = [[CreateTestViewController alloc] init];
     self.hidesBottomBarWhenPushed = YES;
+    c.classModel  = _classModel;
     [self.navigationController pushViewController:c animated:YES];
 }
 -(void)addTableView{

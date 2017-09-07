@@ -176,6 +176,20 @@
 
 #define QuertyQusetionBank      @"course/exam/qureyLib"             //查询题库列表
 
+#define CreateQuestion          @"course/exam/createQuestion"       //创建题目
+
+#define QuertyBankQuestionList  @"course/exam/queryQuestion"        //查询题库题目列表
+
+#define CreateText              @"course/exam/createExam"           //创建考试
+
+
+
+
+
+
+
+
+
 
 
 

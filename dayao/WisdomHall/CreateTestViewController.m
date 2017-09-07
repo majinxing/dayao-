@@ -74,6 +74,7 @@
             TestQuestionsViewController * tQVC = [[TestQuestionsViewController alloc] init];
             tQVC.t = t;
             tQVC.qBank = _questionModel;
+            tQVC.classModel = _classModel;
             self.hidesBottomBarWhenPushed = YES;
             [self.navigationController pushViewController:tQVC animated:YES];
         }else{

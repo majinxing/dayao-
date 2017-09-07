@@ -135,6 +135,8 @@
             NSString * str = [NSString stringWithFormat:@"%@",[[data objectForKey:@"header"] objectForKey:@"code"]];
             if ([str isEqualToString:@"0000"]) {
                 [UIUtils showInfoMessage:@"交卷成功"];
+            }else if ([str isEqualToString:@"6676"]){
+                [UIUtils showInfoMessage:@"考试未开始"];
             }else{
                 [UIUtils showInfoMessage:@"交卷失败"];
             }

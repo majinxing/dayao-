@@ -14,28 +14,45 @@
 @interface CollectionHeadView()<UIScrollViewDelegate>
 @property (nonatomic,strong)NSTimer * rotateTimer;
 @property (nonatomic,strong)UIPageControl * myPageControl;
+@property (nonatomic,strong)NSMutableArray * ary;
+@property (nonatomic,assign) int temp;
 @end
 @implementation CollectionHeadView
 - (instancetype) initWithFrame:(CGRect)frame{
     self=[super initWithFrame:frame];
     if (self) {
         self.backgroundColor = [UIColor clearColor];
-        [self addScrollView];
+        _ary = [NSMutableArray arrayWithCapacity:1];
+        _temp = 0;
         [self getData];
     }
     return self;
 }
 -(void)getData{
     [[NetworkRequest sharedInstance] GET:QueryAdvertising dict:nil succeed:^(id data) {
-//        NSLog(@"%@",data);
+        NSArray * ary = [data objectForKey:@"body"];
+        [_ary removeAllObjects];
+        for (int i = 0; i<ary.count; i++) {
+            NSString * d = [ary[i] objectForKey:@"id"];
+            NSString * str = [NSString stringWithFormat:@"%@/course/resource/download?resourceId=%@",BaseURL,d];
+            NSData *data = [NSData dataWithContentsOfURL:[NSURL  URLWithString:str]];
+            UIImage *image = [UIImage imageWithData:data];
+            [_ary addObject:image];
+        }
+        [self addScrollView];
     } failure:^(NSError *error) {
         
     }];
 }
 -(void)addScrollView{
+    if (_ary.count>0) {
+        _temp = (int)_ary.count;
+    }else{
+        return;
+    }
     UIScrollView * s = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 0,APPLICATION_WIDTH, APPLICATION_HEIGHT/4)];
-    s.backgroundColor = [UIColor greenColor];
-    s.contentSize = CGSizeMake(APPLICATION_WIDTH*2, APPLICATION_HEIGHT/4);
+    s.backgroundColor = [UIColor whiteColor];
+    s.contentSize = CGSizeMake(APPLICATION_WIDTH*_temp, APPLICATION_HEIGHT/4);
     s.scrollEnabled = YES;//是否可以滚动
     s.pagingEnabled = YES;//是否整页滚动
     s.showsVerticalScrollIndicator = NO;//水平方向的滚动条
@@ -43,38 +60,33 @@
     s.bounces = NO;
     [self addSubview:s];
     
-    for (int i = 0; i<2; i++) {
+    for (int i = 0; i<_temp; i++) {
         UIView * v = [[UIView alloc] initWithFrame:CGRectMake(APPLICATION_WIDTH*i, 0, APPLICATION_WIDTH, APPLICATION_HEIGHT/4)];
-        if (i==0) {
-            v.backgroundColor = [UIColor redColor];
-            UIImageView * i = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, APPLICATION_WIDTH, APPLICATION_HEIGHT/4)];
-            i.image = [UIImage imageNamed:@"xtu01"];
-            [v addSubview:i];
-        }else if (i==1){
-            v.backgroundColor = [UIColor greenColor];
-            UIImageView * i = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, APPLICATION_WIDTH, APPLICATION_HEIGHT/4)];
-            i.image = [UIImage imageNamed:@"abc_adv_3"];
-            [v addSubview:i];
-        }else if(i==2){
-            v.backgroundColor = [UIColor blueColor];
-            UIImageView * i = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, APPLICATION_WIDTH, APPLICATION_HEIGHT/4)];
-            i.image = [UIImage imageNamed:@"xtu01"];
-            [v addSubview:i];
-        }
+//        if (i==0) {
+//            v.backgroundColor = [UIColor redColor];
+//            UIImageView * i = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, APPLICATION_WIDTH, APPLICATION_HEIGHT/4)];
+//            i.image = [UIImage imageNamed:@"xtu01"];
+//            [v addSubview:i];
+//        }else{
+            v.backgroundColor = [UIColor whiteColor];
+            UIImageView * ii = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, APPLICATION_WIDTH, APPLICATION_HEIGHT/4)];
+            ii.image = _ary[i];
+            [v addSubview:ii];
+//        }
         [s addSubview:v];
     }
-    UIView * v = [[UIView alloc] initWithFrame:CGRectMake(APPLICATION_WIDTH*2, 0, APPLICATION_WIDTH, APPLICATION_HEIGHT)];
-    v.backgroundColor = [UIColor redColor];
+    UIView * v = [[UIView alloc] initWithFrame:CGRectMake(APPLICATION_WIDTH*_temp, 0, APPLICATION_WIDTH, APPLICATION_HEIGHT)];
+    v.backgroundColor = [UIColor whiteColor];
     s.tag = 1000;
     UIImageView * i = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, APPLICATION_WIDTH, APPLICATION_HEIGHT/4)];
-    i.image = [UIImage imageNamed:@"xtu01"];
+    i.image = _ary[0];
     
     [v addSubview:i];
 
     [s addSubview:v];
     
     _myPageControl = [[UIPageControl alloc] initWithFrame:CGRectMake(0, APPLICATION_HEIGHT/4-20, CGRectGetWidth(self.frame), 20)];
-    _myPageControl.numberOfPages = 2;
+    _myPageControl.numberOfPages = _temp;
     _myPageControl.currentPage = 0;
     [self addSubview:_myPageControl];
     
@@ -92,12 +104,12 @@
     offset_X += CGRectGetWidth(self.frame);
     
     //说明要从最右边的多余视图开始滚动了，最右边的多余视图实际上就是第一个视图。所以偏移量需要更改为第一个视图的偏移量。
-    if (offset_X > CGRectGetWidth(self.frame)*2) {
+    if (offset_X > CGRectGetWidth(self.frame)*_temp) {
         scrollView.contentOffset = CGPointMake(0, 0);
         
     }
     //说明正在显示的就是最右边的多余视图，最右边的多余视图实际上就是第一个视图。所以pageControl的小白点需要在第一个视图的位置。
-    if (offset_X == CGRectGetWidth(self.frame)*2) {
+    if (offset_X == CGRectGetWidth(self.frame)*_temp) {
         self.myPageControl.currentPage = 0;
     }else{
         self.myPageControl.currentPage = offset_X/CGRectGetWidth(self.frame);
@@ -107,7 +119,7 @@
     CGPoint resultPoint = CGPointMake(offset_X, 0);
     //切换视图时带动画效果
     //最右边的多余视图实际上就是第一个视图，现在是要从第一个视图向第二个视图偏移，所以偏移量为一个屏幕宽度
-    if (offset_X >CGRectGetWidth(self.frame)*2) {
+    if (offset_X >CGRectGetWidth(self.frame)*_temp) {
         self.myPageControl.currentPage = 1;
         [scrollView setContentOffset:CGPointMake(CGRectGetWidth(self.frame), 0) animated:YES];
     }else{

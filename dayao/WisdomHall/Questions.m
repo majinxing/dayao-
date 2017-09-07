@@ -39,6 +39,14 @@
     _questionsID = [NSString stringWithFormat:@"%@",[dict objectForKey:@"examQuestionId"]];
     _answer = [[NSString alloc] init];
 }
+-(void)getSelfInfo:(NSDictionary *)dict{
+    _title = [dict objectForKey:@"content"];
+    _multiSelect = [dict objectForKey:@"typeName"];
+    _questionsID = [NSString stringWithFormat:@"%@",[dict objectForKey:@"id"]];
+    _answer = [[NSString alloc] init];
+
+}
+
 +(NSMutableArray *)returnText:(NSMutableArray *)ary{
     NSMutableArray * a = [NSMutableArray arrayWithCapacity:1];
     for (int i = 0; i<ary.count; i++) {
