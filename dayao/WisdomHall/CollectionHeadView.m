@@ -34,10 +34,12 @@
         [_ary removeAllObjects];
         for (int i = 0; i<ary.count; i++) {
             NSString * d = [ary[i] objectForKey:@"id"];
-            NSString * str = [NSString stringWithFormat:@"%@/course/resource/download?resourceId=%@",BaseURL,d];
-            NSData *data = [NSData dataWithContentsOfURL:[NSURL  URLWithString:str]];
+            NSString * str = [NSString stringWithFormat:@"%@course/resource/download?resourceId=%@",BaseURL,d];
+            NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString:str]];
             UIImage *image = [UIImage imageWithData:data];
-            [_ary addObject:image];
+            if (image!=nil) {
+                [_ary addObject:image];
+            }
         }
         [self addScrollView];
     } failure:^(NSError *error) {

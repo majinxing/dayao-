@@ -58,7 +58,10 @@
 }
 -(void)selectQuestion:(NSNotification *)dict{
     NSArray * ary = [dict.userInfo objectForKey:@"ary"];
-    [_questionArt setArray:ary];
+    for (int i = 0; i<ary.count; i++) {
+        Questions * q = ary[i];
+        [_questionArt addObject:q];
+    }
     _questionNumber.text = [NSString stringWithFormat:@"总题数：%lu",(unsigned long)_questionArt.count];
 }
 /**
@@ -119,7 +122,6 @@
         NSDictionary * dict = [[NSDictionary alloc] initWithObjectsAndKeys:_t.title,@"name",@"1",@"status",_classModel.sclassId,@"relId",@"1",@"relType",ary,@"examQuestionList",@"0",@"startTime",nil];
         
         [[NetworkRequest sharedInstance] POST:CreateText dict:dict succeed:^(id data) {
-            NSLog(@"%@",data);
             NSString * str = [[data objectForKey:@"header"] objectForKey:@"code"];
             if ([str isEqualToString:@"0000"]) {
                 [UIUtils showInfoMessage:@"创建成功"];
@@ -221,6 +223,9 @@
 //}
 -(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
     return 10;
+}
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView{
+    [self.view endEditing:YES];
 }
 #pragma mark ----------------------CreateTextTableViewCellDelegate
 -(void)createTopicPressedDelegate{

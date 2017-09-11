@@ -182,7 +182,6 @@ static NSString *cellIdentifier = @"cellIdentifier";
     NSDictionary * dict = [[NSDictionary alloc] initWithObjectsAndKeys:[NSString stringWithFormat:@"%ld",(long)page],@"start",_userModel.peopleId,@"studentId",[UIUtils getTime],@"actStartTime",[UIUtils getMoreMonthTime],@"actEndTime",@"1000",@"length",_userModel.school,@"universityId",@"1",@"type",[NSString stringWithFormat:@"%d",[UIUtils getTermId]],@"termId",@"1",@"courseType",nil];
     
     [[NetworkRequest sharedInstance] GET:QueryCourse dict:dict succeed:^(id data) {
-        //        NSLog(@"2");
         NSString * str = [[data objectForKey:@"header"] objectForKey:@"message"];
         if ([str isEqualToString:@"成功"]) {
             NSArray * ary = [[data objectForKey:@"body"] objectForKey:@"list"];
@@ -192,7 +191,6 @@ static NSString *cellIdentifier = @"cellIdentifier";
                 [_classAry addObject:c];
             }
         }
-        //        [_collection reloadData];
         [self getSelfCreateClassType:page];
     } failure:^(NSError *error) {
         [self hideHud];
@@ -205,7 +203,6 @@ static NSString *cellIdentifier = @"cellIdentifier";
     NSDictionary * dict = [[NSDictionary alloc] initWithObjectsAndKeys:[NSString stringWithFormat:@"%ld",(long)page],@"start",_userModel.peopleId,@"teacherId",[UIUtils getTime],@"actStartTime",[UIUtils getMoreMonthTime],@"actEndTime",@"1000",@"length",_userModel.school,@"universityId",@"2",@"type",@"2",@"courseType",nil];
     
     [[NetworkRequest sharedInstance] GET:QueryCourse dict:dict succeed:^(id data) {
-        //        NSLog(@"3");
         NSString * str = [[data objectForKey:@"header"] objectForKey:@"message"];
         if ([str isEqualToString:@"成功"]) {
             NSArray * ary = [[data objectForKey:@"body"] objectForKey:@"list"];
@@ -215,7 +212,6 @@ static NSString *cellIdentifier = @"cellIdentifier";
                 [_classAry addObject:c];
             }
         }
-        //        [_collection reloadData];
         [self getSelfJoinClassType:page];
     } failure:^(NSError *error) {
         [self hideHud];
@@ -282,8 +278,6 @@ static NSString *cellIdentifier = @"cellIdentifier";
         UIBarButtonItem *myButton = [[UIBarButtonItem alloc] initWithTitle:@"加入课程" style:UIBarButtonItemStylePlain target:self action:@selector(joinCourse)];
         self.navigationItem.rightBarButtonItem = myButton;
     }
-    
-    
     
     UIBarButtonItem * selection = [[UIBarButtonItem alloc] initWithTitle:@"搜索" style:UIBarButtonItemStylePlain target:self action:@selector(selectionBtnPressed)];
     self.navigationItem.leftBarButtonItem = selection;

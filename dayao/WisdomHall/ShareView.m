@@ -70,8 +70,6 @@
                               InteractionType_Vote,
                               InteractionType_Data,
                               InteractionType_Responder,
-                              InteractionType_Discuss,
-                              InteractionType_Add
                               ];
     
     //水平间距
@@ -135,8 +133,6 @@
                               InteractionType_Vote,
                               InteractionType_Responder,
                               InteractionType_Test,
-                              InteractionType_Discuss,
-                              InteractionType_Add
                               ];
     
     //水平间距

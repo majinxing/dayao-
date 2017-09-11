@@ -86,6 +86,10 @@
     _tableView.delegate = self;
     _tableView.dataSource = self;
     self.automaticallyAdjustsScrollViewInsets = NO;
+    _tableView.separatorStyle =     UITableViewCellSeparatorStyleNone;
+    _tableView.estimatedRowHeight = 70;
+    _tableView.rowHeight = UITableViewAutomaticDimension;
+
     [self.view addSubview:_tableView];
 }
 - (void)didReceiveMemoryWarning {
@@ -115,26 +119,35 @@
 }
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
-    JoinVoteTableViewCell * cell = [tableView dequeueReusableCellWithIdentifier:@"JoinVoteTableViewCellSecond"];
-    if (!cell) {
-        cell = [[[NSBundle mainBundle] loadNibNamed:@"JoinVoteTableViewCell" owner:nil options:nil] objectAtIndex:1];
-    }
+    JoinVoteTableViewCell * cell ;
+    
     Questions * q = _questionAry[indexPath.row];
+    
     if (_isSelect) {
+        
+        cell = [tableView dequeueReusableCellWithIdentifier:@"JoinVoteTableViewCellSecond"];
+        if (!cell) {
+            cell = [[[NSBundle mainBundle] loadNibNamed:@"JoinVoteTableViewCell" owner:nil options:nil] objectAtIndex:1];
+        }
         [cell setSelectText:[NSString stringWithFormat:@"题目:%@",q.title] withTag:(int)indexPath.row+1 withSelect:_selectAry[indexPath.row]];
     }else{
-        cell.textLabel.text = [NSString stringWithFormat:@"题目:%@",q.title];
+        cell = [tableView dequeueReusableCellWithIdentifier:@"JoinVoteTableViewCellFirst"];
+        if (!cell) {
+            cell = [[[NSBundle mainBundle] loadNibNamed:@"JoinVoteTableViewCell" owner:nil options:nil] objectAtIndex:0];
+        }
+        [cell setQuestionContent:q.title];
     }
     
     cell.delegate = self;
+    cell.selectionStyle = UITableViewCellSelectionStyleNone;
     return cell;
 }
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
--(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
-    return 50;
-}
+//-(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
+//    return 60;
+//}
 -(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
     return 10;
 }

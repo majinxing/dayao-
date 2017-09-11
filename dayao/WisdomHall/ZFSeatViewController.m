@@ -147,8 +147,6 @@
     [self.view addSubview:selectionView];
 }
 
-
-
 -(void)setupSureBtn{
     
     UIButton *sureBtn = [UIButton buttonWithType:UIButtonTypeCustom];

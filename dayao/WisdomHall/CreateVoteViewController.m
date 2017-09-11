@@ -18,6 +18,7 @@
 @property (nonatomic,strong)VoteModel * voteModel;
 @property (nonatomic,strong)NSMutableArray * labeAry;
 @property (nonatomic,assign)int rowNumber;
+@property (nonatomic,assign)int temp;
 @end
 
 @implementation CreateVoteViewController
@@ -213,6 +214,9 @@
 
 -(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
     return 10;
+}
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView{
+    
 }
 #pragma mark textFileTextChangeDelegate
 -(void)textFileTextChangeDelegate:(UITextView *)textFile{
