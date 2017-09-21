@@ -188,7 +188,7 @@
     _meetingId.text = [NSString stringWithFormat:@"会议邀请码：%@",_meetingModel.meetingId];
     
     if ([[NSString stringWithFormat:@"%@",_user.peopleId] isEqualToString:[NSString stringWithFormat:@"%@",_meetingModel.meetingHostId]]) {
-        _signNumber.text = [NSString stringWithFormat:@"签到人数：%ld/%ld",(long)_meetingModel.n,(long)_meetingModel.m];
+        _signNumber.text = [NSString stringWithFormat:@"已签/未签：%ld/%ld",(long)_meetingModel.n,(long)_meetingModel.m];
         [_seatBtn setBackgroundColor:[UIColor colorWithHexString:@"#29a7e1"]];
         [_seatBtn setTitle:@"人员管理" forState:UIControlStateNormal];
         _temp = 0;

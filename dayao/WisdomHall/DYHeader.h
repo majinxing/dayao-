@@ -182,6 +182,7 @@
 
 #define CreateText              @"course/exam/createExam"           //创建考试
 
+#define Update                  @"course/user/password/update"      //修改密码
 
 
 

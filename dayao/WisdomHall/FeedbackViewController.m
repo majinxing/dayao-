@@ -45,7 +45,7 @@
                                                                       NSFontAttributeName:[UIFont systemFontOfSize:17],
                                                                       NSForegroundColorAttributeName:[UIColor blackColor]}];
     self.title = @"意见反馈";
-    UIBarButtonItem * myButton = [[UIBarButtonItem alloc] initWithTitle:@"修改" style:UIBarButtonItemStylePlain target:self action:@selector(saveInfo)];
+    UIBarButtonItem * myButton = [[UIBarButtonItem alloc] initWithTitle:@"提交" style:UIBarButtonItemStylePlain target:self action:@selector(saveInfo)];
     self.navigationItem.rightBarButtonItem = myButton;
 }
 -(void)saveInfo{
@@ -120,9 +120,12 @@
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     [self.view endEditing:YES];
 }
-//-(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
-//    return 60;
-//}
+-(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
+    if (indexPath.row == 0) {
+        return 90;
+    }
+    return 200;
+}
 -(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
     return 10;
 }

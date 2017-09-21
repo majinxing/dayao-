@@ -133,6 +133,7 @@
                               InteractionType_Vote,
                               InteractionType_Responder,
                               InteractionType_Test,
+                              InteractionType_Discuss
                               ];
     
     //水平间距

@@ -42,36 +42,36 @@
     return YES;
 }
 - (void)textViewDidChange:(UITextView *)textView{
-    CGRect bounds = textView.bounds;
-    // 计算 text view 的高度
-    CGSize maxSize = CGSizeMake(bounds.size.width, CGFLOAT_MAX);
-    CGSize newSize = [textView sizeThatFits:maxSize];
-    bounds.size = newSize;
-    textView.bounds = bounds;
-    // 让 table view 重新计算高度
-    UITableView *tableView = [self tableView];
-    [tableView beginUpdates];
-    [tableView endUpdates];
+//    CGRect bounds = textView.bounds;
+//    // 计算 text view 的高度
+//    CGSize maxSize = CGSizeMake(bounds.size.width, CGFLOAT_MAX);
+//    CGSize newSize = [textView sizeThatFits:maxSize];
+//    bounds.size = newSize;
+//    textView.bounds = bounds;
+//    // 让 table view 重新计算高度
+//    UITableView *tableView = [self tableView];
+//    [tableView beginUpdates];
+//    [tableView endUpdates];
     
     if (self.delegate&&[self.delegate respondsToSelector:@selector(feedBackCellDelegateTextViewChange:)]) {
         [self.delegate feedBackCellDelegateTextViewChange:textView];
     }
 }
--(BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString*)text
-{
-    if ([text isEqualToString:@"\n"]) {
-        [textView resignFirstResponder];
-        return NO;
-    }
-    return YES;
-}
-- (UITableView *)tableView
-{
-    UIView *tableView = self.superview;
-    while (![tableView isKindOfClass:[UITableView class]] && tableView) {
-        tableView = tableView.superview;
-    }
-    return (UITableView *)tableView;
-}
+//-(BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString*)text
+//{
+//    if ([text isEqualToString:@"\n"]) {
+//        [textView resignFirstResponder];
+//        return NO;
+//    }
+//    return YES;
+//}
+//- (UITableView *)tableView
+//{
+//    UIView *tableView = self.superview;
+//    while (![tableView isKindOfClass:[UITableView class]] && tableView) {
+//        tableView = tableView.superview;
+//    }
+//    return (UITableView *)tableView;
+//}
 
 @end

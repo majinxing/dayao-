@@ -93,20 +93,18 @@ static dispatch_once_t onceToken;
         
         UserModel * user = [[Appsetting sharedInstance] getUsetInfo];
         
-        EMError *error = [[EMClient sharedClient] registerWithUsername:[NSString stringWithFormat:@"%@%@",user.school,user.studentId] password:user.userPassword];
-        
-        
+        EMError *error = [[EMClient sharedClient] registerWithUsername:[NSString stringWithFormat:@"%@%@",user.school,user.studentId] password:[NSString stringWithFormat:@"%@",user.studentId]];
         
         [JPUSHService setAlias:[NSString stringWithFormat:@"%@%@",user.school,user.studentId] completion:^(NSInteger iResCode, NSString *iAlias, NSInteger seq) {
 
         } seq:0];
         
-        
         if (error==nil) {
             NSLog(@"注册成功");
         }
         
-        EMError *error2 = [[EMClient sharedClient] loginWithUsername:[NSString stringWithFormat:@"%@%@",user.school,user.studentId] password:user.userPassword];
+        EMError *error2 = [[EMClient sharedClient] loginWithUsername:[NSString stringWithFormat:@"%@%@",user.school,user.studentId] password:[NSString stringWithFormat:@"%@",user.studentId]];
+        
         if (!error2) {
             NSLog(@"登录成功");
         }else{

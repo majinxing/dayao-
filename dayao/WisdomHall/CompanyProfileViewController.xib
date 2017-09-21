@@ -11,6 +11,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="CompanyProfileViewController">
             <connections>
+                <outlet property="aboutCompany" destination="Zcu-Ie-bnd" id="BJR-Py-ja5"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
@@ -22,17 +23,7 @@
                 <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" textAlignment="natural" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Zcu-Ie-bnd">
                     <rect key="frame" x="15" y="70" width="345" height="557"/>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                    <string key="text">湖南大姚科技有限公司是一家致力于科技改变生活的高新技术研发与销售公司，集高科技创意产品设计、研发与推广的创新创业公司。  
-         
-联系我们
-通讯地址：长沙市高新开发区芯城科技园，邮编410000
-
-服务邮箱：hunandayaokeji@163.com
-
-我们将随时为您献上真诚的服务。
-
-网站网址：www.dayaokeji.com</string>
-                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="15"/>
                     <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                 </textView>
             </subviews>

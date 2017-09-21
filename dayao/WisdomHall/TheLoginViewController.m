@@ -32,6 +32,9 @@
     [_personalPassword addTarget:self action:@selector(textFieldDidChange:) forControlEvents:UIControlEventEditingChanged];
     [_personalAccount setValue:[UIColor whiteColor] forKeyPath:@"_placeholderLabel.textColor"];
     [_personalPassword setValue:[UIColor whiteColor] forKeyPath:@"_placeholderLabel.textColor"];
+    UserModel * user = [[Appsetting sharedInstance] getUsetInfo];
+    _personalAccount.text = user.userPhone;
+    _personalPassword.text = user.userPassword;
     // Do any additional setup after loading the view from its nib.
 }
 -(void)viewWillAppear:(BOOL)animated{

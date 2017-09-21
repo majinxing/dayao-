@@ -109,7 +109,7 @@
     [self.view addSubview:_tabelView];
 }
 -(void)quertyNumberClass{
-    NSDictionary * dict = [[NSDictionary alloc] initWithObjectsAndKeys:_userModel.school,@" universityId", nil];
+    NSDictionary * dict = [[NSDictionary alloc] initWithObjectsAndKeys:_userModel.school,@"universityId", nil];
     [[NetworkRequest sharedInstance] GET:QuertyClassNumber dict:dict succeed:^(id data) {
         NSLog(@"%@",data);
     } failure:^(NSError *error) {

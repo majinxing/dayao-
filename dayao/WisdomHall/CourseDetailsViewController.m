@@ -510,11 +510,11 @@
         [self.navigationController pushViewController:textVC animated:YES];
         
     }
-    else{
-        UIAlertView * later = [[UIAlertView alloc] initWithTitle:nil message:@"未完待续" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil];
-        [later show];
-        return;
-    }
+//    else{
+//        UIAlertView * later = [[UIAlertView alloc] initWithTitle:nil message:@"未完待续" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil];
+//        [later show];
+//        return;
+//    }
     
     if ([platform isEqualToString:InteractionType_Discuss]){
         DiscussViewController * d = [[DiscussViewController alloc] init];

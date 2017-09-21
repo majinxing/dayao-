@@ -124,9 +124,9 @@
 
 - (IBAction)nextButtonPressed:(id)sender {
     
-//    RedefineThePasswordViewController * redeFineVC = [[RedefineThePasswordViewController alloc] init];
-//    redeFineVC.phoneNumber = _phoneNumber.text;
-//    [self.navigationController pushViewController:redeFineVC animated:YES];
+    RedefineThePasswordViewController * redeFineVC = [[RedefineThePasswordViewController alloc] init];
+    redeFineVC.phoneNumber = _phoneNumber.text;
+    [self.navigationController pushViewController:redeFineVC animated:YES];
     
     [SMSSDK commitVerificationCode:_Verification.text phoneNumber:_phoneNumber.text zone:@"86" result:^(NSError *error) {
         
