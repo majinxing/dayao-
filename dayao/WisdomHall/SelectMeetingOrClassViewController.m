@@ -183,7 +183,7 @@ static NSString * cellIdentifier = @"cellIdentifier";
 }
 -(void)getSelfCreateMeetingList:(NSInteger)page{
     UserModel * user = [[Appsetting sharedInstance] getUsetInfo];
-    if ([[NSString stringWithFormat:@"%@",user.identity] isEqualToString:@"0"]) {
+    if ([[NSString stringWithFormat:@"%@",user.identity] isEqualToString:@"1"]) {
         
 //        NSDictionary * dict = [[NSDictionary alloc] initWithObjectsAndKeys:_userModel.peopleId,@"userId",[UIUtils getTime],@"startTime",@"",@"endTime",[NSString stringWithFormat:@"%ld",(long)page],@"start",nil];
         NSDictionary * dict = [[NSDictionary alloc] initWithObjectsAndKeys:_userModel.peopleId,@"userId",_keyWord,@"keywords",[NSString stringWithFormat:@"%ld",(long)page],@"start", nil];

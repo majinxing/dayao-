@@ -21,7 +21,7 @@
 - (instancetype) initWithFrame:(CGRect)frame{
     self=[super initWithFrame:frame];
     if (self) {
-        self.backgroundColor = [UIColor clearColor];
+        self.backgroundColor = [UIColor whiteColor];
         _ary = [NSMutableArray arrayWithCapacity:1];
         _temp = 0;
         [self getData];

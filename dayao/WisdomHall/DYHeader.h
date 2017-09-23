@@ -56,6 +56,12 @@
 
 #define Test_Scores_Query           @"查询成绩"
 
+#define Meeting                     @"会议"
+#define Announcement                @"公告"
+#define Leave                       @"请假"
+#define Business                    @"出差"
+#define Lotus                       @"审批"
+
 //数据库的名字
 #define SQLITE_NAME            @"Dayao"
 

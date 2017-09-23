@@ -72,9 +72,9 @@ static NSString * cellIdentifier = @"cellIdentifier";
                                                                       NSForegroundColorAttributeName:[UIColor blackColor]}];
     self.title = @"会议";
     
-    UIBarButtonItem * selection = [[UIBarButtonItem alloc] initWithTitle:@"搜索" style:UIBarButtonItemStylePlain target:self action:@selector(selectionBtnPressed)];
-    self.navigationItem.leftBarButtonItem = selection;
-    UIBarButtonItem * createMeeting = [[UIBarButtonItem alloc] initWithTitle:@"创建/加入会议" style:UIBarButtonItemStylePlain target:self action:@selector(createMeeting)];
+//    UIBarButtonItem * selection = [[UIBarButtonItem alloc] initWithTitle:@"搜索" style:UIBarButtonItemStylePlain target:self action:@selector(selectionBtnPressed)];
+//    self.navigationItem.leftBarButtonItem = selection;
+    UIBarButtonItem * createMeeting = [[UIBarButtonItem alloc] initWithTitle:@"更多" style:UIBarButtonItemStylePlain target:self action:@selector(createMeeting)];
     self.navigationItem.rightBarButtonItem = createMeeting;
 }
 -(void)createMeeting{
@@ -86,7 +86,8 @@ static NSString * cellIdentifier = @"cellIdentifier";
         CreateMeetingViewController * c = [[CreateMeetingViewController alloc] init];
         self.hidesBottomBarWhenPushed = YES;
         [self.navigationController pushViewController:c animated:YES];
-        self.hidesBottomBarWhenPushed = NO;    }]];
+//        self.hidesBottomBarWhenPushed = NO;
+    }]];
     
     [alert addAction:[UIAlertAction actionWithTitle:@"加入会议" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
         if (_join==nil) {
@@ -97,6 +98,9 @@ static NSString * cellIdentifier = @"cellIdentifier";
         }
         
         
+    }]];
+    [alert addAction:[UIAlertAction actionWithTitle:@"搜索会议" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        [self selectionBtnPressed];
     }]];
     
     [alert addAction:[UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleDestructive handler:^(UIAlertAction * _Nonnull action) {
@@ -111,7 +115,7 @@ static NSString * cellIdentifier = @"cellIdentifier";
     SelectMeetingOrClassViewController * s = [[SelectMeetingOrClassViewController alloc] init];
     self.hidesBottomBarWhenPushed = YES;
     [self.navigationController pushViewController:s animated:YES];
-    self.hidesBottomBarWhenPushed = NO;
+//    self.hidesBottomBarWhenPushed = NO;
 }
 -(void)addAlterView{
     _alterView = [[AlterView alloc] initWithFrame:CGRectMake(60, 200, APPLICATION_WIDTH-120, 120) withLabelText:@"暂无会议"];
@@ -124,7 +128,7 @@ static NSString * cellIdentifier = @"cellIdentifier";
  * 添加collection
  **/
 -(void)addCollection{
-    _collection = [[UICollectionView alloc] initWithFrame:CGRectMake(0,64,APPLICATION_WIDTH,APPLICATION_HEIGHT-64-48) collectionViewLayout:[[CollectionFlowLayout alloc] init]];
+    _collection = [[UICollectionView alloc] initWithFrame:CGRectMake(0,64,APPLICATION_WIDTH,APPLICATION_HEIGHT-64) collectionViewLayout:[[CollectionFlowLayout alloc] init]];
     //注册
     [_collection registerClass:[CourseCollectionViewCell class] forCellWithReuseIdentifier:cellIdentifier];
     
@@ -314,7 +318,7 @@ static NSString * cellIdentifier = @"cellIdentifier";
     mInfo.hidesBottomBarWhenPushed = YES;
     mInfo.meetingModel = _meetingModelAry[indexPath.row];
     [self.navigationController pushViewController:mInfo animated:YES];
-    self.hidesBottomBarWhenPushed=NO;
+//    self.hidesBottomBarWhenPushed=NO;
     
 }
 //有了初次点击再走这个
@@ -325,7 +329,7 @@ static NSString * cellIdentifier = @"cellIdentifier";
     mInfo.hidesBottomBarWhenPushed = YES;
     mInfo.meetingModel = _meetingModelAry[indexPath.row];
     [self.navigationController pushViewController:mInfo animated:YES];
-    self.hidesBottomBarWhenPushed=NO;
+//    self.hidesBottomBarWhenPushed=NO;
     
 }
 #pragma mark UICollectionViewDelegateFlowLayout

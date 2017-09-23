@@ -41,7 +41,7 @@
     [self.navigationController.navigationBar setTitleTextAttributes:@{
                                                                       NSFontAttributeName:[UIFont systemFontOfSize:17],
                                                                       NSForegroundColorAttributeName:[UIColor blackColor]}];
-    self.title = @"我";
+    self.title = @"我的";
 }
 
 - (void)didReceiveMemoryWarning {

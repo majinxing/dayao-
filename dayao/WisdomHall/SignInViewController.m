@@ -88,7 +88,7 @@ static NSString *cellIdentifier = @"cellIdentifier";
 -(void)addCollection{
     CollectionFlowLayout * flowLayout = [[CollectionFlowLayout alloc] init];
     _collection = [[UICollectionView alloc] initWithFrame:CGRectMake(0, 64,APPLICATION_WIDTH,APPLICATION_HEIGHT-48-64) collectionViewLayout:flowLayout];
-    flowLayout.headerReferenceSize = CGSizeMake(0, APPLICATION_HEIGHT/4);
+//    flowLayout.headerReferenceSize = CGSizeMake(0, APPLICATION_HEIGHT/4);
     self.automaticallyAdjustsScrollViewInsets = NO;
     //注册
     [_collection registerClass:[CourseCollectionViewCell class] forCellWithReuseIdentifier:cellIdentifier];
@@ -397,20 +397,20 @@ static NSString *cellIdentifier = @"cellIdentifier";
     }
     return cell;
 }
-//创建头视图
-- (UICollectionReusableView *)collectionView:(UICollectionView *)collectionView
-           viewForSupplementaryElementOfKind:(NSString *)kind
-                                 atIndexPath:(NSIndexPath *)indexPath{
-    
-    UICollectionReusableView * headView = [collectionView dequeueReusableSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:@"UICollectionViewHeader" forIndexPath:indexPath];
-    
-    headView.backgroundColor = [UIColor redColor];
-    CollectionHeadView * v = [[CollectionHeadView alloc] init];
-    v.frame = CGRectMake(0, 0, APPLICATION_WIDTH, APPLICATION_HEIGHT/4);
-    [headView addSubview:v];
-    
-    return headView;
-}
+////创建头视图
+//- (UICollectionReusableView *)collectionView:(UICollectionView *)collectionView
+//           viewForSupplementaryElementOfKind:(NSString *)kind
+//                                 atIndexPath:(NSIndexPath *)indexPath{
+//    
+//    UICollectionReusableView * headView = [collectionView dequeueReusableSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:@"UICollectionViewHeader" forIndexPath:indexPath];
+//    
+//    headView.backgroundColor = [UIColor redColor];
+//    CollectionHeadView * v = [[CollectionHeadView alloc] init];
+//    v.frame = CGRectMake(0, 0, APPLICATION_WIDTH, APPLICATION_HEIGHT/4);
+//    [headView addSubview:v];
+//    
+//    return headView;
+//}
 #pragma mark UICollectionViewDelegate
 //初次点击走
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath

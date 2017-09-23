@@ -99,6 +99,19 @@
     if ([type isEqualToString:Test_Scores_Query]) {
         [self setImage:[UIImage imageNamed:@"查询"] forState:UIControlStateNormal];
     }
+    if ([type isEqualToString:Meeting]) {
+        [self setImage:[UIImage imageNamed:@"会议"] forState:UIControlStateNormal];
+    }
+    if ([type isEqualToString:Announcement]) {
+        [self setImage:[UIImage imageNamed:@"公告"] forState:UIControlStateNormal];
+    }
+    if ([type isEqualToString:Leave]) {
+        [self setImage:[UIImage imageNamed:@"请假"] forState:UIControlStateNormal];
+    }if ([type isEqualToString:Business]) {
+        [self setImage:[UIImage imageNamed:@"出差"] forState:UIControlStateNormal];
+    }if ([type isEqualToString:Lotus]) {
+        [self setImage:[UIImage imageNamed:@"审批"] forState:UIControlStateNormal];
+    }
     [self setTitle:type forState:UIControlStateNormal];
 }
 

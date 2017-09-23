@@ -12,6 +12,9 @@
 #import "PersonalCenterViewController.h"
 #import "AllTheMeetingViewController.h"
 #import "DYHeader.h"
+#import "TheMessageViewController.h"
+#import "OfficeViewController.h"
+
 @interface DYTabBarViewController ()<UIAlertViewDelegate>
 @property (nonatomic,copy)NSString * url;
 @end
@@ -31,11 +34,14 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    [self addChildViewControllerWithClassname:[SignInViewController description] imagename:@"qiandaoIcon" title:@"签到" withSelectImageName:@"qiandaoIcon"];
+    [self addChildViewControllerWithClassname:[OfficeViewController description] imagename:@"办公_normal" title:@"办公" withSelectImageName:@"办公"];
     
-    [self addChildViewControllerWithClassname:[AllTheMeetingViewController description] imagename:@"hudongIcon" title:@"会场" withSelectImageName:@"hudongIcon"];
+    [self addChildViewControllerWithClassname:[SignInViewController description] imagename:@"课程(1)" title:@"课程" withSelectImageName:@"课程"];
     
-    [self addChildViewControllerWithClassname:[PersonalCenterViewController description] imagename:@"yonghuIcon" title:@"我" withSelectImageName:@"yonghuIcon"];
+    [self addChildViewControllerWithClassname:[TheMessageViewController description] imagename:@"消息(1)" title:@"消息" withSelectImageName:@"消息"];
+    
+    [self addChildViewControllerWithClassname:[PersonalCenterViewController description] imagename:@"我的(1)" title:@"我的" withSelectImageName:@"我的"];
+    
     [self selectApp];
     // Do any additional setup after loading the view from its nib.
 }

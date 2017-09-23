@@ -118,6 +118,10 @@
 		8B17374A1EC58BE400BE3C8F /* TestQuestionsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8B1737481EC58BE400BE3C8F /* TestQuestionsViewController.xib */; };
 		8B17374E1EC5AC3600BE3C8F /* CreateTextTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B17374C1EC5AC3600BE3C8F /* CreateTextTableViewCell.m */; };
 		8B17374F1EC5AC3600BE3C8F /* CreateTextTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8B17374D1EC5AC3600BE3C8F /* CreateTextTableViewCell.xib */; };
+		8B1A502C1F75EB7000A11CB2 /* TheMessageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B1A502A1F75EB7000A11CB2 /* TheMessageViewController.m */; };
+		8B1A502D1F75EB7000A11CB2 /* TheMessageViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8B1A502B1F75EB7000A11CB2 /* TheMessageViewController.xib */; };
+		8B1A50321F75F85C00A11CB2 /* OfficeTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B1A50301F75F85C00A11CB2 /* OfficeTableViewCell.m */; };
+		8B1A50331F75F85C00A11CB2 /* OfficeTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8B1A50311F75F85C00A11CB2 /* OfficeTableViewCell.xib */; };
 		8B2E16D51EB9C1EA008B7C57 /* CourseDetailsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B2E16D31EB9C1EA008B7C57 /* CourseDetailsViewController.m */; };
 		8B2E16D61EB9C1EA008B7C57 /* CourseDetailsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8B2E16D41EB9C1EA008B7C57 /* CourseDetailsViewController.xib */; };
 		8B2E16DA1EBAB968008B7C57 /* ClassManagementViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B2E16D81EBAB968008B7C57 /* ClassManagementViewController.m */; };
@@ -144,6 +148,8 @@
 		8B32FEA81F4C03C200D9BF23 /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8B32FEA71F4C03C200D9BF23 /* CoreFoundation.framework */; };
 		8B32FEAA1F4C043000D9BF23 /* UserNotifications.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8B32FEA91F4C043000D9BF23 /* UserNotifications.framework */; };
 		8B32FEAC1F4C045900D9BF23 /* libresolv.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 8B32FEAB1F4C045900D9BF23 /* libresolv.tbd */; };
+		8B3CAEC81F75091000BDE092 /* OfficeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B3CAEC61F75091000BDE092 /* OfficeViewController.m */; };
+		8B3CAEC91F75091000BDE092 /* OfficeViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8B3CAEC71F75091000BDE092 /* OfficeViewController.xib */; };
 		8B4D91141EBDAB1000A4BE34 /* SignListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B4D91121EBDAB1000A4BE34 /* SignListViewController.m */; };
 		8B4D91151EBDAB1000A4BE34 /* SignListViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8B4D91131EBDAB1000A4BE34 /* SignListViewController.xib */; };
 		8B51AAA31F3EE71900AE034E /* MeetingChooseSeatViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B51AAA11F3EE71900AE034E /* MeetingChooseSeatViewController.m */; };
@@ -703,6 +709,12 @@
 		8B17374B1EC5AC3600BE3C8F /* CreateTextTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CreateTextTableViewCell.h; sourceTree = "<group>"; };
 		8B17374C1EC5AC3600BE3C8F /* CreateTextTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CreateTextTableViewCell.m; sourceTree = "<group>"; };
 		8B17374D1EC5AC3600BE3C8F /* CreateTextTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CreateTextTableViewCell.xib; sourceTree = "<group>"; };
+		8B1A50291F75EB7000A11CB2 /* TheMessageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TheMessageViewController.h; sourceTree = "<group>"; };
+		8B1A502A1F75EB7000A11CB2 /* TheMessageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TheMessageViewController.m; sourceTree = "<group>"; };
+		8B1A502B1F75EB7000A11CB2 /* TheMessageViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TheMessageViewController.xib; sourceTree = "<group>"; };
+		8B1A502F1F75F85C00A11CB2 /* OfficeTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OfficeTableViewCell.h; sourceTree = "<group>"; };
+		8B1A50301F75F85C00A11CB2 /* OfficeTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OfficeTableViewCell.m; sourceTree = "<group>"; };
+		8B1A50311F75F85C00A11CB2 /* OfficeTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = OfficeTableViewCell.xib; sourceTree = "<group>"; };
 		8B2E16D21EB9C1EA008B7C57 /* CourseDetailsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CourseDetailsViewController.h; sourceTree = "<group>"; };
 		8B2E16D31EB9C1EA008B7C57 /* CourseDetailsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CourseDetailsViewController.m; sourceTree = "<group>"; };
 		8B2E16D41EB9C1EA008B7C57 /* CourseDetailsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CourseDetailsViewController.xib; sourceTree = "<group>"; };
@@ -743,6 +755,9 @@
 		8B32FEA91F4C043000D9BF23 /* UserNotifications.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UserNotifications.framework; path = System/Library/Frameworks/UserNotifications.framework; sourceTree = SDKROOT; };
 		8B32FEAB1F4C045900D9BF23 /* libresolv.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libresolv.tbd; path = usr/lib/libresolv.tbd; sourceTree = SDKROOT; };
 		8B32FEAD1F4C052700D9BF23 /* WisdomHall.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = WisdomHall.entitlements; sourceTree = "<group>"; };
+		8B3CAEC51F75091000BDE092 /* OfficeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OfficeViewController.h; sourceTree = "<group>"; };
+		8B3CAEC61F75091000BDE092 /* OfficeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OfficeViewController.m; sourceTree = "<group>"; };
+		8B3CAEC71F75091000BDE092 /* OfficeViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = OfficeViewController.xib; sourceTree = "<group>"; };
 		8B4D91111EBDAB1000A4BE34 /* SignListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SignListViewController.h; sourceTree = "<group>"; };
 		8B4D91121EBDAB1000A4BE34 /* SignListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SignListViewController.m; sourceTree = "<group>"; };
 		8B4D91131EBDAB1000A4BE34 /* SignListViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SignListViewController.xib; sourceTree = "<group>"; };
@@ -1336,6 +1351,27 @@
 			name = Chat;
 			sourceTree = "<group>";
 		};
+		8B1A50281F75EB3E00A11CB2 /* TheMessage */ = {
+			isa = PBXGroup;
+			children = (
+				8B1A50291F75EB7000A11CB2 /* TheMessageViewController.h */,
+				8B1A502A1F75EB7000A11CB2 /* TheMessageViewController.m */,
+				8B1A502B1F75EB7000A11CB2 /* TheMessageViewController.xib */,
+			);
+			name = TheMessage;
+			path = ..;
+			sourceTree = "<group>";
+		};
+		8B1A502E1F75F83400A11CB2 /* Cell */ = {
+			isa = PBXGroup;
+			children = (
+				8B1A502F1F75F85C00A11CB2 /* OfficeTableViewCell.h */,
+				8B1A50301F75F85C00A11CB2 /* OfficeTableViewCell.m */,
+				8B1A50311F75F85C00A11CB2 /* OfficeTableViewCell.xib */,
+			);
+			name = Cell;
+			sourceTree = "<group>";
+		};
 		8B2E16E41EBAD95A008B7C57 /* TheMeetingType */ = {
 			isa = PBXGroup;
 			children = (
@@ -1366,6 +1402,17 @@
 				8B32FEA41F4C038B00D9BF23 /* JPUSHService.h */,
 			);
 			path = Lib;
+			sourceTree = "<group>";
+		};
+		8B3CAEC41F75085500BDE092 /* Office */ = {
+			isa = PBXGroup;
+			children = (
+				8B1A502E1F75F83400A11CB2 /* Cell */,
+				8B3CAEC51F75091000BDE092 /* OfficeViewController.h */,
+				8B3CAEC61F75091000BDE092 /* OfficeViewController.m */,
+				8B3CAEC71F75091000BDE092 /* OfficeViewController.xib */,
+			);
+			name = Office;
 			sourceTree = "<group>";
 		};
 		8B63EFF51F58FBDB00888425 /* SDK */ = {
@@ -1470,6 +1517,8 @@
 				8BA224961EADFF2700627A1B /* FrameWork */,
 				8BA224951EADFF1600627A1B /* Model */,
 				8BA2248F1EADFE2D00627A1B /* Login */,
+				8B1A50281F75EB3E00A11CB2 /* TheMessage */,
+				8B3CAEC41F75085500BDE092 /* Office */,
 				8BA224921EADFE9500627A1B /* Course */,
 				8BA224931EADFEB500627A1B /* Interactive */,
 				8BA224941EADFED000627A1B /* PersonalCenter */,
@@ -2243,6 +2292,7 @@
 				8B0DB13C1ED6CA4E0042DF0D /* ImportTextViewController.xib in Resources */,
 				8BA224D51EAF25DC00627A1B /* RegisterViewController.xib in Resources */,
 				8BA2249E1EADFFA400627A1B /* SignInViewController.xib in Resources */,
+				8B3CAEC91F75091000BDE092 /* OfficeViewController.xib in Resources */,
 				8B9171CC1ED41BC7009686FD /* QuestionsTableViewCell.xib in Resources */,
 				8B64EB5C1F1A2BA900BF7D0F /* SelectClassViewController.xib in Resources */,
 				8B7D5D831EB961260068058E /* CreateCourseViewController.xib in Resources */,
@@ -2295,6 +2345,8 @@
 				8BF82D821EE001D600D33473 /* VoteTableViewCell.xib in Resources */,
 				8BA2246C1EADF68500627A1B /* LaunchScreen.storyboard in Resources */,
 				8BEE94491F2C780500488651 /* CompanyProfileViewController.xib in Resources */,
+				8B1A502D1F75EB7000A11CB2 /* TheMessageViewController.xib in Resources */,
+				8B1A50331F75F85C00A11CB2 /* OfficeTableViewCell.xib in Resources */,
 				8B081E0F1F0B766D00493B81 /* SelectMeetingOrClassViewController.xib in Resources */,
 				8B05CB6C1EC0056B0063EC20 /* TextsTableViewCell.xib in Resources */,
 				8BFB946C1EE7F7F1004BB963 /* ResultsOfVoteViewController.xib in Resources */,
@@ -2462,6 +2514,7 @@
 				8BA224611EADF68500627A1B /* AppDelegate.m in Sources */,
 				8B0AF7621F5179F2003858A4 /* FileDowan.m in Sources */,
 				8B0D960B1F1893A2006796E3 /* CreateCouresTableViewCell.m in Sources */,
+				8B1A50321F75F85C00A11CB2 /* OfficeTableViewCell.m in Sources */,
 				8BE877901EBD69C000866A34 /* CreateTestViewController.m in Sources */,
 				8B045B781F3458820021699B /* NSObject+MJProperty.m in Sources */,
 				8BFB947A1EE94948004BB963 /* VoteDrawView.m in Sources */,
@@ -2515,6 +2568,7 @@
 				8BF864C51ECAD97300B7EED4 /* UIButton+WebCache.m in Sources */,
 				8B4D91141EBDAB1000A4BE34 /* SignListViewController.m in Sources */,
 				8BE8777B1EBC2D8E00866A34 /* NotStartTestingViewController.m in Sources */,
+				8B3CAEC81F75091000BDE092 /* OfficeViewController.m in Sources */,
 				8BF864C61ECAD97300B7EED4 /* UIImage+GIF.m in Sources */,
 				8BE9139D1EEFB7C500000282 /* UIViewController+HUD.m in Sources */,
 				8B1737491EC58BE400BE3C8F /* TestQuestionsViewController.m in Sources */,
@@ -2535,6 +2589,7 @@
 				8BB56D6E1EB05C760023DAFF /* DefineThePasswordViewController.m in Sources */,
 				8B2E16E81EBAD9AF008B7C57 /* AllTheMeetingViewController.m in Sources */,
 				8BE877801EBC2DE000866A34 /* InTheTestViewController.m in Sources */,
+				8B1A502C1F75EB7000A11CB2 /* TheMessageViewController.m in Sources */,
 				8B045B751F3458820021699B /* NSObject+MJClass.m in Sources */,
 				8BF864C11ECAD97300B7EED4 /* SDWebImageDownloader.m in Sources */,
 				8B0DB1361ED561B80042DF0D /* AnswerModel.m in Sources */,
@@ -2771,7 +2826,7 @@
 				CODE_SIGN_ENTITLEMENTS = WisdomHall/WisdomHall.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Distribution: yao zhiqiang (AM9UTP2CL3)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				DEVELOPMENT_TEAM = AM9UTP2CL3;
+				DEVELOPMENT_TEAM = "";
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -2967,7 +3022,7 @@
 				CODE_SIGN_ENTITLEMENTS = WisdomHall/WisdomHall.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Distribution: yao zhiqiang (AM9UTP2CL3)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				DEVELOPMENT_TEAM = AM9UTP2CL3;
+				DEVELOPMENT_TEAM = "";
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -3011,7 +3066,7 @@
 				CODE_SIGN_ENTITLEMENTS = WisdomHall/WisdomHall.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Distribution: yao zhiqiang (AM9UTP2CL3)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				DEVELOPMENT_TEAM = AM9UTP2CL3;
+				DEVELOPMENT_TEAM = "";
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
