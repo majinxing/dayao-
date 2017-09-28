@@ -10,8 +10,8 @@
 #import "DefineThePasswordViewController.h"
 #import "DYHeader.h"
 #import "UIUtils.h"
-
-#import<SMS_SDK/SMSSDK.h>
+#import "JSMSConstant.h"
+#import "JSMSSDK.h"
 
 @interface RegisterViewController ()<UITextFieldDelegate>
 @property (strong, nonatomic) IBOutlet UIButton *getVerificationCodeBtn;
@@ -66,14 +66,10 @@
 }
 - (void)startTimer
 {
-    [SMSSDK getVerificationCodeByMethod:SMSGetCodeMethodSMS phoneNumber:_phoneNumber zone:@"86" result:^(NSError *error) {
-        
-        if (!error)
-        {
-            NSLog(@"成功");
-        }
-        else
-        {
+    [JSMSSDK getVerificationCodeWithPhoneNumber:_phoneNumber andTemplateID:@"1" completionHandler:^(id resultObject, NSError *error) {
+        if (!error) {
+            NSLog(@"Get verification code success!");
+        }else{
             NSLog(@"失败");
             UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"请输入验证码：0" message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: nil];
             [alertView show];
@@ -125,9 +121,8 @@
         [self.navigationController pushViewController:definePWVC animated:YES];
         return;
     }
-    
-    
-    [SMSSDK commitVerificationCode:_Verification phoneNumber:_phoneNumber zone:@"86" result:^(NSError *error) {
+    //验证验证码
+    [JSMSSDK commitWithPhoneNumber:_phoneNumber verificationCode:_Verification completionHandler:^(id resultObject, NSError *error) {
         
         if (!error)
         {

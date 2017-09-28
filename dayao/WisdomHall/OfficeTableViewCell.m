@@ -65,6 +65,11 @@
     }
 
 }
+- (IBAction)signPressed:(UIButton *)sender {
+    if (self.delegate&&[self.delegate respondsToSelector:@selector(signBtnPressedDelegate:)]) {
+        [self.delegate signBtnPressedDelegate:sender];
+    }
+}
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
     [super setSelected:selected animated:animated];

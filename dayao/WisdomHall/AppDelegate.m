@@ -18,6 +18,8 @@
 #import "FMDBTool.h"
 
 #import <Bugly/Bugly.h>
+#import "JSMSSDK.h"
+#import "JSMSConstant.h"
 
 // 引入JPush功能所需头文件
 #import "JPUSHService.h"
@@ -49,6 +51,8 @@
     
     [Bugly startWithAppId:@"64f1536e43"];//用于崩溃统计
     
+    [JSMSSDK registerWithAppKey:@"c2c43e29df600296b418e070"];
+
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     self.window.backgroundColor = [UIColor whiteColor];
     [self.window makeKeyAndVisible];

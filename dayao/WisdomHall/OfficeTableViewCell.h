@@ -10,7 +10,7 @@
 
 @protocol OfficeTableViewCellDelegate <NSObject>
 -(void)shareButtonClickedDelegate:(NSString *)str;
-
+-(void)signBtnPressedDelegate:(UIButton *)btn;
 
 @end
 @interface OfficeTableViewCell : UITableViewCell

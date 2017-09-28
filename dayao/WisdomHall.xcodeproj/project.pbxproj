@@ -152,13 +152,12 @@
 		8B32FEAC1F4C045900D9BF23 /* libresolv.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 8B32FEAB1F4C045900D9BF23 /* libresolv.tbd */; };
 		8B3CAEC81F75091000BDE092 /* OfficeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B3CAEC61F75091000BDE092 /* OfficeViewController.m */; };
 		8B3CAEC91F75091000BDE092 /* OfficeViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8B3CAEC71F75091000BDE092 /* OfficeViewController.xib */; };
+		8B45D3871F7CF6A700A00677 /* libsms-lib.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8B45D3861F7CF6A700A00677 /* libsms-lib.a */; };
 		8B4D91141EBDAB1000A4BE34 /* SignListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B4D91121EBDAB1000A4BE34 /* SignListViewController.m */; };
 		8B4D91151EBDAB1000A4BE34 /* SignListViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8B4D91131EBDAB1000A4BE34 /* SignListViewController.xib */; };
 		8B51AAA31F3EE71900AE034E /* MeetingChooseSeatViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B51AAA11F3EE71900AE034E /* MeetingChooseSeatViewController.m */; };
 		8B51AAA41F3EE71900AE034E /* MeetingChooseSeatViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8B51AAA21F3EE71900AE034E /* MeetingChooseSeatViewController.xib */; };
 		8B63EFF41F58F3F500888425 /* Bugly.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8B63EFF31F58F3F500888425 /* Bugly.framework */; };
-		8B63EFFA1F58FBDB00888425 /* MOBFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8B63EFF71F58FBDB00888425 /* MOBFoundation.framework */; };
-		8B63EFFB1F58FBDB00888425 /* SMS_SDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8B63EFF91F58FBDB00888425 /* SMS_SDK.framework */; };
 		8B64EB561F1A162F00BF7D0F /* CreateTemporaryCourseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B64EB541F1A162F00BF7D0F /* CreateTemporaryCourseViewController.m */; };
 		8B64EB571F1A162F00BF7D0F /* CreateTemporaryCourseViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8B64EB551F1A162F00BF7D0F /* CreateTemporaryCourseViewController.xib */; };
 		8B64EB5B1F1A2BA900BF7D0F /* SelectClassViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B64EB591F1A2BA900BF7D0F /* SelectClassViewController.m */; };
@@ -763,6 +762,9 @@
 		8B3CAEC51F75091000BDE092 /* OfficeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OfficeViewController.h; sourceTree = "<group>"; };
 		8B3CAEC61F75091000BDE092 /* OfficeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OfficeViewController.m; sourceTree = "<group>"; };
 		8B3CAEC71F75091000BDE092 /* OfficeViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = OfficeViewController.xib; sourceTree = "<group>"; };
+		8B45D3841F7CF6A700A00677 /* JSMSConstant.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSMSConstant.h; sourceTree = "<group>"; };
+		8B45D3851F7CF6A700A00677 /* JSMSSDK.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSMSSDK.h; sourceTree = "<group>"; };
+		8B45D3861F7CF6A700A00677 /* libsms-lib.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = "libsms-lib.a"; sourceTree = "<group>"; };
 		8B4D91111EBDAB1000A4BE34 /* SignListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SignListViewController.h; sourceTree = "<group>"; };
 		8B4D91121EBDAB1000A4BE34 /* SignListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SignListViewController.m; sourceTree = "<group>"; };
 		8B4D91131EBDAB1000A4BE34 /* SignListViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SignListViewController.xib; sourceTree = "<group>"; };
@@ -770,8 +772,6 @@
 		8B51AAA11F3EE71900AE034E /* MeetingChooseSeatViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MeetingChooseSeatViewController.m; path = Model/MeetingChooseSeatViewController.m; sourceTree = "<group>"; };
 		8B51AAA21F3EE71900AE034E /* MeetingChooseSeatViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = MeetingChooseSeatViewController.xib; path = Model/MeetingChooseSeatViewController.xib; sourceTree = "<group>"; };
 		8B63EFF31F58F3F500888425 /* Bugly.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Bugly.framework; sourceTree = "<group>"; };
-		8B63EFF71F58FBDB00888425 /* MOBFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = MOBFoundation.framework; sourceTree = "<group>"; };
-		8B63EFF91F58FBDB00888425 /* SMS_SDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = SMS_SDK.framework; sourceTree = "<group>"; };
 		8B64EB531F1A162F00BF7D0F /* CreateTemporaryCourseViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CreateTemporaryCourseViewController.h; sourceTree = "<group>"; };
 		8B64EB541F1A162F00BF7D0F /* CreateTemporaryCourseViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CreateTemporaryCourseViewController.m; sourceTree = "<group>"; };
 		8B64EB551F1A162F00BF7D0F /* CreateTemporaryCourseViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CreateTemporaryCourseViewController.xib; sourceTree = "<group>"; };
@@ -1070,14 +1070,13 @@
 				8B17373B1EC55B7A00BE3C8F /* AddressBook.framework in Frameworks */,
 				8B32FEA51F4C038B00D9BF23 /* jcore-ios-1.1.5.a in Frameworks */,
 				8B1737371EC55B2300BE3C8F /* Security.framework in Frameworks */,
-				8B63EFFB1F58FBDB00888425 /* SMS_SDK.framework in Frameworks */,
 				8B1737351EC55B0600BE3C8F /* Social.framework in Frameworks */,
 				8B1737331EC55AFA00BE3C8F /* SystemConfiguration.framework in Frameworks */,
 				8B1737311EC55AEA00BE3C8F /* CoreLocation.framework in Frameworks */,
 				8B17372F1EC55ADD00BE3C8F /* MapKit.framework in Frameworks */,
 				8B17372B1EC55AA600BE3C8F /* CoreText.framework in Frameworks */,
 				8B1737291EC55A8A00BE3C8F /* QuartzCore.framework in Frameworks */,
-				8B63EFFA1F58FBDB00888425 /* MOBFoundation.framework in Frameworks */,
+				8B45D3871F7CF6A700A00677 /* libsms-lib.a in Frameworks */,
 				8B1737271EC55A7F00BE3C8F /* CoreData.framework in Frameworks */,
 				8B1737231EC55A6700BE3C8F /* Accounts.framework in Frameworks */,
 				8B17371F1EC55A4E00BE3C8F /* MessageUI.framework in Frameworks */,
@@ -1423,29 +1422,22 @@
 			name = Office;
 			sourceTree = "<group>";
 		};
-		8B63EFF51F58FBDB00888425 /* SDK */ = {
+		8B45D3821F7CF6A700A00677 /* JsmsSDK */ = {
 			isa = PBXGroup;
 			children = (
-				8B63EFF61F58FBDB00888425 /* Required */,
-				8B63EFF81F58FBDB00888425 /* SMSSDK */,
+				8B45D3831F7CF6A700A00677 /* include */,
+				8B45D3861F7CF6A700A00677 /* libsms-lib.a */,
 			);
-			path = SDK;
+			path = JsmsSDK;
 			sourceTree = "<group>";
 		};
-		8B63EFF61F58FBDB00888425 /* Required */ = {
+		8B45D3831F7CF6A700A00677 /* include */ = {
 			isa = PBXGroup;
 			children = (
-				8B63EFF71F58FBDB00888425 /* MOBFoundation.framework */,
+				8B45D3841F7CF6A700A00677 /* JSMSConstant.h */,
+				8B45D3851F7CF6A700A00677 /* JSMSSDK.h */,
 			);
-			path = Required;
-			sourceTree = "<group>";
-		};
-		8B63EFF81F58FBDB00888425 /* SMSSDK */ = {
-			isa = PBXGroup;
-			children = (
-				8B63EFF91F58FBDB00888425 /* SMS_SDK.framework */,
-			);
-			path = SMSSDK;
+			path = include;
 			sourceTree = "<group>";
 		};
 		8B7D5D841EB969B70068058E /* Collection */ = {
@@ -1730,6 +1722,7 @@
 		8BA224961EADFF2700627A1B /* FrameWork */ = {
 			isa = PBXGroup;
 			children = (
+				8B45D3821F7CF6A700A00677 /* JsmsSDK */,
 				8B63EFF31F58F3F500888425 /* Bugly.framework */,
 				8B081DEC1F06524000493B81 /* PinYin */,
 				8BCE7CBE1F04F07600FE261B /* AFNetworking */,
@@ -1757,7 +1750,6 @@
 		8BA224AF1EAED25400627A1B /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				8B63EFF51F58FBDB00888425 /* SDK */,
 				8BF3ADAC1F569B26002BD6DA /* libstdc++.tbd */,
 				8B32FEAB1F4C045900D9BF23 /* libresolv.tbd */,
 				8B32FEA91F4C043000D9BF23 /* UserNotifications.framework */,
@@ -2231,6 +2223,9 @@
 						ProvisioningStyle = Automatic;
 						SystemCapabilities = {
 							com.apple.BackgroundModes = {
+								enabled = 1;
+							};
+							com.apple.Keychain = {
 								enabled = 1;
 							};
 							com.apple.Push = {
@@ -2862,7 +2857,9 @@
 					"$(PROJECT_DIR)/WisdomHall/HyphenateFullSDK/HyphenateFullSDK/lib",
 					"$(PROJECT_DIR)/WisdomHall/lupai/wechatSDK",
 					"$(SRCROOT)/Lib",
+					"$(PROJECT_DIR)/WisdomHall/JsmsSDK",
 				);
+				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_BUNDLE_IDENTIFIER = com.dayaokeji.rhythm;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
@@ -3058,7 +3055,9 @@
 					"$(PROJECT_DIR)/WisdomHall/HyphenateFullSDK/HyphenateFullSDK/lib",
 					"$(PROJECT_DIR)/WisdomHall/lupai/wechatSDK",
 					"$(SRCROOT)/Lib",
+					"$(PROJECT_DIR)/WisdomHall/JsmsSDK",
 				);
+				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_BUNDLE_IDENTIFIER = com.dayaokeji.rhythm;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
@@ -3102,7 +3101,9 @@
 					"$(PROJECT_DIR)/WisdomHall/HyphenateFullSDK/HyphenateFullSDK/lib",
 					"$(PROJECT_DIR)/WisdomHall/lupai/wechatSDK",
 					"$(SRCROOT)/Lib",
+					"$(PROJECT_DIR)/WisdomHall/JsmsSDK",
 				);
+				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_BUNDLE_IDENTIFIER = com.dayaokeji.rhythm;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";

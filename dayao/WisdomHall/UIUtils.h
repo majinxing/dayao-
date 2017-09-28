@@ -83,5 +83,10 @@
 +(BOOL)socketReachabilityTest;
 //返回手机型号
 +(NSString*)deviceVersion;
+
+/**
+ * 日常签到
+ **/
++(void)dailyCheck;
 @end
 

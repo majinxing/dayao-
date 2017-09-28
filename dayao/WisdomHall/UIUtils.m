@@ -49,7 +49,7 @@
     
     //获得当前时间的年月日时分
     NSDateComponents *nowCmps = [calendar components:unit fromDate:[NSDate date]];
-    NSString *nowDate = [NSString stringWithFormat:@"%ld-%ld-%ld-%ld-%ld-%ld",(long)nowCmps.year,(long)nowCmps.month,(long)nowCmps.day,(long)nowCmps.hour,(long)nowCmps.minute,(long)nowCmps.second];
+    NSString *nowDate = [NSString stringWithFormat:@"%ld-%ld-%ld %ld:%ld:%ld",(long)nowCmps.year,(long)nowCmps.month,(long)nowCmps.day,(long)nowCmps.hour,(long)nowCmps.minute,(long)nowCmps.second];
     return nowDate;
 }
 
@@ -624,7 +624,7 @@
 +(NSMutableDictionary *)seatingArrangements:(NSString *)seating withNumberPeople:(NSString *)numberPeople{
     
     NSMutableDictionary * dict = [[NSMutableDictionary alloc] init];
-
+    
     if (![UIUtils isBlankString:seating]) {
         
         NSMutableString * str = [NSMutableString stringWithFormat:@"%@",seating];
@@ -884,6 +884,172 @@
         return @"iPhone Simulator";
     
     return @"未识别";
+}
+
+/**
+ * 日常签到
+ **/
++(void)dailyCheck{
+    [UIUtils creatDailyCheckTable:DAILYCHECK_TABLE_NAME];
+    FMDatabase * db = [FMDBTool createDBWithName:SQLITE_NAME];
+    if ([db open]) {
+        NSString * sql = [NSString stringWithFormat:@"select * from %@",DAILYCHECK_TABLE_NAME];
+        FMResultSet * rs = [FMDBTool queryWithDB:db withSqlStr:sql];
+        int n = 0;
+        int m = 0;
+        while (rs.next) {
+            NSString * date = [rs stringForColumn:@"date"];
+            NSString * today = [UIUtils getTime];
+            if ([today isEqualToString:date]) {
+                n = 1;
+                NSString * signIn = [rs stringForColumn:@"signIn"];
+                
+                if ([UIUtils isBlankString:signIn]) {
+                    m = 1;
+                }
+                NSString * signBack = [rs stringForColumn:@"signBack"];
+                if ([UIUtils isBlankString:signBack]) {
+                    m = 2;
+                }
+                break;
+            }
+        }
+        [db close];
+        
+        if (n == 0) {
+            [UIUtils insertedDailyCheck];
+        }else if(n == 1){
+            if (m == 1||m == 2) {
+                [UIUtils upadteDailyCheck:m];
+            }
+        }
+    }
+}
++(void)creatDailyCheckTable:(NSString *)tableName{
+    FMDatabase * db = [FMDBTool createDBWithName:SQLITE_NAME];
+    
+    if ([db open]) {
+        BOOL result = [FMDBTool createTableWithDB:db tableName:tableName
+                                       parameters:@{
+                                                    @"userID" : @"text",
+                                                    @"signIn" : @"text",
+                                                    @"signBack" : @"text",
+                                                    @"signInState" : @"text",
+                                                    @"signBackState": @"text",
+                                                    @"date" : @"text"
+                                                    }];
+        if (result)
+        {
+            //            NSLog(@"建表成功");
+        }
+        else
+        {
+            //            NSLog(@"建表失败");
+        }
+    }
+    [db close];
+}
++(NSString *)signState{
+    NSString * b = [UIUtils compareTimeStartTime:[UIUtils getCurrentDate] withExpireTime:[NSString stringWithFormat:@"%@ 9:00:00",[UIUtils getTime]]];
+    NSString * B = [UIUtils compareTimeStartTime:[UIUtils getCurrentDate] withExpireTime:[NSString stringWithFormat:@"%@ 17:00:00",[UIUtils getTime]]];
+    if ([b isEqualToString:@"1"]||[b isEqualToString:@"0"]) {
+        return @"签到正常";
+    }else{
+        NSString * a = [UIUtils compareTimeStartTime:[UIUtils getCurrentDate] withExpireTime:[NSString stringWithFormat:@"%@ 12:00:00",[UIUtils getTime]]];
+        if ([a isEqualToString:@"1"]) {
+            return @"签到迟到";
+        }
+    }
+    if ([B isEqualToString:@"-1"]||[B isEqualToString:@"0"]) {
+        return @"签退正常";
+    }else{
+        NSString * a = [UIUtils compareTimeStartTime:[UIUtils getCurrentDate] withExpireTime:[NSString stringWithFormat:@"%@ 12:00:00",[UIUtils getTime]]];
+        if ([a isEqualToString:@"-1"]) {
+            return @"签退早退";
+        }
+    }
+    return @"a";
+    
+}
++(void)insertedDailyCheck{
+    FMDatabase * db = [FMDBTool createDBWithName:SQLITE_NAME];
+    NSString * str  = [UIUtils signState];
+    if ([db open]) {
+        UserModel * user = [[Appsetting sharedInstance] getUsetInfo];
+        if ([str isEqualToString:@"签到正常"]) {
+            NSString * sql = [NSString stringWithFormat:@"insert into %@ (userID,signIn,signInState,date) values ('%@','%@','%@','%@')",DAILYCHECK_TABLE_NAME,[NSString stringWithFormat:@"%@",user.peopleId],[UIUtils getCurrentDate],[NSString stringWithFormat:@"正常"],[UIUtils getTime]];
+            BOOL rs = [FMDBTool insertWithDB:db tableName:DAILYCHECK_TABLE_NAME withSqlStr:sql];
+            
+            if (!rs) {
+                NSLog(@"失败");
+            }
+        }else if([str isEqualToString:@"签到迟到"]){
+            NSString * sql = [NSString stringWithFormat:@"insert into %@ (userID,signIn,signInState,date) values ('%@','%@','%@','%@')",DAILYCHECK_TABLE_NAME,[NSString stringWithFormat:@"%@",user.peopleId],[UIUtils getCurrentDate],[NSString stringWithFormat:@"迟到"],[UIUtils getTime]];
+            BOOL rs = [FMDBTool insertWithDB:db tableName:DAILYCHECK_TABLE_NAME withSqlStr:sql];
+            
+            if (!rs) {
+                NSLog(@"失败");
+            }
+        }else if ([str isEqualToString:@"签退正常"]) {
+            NSString * sql = [NSString stringWithFormat:@"insert into %@ (userID,signBack,signBackState,date) values ('%@','%@','%@','%@')",DAILYCHECK_TABLE_NAME,[NSString stringWithFormat:@"%@",user.peopleId],[UIUtils getCurrentDate],[NSString stringWithFormat:@"正常"],[UIUtils getTime]];
+            BOOL rs = [FMDBTool insertWithDB:db tableName:DAILYCHECK_TABLE_NAME withSqlStr:sql];
+            
+            if (!rs) {
+                NSLog(@"失败");
+            }
+        }else if ([str isEqualToString:@"签退早退"]){
+            NSString * sql = [NSString stringWithFormat:@"insert into %@ (userID,signBack,signBackState,date) values ('%@','%@','%@','%@')",DAILYCHECK_TABLE_NAME,[NSString stringWithFormat:@"%@",user.peopleId],[UIUtils getCurrentDate],[NSString stringWithFormat:@"早退"],[UIUtils getTime]];
+            BOOL rs = [FMDBTool insertWithDB:db tableName:DAILYCHECK_TABLE_NAME withSqlStr:sql];
+            
+            if (!rs) {
+                NSLog(@"失败");
+            }
+        }
+    }
+    [db close];
+}
++(void)upadteDailyCheck:(int)m{
+    FMDatabase * db = [FMDBTool createDBWithName:SQLITE_NAME];
+    NSString * str  = [UIUtils signState];
+    UserModel * user = [[Appsetting sharedInstance] getUsetInfo];
+    if ([db open]) {
+        if (m==1) {
+            if ([str isEqualToString:@"签到正常"]) {
+                NSString * sql = [NSString stringWithFormat:@"update %@ set userID = '%@' , signIn = '%@' , signInState = '%@' where date = '%@';",DAILYCHECK_TABLE_NAME,[NSString stringWithFormat:@"%@",user.peopleId],[UIUtils getCurrentDate],[NSString stringWithFormat:@"正常"],[UIUtils getTime]];
+                BOOL rs = [FMDBTool updateWithDB:db withSqlStr:sql];
+                
+                if (!rs) {
+                    NSLog(@"失败");
+                }
+            }else if([str isEqualToString:@"签到迟到"]){
+                NSString * sql = [NSString stringWithFormat:@"update %@ set userID = '%@' , signIn = '%@' , signInState = '%@' where date = '%@'",DAILYCHECK_TABLE_NAME,[NSString stringWithFormat:@"%@",user.peopleId],[UIUtils getCurrentDate],[NSString stringWithFormat:@"迟到"],[UIUtils getTime]];
+                BOOL rs = [FMDBTool updateWithDB:db withSqlStr:sql];
+                
+                if (!rs) {
+                    NSLog(@"失败");
+                }
+            }
+        }else if(m == 2){
+            
+            if ([str isEqualToString:@"签退正常"]) {
+                NSString * sql = [NSString stringWithFormat:@"update %@ set userID ='%@' , signBack = '%@' , signBackState = '%@' where date = '%@'",DAILYCHECK_TABLE_NAME,[NSString stringWithFormat:@"%@",user.peopleId],[UIUtils getCurrentDate],[NSString stringWithFormat:@"正常"],[UIUtils getTime]];
+                BOOL rs = [FMDBTool updateWithDB:db withSqlStr:sql];
+                
+                if (!rs) {
+                    NSLog(@"失败");
+                }
+            }else if ([str isEqualToString:@"签退早退"]){
+                NSString * sql = [NSString stringWithFormat:@"update %@ set userID ='%@' , signBack = '%@' , signBackState = '%@' where date = '%@'",DAILYCHECK_TABLE_NAME,[NSString stringWithFormat:@"%@",user.peopleId],[UIUtils getCurrentDate],[NSString stringWithFormat:@"早退"],[UIUtils getTime]];
+                BOOL rs = [FMDBTool updateWithDB:db withSqlStr:sql];
+                
+                if (!rs) {
+                    NSLog(@"失败");
+                }
+            }
+        }
+    }
+    [db close];
+    
 }
 @end
 

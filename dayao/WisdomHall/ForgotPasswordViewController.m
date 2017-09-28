@@ -9,10 +9,8 @@
 #import "ForgotPasswordViewController.h"
 #import "RedefineThePasswordViewController.h"
 #import "DYHeader.h"
-
-
-
-#import <SMS_SDK/SMSSDK.h>
+#import "JSMSSDK.h"
+#import "JSMSConstant.h"
 
 
 @interface ForgotPasswordViewController ()
@@ -72,17 +70,15 @@
 }
 - (void)startTimer
 {
-    [SMSSDK getVerificationCodeByMethod:SMSGetCodeMethodSMS phoneNumber:_phoneNumber.text zone:@"86" result:^(NSError *error) {
-        
-        if (!error)
-        {
-            NSLog(@"成功");
-        }
-        else
-        {
-            NSLog(@"失败");
+    [JSMSSDK getVerificationCodeWithPhoneNumber:_phoneNumber.text andTemplateID:@"1" completionHandler:^(id resultObject, NSError *error) {
+        if (!error) {
+            NSLog(@"Get verification code success!");
+        }else{
+            NSLog(@"Get verification code failure!");
+            NSLog(@"%@",error);
         }
     }];
+    
     [_sendVerification setEnabled:NO];
         //时间间隔
         NSTimeInterval timeInterval = 1.0 ;
@@ -128,8 +124,8 @@
     redeFineVC.phoneNumber = _phoneNumber.text;
     [self.navigationController pushViewController:redeFineVC animated:YES];
     
-    [SMSSDK commitVerificationCode:_Verification.text phoneNumber:_phoneNumber.text zone:@"86" result:^(NSError *error) {
-        
+    //验证验证码
+    [JSMSSDK commitWithPhoneNumber:_phoneNumber.text verificationCode:_Verification.text completionHandler:^(id resultObject, NSError *error) {
         if (!error)
         {
             // 验证成功
@@ -142,7 +138,6 @@
             [alertView show];
         }
     }];
-   
 }
 
 /*

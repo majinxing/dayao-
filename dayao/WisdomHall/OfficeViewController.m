@@ -64,6 +64,9 @@
         [UIUtils showInfoMessage:@"未完待续"];
     }
 }
+-(void)signBtnPressedDelegate:(UIButton *)btn{
+    [UIUtils dailyCheck];
+}
 #pragma mark UITableViewdelegate
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
     return 2;
