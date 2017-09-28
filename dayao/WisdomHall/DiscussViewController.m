@@ -13,6 +13,7 @@
 #import <Hyphenate/Hyphenate.h>
 #import "MJRefresh.h"
 #import "MJXChatViewController.h"
+#import "CreateChatViewController.h"
 #define FetchChatroomPageSize   20
 
 @interface DiscussViewController ()<UITableViewDelegate,UITableViewDataSource,EMChatManagerDelegate,EMGroupManagerDelegate>
@@ -145,7 +146,6 @@
         cell = [[[NSBundle mainBundle] loadNibNamed:@"DiscussListTableViewCell" owner:nil options:nil] objectAtIndex:0];
     }
     if (indexPath.row>1) {
-        //        EMChatroom *chatroom = [self.dataArray objectAtIndex:indexPath.row-2];
         EMGroup * chatroom = [self.dataArray objectAtIndex:indexPath.row-2];
         [cell setImage:_imageAry[2] withLableTitle:chatroom.subject];
     }else{
@@ -156,11 +156,20 @@
 }
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
-    
-    MJXChatViewController *chat = [[MJXChatViewController alloc] init];
-    self.hidesBottomBarWhenPushed = YES;
-    chat.chatroom = _dataArray[0];
-    [self.navigationController pushViewController:chat animated:YES];
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    if (indexPath.row == 0) {
+        CreateChatViewController * c = [[CreateChatViewController alloc] init];
+        self.hidesBottomBarWhenPushed = YES;
+        [self.navigationController pushViewController:c animated:YES];
+        self.hidesBottomBarWhenPushed = NO;
+    }else if (indexPath.row == 1){
+        
+    }else if (indexPath.row>1) {
+        MJXChatViewController *chat = [[MJXChatViewController alloc] init];
+        self.hidesBottomBarWhenPushed = YES;
+        chat.chatroom = _dataArray[indexPath.row-2];
+        [self.navigationController pushViewController:chat animated:YES];
+    }
     
 }
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{

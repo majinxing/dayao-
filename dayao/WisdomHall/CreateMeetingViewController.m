@@ -144,8 +144,9 @@
             
             [UIUtils sendMeetingInfo:sendDict];
             
-            
             [self.navigationController popViewControllerAnimated:YES];
+        }else{
+            [UIUtils showInfoMessage:@"系统错误"];
         }
     } failure:^(NSError *error) {
         [self hideHud];
@@ -404,13 +405,23 @@
         [self addPickView];
     }else if (btn.tag == 4){
         SelectPeopleToClassViewController * s = [[SelectPeopleToClassViewController alloc] init];
+        
         self.hidesBottomBarWhenPushed = YES;
+        
+        s.selectPeople = [[NSMutableArray alloc] initWithArray:_selectPeopleAry];
+        
         [self.navigationController pushViewController:s animated:YES];
         
         [s returnText:^(NSMutableArray *returnText) {
+            
+            [_selectPeopleAry removeAllObjects];
+
             for (int i = 0; i<returnText.count; i++) {
+                
                 SignPeople * s = returnText[i];
+                
                 int n = 0;
+                
                 for (int j = 0; j<_selectPeopleAry.count; j++) {
                     SignPeople * sp = _selectPeopleAry[j];
                     if ([[NSString stringWithFormat:@"%@",s.userId] isEqualToString:[NSString stringWithFormat:@"%@",sp.userId]]) {
@@ -442,6 +453,10 @@
                         [alter show];
                     }
                 }
+                
+                [_tableView reloadData];
+            }else{
+                [_textFileAry setObject:[NSString stringWithFormat:@"已选择0人"] atIndexedSubscript:btn.tag];
                 
                 [_tableView reloadData];
             }

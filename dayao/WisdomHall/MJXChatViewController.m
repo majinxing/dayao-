@@ -86,6 +86,7 @@
     UIBarButtonItem *myButton = [[UIBarButtonItem alloc] initWithTitle:@"保存" style:UIBarButtonItemStylePlain target:self action:@selector(createAcourse)];
     self.navigationItem.rightBarButtonItem = myButton;
 }
+//包含了发送视图
 -(void)addTableView{
     self.automaticallyAdjustsScrollViewInsets=NO;
     _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0,64, APPLICATION_WIDTH, APPLICATION_HEIGHT-64-40) style:UITableViewStylePlain];
@@ -120,7 +121,7 @@
     expression.frame = CGRectMake(CGRectGetMaxX(_textView .frame), 0, 40, 40);
     [expression setImage:[UIImage imageNamed:@"chat_bar_face_normal"] forState:UIControlStateNormal];
     
-    [_btoView addSubview:expression];
+//    [_btoView addSubview:expression];
     
     UIButton * more = [UIButton buttonWithType:UIButtonTypeCustom];
     more.frame = CGRectMake(CGRectGetMaxX(expression.frame), 0, 40, 40);
@@ -324,16 +325,24 @@
     if (_currentIsInBottom) {
         [self _scrollViewToBottom:NO];
     }else{
-        
+        [self _scrollViewToBottom:NO];
     }
 }
 
 -(void)getHistoryMessage{
     EMConversation * c = [[EMClient sharedClient].chatManager getConversation:_chatroom.groupId type:EMConversationTypeGroupChat createIfNotExist:YES];
+    
     [c loadMessagesWithKeyword:nil timestamp:-1 count:10000 fromUser:nil searchDirection:EMMessageSearchDirectionUp completion:^(NSArray *aMessages, EMError *aError) {
-        [_dataChat addObjectsFromArray:aMessages];
+        for (int i = 0 ; i<aMessages.count; i++) {
+            EMMessage * message = aMessages[i];
+            NSString * str = message.conversationId;
+            if ([str isEqualToString:_chatroom.groupId]) {
+                [_dataChat addObjectsFromArray:aMessages];
+            }
+        }
         [_tableView reloadData];
         [self _scrollViewToBottom:NO];
+        
     }];
     
 }

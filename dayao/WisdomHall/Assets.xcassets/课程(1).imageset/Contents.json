@@ -2,11 +2,12 @@
   "images" : [
     {
       "idiom" : "universal",
-      "filename" : "课程(1).png",
+      "filename" : "课程.png",
       "scale" : "1x"
     },
     {
       "idiom" : "universal",
+      "filename" : "课程(1).png",
       "scale" : "2x"
     },
     {

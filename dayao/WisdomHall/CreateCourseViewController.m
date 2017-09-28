@@ -443,6 +443,7 @@
         [self.view endEditing: YES];
         SelectClassRoomViewController * s = [[SelectClassRoomViewController alloc] init];
         self.hidesBottomBarWhenPushed = YES;
+        
         [self.navigationController pushViewController:s animated:YES];
         
         [s returnText:^(ClassRoomModel *returnText) {
@@ -458,7 +459,13 @@
     }else if (btn.tag == 4){
         SelectPeopleToClassViewController * s = [[SelectPeopleToClassViewController alloc] init];
         self.hidesBottomBarWhenPushed = YES;
+        
+        s.selectPeople = [[NSMutableArray alloc] initWithArray:_selectPeopleAry];
+
         [self.navigationController pushViewController:s animated:YES];
+        
+        [_selectPeopleAry removeAllObjects];
+
         [s returnText:^(NSMutableArray *returnText) {
             for (int i = 0; i<returnText.count; i++) {
                 SignPeople * s = returnText[i];
@@ -476,6 +483,10 @@
             }
             if (_selectPeopleAry.count>0) {
                 [_textFileAry setObject:[NSString stringWithFormat:@"已选择%ld人",(unsigned long)_selectPeopleAry.count] atIndexedSubscript:btn.tag];
+                [_tabelView reloadData];
+            }else{
+                [_textFileAry setObject:[NSString stringWithFormat:@"已选择0人"] atIndexedSubscript:btn.tag];
+                
                 [_tabelView reloadData];
             }
             

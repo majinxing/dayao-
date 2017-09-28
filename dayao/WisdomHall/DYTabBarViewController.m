@@ -14,6 +14,7 @@
 #import "DYHeader.h"
 #import "TheMessageViewController.h"
 #import "OfficeViewController.h"
+#import "DiscussViewController.h"
 
 @interface DYTabBarViewController ()<UIAlertViewDelegate>
 @property (nonatomic,copy)NSString * url;

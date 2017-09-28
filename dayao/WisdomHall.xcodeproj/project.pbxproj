@@ -51,6 +51,8 @@
 		8B064E541F00D8D80004C3D4 /* MJXChatCellTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B064E521F00D8D80004C3D4 /* MJXChatCellTableViewCell.m */; };
 		8B064E551F00D8D80004C3D4 /* MJXChatCellTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8B064E531F00D8D80004C3D4 /* MJXChatCellTableViewCell.xib */; };
 		8B064E581F00F53F0004C3D4 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8B064E571F00F53F0004C3D4 /* Assets.xcassets */; };
+		8B07DB7E1F78E7E500DC371C /* CreateChatViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B07DB7C1F78E7E500DC371C /* CreateChatViewController.m */; };
+		8B07DB7F1F78E7E500DC371C /* CreateChatViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8B07DB7D1F78E7E500DC371C /* CreateChatViewController.xib */; };
 		8B081DDD1F06013300493B81 /* collegedata.json in Resources */ = {isa = PBXBuildFile; fileRef = 8B081DDC1F06013300493B81 /* collegedata.json */; };
 		8B081DE11F06238E00493B81 /* DefinitionPersonalTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B081DDF1F06238E00493B81 /* DefinitionPersonalTableViewCell.m */; };
 		8B081DE21F06238E00493B81 /* DefinitionPersonalTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8B081DE01F06238E00493B81 /* DefinitionPersonalTableViewCell.xib */; };
@@ -608,6 +610,9 @@
 		8B064E521F00D8D80004C3D4 /* MJXChatCellTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MJXChatCellTableViewCell.m; sourceTree = "<group>"; };
 		8B064E531F00D8D80004C3D4 /* MJXChatCellTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MJXChatCellTableViewCell.xib; sourceTree = "<group>"; };
 		8B064E571F00F53F0004C3D4 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		8B07DB7B1F78E7E500DC371C /* CreateChatViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CreateChatViewController.h; sourceTree = "<group>"; };
+		8B07DB7C1F78E7E500DC371C /* CreateChatViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CreateChatViewController.m; sourceTree = "<group>"; };
+		8B07DB7D1F78E7E500DC371C /* CreateChatViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CreateChatViewController.xib; sourceTree = "<group>"; };
 		8B081DDC1F06013300493B81 /* collegedata.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = collegedata.json; sourceTree = "<group>"; };
 		8B081DDE1F06238E00493B81 /* DefinitionPersonalTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DefinitionPersonalTableViewCell.h; sourceTree = "<group>"; };
 		8B081DDF1F06238E00493B81 /* DefinitionPersonalTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DefinitionPersonalTableViewCell.m; sourceTree = "<group>"; };
@@ -1357,6 +1362,9 @@
 				8B1A50291F75EB7000A11CB2 /* TheMessageViewController.h */,
 				8B1A502A1F75EB7000A11CB2 /* TheMessageViewController.m */,
 				8B1A502B1F75EB7000A11CB2 /* TheMessageViewController.xib */,
+				8B07DB7B1F78E7E500DC371C /* CreateChatViewController.h */,
+				8B07DB7C1F78E7E500DC371C /* CreateChatViewController.m */,
+				8B07DB7D1F78E7E500DC371C /* CreateChatViewController.xib */,
 			);
 			name = TheMessage;
 			path = ..;
@@ -2301,6 +2309,7 @@
 				8B081DE21F06238E00493B81 /* DefinitionPersonalTableViewCell.xib in Resources */,
 				8B027A251EFA5FF200600E18 /* DataDownloadViewController.xib in Resources */,
 				8BB56D881EB2E2820023DAFF /* RedefineThePasswordViewController.xib in Resources */,
+				8B07DB7F1F78E7E500DC371C /* CreateChatViewController.xib in Resources */,
 				8B51AAA41F3EE71900AE034E /* MeetingChooseSeatViewController.xib in Resources */,
 				8B9CCC931F17204B001833FD /* SelectPeopleToClassViewController.xib in Resources */,
 				8BFB94671EE79745004BB963 /* JoinVoteTableViewCell.xib in Resources */,
@@ -2583,6 +2592,7 @@
 				8B045B731F3458820021699B /* MJPropertyKey.m in Sources */,
 				8BF864711ECACAE800B7EED4 /* FMDatabaseQueue.m in Sources */,
 				8BE877691EBAF7A800866A34 /* ShareView.m in Sources */,
+				8B07DB7E1F78E7E500DC371C /* CreateChatViewController.m in Sources */,
 				8B045B791F3458820021699B /* NSString+MJExtension.m in Sources */,
 				8B9B584F1EC998080010A1F1 /* TextListViewController.m in Sources */,
 				8B2F144E1F5D2D1900438374 /* SelectQuestion.m in Sources */,

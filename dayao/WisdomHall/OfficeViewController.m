@@ -10,6 +10,7 @@
 #import "DYHeader.h"
 #import "OfficeTableViewCell.h"
 #import "AllTheMeetingViewController.h"
+#import "NoticeViewController.h"
 
 @interface OfficeViewController ()<UITableViewDelegate,UITableViewDataSource,OfficeTableViewCellDelegate>
 @property (nonatomic,strong)UITableView * tableView;
@@ -54,6 +55,13 @@
         AllTheMeetingViewController * s = [[AllTheMeetingViewController alloc] init];
         [self.navigationController pushViewController:s animated:YES];
         self.hidesBottomBarWhenPushed = NO;
+    }else if ([str isEqualToString:Announcement]){
+        NoticeViewController * noticeVC = [[NoticeViewController alloc] init];
+        self.hidesBottomBarWhenPushed = YES;
+        [self.navigationController pushViewController:noticeVC animated:YES];
+        self.hidesBottomBarWhenPushed = NO;
+    }else{
+        [UIUtils showInfoMessage:@"未完待续"];
     }
 }
 #pragma mark UITableViewdelegate

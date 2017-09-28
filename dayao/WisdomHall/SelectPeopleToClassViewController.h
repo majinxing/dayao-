@@ -15,6 +15,8 @@ typedef void(^RreturnTextBlock)(NSMutableArray *returnText);
 
 @property (nonatomic, copy) RreturnTextBlock returnTextBlock;
 
+@property (nonatomic,strong) NSMutableArray * selectPeople;
+
 - (void)returnText:(RreturnTextBlock)block;
 
 @end

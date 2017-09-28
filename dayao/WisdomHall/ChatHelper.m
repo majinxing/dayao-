@@ -43,6 +43,15 @@ static dispatch_once_t onceToken;
 }
 -(void)getOut{
     onceToken = 0;
+    helper = nil;
+    [[EMClient sharedClient] removeDelegate:self];
+    [[EMClient sharedClient].groupManager removeDelegate:self];
+    [[EMClient sharedClient].contactManager removeDelegate:self];
+    [[EMClient sharedClient].roomManager removeDelegate:self];
+    [[EMClient sharedClient].chatManager removeDelegate:self];
+    [[EMClient sharedClient].callManager removeDelegate:self];
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+
     EMError *error = [[EMClient sharedClient] logout:YES];
     if (!error) {
         NSLog(@"退出成功");
@@ -117,6 +126,15 @@ static dispatch_once_t onceToken;
     
     NSLog(@"rescode: %d, \ntags: %@, \nalias: %@\n", iResCode, tags , alias);
     
+}
+- (void)didJoinedGroup:(EMGroup *)aGroup
+               inviter:(NSString *)aInviter
+               message:(NSString *)aMessage{
+    EMError *error = nil;
+    UserModel * user = [[Appsetting sharedInstance] getUsetInfo];
+    NSArray * a = [[NSArray alloc] initWithObjects:[NSString stringWithFormat:@"%@%@",user.school,user.studentId], nil];
+    [[EMClient sharedClient].groupManager addOccupants:a toGroup:aGroup.groupId welcomeMessage:@"message" error:&error];
+
 }
 /*!
  @method

@@ -48,7 +48,8 @@ static NSString * cellIdentifier = @"cellIdentifier";
     [self setNavigationTitle];
     
     [self addCollection];
-    
+
+    self.view.backgroundColor = [UIColor whiteColor];
     // 1.注册通知
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(headerRereshing) name:@"UpdateTheMeetingPage" object:nil];
@@ -315,7 +316,7 @@ static NSString * cellIdentifier = @"cellIdentifier";
 {
     
     TheMeetingInfoViewController * mInfo = [[TheMeetingInfoViewController alloc] init];
-    mInfo.hidesBottomBarWhenPushed = YES;
+    self.hidesBottomBarWhenPushed = YES;
     mInfo.meetingModel = _meetingModelAry[indexPath.row];
     [self.navigationController pushViewController:mInfo animated:YES];
 //    self.hidesBottomBarWhenPushed=NO;
@@ -326,7 +327,7 @@ static NSString * cellIdentifier = @"cellIdentifier";
 {
     
     TheMeetingInfoViewController * mInfo = [[TheMeetingInfoViewController alloc] init];
-    mInfo.hidesBottomBarWhenPushed = YES;
+    self.hidesBottomBarWhenPushed = YES;
     mInfo.meetingModel = _meetingModelAry[indexPath.row];
     [self.navigationController pushViewController:mInfo animated:YES];
 //    self.hidesBottomBarWhenPushed=NO;

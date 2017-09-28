@@ -106,11 +106,25 @@
     if (n==0) {
         // 收到的文字消息
         EMTextMessageBody *textBody = (EMTextMessageBody *)message.body;
+        
         _firstTextView.text = textBody.text;
+        
         _firstNameLabel.text = [NSString stringWithFormat:@"%@",message.from];
-        float f = [self measureSinglelineStringWidth:textBody.text andFont:[UIFont systemFontOfSize:13]];
+        
+//        float f = [self measureSinglelineStringWidth:textBody.text andFont:[UIFont systemFontOfSize:13]];
+        
+        CGSize size = CGSizeMake(APPLICATION_WIDTH, CGFLOAT_MAX);
+        
+        NSDictionary *dic = [NSDictionary dictionaryWithObjectsAndKeys:[UIFont systemFontOfSize:13],NSFontAttributeName, nil];
+        
+        CGFloat f = [textBody.text boundingRectWithSize:size
+                                                        options:NSStringDrawingUsesLineFragmentOrigin | NSStringDrawingUsesFontLeading
+                                                     attributes:dic
+                                                        context:nil].size.width;
+        
+
         if (f<30) {
-            _bView.frame = CGRectMake(61+30,CGRectGetMaxY(_firstNameLabel.frame), 200, 35.5);
+            _bView.frame = CGRectMake(61+35,CGRectGetMaxY(_firstNameLabel.frame), 200, 35.5);
         }else if(f>=35&&f<200){
             _bView.frame = CGRectMake(61+f+15, CGRectGetMaxY(_firstNameLabel.frame), 200, 35.5);
         }else{
@@ -129,7 +143,7 @@
         _fifthNameLabel.text = message.from;
         float f = [self measureSinglelineStringWidth:textBody.text andFont:[UIFont systemFontOfSize:13]];
         if (f<30) {
-            _bView.frame = CGRectMake(0,CGRectGetMaxY(_fifthNameLabel.frame), APPLICATION_WIDTH-30-45-16, 43);
+            _bView.frame = CGRectMake(0,CGRectGetMaxY(_fifthNameLabel.frame), APPLICATION_WIDTH-35-45-16, 43);
         }else if(f>=30&&f<200){
             _bView.frame = CGRectMake(0, CGRectGetMaxY(_fifthNameLabel.frame),APPLICATION_WIDTH-f-10-45-16, 43);
         }else{

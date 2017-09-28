@@ -56,7 +56,7 @@
     
     
     if ([[Appsetting sharedInstance] isLogin]) {
-        _chat = [[ChatHelper alloc] init];
+        _chat = [ChatHelper shareHelper];
         DYTabBarViewController * tab = [[DYTabBarViewController alloc] init];
         self.window.rootViewController = tab;
     }else{
@@ -116,7 +116,7 @@
 -(void)application:(UIApplication *)application didReceiveLocalNotification:(UILocalNotification *)notification{
     
     NoticeViewController * n = [[NoticeViewController alloc] init];
-    _chat = [[ChatHelper alloc] init];
+    _chat = [ChatHelper shareHelper];
     n.backType = @"TabBar";
     self.window.rootViewController = [[UINavigationController alloc]initWithRootViewController:n];
     

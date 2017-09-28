@@ -31,7 +31,6 @@
 
 @property (nonatomic,strong) NSMutableArray * pickAry;
 @property (nonatomic,strong) NSMutableArray * dataAry;
-@property (nonatomic,strong) NSMutableArray * selectPeople;
 @property (nonatomic,strong)UISearchBar * mySearchBar;
 
 
@@ -46,7 +45,12 @@
     [super viewDidLoad];
     _pickAry = [NSMutableArray arrayWithCapacity:1];
     _dataAry = [NSMutableArray arrayWithCapacity:1];
-    _selectPeople = [NSMutableArray arrayWithCapacity:1];
+    
+    if (!_selectPeople) {
+        _selectPeople = [NSMutableArray arrayWithCapacity:1];
+
+    }
+    
     _user = [[Appsetting sharedInstance] getUsetInfo];
     _school = [[SchoolModel alloc] init];
     _school.schoolId = _user.school;
@@ -278,6 +282,7 @@
         [_mySearchBar setHidden:NO];
     }else if (btn.tag == 1003){
         if ([btn.titleLabel.text isEqualToString:@"全选"]) {
+            [_selectPeople removeAllObjects];
             for (int i = 0; i<_dataAry.count; i++) {
                 SignPeople * s = _dataAry[i];
                 s.isSelect = YES;
