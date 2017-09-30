@@ -66,6 +66,7 @@
 }
 -(void)signBtnPressedDelegate:(UIButton *)btn{
     [UIUtils dailyCheck];
+    [_tableView reloadData];
 }
 #pragma mark UITableViewdelegate
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
@@ -82,6 +83,7 @@
         if (!cell) {
             cell = [[[NSBundle mainBundle] loadNibNamed:@"OfficeTableViewCell" owner:self options:nil] objectAtIndex:0];
         }
+        [cell signState];
     }else{
         cell = [tableView dequeueReusableCellWithIdentifier:@"OfficeTableViewCellSecond"];
         if (!cell) {

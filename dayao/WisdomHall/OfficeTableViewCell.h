@@ -16,4 +16,5 @@
 @interface OfficeTableViewCell : UITableViewCell
 @property (nonatomic,weak)id<OfficeTableViewCellDelegate>delegate;
 -(void)addSecondContentView;
+-(void)signState;
 @end

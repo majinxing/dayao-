@@ -78,7 +78,7 @@
 #define DAILYCHECK_TABLE_NAME  @"dailyCheck"                        //日常签到统计表
 
 //接口116.62.161.250:8080 192.168.1.81:8080 api.dayaokeji.com
-#define BaseURL                 @"http://api.dayaokeji.com/"
+#define BaseURL                 @"http://192.168.1.81:8080/"
 
 #define Login                   @"course/user/login"                //登录
 

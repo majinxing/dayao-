@@ -41,16 +41,42 @@
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
                     </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PmV-kn-ytO">
+                        <rect key="frame" x="10" y="35" width="100" height="21"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="21" id="gzv-qL-vbE"/>
+                            <constraint firstAttribute="width" constant="100" id="z6R-fv-DKB"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                        <nil key="textColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="S78-2d-0dS">
+                        <rect key="frame" x="10" y="71" width="100" height="21"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="21" id="Nu9-z1-cFf"/>
+                            <constraint firstAttribute="width" constant="100" id="utH-4Y-nxx"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                        <nil key="textColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
                 </subviews>
                 <constraints>
                     <constraint firstItem="qWi-Xx-ewX" firstAttribute="centerX" secondItem="H2p-sc-9uM" secondAttribute="centerX" id="4rz-6N-sfT"/>
+                    <constraint firstItem="S78-2d-0dS" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="10" id="5Qy-yS-eWZ"/>
                     <constraint firstItem="Fk0-xf-myL" firstAttribute="centerX" secondItem="H2p-sc-9uM" secondAttribute="centerX" id="Oh6-Tk-ixS"/>
                     <constraint firstAttribute="bottom" secondItem="Fk0-xf-myL" secondAttribute="bottom" constant="10" id="VIJ-iL-4ga"/>
+                    <constraint firstItem="S78-2d-0dS" firstAttribute="top" secondItem="PmV-kn-ytO" secondAttribute="bottom" constant="15" id="cVQ-El-1K0"/>
                     <constraint firstItem="qWi-Xx-ewX" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" constant="20" id="eEs-LW-8TF"/>
+                    <constraint firstItem="PmV-kn-ytO" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="10" id="exE-fM-6iP"/>
+                    <constraint firstItem="PmV-kn-ytO" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="35" id="wfc-NO-CmQ"/>
                 </constraints>
             </tableViewCellContentView>
             <connections>
+                <outlet property="signBack" destination="S78-2d-0dS" id="Hhg-7u-UG4"/>
                 <outlet property="signBtn" destination="qWi-Xx-ewX" id="nqk-Na-UPs"/>
+                <outlet property="signIN" destination="PmV-kn-ytO" id="zWx-Yz-Rhw"/>
             </connections>
             <point key="canvasLocation" x="41.5" y="109.5"/>
         </tableViewCell>

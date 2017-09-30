@@ -19,6 +19,7 @@
 @property (strong, nonatomic) IBOutlet UITextView *introduction;
 @property (strong, nonatomic) IBOutlet UITextField *groupName;
 @property (nonatomic,strong) NSMutableArray * dataAry;
+@property (nonatomic,strong) NSMutableArray * selectPeople;
 @property (strong, nonatomic) IBOutlet UILabel *selectNumber;
 
 @end
@@ -41,8 +42,13 @@
     
     _dataAry = [NSMutableArray arrayWithCapacity:1];
     
+    _selectPeople = [NSMutableArray arrayWithCapacity:1];
+    
     [[EMClient sharedClient].groupManager addDelegate:self delegateQueue:nil];
     // Do any additional setup after loading the view from its nib.
+}
+-(void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event{
+    [self.view endEditing:YES];
 }
 -(void)xib{
     _introduction.layer.masksToBounds = YES;
@@ -70,10 +76,14 @@
 -(void)addPeople{
     SelectPeopleToClassViewController * s = [[SelectPeopleToClassViewController alloc] init];
     self.hidesBottomBarWhenPushed = YES;
+    s.selectPeople = [[NSMutableArray alloc] initWithArray:_selectPeople];
     [self.navigationController pushViewController:s animated:YES];
+    [_dataAry removeAllObjects];
+    [_selectPeople removeAllObjects];
     [s returnText:^(NSMutableArray *returnText) {
         for (int i = 0; i<returnText.count; i++) {
             SignPeople * s = returnText[i];
+            [_selectPeople addObject:s];
             UserModel * user = [[Appsetting sharedInstance] getUsetInfo];
             [_dataAry addObject:[NSString stringWithFormat:@"%@%@",user.school,s.workNo]];
             _selectNumber.text = [NSString stringWithFormat:@"已选%lu人",(unsigned long)_dataAry.count];
