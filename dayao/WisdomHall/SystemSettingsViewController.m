@@ -11,6 +11,7 @@
 #import "DYTabBarViewController.h"
 #import "DYHeader.h"
 #import "ChatHelper.h"
+#import "WorkingLoginViewController.h"
 @interface SystemSettingsViewController ()
 
 @end
@@ -25,11 +26,15 @@
 }
 - (IBAction)logoutButtonPressed:(id)sender {
     [[Appsetting sharedInstance] getOut];
+    
     DYTabBarViewController *rootVC = [DYTabBarViewController sharedInstance];
     rootVC = nil;
     ChatHelper * c =[ChatHelper shareHelper];
     [c getOut];
+    
+//    WorkingLoginViewController * userLogin = [[WorkingLoginViewController alloc] init];
     TheLoginViewController * userLogin = [[TheLoginViewController alloc] init];
+
     [UIApplication sharedApplication].keyWindow.rootViewController =[[UINavigationController alloc] initWithRootViewController:userLogin];
 }
 

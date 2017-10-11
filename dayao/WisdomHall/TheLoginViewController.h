@@ -9,5 +9,5 @@
 #import <UIKit/UIKit.h>
 
 @interface TheLoginViewController : UIViewController
-
+@property (nonatomic,copy)NSString * type;
 @end

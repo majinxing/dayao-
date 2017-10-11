@@ -83,8 +83,8 @@
                                                                       NSFontAttributeName:[UIFont systemFontOfSize:17],
                                                                       NSForegroundColorAttributeName:[UIColor blackColor]}];
     self.title = @"聊天室";
-    UIBarButtonItem *myButton = [[UIBarButtonItem alloc] initWithTitle:@"保存" style:UIBarButtonItemStylePlain target:self action:@selector(createAcourse)];
-    self.navigationItem.rightBarButtonItem = myButton;
+//    UIBarButtonItem *myButton = [[UIBarButtonItem alloc] initWithTitle:@"保存" style:UIBarButtonItemStylePlain target:self action:@selector(createAcourse)];
+//    self.navigationItem.rightBarButtonItem = myButton;
 }
 //包含了发送视图
 -(void)addTableView{

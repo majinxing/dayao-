@@ -16,6 +16,7 @@
 #import "DYHeader.h"
 #import "NoticeViewController.h"
 #import "FMDBTool.h"
+#import "WorkingLoginViewController.h"
 
 #import <Bugly/Bugly.h>
 #import "JSMSSDK.h"
@@ -51,7 +52,6 @@
     
     [Bugly startWithAppId:@"64f1536e43"];//用于崩溃统计
     
-    [JSMSSDK registerWithAppKey:@"c2c43e29df600296b418e070"];
 
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     self.window.backgroundColor = [UIColor whiteColor];
@@ -64,6 +64,7 @@
         DYTabBarViewController * tab = [[DYTabBarViewController alloc] init];
         self.window.rootViewController = tab;
     }else{
+//        WorkingLoginViewController * loginVC = [[WorkingLoginViewController alloc] init];
         TheLoginViewController * loginVC = [[TheLoginViewController alloc] init];
         self.window.rootViewController = [[UINavigationController alloc]initWithRootViewController:loginVC];
     }
@@ -99,7 +100,9 @@
     // init Push
     // notice: 2.1.5版本的SDK新增的注册方法，改成可上报IDFA，如果没有使用IDFA直接传nil
     // 如需继续使用pushConfig.plist文件声明appKey等配置内容，请依旧使用[JPUSHService setupWithOption:launchOptions]方式初始化。
-    [JPUSHService setupWithOption:launchOptions appKey:@"c2c43e29df600296b418e070"
+    [JSMSSDK registerWithAppKey:@"03501087af85ae095660e55e"];
+
+    [JPUSHService setupWithOption:launchOptions appKey:@"03501087af85ae095660e55e"
                           channel:@"App Store"
                  apsForProduction:FALSE
             advertisingIdentifier:nil];

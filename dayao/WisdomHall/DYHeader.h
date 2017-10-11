@@ -61,6 +61,7 @@
 #define Leave                       @"请假"
 #define Business                    @"出差"
 #define Lotus                       @"审批"
+#define Group                       @"群组"
 
 //数据库的名字
 #define SQLITE_NAME            @"Dayao"
@@ -77,8 +78,8 @@
 
 #define DAILYCHECK_TABLE_NAME  @"dailyCheck"                        //日常签到统计表
 
-//接口116.62.161.250:8080 192.168.1.81:8080 api.dayaokeji.com
-#define BaseURL                 @"http://192.168.1.81:8080/"
+//接口 192.168.1.81:8080 api.dayaokeji.com
+#define BaseURL                 @"http://api.dayaokeji.com/"
 
 #define Login                   @"course/user/login"                //登录
 
@@ -192,11 +193,11 @@
 
 #define Update                  @"course/user/password/update"      //修改密码
 
+#define QueryGroupList          @"course/group/select"              //查询群组列表
 
+#define JoinGroup               @"course/group/addGroupUser"        //加入群组
 
-
-
-
+#define GroupPeople             @"course/group/member"              //查询群组成员
 
 
 

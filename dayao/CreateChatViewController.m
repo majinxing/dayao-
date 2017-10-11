@@ -97,7 +97,7 @@
         EMError *error = nil;
         EMGroupOptions *setting = [[EMGroupOptions alloc] init];
         setting.maxUsersCount = 2000;
-        setting.style = EMGroupStylePublicJoinNeedApproval;// 创建不同类型的群组，这里需要才传入不同的类型
+        setting.style = EMGroupStylePublicOpenJoin;// 创建不同类型的群组，这里需要才传入不同的类型
         UserModel * user = [[Appsetting sharedInstance] getUsetInfo];
         
         [_dataAry addObject:[NSString stringWithFormat:@"%@%@",user.school,user.studentId]];

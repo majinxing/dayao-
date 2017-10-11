@@ -15,6 +15,7 @@
 #import "MJRefresh.h"
 #import "MJXChatViewController.h"
 #import "CreateChatViewController.h"
+#import "JoinMessageGroupViewController.h"
 #define FetchChatroomPageSize   20
 
 @interface TheMessageViewController ()<UITableViewDelegate,UITableViewDataSource,EMChatManagerDelegate,EMGroupManagerDelegate>
@@ -177,7 +178,10 @@
         [self.navigationController pushViewController:c animated:YES];
         self.hidesBottomBarWhenPushed = NO;
     }else if (indexPath.row == 1){
-    
+        JoinMessageGroupViewController * j = [[JoinMessageGroupViewController alloc] init];
+        self.hidesBottomBarWhenPushed = YES;
+        [self.navigationController pushViewController:j animated:YES];
+        self.hidesBottomBarWhenPushed = NO;
     }else if(indexPath.row>1){
         MJXChatViewController *chat = [[MJXChatViewController alloc] init];
         self.hidesBottomBarWhenPushed = YES;

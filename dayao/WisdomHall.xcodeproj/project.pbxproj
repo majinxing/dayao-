@@ -14,6 +14,10 @@
 		8B027A251EFA5FF200600E18 /* DataDownloadViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8B027A231EFA5FF200600E18 /* DataDownloadViewController.xib */; };
 		8B027A291EFB4E0000600E18 /* DataDownloadTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B027A271EFB4E0000600E18 /* DataDownloadTableViewCell.m */; };
 		8B027A2A1EFB4E0000600E18 /* DataDownloadTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8B027A281EFB4E0000600E18 /* DataDownloadTableViewCell.xib */; };
+		8B0333F31F8C50950021D495 /* GroupListTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B0333F11F8C50950021D495 /* GroupListTableViewCell.m */; };
+		8B0333F41F8C50950021D495 /* GroupListTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8B0333F21F8C50950021D495 /* GroupListTableViewCell.xib */; };
+		8B0333F81F8C70190021D495 /* JoinMessageGroupViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B0333F61F8C70190021D495 /* JoinMessageGroupViewController.m */; };
+		8B0333F91F8C70190021D495 /* JoinMessageGroupViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8B0333F71F8C70190021D495 /* JoinMessageGroupViewController.xib */; };
 		8B045B701F3458820021699B /* MJExtensionConst.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B045B5B1F3458820021699B /* MJExtensionConst.m */; };
 		8B045B711F3458820021699B /* MJFoundation.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B045B5D1F3458820021699B /* MJFoundation.m */; };
 		8B045B721F3458820021699B /* MJProperty.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B045B5F1F3458820021699B /* MJProperty.m */; };
@@ -237,6 +241,11 @@
 		8BCE7CCF1F04F07600FE261B /* AFURLRequestSerialization.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BCE7CC71F04F07600FE261B /* AFURLRequestSerialization.m */; };
 		8BCE7CD01F04F07600FE261B /* AFURLResponseSerialization.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BCE7CC91F04F07600FE261B /* AFURLResponseSerialization.m */; };
 		8BCE7CD11F04F07600FE261B /* AFURLSessionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BCE7CCB1F04F07600FE261B /* AFURLSessionManager.m */; };
+		8BE24D601F8B488E00621055 /* GroupListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BE24D5E1F8B488E00621055 /* GroupListViewController.m */; };
+		8BE24D611F8B488E00621055 /* GroupListViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8BE24D5F1F8B488E00621055 /* GroupListViewController.xib */; };
+		8BE24D641F8B528600621055 /* GroupModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BE24D631F8B528600621055 /* GroupModel.m */; };
+		8BE24D681F8B6E2200621055 /* GroupPeopleViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BE24D661F8B6E2200621055 /* GroupPeopleViewController.m */; };
+		8BE24D691F8B6E2200621055 /* GroupPeopleViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8BE24D671F8B6E2200621055 /* GroupPeopleViewController.xib */; };
 		8BE877691EBAF7A800866A34 /* ShareView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BE877681EBAF7A800866A34 /* ShareView.m */; };
 		8BE8776C1EBAF82E00866A34 /* ShareButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BE8776B1EBAF82E00866A34 /* ShareButton.m */; };
 		8BE877701EBC1CA800866A34 /* TextViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BE8776E1EBC1CA800866A34 /* TextViewController.m */; };
@@ -541,6 +550,12 @@
 		8B027A261EFB4E0000600E18 /* DataDownloadTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DataDownloadTableViewCell.h; sourceTree = "<group>"; };
 		8B027A271EFB4E0000600E18 /* DataDownloadTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DataDownloadTableViewCell.m; sourceTree = "<group>"; };
 		8B027A281EFB4E0000600E18 /* DataDownloadTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DataDownloadTableViewCell.xib; sourceTree = "<group>"; };
+		8B0333F01F8C50950021D495 /* GroupListTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GroupListTableViewCell.h; sourceTree = "<group>"; };
+		8B0333F11F8C50950021D495 /* GroupListTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GroupListTableViewCell.m; sourceTree = "<group>"; };
+		8B0333F21F8C50950021D495 /* GroupListTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = GroupListTableViewCell.xib; sourceTree = "<group>"; };
+		8B0333F51F8C70190021D495 /* JoinMessageGroupViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JoinMessageGroupViewController.h; sourceTree = "<group>"; };
+		8B0333F61F8C70190021D495 /* JoinMessageGroupViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JoinMessageGroupViewController.m; sourceTree = "<group>"; };
+		8B0333F71F8C70190021D495 /* JoinMessageGroupViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JoinMessageGroupViewController.xib; sourceTree = "<group>"; };
 		8B045B581F3458820021699B /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		8B045B591F3458820021699B /* MJExtension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MJExtension.h; sourceTree = "<group>"; };
 		8B045B5A1F3458820021699B /* MJExtensionConst.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MJExtensionConst.h; sourceTree = "<group>"; };
@@ -904,6 +919,14 @@
 		8BCE7CC91F04F07600FE261B /* AFURLResponseSerialization.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFURLResponseSerialization.m; sourceTree = "<group>"; };
 		8BCE7CCA1F04F07600FE261B /* AFURLSessionManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFURLSessionManager.h; sourceTree = "<group>"; };
 		8BCE7CCB1F04F07600FE261B /* AFURLSessionManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFURLSessionManager.m; sourceTree = "<group>"; };
+		8BE24D5D1F8B488E00621055 /* GroupListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GroupListViewController.h; sourceTree = "<group>"; };
+		8BE24D5E1F8B488E00621055 /* GroupListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GroupListViewController.m; sourceTree = "<group>"; };
+		8BE24D5F1F8B488E00621055 /* GroupListViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = GroupListViewController.xib; sourceTree = "<group>"; };
+		8BE24D621F8B528600621055 /* GroupModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GroupModel.h; sourceTree = "<group>"; };
+		8BE24D631F8B528600621055 /* GroupModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GroupModel.m; sourceTree = "<group>"; };
+		8BE24D651F8B6E2200621055 /* GroupPeopleViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GroupPeopleViewController.h; sourceTree = "<group>"; };
+		8BE24D661F8B6E2200621055 /* GroupPeopleViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GroupPeopleViewController.m; sourceTree = "<group>"; };
+		8BE24D671F8B6E2200621055 /* GroupPeopleViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = GroupPeopleViewController.xib; sourceTree = "<group>"; };
 		8BE877671EBAF7A800866A34 /* ShareView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShareView.h; sourceTree = "<group>"; };
 		8BE877681EBAF7A800866A34 /* ShareView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShareView.m; sourceTree = "<group>"; };
 		8BE8776A1EBAF82E00866A34 /* ShareButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShareButton.h; sourceTree = "<group>"; };
@@ -1369,6 +1392,9 @@
 				8B07DB7B1F78E7E500DC371C /* CreateChatViewController.h */,
 				8B07DB7C1F78E7E500DC371C /* CreateChatViewController.m */,
 				8B07DB7D1F78E7E500DC371C /* CreateChatViewController.xib */,
+				8B0333F51F8C70190021D495 /* JoinMessageGroupViewController.h */,
+				8B0333F61F8C70190021D495 /* JoinMessageGroupViewController.m */,
+				8B0333F71F8C70190021D495 /* JoinMessageGroupViewController.xib */,
 			);
 			name = TheMessage;
 			path = ..;
@@ -1380,6 +1406,9 @@
 				8B1A502F1F75F85C00A11CB2 /* OfficeTableViewCell.h */,
 				8B1A50301F75F85C00A11CB2 /* OfficeTableViewCell.m */,
 				8B1A50311F75F85C00A11CB2 /* OfficeTableViewCell.xib */,
+				8B0333F01F8C50950021D495 /* GroupListTableViewCell.h */,
+				8B0333F11F8C50950021D495 /* GroupListTableViewCell.m */,
+				8B0333F21F8C50950021D495 /* GroupListTableViewCell.xib */,
 			);
 			name = Cell;
 			sourceTree = "<group>";
@@ -1420,6 +1449,7 @@
 			isa = PBXGroup;
 			children = (
 				8B1A502E1F75F83400A11CB2 /* Cell */,
+				8BE24D5C1F8B487400621055 /* Group */,
 				8B3CAEC51F75091000BDE092 /* OfficeViewController.h */,
 				8B3CAEC61F75091000BDE092 /* OfficeViewController.m */,
 				8B3CAEC71F75091000BDE092 /* OfficeViewController.xib */,
@@ -1720,6 +1750,8 @@
 				8B0F8E841F59460400993B0B /* QuestionBank.m */,
 				8B2F144F1F5E93BF00438374 /* StudentSorce.h */,
 				8B2F14501F5E93BF00438374 /* StudentSorce.m */,
+				8BE24D621F8B528600621055 /* GroupModel.h */,
+				8BE24D631F8B528600621055 /* GroupModel.m */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -1868,6 +1900,19 @@
 				8BCE7CCB1F04F07600FE261B /* AFURLSessionManager.m */,
 			);
 			path = AFNetworking;
+			sourceTree = "<group>";
+		};
+		8BE24D5C1F8B487400621055 /* Group */ = {
+			isa = PBXGroup;
+			children = (
+				8BE24D5D1F8B488E00621055 /* GroupListViewController.h */,
+				8BE24D5E1F8B488E00621055 /* GroupListViewController.m */,
+				8BE24D5F1F8B488E00621055 /* GroupListViewController.xib */,
+				8BE24D651F8B6E2200621055 /* GroupPeopleViewController.h */,
+				8BE24D661F8B6E2200621055 /* GroupPeopleViewController.m */,
+				8BE24D671F8B6E2200621055 /* GroupPeopleViewController.xib */,
+			);
+			name = Group;
 			sourceTree = "<group>";
 		};
 		8BE877631EBAF73700866A34 /* ShareView */ = {
@@ -2228,7 +2273,7 @@
 					8BA224581EADF68500627A1B = {
 						CreatedOnToolsVersion = 8.3;
 						DevelopmentTeam = AM9UTP2CL3;
-						ProvisioningStyle = Automatic;
+						ProvisioningStyle = Manual;
 						SystemCapabilities = {
 							com.apple.BackgroundModes = {
 								enabled = 1;
@@ -2323,10 +2368,12 @@
 				8B05CB711EC015DB0063EC20 /* PersonalInfoTableViewCell.xib in Resources */,
 				8BF7D3661F3D7D700087D35D /* CreateMeetingViewController.xib in Resources */,
 				8B2E16D61EB9C1EA008B7C57 /* CourseDetailsViewController.xib in Resources */,
+				8B0333F41F8C50950021D495 /* GroupListTableViewCell.xib in Resources */,
 				8BFB94621EE6A381004BB963 /* JoinVoteViewController.xib in Resources */,
 				8B9CCB891F1468D6001833FD /* Hyphenate.podspec in Resources */,
 				8B081DDD1F06013300493B81 /* collegedata.json in Resources */,
 				8BF82D731EDEC50E00D33473 /* DiscussViewController.xib in Resources */,
+				8BE24D691F8B6E2200621055 /* GroupPeopleViewController.xib in Resources */,
 				8B081E141F0C980200493B81 /* SelectClassRoomViewController.xib in Resources */,
 				8B17374A1EC58BE400BE3C8F /* TestQuestionsViewController.xib in Resources */,
 				8BB56D8D1EB31C110023DAFF /* SystemSettingsViewController.xib in Resources */,
@@ -2348,6 +2395,7 @@
 				8BA224A81EAE000000627A1B /* PersonalCenterViewController.xib in Resources */,
 				8B2E16DB1EBAB968008B7C57 /* ClassManagementViewController.xib in Resources */,
 				8B0F41311EF522CF001AF4DF /* MJXChatViewController.xib in Resources */,
+				8BE24D611F8B488E00621055 /* GroupListViewController.xib in Resources */,
 				8BF864871ECAD21200B7EED4 /* MJRefresh.bundle in Resources */,
 				8B17374F1EC5AC3600BE3C8F /* CreateTextTableViewCell.xib in Resources */,
 				8BE8777C1EBC2D8E00866A34 /* NotStartTestingViewController.xib in Resources */,
@@ -2369,6 +2417,7 @@
 				8BE877861EBC2E0C00866A34 /* EndTheTestViewController.xib in Resources */,
 				8BA224671EADF68500627A1B /* Main.storyboard in Resources */,
 				8B2E16F31EBADA2F008B7C57 /* TheMeetingNotStartViewController.xib in Resources */,
+				8B0333F91F8C70190021D495 /* JoinMessageGroupViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2545,6 +2594,8 @@
 				8B045B741F3458820021699B /* MJPropertyType.m in Sources */,
 				8BE913991EEF7EF000000282 /* DiscussListTableViewCell.m in Sources */,
 				8BF8648A1ECAD21200B7EED4 /* MJRefreshFooterView.m in Sources */,
+				8BE24D641F8B528600621055 /* GroupModel.m in Sources */,
+				8BE24D601F8B488E00621055 /* GroupListViewController.m in Sources */,
 				8BF82D811EE001D600D33473 /* VoteTableViewCell.m in Sources */,
 				8BF8646E1ECACAE800B7EED4 /* FMDatabase.m in Sources */,
 				8BA224A21EADFFE500627A1B /* InteractiveViewController.m in Sources */,
@@ -2605,6 +2656,7 @@
 				8BE877801EBC2DE000866A34 /* InTheTestViewController.m in Sources */,
 				8B1A502C1F75EB7000A11CB2 /* TheMessageViewController.m in Sources */,
 				8B045B751F3458820021699B /* NSObject+MJClass.m in Sources */,
+				8B0333F31F8C50950021D495 /* GroupListTableViewCell.m in Sources */,
 				8BF864C11ECAD97300B7EED4 /* SDWebImageDownloader.m in Sources */,
 				8B0DB1361ED561B80042DF0D /* AnswerModel.m in Sources */,
 				8BF864751ECACBEC00B7EED4 /* FMDBTool.m in Sources */,
@@ -2618,10 +2670,12 @@
 				8B8C3D141ECD300C00E9FB56 /* ChatHelper.m in Sources */,
 				8B081E031F078B8C00493B81 /* Appsetting.m in Sources */,
 				8BF864891ECAD21200B7EED4 /* MJRefreshConst.m in Sources */,
+				8B0333F81F8C70190021D495 /* JoinMessageGroupViewController.m in Sources */,
 				8B9171C71ED3D9D8009686FD /* contactTool.m in Sources */,
 				8B0DB1331ED5188C0042DF0D /* ContactModel.m in Sources */,
 				8B1737181EC2F84900BE3C8F /* NoticeTableViewCell.m in Sources */,
 				8B081DE11F06238E00493B81 /* DefinitionPersonalTableViewCell.m in Sources */,
+				8BE24D681F8B6E2200621055 /* GroupPeopleViewController.m in Sources */,
 				8BB56D8C1EB31C110023DAFF /* SystemSettingsViewController.m in Sources */,
 				8BFC79741F457E760052C088 /* JoinCours.m in Sources */,
 				8B045B9A1F3458E40021699B /* ZFHallLogoView.m in Sources */,
@@ -2840,8 +2894,8 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = WisdomHall/WisdomHall.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Distribution: yao zhiqiang (AM9UTP2CL3)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				DEVELOPMENT_TEAM = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: yao zhiqiang (AM9UTP2CL3)";
+				DEVELOPMENT_TEAM = AM9UTP2CL3;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -2872,8 +2926,8 @@
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_BUNDLE_IDENTIFIER = com.dayaokeji.rhythm;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "";
-				PROVISIONING_PROFILE_SPECIFIER = "";
+				PROVISIONING_PROFILE = "86336f4f-32b9-4444-9a53-bce2f880f564";
+				PROVISIONING_PROFILE_SPECIFIER = rhythmP12;
 				TARGETED_DEVICE_FAMILY = 1;
 				USER_HEADER_SEARCH_PATHS = "";
 			};
@@ -3038,8 +3092,8 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = WisdomHall/WisdomHall.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Distribution: yao zhiqiang (AM9UTP2CL3)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				DEVELOPMENT_TEAM = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: yao zhiqiang (AM9UTP2CL3)";
+				DEVELOPMENT_TEAM = AM9UTP2CL3;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -3070,8 +3124,8 @@
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_BUNDLE_IDENTIFIER = com.dayaokeji.rhythm;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "";
-				PROVISIONING_PROFILE_SPECIFIER = "";
+				PROVISIONING_PROFILE = "86336f4f-32b9-4444-9a53-bce2f880f564";
+				PROVISIONING_PROFILE_SPECIFIER = rhythmP12;
 				TARGETED_DEVICE_FAMILY = 1;
 				USER_HEADER_SEARCH_PATHS = "";
 			};
@@ -3084,8 +3138,8 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = WisdomHall/WisdomHall.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Distribution: yao zhiqiang (AM9UTP2CL3)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				DEVELOPMENT_TEAM = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: yao zhiqiang (AM9UTP2CL3)";
+				DEVELOPMENT_TEAM = AM9UTP2CL3;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -3116,8 +3170,8 @@
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_BUNDLE_IDENTIFIER = com.dayaokeji.rhythm;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "";
-				PROVISIONING_PROFILE_SPECIFIER = "";
+				PROVISIONING_PROFILE = "86336f4f-32b9-4444-9a53-bce2f880f564";
+				PROVISIONING_PROFILE_SPECIFIER = rhythmP12;
 				TARGETED_DEVICE_FAMILY = 1;
 				USER_HEADER_SEARCH_PATHS = "";
 			};

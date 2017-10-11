@@ -52,11 +52,7 @@ static NSString *cellIdentifier = @"cellIdentifierPersonal";
     [self.navigationController.navigationBar setTitleTextAttributes:@{
                                                                       NSFontAttributeName:[UIFont systemFontOfSize:17],
                                                                       NSForegroundColorAttributeName:[UIColor blackColor]}];
-    if ([UIUtils isBlankString:[NSString stringWithFormat:@"%@",_meeting.meetingId]]) {
-        self.title = @"班级管理";
-    }else{
-        self.title = @"会议管理";
-    }
+    self.title = @"人员管理";
 }
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

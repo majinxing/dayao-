@@ -11,6 +11,7 @@
 #import "OfficeTableViewCell.h"
 #import "AllTheMeetingViewController.h"
 #import "NoticeViewController.h"
+#import "GroupListViewController.h"
 
 @interface OfficeViewController ()<UITableViewDelegate,UITableViewDataSource,OfficeTableViewCellDelegate>
 @property (nonatomic,strong)UITableView * tableView;
@@ -60,6 +61,11 @@
         self.hidesBottomBarWhenPushed = YES;
         [self.navigationController pushViewController:noticeVC animated:YES];
         self.hidesBottomBarWhenPushed = NO;
+    }else if ([str isEqualToString:Group]){
+        GroupListViewController * g = [[GroupListViewController alloc] init];
+        self.hidesBottomBarWhenPushed = YES;
+        [self.navigationController pushViewController:g animated:YES];
+        self.hidesBottomBarWhenPushed = NO;
     }else{
         [UIUtils showInfoMessage:@"未完待续"];
     }
@@ -88,8 +94,8 @@
         cell = [tableView dequeueReusableCellWithIdentifier:@"OfficeTableViewCellSecond"];
         if (!cell) {
             cell = [[[NSBundle mainBundle] loadNibNamed:@"OfficeTableViewCell" owner:self options:nil] objectAtIndex:1];
+            [cell addSecondContentView];
         }
-        [cell addSecondContentView];
         
     }
     cell.delegate = self;

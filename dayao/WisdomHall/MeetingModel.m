@@ -8,6 +8,7 @@
 
 #import "MeetingModel.h"
 #import "SignPeople.h"
+
 @implementation MeetingModel
 -(instancetype)init{
     self = [super init];

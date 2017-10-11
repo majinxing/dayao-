@@ -129,12 +129,27 @@
                         <action selector="forgotPasswordPressed:" destination="-1" eventType="touchUpInside" id="kTt-E0-DQr"/>
                     </connections>
                 </button>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Jsa-1A-dki">
+                    <rect key="frame" x="0.0" y="22" width="40" height="40"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="40" id="BQj-f0-MpJ"/>
+                        <constraint firstAttribute="height" constant="40" id="Mhl-0o-J0Z"/>
+                    </constraints>
+                    <state key="normal">
+                        <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </state>
+                    <connections>
+                        <action selector="back:" destination="-1" eventType="touchUpInside" id="1I1-a6-DBo"/>
+                    </connections>
+                </button>
             </subviews>
             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
                 <constraint firstAttribute="trailing" secondItem="8zw-Xu-8l8" secondAttribute="trailing" constant="30" id="0mB-My-Mbw"/>
+                <constraint firstItem="Jsa-1A-dki" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="22" id="1E9-uM-d18"/>
                 <constraint firstAttribute="bottom" secondItem="SYI-Cq-zpO" secondAttribute="bottom" id="1R4-MK-S0Y"/>
                 <constraint firstItem="yXt-zY-hHJ" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="30" id="7cD-ht-OV4"/>
+                <constraint firstItem="Jsa-1A-dki" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="7vq-Dd-ohl"/>
                 <constraint firstAttribute="trailing" secondItem="SYI-Cq-zpO" secondAttribute="trailing" id="8Pq-df-HS7"/>
                 <constraint firstItem="yXt-zY-hHJ" firstAttribute="top" secondItem="8zw-Xu-8l8" secondAttribute="bottom" constant="60" id="8RA-WB-Tpt"/>
                 <constraint firstAttribute="trailing" secondItem="yXt-zY-hHJ" secondAttribute="trailing" constant="30" id="A2X-a8-z8v"/>

@@ -26,19 +26,35 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
     self.view.backgroundColor = [UIColor whiteColor];//secureTextEntry
-    _personalPassword.secureTextEntry = YES;
-    [_personalAccount addTarget:self action:@selector(textFieldDidChange:) forControlEvents:UIControlEventEditingChanged];
-    [_personalPassword addTarget:self action:@selector(textFieldDidChange:) forControlEvents:UIControlEventEditingChanged];
-    [_personalAccount setValue:[UIColor whiteColor] forKeyPath:@"_placeholderLabel.textColor"];
-    [_personalPassword setValue:[UIColor whiteColor] forKeyPath:@"_placeholderLabel.textColor"];
-    UserModel * user = [[Appsetting sharedInstance] getUsetInfo];
-    _personalAccount.text = user.userPhone;
-    _personalPassword.text = user.userPassword;
-    // Do any additional setup after loading the view from its nib.
+    
+    [self xib];
+    
+        // Do any additional setup after loading the view from its nib.
 }
 -(void)viewWillAppear:(BOOL)animated{
     self.navigationController.navigationBarHidden = YES;
+}
+- (IBAction)back:(id)sender {
+    [self.navigationController popViewControllerAnimated:YES];
+}
+
+-(void)xib{
+    _personalPassword.secureTextEntry = YES;
+    
+    [_personalAccount addTarget:self action:@selector(textFieldDidChange:) forControlEvents:UIControlEventEditingChanged];
+    
+    [_personalPassword addTarget:self action:@selector(textFieldDidChange:) forControlEvents:UIControlEventEditingChanged];
+    
+    [_personalAccount setValue:[UIColor whiteColor] forKeyPath:@"_placeholderLabel.textColor"];
+    [_personalPassword setValue:[UIColor whiteColor] forKeyPath:@"_placeholderLabel.textColor"];
+    UserModel * user = [[Appsetting sharedInstance] getUsetInfo];
+    
+    _personalAccount.text = user.userPhone;
+    
+    _personalPassword.text = user.userPassword;
+
 }
 -(void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event{
     //点击屏幕 回收键盘

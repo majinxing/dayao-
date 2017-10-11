@@ -112,6 +112,9 @@
     }if ([type isEqualToString:Lotus]) {
         [self setImage:[UIImage imageNamed:@"审批"] forState:UIControlStateNormal];
     }
+    if ([type isEqualToString:Group]) {
+        [self setImage:[UIImage imageNamed:@"群组"] forState:UIControlStateNormal];
+    }
     [self setTitle:type forState:UIControlStateNormal];
 }
 

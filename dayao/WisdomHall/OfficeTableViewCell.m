@@ -32,6 +32,7 @@
     _signBtn.backgroundColor = [UIColor colorWithHexString:@"#29a7e1"];
     [_signBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [self signState];
+//    [self addSecondContentView];
     // Initialization code
 }
 -(void)signState{
@@ -73,7 +74,8 @@
                        Announcement,
                        Leave,
                        Business,
-                       Lotus
+                       Lotus,
+                       Group
                        ];
     
     //水平间距

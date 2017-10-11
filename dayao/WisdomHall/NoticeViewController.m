@@ -50,7 +50,7 @@
     [self.navigationController.navigationBar setTitleTextAttributes:@{
                                                                       NSFontAttributeName:[UIFont systemFontOfSize:17],
                                                                       NSForegroundColorAttributeName:[UIColor blackColor]}];
-    self.title = @"个人资料";
+    self.title = @"通知";
    UIBarButtonItem * myButton = [[UIBarButtonItem alloc] initWithTitle:@"< 返回" style:UIBarButtonItemStylePlain target:self action:@selector(back)];
     self.navigationItem.leftBarButtonItem = myButton;
 }
