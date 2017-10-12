@@ -13,6 +13,8 @@
 #import "NoticeViewController.h"
 #import "GroupListViewController.h"
 
+#import "WisdomHall-Swift.h"
+
 @interface OfficeViewController ()<UITableViewDelegate,UITableViewDataSource,OfficeTableViewCellDelegate>
 @property (nonatomic,strong)UITableView * tableView;
 @end
@@ -61,6 +63,11 @@
         self.hidesBottomBarWhenPushed = YES;
         [self.navigationController pushViewController:noticeVC animated:YES];
         self.hidesBottomBarWhenPushed = NO;
+//        NoticeSwiftViewController * a = [[NoticeSwiftViewController alloc] init];
+//        self.hidesBottomBarWhenPushed = YES;
+//        [self.navigationController pushViewController:a animated:YES];
+//        self.hidesBottomBarWhenPushed = NO;
+        
     }else if ([str isEqualToString:Group]){
         GroupListViewController * g = [[GroupListViewController alloc] init];
         self.hidesBottomBarWhenPushed = YES;

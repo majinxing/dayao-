@@ -26,7 +26,7 @@
     [super viewDidLoad];
     _noticeAry = [NSMutableArray arrayWithCapacity:1];
     
-    [self selectFMDBTable];
+    [self addData];
     
     [self addTableView];
     
@@ -67,26 +67,18 @@
     }
     
 }
--(void)selectFMDBTable{
-    _db = [FMDBTool createDBWithName:SQLITE_NAME];
-    if ([_db open]) {
-        NSString * sql = [NSString stringWithFormat:@"select * from %@",NOTICE_TABLE_NAME];
-        FMResultSet * rs = [FMDBTool queryWithDB:_db withSqlStr:sql];
-        while (rs.next) {
-            NoticeModel * notice = [[NoticeModel alloc] init];
-            notice.noticeTime = [rs stringForColumn:@"noticeTime"];
-            notice.noticeContent = [rs stringForColumn:@"noticeContent"];
-            [_noticeAry addObject:notice];
-        }
-        if (_noticeAry.count>0) {
-            
-        }else{
-            UIAlertView * alter = [[UIAlertView alloc] initWithTitle:nil message:@"暂无通知" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil];
-            [alter show];
-        }
-        [_tableView reloadData];
-    }
-    [_db close];
+-(void)addData{
+    NoticeModel * notice = [[NoticeModel alloc] init];
+    notice.noticeTime = @"noticeTime";
+    notice.noticeContent = @"noticeContent";
+    [_noticeAry addObject:notice];
+    NSDictionary * dict = [[NSDictionary alloc] init];
+    
+    [[NetworkRequest sharedInstance] GET:QueryNotice dict:dict succeed:^(id data) {
+        NSLog(@"%@",data);
+    } failure:^(NSError *error) {
+        
+    }];
 }
 
 

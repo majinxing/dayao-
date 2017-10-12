@@ -199,7 +199,7 @@
 
 #define GroupPeople             @"course/group/member"              //查询群组成员
 
-
+#define QueryNotice             @"course/message/qurey"             //查询通知消息
 
 
 

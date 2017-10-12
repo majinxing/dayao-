@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		8B0207151F8DA4DB00CE3B8C /* NoticeSwiftViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B0207131F8DA4DB00CE3B8C /* NoticeSwiftViewController.swift */; };
+		8B0207161F8DA4DB00CE3B8C /* NoticeSwiftViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8B0207141F8DA4DB00CE3B8C /* NoticeSwiftViewController.xib */; };
 		8B027A141EF8F30100600E18 /* TheMeetingInfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B027A121EF8F30100600E18 /* TheMeetingInfoViewController.m */; };
 		8B027A151EF8F30100600E18 /* TheMeetingInfoViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8B027A131EF8F30100600E18 /* TheMeetingInfoViewController.xib */; };
 		8B027A181EF8F48800600E18 /* MeetingModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B027A171EF8F48800600E18 /* MeetingModel.m */; };
@@ -539,6 +541,9 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		8B0207121F8DA4DA00CE3B8C /* WisdomHall-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "WisdomHall-Bridging-Header.h"; sourceTree = "<group>"; };
+		8B0207131F8DA4DB00CE3B8C /* NoticeSwiftViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NoticeSwiftViewController.swift; sourceTree = "<group>"; };
+		8B0207141F8DA4DB00CE3B8C /* NoticeSwiftViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = NoticeSwiftViewController.xib; sourceTree = "<group>"; };
 		8B027A111EF8F30100600E18 /* TheMeetingInfoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TheMeetingInfoViewController.h; sourceTree = "<group>"; };
 		8B027A121EF8F30100600E18 /* TheMeetingInfoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TheMeetingInfoViewController.m; sourceTree = "<group>"; };
 		8B027A131EF8F30100600E18 /* TheMeetingInfoViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TheMeetingInfoViewController.xib; sourceTree = "<group>"; };
@@ -1706,7 +1711,10 @@
 				8B7725031F3029CE00D1B521 /* FeedbackViewController.h */,
 				8B7725041F3029CE00D1B521 /* FeedbackViewController.m */,
 				8B7725051F3029CE00D1B521 /* FeedbackViewController.xib */,
+				8B0207131F8DA4DB00CE3B8C /* NoticeSwiftViewController.swift */,
+				8B0207141F8DA4DB00CE3B8C /* NoticeSwiftViewController.xib */,
 				8B05CB721EC06FD60063EC20 /* Cell */,
+				8B0207121F8DA4DA00CE3B8C /* WisdomHall-Bridging-Header.h */,
 			);
 			name = PersonalCenter;
 			sourceTree = "<group>";
@@ -2273,6 +2281,7 @@
 					8BA224581EADF68500627A1B = {
 						CreatedOnToolsVersion = 8.3;
 						DevelopmentTeam = AM9UTP2CL3;
+						LastSwiftMigration = 0830;
 						ProvisioningStyle = Automatic;
 						SystemCapabilities = {
 							com.apple.BackgroundModes = {
@@ -2397,6 +2406,7 @@
 				8B0F41311EF522CF001AF4DF /* MJXChatViewController.xib in Resources */,
 				8BE24D611F8B488E00621055 /* GroupListViewController.xib in Resources */,
 				8BF864871ECAD21200B7EED4 /* MJRefresh.bundle in Resources */,
+				8B0207161F8DA4DB00CE3B8C /* NoticeSwiftViewController.xib in Resources */,
 				8B17374F1EC5AC3600BE3C8F /* CreateTextTableViewCell.xib in Resources */,
 				8BE8777C1EBC2D8E00866A34 /* NotStartTestingViewController.xib in Resources */,
 				8BA224C21EAEF5CB00627A1B /* TheLoginViewController.xib in Resources */,
@@ -2669,6 +2679,7 @@
 				8BF8646F1ECACAE800B7EED4 /* FMDatabaseAdditions.m in Sources */,
 				8B8C3D141ECD300C00E9FB56 /* ChatHelper.m in Sources */,
 				8B081E031F078B8C00493B81 /* Appsetting.m in Sources */,
+				8B0207151F8DA4DB00CE3B8C /* NoticeSwiftViewController.swift in Sources */,
 				8BF864891ECAD21200B7EED4 /* MJRefreshConst.m in Sources */,
 				8B0333F81F8C70190021D495 /* JoinMessageGroupViewController.m in Sources */,
 				8B9171C71ED3D9D8009686FD /* contactTool.m in Sources */,
@@ -2892,9 +2903,11 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = WisdomHall/WisdomHall.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Distribution: yao zhiqiang (AM9UTP2CL3)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = "";
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -2928,6 +2941,8 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				PROVISIONING_PROFILE_SPECIFIER = "";
+				SWIFT_OBJC_BRIDGING_HEADER = "WisdomHall/WisdomHall-Bridging-Header.h";
+				SWIFT_VERSION = 3.0;
 				TARGETED_DEVICE_FAMILY = 1;
 				USER_HEADER_SEARCH_PATHS = "";
 			};
@@ -2936,6 +2951,7 @@
 		8B9CCB821F1463B6001833FD /* ad hoc distribution */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				DEVELOPMENT_TEAM = AM9UTP2CL3;
 				INFOPLIST_FILE = WisdomHallTests/Info.plist;
@@ -2949,6 +2965,7 @@
 		8B9CCB831F1463B6001833FD /* ad hoc distribution */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				DEVELOPMENT_TEAM = "";
 				INFOPLIST_FILE = WisdomHallUITests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
@@ -3090,9 +3107,11 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = WisdomHall/WisdomHall.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Distribution: yao zhiqiang (AM9UTP2CL3)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = "";
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -3126,6 +3145,9 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				PROVISIONING_PROFILE_SPECIFIER = "";
+				SWIFT_OBJC_BRIDGING_HEADER = "WisdomHall/WisdomHall-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 3.0;
 				TARGETED_DEVICE_FAMILY = 1;
 				USER_HEADER_SEARCH_PATHS = "";
 			};
@@ -3136,9 +3158,11 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = WisdomHall/WisdomHall.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Distribution: yao zhiqiang (AM9UTP2CL3)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = "";
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -3172,6 +3196,8 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				PROVISIONING_PROFILE_SPECIFIER = "";
+				SWIFT_OBJC_BRIDGING_HEADER = "WisdomHall/WisdomHall-Bridging-Header.h";
+				SWIFT_VERSION = 3.0;
 				TARGETED_DEVICE_FAMILY = 1;
 				USER_HEADER_SEARCH_PATHS = "";
 			};
@@ -3180,6 +3206,7 @@
 		8BA2248A1EADF68600627A1B /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				DEVELOPMENT_TEAM = AM9UTP2CL3;
 				INFOPLIST_FILE = WisdomHallTests/Info.plist;
@@ -3193,6 +3220,7 @@
 		8BA2248B1EADF68600627A1B /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				DEVELOPMENT_TEAM = AM9UTP2CL3;
 				INFOPLIST_FILE = WisdomHallTests/Info.plist;
@@ -3206,6 +3234,7 @@
 		8BA2248D1EADF68600627A1B /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				DEVELOPMENT_TEAM = "";
 				INFOPLIST_FILE = WisdomHallUITests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
@@ -3219,6 +3248,7 @@
 		8BA2248E1EADF68600627A1B /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				DEVELOPMENT_TEAM = "";
 				INFOPLIST_FILE = WisdomHallUITests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
