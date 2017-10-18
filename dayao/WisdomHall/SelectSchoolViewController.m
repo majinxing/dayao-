@@ -310,7 +310,7 @@
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     [self.view endEditing:YES];
-    if (indexPath.row>=_selectSchoolAry.count||indexPath.row==0) {
+    if (indexPath.row>=_selectSchoolAry.count) {
         [_tableView reloadData];
         return;
     }

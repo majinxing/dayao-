@@ -64,8 +64,8 @@
         DYTabBarViewController * tab = [[DYTabBarViewController alloc] init];
         self.window.rootViewController = tab;
     }else{
-//        WorkingLoginViewController * loginVC = [[WorkingLoginViewController alloc] init];
-        TheLoginViewController * loginVC = [[TheLoginViewController alloc] init];
+        WorkingLoginViewController * loginVC = [[WorkingLoginViewController alloc] init];
+//        TheLoginViewController * loginVC = [[TheLoginViewController alloc] init];
         self.window.rootViewController = [[UINavigationController alloc]initWithRootViewController:loginVC];
     }
 

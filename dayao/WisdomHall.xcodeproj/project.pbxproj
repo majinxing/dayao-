@@ -20,6 +20,7 @@
 		8B0333F41F8C50950021D495 /* GroupListTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8B0333F21F8C50950021D495 /* GroupListTableViewCell.xib */; };
 		8B0333F81F8C70190021D495 /* JoinMessageGroupViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B0333F61F8C70190021D495 /* JoinMessageGroupViewController.m */; };
 		8B0333F91F8C70190021D495 /* JoinMessageGroupViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8B0333F71F8C70190021D495 /* JoinMessageGroupViewController.xib */; };
+		8B0344C31F920E3A0004228D /* BindPhone.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B0344C21F920E3A0004228D /* BindPhone.m */; };
 		8B045B701F3458820021699B /* MJExtensionConst.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B045B5B1F3458820021699B /* MJExtensionConst.m */; };
 		8B045B711F3458820021699B /* MJFoundation.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B045B5D1F3458820021699B /* MJFoundation.m */; };
 		8B045B721F3458820021699B /* MJProperty.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B045B5F1F3458820021699B /* MJProperty.m */; };
@@ -161,6 +162,8 @@
 		8B3CAEC81F75091000BDE092 /* OfficeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B3CAEC61F75091000BDE092 /* OfficeViewController.m */; };
 		8B3CAEC91F75091000BDE092 /* OfficeViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8B3CAEC71F75091000BDE092 /* OfficeViewController.xib */; };
 		8B45D3871F7CF6A700A00677 /* libsms-lib.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8B45D3861F7CF6A700A00677 /* libsms-lib.a */; };
+		8B47AB831F96DC6A00DB1B9A /* ClassTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B47AB811F96DC6A00DB1B9A /* ClassTableViewCell.m */; };
+		8B47AB841F96DC6A00DB1B9A /* ClassTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8B47AB821F96DC6A00DB1B9A /* ClassTableViewCell.xib */; };
 		8B4D91141EBDAB1000A4BE34 /* SignListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B4D91121EBDAB1000A4BE34 /* SignListViewController.m */; };
 		8B4D91151EBDAB1000A4BE34 /* SignListViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8B4D91131EBDAB1000A4BE34 /* SignListViewController.xib */; };
 		8B51AAA31F3EE71900AE034E /* MeetingChooseSeatViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B51AAA11F3EE71900AE034E /* MeetingChooseSeatViewController.m */; };
@@ -561,6 +564,8 @@
 		8B0333F51F8C70190021D495 /* JoinMessageGroupViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JoinMessageGroupViewController.h; sourceTree = "<group>"; };
 		8B0333F61F8C70190021D495 /* JoinMessageGroupViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JoinMessageGroupViewController.m; sourceTree = "<group>"; };
 		8B0333F71F8C70190021D495 /* JoinMessageGroupViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JoinMessageGroupViewController.xib; sourceTree = "<group>"; };
+		8B0344C11F920E3A0004228D /* BindPhone.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BindPhone.h; sourceTree = "<group>"; };
+		8B0344C21F920E3A0004228D /* BindPhone.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BindPhone.m; sourceTree = "<group>"; };
 		8B045B581F3458820021699B /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		8B045B591F3458820021699B /* MJExtension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MJExtension.h; sourceTree = "<group>"; };
 		8B045B5A1F3458820021699B /* MJExtensionConst.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MJExtensionConst.h; sourceTree = "<group>"; };
@@ -790,6 +795,9 @@
 		8B45D3841F7CF6A700A00677 /* JSMSConstant.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSMSConstant.h; sourceTree = "<group>"; };
 		8B45D3851F7CF6A700A00677 /* JSMSSDK.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSMSSDK.h; sourceTree = "<group>"; };
 		8B45D3861F7CF6A700A00677 /* libsms-lib.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = "libsms-lib.a"; sourceTree = "<group>"; };
+		8B47AB801F96DC6A00DB1B9A /* ClassTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ClassTableViewCell.h; sourceTree = "<group>"; };
+		8B47AB811F96DC6A00DB1B9A /* ClassTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ClassTableViewCell.m; sourceTree = "<group>"; };
+		8B47AB821F96DC6A00DB1B9A /* ClassTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ClassTableViewCell.xib; sourceTree = "<group>"; };
 		8B4D91111EBDAB1000A4BE34 /* SignListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SignListViewController.h; sourceTree = "<group>"; };
 		8B4D91121EBDAB1000A4BE34 /* SignListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SignListViewController.m; sourceTree = "<group>"; };
 		8B4D91131EBDAB1000A4BE34 /* SignListViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SignListViewController.xib; sourceTree = "<group>"; };
@@ -1189,6 +1197,15 @@
 				8B027A281EFB4E0000600E18 /* DataDownloadTableViewCell.xib */,
 			);
 			name = DataDownload;
+			sourceTree = "<group>";
+		};
+		8B0344BE1F920DF60004228D /* View */ = {
+			isa = PBXGroup;
+			children = (
+				8B0344C11F920E3A0004228D /* BindPhone.h */,
+				8B0344C21F920E3A0004228D /* BindPhone.m */,
+			);
+			name = View;
 			sourceTree = "<group>";
 		};
 		8B045B531F3458660021699B /* seating */ = {
@@ -1873,6 +1890,9 @@
 				8B05CB6D1EC015DB0063EC20 /* PersonalInfoTableViewCell.h */,
 				8B05CB6E1EC015DB0063EC20 /* PersonalInfoTableViewCell.m */,
 				8B05CB6F1EC015DB0063EC20 /* PersonalInfoTableViewCell.xib */,
+				8B47AB801F96DC6A00DB1B9A /* ClassTableViewCell.h */,
+				8B47AB811F96DC6A00DB1B9A /* ClassTableViewCell.m */,
+				8B47AB821F96DC6A00DB1B9A /* ClassTableViewCell.xib */,
 			);
 			name = View;
 			sourceTree = "<group>";
@@ -1880,6 +1900,7 @@
 		8BA224BD1EAEF59D00627A1B /* TheLogin */ = {
 			isa = PBXGroup;
 			children = (
+				8B0344BE1F920DF60004228D /* View */,
 				8BA224BE1EAEF5CB00627A1B /* TheLoginViewController.h */,
 				8BA224BF1EAEF5CB00627A1B /* TheLoginViewController.m */,
 				8BA224C01EAEF5CB00627A1B /* TheLoginViewController.xib */,
@@ -2282,7 +2303,7 @@
 						CreatedOnToolsVersion = 8.3;
 						DevelopmentTeam = AM9UTP2CL3;
 						LastSwiftMigration = 0830;
-						ProvisioningStyle = Automatic;
+						ProvisioningStyle = Manual;
 						SystemCapabilities = {
 							com.apple.BackgroundModes = {
 								enabled = 1;
@@ -2398,6 +2419,7 @@
 				8B6E61CC1EE292B10040FDC1 /* CreateVoteTableViewCell.xib in Resources */,
 				8BE877711EBC1CA800866A34 /* TextViewController.xib in Resources */,
 				8B064E581F00F53F0004C3D4 /* Assets.xcassets in Resources */,
+				8B47AB841F96DC6A00DB1B9A /* ClassTableViewCell.xib in Resources */,
 				8B081DE81F063AE900493B81 /* SelectSchoolViewController.xib in Resources */,
 				8B064E551F00D8D80004C3D4 /* MJXChatCellTableViewCell.xib in Resources */,
 				8B4D91151EBDAB1000A4BE34 /* SignListViewController.xib in Resources */,
@@ -2559,7 +2581,9 @@
 				8BA224B81EAED53D00627A1B /* UIColor+HexString.m in Sources */,
 				8B1509821F4E7A6F000127AF /* TFFileUploadManager.m in Sources */,
 				8B05CB6B1EC0056B0063EC20 /* TextsTableViewCell.m in Sources */,
+				8B47AB831F96DC6A00DB1B9A /* ClassTableViewCell.m in Sources */,
 				8B2F14511F5E93BF00438374 /* StudentSorce.m in Sources */,
+				8B0344C31F920E3A0004228D /* BindPhone.m in Sources */,
 				8B045B981F3458E40021699B /* ZFAppLogoView.m in Sources */,
 				8B081E0E1F0B766D00493B81 /* SelectMeetingOrClassViewController.m in Sources */,
 				8B05CB761EC070060063EC20 /* SystemSetingTableViewCell.m in Sources */,
@@ -2906,9 +2930,9 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = WisdomHall/WisdomHall.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Distribution: yao zhiqiang (AM9UTP2CL3)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: yao zhiqiang (AM9UTP2CL3)";
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = AM9UTP2CL3;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -2939,8 +2963,8 @@
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_BUNDLE_IDENTIFIER = com.dayaokeji.rhythm;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "";
-				PROVISIONING_PROFILE_SPECIFIER = "";
+				PROVISIONING_PROFILE = "86336f4f-32b9-4444-9a53-bce2f880f564";
+				PROVISIONING_PROFILE_SPECIFIER = rhythmP12;
 				SWIFT_OBJC_BRIDGING_HEADER = "WisdomHall/WisdomHall-Bridging-Header.h";
 				SWIFT_VERSION = 3.0;
 				TARGETED_DEVICE_FAMILY = 1;
@@ -3110,9 +3134,9 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = WisdomHall/WisdomHall.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Distribution: yao zhiqiang (AM9UTP2CL3)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: yao zhiqiang (AM9UTP2CL3)";
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = AM9UTP2CL3;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -3143,8 +3167,8 @@
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_BUNDLE_IDENTIFIER = com.dayaokeji.rhythm;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "";
-				PROVISIONING_PROFILE_SPECIFIER = "";
+				PROVISIONING_PROFILE = "86336f4f-32b9-4444-9a53-bce2f880f564";
+				PROVISIONING_PROFILE_SPECIFIER = rhythmP12;
 				SWIFT_OBJC_BRIDGING_HEADER = "WisdomHall/WisdomHall-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 3.0;
@@ -3161,9 +3185,9 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = WisdomHall/WisdomHall.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Distribution: yao zhiqiang (AM9UTP2CL3)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: yao zhiqiang (AM9UTP2CL3)";
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = AM9UTP2CL3;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -3194,8 +3218,8 @@
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_BUNDLE_IDENTIFIER = com.dayaokeji.rhythm;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "";
-				PROVISIONING_PROFILE_SPECIFIER = "";
+				PROVISIONING_PROFILE = "86336f4f-32b9-4444-9a53-bce2f880f564";
+				PROVISIONING_PROFILE_SPECIFIER = rhythmP12;
 				SWIFT_OBJC_BRIDGING_HEADER = "WisdomHall/WisdomHall-Bridging-Header.h";
 				SWIFT_VERSION = 3.0;
 				TARGETED_DEVICE_FAMILY = 1;

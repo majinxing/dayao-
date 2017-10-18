@@ -18,6 +18,9 @@
 #import <UIKit/UIKit.h>
 #import <arpa/inet.h>
 #import "sys/utsname.h"
+#import "WorkingLoginViewController.h"
+#import "ClassModel.h"
+
 
 @interface UIUtils()
 
@@ -596,7 +599,7 @@
                 rootVC = nil;
                 ChatHelper * c =[ChatHelper shareHelper];
                 [c getOut];
-                TheLoginViewController * userLogin = [[TheLoginViewController alloc] init];
+                WorkingLoginViewController * userLogin = [[WorkingLoginViewController alloc] init];
                 [UIApplication sharedApplication].keyWindow.rootViewController =[[UINavigationController alloc] initWithRootViewController:userLogin];
                 UIAlertView * alter = [[UIAlertView alloc] initWithTitle:nil message:@"登录过期请重新登录" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil];
                 [alter show];
@@ -1051,6 +1054,60 @@
     [db close];
     
 }
++(NSDictionary *)getWeekTimeWithType:(NSString *)type
+{
+    NSDate *nowDate = [NSDate date];
+    NSCalendar *calendar = [NSCalendar currentCalendar];
+    NSDateComponents *comp = [calendar components:NSYearCalendarUnit | NSMonthCalendarUnit | NSDayCalendarUnit | NSWeekdayCalendarUnit | NSDayCalendarUnit fromDate:nowDate];
+    // 获取今天是周几
+    NSInteger weekDay = [comp weekday];
+    // 获取几天是几号
+    NSInteger day = [comp day];
+    NSLog(@"%d----%d",weekDay,day);
+    
+    // 计算当前日期和本周的星期一和星期天相差天数
+    long firstDiff,lastDiff;
+    //    weekDay = 1;
+    if (weekDay == 1)
+    {
+        firstDiff = -6;
+        lastDiff = 0;
+    }
+    else
+    {
+        firstDiff = [calendar firstWeekday] - weekDay + 1;
+        lastDiff = 8 - weekDay;
+    }
+    NSLog(@"firstDiff: %ld   lastDiff: %ld",firstDiff,lastDiff);
+    
+    // 在当前日期(去掉时分秒)基础上加上差的天数
+    NSDateComponents *firstDayComp = [calendar components:NSYearCalendarUnit | NSMonthCalendarUnit | NSDayCalendarUnit  fromDate:nowDate];
+    [firstDayComp setDay:day + firstDiff];
+    NSDate *firstDayOfWeek = [calendar dateFromComponents:firstDayComp];
+    
+    NSDateComponents *lastDayComp = [calendar components:NSYearCalendarUnit | NSMonthCalendarUnit | NSDayCalendarUnit   fromDate:nowDate];
+    [lastDayComp setDay:day + lastDiff];
+    NSDate *lastDayOfWeek = [calendar dateFromComponents:lastDayComp];
+    
+    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+    [formatter setDateFormat:@"MM月dd日"];
+    NSString *firstDay = [formatter stringFromDate:firstDayOfWeek];
+    NSString *lastDay = [formatter stringFromDate:lastDayOfWeek];
+    NSLog(@"%@=======%@",firstDay,lastDay);
+    
+    NSString *dateStr = [NSString stringWithFormat:@"%@-%@",firstDay,lastDay];
+    NSDictionary * dict = [[NSDictionary alloc] initWithObjectsAndKeys:[NSString stringWithFormat:@"%@",firstDay],@"firstDay",[NSString stringWithFormat:@"%@",lastDay],@"lastDay", nil];
+    return dict;
+    
+}
+-(void)CurriculumGroup:(NSMutableArray *)classAry{
+    NSMutableDictionary * dict = [[NSMutableDictionary alloc] init];
+    for(int i = 0;i<classAry.count;i++)
+    {
+        ClassModel * c = classAry[i];
+    }
+}
+
 @end
 
 

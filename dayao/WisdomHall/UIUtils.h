@@ -88,5 +88,7 @@
  * 日常签到
  **/
 +(void)dailyCheck;
+//返回本周周一周日日期
++(NSDictionary *)getWeekTimeWithType:(NSString *)type;
 @end
 

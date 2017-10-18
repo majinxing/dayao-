@@ -28,6 +28,7 @@
 #import "ChatHelper.h"
 #import "TheLoginViewController.h"
 #import "JoinCours.h"
+#import "WorkingLoginViewController.h"
 
 static NSString *cellIdentifier = @"cellIdentifier";
 
@@ -67,6 +68,9 @@ static NSString *cellIdentifier = @"cellIdentifier";
     // 1.注册通知
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(UpdateTheClassPage) name:@"UpdateTheClassPage" object:nil];
+    
+    NSDictionary * dict = [UIUtils getWeekTimeWithType:nil];
+    NSLog(@"%@",dict);
     // Do any additional setup after loading the view from its nib.
 }
 -(void)UpdateTheClassPage{

@@ -68,14 +68,23 @@
     
 }
 -(void)addData{
-    NoticeModel * notice = [[NoticeModel alloc] init];
-    notice.noticeTime = @"noticeTime";
-    notice.noticeContent = @"noticeContent";
-    [_noticeAry addObject:notice];
+    
     NSDictionary * dict = [[NSDictionary alloc] init];
     
     [[NetworkRequest sharedInstance] GET:QueryNotice dict:dict succeed:^(id data) {
-        NSLog(@"%@",data);
+//        NSLog(@"%@",data);
+        NSString * str = [[data objectForKey:@"header"] objectForKey:@"code"];
+        if ([str isEqualToString:@"0000"]) {
+            NSArray * ary = [data objectForKey:@"body"];
+            for (int i = 0; i<ary.count; i++) {
+                NoticeModel * notice = [[NoticeModel alloc] init];
+                notice.noticeTime = [UIUtils timeWithTimeIntervalString:[ary[i] objectForKey:@"time"]];
+                notice.noticeContent = [ary[i] objectForKey:@"title"];
+                [_noticeAry addObject:notice];
+            }
+            [_tableView reloadData];
+        }
+        
     } failure:^(NSError *error) {
         
     }];

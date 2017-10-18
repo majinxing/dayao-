@@ -32,8 +32,8 @@
     ChatHelper * c =[ChatHelper shareHelper];
     [c getOut];
     
-//    WorkingLoginViewController * userLogin = [[WorkingLoginViewController alloc] init];
-    TheLoginViewController * userLogin = [[TheLoginViewController alloc] init];
+    WorkingLoginViewController * userLogin = [[WorkingLoginViewController alloc] init];
+//    TheLoginViewController * userLogin = [[TheLoginViewController alloc] init];
 
     [UIApplication sharedApplication].keyWindow.rootViewController =[[UINavigationController alloc] initWithRootViewController:userLogin];
 }

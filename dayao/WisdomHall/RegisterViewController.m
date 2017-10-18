@@ -66,13 +66,11 @@
 }
 - (void)startTimer
 {
-    [JSMSSDK getVerificationCodeWithPhoneNumber:_phoneNumber andTemplateID:@"144523" completionHandler:^(id resultObject, NSError *error) {
+    [JSMSSDK getVerificationCodeWithPhoneNumber:_phoneNumber andTemplateID:@"144851" completionHandler:^(id resultObject, NSError *error) {
         if (!error) {
             NSLog(@"Get verification code success!");
         }else{
             NSLog(@"失败");
-//            UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"请输入验证码：0" message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: nil];
-//            [alertView show];
         }
     }];
     

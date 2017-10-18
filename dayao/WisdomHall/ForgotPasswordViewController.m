@@ -70,7 +70,7 @@
 }
 - (void)startTimer
 {
-    [JSMSSDK getVerificationCodeWithPhoneNumber:_phoneNumber.text andTemplateID:@"144523" completionHandler:^(id resultObject, NSError *error) {
+    [JSMSSDK getVerificationCodeWithPhoneNumber:_phoneNumber.text andTemplateID:@"144851" completionHandler:^(id resultObject, NSError *error) {
         if (!error) {
             NSLog(@"Get verification code success!");
         }else{
