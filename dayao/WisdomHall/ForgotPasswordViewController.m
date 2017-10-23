@@ -120,10 +120,6 @@
 
 - (IBAction)nextButtonPressed:(id)sender {
     
-    RedefineThePasswordViewController * redeFineVC = [[RedefineThePasswordViewController alloc] init];
-    redeFineVC.phoneNumber = _phoneNumber.text;
-    [self.navigationController pushViewController:redeFineVC animated:YES];
-    
     //验证验证码
     [JSMSSDK commitWithPhoneNumber:_phoneNumber.text verificationCode:_Verification.text completionHandler:^(id resultObject, NSError *error) {
         if (!error)

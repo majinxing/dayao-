@@ -272,7 +272,7 @@
     }
     
     if (m>=30) {
-        if (n == 12||n == 24) {
+        if (n == 24) {
             n = 1;
             m = m + 30 - 60;
             ary1[0] = [NSString stringWithFormat:@"%ld",n];
@@ -295,20 +295,50 @@
     
     expireTime = [NSString stringWithFormat:@"%@ %@:%@",ary[0],ary1[0],ary1[1]];
     
-    NSDate *today = [NSDate date];
+//    NSDate *today = [UIUtils getInternetDate];
+//    if (today == nil) {
     
+    NSDate * today = [NSDate date];
+
     NSDateFormatter *dateFormat = [[NSDateFormatter alloc] init];
     // 时间格式,此处遇到过坑,建议时间HH大写,手机24小时进制和12小时禁止都可以完美格式化
     [dateFormat setDateFormat:@"yyyy-MM-dd HH:mm"];
-    
-    NSDate *start = [dateFormat dateFromString:startTime];
-    NSDate *expire = [dateFormat dateFromString:expireTime];
+//    dateFormat.timeZone = [NSTimeZone timeZoneWithName:@"Asia/Shanghai"];//东八区时间
+    NSDate *start = [dateFormat dateFromString:startTime];// dateByAddingTimeInterval:60*60*8];
+    NSDate *expire = [dateFormat dateFromString:expireTime];// dateByAddingTimeInterval:60*60*8];
     
     if ([today compare:start] == NSOrderedDescending && [today compare:expire] == NSOrderedAscending) {
         return YES;
     }
     return NO;
 }
++(NSDate *)getInternetDate
+{
+    NSString *urlString = @"http://m.baidu.com";
+    urlString = [urlString stringByAddingPercentEscapesUsingEncoding: NSUTF8StringEncoding];
+    NSMutableURLRequest *request = [[NSMutableURLRequest alloc] init];
+    [request setURL:[NSURL URLWithString: urlString]];
+    [request setCachePolicy:NSURLRequestReloadIgnoringCacheData];
+    [request setTimeoutInterval: 2];
+    [request setHTTPShouldHandleCookies:FALSE];
+    [request setHTTPMethod:@"GET"];
+    NSHTTPURLResponse *response;
+    [NSURLConnection sendSynchronousRequest:request returningResponse:&response error:nil];
+    
+    NSString *date = [[response allHeaderFields] objectForKey:@"Date"];
+    date = [date substringFromIndex:5];
+    date = [date substringToIndex:[date length]-4];
+    NSDateFormatter *dMatter = [[NSDateFormatter alloc] init];
+    dMatter.locale = [[NSLocale alloc] initWithLocaleIdentifier:@"en_US"];
+    [dMatter setDateFormat:@"dd MMM yyyy HH:mm:ss"];
+    NSDate *netDate = [[dMatter dateFromString:date] dateByAddingTimeInterval:60*60*8];
+    
+    NSTimeZone *zone = [NSTimeZone systemTimeZone];
+    NSInteger interval = [zone secondsFromGMTForDate: netDate];
+    NSDate *localeDate = [netDate  dateByAddingTimeInterval: interval];
+    return localeDate;
+}
+
 +(NSString *)compareTimeStartTime:(NSString *)startTime withExpireTime:(NSString *)expireTime {
     
     NSArray *ary = [startTime componentsSeparatedByString:@" "];
@@ -1082,15 +1112,19 @@
     
     // 在当前日期(去掉时分秒)基础上加上差的天数
     NSDateComponents *firstDayComp = [calendar components:NSYearCalendarUnit | NSMonthCalendarUnit | NSDayCalendarUnit  fromDate:nowDate];
+    
     [firstDayComp setDay:day + firstDiff];
+    
     NSDate *firstDayOfWeek = [calendar dateFromComponents:firstDayComp];
     
     NSDateComponents *lastDayComp = [calendar components:NSYearCalendarUnit | NSMonthCalendarUnit | NSDayCalendarUnit   fromDate:nowDate];
     [lastDayComp setDay:day + lastDiff];
+    
     NSDate *lastDayOfWeek = [calendar dateFromComponents:lastDayComp];
     
     NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
-    [formatter setDateFormat:@"MM月dd日"];
+    [formatter setDateFormat:@"yyyy-MM-dd"];
+    
     NSString *firstDay = [formatter stringFromDate:firstDayOfWeek];
     NSString *lastDay = [formatter stringFromDate:lastDayOfWeek];
     NSLog(@"%@=======%@",firstDay,lastDay);
@@ -1100,14 +1134,75 @@
     return dict;
     
 }
--(void)CurriculumGroup:(NSMutableArray *)classAry{
++(NSMutableDictionary *)CurriculumGroup:(NSMutableArray *)classAry{
     NSMutableDictionary * dict = [[NSMutableDictionary alloc] init];
+    NSMutableArray * bColock = [[NSMutableArray alloc] initWithObjects:YELLOW,PINK,GRASS,PURPLE,BULE,GREEN,LightBlue,RED,GrayG,Warm,DeepBlue, nil];
+    NSMutableDictionary * dictColock = [[NSMutableDictionary alloc] init];
+    //预先设置课程数组
+    for ( int i = 1; i<7; i++) {
+        NSMutableArray * ary = [NSMutableArray arrayWithCapacity:1];
+        [dict setObject:ary forKey:[NSString stringWithFormat:@"%d",i]];
+    }
+    
     for(int i = 0;i<classAry.count;i++)
     {
         ClassModel * c = classAry[i];
+        if ([c.startTh intValue]%2==0&&[c.startTh intValue]!=0) {
+            c.startTh = [NSString stringWithFormat:@"%d",[c.startTh intValue]-1];
+        }
+        if ([c.endTh intValue]%2==1) {
+            c.endTh = [NSString stringWithFormat:@"%d",[c.endTh intValue]+1];
+        }
+        int n = [UIUtils classNumber:c.startTh];
+        int m = ([c.endTh intValue]-[c.startTh intValue]+1)/2;
+        if (dictColock.allKeys.count>0) {
+            for (int i = 0; i<dictColock.allKeys.count; i++) {
+                NSString * str = dictColock.allKeys[i];
+                if ([c.name isEqualToString:str]) {
+                    c.backColock = [dictColock objectForKey:c.name];
+                    break;
+                }else if (i==dictColock.allKeys.count-1){
+                    if (bColock.count>0) {
+                        [dictColock setObject:bColock[0] forKey:c.name];
+                        c.backColock = bColock[0];
+                        [bColock removeObjectAtIndex:0];
+                    }
+                }
+            }
+        }else{
+            if (bColock.count>0) {
+                [dictColock setObject:bColock[0] forKey:c.name];
+                c.backColock = bColock[0];
+                [bColock removeObjectAtIndex:0];
+            }
+        }
+        
+        
+        for (int j = 0; j<m; j++) {
+            NSMutableArray * ary = [dict objectForKey:[NSString stringWithFormat:@"%d",n+j]];
+            [ary addObject:c];
+            [dict setObject:ary forKey:[NSString stringWithFormat:@"%d",n+j]];
+        }
     }
+    return dict;
 }
-
++(int)classNumber:(NSString *)str{
+    str = [NSString stringWithFormat:@"%@",str];
+    if ([str isEqualToString:@"1"]) {
+        return 1;
+    }else if ([str isEqualToString:@"3"]) {
+        return 2;
+    }else if ([str isEqualToString:@"5"]) {
+        return 3;
+    }else if ([str isEqualToString:@"7"]) {
+        return 4;
+    }else if ([str isEqualToString:@"9"]) {
+        return 5;
+    }else if ([str isEqualToString:@"11"]) {
+        return 6;
+    }
+    return 0;
+}
 @end
 
 

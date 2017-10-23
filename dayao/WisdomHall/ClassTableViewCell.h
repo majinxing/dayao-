@@ -8,6 +8,13 @@
 
 #import <UIKit/UIKit.h>
 
+@protocol ClassTableViewCellDelegate <NSObject>
+-(void)intoTheCurriculumDelegate:(NSString *)str withNumber:(UIButton *)btn;
+
+
+@end
 @interface ClassTableViewCell : UITableViewCell
+@property (nonatomic,weak)id<ClassTableViewCellDelegate>delegate;
+-(void)addFirstContentViewWith:(int)index withClass:(NSMutableArray *)classAry;
 
 @end

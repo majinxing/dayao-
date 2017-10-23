@@ -7,6 +7,9 @@
 //
 
 #import "ClassTableViewCell.h"
+#import "ClassModel.h"
+#import "DYHeader.h"
+
 
 @interface ClassTableViewCell()
 @property (strong, nonatomic) IBOutlet UILabel *weekDay;
@@ -18,15 +21,78 @@
 @property (strong, nonatomic) IBOutlet UIButton *friday;
 @property (strong, nonatomic) IBOutlet UIButton *saturday;
 @property (strong, nonatomic) IBOutlet UIButton *sunday;
+@property (strong, nonatomic) IBOutlet UIView *h;
+@property (strong, nonatomic) IBOutlet UIView *s;
+@property (nonatomic,strong)NSMutableArray * weekday;
+@property (nonatomic,strong)NSMutableArray * ary;
+@property (nonatomic,copy)NSString * index;
 
 @end
 @implementation ClassTableViewCell
 
 - (void)awakeFromNib {
     [super awakeFromNib];
+    _weekday = [[NSMutableArray alloc] initWithObjects:@"星期一",@"星期二",@"星期三",@"星期四",@"星期五",@"星期六",@"星期日", nil];
+    _monday.tag = 1;
+    _tuesday.tag = 2;
+    _wednesday.tag = 3;
+    _thursday.tag = 4;
+    _friday.tag = 5;
+    _saturday.tag = 6;
+    _sunday.tag = 7;
+    _h.backgroundColor = RGBA_COLOR(184, 216, 248, 1);
+    _s.backgroundColor = RGBA_COLOR(184, 216, 248, 1);
+    _weekDay.textColor = RGBA_COLOR(57, 114, 172, 1);
+    _sclass.textColor = RGBA_COLOR(57, 114, 172, 1);
     // Initialization code
 }
 -(void)addFirstContentViewWith:(int)index withClass:(NSMutableArray *)classAry{
+    _index = [NSString stringWithFormat:@"%d",index+1];
+    for (int i = 0; i<7; i++) {
+        NSString * ss = [[NSString alloc] init];
+        
+        UIButton * btn = [self viewWithTag:i+1];
+
+        for (int j = 0; j<classAry.count; j++) {
+            NSString * str = _weekday[i];
+            ClassModel * c = classAry[j];
+            if ([c.weekDayName isEqualToString:str]) {
+                if ([UIUtils isBlankString:ss]) {
+                    ss = [NSString stringWithFormat:@"%@@%@",c.name,c.typeRoom];
+                    btn.tag = 1000+j;
+                }else{
+                    ss = [NSString stringWithFormat:@"%@ %@@%@",ss,c.name,c.typeRoom];
+                }
+            }
+        }
+        if ([UIUtils isBlankString:ss]) {
+            [btn setEnabled:NO];
+            btn.backgroundColor = [UIColor clearColor];
+        }else{
+            if (btn.tag>=1000&&classAry.count>btn.tag-1000) {
+                ClassModel * c = classAry[btn.tag-1000];
+                [btn setTitle:ss forState:UIControlStateNormal];
+                [btn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+                [btn setEnabled:YES];
+                btn.backgroundColor  = c.backColock;//YELLOW;//RGBA_COLOR(80, 172, 224, 1);
+                btn.layer.masksToBounds = YES;
+                btn.layer.cornerRadius = 5;
+                btn.titleLabel.lineBreakMode = 0;//这句话很重要，不加这句话加上换行符也没用
+                [btn addTarget:self action:@selector(intoTheCurriculum:) forControlEvents:UIControlEventTouchUpInside];
+
+            }
+        }
+    }
+    _weekDay.text = [NSString stringWithFormat:@"%d",index*2+1];
+    
+    _sclass.text = [NSString stringWithFormat:@"%d",index*2+2];
+    
+}
+-(void)intoTheCurriculum:(UIButton *)btn{
+//    NSString * str = [NSString stringWithFormat:@"%@",_index];
+    if (self.delegate&&[self.delegate respondsToSelector:@selector(intoTheCurriculumDelegate:withNumber:)]) {
+        [self.delegate intoTheCurriculumDelegate:_index withNumber:btn];
+    }
     
 }
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {

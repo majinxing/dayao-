@@ -131,7 +131,10 @@
             [[NSNotificationCenter defaultCenter] postNotification:notification];
             
             [self.navigationController popViewControllerAnimated:YES];
-        }else{
+        }else if ([[NSString stringWithFormat:@"%@",str] isEqualToString:@"9999"]){
+            [UIUtils showInfoMessage:@"系统错误"];
+        }
+        else{
             UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"创建失败，请填写完整课堂信息并且按照提示的格式" message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: nil];
             [alertView show];
         }

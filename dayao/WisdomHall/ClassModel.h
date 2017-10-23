@@ -33,6 +33,7 @@
 @property (nonatomic,copy)NSString * status;
 @property (nonatomic,strong)NSMutableArray * mck;
 @property (nonatomic,copy)NSString * courseType;//1、周期 2、临时
+@property (nonatomic,copy)NSString * backColock;//课程的背景颜色
 //@property (nonatomic,copy)NSString 
 
 -(void)setInfoWithDict:(NSDictionary *)dict;

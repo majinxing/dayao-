@@ -90,5 +90,7 @@
 +(void)dailyCheck;
 //返回本周周一周日日期
 +(NSDictionary *)getWeekTimeWithType:(NSString *)type;
+//课程分组
++(NSMutableDictionary *)CurriculumGroup:(NSMutableArray *)classAry;
 @end
 

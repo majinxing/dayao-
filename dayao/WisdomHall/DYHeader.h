@@ -26,10 +26,23 @@
 #define MAIN_SCREEN_FRAME     [[UIScreen mainScreen] bounds]
 
 #define RGBA_COLOR(R, G, B, A) [UIColor colorWithRed:((R) / 255.0f) green:((G) / 255.0f) blue:((B) / 255.0f) alpha:A]
+
+#define YELLOW                  RGBA_COLOR(230, 185, 90, 1)
+#define PINK                    RGBA_COLOR(222, 135, 141, 1)
+#define GRASS                   RGBA_COLOR(125, 200, 71, 1)
+#define PURPLE                  RGBA_COLOR(113, 147, 228, 1)
+#define BULE                    RGBA_COLOR(77, 174, 224, 1)
+#define GREEN                   RGBA_COLOR(135, 217, 183, 1)
+#define LightBlue               RGBA_COLOR(0, 210, 235, 1)
+#define RED                     RGBA_COLOR(228, 0, 63, 1)
+#define GrayG                   RGBA_COLOR(162, 183, 165, 1)
+#define Warm                    RGBA_COLOR(255, 129, 0, 1)
+#define DeepBlue                RGBA_COLOR(0, 39, 74, 1)
+
+
 #ifdef __OBJC__
     @import UIKit;
     @import Foundation;
-
 #endif
 
 #endif /* DYHeader_h */
@@ -41,7 +54,7 @@
 #import "UserModel.h"
 
 
-#define Collection_height 225
+#define Collection_height 120
 
 #define ShareType_Weixin_Friend     @"微信好友"
 #define ShareType_Weixin_Circle     @"朋友圈"

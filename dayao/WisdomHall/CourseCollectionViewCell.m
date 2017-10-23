@@ -57,7 +57,7 @@
     
     _imageH.image = [UIImage imageNamed:@"meet"];
     
-    [strUrl deleteCharactersInRange:NSMakeRange(0,5)];
+//    [strUrl deleteCharactersInRange:NSMakeRange(0,5)];
     
 
     _time.text = [NSString stringWithFormat:@"时间：%@",strUrl];

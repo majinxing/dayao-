@@ -29,10 +29,12 @@
 #import "TheLoginViewController.h"
 #import "JoinCours.h"
 #import "WorkingLoginViewController.h"
+#import "ClassTableViewCell.h"
+
 
 static NSString *cellIdentifier = @"cellIdentifier";
 
-@interface SignInViewController ()<UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout,AlterViewDelegate,JoinCoursDelegate>
+@interface SignInViewController ()<UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout,AlterViewDelegate,JoinCoursDelegate,UITableViewDelegate,UITableViewDataSource,ClassTableViewCellDelegate>
 @property (nonatomic,strong) UICollectionView * collection;
 @property (nonatomic,strong) UserModel * userModel;
 @property (nonatomic,strong) NSMutableArray * classAry;
@@ -45,6 +47,10 @@ static NSString *cellIdentifier = @"cellIdentifier";
 
 @property (nonatomic,strong)JoinCours * join;
 
+@property (nonatomic,strong)UITableView * tableView;
+
+@property (nonatomic,strong)NSMutableDictionary * dict;
+@property (nonatomic,strong)NSDictionary * dictDay;
 @end
 
 @implementation SignInViewController
@@ -53,24 +59,34 @@ static NSString *cellIdentifier = @"cellIdentifier";
     [super viewDidLoad];
     self.page = 0;
     self.temp = 0;
-    self.view.backgroundColor = [UIColor whiteColor];
+    self.view.backgroundColor = RGBA_COLOR(231, 231, 231, 1);
+    UIImageView * i = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, APPLICATION_WIDTH, APPLICATION_HEIGHT)];
+                       
+    i.image = [UIImage imageNamed:@"bg3"];
+                       
+    [self.view addSubview:i];
     
     _classAry = [NSMutableArray arrayWithCapacity:10];
     
     _userModel = [[Appsetting sharedInstance] getUsetInfo];
+    
+    _dictDay = [UIUtils getWeekTimeWithType:nil];
+//    NSLog(@"%@",dict);
 
     [self addAlterView];
     
     [self setNavigationTitle];
     
-    [self addCollection];
+//    [self addCollection];
+    [self headerRereshing];
+
     
+    [self addTableView];
     // 1.注册通知
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(UpdateTheClassPage) name:@"UpdateTheClassPage" object:nil];
     
-    NSDictionary * dict = [UIUtils getWeekTimeWithType:nil];
-    NSLog(@"%@",dict);
+    
     // Do any additional setup after loading the view from its nib.
 }
 -(void)UpdateTheClassPage{
@@ -82,6 +98,25 @@ static NSString *cellIdentifier = @"cellIdentifier";
 -(void)viewWillAppear:(BOOL)animated{
     [UIUtils tokenThePeriodOfValidity];
 }
+-(void)addTableView{
+    _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 64, APPLICATION_WIDTH, APPLICATION_HEIGHT-64-44) style:UITableViewStylePlain];
+    _tableView.delegate = self;
+    _tableView.dataSource = self;
+    _tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+    _tableView.backgroundColor = [UIColor clearColor];
+    self.automaticallyAdjustsScrollViewInsets = NO;
+    
+    __weak SignInViewController * weakSelf = self;
+    [_tableView addHeaderWithCallback:^{
+        [weakSelf headerRereshing];
+
+    }];
+    [_tableView addFooterWithCallback:^{
+        [weakSelf footerRereshing];
+    }];
+    [self.view addSubview:_tableView];
+
+}
 -(void)addAlterView{
     _alterView = [[AlterView alloc] initWithFrame:CGRectMake(60, 200, APPLICATION_WIDTH-120, 120) withLabelText:@"暂无课程"];
     _alterView.layer.masksToBounds = YES;
@@ -89,37 +124,7 @@ static NSString *cellIdentifier = @"cellIdentifier";
     _alterView.delegate = self;
 }
 
--(void)addCollection{
-    CollectionFlowLayout * flowLayout = [[CollectionFlowLayout alloc] init];
-    _collection = [[UICollectionView alloc] initWithFrame:CGRectMake(0, 64,APPLICATION_WIDTH,APPLICATION_HEIGHT-48-64) collectionViewLayout:flowLayout];
-//    flowLayout.headerReferenceSize = CGSizeMake(0, APPLICATION_HEIGHT/4);
-    self.automaticallyAdjustsScrollViewInsets = NO;
-    //注册
-    [_collection registerClass:[CourseCollectionViewCell class] forCellWithReuseIdentifier:cellIdentifier];
-    [_collection registerClass:[UICollectionReusableView class] forSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:@"UICollectionViewHeader"];
-    _collection.delegate = self;
-    _collection.dataSource = self;
-    _collection.allowsMultipleSelection = YES;
-    _collection.showsVerticalScrollIndicator = NO;
-    _collection.showsHorizontalScrollIndicator = NO;
-    //取消滑动的滚动条
-    _collection.decelerationRate = UIScrollViewDecelerationRateNormal;
-    _collection.backgroundColor = [UIColor clearColor];
-    self.collection.alwaysBounceVertical = YES; //垂直方向遇到边框是否总是反弹
-    __weak SignInViewController * weakSelf = self;
-    
-    [self.collection addHeaderWithCallback:^{
-        [weakSelf headerRereshing];
-    }];
-    
-    [self.collection addFooterWithCallback:^{
-        [weakSelf footerRereshing];
-    }];
-    
-    [self headerRereshing];
-    
-    [self.view addSubview:_collection];
-}
+
 -(void)headerRereshing{
     self.page = 1;
     [self fetchChatRoomsWithPage:self.page isHeader:YES];
@@ -146,9 +151,9 @@ static NSString *cellIdentifier = @"cellIdentifier";
             });
             
             if (aIsHeader) {
-                [strongSelf.collection headerEndRefreshing];
+                [strongSelf.tableView headerEndRefreshing];
             }else{
-                [strongSelf.collection footerEndRefreshing];
+                [strongSelf.tableView footerEndRefreshing];
             }
         }
     });
@@ -157,7 +162,7 @@ static NSString *cellIdentifier = @"cellIdentifier";
 -(void)getDataWithPage:(NSInteger)page{
     
     
-    NSDictionary * dict = [[NSDictionary alloc] initWithObjectsAndKeys:[NSString stringWithFormat:@"%ld",(long)page],@"start",_userModel.peopleId,@"teacherId",[UIUtils getTime],@"actStartTime",[UIUtils getMoreMonthTime],@"actEndTime",@"1000",@"length",_userModel.school,@"universityId",@"2",@"type",[NSString stringWithFormat:@"%d",[UIUtils getTermId]],@"termId",@"1",@"courseType",nil];
+    NSDictionary * dict = [[NSDictionary alloc] initWithObjectsAndKeys:[NSString stringWithFormat:@"%ld",(long)page],@"start",_userModel.peopleId,@"teacherId",_dictDay[@"firstDay"],@"actStartTime",_dictDay[@"lastDay"],@"actEndTime",@"1000",@"length",_userModel.school,@"universityId",@"2",@"type",[NSString stringWithFormat:@"%d",[UIUtils getTermId]],@"termId",@"1",@"courseType",nil];
     
     [[NetworkRequest sharedInstance] GET:QueryCourse dict:dict succeed:^(id data) {
         //        NSLog(@"1");
@@ -183,7 +188,7 @@ static NSString *cellIdentifier = @"cellIdentifier";
     }];
 }
 -(void)getSelfJoinClass:(NSInteger)page{
-    NSDictionary * dict = [[NSDictionary alloc] initWithObjectsAndKeys:[NSString stringWithFormat:@"%ld",(long)page],@"start",_userModel.peopleId,@"studentId",[UIUtils getTime],@"actStartTime",[UIUtils getMoreMonthTime],@"actEndTime",@"1000",@"length",_userModel.school,@"universityId",@"1",@"type",[NSString stringWithFormat:@"%d",[UIUtils getTermId]],@"termId",@"1",@"courseType",nil];
+    NSDictionary * dict = [[NSDictionary alloc] initWithObjectsAndKeys:[NSString stringWithFormat:@"%ld",(long)page],@"start",_userModel.peopleId,@"studentId",_dictDay[@"firstDay"],@"actStartTime",_dictDay[@"lastDay"],@"actEndTime",@"1000",@"length",_userModel.school,@"universityId",@"1",@"type",[NSString stringWithFormat:@"%d",[UIUtils getTermId]],@"termId",@"1",@"courseType",nil];
     
     [[NetworkRequest sharedInstance] GET:QueryCourse dict:dict succeed:^(id data) {
         NSString * str = [[data objectForKey:@"header"] objectForKey:@"message"];
@@ -204,7 +209,7 @@ static NSString *cellIdentifier = @"cellIdentifier";
 //临时
 -(void)getSelfCreateClassType:(NSInteger)page{
     
-    NSDictionary * dict = [[NSDictionary alloc] initWithObjectsAndKeys:[NSString stringWithFormat:@"%ld",(long)page],@"start",_userModel.peopleId,@"teacherId",[UIUtils getTime],@"actStartTime",[UIUtils getMoreMonthTime],@"actEndTime",@"1000",@"length",_userModel.school,@"universityId",@"2",@"type",@"2",@"courseType",nil];
+    NSDictionary * dict = [[NSDictionary alloc] initWithObjectsAndKeys:[NSString stringWithFormat:@"%ld",(long)page],@"start",_userModel.peopleId,@"teacherId",_dictDay[@"firstDay"],@"actStartTime",_dictDay[@"lastDay"],@"actEndTime",@"1000",@"length",_userModel.school,@"universityId",@"2",@"type",@"2",@"courseType",nil];
     
     [[NetworkRequest sharedInstance] GET:QueryCourse dict:dict succeed:^(id data) {
         NSString * str = [[data objectForKey:@"header"] objectForKey:@"message"];
@@ -224,7 +229,7 @@ static NSString *cellIdentifier = @"cellIdentifier";
 }
 //临时
 -(void)getSelfJoinClassType:(NSInteger)page{
-    NSDictionary * dict = [[NSDictionary alloc] initWithObjectsAndKeys:[NSString stringWithFormat:@"%ld",(long)page],@"start",_userModel.peopleId,@"studentId",[UIUtils getTime],@"actStartTime",[UIUtils getMoreMonthTime],@"actEndTime",@"1000",@"length",_userModel.school,@"universityId",@"1",@"type",@"2",@"courseType",nil];
+    NSDictionary * dict = [[NSDictionary alloc] initWithObjectsAndKeys:[NSString stringWithFormat:@"%ld",(long)page],@"start",_userModel.peopleId,@"studentId",_dictDay[@"firstDay"],@"actStartTime",_dictDay[@"lastDay"],@"actEndTime",@"1000",@"length",_userModel.school,@"universityId",@"1",@"type",@"2",@"courseType",nil];
     [[NetworkRequest sharedInstance] GET:QueryCourse dict:dict succeed:^(id data) {
         //        NSLog(@"4");
         NSString * str = [[data objectForKey:@"header"] objectForKey:@"message"];
@@ -252,11 +257,14 @@ static NSString *cellIdentifier = @"cellIdentifier";
                 }
             }
         }
-        dispatch_async(dispatch_get_main_queue(), ^{
-            [self hideHud];
-            [_collection reloadData];
-            
-        });
+        _dict = [[NSMutableDictionary alloc] initWithDictionary:[UIUtils CurriculumGroup:_classAry]];
+        
+        [_tableView reloadData];
+//        dispatch_async(dispatch_get_main_queue(), ^{
+//            [self hideHud];
+//            [_collection reloadData];
+//            
+//        });
         
     } failure:^(NSError *error) {
         [self hideHud];
@@ -374,75 +382,78 @@ static NSString *cellIdentifier = @"cellIdentifier";
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
-#pragma mark UICollectionViewDataSource
-//定义每个Section的四边间距
--(UIEdgeInsets)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout insetForSectionAtIndex:(NSInteger)section
-{
-    return UIEdgeInsetsMake(15, 15, 15, 15);//分别为上、左、下、右
+
+#pragma mark UITableViewdelegate
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
+    return 1;
 }
-- (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
-{
-    if (_classAry.count>0) {
-        [_alterView removeFromSuperview];
-        return _classAry.count;
-    }else if(_classAry.count == 0) {
-        [self.view addSubview:_alterView];
-    }
-    
-    return 0;
+-(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
+    return 6;
 }
 
-- (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
-{
-    CourseCollectionViewCell * cell = [collectionView dequeueReusableCellWithReuseIdentifier:cellIdentifier forIndexPath:indexPath];
-    cell.backgroundColor = [UIColor whiteColor];
-    if (indexPath.row<_classAry.count) {
-        [cell setClassInfoForContentView:_classAry[indexPath.row]];
-    }
+-(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
+    ClassTableViewCell * cell ;
+//    if (indexPath.row == 0) {
+////        cell = [tableView dequeueReusableCellWithIdentifier:@"ClassTableViewCellSecond"];
+////        if (!cell) {
+////            cell = [[[NSBundle mainBundle] loadNibNamed:@"ClassTableViewCell" owner:self options:nil] objectAtIndex:1];
+////        }
+//    }else{
+        cell = [tableView dequeueReusableCellWithIdentifier:@"ClassTableViewCellFirst"];
+        if (!cell) {
+            cell = [[[NSBundle mainBundle] loadNibNamed:@"ClassTableViewCell" owner:self options:nil] objectAtIndex:0];
+        }
+        NSString * str = [NSString stringWithFormat:@"%d",(int)indexPath.row+1];
+        NSMutableArray * ary = _dict[str];
+        [cell addFirstContentViewWith:(int)indexPath.row withClass:ary];
+//    }
+    cell.selectionStyle = UITableViewCellSelectionStyleNone;
+    cell.backgroundColor = [UIColor clearColor];
+    cell.delegate = self;
     return cell;
 }
-////创建头视图
-//- (UICollectionReusableView *)collectionView:(UICollectionView *)collectionView
-//           viewForSupplementaryElementOfKind:(NSString *)kind
-//                                 atIndexPath:(NSIndexPath *)indexPath{
-//    
-//    UICollectionReusableView * headView = [collectionView dequeueReusableSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:@"UICollectionViewHeader" forIndexPath:indexPath];
-//    
-//    headView.backgroundColor = [UIColor redColor];
-//    CollectionHeadView * v = [[CollectionHeadView alloc] init];
-//    v.frame = CGRectMake(0, 0, APPLICATION_WIDTH, APPLICATION_HEIGHT/4);
-//    [headView addSubview:v];
-//    
-//    return headView;
-//}
-#pragma mark UICollectionViewDelegate
-//初次点击走
-- (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
-{
-    if (indexPath.row<_classAry.count) {
-        self.hidesBottomBarWhenPushed = YES;
-        CourseDetailsViewController * cdetailVC = [[CourseDetailsViewController alloc] init];
-        cdetailVC.c = _classAry[indexPath.row];
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+}
+-(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
+    return 100;
+}
+-(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
+    return 50;
+}
+-(UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section{
+    UIView * view = [[UIView alloc] init];
+    view.backgroundColor = RGBA_COLOR(201, 242, 253, 1);
+    NSArray * ary = @[@"月",@"周一",@"周二",@"周三",@"周四",@"周五",@"周六",@"周日"];
+    for (int i =0; i<8; i++) {
+        UILabel * label = [[UILabel alloc] initWithFrame:CGRectMake(i*APPLICATION_WIDTH/8, 0, APPLICATION_WIDTH/8, 50)];
+        label.backgroundColor = [UIColor clearColor];
+        label.textColor = RGBA_COLOR(57, 114, 172, 1);
+        label.text = ary[i];
+        label.font = [UIFont systemFontOfSize:14];
+        label.textAlignment = NSTextAlignmentCenter;
+        [view addSubview:label];
+        UIView * v = [[UIView alloc] initWithFrame:CGRectMake(CGRectGetMaxX(label.frame)-1, 0, 1, 50)];
+        v.backgroundColor = RGBA_COLOR(184, 216, 248, 1);
+        [view addSubview:v];
+    }
+    UIView * v = [[UIView alloc] initWithFrame:CGRectMake(0, 49, APPLICATION_WIDTH, 1)];
+    v.backgroundColor = RGBA_COLOR(184, 216, 248, 1);
+    [view addSubview:v];
+    return view;
+}
+#pragma mark Class
+-(void)intoTheCurriculumDelegate:(NSString *)str withNumber:(UIButton *)btn{
+    NSMutableArray * ary = [_dict objectForKey:str];
+    self.hidesBottomBarWhenPushed = YES;
+    CourseDetailsViewController * cdetailVC = [[CourseDetailsViewController alloc] init];
+    if ((btn.tag-1000)<ary.count&&btn.tag>=1000) {
+        cdetailVC.c = ary[btn.tag-1000];
         [self.navigationController pushViewController:cdetailVC animated:YES];
         self.hidesBottomBarWhenPushed=NO;
     }
+    
 }
-//有了初次点击再走这个
-- (void)collectionView:(UICollectionView *)collectionView didDeselectItemAtIndexPath:(NSIndexPath *)indexPath
-{
-    if (indexPath.row<_classAry.count) {
-        self.hidesBottomBarWhenPushed = YES;
-        CourseDetailsViewController * cdetailVC = [[CourseDetailsViewController alloc] init];
-        cdetailVC.c = _classAry[indexPath.row];
-        [self.navigationController pushViewController:cdetailVC animated:YES];
-        self.hidesBottomBarWhenPushed=NO;
-    }
-}
-#pragma mark UICollectionViewDelegateFlowLayout
-- (CGSize)collectionView:(nonnull UICollectionView *)collectionView layout:(nonnull UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(nonnull NSIndexPath *)indexPath{
-    return CGSizeMake(APPLICATION_WIDTH/2-20, Collection_height);
-}
-
 /*
  #pragma mark - Navigation
  

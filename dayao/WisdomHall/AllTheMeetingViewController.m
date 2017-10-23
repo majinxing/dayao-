@@ -49,7 +49,7 @@ static NSString * cellIdentifier = @"cellIdentifier";
     
     [self addCollection];
 
-    self.view.backgroundColor = [UIColor whiteColor];
+    self.view.backgroundColor = RGBA_COLOR(231, 231, 231, 1);
     // 1.注册通知
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(headerRereshing) name:@"UpdateTheMeetingPage" object:nil];
@@ -138,6 +138,8 @@ static NSString * cellIdentifier = @"cellIdentifier";
     _collection.allowsMultipleSelection = YES;
     _collection.showsVerticalScrollIndicator = NO;
     _collection.showsHorizontalScrollIndicator = NO;
+    _collection.layer.masksToBounds = YES;
+    _collection.layer.cornerRadius = 0;
     //取消滑动的滚动条
     _collection.decelerationRate = UIScrollViewDecelerationRateNormal;
     _collection.backgroundColor = [UIColor clearColor];
@@ -249,7 +251,6 @@ static NSString * cellIdentifier = @"cellIdentifier";
     
     NSDictionary * dict = [[NSDictionary alloc] initWithObjectsAndKeys:_userModel.peopleId,@"userId",[UIUtils getTime],@"startTime",@"",@"endTime",[NSString stringWithFormat:@"%ld",(long)page],@"start",nil];
     [[NetworkRequest sharedInstance] GET:QueryMeeting dict:dict succeed:^(id data) {
-        //            NSLog(@"succeed%@",data);
         NSArray * d = [[data objectForKey:@"body"] objectForKey:@"list"];
         for (int i = 0; i<d.count; i++) {
             MeetingModel * m = [[MeetingModel alloc] init];
@@ -290,7 +291,7 @@ static NSString * cellIdentifier = @"cellIdentifier";
 //定义每个Section的四边间距
 -(UIEdgeInsets)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout insetForSectionAtIndex:(NSInteger)section
 {
-    return UIEdgeInsetsMake(15, 15, 15, 15);//分别为上、左、下、右
+    return UIEdgeInsetsMake(10, 0, 10, 0);//分别为上、左、下、右
 }
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
 {
@@ -307,6 +308,7 @@ static NSString * cellIdentifier = @"cellIdentifier";
 {
     CourseCollectionViewCell * cell = [collectionView dequeueReusableCellWithReuseIdentifier:cellIdentifier forIndexPath:indexPath];
     cell.backgroundColor = [UIColor whiteColor];
+    cell.layer.borderColor = [UIColor clearColor].CGColor;
     [cell setInfoForContentView:_meetingModelAry[indexPath.row]];
     return cell;
 }
@@ -335,7 +337,7 @@ static NSString * cellIdentifier = @"cellIdentifier";
 }
 #pragma mark UICollectionViewDelegateFlowLayout
 - (CGSize)collectionView:(nonnull UICollectionView *)collectionView layout:(nonnull UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(nonnull NSIndexPath *)indexPath {
-    return CGSizeMake(APPLICATION_WIDTH/2-20, Collection_height);
+    return CGSizeMake(APPLICATION_WIDTH, Collection_height);
 }
 
 /*
