@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 
 @protocol ClassTableViewCellDelegate <NSObject>
--(void)intoTheCurriculumDelegate:(NSString *)str withNumber:(UIButton *)btn;
+-(void)intoTheCurriculumDelegate:(NSString *)str withNumber:(NSMutableArray *)btn;
 
 
 @end

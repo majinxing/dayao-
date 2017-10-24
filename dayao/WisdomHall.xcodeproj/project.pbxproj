@@ -228,6 +228,8 @@
 		8BA224D01EAF258B00627A1B /* ForgotPasswordViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8BA224CE1EAF258B00627A1B /* ForgotPasswordViewController.xib */; };
 		8BA224D41EAF25DC00627A1B /* RegisterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BA224D21EAF25DC00627A1B /* RegisterViewController.m */; };
 		8BA224D51EAF25DC00627A1B /* RegisterViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8BA224D31EAF25DC00627A1B /* RegisterViewController.xib */; };
+		8BA41B761F9F0D6B00B9886E /* MeetingTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BA41B741F9F0D6B00B9886E /* MeetingTableViewCell.m */; };
+		8BA41B771F9F0D6B00B9886E /* MeetingTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8BA41B751F9F0D6B00B9886E /* MeetingTableViewCell.xib */; };
 		8BB56D641EAF38CA0023DAFF /* AppSetingPersongInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BB56D631EAF38CA0023DAFF /* AppSetingPersongInfo.m */; };
 		8BB56D671EAF3C620023DAFF /* UserModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BB56D661EAF3C620023DAFF /* UserModel.m */; };
 		8BB56D6A1EB037410023DAFF /* UIUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BB56D691EB037410023DAFF /* UIUtils.m */; };
@@ -898,6 +900,9 @@
 		8BA224D11EAF25DC00627A1B /* RegisterViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RegisterViewController.h; sourceTree = "<group>"; };
 		8BA224D21EAF25DC00627A1B /* RegisterViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RegisterViewController.m; sourceTree = "<group>"; };
 		8BA224D31EAF25DC00627A1B /* RegisterViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RegisterViewController.xib; sourceTree = "<group>"; };
+		8BA41B731F9F0D6B00B9886E /* MeetingTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MeetingTableViewCell.h; sourceTree = "<group>"; };
+		8BA41B741F9F0D6B00B9886E /* MeetingTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MeetingTableViewCell.m; sourceTree = "<group>"; };
+		8BA41B751F9F0D6B00B9886E /* MeetingTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MeetingTableViewCell.xib; sourceTree = "<group>"; };
 		8BB56D621EAF38CA0023DAFF /* AppSetingPersongInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppSetingPersongInfo.h; sourceTree = "<group>"; };
 		8BB56D631EAF38CA0023DAFF /* AppSetingPersongInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppSetingPersongInfo.m; sourceTree = "<group>"; };
 		8BB56D651EAF3C620023DAFF /* UserModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserModel.h; sourceTree = "<group>"; };
@@ -1699,6 +1704,7 @@
 		8BA224931EADFEB500627A1B /* Interactive */ = {
 			isa = PBXGroup;
 			children = (
+				8BA41B721F9F0D4D00B9886E /* Cell */,
 				8BF7D3611F3D7D490087D35D /* CreateMeeting */,
 				8BF7D3601F3D7D320087D35D /* SelecteMeeting */,
 				8B2E16E41EBAD95A008B7C57 /* TheMeetingType */,
@@ -1909,6 +1915,16 @@
 				8B0857961F7E3A30009D5AC9 /* WorkingLoginViewController.xib */,
 			);
 			name = TheLogin;
+			sourceTree = "<group>";
+		};
+		8BA41B721F9F0D4D00B9886E /* Cell */ = {
+			isa = PBXGroup;
+			children = (
+				8BA41B731F9F0D6B00B9886E /* MeetingTableViewCell.h */,
+				8BA41B741F9F0D6B00B9886E /* MeetingTableViewCell.m */,
+				8BA41B751F9F0D6B00B9886E /* MeetingTableViewCell.xib */,
+			);
+			name = Cell;
 			sourceTree = "<group>";
 		};
 		8BCE7CBE1F04F07600FE261B /* AFNetworking */ = {
@@ -2408,6 +2424,7 @@
 				8B17374A1EC58BE400BE3C8F /* TestQuestionsViewController.xib in Resources */,
 				8BB56D8D1EB31C110023DAFF /* SystemSettingsViewController.xib in Resources */,
 				8B0D960C1F1893A2006796E3 /* CreateCouresTableViewCell.xib in Resources */,
+				8BA41B771F9F0D6B00B9886E /* MeetingTableViewCell.xib in Resources */,
 				8BA224A31EADFFE500627A1B /* InteractiveViewController.xib in Resources */,
 				8BE9139A1EEF7EF000000282 /* DiscussListTableViewCell.xib in Resources */,
 				8B1737141EC2F6A700BE3C8F /* NoticeViewController.xib in Resources */,
@@ -2714,6 +2731,7 @@
 				8BB56D8C1EB31C110023DAFF /* SystemSettingsViewController.m in Sources */,
 				8BFC79741F457E760052C088 /* JoinCours.m in Sources */,
 				8B045B9A1F3458E40021699B /* ZFHallLogoView.m in Sources */,
+				8BA41B761F9F0D6B00B9886E /* MeetingTableViewCell.m in Sources */,
 				8BF833F11F4AE086000F13E1 /* VoteOption.m in Sources */,
 				8BEE943B1F29DBF900488651 /* NoticeModel.m in Sources */,
 				8BCE7CAD1F033AE100FE261B /* HYDelegate.m in Sources */,

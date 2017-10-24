@@ -35,6 +35,10 @@
  * 获取当前时间
  **/
 +(NSString *)getTime;
+/**
+ *  获取当前月份
+ **/
++(NSString *)getMonth;
 +(NSString *)getMoreMonthTime;
 /**
  * 获取当前的无线信号

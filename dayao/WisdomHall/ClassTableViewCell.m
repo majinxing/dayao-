@@ -26,6 +26,7 @@
 @property (nonatomic,strong)NSMutableArray * weekday;
 @property (nonatomic,strong)NSMutableArray * ary;
 @property (nonatomic,copy)NSString * index;
+@property (nonatomic,strong)NSMutableDictionary * dictAry;
 
 @end
 @implementation ClassTableViewCell
@@ -44,6 +45,11 @@
     _s.backgroundColor = RGBA_COLOR(184, 216, 248, 1);
     _weekDay.textColor = RGBA_COLOR(57, 114, 172, 1);
     _sclass.textColor = RGBA_COLOR(57, 114, 172, 1);
+    _dictAry = [[NSMutableDictionary alloc] init];
+    for (int i = 1; i<=7; i++) {
+        NSMutableArray *ary = [NSMutableArray arrayWithCapacity:1];
+        [_dictAry setObject:ary forKey:[NSString stringWithFormat:@"%d",i]];
+    }
     // Initialization code
 }
 -(void)addFirstContentViewWith:(int)index withClass:(NSMutableArray *)classAry{
@@ -52,16 +58,22 @@
         NSString * ss = [[NSString alloc] init];
         
         UIButton * btn = [self viewWithTag:i+1];
-
+        NSMutableArray * ary = [_dictAry objectForKey:[NSString stringWithFormat:@"%ld",(long)btn.tag]];
+        [ary removeAllObjects];
         for (int j = 0; j<classAry.count; j++) {
             NSString * str = _weekday[i];
             ClassModel * c = classAry[j];
             if ([c.weekDayName isEqualToString:str]) {
                 if ([UIUtils isBlankString:ss]) {
                     ss = [NSString stringWithFormat:@"%@@%@",c.name,c.typeRoom];
-                    btn.tag = 1000+j;
+                    NSMutableArray * ary = [_dictAry objectForKey:[NSString stringWithFormat:@"%ld",(long)btn.tag]];
+                    [ary addObject:[NSString stringWithFormat:@"%d",j]];
+                    [_dictAry setObject:[NSString stringWithFormat:@"%ld",(long)btn.tag] forKey:ary];
                 }else{
                     ss = [NSString stringWithFormat:@"%@ %@@%@",ss,c.name,c.typeRoom];
+                    NSMutableArray * ary = [_dictAry objectForKey:[NSString stringWithFormat:@"%ld",(long)btn.tag]];
+                    [ary addObject:[NSString stringWithFormat:@"%d",j]];
+                    [_dictAry setObject:[NSString stringWithFormat:@"%ld",(long)btn.tag] forKey:ary];
                 }
             }
         }
@@ -69,18 +81,21 @@
             [btn setEnabled:NO];
             btn.backgroundColor = [UIColor clearColor];
         }else{
-            if (btn.tag>=1000&&classAry.count>btn.tag-1000) {
-                ClassModel * c = classAry[btn.tag-1000];
-                [btn setTitle:ss forState:UIControlStateNormal];
-                [btn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-                [btn setEnabled:YES];
-                btn.backgroundColor  = c.backColock;//YELLOW;//RGBA_COLOR(80, 172, 224, 1);
-                btn.layer.masksToBounds = YES;
-                btn.layer.cornerRadius = 5;
-                btn.titleLabel.lineBreakMode = 0;//这句话很重要，不加这句话加上换行符也没用
-                [btn addTarget:self action:@selector(intoTheCurriculum:) forControlEvents:UIControlEventTouchUpInside];
-
+            NSMutableArray * ary = [_dictAry objectForKey:[NSString stringWithFormat:@"%ld",(long)btn.tag]];
+            int n = 0;
+            if (ary.count>0) {
+                n = [ary[0] intValue];
             }
+            ClassModel * c = classAry[n];
+            [btn setTitle:ss forState:UIControlStateNormal];
+            [btn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+            [btn setEnabled:YES];
+            btn.backgroundColor  = c.backColock;//YELLOW;//RGBA_COLOR(80, 172, 224, 1);
+            btn.layer.masksToBounds = YES;
+            btn.layer.cornerRadius = 5;
+            btn.titleLabel.lineBreakMode = 0;//这句话很重要，不加这句话加上换行符也没用
+            [btn addTarget:self action:@selector(intoTheCurriculum:) forControlEvents:UIControlEventTouchUpInside];
+            
         }
     }
     _weekDay.text = [NSString stringWithFormat:@"%d",index*2+1];
@@ -89,15 +104,17 @@
     
 }
 -(void)intoTheCurriculum:(UIButton *)btn{
-//    NSString * str = [NSString stringWithFormat:@"%@",_index];
+    //    NSString * str = [NSString stringWithFormat:@"%@",_index];
     if (self.delegate&&[self.delegate respondsToSelector:@selector(intoTheCurriculumDelegate:withNumber:)]) {
-        [self.delegate intoTheCurriculumDelegate:_index withNumber:btn];
+        NSMutableArray * ary = [_dictAry objectForKey:[NSString stringWithFormat:@"%ld",(long)btn.tag]];
+
+        [self.delegate intoTheCurriculumDelegate:_index withNumber:ary];
     }
     
 }
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
     [super setSelected:selected animated:animated];
-
+    
     // Configure the view for the selected state
 }
 

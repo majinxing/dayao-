@@ -61,9 +61,9 @@ static NSString *cellIdentifier = @"cellIdentifier";
     self.temp = 0;
     self.view.backgroundColor = RGBA_COLOR(231, 231, 231, 1);
     UIImageView * i = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, APPLICATION_WIDTH, APPLICATION_HEIGHT)];
-                       
+    
     i.image = [UIImage imageNamed:@"bg3"];
-                       
+    
     [self.view addSubview:i];
     
     _classAry = [NSMutableArray arrayWithCapacity:10];
@@ -71,15 +71,15 @@ static NSString *cellIdentifier = @"cellIdentifier";
     _userModel = [[Appsetting sharedInstance] getUsetInfo];
     
     _dictDay = [UIUtils getWeekTimeWithType:nil];
-//    NSLog(@"%@",dict);
-
+    //    NSLog(@"%@",dict);
+    
     [self addAlterView];
     
     [self setNavigationTitle];
     
-//    [self addCollection];
+    //    [self addCollection];
     [self headerRereshing];
-
+    
     
     [self addTableView];
     // 1.注册通知
@@ -109,13 +109,13 @@ static NSString *cellIdentifier = @"cellIdentifier";
     __weak SignInViewController * weakSelf = self;
     [_tableView addHeaderWithCallback:^{
         [weakSelf headerRereshing];
-
+        
     }];
     [_tableView addFooterWithCallback:^{
         [weakSelf footerRereshing];
     }];
     [self.view addSubview:_tableView];
-
+    
 }
 -(void)addAlterView{
     _alterView = [[AlterView alloc] initWithFrame:CGRectMake(60, 200, APPLICATION_WIDTH-120, 120) withLabelText:@"暂无课程"];
@@ -260,11 +260,11 @@ static NSString *cellIdentifier = @"cellIdentifier";
         _dict = [[NSMutableDictionary alloc] initWithDictionary:[UIUtils CurriculumGroup:_classAry]];
         
         [_tableView reloadData];
-//        dispatch_async(dispatch_get_main_queue(), ^{
-//            [self hideHud];
-//            [_collection reloadData];
-//            
-//        });
+        //        dispatch_async(dispatch_get_main_queue(), ^{
+        //            [self hideHud];
+        //            [_collection reloadData];
+        //
+        //        });
         
     } failure:^(NSError *error) {
         [self hideHud];
@@ -282,7 +282,7 @@ static NSString *cellIdentifier = @"cellIdentifier";
     [self.navigationController.navigationBar setTitleTextAttributes:@{
                                                                       NSFontAttributeName:[UIFont systemFontOfSize:17],
                                                                       NSForegroundColorAttributeName:[UIColor blackColor]}];
-    self.title = @"当天课程";
+    self.title = @"本周课程";
     if ([[NSString stringWithFormat:@"%@",_userModel.identity] isEqualToString:@"1"]) {
         UIBarButtonItem *myButton = [[UIBarButtonItem alloc] initWithTitle:@"创建课程" style:UIBarButtonItemStylePlain target:self action:@selector(createAcourse)];
         self.navigationItem.rightBarButtonItem = myButton;
@@ -367,7 +367,7 @@ static NSString *cellIdentifier = @"cellIdentifier";
                 [self headerRereshing];
                 [_join removeFromSuperview];
                 _join = nil;
-
+                
             }
         } failure:^(NSError *error) {
             [UIUtils showInfoMessage:@"加入失败"];
@@ -393,20 +393,20 @@ static NSString *cellIdentifier = @"cellIdentifier";
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     ClassTableViewCell * cell ;
-//    if (indexPath.row == 0) {
-////        cell = [tableView dequeueReusableCellWithIdentifier:@"ClassTableViewCellSecond"];
-////        if (!cell) {
-////            cell = [[[NSBundle mainBundle] loadNibNamed:@"ClassTableViewCell" owner:self options:nil] objectAtIndex:1];
-////        }
-//    }else{
-        cell = [tableView dequeueReusableCellWithIdentifier:@"ClassTableViewCellFirst"];
-        if (!cell) {
-            cell = [[[NSBundle mainBundle] loadNibNamed:@"ClassTableViewCell" owner:self options:nil] objectAtIndex:0];
-        }
-        NSString * str = [NSString stringWithFormat:@"%d",(int)indexPath.row+1];
-        NSMutableArray * ary = _dict[str];
-        [cell addFirstContentViewWith:(int)indexPath.row withClass:ary];
-//    }
+    //    if (indexPath.row == 0) {
+    ////        cell = [tableView dequeueReusableCellWithIdentifier:@"ClassTableViewCellSecond"];
+    ////        if (!cell) {
+    ////            cell = [[[NSBundle mainBundle] loadNibNamed:@"ClassTableViewCell" owner:self options:nil] objectAtIndex:1];
+    ////        }
+    //    }else{
+    cell = [tableView dequeueReusableCellWithIdentifier:@"ClassTableViewCellFirst"];
+    if (!cell) {
+        cell = [[[NSBundle mainBundle] loadNibNamed:@"ClassTableViewCell" owner:self options:nil] objectAtIndex:0];
+    }
+    NSString * str = [NSString stringWithFormat:@"%d",(int)indexPath.row+1];
+    NSMutableArray * ary = _dict[str];
+    [cell addFirstContentViewWith:(int)indexPath.row withClass:ary];
+    //    }
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     cell.backgroundColor = [UIColor clearColor];
     cell.delegate = self;
@@ -424,7 +424,8 @@ static NSString *cellIdentifier = @"cellIdentifier";
 -(UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section{
     UIView * view = [[UIView alloc] init];
     view.backgroundColor = RGBA_COLOR(201, 242, 253, 1);
-    NSArray * ary = @[@"月",@"周一",@"周二",@"周三",@"周四",@"周五",@"周六",@"周日"];
+    NSString * month = [UIUtils getMonth];
+    NSArray * ary = @[month,@"周一",@"周二",@"周三",@"周四",@"周五",@"周六",@"周日"];
     for (int i =0; i<8; i++) {
         UILabel * label = [[UILabel alloc] initWithFrame:CGRectMake(i*APPLICATION_WIDTH/8, 0, APPLICATION_WIDTH/8, 50)];
         label.backgroundColor = [UIColor clearColor];
@@ -443,16 +444,39 @@ static NSString *cellIdentifier = @"cellIdentifier";
     return view;
 }
 #pragma mark Class
--(void)intoTheCurriculumDelegate:(NSString *)str withNumber:(UIButton *)btn{
+-(void)intoTheCurriculumDelegate:(NSString *)str withNumber:(NSMutableArray *)btn{
     NSMutableArray * ary = [_dict objectForKey:str];
-    self.hidesBottomBarWhenPushed = YES;
-    CourseDetailsViewController * cdetailVC = [[CourseDetailsViewController alloc] init];
-    if ((btn.tag-1000)<ary.count&&btn.tag>=1000) {
-        cdetailVC.c = ary[btn.tag-1000];
+    if (btn.count == 1) {
+        self.hidesBottomBarWhenPushed = YES;
+        CourseDetailsViewController * cdetailVC = [[CourseDetailsViewController alloc] init];
+        int n = [btn[0] intValue];
+        cdetailVC.c = ary[n];
         [self.navigationController pushViewController:cdetailVC animated:YES];
         self.hidesBottomBarWhenPushed=NO;
+    }else{
+        UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"有重复课程请选择要查看的课" message:nil preferredStyle:  UIAlertControllerStyleActionSheet];
+        for (int i = 0; i<btn.count; i++) {
+            //分别按顺序放入每个按钮；
+            int n = [btn[i] intValue];
+            ClassModel * c =ary[n];
+            NSString * str = c.name;
+            
+            [alert addAction:[UIAlertAction actionWithTitle:str style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+                self.hidesBottomBarWhenPushed = YES;
+                CourseDetailsViewController * cdetailVC = [[CourseDetailsViewController alloc] init];
+                int n = [btn[i] intValue];
+                cdetailVC.c = ary[n];
+                [self.navigationController pushViewController:cdetailVC animated:YES];
+                self.hidesBottomBarWhenPushed=NO;
+            }]];
+
+        }
+        [alert addAction:[UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleDestructive handler:^(UIAlertAction * _Nonnull action) {
+            //点击按钮的响应事件；
+        }]];
+        //弹出提示框；
+        [self presentViewController:alert animated:true completion:nil];
     }
-    
 }
 /*
  #pragma mark - Navigation

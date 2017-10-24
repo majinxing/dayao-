@@ -115,6 +115,9 @@
     if ([type isEqualToString:Group]) {
         [self setImage:[UIImage imageNamed:@"群组"] forState:UIControlStateNormal];
     }
+    if ([type isEqualToString:InteractionType_Sit]) {
+        [self setImage:[UIImage imageNamed:@"座次"] forState:UIControlStateNormal];
+    }
     [self setTitle:type forState:UIControlStateNormal];
 }
 

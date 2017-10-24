@@ -16,7 +16,13 @@
 //#else #define SCREEN_WIDTH [UIScreen mainScreen].bounds.size.width #define SCREENH_HEIGHT [UIScreen mainScreen].bounds.size.height
 //#define SCREEN_SIZE [UIScreen mainScreen].bounds.size
 //#endif
-
+#define ScreenWidth [[UIScreen mainScreen] bounds].size.width
+#define ScreenHeight [[UIScreen mainScreen] bounds].size.height
+#define Is_Iphone (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone)
+#define Is_Iphone_X (Is_Iphone && ScreenHeight == 812.0)
+#define NaviHeight Is_Iphone_X ? 88 : 64
+#define TabbarHeight Is_Iphone_X ? 83 : 49
+#define BottomHeight Is_Iphone_X ? 34 : 0
 
 //屏幕
 #define APPLICATION_WIDTH [UIScreen mainScreen].bounds.size.width
@@ -35,10 +41,13 @@
 #define GREEN                   RGBA_COLOR(135, 217, 183, 1)
 #define LightBlue               RGBA_COLOR(0, 210, 235, 1)
 #define RED                     RGBA_COLOR(228, 0, 63, 1)
-#define GrayG                   RGBA_COLOR(162, 183, 165, 1)
+#define GrayG                   RGBA_COLOR(41, 176, 162, 1)
 #define Warm                    RGBA_COLOR(255, 129, 0, 1)
 #define DeepBlue                RGBA_COLOR(0, 39, 74, 1)
-
+#define ORANGE                  RGBA_COLOR(255, 162, 42, 1)
+#define LB                      RGBA_COLOR(0, 73, 111, 1)
+#define FENSE                   RGBA_COLOR(252, 0, 163, 1)
+#define ZI                      RGBA_COLOR(181, 33, 141, 1)
 
 #ifdef __OBJC__
     @import UIKit;
@@ -69,8 +78,9 @@
 #define InteractionType_Discuss     @"讨论"
 #define InteractionType_Vote        @"投票"
 #define InteractionType_Responder   @"抢答"
-#define InteractionType_Data        @"资料"
+#define InteractionType_Data        @"文件"
 #define InteractionType_Add         @"更多"
+#define InteractionType_Sit         @"座次"
 
 #define Vote_delecate               @"删除"
 #define Vote_Modify                 @"修改"

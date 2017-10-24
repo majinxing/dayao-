@@ -152,6 +152,22 @@
     
     return nowDate;
 }
++(NSString *)getMonth{
+    NSCalendar *calendar = [NSCalendar currentCalendar];
+    int unit = NSCalendarUnitDay | NSCalendarUnitMonth | NSCalendarUnitYear | NSCalendarUnitHour | NSCalendarUnitMinute | NSCalendarUnitSecond;
+    
+    //获得当前时间的年月日时分
+    NSDateComponents *nowCmps = [calendar components:unit fromDate:[NSDate date]];
+    NSString *month;
+    if (nowCmps.month<10) {
+        month = [NSString stringWithFormat:@"0%ld",(long)nowCmps.month];
+    }else{
+        month = [NSString stringWithFormat:@"%ld",(long)nowCmps.month];
+    }
+    NSString *nowDate = [NSString stringWithFormat:@"%@月",month];
+    
+    return nowDate;
+}
 +(NSString *)getMoreMonthTime{
     
     NSCalendar *calendar = [NSCalendar currentCalendar];
@@ -1129,14 +1145,14 @@
     NSString *lastDay = [formatter stringFromDate:lastDayOfWeek];
     NSLog(@"%@=======%@",firstDay,lastDay);
     
-    NSString *dateStr = [NSString stringWithFormat:@"%@-%@",firstDay,lastDay];
+//    NSString *dateStr = [NSString stringWithFormat:@"%@-%@",firstDay,lastDay];
     NSDictionary * dict = [[NSDictionary alloc] initWithObjectsAndKeys:[NSString stringWithFormat:@"%@",firstDay],@"firstDay",[NSString stringWithFormat:@"%@",lastDay],@"lastDay", nil];
     return dict;
     
 }
 +(NSMutableDictionary *)CurriculumGroup:(NSMutableArray *)classAry{
     NSMutableDictionary * dict = [[NSMutableDictionary alloc] init];
-    NSMutableArray * bColock = [[NSMutableArray alloc] initWithObjects:YELLOW,PINK,GRASS,PURPLE,BULE,GREEN,LightBlue,RED,GrayG,Warm,DeepBlue, nil];
+    NSMutableArray * bColock = [[NSMutableArray alloc] initWithObjects:YELLOW,PINK,GRASS,PURPLE,BULE,GREEN,LightBlue,RED,GrayG,Warm,DeepBlue,ORANGE,LB,FENSE,ZI, nil];
     NSMutableDictionary * dictColock = [[NSMutableDictionary alloc] init];
     //预先设置课程数组
     for ( int i = 1; i<7; i++) {
@@ -1165,6 +1181,14 @@
                     if (bColock.count>0) {
                         [dictColock setObject:bColock[0] forKey:c.name];
                         c.backColock = bColock[0];
+                        [bColock removeObjectAtIndex:0];
+                    }else{
+                        //预设颜色不足时候用随机颜色
+                        [dictColock setObject:bColock[0] forKey:c.name];
+                        int r = arc4random()%225;
+                        int g = arc4random()%225;
+                        int b = arc4random()%225;
+                        c.backColock = RGBA_COLOR(r, g, b, 1);
                         [bColock removeObjectAtIndex:0];
                     }
                 }
