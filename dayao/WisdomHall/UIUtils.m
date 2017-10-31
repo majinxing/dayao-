@@ -328,6 +328,8 @@
     }
     return NO;
 }
+
+//存储网络时间与本地时间的差值
 +(NSDate *)getInternetDate
 {
     NSString *urlString = @"http://m.baidu.com";
@@ -352,7 +354,38 @@
     NSTimeZone *zone = [NSTimeZone systemTimeZone];
     NSInteger interval = [zone secondsFromGMTForDate: netDate];
     NSDate *localeDate = [netDate  dateByAddingTimeInterval: interval];
+    
+    NSDate *endD = [NSDate date];//[date dateFromString:endTime];
+    
+    NSString*timeSp = [NSString stringWithFormat:@"%ld", (long)[endD timeIntervalSince1970]];
+    
+    NSTimeZone *zone1 = [NSTimeZone timeZoneWithName:@"Asia/Beijing"];
+    
+    NSInteger interval1 = [zone1 secondsFromGMTForDate:endD];
+    
+    NSDate * localeDate1 = [endD dateByAddingTimeInterval:interval1];
+    
+    //    NSTimeInterval start = [localeDate timeIntervalSince1970]*1;
+    
+    //    NSTimeInterval end = [endD timeIntervalSince1970]*1;
+    
+    //    NSTimeInterval value = end - start;
+    // 当前日历
+    NSCalendar *calendar = [NSCalendar currentCalendar];
+    // 需要对比的时间数据
+    NSCalendarUnit unit = NSCalendarUnitYear | NSCalendarUnitMonth
+    | NSCalendarUnitDay | NSCalendarUnitHour | NSCalendarUnitMinute | NSCalendarUnitSecond;
+    // 对比时间差
+    NSDateComponents *dateCom = [calendar components:unit fromDate:localeDate1 toDate:endD options:0];
+    [[Appsetting sharedInstance].mySettingData setValue:[NSString stringWithFormat:@"%ld",(long)dateCom.year] forKey:@"year"];
+    [[Appsetting sharedInstance].mySettingData setValue:[NSString stringWithFormat:@"%ld",(long)dateCom.month] forKey:@"month"];
+    [[Appsetting sharedInstance].mySettingData setValue:[NSString stringWithFormat:@"%ld",(long)dateCom.day] forKey:@"day"];
+    [[Appsetting sharedInstance].mySettingData setValue:[NSString stringWithFormat:@"%ld",(long)dateCom.minute] forKey:@"minute"];
+    [[Appsetting sharedInstance].mySettingData setValue:[NSString stringWithFormat:@"%ld",(long)dateCom.second] forKey:@"second"];
+    [[Appsetting sharedInstance].mySettingData synchronize];
+    
     return localeDate;
+    
 }
 
 +(NSString *)compareTimeStartTime:(NSString *)startTime withExpireTime:(NSString *)expireTime {
@@ -445,8 +478,6 @@
     [dict setObject:ary[1] forKey:@"name"];
     UserModel * users = [[Appsetting sharedInstance] getUsetInfo];
     [dict setObject:[NSString stringWithFormat:@"%@",users.peopleId] forKey:@"teacherId"];
-    [dict setObject:@"1" forKey:@"signWay"];
-    [dict setObject:[NSString stringWithFormat:@"%@",c.classRoomId] forKey:@"roomId"];
     
     NSMutableArray * userList = [NSMutableArray arrayWithCapacity:1];
     for (int i = 0; i<joinPeopleAry.count; i++) {
@@ -507,7 +538,13 @@
     }else{
         week = week + 2;
     }
+    
+    [dict setObject:@"1" forKey:@"signWay"];
+    [dict setObject:[NSString stringWithFormat:@"%@",c.classRoomId] forKey:@"roomId"];
     NSDictionary * w = [[NSDictionary alloc] initWithObjectsAndKeys:[NSString stringWithFormat:@"%d",week],@"weekDay",[NSString stringWithFormat:@"%d",class1+1],@"startTh",[NSString stringWithFormat:@"%d",class2+1],@"endTh",nil];
+    
+//    NSDictionary * w = [[NSDictionary alloc] initWithObjectsAndKeys:[NSString stringWithFormat:@"%d",week],@"weekDay",[NSString stringWithFormat:@"%d",class1+1],@"startTh",[NSString stringWithFormat:@"%d",class2+1],@"endTh",@"1",@"signWay",[NSString stringWithFormat:@"%@",c.classRoomId],@"roomId",nil];
+    
     
     NSArray * aa = [[NSArray alloc] initWithObjects:w, nil];
     [dict setObject:aa forKey:@"courseTimeList"];
@@ -662,7 +699,7 @@
     rootVC = nil;
     ChatHelper * c =[ChatHelper shareHelper];
     [c getOut];
-    TheLoginViewController * userLogin = [[TheLoginViewController alloc] init];
+    WorkingLoginViewController * userLogin = [[WorkingLoginViewController alloc] init];
     [UIApplication sharedApplication].keyWindow.rootViewController =[[UINavigationController alloc] initWithRootViewController:userLogin];
     UIAlertView * alter = [[UIAlertView alloc] initWithTitle:nil message:@"账号在另一台设备登录，请重新登录或修改密码" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil];
     [alter show];
@@ -1109,7 +1146,7 @@
     NSInteger weekDay = [comp weekday];
     // 获取几天是几号
     NSInteger day = [comp day];
-    NSLog(@"%d----%d",weekDay,day);
+   // NSLog(@"%d----%d",weekDay,day);
     
     // 计算当前日期和本周的星期一和星期天相差天数
     long firstDiff,lastDiff;
@@ -1124,7 +1161,7 @@
         firstDiff = [calendar firstWeekday] - weekDay + 1;
         lastDiff = 8 - weekDay;
     }
-    NSLog(@"firstDiff: %ld   lastDiff: %ld",firstDiff,lastDiff);
+   // NSLog(@"firstDiff: %ld   lastDiff: %ld",firstDiff,lastDiff);
     
     // 在当前日期(去掉时分秒)基础上加上差的天数
     NSDateComponents *firstDayComp = [calendar components:NSYearCalendarUnit | NSMonthCalendarUnit | NSDayCalendarUnit  fromDate:nowDate];
@@ -1148,11 +1185,63 @@
 //    NSString *dateStr = [NSString stringWithFormat:@"%@-%@",firstDay,lastDay];
     NSDictionary * dict = [[NSDictionary alloc] initWithObjectsAndKeys:[NSString stringWithFormat:@"%@",firstDay],@"firstDay",[NSString stringWithFormat:@"%@",lastDay],@"lastDay", nil];
     return dict;
+}
++(NSArray *)getWeekAllTimeWithType:(NSString *)type
+{
+    NSDate *nowDate = [NSDate date];
+    NSCalendar *calendar = [NSCalendar currentCalendar];
+    NSDateComponents *comp = [calendar components:NSYearCalendarUnit | NSMonthCalendarUnit | NSDayCalendarUnit | NSWeekdayCalendarUnit | NSDayCalendarUnit fromDate:nowDate];
+    // 获取今天是周几
+    NSInteger weekDay = [comp weekday];
+    // 获取几天是几号
+    NSInteger day = [comp day];
+    // NSLog(@"%d----%d",weekDay,day);
     
+    // 计算当前日期和本周的星期一和星期天相差天数
+    long firstDiff,lastDiff;
+    //    weekDay = 1;
+    if (weekDay == 1)
+    {
+        firstDiff = -6;
+        lastDiff = 0;
+    }
+    else
+    {
+        firstDiff = [calendar firstWeekday] - weekDay + 1;
+        lastDiff = 8 - weekDay;
+    }
+    NSMutableArray * ary = [NSMutableArray arrayWithCapacity:1];
+    for (int i = 0; i<labs(firstDiff); i++) {
+        // 在当前日期(去掉时分秒)基础上加上差的天数
+        NSDateComponents *firstDayComp = [calendar components:NSYearCalendarUnit | NSMonthCalendarUnit | NSDayCalendarUnit  fromDate:nowDate];
+        
+        [firstDayComp setDay:day + firstDiff+i];
+        
+        NSDate *firstDayOfWeek = [calendar dateFromComponents:firstDayComp];
+        
+        NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+        [formatter setDateFormat:@"dd"];
+        
+        NSString *firstDay = [formatter stringFromDate:firstDayOfWeek];
+        [ary addObject:firstDay];
+    }
+    for (int i = 0; i<=labs(lastDiff); i++) {
+        NSDateComponents *lastDayComp = [calendar components:NSYearCalendarUnit | NSMonthCalendarUnit | NSDayCalendarUnit   fromDate:nowDate];
+        [lastDayComp setDay:day + i];
+        
+        NSDate *lastDayOfWeek = [calendar dateFromComponents:lastDayComp];
+        
+        NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+        [formatter setDateFormat:@"dd"];
+        
+        NSString *lastDay = [formatter stringFromDate:lastDayOfWeek];
+        [ary addObject:lastDay];
+    }
+    return ary;
 }
 +(NSMutableDictionary *)CurriculumGroup:(NSMutableArray *)classAry{
     NSMutableDictionary * dict = [[NSMutableDictionary alloc] init];
-    NSMutableArray * bColock = [[NSMutableArray alloc] initWithObjects:YELLOW,PINK,GRASS,PURPLE,BULE,GREEN,LightBlue,RED,GrayG,Warm,DeepBlue,ORANGE,LB,FENSE,ZI, nil];
+    NSMutableArray * bColock = [[NSMutableArray alloc] initWithObjects:YELLOW,PINK,GRASS,PURPLE,BULE,GREEN,LightBlue,RED,GrayG,Warm,DeepBlue,ORANGE,LB,FENSE,ZI,HUANG,LUSE,FENFEN,HUANG1,FEN1, nil];
     NSMutableDictionary * dictColock = [[NSMutableDictionary alloc] init];
     //预先设置课程数组
     for ( int i = 1; i<7; i++) {
@@ -1183,13 +1272,13 @@
                         c.backColock = bColock[0];
                         [bColock removeObjectAtIndex:0];
                     }else{
-                        //预设颜色不足时候用随机颜色
-                        [dictColock setObject:bColock[0] forKey:c.name];
+                        
                         int r = arc4random()%225;
                         int g = arc4random()%225;
                         int b = arc4random()%225;
                         c.backColock = RGBA_COLOR(r, g, b, 1);
-                        [bColock removeObjectAtIndex:0];
+                        //预设颜色不足时候用随机颜色
+                        [dictColock setObject:RGBA_COLOR(r, g, b, 1) forKey:c.name];
                     }
                 }
             }
@@ -1226,6 +1315,167 @@
         return 6;
     }
     return 0;
+}
+//json格式字符串转字典：
+
++(NSDictionary *)dictionaryWithJsonString:(NSString *)jsonString {
+    
+    if (jsonString == nil) {
+        [UIUtils showInfoMessage:@"扫描二维码有误，请重新扫描或者连接指定WiFi签到"];
+        return nil;
+        
+    }
+    
+    NSData *jsonData = [jsonString dataUsingEncoding:NSUTF8StringEncoding];
+    
+    NSError *err;
+    
+    NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:jsonData
+                         
+                                                        options:NSJSONReadingMutableContainers
+                         
+                                                          error:&err];
+    
+    if(err) {
+        
+        NSLog(@"json解析失败：%@",err);
+        [UIUtils showInfoMessage:@"扫描二维码失效，请重新扫描或者连接指定WiFi签到"];
+        return nil;
+        
+    }
+    
+    return dic;
+    
+}
+//获取当前时间戳
++ (NSString*)getCurrentTime {
+    
+    NSString *urlString = @"http://m.baidu.com";
+    urlString = [urlString stringByAddingPercentEscapesUsingEncoding: NSUTF8StringEncoding];
+    NSMutableURLRequest *request = [[NSMutableURLRequest alloc] init];
+    [request setURL:[NSURL URLWithString: urlString]];
+    [request setCachePolicy:NSURLRequestReloadIgnoringCacheData];
+    [request setTimeoutInterval: 2];
+    [request setHTTPShouldHandleCookies:FALSE];
+    [request setHTTPMethod:@"GET"];
+    NSHTTPURLResponse *response;
+    [NSURLConnection sendSynchronousRequest:request returningResponse:&response error:nil];
+    
+    NSString *date = [[response allHeaderFields] objectForKey:@"Date"];
+    date = [date substringFromIndex:5];
+    date = [date substringToIndex:[date length]-4];
+    NSDateFormatter *dMatter = [[NSDateFormatter alloc] init];
+    dMatter.locale = [[NSLocale alloc] initWithLocaleIdentifier:@"en_US"];
+    [dMatter setDateFormat:@"dd MMM yyyy HH:mm:ss"];
+    NSDate *netDate = [[dMatter dateFromString:date] dateByAddingTimeInterval:60*60*8];
+    
+    NSTimeZone *zone = [NSTimeZone systemTimeZone];
+    NSInteger interval = [zone secondsFromGMTForDate: netDate];
+    NSDate *localeDate = [netDate  dateByAddingTimeInterval: interval];
+    
+    NSString*timeSp = [NSString stringWithFormat:@"%ld", (long)[localeDate timeIntervalSince1970]];
+    if (localeDate!=nil) {
+        return timeSp;
+    }
+    NSDate*datenow = [NSDate date];
+    
+    //    NSString*timeSp = [NSString stringWithFormat:@"%ld", (long)[datenow timeIntervalSince1970]];
+    
+    NSTimeZone*zone1 = [NSTimeZone timeZoneWithName:@"Asia/Beijing"];
+    
+    NSInteger interval1 = [zone1 secondsFromGMTForDate:datenow];
+    
+    NSDate*localeDate1 = [datenow dateByAddingTimeInterval:interval1];
+    
+    NSString*timeSpp = [NSString stringWithFormat:@"%ld", (long)[localeDate1 timeIntervalSince1970]];
+    
+    return timeSpp;
+}
+/**
+ 
+ * 开始到结束的时间差
+ 
+ */
+
++ (BOOL)dateTimeDifferenceWithStartTime:(NSString *)startTime{
+    
+    NSDateFormatter *date = [[NSDateFormatter alloc]init];
+    
+    [date setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
+    
+    NSDate *startD  = [date dateFromString:startTime];
+    
+    NSDate *endD = [NSDate date];//[date dateFromString:endTime];
+    
+    NSTimeInterval start = [startD timeIntervalSince1970]*1;
+    
+    NSTimeInterval end = [endD timeIntervalSince1970]*1;
+    
+    NSTimeInterval value = end - start;
+    // 当前日历
+    NSCalendar *calendar = [NSCalendar currentCalendar];
+    // 需要对比的时间数据
+    NSCalendarUnit unit = NSCalendarUnitYear | NSCalendarUnitMonth
+    | NSCalendarUnitDay | NSCalendarUnitHour | NSCalendarUnitMinute | NSCalendarUnitSecond;
+    // 对比时间差
+    NSDateComponents *dateCom = [calendar components:unit fromDate:startD toDate:endD options:0];
+    NSInteger year = [[[Appsetting sharedInstance].mySettingData objectForKey:@"year"] integerValue];
+    NSInteger month = [[[Appsetting sharedInstance].mySettingData objectForKey:@"month"] integerValue];
+    NSInteger day = [[[Appsetting sharedInstance].mySettingData objectForKey:@"day"] integerValue];
+    NSInteger hour = [[[Appsetting sharedInstance].mySettingData objectForKey:@"hour"] integerValue];
+    NSInteger minute = [[[Appsetting sharedInstance].mySettingData objectForKey:@"minue"] integerValue];
+    NSInteger second = [[[Appsetting sharedInstance].mySettingData objectForKey:@"second"] integerValue];
+    if ((dateCom.year+year)>0) {
+        return NO;
+    }
+    if ((dateCom.month+month)>0){
+        return NO;
+    }
+    if ((dateCom.day+day)>0) {
+        return NO;
+    }
+    if ((dateCom.hour+hour)>0) {
+        return NO;
+    }
+    if ((dateCom.minute+minute)>0) {
+        return NO;
+    }
+    if ((dateCom.second+second)<CodeEffectiveTime) {
+        return YES;
+    }
+    return NO;
+}
+//时间戳化时间
++(NSString *)getTheTimeStamp:(NSString *)time{
+    
+    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+    [formatter setDateStyle:NSDateFormatterMediumStyle];
+    [formatter setTimeStyle:NSDateFormatterShortStyle];
+    [formatter setDateFormat:@"YYYY-MM-dd HH:mm:ss"]; // ----------设置你想要的格式,hh与      HH的区别:分别表示12小时制,24小时制
+    
+    //设置时区,这个对于时间的处理有时很重要
+    //例如你在国内发布信息,用户在国外的另一个时区,你想让用户看到正确的发布时间就得注意时区设置,时间的换算.
+    //例如你发布的时间为2010-01-26 17:40:50,那么在英国爱尔兰那边用户看到的时间应该是多少呢?
+    //他们与我们有7个小时的时差,所以他们那还没到这个时间呢...那就是把未来的事做了
+    
+    NSTimeZone* timeZone = [NSTimeZone timeZoneWithName:@"Asia/Shanghai"];
+    [formatter setTimeZone:timeZone];
+    NSDate *confromTimesp = [NSDate dateWithTimeIntervalSince1970:[time doubleValue]];
+    
+    NSString *dateTime = [formatter stringFromDate:confromTimesp];
+    return dateTime;
+}
++(BOOL)returnMckIsHave:(NSMutableArray *)localAry withAccept:(NSArray *)acceptAry{
+    for (int i = 0; i<localAry.count; i++) {
+        NSString * local = [NSString stringWithFormat:@"%@",localAry[i]];
+        for (int j = 0; j<acceptAry.count; j++) {
+            NSString * accept = [NSString stringWithFormat:@"%@",acceptAry[j]];
+            if ([local isEqualToString:accept]) {
+                return YES;
+            }
+        }
+    }
+    return NO;
 }
 @end
 

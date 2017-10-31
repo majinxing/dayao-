@@ -51,7 +51,9 @@ static dispatch_once_t onceToken;
     [[EMClient sharedClient].chatManager removeDelegate:self];
     [[EMClient sharedClient].callManager removeDelegate:self];
     [[NSNotificationCenter defaultCenter] removeObserver:self];
-
+    UserModel * user = [[Appsetting sharedInstance] getUsetInfo];
+    [JPUSHService setAlias:[NSString stringWithFormat:@"%@%@",user.school,user.studentId] callbackSelector:nil object:self];
+    
     EMError *error = [[EMClient sharedClient] logout:YES];
     if (!error) {
         NSLog(@"退出成功");

@@ -14,6 +14,7 @@
 #import "GroupListViewController.h"
 
 #import "WisdomHall-Swift.h"
+#import "JPUSHService.h"
 
 @interface OfficeViewController ()<UITableViewDelegate,UITableViewDataSource,OfficeTableViewCellDelegate>
 @property (nonatomic,strong)UITableView * tableView;
@@ -26,6 +27,14 @@
     self.view.backgroundColor = [UIColor whiteColor];
     [self addTableView];
     [self setNavigationTitle];
+    UserModel * user = [[Appsetting sharedInstance] getUsetInfo];
+#pragma mark - 推送别名设置
+    
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.0f * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        [JPUSHService setTags:nil alias:[NSString stringWithFormat:@"%@%@",user.school,user.studentId] fetchCompletionHandle:^(int iResCode, NSSet *iTags, NSString *iAlias) {
+            NSLog(@"%d-------------%@,-------------%@",iResCode,iTags,iAlias);
+        }];
+    });
     // Do any additional setup after loading the view from its nib.
 }
 /**

@@ -28,7 +28,7 @@
     self.actStarTime = [self.actStarTime stringByReplacingOccurrencesOfString:@"\t" withString:@""];
     
     self.courseDetailId = [dict objectForKey:@"courseDetailId"];
-    self.time = [dict objectForKey:@"time"];
+    self.time = [dict objectForKey:@"actStartTime"];
     self.total = [dict objectForKey:@"total"];
     self.pictureId = [dict objectForKey:@"pictureId"];
     self.roomId = [dict objectForKey:@"roomId"];

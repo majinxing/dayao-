@@ -22,6 +22,16 @@
 #import "SeatIngModel.h"
 #import "AFHTTPSessionManager.h"
 #import "MeetingTableViewCell.h"
+#import "QRCodeGenerateVC.h"
+#import "SGQRCodeScanningVC.h"
+#import <AVFoundation/AVFoundation.h>
+#import <Foundation/Foundation.h>
+#import <CommonCrypto/CommonDigest.h>
+#import "QrCodeViewController.h"
+
+#define kScreenWidth [UIScreen mainScreen].bounds.size.width
+
+#define kScreenHeight [UIScreen mainScreen].bounds.size.height
 
 #define RGBA_COLOR(R, G, B, A) [UIColor colorWithRed:((R) / 255.0f) green:((G) / 255.0f) blue:((B) / 255.0f) alpha:A]
 
@@ -439,11 +449,12 @@
 
     } failure:^(NSError *error) {
         NSLog(@"失败：%@",error);
-        UIAlertView * alter = [[UIAlertView alloc] initWithTitle:nil message:@"签到失败请重新签到，请保证数据流量的连接" delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil];
+        UIAlertView * alter = [[UIAlertView alloc] initWithTitle:nil message:@"无网络，请保证数据流量的连接后再次点击签到" delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil];
         alter.tag = 2;
         [alter show];
         [self hideHud];
-
+        _meetingModel.signStatus = @"4";
+        [_tableView reloadData];
     }];
 }
 -(void)alter:(NSString *) str{
@@ -472,8 +483,121 @@
     }else if ([str isEqualToString:@"5000"]){
         [UIUtils showInfoMessage:@"签到失败"];
         _meetingModel.signStatus = @"1";
+    }else if ([str isEqualToString:@"1008"]){
+        [UIUtils showInfoMessage:@"这台手机已经签到一次了，不能重复使用签到，谢谢"];
+        _meetingModel.signStatus =@"1";
     }
     [_tableView reloadData];
+}
+-(void)codePressedDelegate:(UIButton *)btn{
+    if ([btn.titleLabel.text isEqualToString:@"二维码签到"]) {
+        if (![UIUtils validateWithStartTime:_meetingModel.meetingTime withExpireTime:nil]) {
+            [UIUtils showInfoMessage:@"课程开始之后一定时间范围内才可以签到"];
+            return;
+        }
+        //     1、 获取摄像设备
+        AVCaptureDevice *device = [AVCaptureDevice defaultDeviceWithMediaType:AVMediaTypeVideo];
+        if (device) {
+            AVAuthorizationStatus status = [AVCaptureDevice authorizationStatusForMediaType:AVMediaTypeVideo];
+            if (status == AVAuthorizationStatusNotDetermined) {
+                [AVCaptureDevice requestAccessForMediaType:AVMediaTypeVideo completionHandler:^(BOOL granted) {
+                    if (granted) {
+                        dispatch_sync(dispatch_get_main_queue(), ^{
+                            SGQRCodeScanningVC *vc = [[SGQRCodeScanningVC alloc] init];
+                            [self.navigationController pushViewController:vc animated:YES];
+                            [vc returnText:^(NSDictionary *returnText) {
+                                if (returnText) {
+                                    [self codeSign:returnText];
+                                }
+                            }];
+                        });
+                        // 用户第一次同意了访问相机权限
+                        NSLog(@"用户第一次同意了访问相机权限 - - %@", [NSThread currentThread]);
+                        
+                    } else {
+                        // 用户第一次拒绝了访问相机权限
+                        NSLog(@"用户第一次拒绝了访问相机权限 - - %@", [NSThread currentThread]);
+                    }
+                }];
+            } else if (status == AVAuthorizationStatusAuthorized) { // 用户允许当前应用访问相机
+                SGQRCodeScanningVC *vc = [[SGQRCodeScanningVC alloc] init];
+                self.hidesBottomBarWhenPushed = YES;
+                [self.navigationController pushViewController:vc animated:YES];
+                [vc returnText:^(NSDictionary *returnText) {
+                    if (returnText) {
+                        [self codeSign:returnText];
+                    }
+                }];
+            } else if (status == AVAuthorizationStatusDenied) { // 用户拒绝当前应用访问相机
+                UIAlertController *alertC = [UIAlertController alertControllerWithTitle:@"温馨提示" message:@"请去-> [设置 - 隐私 - 相机 - SGQRCodeExample] 打开访问开关" preferredStyle:(UIAlertControllerStyleAlert)];
+                UIAlertAction *alertA = [UIAlertAction actionWithTitle:@"确定" style:(UIAlertActionStyleDefault) handler:^(UIAlertAction * _Nonnull action) {
+                    
+                }];
+                
+                [alertC addAction:alertA];
+                [self presentViewController:alertC animated:YES completion:nil];
+                
+            } else if (status == AVAuthorizationStatusRestricted) {
+                NSLog(@"因为系统原因, 无法访问相册");
+            }
+        } else {
+            UIAlertController *alertC = [UIAlertController alertControllerWithTitle:@"温馨提示" message:@"未检测到您的摄像头" preferredStyle:(UIAlertControllerStyleAlert)];
+            UIAlertAction *alertA = [UIAlertAction actionWithTitle:@"确定" style:(UIAlertActionStyleDefault) handler:^(UIAlertAction * _Nonnull action) {
+                
+            }];
+            
+            [alertC addAction:alertA];
+            [self presentViewController:alertC animated:YES completion:nil];
+        }
+    }else{
+        NSString * interval = [UIUtils getCurrentTime];
+        NSString * checkcodeLocal = [NSString stringWithFormat:@"%@dayaokeji",interval];
+        NSString * md5 = [self md5:checkcodeLocal];
+        NSMutableDictionary * dict = [[NSMutableDictionary alloc] initWithObjectsAndKeys:interval,@"date",_meetingModel.mck,@"loc_array",md5,@"checkcode",nil];
+        QrCodeViewController * q = [[QrCodeViewController alloc] init];
+        self.hidesBottomBarWhenPushed = YES;
+        q.dict = dict;
+        [self.navigationController pushViewController:q animated:YES];
+    }
+}
+-(void)codeSign:(NSDictionary *)dict{
+    if (dict) {
+        NSString * date = [dict objectForKey:@"date"];
+        NSArray * loc_array = [dict objectForKey:@"loc_array"];
+        NSString * checkcode = [[dict objectForKey:@"checkcode"] lowercaseString];
+        NSString * dateTime = [UIUtils getTheTimeStamp:date];
+        NSString * checkcodeLocal = [NSString stringWithFormat:@"%@dayaokeji",date];
+        NSString * md5 = [self md5:checkcodeLocal];
+        if ([md5 isEqualToString:checkcode]) {
+            if ([UIUtils dateTimeDifferenceWithStartTime:dateTime]) {
+                if ([UIUtils returnMckIsHave:_meetingModel.mck withAccept:loc_array]) {
+                    [self sendSignInfo];
+                }else{
+                    [UIUtils showInfoMessage:@"扫描二维码有误，请重新扫描或者连接指定WiFi签到"];
+                }
+            }else{
+                [UIUtils showInfoMessage:@"扫描二维码失效，请重新扫描或者连接指定WiFi签到"];
+            }
+        }else{
+            [UIUtils showInfoMessage:@"扫描二维码失效，请重新扫描或者连接指定WiFi签到"];
+        }
+    }else{
+        [UIUtils showInfoMessage:@"扫描二维码失效，请重新扫描或者连接指定WiFi签到"];
+    }
+    
+}
+-(NSString *) md5:(NSString *)str
+{
+    const char *cStr = [str UTF8String];
+    unsigned char digest[CC_MD5_DIGEST_LENGTH];
+    CC_MD5( cStr, strlen(cStr), digest );
+    
+    NSMutableString *output = [NSMutableString stringWithCapacity:CC_MD5_DIGEST_LENGTH * 2];
+    
+    for(int i = 0; i < CC_MD5_DIGEST_LENGTH; i++)
+        [output appendFormat:@"%02x", digest[i]];
+    
+    return output;
 }
 /*
  #pragma mark - Navigation

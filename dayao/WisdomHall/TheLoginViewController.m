@@ -76,16 +76,19 @@
 
                 NSMutableDictionary * dict = [[NSMutableDictionary alloc] init];
                 dict = [data objectForKey:@"body"];
-                
-                [[Appsetting sharedInstance] sevaUserInfoWithDict:dict withStr:str];
-                
-                ChatHelper * c =[ChatHelper shareHelper];
-
-                DYTabBarViewController *rootVC = [[DYTabBarViewController alloc] init];
-                
-                [UIApplication sharedApplication].keyWindow.rootViewController = rootVC;
-                
-                
+                NSString * type = [NSString stringWithFormat:@"%@",[dict objectForKey:@"type"]];
+                if ([type isEqualToString:@"2"]) {
+                    [UIUtils showInfoMessage:@"您的身份是学生，本客户端只支持老师，请登录“律动课堂”"];
+                }else{
+                    [[Appsetting sharedInstance] sevaUserInfoWithDict:dict withStr:str];
+                    
+                    ChatHelper * c =[ChatHelper shareHelper];
+                    
+                    DYTabBarViewController *rootVC = [[DYTabBarViewController alloc] init];
+                    
+                    [UIApplication sharedApplication].keyWindow.rootViewController = rootVC;
+                }
+                [self hideHud];
             }else{
                 [self hideHud];
 

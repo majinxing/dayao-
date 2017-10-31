@@ -30,10 +30,10 @@
     
     _password.secureTextEntry = YES;
     
-//    [_workNumber setValue:[UIColor whiteColor] forKeyPath:@"_placeholderLabel.textColor"];
-//
-//    [_password setValue:[UIColor whiteColor] forKeyPath:@"_placeholderLabel.textColor"];
-
+    //    [_workNumber setValue:[UIColor whiteColor] forKeyPath:@"_placeholderLabel.textColor"];
+    //
+    //    [_password setValue:[UIColor whiteColor] forKeyPath:@"_placeholderLabel.textColor"];
+    
     self.automaticallyAdjustsScrollViewInsets = NO;
     
     UserModel * user = [[Appsetting sharedInstance] getUsetInfo];
@@ -55,10 +55,9 @@
 }
 - (IBAction)login:(id)sender {
     [self showHudInView:self.view hint:NSLocalizedString(@"正在登陆请稍后……", @"Load data...")];
-
+    
     NSDictionary * dict = [[NSDictionary alloc] initWithObjectsAndKeys:@"500",@"universityId",_workNumber.text,@"loginStr",_password.text,@"password", nil];
     [[NetworkRequest sharedInstance] POST:Login dict:dict succeed:^(id data) {
-        NSLog(@"%@",data);
         NSString * str = [[data objectForKey:@"header"] objectForKey:@"code"];
         if ([str isEqualToString:@"0000"]) {
             NSString * ss = [[data objectForKey:@"body"] objectForKey:@"bind"];
@@ -67,24 +66,31 @@
             }else{
                 NSMutableDictionary * dict = [[NSMutableDictionary alloc] init];
                 dict = [data objectForKey:@"body"];
-                
-                [[Appsetting sharedInstance] sevaUserInfoWithDict:dict withStr:_password.text];
-                
-                ChatHelper * c =[ChatHelper shareHelper];
-                
-                DYTabBarViewController *rootVC = [[DYTabBarViewController alloc] init];
-                
-                [UIApplication sharedApplication].keyWindow.rootViewController = rootVC;
+                NSString * type = [NSString stringWithFormat:@"%@",[dict objectForKey:@"type"]];
+                if ([type isEqualToString:@"2"]) {
+                    [UIUtils showInfoMessage:@"您登陆的是学生身份,本客户端只服务与老师，请登录“律动课堂”"];
+                }else{
+                    [[Appsetting sharedInstance] sevaUserInfoWithDict:dict withStr:_password.text];
+                    
+                    ChatHelper * c =[ChatHelper shareHelper];
+                    
+                    DYTabBarViewController *rootVC = [[DYTabBarViewController alloc] init];
+                    
+                    [UIApplication sharedApplication].keyWindow.rootViewController = rootVC;
+                }
+                [self hideHud];
             }
         }else if ([str isEqualToString:@"1014"]){
             [UIUtils showInfoMessage:@"用户名或密码错误"];
+        }else if ([str isEqualToString:@"9999"]){
+            [UIUtils showInfoMessage:@"网络错误或者其他不可知错误"];
         }else{
             [UIUtils showInfoMessage:@"登录失败"];
         }
         [self hideHud];
     } failure:^(NSError *error) {
         [UIUtils showInfoMessage:@"登陆失败，请检查网络"];
-        [self hideHud]; 
+        [self hideHud];
     }];
 }
 - (IBAction)phoneLogin:(id)sender {
@@ -107,7 +113,7 @@
         _bindPhone = nil;
     }else if (btn.tag == 2){
         _phone = [NSString stringWithFormat:@"%@",_bindPhone.courseNumber.text];
-
+        
         [JSMSSDK getVerificationCodeWithPhoneNumber:_bindPhone.courseNumber.text andTemplateID:@"144851" completionHandler:^(id resultObject, NSError *error) {
             if (!error) {
                 NSLog(@"Get verification code success!");
@@ -115,7 +121,7 @@
             }else{
                 [UIUtils showInfoMessage:@"发送失败"];
             }
-            }];
+        }];
     }
 }
 -(void)bindDelegate:(UIButton *)btn{
@@ -137,7 +143,7 @@
         }];
         
     }
-
+    
 }
 -(void)bindPhoneA{
     NSDictionary * dict = [[NSDictionary alloc] initWithObjectsAndKeys:[NSString stringWithFormat:@"%@",_phone],@"phone",_workNumber.text,@"workNo", nil];
@@ -146,31 +152,36 @@
         if ([str isEqualToString:@"0000"]) {
             NSMutableDictionary * dict = [[NSMutableDictionary alloc] init];
             dict = [data objectForKey:@"body"];
-            
-            [[Appsetting sharedInstance] sevaUserInfoWithDict:dict withStr:_password.text];
-            
-            ChatHelper * c =[ChatHelper shareHelper];
-            
-            DYTabBarViewController *rootVC = [[DYTabBarViewController alloc] init];
-            
-            [UIApplication sharedApplication].keyWindow.rootViewController = rootVC;
+            NSString * type = [NSString stringWithFormat:@"%@",[dict objectForKey:@"type"]];
+            if ([type isEqualToString:@"2"]) {
+                [UIUtils showInfoMessage:@"您登陆的是学生身份,本客户端只服务与老师，请登录“律动课堂”"];
+            }else{
+                [[Appsetting sharedInstance] sevaUserInfoWithDict:dict withStr:_password.text];
+                
+                ChatHelper * c =[ChatHelper shareHelper];
+                
+                DYTabBarViewController *rootVC = [[DYTabBarViewController alloc] init];
+                
+                [UIApplication sharedApplication].keyWindow.rootViewController = rootVC;
+            }
         }else if([str isEqualToString:@"1009"]){
             [UIUtils showInfoMessage:@"绑定失败：手机号已注册"];
         }
+        [self hideHud];
     } failure:^(NSError *error) {
         [UIUtils showInfoMessage:@"绑定失败请检查网络"];
     }];
-
-
+    
+    
 }
 /*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
+ #pragma mark - Navigation
+ 
+ // In a storyboard-based application, you will often want to do a little preparation before navigation
+ - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+ // Get the new view controller using [segue destinationViewController].
+ // Pass the selected object to the new view controller.
+ }
+ */
 
 @end

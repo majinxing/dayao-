@@ -23,6 +23,7 @@
 @property (strong, nonatomic) IBOutlet UILabel *meetCode;
 @property (weak, nonatomic) IBOutlet UIButton *singNumber;
 @property (weak, nonatomic) IBOutlet UIButton *signBtn;
+@property (weak, nonatomic) IBOutlet UIButton *code;
 
 
 @end
@@ -47,8 +48,21 @@
     _meetCode.text = [NSString stringWithFormat:@"邀请码：%@",meetModel.meetingId];
     _meetPlace.text = [NSString stringWithFormat:@"地址：%@",meetModel.meetingPlace];
 }
+-(void)addFirstCOntentViewWithClassModel:(ClassModel *)classModel{
+    _meetName.text = [NSString stringWithFormat:@"课程名：%@",classModel.name];
+    NSMutableString *strUrl = [NSMutableString stringWithFormat:@"%@",classModel.time];
+    [strUrl deleteCharactersInRange:NSMakeRange(strUrl.length-3, 3)];
+    _meetTime.text = [NSString stringWithFormat:@"时间：%@",strUrl];
+    _meetPlace.text = [NSString stringWithFormat:@"教室：%@",classModel.typeRoom];
+    _meetHost.text = [NSString stringWithFormat:@"主持人：%@",classModel.teacherName];
+    _meetCode.text = [NSString stringWithFormat:@"邀请码：%@",classModel.sclassId];
+}
 -(void)addSecondContentView:(MeetingModel *)meetModel{
     [_singNumber setTitle:[NSString stringWithFormat:@"已签/未签：%ld/%ld",(long)meetModel.n,(long)meetModel.m] forState:UIControlStateNormal];
+}
+-(void)addSecondContentViewWithClassModel:(ClassModel *)classModel{
+    [_singNumber setTitle:[NSString stringWithFormat:@"已签/未签：%ld/%ld",(long)classModel.n,(long)classModel.m] forState:UIControlStateNormal];
+
 }
 -(void)addFourthContentView:(MeetingModel *)meetModel{
     NSArray * array = @[
@@ -88,15 +102,78 @@
         [self.contentView addSubview:button];
     }
 }
+-(void)addFourthContentViewWithClassModel:(ClassModel *)classModel{
+    NSArray * array = @[
+                              InteractionType_Data,
+                              InteractionType_Vote,
+                              InteractionType_Responder,
+                              InteractionType_Test,
+                              InteractionType_Discuss
+                              ];
+    
+    //水平间距
+    int marginWidth = (APPLICATION_WIDTH - buttonWH * columns) / (columns + 1);
+    //起始XY坐标
+    int oneX = marginWidth;
+    int oneY = marginHeight;
+    
+    for (int i = 0; i < array.count; i++)
+    {
+        //行
+        int row = i / columns;
+        //列
+        int column = i % columns;
+        
+        int x = oneX + (buttonWH + marginWidth) * column;
+        int y = oneY + (buttonWH + marginWidth) * row;
+        
+        ShareButton * button = [[ShareButton alloc] initWithFrame:CGRectMake(x, y, buttonWH, buttonWH) andType:array[i]];
+        [button addTarget:self action:@selector(shareButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
+        [self.contentView addSubview:button];
+    }
+}
 -(void)addThirdContentView:(MeetingModel *)meetModel{
     if ([[NSString stringWithFormat:@"%@",meetModel.signStatus] isEqualToString:@"1"]) {
         [_signBtn setTitle:@"签到状态：未签到" forState:UIControlStateNormal];
+        [_code setTitle:@"二维码签到" forState:UIControlStateNormal];
+        [_signBtn setEnabled:YES];
+
     }else if([[NSString stringWithFormat:@"%@",meetModel.signStatus] isEqualToString:@"2"]){
         [_signBtn setTitle:@"签到状态：已签到" forState:UIControlStateNormal];
+        [_code setTitle:@"生成二维码" forState:UIControlStateNormal];
         [_signBtn setEnabled:NO];
     }else if ([[NSString stringWithFormat:@"%@",meetModel.signStatus] isEqualToString:@"3"]){
         [_signBtn setTitle:@"签到状态：正在签到，请不要退出界面" forState:UIControlStateNormal];
+        [_code setTitle:@"二维码签到" forState:UIControlStateNormal];
         [_signBtn setEnabled:NO];
+    }else if ([[NSString stringWithFormat:@"%@",meetModel.signStatus] isEqualToString:@"4"]){
+        [_signBtn setTitle:@"签到状态：连接数据流量后再次点击" forState:UIControlStateNormal];
+        [_code setTitle:@"二维码签到" forState:UIControlStateNormal];
+        [_signBtn setEnabled:YES];
+
+    }
+}
+-(void)addThirdContentViewWithClassModel:(ClassModel *)meetModel{
+    if ([[NSString stringWithFormat:@"%@",meetModel.signStatus] isEqualToString:@"1"]) {
+        [_signBtn setTitle:@"签到状态：未签到" forState:UIControlStateNormal];
+        [_code setTitle:@"二维码签到" forState:UIControlStateNormal];
+        [_signBtn setEnabled:YES];
+        
+    }else if([[NSString stringWithFormat:@"%@",meetModel.signStatus] isEqualToString:@"2"]){
+        [_signBtn setTitle:@"签到状态：已签到" forState:UIControlStateNormal];
+        [_code setTitle:@"生成二维码" forState:UIControlStateNormal];
+        [_signBtn setEnabled:NO];
+    }else if ([[NSString stringWithFormat:@"%@",meetModel.signStatus] isEqualToString:@"3"]){
+        [_signBtn setTitle:@"签到状态：正在签到，请不要退出界面" forState:UIControlStateNormal];
+        [_code setTitle:@"二维码签到" forState:UIControlStateNormal];
+
+        [_signBtn setEnabled:NO];
+    }else if ([[NSString stringWithFormat:@"%@",meetModel.signStatus] isEqualToString:@"4"]){
+        [_signBtn setTitle:@"签到状态：连接数据流量后再次点击" forState:UIControlStateNormal];
+        [_code setTitle:@"二维码签到" forState:UIControlStateNormal];
+
+        [_signBtn setEnabled:YES];
+        
     }
 }
 -(void)shareButtonClicked:(UIButton *)btn{
@@ -117,6 +194,11 @@
 - (IBAction)signBtnPressed:(UIButton *)sender {
     if (self.delegate&&[self.delegate respondsToSelector:@selector(signBtnPressedDelegate:)]) {
         [self.delegate signBtnPressedDelegate:sender];
+    }
+}
+- (IBAction)codePressed:(UIButton *)sender {
+    if (self.delegate&&[self.delegate respondsToSelector:@selector(codePressedDelegate:)]) {
+        [self.delegate codePressedDelegate:sender];
     }
 }
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {

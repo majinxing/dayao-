@@ -48,6 +48,12 @@
 #define LB                      RGBA_COLOR(0, 73, 111, 1)
 #define FENSE                   RGBA_COLOR(252, 0, 163, 1)
 #define ZI                      RGBA_COLOR(181, 33, 141, 1)
+#define HUANG                   RGBA_COLOR(252, 199, 45, 1)
+#define LUSE                    RGBA_COLOR(0, 111, 45, 1)
+#define FENFEN                  RGBA_COLOR(255, 100, 101, 1)
+#define HUANG1                  RGBA_COLOR(255, 153, 42, 1)
+#define FEN1                    RGBA_COLOR(255, 56, 119, 1)
+
 
 #ifdef __OBJC__
     @import UIKit;
@@ -64,6 +70,7 @@
 
 
 #define Collection_height 120
+#define CodeEffectiveTime 5
 
 #define ShareType_Weixin_Friend     @"微信好友"
 #define ShareType_Weixin_Circle     @"朋友圈"

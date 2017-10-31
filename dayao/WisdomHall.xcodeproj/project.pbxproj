@@ -161,6 +161,19 @@
 		8B32FEAC1F4C045900D9BF23 /* libresolv.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 8B32FEAB1F4C045900D9BF23 /* libresolv.tbd */; };
 		8B3CAEC81F75091000BDE092 /* OfficeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B3CAEC61F75091000BDE092 /* OfficeViewController.m */; };
 		8B3CAEC91F75091000BDE092 /* OfficeViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8B3CAEC71F75091000BDE092 /* OfficeViewController.xib */; };
+		8B429C1C1FA8488700084A99 /* QRCodeGenerateVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B429C041FA8488600084A99 /* QRCodeGenerateVC.m */; };
+		8B429C1D1FA8488700084A99 /* ScanSuccessJumpVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B429C061FA8488600084A99 /* ScanSuccessJumpVC.m */; };
+		8B429C1E1FA8488700084A99 /* SGQRCodeScanningVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B429C081FA8488600084A99 /* SGQRCodeScanningVC.m */; };
+		8B429C1F1FA8488700084A99 /* UIImage+ImageSize.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B429C0C1FA8488600084A99 /* UIImage+ImageSize.m */; };
+		8B429C201FA8488700084A99 /* SGQRCode.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 8B429C0D1FA8488600084A99 /* SGQRCode.bundle */; };
+		8B429C211FA8488700084A99 /* SGQRCodeAlbumManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B429C101FA8488600084A99 /* SGQRCodeAlbumManager.m */; };
+		8B429C221FA8488700084A99 /* SGQRCodeGenerateManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B429C121FA8488600084A99 /* SGQRCodeGenerateManager.m */; };
+		8B429C231FA8488700084A99 /* SGQRCodeHelperTool.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B429C141FA8488600084A99 /* SGQRCodeHelperTool.m */; };
+		8B429C241FA8488700084A99 /* SGQRCodeScanManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B429C161FA8488600084A99 /* SGQRCodeScanManager.m */; };
+		8B429C251FA8488700084A99 /* SGQRCodeScanningView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B429C181FA8488600084A99 /* SGQRCodeScanningView.m */; };
+		8B429C261FA8488700084A99 /* SGWebView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B429C1B1FA8488600084A99 /* SGWebView.m */; };
+		8B429C2A1FA84B0600084A99 /* QrCodeViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8B429C271FA84B0500084A99 /* QrCodeViewController.xib */; };
+		8B429C2B1FA84B0600084A99 /* QrCodeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B429C291FA84B0500084A99 /* QrCodeViewController.m */; };
 		8B45D3871F7CF6A700A00677 /* libsms-lib.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8B45D3861F7CF6A700A00677 /* libsms-lib.a */; };
 		8B47AB831F96DC6A00DB1B9A /* ClassTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B47AB811F96DC6A00DB1B9A /* ClassTableViewCell.m */; };
 		8B47AB841F96DC6A00DB1B9A /* ClassTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8B47AB821F96DC6A00DB1B9A /* ClassTableViewCell.xib */; };
@@ -794,6 +807,31 @@
 		8B3CAEC51F75091000BDE092 /* OfficeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OfficeViewController.h; sourceTree = "<group>"; };
 		8B3CAEC61F75091000BDE092 /* OfficeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OfficeViewController.m; sourceTree = "<group>"; };
 		8B3CAEC71F75091000BDE092 /* OfficeViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = OfficeViewController.xib; sourceTree = "<group>"; };
+		8B429C031FA8488600084A99 /* QRCodeGenerateVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QRCodeGenerateVC.h; sourceTree = "<group>"; };
+		8B429C041FA8488600084A99 /* QRCodeGenerateVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QRCodeGenerateVC.m; sourceTree = "<group>"; };
+		8B429C051FA8488600084A99 /* ScanSuccessJumpVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ScanSuccessJumpVC.h; sourceTree = "<group>"; };
+		8B429C061FA8488600084A99 /* ScanSuccessJumpVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ScanSuccessJumpVC.m; sourceTree = "<group>"; };
+		8B429C071FA8488600084A99 /* SGQRCodeScanningVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SGQRCodeScanningVC.h; sourceTree = "<group>"; };
+		8B429C081FA8488600084A99 /* SGQRCodeScanningVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SGQRCodeScanningVC.m; sourceTree = "<group>"; };
+		8B429C0B1FA8488600084A99 /* UIImage+ImageSize.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+ImageSize.h"; sourceTree = "<group>"; };
+		8B429C0C1FA8488600084A99 /* UIImage+ImageSize.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+ImageSize.m"; sourceTree = "<group>"; };
+		8B429C0D1FA8488600084A99 /* SGQRCode.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = SGQRCode.bundle; sourceTree = "<group>"; };
+		8B429C0E1FA8488600084A99 /* SGQRCode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SGQRCode.h; sourceTree = "<group>"; };
+		8B429C0F1FA8488600084A99 /* SGQRCodeAlbumManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SGQRCodeAlbumManager.h; sourceTree = "<group>"; };
+		8B429C101FA8488600084A99 /* SGQRCodeAlbumManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SGQRCodeAlbumManager.m; sourceTree = "<group>"; };
+		8B429C111FA8488600084A99 /* SGQRCodeGenerateManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SGQRCodeGenerateManager.h; sourceTree = "<group>"; };
+		8B429C121FA8488600084A99 /* SGQRCodeGenerateManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SGQRCodeGenerateManager.m; sourceTree = "<group>"; };
+		8B429C131FA8488600084A99 /* SGQRCodeHelperTool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SGQRCodeHelperTool.h; sourceTree = "<group>"; };
+		8B429C141FA8488600084A99 /* SGQRCodeHelperTool.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SGQRCodeHelperTool.m; sourceTree = "<group>"; };
+		8B429C151FA8488600084A99 /* SGQRCodeScanManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SGQRCodeScanManager.h; sourceTree = "<group>"; };
+		8B429C161FA8488600084A99 /* SGQRCodeScanManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SGQRCodeScanManager.m; sourceTree = "<group>"; };
+		8B429C171FA8488600084A99 /* SGQRCodeScanningView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SGQRCodeScanningView.h; sourceTree = "<group>"; };
+		8B429C181FA8488600084A99 /* SGQRCodeScanningView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SGQRCodeScanningView.m; sourceTree = "<group>"; };
+		8B429C1A1FA8488600084A99 /* SGWebView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SGWebView.h; sourceTree = "<group>"; };
+		8B429C1B1FA8488600084A99 /* SGWebView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SGWebView.m; sourceTree = "<group>"; };
+		8B429C271FA84B0500084A99 /* QrCodeViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = QrCodeViewController.xib; sourceTree = "<group>"; };
+		8B429C281FA84B0500084A99 /* QrCodeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QrCodeViewController.h; sourceTree = "<group>"; };
+		8B429C291FA84B0500084A99 /* QrCodeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QrCodeViewController.m; sourceTree = "<group>"; };
 		8B45D3841F7CF6A700A00677 /* JSMSConstant.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSMSConstant.h; sourceTree = "<group>"; };
 		8B45D3851F7CF6A700A00677 /* JSMSSDK.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSMSSDK.h; sourceTree = "<group>"; };
 		8B45D3861F7CF6A700A00677 /* libsms-lib.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = "libsms-lib.a"; sourceTree = "<group>"; };
@@ -1484,6 +1522,57 @@
 			name = Office;
 			sourceTree = "<group>";
 		};
+		8B429C021FA8488600084A99 /* SGQRController */ = {
+			isa = PBXGroup;
+			children = (
+				8B429C031FA8488600084A99 /* QRCodeGenerateVC.h */,
+				8B429C041FA8488600084A99 /* QRCodeGenerateVC.m */,
+				8B429C051FA8488600084A99 /* ScanSuccessJumpVC.h */,
+				8B429C061FA8488600084A99 /* ScanSuccessJumpVC.m */,
+				8B429C071FA8488600084A99 /* SGQRCodeScanningVC.h */,
+				8B429C081FA8488600084A99 /* SGQRCodeScanningVC.m */,
+			);
+			path = SGQRController;
+			sourceTree = "<group>";
+		};
+		8B429C091FA8488600084A99 /* SGQRCode */ = {
+			isa = PBXGroup;
+			children = (
+				8B429C0A1FA8488600084A99 /* Category */,
+				8B429C0D1FA8488600084A99 /* SGQRCode.bundle */,
+				8B429C0E1FA8488600084A99 /* SGQRCode.h */,
+				8B429C0F1FA8488600084A99 /* SGQRCodeAlbumManager.h */,
+				8B429C101FA8488600084A99 /* SGQRCodeAlbumManager.m */,
+				8B429C111FA8488600084A99 /* SGQRCodeGenerateManager.h */,
+				8B429C121FA8488600084A99 /* SGQRCodeGenerateManager.m */,
+				8B429C131FA8488600084A99 /* SGQRCodeHelperTool.h */,
+				8B429C141FA8488600084A99 /* SGQRCodeHelperTool.m */,
+				8B429C151FA8488600084A99 /* SGQRCodeScanManager.h */,
+				8B429C161FA8488600084A99 /* SGQRCodeScanManager.m */,
+				8B429C171FA8488600084A99 /* SGQRCodeScanningView.h */,
+				8B429C181FA8488600084A99 /* SGQRCodeScanningView.m */,
+			);
+			path = SGQRCode;
+			sourceTree = "<group>";
+		};
+		8B429C0A1FA8488600084A99 /* Category */ = {
+			isa = PBXGroup;
+			children = (
+				8B429C0B1FA8488600084A99 /* UIImage+ImageSize.h */,
+				8B429C0C1FA8488600084A99 /* UIImage+ImageSize.m */,
+			);
+			path = Category;
+			sourceTree = "<group>";
+		};
+		8B429C191FA8488600084A99 /* SGQRView */ = {
+			isa = PBXGroup;
+			children = (
+				8B429C1A1FA8488600084A99 /* SGWebView.h */,
+				8B429C1B1FA8488600084A99 /* SGWebView.m */,
+			);
+			path = SGQRView;
+			sourceTree = "<group>";
+		};
 		8B45D3821F7CF6A700A00677 /* JsmsSDK */ = {
 			isa = PBXGroup;
 			children = (
@@ -1692,6 +1781,9 @@
 				8B4D91111EBDAB1000A4BE34 /* SignListViewController.h */,
 				8B4D91121EBDAB1000A4BE34 /* SignListViewController.m */,
 				8B4D91131EBDAB1000A4BE34 /* SignListViewController.xib */,
+				8B429C281FA84B0500084A99 /* QrCodeViewController.h */,
+				8B429C291FA84B0500084A99 /* QrCodeViewController.m */,
+				8B429C271FA84B0500084A99 /* QrCodeViewController.xib */,
 				8B8C3D0F1ECC336500E9FB56 /* ConversationVC.h */,
 				8B8C3D101ECC336500E9FB56 /* ConversationVC.m */,
 				8BCE7CAE1F03888D00FE261B /* EMCallOptions+NSCoding.h */,
@@ -1790,6 +1882,9 @@
 		8BA224961EADFF2700627A1B /* FrameWork */ = {
 			isa = PBXGroup;
 			children = (
+				8B429C091FA8488600084A99 /* SGQRCode */,
+				8B429C021FA8488600084A99 /* SGQRController */,
+				8B429C191FA8488600084A99 /* SGQRView */,
 				8B45D3821F7CF6A700A00677 /* JsmsSDK */,
 				8B63EFF31F58F3F500888425 /* Bugly.framework */,
 				8B081DEC1F06524000493B81 /* PinYin */,
@@ -2432,6 +2527,7 @@
 				8BB56D6F1EB05C760023DAFF /* DefineThePasswordViewController.xib in Resources */,
 				8BF82D871EE1573200D33473 /* CreateVoteViewController.xib in Resources */,
 				8B0464401F5FE44F005EEE36 /* QuestionListViewController.xib in Resources */,
+				8B429C201FA8488700084A99 /* SGQRCode.bundle in Resources */,
 				8B2E16E91EBAD9AF008B7C57 /* AllTheMeetingViewController.xib in Resources */,
 				8B6E61CC1EE292B10040FDC1 /* CreateVoteTableViewCell.xib in Resources */,
 				8BE877711EBC1CA800866A34 /* TextViewController.xib in Resources */,
@@ -2448,6 +2544,7 @@
 				8B0207161F8DA4DB00CE3B8C /* NoticeSwiftViewController.xib in Resources */,
 				8B17374F1EC5AC3600BE3C8F /* CreateTextTableViewCell.xib in Resources */,
 				8BE8777C1EBC2D8E00866A34 /* NotStartTestingViewController.xib in Resources */,
+				8B429C2A1FA84B0600084A99 /* QrCodeViewController.xib in Resources */,
 				8BA224C21EAEF5CB00627A1B /* TheLoginViewController.xib in Resources */,
 				8BE877911EBD69C000866A34 /* CreateTestViewController.xib in Resources */,
 				8B2F14561F5E9BD600438374 /* StudentScoreTableViewCell.xib in Resources */,
@@ -2551,6 +2648,7 @@
 				8B2E16DA1EBAB968008B7C57 /* ClassManagementViewController.m in Sources */,
 				8BF864C31ECAD97300B7EED4 /* SDWebImageManager.m in Sources */,
 				8B045B9B1F3458E40021699B /* ZFIndicatorView.m in Sources */,
+				8B429C1C1FA8488700084A99 /* QRCodeGenerateVC.m in Sources */,
 				8BB56D871EB2E2820023DAFF /* RedefineThePasswordViewController.m in Sources */,
 				8B081DFF1F06524000493B81 /* PinyinHelper.m in Sources */,
 				8B045BA01F3458E40021699B /* ZFSeatsView.m in Sources */,
@@ -2558,6 +2656,8 @@
 				8BCE7CD11F04F07600FE261B /* AFURLSessionManager.m in Sources */,
 				8BFB94611EE6A381004BB963 /* JoinVoteViewController.m in Sources */,
 				8B081DEB1F0645E600493B81 /* SchoolModel.m in Sources */,
+				8B429C231FA8488700084A99 /* SGQRCodeHelperTool.m in Sources */,
+				8B429C1D1FA8488700084A99 /* ScanSuccessJumpVC.m in Sources */,
 				8BF864C41ECAD97300B7EED4 /* SDWebImagePrefetcher.m in Sources */,
 				8B081DFD1F06524000493B81 /* PinyinFormatter.m in Sources */,
 				8BA224CF1EAF258B00627A1B /* ForgotPasswordViewController.m in Sources */,
@@ -2578,6 +2678,7 @@
 				8B045B821F3458CC0021699B /* ZFSeatModel.m in Sources */,
 				8B045B761F3458820021699B /* NSObject+MJCoding.m in Sources */,
 				8B045B9D1F3458E40021699B /* ZFSeatButton.m in Sources */,
+				8B429C261FA8488700084A99 /* SGWebView.m in Sources */,
 				8BE877851EBC2E0C00866A34 /* EndTheTestViewController.m in Sources */,
 				8B2E16F71EBADA5D008B7C57 /* TheMeetingEndedViewController.m in Sources */,
 				8BA2249D1EADFFA400627A1B /* SignInViewController.m in Sources */,
@@ -2591,6 +2692,7 @@
 				8BA224641EADF68500627A1B /* ViewController.m in Sources */,
 				8B0F41301EF522CF001AF4DF /* MJXChatViewController.m in Sources */,
 				8BF864C01ECAD97300B7EED4 /* SDWebImageDecoder.m in Sources */,
+				8B429C211FA8488700084A99 /* SGQRCodeAlbumManager.m in Sources */,
 				8BCE7CB01F03888D00FE261B /* EMCallOptions+NSCoding.m in Sources */,
 				8B045B721F3458820021699B /* MJProperty.m in Sources */,
 				8BA224BC1EAEE36800627A1B /* SignPromptView.m in Sources */,
@@ -2602,11 +2704,13 @@
 				8B2F14511F5E93BF00438374 /* StudentSorce.m in Sources */,
 				8B0344C31F920E3A0004228D /* BindPhone.m in Sources */,
 				8B045B981F3458E40021699B /* ZFAppLogoView.m in Sources */,
+				8B429C241FA8488700084A99 /* SGQRCodeScanManager.m in Sources */,
 				8B081E0E1F0B766D00493B81 /* SelectMeetingOrClassViewController.m in Sources */,
 				8B05CB761EC070060063EC20 /* SystemSetingTableViewCell.m in Sources */,
 				8BEE94481F2C780500488651 /* CompanyProfileViewController.m in Sources */,
 				8B2F14551F5E9BD600438374 /* StudentScoreTableViewCell.m in Sources */,
 				8BCE7CBD1F04E0EA00FE261B /* NetworkRequest.m in Sources */,
+				8B429C1F1FA8488700084A99 /* UIImage+ImageSize.m in Sources */,
 				8B045BA31F34595D0021699B /* UIView+Extension.m in Sources */,
 				8B0AF7591F4FAF53003858A4 /* UploadFileViewController.m in Sources */,
 				8B9171CB1ED41BC7009686FD /* QuestionsTableViewCell.m in Sources */,
@@ -2617,6 +2721,7 @@
 				8BF864881ECAD21200B7EED4 /* MJRefreshBaseView.m in Sources */,
 				8BFB94661EE79745004BB963 /* JoinVoteTableViewCell.m in Sources */,
 				8B77250F1F31586300D1B521 /* AlterView.m in Sources */,
+				8B429C251FA8488700084A99 /* SGQRCodeScanningView.m in Sources */,
 				8B045BA61F3462640021699B /* SeatIngModel.m in Sources */,
 				8BF864C21ECAD97300B7EED4 /* SDWebImageDownloaderOperation.m in Sources */,
 				8BCE7CCD1F04F07600FE261B /* AFNetworkReachabilityManager.m in Sources */,
@@ -2648,7 +2753,9 @@
 				8BE24D641F8B528600621055 /* GroupModel.m in Sources */,
 				8BE24D601F8B488E00621055 /* GroupListViewController.m in Sources */,
 				8BF82D811EE001D600D33473 /* VoteTableViewCell.m in Sources */,
+				8B429C2B1FA84B0600084A99 /* QrCodeViewController.m in Sources */,
 				8BF8646E1ECACAE800B7EED4 /* FMDatabase.m in Sources */,
+				8B429C1E1FA8488700084A99 /* SGQRCodeScanningVC.m in Sources */,
 				8BA224A21EADFFE500627A1B /* InteractiveViewController.m in Sources */,
 				8B081E1A1F0E0FA400493B81 /* SignPeople.m in Sources */,
 				8BF864701ECACAE800B7EED4 /* FMDatabasePool.m in Sources */,
@@ -2728,6 +2835,7 @@
 				8B1737181EC2F84900BE3C8F /* NoticeTableViewCell.m in Sources */,
 				8B081DE11F06238E00493B81 /* DefinitionPersonalTableViewCell.m in Sources */,
 				8BE24D681F8B6E2200621055 /* GroupPeopleViewController.m in Sources */,
+				8B429C221FA8488700084A99 /* SGQRCodeGenerateManager.m in Sources */,
 				8BB56D8C1EB31C110023DAFF /* SystemSettingsViewController.m in Sources */,
 				8BFC79741F457E760052C088 /* JoinCours.m in Sources */,
 				8B045B9A1F3458E40021699B /* ZFHallLogoView.m in Sources */,
@@ -2950,7 +3058,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Distribution: yao zhiqiang (AM9UTP2CL3)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = AM9UTP2CL3;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -3154,7 +3262,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Distribution: yao zhiqiang (AM9UTP2CL3)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = AM9UTP2CL3;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -3205,7 +3313,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Distribution: yao zhiqiang (AM9UTP2CL3)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = AM9UTP2CL3;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",

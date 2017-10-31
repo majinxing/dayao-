@@ -142,7 +142,7 @@
             
             [alter show];
             
-            [UIUtils sendMeetingInfo:sendDict];
+//            [UIUtils sendMeetingInfo:sendDict]; 发送环信消息，提示会议创建成功
             
             [self.navigationController popViewControllerAnimated:YES];
         }else{

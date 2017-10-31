@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="12121" systemVersion="16E195" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="13196" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12089"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13174"/>
         <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -39,7 +39,7 @@
                         <constraint firstAttribute="width" constant="70" id="gUS-NG-FoM"/>
                     </constraints>
                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                    <color key="textColor" red="0.97232758782959194" green="0.97723805047400558" blue="1" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                    <color key="textColor" red="0.00028480167384259403" green="0.47891408205032349" blue="0.99827343225479126" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     <nil key="highlightedColor"/>
                 </label>
                 <label opaque="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="密       码" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="V09-sb-2qi">
@@ -49,7 +49,7 @@
                         <constraint firstAttribute="height" constant="20.5" id="Oyq-rd-ied"/>
                     </constraints>
                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                    <color key="textColor" red="0.96767658440805626" green="0.98987205831560088" blue="1" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                    <color key="textColor" red="0.00028480167384259403" green="0.47891408205032349" blue="0.99827343225479126" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     <nil key="highlightedColor"/>
                 </label>
                 <textField opaque="NO" clipsSubviews="YES" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="请输入账号" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="CJU-LI-J9A">
@@ -59,7 +59,7 @@
                         <constraint firstAttribute="width" constant="200" id="Ae9-sz-Cmz"/>
                         <constraint firstAttribute="height" constant="20" id="nEJ-Yo-r0E"/>
                     </constraints>
-                    <color key="textColor" red="0.95541075603056569" green="0.96323014760018055" blue="1" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     <fontDescription key="fontDescription" type="system" pointSize="13"/>
                     <textInputTraits key="textInputTraits"/>
                 </textField>
@@ -70,20 +70,20 @@
                         <constraint firstAttribute="height" constant="20" id="85O-eE-86s"/>
                         <constraint firstAttribute="width" constant="200" id="QKQ-PS-7JQ"/>
                     </constraints>
-                    <color key="textColor" red="0.9865880577396926" green="0.99555968650306481" blue="1" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     <fontDescription key="fontDescription" type="system" pointSize="13"/>
                     <textInputTraits key="textInputTraits"/>
                 </textField>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="0B6-cV-dd5">
                     <rect key="frame" x="30" y="278" width="315" height="1"/>
-                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <color key="backgroundColor" red="0.63667909263959399" green="0.63667909263959399" blue="0.63667909263959399" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="1" id="gtw-bY-OPo"/>
                     </constraints>
                 </view>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="8zw-Xu-8l8">
                     <rect key="frame" x="30" y="323.5" width="315" height="1"/>
-                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <color key="backgroundColor" red="0.74895554779999995" green="0.74906206129999997" blue="0.74892205000000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="1" id="heZ-uV-INI"/>
                     </constraints>
@@ -111,7 +111,7 @@
                         <constraint firstAttribute="height" constant="40" id="WA4-S3-uYx"/>
                     </constraints>
                     <state key="normal" title="注册">
-                        <color key="titleColor" red="0.96271056339014205" green="0.94671390437398528" blue="1" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                        <color key="titleColor" red="0.00028480167384259403" green="0.47891408205032349" blue="0.99827343225479126" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     </state>
                     <connections>
                         <action selector="registeredButtonPressed:" destination="-1" eventType="touchUpInside" id="AiJ-fK-M9W"/>
@@ -123,7 +123,7 @@
                         <constraint firstAttribute="height" constant="40" id="6K2-ua-IB3"/>
                     </constraints>
                     <state key="normal" title="忘记密码">
-                        <color key="titleColor" red="0.99090111614614418" green="1" blue="0.98625312667329856" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                        <color key="titleColor" red="0.00028480167384259403" green="0.47891408205032349" blue="0.99827343225479126" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     </state>
                     <connections>
                         <action selector="forgotPasswordPressed:" destination="-1" eventType="touchUpInside" id="kTt-E0-DQr"/>
@@ -136,7 +136,7 @@
                         <constraint firstAttribute="height" constant="40" id="Mhl-0o-J0Z"/>
                     </constraints>
                     <state key="normal" title="&lt;">
-                        <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="titleColor" red="0.22499465939999999" green="0.68172186609999996" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     </state>
                     <connections>
                         <action selector="back:" destination="-1" eventType="touchUpInside" id="1I1-a6-DBo"/>
@@ -181,7 +181,7 @@
         </view>
     </objects>
     <resources>
-        <image name="login_back" width="1440" height="2560"/>
+        <image name="login_back" width="750" height="1334"/>
         <image name="logo" width="1030" height="1024"/>
     </resources>
 </document>

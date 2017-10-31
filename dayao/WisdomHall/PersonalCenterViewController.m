@@ -113,7 +113,7 @@
     return 50;
 }
 -(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
-    return 10;
+    return 0;
 }
 /*
  #pragma mark - Navigation

@@ -96,5 +96,27 @@
 +(NSDictionary *)getWeekTimeWithType:(NSString *)type;
 //课程分组
 +(NSMutableDictionary *)CurriculumGroup:(NSMutableArray *)classAry;
+
++(NSArray *)getWeekAllTimeWithType:(NSString *)type;
+/**
+ 
+ * 开始到结束的时间差
+ 
+ */
++ (BOOL)dateTimeDifferenceWithStartTime:(NSString *)startTime;
+//获取当前时间戳
++ (NSString*)getCurrentTime;
+//json格式字符串转字典：
+
++(NSDictionary *)dictionaryWithJsonString:(NSString *)jsonString;
+//时间戳化时间
++(NSString *)getTheTimeStamp:(NSString *)time;
+/**
+ *  判断二维码数组是否与接口数组有重叠数据
+ **/
++(BOOL)returnMckIsHave:(NSMutableArray *)localAry withAccept:(NSArray *)acceptAry;
+//获取网络时间
++(NSDate *)getInternetDate;
 @end
+
 

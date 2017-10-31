@@ -21,26 +21,26 @@
 #import "SignPeople.h"
 #import "AFHTTPSessionManager.h"
 #import "AllTestViewController.h"
+#import "MeetingTableViewCell.h"
+#import "QRCodeGenerateVC.h"
+#import "SGQRCodeScanningVC.h"
+#import <AVFoundation/AVFoundation.h>
+#import <Foundation/Foundation.h>
+#import <CommonCrypto/CommonDigest.h>
+#import "QrCodeViewController.h"
 
+#define kScreenWidth [UIScreen mainScreen].bounds.size.width
 
-@interface CourseDetailsViewController ()<UIActionSheetDelegate,ShareViewDelegate,UIAlertViewDelegate>
-@property (strong, nonatomic) IBOutlet UIButton *interactive;
-@property (strong, nonatomic) IBOutlet UIButton *signInBtn;
+#define kScreenHeight [UIScreen mainScreen].bounds.size.height
+
+@interface CourseDetailsViewController ()<UIActionSheetDelegate,ShareViewDelegate,UIAlertViewDelegate,UITableViewDelegate,UITableViewDataSource,MeetingTableViewCellDelegate>
+
 @property (nonatomic,strong) InteractiveView * interactiveView;
 @property (nonatomic,strong) ShareView * shareView;
 @property (nonatomic,strong) ShareView * interaction;
 
 @property (strong, nonatomic, readonly) EMCallSession *callSession;
-@property (strong, nonatomic) IBOutlet UILabel *className;
 
-@property (strong, nonatomic) IBOutlet UILabel *classTime;
-@property (strong, nonatomic) IBOutlet UILabel *classPlace;
-
-@property (strong, nonatomic) IBOutlet UILabel *classTeacherName;
-@property (strong, nonatomic) IBOutlet UILabel *classSign;
-
-@property (strong, nonatomic) IBOutlet UIButton *classManage;
-@property (strong, nonatomic) IBOutlet UILabel *classId;
 
 
 @property (strong, nonatomic)UserModel * user;
@@ -52,6 +52,7 @@
 
 @property (nonatomic,copy)NSString * selfSignStatus;
 @property (nonatomic,assign)int temp;//记录mac不被覆盖
+@property (nonatomic,strong)UITableView * tableView;
 @end
 
 @implementation CourseDetailsViewController
@@ -73,11 +74,9 @@
     
     [self setNavigationTitle];
     
-    [self xib];
-    
     [self getData];
     
-    
+    [self addTableView];
     // 1.注册通知
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(voiceCalls:) name:@"VoiceCalls" object:nil];
@@ -99,41 +98,13 @@
     [self.navigationController pushViewController:c animated:YES];
     //    调用:
 }
--(void)xib{
-    _interactive.layer.masksToBounds = YES;
-    _interactive.layer.borderWidth = 1;
-    _interactive.layer.borderColor = [[UIColor whiteColor]CGColor];
-    
-    _signInBtn.layer.masksToBounds = YES;
-    _signInBtn.layer.borderWidth = 1;
-    _signInBtn.layer.borderColor = [[UIColor whiteColor]CGColor];
-    
-    
-    _className.text = [NSString stringWithFormat:@"课程名：%@",_c.name];
-    
-    NSMutableString *strUrl = [NSMutableString stringWithFormat:@"%@",_c.actStarTime];
-    
-    [strUrl deleteCharactersInRange:NSMakeRange(0,5)];
-    
-    _classTime.text = [NSString stringWithFormat:@"时间：%@",strUrl];
-    
-    _classPlace.text = [NSString stringWithFormat:@"地点：%@",_c.typeRoom];
-    if ([UIUtils isBlankString:_c.teacherName]) {
-        _classTeacherName.text = [NSString stringWithFormat:@"老  师："];
-    }else{
-        _classTeacherName.text = [NSString stringWithFormat:@"老  师：%@",_c.teacherName];
-    }
-    
-    _classId.text = [NSString stringWithFormat:@"课程邀请码：%@",_c.sclassId];
-    
-    if ([[NSString stringWithFormat:@"%@",_c.teacherWorkNo] isEqualToString:[NSString stringWithFormat:@"%@",_user.studentId]]) {
-        [_classManage setTitle:@"班级管理" forState:UIControlStateNormal];
-        _classManage.backgroundColor = [UIColor colorWithHexString:@"#29a7e1"];
-        [_classManage setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-        
-    }else{
-        _classManage.enabled = NO;
-    }
+-(void)addTableView{
+    _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 64, APPLICATION_WIDTH, APPLICATION_HEIGHT-64) style:UITableViewStylePlain];
+    _tableView.delegate = self;
+    _tableView.dataSource = self;
+    _tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+    self.automaticallyAdjustsScrollViewInsets = NO;
+    [self.view addSubview:_tableView];
 }
 -(void)getData{
     NSDictionary * dict = [[NSDictionary alloc] initWithObjectsAndKeys:_c.sclassId,@"id",_c.courseDetailId,@"courseDetailId", nil];
@@ -156,18 +127,19 @@
                 }else if ([[NSString stringWithFormat:@"%@",s.signStatus] isEqualToString:@"2"]){
                     _selfSignStatus = @"签到状态：已签到";
                     _c.signStatus = @"2";
-                    [self signBtned];
                 }
             }
             [_signAry addObject:s];
         }
         if ([[NSString stringWithFormat:@"%@",_c.teacherWorkNo] isEqualToString:[NSString stringWithFormat:@"%@",_user.studentId]]) {
-            _classSign.text = [NSString stringWithFormat:@"签到人：%ld/%d",(long)_n,(_m+_n)];
-        }else{
-            _classSign.text = _selfSignStatus;
+            _c.n = (int)_n;
+            _c.m = (int)_m;
         }
+        [self hideHud];
+        [_tableView reloadData];
     } failure:^(NSError *error) {
         NSLog(@"失败%@",error);
+        [self hideHud];
     }];
 }
 /**
@@ -221,105 +193,23 @@
         [alertView show];
     }
 }
--(void)signSendIng{
-    [_signInBtn setTitle:@"发送数据中" forState:UIControlStateNormal];
-    [_signInBtn setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
-    [_signInBtn setEnabled:NO];
-}
--(void)signBtnSign{
-    [_signInBtn setTitle:@"签到" forState:UIControlStateNormal];
-    [_signInBtn setTitleColor:RGBA_COLOR(10, 96, 254, 1) forState:UIControlStateNormal];
-    [_signInBtn setEnabled:YES];
-}
--(void)signBtned{
-    [_signInBtn setTitle:@"已签到" forState:UIControlStateNormal];
-    [_signInBtn setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
-    [_signInBtn setEnabled:NO];
-}
 
-- (IBAction)signInBtnPressed:(id)sender {
-    [self showHudInView:self.view hint:NSLocalizedString(@"正在签到", @"Load data...")];
-    
-    if ([[NSString stringWithFormat:@"%@",_c.teacherWorkNo] isEqualToString:[NSString stringWithFormat:@"%@",_user.studentId]]) {
-        
-        SignListViewController * signListVC = [[SignListViewController alloc] init];
-        self.hidesBottomBarWhenPushed = YES;
-        signListVC.signType = SignClassRoom;
-        signListVC.ary = [NSMutableArray arrayWithCapacity:1];
-        signListVC.ary = _notSignAry;
-        [self.navigationController pushViewController:signListVC animated:YES];
-        [self hideHud];
-        return;
-        
-    }
-    
-    [self hideHud];
-    
-    if ([[NSString stringWithFormat:@"%@",_c.signStatus] isEqualToString:@"2"]) {
-        [UIUtils showInfoMessage:@"已签到"];
-        return;
-    }else{
-        if (![UIUtils validateWithStartTime:_c.actStarTime withExpireTime:nil]) {
-            [UIUtils showInfoMessage:@"课程开始之后一定时间范围内才可以签到"];
-            return;
-        }
-    }
-    
-    NSMutableDictionary * dictWifi =  [UIUtils getWifiName];
-    
-    if (![UIUtils isBlankString:[NSString stringWithFormat:@"%@",[dictWifi objectForKey:@"BSSID"]]]) {
-        
-        
-        NSString * bssid  = [UIUtils specificationMCKAddress:[dictWifi objectForKey:@"BSSID"]];
-        
-        if ([UIUtils matchingMacWith:_c.mck withMac:bssid]) {
-            _temp = 1;
-            [self signSendIng];
-            [self sendSignInfo];
-            
-        }else if (_temp == 1){
-            
-            [self signSendIng];
-            [self sendSignInfo];
-            
-        }else{
-            NSString * s =[UIUtils returnMac:_c.mck];
-            UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:[NSString stringWithFormat:@"请到WiFi列表连接指定WiFi:%@,再点击签到，若不能跳转请主动在WiFi页面连接无线信号再返回app进行签到，签到完成之后请连接数据流量保证数据传输",s] message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: @"取消", nil];
-            alertView.delegate = self;
-            alertView.tag = 1;
-            [self hideHud];
-            [alertView show];
-        }
-        
-    }else{
-        NSString * s =[UIUtils returnMac:_c.mck];
-        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:[NSString stringWithFormat:@"请到WiFi列表连接指定WiFi:%@,再点击签到，若不能跳转请主动在WiFi页面连接无线信号再返回app进行签到，签到完成之后请连接数据流量保证数据传输",s] message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: @"取消", nil];
-        alertView.delegate = self;
-        alertView.tag = 1;
-        [self hideHud];
-        [alertView show];
-    }
-    
-}
 -(void)alter:(NSString *) str{
     [self hideHud];
     if ([str isEqualToString:@"1002"]) {
         [UIUtils showInfoMessage:@"暂不能签到"];
-        [self signBtnSign];
+        _c.signStatus = @"1";
     }else if ([str isEqualToString:@"1003"]){
         [UIUtils showInfoMessage:@"已签到"];
-        [self signBtned];
+        _c.signStatus = @"2";
     }else if ([str isEqualToString:@"1004"]){
         [UIUtils showInfoMessage:@"没有参加课程"];
-        [self signBtnSign];
+        _c.signStatus = @"1";
     }else if ([str isEqualToString:@"0000"]){
         
         [UIUtils showInfoMessage:@"签到成功"];
-        [self signBtned];
         _c.signStatus = @"2";
         _selfSignStatus = @"签到状态：已签到";
-        _classSign.text = @"签到状态：已签到";
-
         
         // 2.创建通知
         NSNotification *notification =[NSNotification notificationWithName:@"UpdateTheClassPage" object:nil userInfo:nil];
@@ -330,30 +220,18 @@
         //  _signNumber.text = @"签到状态：已签到";
     }else if ([str isEqualToString:@"5000"]){
         [UIUtils showInfoMessage:@"签到失败"];
-        [self signBtnSign];
-
+        _c.signStatus = @"1";
     }else if ([str isEqualToString:@"1016"]){
         [UIUtils showInfoMessage:@"暂不能签到"];
-        [self signBtnSign];
+        _c.signStatus = @"1";
+    }else if ([str isEqualToString:@"1008"]){
+        [UIUtils showInfoMessage:@"这台手机已经签到一次了，不能重复使用签到，谢谢"];
+        _c.signStatus =@"1";
     }
+    [_tableView reloadData];
 }
 
--(void)sendSignInfo{
-    NSString *idfv = [[[UIDevice currentDevice] identifierForVendor] UUIDString];
-    
-    NSDictionary * dict = [[NSDictionary alloc] initWithObjectsAndKeys:_c.sclassId,@"Id",_c.courseDetailId,@"courseDetailId",_user.peopleId,@"userId" ,idfv,@"mck",@"2",@"status",nil];
-    [[NetworkRequest sharedInstance] POST:ClassSign dict:dict succeed:^(id data) {
-        NSLog(@"succedd:%@",data);
-        [self alter:[[data objectForKey:@"header"] objectForKey:@"code"]];
-        
-    } failure:^(NSError *error) {
-        NSLog(@"失败：%@",error);
-        UIAlertView * alter = [[UIAlertView alloc] initWithTitle:nil message:@"签到失败请重新签到，请保证数据流量的连接" delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil];
-        alter.tag = 2;
-        [alter show];
-        [self signBtnSign];
-    }];
-}
+
 
 - (IBAction)interactiveBtnPressed:(id)sender {
     if (!_interaction)
@@ -363,17 +241,6 @@
     }
     [_interaction showInView:self.view];
 }
-- (IBAction)classManagementBtnPressed:(id)sender {
-    ClassManagementViewController * classManegeVC = [[ClassManagementViewController alloc] init];
-    self.hidesBottomBarWhenPushed = YES;
-    classManegeVC.manage = ClassManageType;
-    classManegeVC.signAry = [NSMutableArray arrayWithCapacity:1];
-    classManegeVC.signAry = _signAry;
-    [self.navigationController pushViewController:classManegeVC animated:YES];
-    
-}
-
-
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
@@ -465,11 +332,67 @@
         }
     }
 }
+#pragma mark UITableViewdelegate
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
+    return 3;
+}
+-(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
+    return 1;
+}
 
-#pragma mark ShareViewDelegate
+-(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
+    MeetingTableViewCell * cell;
+    if (indexPath.section == 0) {
+        cell = [tableView dequeueReusableCellWithIdentifier:@"MeetingTableViewCellFirst"];
+        if (!cell) {
+            cell = [[[NSBundle mainBundle] loadNibNamed:@"MeetingTableViewCell" owner:self options:nil] objectAtIndex:0];
+        }
+        [cell addFirstCOntentViewWithClassModel:_c];
+    }else if (indexPath.section == 1){
+        if ([[NSString stringWithFormat:@"%@",_user.peopleId] isEqualToString:[NSString stringWithFormat:@"%@",_c.teacherId]]) {
+            cell = [tableView dequeueReusableCellWithIdentifier:@"MeetingTableViewCellSecond"];
+            if (!cell) {
+                cell = [[[NSBundle mainBundle] loadNibNamed:@"MeetingTableViewCell" owner:self options:nil] objectAtIndex:1];
+            }
+            [cell addSecondContentViewWithClassModel:_c];
+        }else{
+            cell = [tableView dequeueReusableCellWithIdentifier:@"MeetingTableViewCellThird"];
+            if (!cell) {
+                cell = [[[NSBundle mainBundle] loadNibNamed:@"MeetingTableViewCell" owner:self options:nil] objectAtIndex:2];
+            }
+            [cell addThirdContentViewWithClassModel:_c];
+        }
+        
+    }else if (indexPath.section==2){
+        cell = [tableView dequeueReusableCellWithIdentifier:@"MeetingTableViewCellFourth"];
+        if (!cell) {
+            cell = [[[NSBundle mainBundle] loadNibNamed:@"MeetingTableViewCell" owner:self options:nil] objectAtIndex:3];
+        }
+        [cell addFourthContentViewWithClassModel:_c];
+    }
+    cell.selectionStyle = UITableViewCellSelectionStyleNone;
+    cell.delegate = self;
+    return cell;
+}
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+}
+-(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
+    if (indexPath.section==0) {
+        return 150;
+    }else if (indexPath.section==1){
+        return 60;
+    }else if (indexPath.section==2){
+        return 200;
+    }
+    return 0;
+}
+-(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
+    return 10;
+}
+#pragma mark MeetingCellDelegate
+-(void)shareButtonClickedDelegate:(NSString *)platform{
 
-- (void)shareViewButtonClick:(NSString *)platform
-{
     //    if (![platform isEqualToString:InteractionType_Responder]||![platform isEqualToString:InteractionType_Data]) {
     //        UIAlertView * later = [[UIAlertView alloc] initWithTitle:nil message:@"未完待续" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil];
     //        [later show];
@@ -510,11 +433,11 @@
         [self.navigationController pushViewController:textVC animated:YES];
         
     }
-//    else{
-//        UIAlertView * later = [[UIAlertView alloc] initWithTitle:nil message:@"未完待续" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil];
-//        [later show];
-//        return;
-//    }
+    //    else{
+    //        UIAlertView * later = [[UIAlertView alloc] initWithTitle:nil message:@"未完待续" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil];
+    //        [later show];
+    //        return;
+    //    }
     
     if ([platform isEqualToString:InteractionType_Discuss]){
         DiscussViewController * d = [[DiscussViewController alloc] init];
@@ -525,8 +448,205 @@
         NSLog(@"更多");
     }
 }
+-(void)peopleManagementDelegate{
+    ClassManagementViewController * classManegeVC = [[ClassManagementViewController alloc] init];
+    self.hidesBottomBarWhenPushed = YES;
+    classManegeVC.manage = ClassManageType;
+    classManegeVC.signAry = [NSMutableArray arrayWithCapacity:1];
+    classManegeVC.signAry = _signAry;
+    [self.navigationController pushViewController:classManegeVC animated:YES];
+}
+-(void)signNOPeopleDelegate{
+    SignListViewController * signListVC = [[SignListViewController alloc] init];
+    self.hidesBottomBarWhenPushed = YES;
+    signListVC.signType = SignClassRoom;
+    signListVC.ary = [NSMutableArray arrayWithCapacity:1];
+    signListVC.ary = _notSignAry;
+    [self.navigationController pushViewController:signListVC animated:YES];
+}
+-(void)signBtnPressedDelegate:(UIButton *)btn{
+    [self showHudInView:self.view hint:NSLocalizedString(@"正在加载数据", @"Load data...")];
 
+    if ([[NSString stringWithFormat:@"%@",_c.signStatus] isEqualToString:@"2"]) {
+        [UIUtils showInfoMessage:@"已签到"];
+        [self hideHud];
+        return;
+    }else{
+        if (![UIUtils validateWithStartTime:_c.actStarTime withExpireTime:nil]) {
+            [UIUtils showInfoMessage:@"课程开始之后一定时间范围内才可以签到"];
+            [self hideHud];
+            return;
+        }
+    }
+    
+    NSMutableDictionary * dictWifi =  [UIUtils getWifiName];
+    
+    if (![UIUtils isBlankString:[NSString stringWithFormat:@"%@",[dictWifi objectForKey:@"BSSID"]]]) {
+        
+        
+        NSString * bssid  = [UIUtils specificationMCKAddress:[dictWifi objectForKey:@"BSSID"]];
+        
+        if ([UIUtils matchingMacWith:_c.mck withMac:bssid]) {
+            _temp = 1;
+            [self signSendIng];
+            [self sendSignInfo];
+            
+        }else if (_temp == 1){
+            
+            [self signSendIng];
+            [self sendSignInfo];
+            
+        }else{
+            NSString * s =[UIUtils returnMac:_c.mck];
+            UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:[NSString stringWithFormat:@"请到WiFi列表连接指定WiFi:%@,再点击签到，若不能跳转请主动在WiFi页面连接无线信号再返回app进行签到，签到完成之后请连接数据流量保证数据传输",s] message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: @"取消", nil];
+            alertView.delegate = self;
+            alertView.tag = 1;
+            [self hideHud];
+            [alertView show];
+        }
+        
+    }else{
+        NSString * s =[UIUtils returnMac:_c.mck];
+        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:[NSString stringWithFormat:@"请到WiFi列表连接指定WiFi:%@,再点击签到，若不能跳转请主动在WiFi页面连接无线信号再返回app进行签到，签到完成之后请连接数据流量保证数据传输",s] message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: @"取消", nil];
+        alertView.delegate = self;
+        alertView.tag = 1;
+        [self hideHud];
+        [alertView show];
+    }
+}
+-(void)signSendIng{
+    _c.signStatus = @"3";
+    [_tableView reloadData];
+}
+-(void)sendSignInfo{
+    NSString *idfv = [[[UIDevice currentDevice] identifierForVendor] UUIDString];
+    
+    NSDictionary * dict = [[NSDictionary alloc] initWithObjectsAndKeys:_c.sclassId,@"Id",_c.courseDetailId,@"courseDetailId",_user.peopleId,@"userId" ,idfv,@"mck",@"2",@"status",nil];
+    [[NetworkRequest sharedInstance] POST:ClassSign dict:dict succeed:^(id data) {
+        NSLog(@"succedd:%@",data);
+        [self alter:[[data objectForKey:@"header"] objectForKey:@"code"]];
+        [self hideHud];
+    } failure:^(NSError *error) {
+        NSLog(@"失败：%@",error);
+        UIAlertView * alter = [[UIAlertView alloc] initWithTitle:nil message:@"签到失败请重新签到，请保证数据流量的连接" delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil];
+        alter.tag = 2;
+        [alter show];
+        [self hideHud];
+        _c.signStatus = @"4";
+        [_tableView reloadData];
+    }];
+}
 
+-(void)codePressedDelegate:(UIButton *)btn{
+    if ([btn.titleLabel.text isEqualToString:@"二维码签到"]) {
+        if (![UIUtils validateWithStartTime:_c.actStarTime withExpireTime:nil]) {
+            [UIUtils showInfoMessage:@"课程开始之后一定时间范围内才可以签到"];
+            return;
+        }
+        //     1、 获取摄像设备
+        AVCaptureDevice *device = [AVCaptureDevice defaultDeviceWithMediaType:AVMediaTypeVideo];
+        if (device) {
+            AVAuthorizationStatus status = [AVCaptureDevice authorizationStatusForMediaType:AVMediaTypeVideo];
+            if (status == AVAuthorizationStatusNotDetermined) {
+                [AVCaptureDevice requestAccessForMediaType:AVMediaTypeVideo completionHandler:^(BOOL granted) {
+                    if (granted) {
+                        dispatch_sync(dispatch_get_main_queue(), ^{
+                            SGQRCodeScanningVC *vc = [[SGQRCodeScanningVC alloc] init];
+                            [self.navigationController pushViewController:vc animated:YES];
+                            [vc returnText:^(NSDictionary *returnText) {
+                                if (returnText) {
+                                    [self codeSign:returnText];
+                                }
+                            }];
+                        });
+                        // 用户第一次同意了访问相机权限
+                        NSLog(@"用户第一次同意了访问相机权限 - - %@", [NSThread currentThread]);
+                        
+                    } else {
+                        // 用户第一次拒绝了访问相机权限
+                        NSLog(@"用户第一次拒绝了访问相机权限 - - %@", [NSThread currentThread]);
+                    }
+                }];
+            } else if (status == AVAuthorizationStatusAuthorized) { // 用户允许当前应用访问相机
+                SGQRCodeScanningVC *vc = [[SGQRCodeScanningVC alloc] init];
+                self.hidesBottomBarWhenPushed = YES;
+                [self.navigationController pushViewController:vc animated:YES];
+                [vc returnText:^(NSDictionary *returnText) {
+                    if (returnText) {
+                        [self codeSign:returnText];
+                    }
+                }];
+            } else if (status == AVAuthorizationStatusDenied) { // 用户拒绝当前应用访问相机
+                UIAlertController *alertC = [UIAlertController alertControllerWithTitle:@"温馨提示" message:@"请去-> [设置 - 隐私 - 相机 - SGQRCodeExample] 打开访问开关" preferredStyle:(UIAlertControllerStyleAlert)];
+                UIAlertAction *alertA = [UIAlertAction actionWithTitle:@"确定" style:(UIAlertActionStyleDefault) handler:^(UIAlertAction * _Nonnull action) {
+                    
+                }];
+                
+                [alertC addAction:alertA];
+                [self presentViewController:alertC animated:YES completion:nil];
+                
+            } else if (status == AVAuthorizationStatusRestricted) {
+                NSLog(@"因为系统原因, 无法访问相册");
+            }
+        } else {
+            UIAlertController *alertC = [UIAlertController alertControllerWithTitle:@"温馨提示" message:@"未检测到您的摄像头" preferredStyle:(UIAlertControllerStyleAlert)];
+            UIAlertAction *alertA = [UIAlertAction actionWithTitle:@"确定" style:(UIAlertActionStyleDefault) handler:^(UIAlertAction * _Nonnull action) {
+                
+            }];
+            
+            [alertC addAction:alertA];
+            [self presentViewController:alertC animated:YES completion:nil];
+        }
+    }else{
+        NSString * interval = [UIUtils getCurrentTime];
+        NSString * checkcodeLocal = [NSString stringWithFormat:@"%@dayaokeji",interval];
+        NSString * md5 = [self md5:checkcodeLocal];
+        NSMutableDictionary * dict = [[NSMutableDictionary alloc] initWithObjectsAndKeys:interval,@"date",_c.mck,@"loc_array",md5,@"checkcode",nil];
+        QrCodeViewController * q = [[QrCodeViewController alloc] init];
+        self.hidesBottomBarWhenPushed = YES;
+        q.dict = dict;
+        [self.navigationController pushViewController:q animated:YES];
+    }
+}
+-(void)codeSign:(NSDictionary *)dict{
+    if (dict) {
+        NSString * date = [dict objectForKey:@"date"];
+        NSArray * loc_array = [dict objectForKey:@"loc_array"];
+        NSString * checkcode = [[dict objectForKey:@"checkcode"] lowercaseString];
+        NSString * dateTime = [UIUtils getTheTimeStamp:date];
+        NSString * checkcodeLocal = [NSString stringWithFormat:@"%@dayaokeji",date];
+        NSString * md5 = [self md5:checkcodeLocal];
+        if ([md5 isEqualToString:checkcode]) {
+            if ([UIUtils dateTimeDifferenceWithStartTime:dateTime]) {
+                if ([UIUtils returnMckIsHave:_c.mck withAccept:loc_array]) {
+                    [self sendSignInfo];
+                }else{
+                    [UIUtils showInfoMessage:@"扫描二维码有误，请重新扫描或者连接指定WiFi签到"];
+                }
+            }else{
+                [UIUtils showInfoMessage:@"扫描二维码失效，请重新扫描或者连接指定WiFi签到"];
+            }
+        }else{
+            [UIUtils showInfoMessage:@"扫描二维码失效，请重新扫描或者连接指定WiFi签到"];
+        }
+    }else{
+        [UIUtils showInfoMessage:@"扫描二维码失效，请重新扫描或者连接指定WiFi签到"];
+    }
+    
+}
+-(NSString *) md5:(NSString *)str
+{
+    const char *cStr = [str UTF8String];
+    unsigned char digest[CC_MD5_DIGEST_LENGTH];
+    CC_MD5( cStr, strlen(cStr), digest );
+    
+    NSMutableString *output = [NSMutableString stringWithCapacity:CC_MD5_DIGEST_LENGTH * 2];
+    
+    for(int i = 0; i < CC_MD5_DIGEST_LENGTH; i++)
+        [output appendFormat:@"%02x", digest[i]];
+    
+    return output;
+}
 /*
  #pragma mark - Navigation
  

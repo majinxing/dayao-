@@ -86,6 +86,7 @@ static NSString *cellIdentifier = @"cellIdentifier";
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(UpdateTheClassPage) name:@"UpdateTheClassPage" object:nil];
     
+    [UIUtils getInternetDate];
     
     // Do any additional setup after loading the view from its nib.
 }
@@ -111,9 +112,9 @@ static NSString *cellIdentifier = @"cellIdentifier";
         [weakSelf headerRereshing];
         
     }];
-    [_tableView addFooterWithCallback:^{
-        [weakSelf footerRereshing];
-    }];
+//    [_tableView addFooterWithCallback:^{
+//        [weakSelf footerRereshing];
+//    }];
     [self.view addSubview:_tableView];
     
 }
@@ -257,6 +258,8 @@ static NSString *cellIdentifier = @"cellIdentifier";
                 }
             }
         }
+//        [self deleteTheDuplicateData];
+        
         _dict = [[NSMutableDictionary alloc] initWithDictionary:[UIUtils CurriculumGroup:_classAry]];
         
         [_tableView reloadData];
@@ -271,6 +274,20 @@ static NSString *cellIdentifier = @"cellIdentifier";
         
         NSLog(@"%@",error);
     }];
+    
+}
+-(void)deleteTheDuplicateData{
+    for (int i = 0; i<_classAry.count; i++) {
+        ClassModel * c = _classAry[i];
+        for (int j = i+1; j<_classAry.count; j++) {
+            ClassModel * d = _classAry[j];
+            NSString * s1 = [NSString stringWithFormat:@"%@",c.sclassId];
+            NSString * s2 = [NSString stringWithFormat:@"%@",d.sclassId];
+            if ([s1 isEqualToString:s2]) {
+                [_classAry removeObjectAtIndex:j];
+            }
+        }
+    }
     
 }
 /**
@@ -425,7 +442,19 @@ static NSString *cellIdentifier = @"cellIdentifier";
     UIView * view = [[UIView alloc] init];
     view.backgroundColor = RGBA_COLOR(201, 242, 253, 1);
     NSString * month = [UIUtils getMonth];
-    NSArray * ary = @[month,@"周一",@"周二",@"周三",@"周四",@"周五",@"周六",@"周日"];
+    NSMutableArray * day = [UIUtils getWeekAllTimeWithType:nil];
+    NSMutableArray * ary = [NSMutableArray arrayWithCapacity:1];;
+    if (day.count==7) {
+        NSArray *  a = @[month,@"周一",@"周二",@"周三",@"周四",@"周五",@"周六",@"周日"];
+        for (int i = 0; i<8; i++) {
+            if (i == 0) {
+                [ary addObject:month];
+            }else
+            [ary addObject: [NSString stringWithFormat:@"%@", [NSString stringWithFormat:@"%@\n%@",day[i-1],a[i]]]];
+        }
+    }else{
+       ary = [[NSMutableArray alloc] initWithArray:@[month,@"周一",@"周二",@"周三",@"周四",@"周五",@"周六",@"周日"]];
+    }
     for (int i =0; i<8; i++) {
         UILabel * label = [[UILabel alloc] initWithFrame:CGRectMake(i*APPLICATION_WIDTH/8, 0, APPLICATION_WIDTH/8, 50)];
         label.backgroundColor = [UIColor clearColor];
@@ -433,6 +462,7 @@ static NSString *cellIdentifier = @"cellIdentifier";
         label.text = ary[i];
         label.font = [UIFont systemFontOfSize:14];
         label.textAlignment = NSTextAlignmentCenter;
+        label.numberOfLines = 0;
         [view addSubview:label];
         UIView * v = [[UIView alloc] initWithFrame:CGRectMake(CGRectGetMaxX(label.frame)-1, 0, 1, 50)];
         v.backgroundColor = RGBA_COLOR(184, 216, 248, 1);
