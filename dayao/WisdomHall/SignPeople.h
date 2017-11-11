@@ -15,6 +15,7 @@
 @property (nonatomic,copy) NSString * signStatus;
 @property (nonatomic,copy) NSString * userId;
 @property (nonatomic,copy) NSString * workNo;
+@property (nonatomic,copy) NSString * pictureId;
 @property (nonatomic,assign) BOOL isSelect;
 
 

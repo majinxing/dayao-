@@ -45,10 +45,10 @@
 -(void)setInfoForContentView:(MeetingModel *)meetingModel{
     _classOrMeetingName.text = [NSString stringWithFormat:@"会议名：%@",meetingModel.meetingName];
     if ([UIUtils isBlankString:meetingModel.meetingHost]) {
-        _hostName.text = [NSString stringWithFormat:@"主持人："];
+        _hostName.text = [NSString stringWithFormat:@"创建者："];
 
     }else{
-        _hostName.text = [NSString stringWithFormat:@"主持人：%@",meetingModel.meetingHost];
+        _hostName.text = [NSString stringWithFormat:@"创建者：%@",meetingModel.meetingHost];
     }
     
     _place.text = [NSString stringWithFormat:@"地点：%@",meetingModel.meetingPlace];

@@ -35,17 +35,42 @@
                                                  repeats:YES];
     [_showTimer fire];
 //    _codeImageView.image = [self qrImageForString:_dict imageSize:220 logoImageSize:220];
-    _textLabel.text = [NSString stringWithFormat:@"注意：此二维码失效时间为%d秒并自动更新，请及时提供给同学签到",CodeEffectiveTime];
+    _textLabel.text = [NSString stringWithFormat:@"注意：二维码将每3秒钟重新生成，请即时提供给同学签到"];
     // Do any additional setup after loading the view from its nib.
 }
 -(void)handleMaxShowTimer:(NSTimer *)theTimer{
-    NSString * interval = [UIUtils getCurrentTime];
-    [_dict setObject:interval forKey:@"date"];
-    NSString * checkcodeLocal = [NSString stringWithFormat:@"%@dayaokeji",interval];
-    NSString * md5 = [self md5:checkcodeLocal];
-    [_dict setObject:md5 forKey:@"checkcode"];
-    _codeImageView.image = nil;
-    _codeImageView.image = [self qrImageForString:_dict imageSize:220 logoImageSize:220];
+    
+    NSMutableDictionary * dictWifi =  [UIUtils getWifiName];
+    
+    if (![UIUtils isBlankString:[dictWifi objectForKey:@"BSSID"]]) {
+        NSString * bssid  = [UIUtils specificationMCKAddress:[dictWifi objectForKey:@"BSSID"]];
+        
+        if ([UIUtils matchingMacWith:_mck withMac:bssid]) {
+            NSString * interval = [UIUtils getCurrentTime];
+            [_dict setObject:interval forKey:@"date"];
+            NSString * checkcodeLocal = [NSString stringWithFormat:@"%@dayaokeji",interval];
+            NSString * md5 = [self md5:checkcodeLocal];
+            [_dict setObject:md5 forKey:@"checkcode"];
+            _codeImageView.image = nil;
+            _codeImageView.image = [self qrImageForString:_dict imageSize:220 logoImageSize:220];
+        }else{
+            [_showTimer invalidate];
+            [self outView];
+        }
+    }else{
+        [_showTimer invalidate];
+        [self outView];
+    }
+}
+-(void)outView{
+    UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"提示：请在连接指定的DAYAO或XTU开头的WiFi下生成二维码" message:nil preferredStyle:  UIAlertControllerStyleActionSheet];
+    [alert addAction:[UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDestructive handler:^(UIAlertAction * _Nonnull action) {
+        //点击按钮的响应事件；
+        [self.navigationController popViewControllerAnimated:YES];
+    }]];
+    
+    //弹出提示框；
+    [self presentViewController:alert animated:true completion:nil];
 }
 -(NSString *) md5:(NSString *)str
 {

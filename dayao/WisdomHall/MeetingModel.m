@@ -37,9 +37,11 @@
     self.url = [dict objectForKey:@"url"];
     self.userSeat = [dict objectForKey:@"userSeat"];
     self.workNo = [dict objectForKey:@"workNo"];
-    [self setSignPeopleWithNSArray:[dict objectForKey:@"userSeatList"]];
+//    [self setSignPeopleWithNSArray:[dict objectForKey:@"userSeatList"]];
 }
 -(void)setSignPeopleWithNSArray:(NSArray *)ary{
+    _n = 0;
+    _m = 0;//数据重新初始化，这是model对象可能不被销毁，容易造成数据重复叠加
     for (int i =0 ; i<ary.count; i++) {
         SignPeople * sign = [[SignPeople alloc] init];
         [sign setInfoWithDict:ary[i]];

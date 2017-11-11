@@ -8,6 +8,9 @@
 
 #import "PersonalInfoTableViewCell.h"
 #import "SignPeople.h"
+#import "DYHeader.h"
+#import "UIImageView+WebCache.h"
+
 
 @interface PersonalInfoTableViewCell()
 @property (weak, nonatomic) IBOutlet UILabel *nameLabel;
@@ -54,6 +57,9 @@
         
         cell.personalNameLabel.text = [NSString stringWithFormat:@"姓名 :%@",ss.name];
         cell.workNo.text = [NSString stringWithFormat:@"学号 :%@",ss.workNo];
+        if (![UIUtils isBlankString:[NSString stringWithFormat:@"%@",ss.pictureId]]) {
+            [cell.headImage sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@?resourceId=%@",BaseURL,FileDownload,ss.pictureId]] placeholderImage:[UIImage imageNamed:@"signa.png"]];
+        }
     }
     return cell;
     

@@ -33,6 +33,7 @@
 }
 -(void)sevaUserInfoWithDict:(NSDictionary *)dict withStr:(NSString *)p{
     [_mySettingData setValue:[dict objectForKey:@"id"] forKey:@"user_id"];
+    [_mySettingData setValue:[dict objectForKey:@"pictureId"] forKey:@"user_pictureId"];
     [_mySettingData setValue:[dict objectForKey:@"name"] forKey:@"user_name"];
     [_mySettingData setValue:[dict objectForKey:@"phone"] forKey:@"user_phone"];
     [_mySettingData setValue:[dict objectForKey:@"type"] forKey:@"user_type"];
@@ -59,6 +60,7 @@
     [_mySettingData setValue:[dict objectForKey:@"region"] forKey:@"user_region"];
     [_mySettingData setValue:[dict objectForKey:@"sex"] forKey:@"user_sex"];
     [_mySettingData setValue:[dict objectForKey:@"sign"] forKey:@"user_sign"];
+    [_mySettingData setValue:[dict objectForKey:@"pictureId"] forKey:@"user_pictureId"];
     [_mySettingData synchronize];
 }
 -(UserModel *)getUsetInfo{
@@ -84,6 +86,7 @@
     userInfo.region = [_mySettingData objectForKey:@"user_region"];
     userInfo.sign = [_mySettingData objectForKey:@"user_sign"];
     userInfo.token = [_mySettingData objectForKey:@"user_token"];
+    userInfo.userHeadImageId = [_mySettingData objectForKey:@"user_pictureId"];
     return userInfo;
 }
 -(BOOL)isLogin{

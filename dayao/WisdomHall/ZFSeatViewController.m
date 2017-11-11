@@ -12,6 +12,7 @@
 #import "ZFSeatSelectionView.h"
 #import "MBProgressHUD.h"
 #import "ZFSeatSelectionTool.h"
+#import "DYHeader.h"
 
 @interface ZFSeatViewController ()
 /**按钮数组*/
@@ -103,7 +104,14 @@
             NSDictionary * d = [[NSDictionary alloc] initWithObjectsAndKeys:aa,@"columns",[NSString stringWithFormat:@"%d",j+1],@"rowId",[NSString stringWithFormat:@"%d",j+1],@"rowNum",nil];
             [a addObject:d];
         }
-        
+        UILabel * seatLable = [[UILabel alloc] initWithFrame:CGRectMake(APPLICATION_WIDTH/2-50, 30, 100, 25)];
+        if (![UIUtils isBlankString:_seat]) {
+            seatLable.text = [NSString stringWithFormat:@"座次:%@",_seat];
+        }
+        seatLable.font = [UIFont systemFontOfSize:15];
+        seatLable.textColor = [UIColor blackColor];
+        seatLable.textAlignment = NSTextAlignmentCenter;
+        [self.view addSubview:seatLable];
         
         __block  NSMutableArray *  seatsArray = a;//seatsDic[@"seats"];
         

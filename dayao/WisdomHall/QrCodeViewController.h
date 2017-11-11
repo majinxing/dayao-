@@ -10,4 +10,5 @@
 
 @interface QrCodeViewController : UIViewController
 @property (nonatomic,strong)NSMutableDictionary * dict;
+@property (nonatomic,strong) NSMutableArray * mck;
 @end

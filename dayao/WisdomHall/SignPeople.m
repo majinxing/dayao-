@@ -15,6 +15,7 @@
     self.signStatus = [dict objectForKey:@"signStatus"];
     self.userId = [dict objectForKey:@"userId"];
     self.workNo = [dict objectForKey:@"workNo"];
+    self.pictureId = [dict objectForKey:@"pictureId"];
     self.isSelect = NO;
 }
 @end

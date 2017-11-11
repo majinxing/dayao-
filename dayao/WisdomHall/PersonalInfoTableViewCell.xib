@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="12121" systemVersion="16E195" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="13196" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12089"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13174"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -183,6 +183,7 @@
                 </constraints>
             </tableViewCellContentView>
             <connections>
+                <outlet property="headImage" destination="CW4-qU-sMN" id="d6t-Nb-mHB"/>
                 <outlet property="nameLabel" destination="ZLR-iH-C0h" id="s2T-p0-V4L"/>
                 <outlet property="personalNameLabel" destination="ZLR-iH-C0h" id="gCy-5h-uZP"/>
                 <outlet property="workNo" destination="5Ze-h3-lGh" id="vMt-pu-r5Y"/>
@@ -191,8 +192,8 @@
         </tableViewCell>
     </objects>
     <resources>
-        <image name="Vote" width="32" height="32"/>
+        <image name="Vote" width="80" height="80"/>
         <image name="address" width="48" height="48"/>
-        <image name="headImage" width="352" height="220"/>
+        <image name="headImage" width="96" height="96"/>
     </resources>
 </document>

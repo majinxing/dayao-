@@ -351,7 +351,7 @@
     [dMatter setDateFormat:@"dd MMM yyyy HH:mm:ss"];
     NSDate *netDate = [[dMatter dateFromString:date] dateByAddingTimeInterval:60*60*8];
     
-    NSTimeZone *zone = [NSTimeZone systemTimeZone];
+    NSTimeZone *zone = [NSTimeZone timeZoneWithName:@"Asia/Beijing"];
     NSInteger interval = [zone secondsFromGMTForDate: netDate];
     NSDate *localeDate = [netDate  dateByAddingTimeInterval: interval];
     
@@ -376,7 +376,7 @@
     NSCalendarUnit unit = NSCalendarUnitYear | NSCalendarUnitMonth
     | NSCalendarUnitDay | NSCalendarUnitHour | NSCalendarUnitMinute | NSCalendarUnitSecond;
     // 对比时间差
-    NSDateComponents *dateCom = [calendar components:unit fromDate:localeDate1 toDate:endD options:0];
+    NSDateComponents *dateCom = [calendar components:unit fromDate:localeDate1 toDate:localeDate options:0];
     [[Appsetting sharedInstance].mySettingData setValue:[NSString stringWithFormat:@"%ld",(long)dateCom.year] forKey:@"year"];
     [[Appsetting sharedInstance].mySettingData setValue:[NSString stringWithFormat:@"%ld",(long)dateCom.month] forKey:@"month"];
     [[Appsetting sharedInstance].mySettingData setValue:[NSString stringWithFormat:@"%ld",(long)dateCom.day] forKey:@"day"];
@@ -439,9 +439,9 @@
     
     [dict setObject:[NSString stringWithFormat:@"%@",users.peopleId] forKey:@"teacherId"];
     
-    [dict setObject:@"1" forKey:@"signWay"];
+//    [dict setObject:@"1" forKey:@"signWay"];
     
-    [dict setObject:[NSString stringWithFormat:@"%@",c.classRoomId] forKey:@"roomId"];
+//    [dict setObject:[NSString stringWithFormat:@"%@",c.classRoomId] forKey:@"roomId"];
     
     NSMutableArray * userList = [NSMutableArray arrayWithCapacity:1];
     for (int i = 0; i<joinPeopleAry.count; i++) {
@@ -459,9 +459,15 @@
     
     [dict setObject:ary[7] forKey:@"startTime"];
     
-    [dict setObject:[NSString stringWithFormat:@"%d",class1+1] forKey:@"startTh"];
+//    [dict setObject:[NSString stringWithFormat:@"%d",class1+1] forKey:@"startTh"];
     
-    [dict setObject:[NSString stringWithFormat:@"%d",class2+1] forKey:@"endTh"];
+//    [dict setObject:[NSString stringWithFormat:@"%d",class2+1] forKey:@"endTh"];
+    
+    NSDictionary * w = [[NSDictionary alloc] initWithObjectsAndKeys:[NSString stringWithFormat:@"%d",class1+1],@"startTh",[NSString stringWithFormat:@"%d",class2+1],@"endTh",@"1",@"signWay",[NSString stringWithFormat:@"%@",c.classRoomId],@"roomId",nil];
+    
+    
+    NSArray * aa = [[NSArray alloc] initWithObjects:w, nil];
+    [dict setObject:aa forKey:@"courseTimeList"];
     
     return dict;
 }
@@ -539,11 +545,11 @@
         week = week + 2;
     }
     
-    [dict setObject:@"1" forKey:@"signWay"];
-    [dict setObject:[NSString stringWithFormat:@"%@",c.classRoomId] forKey:@"roomId"];
-    NSDictionary * w = [[NSDictionary alloc] initWithObjectsAndKeys:[NSString stringWithFormat:@"%d",week],@"weekDay",[NSString stringWithFormat:@"%d",class1+1],@"startTh",[NSString stringWithFormat:@"%d",class2+1],@"endTh",nil];
+//    [dict setObject:@"1" forKey:@"signWay"];
+//    [dict setObject:[NSString stringWithFormat:@"%@",c.classRoomId] forKey:@"roomId"];
+//    NSDictionary * w = [[NSDictionary alloc] initWithObjectsAndKeys:[NSString stringWithFormat:@"%d",week],@"weekDay",[NSString stringWithFormat:@"%d",class1+1],@"startTh",[NSString stringWithFormat:@"%d",class2+1],@"endTh",nil];
     
-//    NSDictionary * w = [[NSDictionary alloc] initWithObjectsAndKeys:[NSString stringWithFormat:@"%d",week],@"weekDay",[NSString stringWithFormat:@"%d",class1+1],@"startTh",[NSString stringWithFormat:@"%d",class2+1],@"endTh",@"1",@"signWay",[NSString stringWithFormat:@"%@",c.classRoomId],@"roomId",nil];
+    NSDictionary * w = [[NSDictionary alloc] initWithObjectsAndKeys:[NSString stringWithFormat:@"%d",week],@"weekDay",[NSString stringWithFormat:@"%d",class1+1],@"startTh",[NSString stringWithFormat:@"%d",class2+1],@"endTh",@"1",@"signWay",[NSString stringWithFormat:@"%@",c.classRoomId],@"roomId",nil];
     
     
     NSArray * aa = [[NSArray alloc] initWithObjects:w, nil];
@@ -600,7 +606,12 @@
         [ary addObject:[NSString stringWithFormat:@""]];
         
     }else{
-        [ary addObject:[NSString stringWithFormat:@"%@",user.sex]];
+        if ([[NSString stringWithFormat:@"%@",user.sex] isEqualToString:@"1"]) {
+            [ary addObject:[NSString stringWithFormat:@"男"]];
+        }else if([[NSString stringWithFormat:@"%@",user.sex] isEqualToString:@"2"]){
+            [ary addObject:[NSString stringWithFormat:@"女"]];
+        }
+        
     }
     if ([UIUtils isBlankString:[NSString stringWithFormat:@"%@",user.birthday]]) {
         [ary addObject:[NSString stringWithFormat:@""]];
@@ -1404,14 +1415,14 @@
     [date setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
     
     NSDate *startD  = [date dateFromString:startTime];
-    
+
     NSDate *endD = [NSDate date];//[date dateFromString:endTime];
     
-    NSTimeInterval start = [startD timeIntervalSince1970]*1;
-    
-    NSTimeInterval end = [endD timeIntervalSince1970]*1;
-    
-    NSTimeInterval value = end - start;
+//    NSTimeInterval start = [startD timeIntervalSince1970]*1;
+//
+//    NSTimeInterval end = [endD timeIntervalSince1970]*60*60*8;
+//
+//    NSTimeInterval value = end - start;
     // 当前日历
     NSCalendar *calendar = [NSCalendar currentCalendar];
     // 需要对比的时间数据
@@ -1423,24 +1434,24 @@
     NSInteger month = [[[Appsetting sharedInstance].mySettingData objectForKey:@"month"] integerValue];
     NSInteger day = [[[Appsetting sharedInstance].mySettingData objectForKey:@"day"] integerValue];
     NSInteger hour = [[[Appsetting sharedInstance].mySettingData objectForKey:@"hour"] integerValue];
-    NSInteger minute = [[[Appsetting sharedInstance].mySettingData objectForKey:@"minue"] integerValue];
+    NSInteger minute = [[[Appsetting sharedInstance].mySettingData objectForKey:@"minute"] integerValue];
     NSInteger second = [[[Appsetting sharedInstance].mySettingData objectForKey:@"second"] integerValue];
-    if ((dateCom.year+year)>0) {
+    if (abs((int)dateCom.year+(int)year)>0) {
         return NO;
     }
-    if ((dateCom.month+month)>0){
+    if (abs((int)dateCom.month+(int)month)>0){
         return NO;
     }
-    if ((dateCom.day+day)>0) {
+    if (abs((int)dateCom.day+(int)day)>0) {
         return NO;
     }
-    if ((dateCom.hour+hour)>0) {
+    if (abs((int)dateCom.hour+(int)hour)>0) {
         return NO;
     }
-    if ((dateCom.minute+minute)>0) {
+    if (abs((int)dateCom.minute+(int)minute)>0) {
         return NO;
     }
-    if ((dateCom.second+second)<CodeEffectiveTime) {
+    if (abs((int)dateCom.second+(int)second)<CodeEffectiveTime) {
         return YES;
     }
     return NO;
@@ -1451,7 +1462,7 @@
     NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
     [formatter setDateStyle:NSDateFormatterMediumStyle];
     [formatter setTimeStyle:NSDateFormatterShortStyle];
-    [formatter setDateFormat:@"YYYY-MM-dd HH:mm:ss"]; // ----------设置你想要的格式,hh与      HH的区别:分别表示12小时制,24小时制
+    [formatter setDateFormat:@"yyyy-MM-dd HH:mm:ss"]; // ----------设置你想要的格式,hh与      HH的区别:分别表示12小时制,24小时制
     
     //设置时区,这个对于时间的处理有时很重要
     //例如你在国内发布信息,用户在国外的另一个时区,你想让用户看到正确的发布时间就得注意时区设置,时间的换算.

@@ -43,7 +43,9 @@
                                                                       NSForegroundColorAttributeName:[UIColor blackColor]}];
     self.title = @"我的";
 }
-
+-(void)viewWillAppear:(BOOL)animated{
+    [_tableview reloadData];
+}
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
@@ -99,7 +101,6 @@
             self.hidesBottomBarWhenPushed = NO;
         }else if (indexPath.row == 4){
             FeedbackViewController * f = [[FeedbackViewController alloc] init];
-            self.hidesBottomBarWhenPushed = YES;
             [self.navigationController pushViewController:f animated:YES];
             self.hidesBottomBarWhenPushed = NO;
             
@@ -108,7 +109,7 @@
 }
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
     if (indexPath.section == 0) {
-        return 140;
+        return 146;
     }
     return 50;
 }

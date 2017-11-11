@@ -67,7 +67,7 @@
     
     // 1.注册通知
     
-//    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(changeSignNumber) name:@"SignSucceed" object:nil];
+    //    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(changeSignNumber) name:@"SignSucceed" object:nil];
     
     // 1.注册通知
     
@@ -108,6 +108,9 @@
     NSDictionary * dict = [[NSDictionary alloc] initWithObjectsAndKeys:_meetingModel.meetingId,@"meetingId", nil];
     [[NetworkRequest sharedInstance] GET:QueryMeetingPeople dict:dict succeed:^(id data) {
         //        NSLog(@"%@",data);
+        NSArray * ary = [data objectForKey:@"body"];
+        [_meetingModel setSignPeopleWithNSArray:ary];
+        [_tableView reloadData];
     } failure:^(NSError *error) {
         
     }];
@@ -412,7 +415,7 @@
             
             NSString * s = [UIUtils returnMac:_meetingModel.mck];
             
-            UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:[NSString stringWithFormat:@"请到WiFi列表连接指定WiFi:%@,再点击签到，若不能跳转请主动在WiFi页面连接无线信号再返回app进行签到，签到完成之后请连接数据流量保证数据传输",s] message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: @"取消", nil];
+            UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:[NSString stringWithFormat:@"请到WiFi列表连接指定的DAYAO或XTU开头的WiFi，再点击签到，若不能跳转请主动在WiFi页面连接无线信号再返回app进行签到，签到完成之后请连接数据流量保证数据传输"] message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: @"取消", nil];
             alertView.delegate = self;
             alertView.tag = 1;
             [alertView show];
@@ -425,8 +428,9 @@
         [self sendSignInfo];
         
     }else{
+        
         NSString * s = [UIUtils returnMac:_meetingModel.mck];
-        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:[NSString stringWithFormat:@"请到WiFi列表连接指定WiFi:%@,再点击签到，若不能跳转请主动在WiFi页面连接无线信号再返回app进行签到，签到完成之后请连接数据流量保证数据传输",s] message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: @"取消", nil];
+        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:[NSString stringWithFormat:@"请到WiFi列表连接指定的DAYAO或XTU开头的WiFi，若不能跳转请主动在WiFi页面连接无线信号再返回app进行签到，签到完成之后请连接数据流量保证数据传输"] message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: @"取消", nil];
         alertView.delegate = self;
         alertView.tag = 1;
         [alertView show];
@@ -446,7 +450,7 @@
         NSLog(@"succedd:%@",data);
         [self alter:[[data objectForKey:@"header"] objectForKey:@"code"]];
         [self hideHud];
-
+        
     } failure:^(NSError *error) {
         NSLog(@"失败：%@",error);
         UIAlertView * alter = [[UIAlertView alloc] initWithTitle:nil message:@"无网络，请保证数据流量的连接后再次点击签到" delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil];
@@ -461,7 +465,7 @@
     if ([str isEqualToString:@"1002"]) {
         [UIUtils showInfoMessage:@"暂时不能签到"];
         _meetingModel.signStatus = @"1";
-
+        
     }else if ([str isEqualToString:@"1003"]){
         [UIUtils showInfoMessage:@"已签到"];
         _meetingModel.signStatus = @"2";
@@ -490,9 +494,9 @@
     [_tableView reloadData];
 }
 -(void)codePressedDelegate:(UIButton *)btn{
-    if ([btn.titleLabel.text isEqualToString:@"二维码签到"]) {
+    if ([btn.titleLabel.text isEqualToString:@"扫码签到"]) {
         if (![UIUtils validateWithStartTime:_meetingModel.meetingTime withExpireTime:nil]) {
-            [UIUtils showInfoMessage:@"课程开始之后一定时间范围内才可以签到"];
+            [UIUtils showInfoMessage:@"会议开始之后一定时间范围内才可以签到"];
             return;
         }
         //     1、 获取摄像设备
@@ -550,14 +554,28 @@
             [self presentViewController:alertC animated:YES completion:nil];
         }
     }else{
-        NSString * interval = [UIUtils getCurrentTime];
-        NSString * checkcodeLocal = [NSString stringWithFormat:@"%@dayaokeji",interval];
-        NSString * md5 = [self md5:checkcodeLocal];
-        NSMutableDictionary * dict = [[NSMutableDictionary alloc] initWithObjectsAndKeys:interval,@"date",_meetingModel.mck,@"loc_array",md5,@"checkcode",nil];
-        QrCodeViewController * q = [[QrCodeViewController alloc] init];
-        self.hidesBottomBarWhenPushed = YES;
-        q.dict = dict;
-        [self.navigationController pushViewController:q animated:YES];
+        NSMutableDictionary * dictWifi =  [UIUtils getWifiName];
+        
+        if (![UIUtils isBlankString:[dictWifi objectForKey:@"BSSID"]]) {
+            NSString * bssid  = [UIUtils specificationMCKAddress:[dictWifi objectForKey:@"BSSID"]];
+            if ([UIUtils matchingMacWith:_meetingModel.mck withMac:bssid]) {
+                NSString * interval = [UIUtils getCurrentTime];
+                NSString * checkcodeLocal = [NSString stringWithFormat:@"%@dayaokeji",interval];
+                NSString * md5 = [self md5:checkcodeLocal];
+                NSMutableDictionary * dict = [[NSMutableDictionary alloc] initWithObjectsAndKeys:interval,@"date",_meetingModel.mck,@"loc_array",md5,@"checkcode",nil];
+                QrCodeViewController * q = [[QrCodeViewController alloc] init];
+                self.hidesBottomBarWhenPushed = YES;
+                q.dict = dict;
+                q.mck = [[NSMutableArray alloc] initWithArray:_meetingModel.mck];
+                [self.navigationController pushViewController:q animated:YES];
+            }else{
+                [UIUtils showInfoMessage:@"请在连接指定的DAYAO或XTU开头的WiFi下生成二维码"];
+            }
+        }else{
+            [UIUtils showInfoMessage:@"请在连接指定的DAYAO或XTU开头的WiFi下生成二维码"];
+        }
+        
+        
     }
 }
 -(void)codeSign:(NSDictionary *)dict{
@@ -573,16 +591,16 @@
                 if ([UIUtils returnMckIsHave:_meetingModel.mck withAccept:loc_array]) {
                     [self sendSignInfo];
                 }else{
-                    [UIUtils showInfoMessage:@"扫描二维码有误，请重新扫描或者连接指定WiFi签到"];
+                    [UIUtils showInfoMessage:@"未识别到指定路由器，请重新扫描或者连接指定WiFi签到"];
                 }
             }else{
-                [UIUtils showInfoMessage:@"扫描二维码失效，请重新扫描或者连接指定WiFi签到"];
+                [UIUtils showInfoMessage:@"二维码时间失效，请重新扫描或者连接指定WiFi签到"];
             }
         }else{
-            [UIUtils showInfoMessage:@"扫描二维码失效，请重新扫描或者连接指定WiFi签到"];
+            [UIUtils showInfoMessage:@"二维码无效，请重新扫描或者连接指定WiFi签到"];
         }
     }else{
-        [UIUtils showInfoMessage:@"扫描二维码失效，请重新扫描或者连接指定WiFi签到"];
+        [UIUtils showInfoMessage:@"二维码无效，请重新扫描或者连接指定WiFi签到"];
     }
     
 }

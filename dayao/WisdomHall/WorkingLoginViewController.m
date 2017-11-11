@@ -68,7 +68,7 @@
                 dict = [data objectForKey:@"body"];
                 NSString * type = [NSString stringWithFormat:@"%@",[dict objectForKey:@"type"]];
                 if ([type isEqualToString:@"2"]) {
-                    [UIUtils showInfoMessage:@"您登陆的是学生身份,本客户端只服务与老师，请登录“律动课堂”"];
+                    [UIUtils showInfoMessage:@"您登陆的是学生身份,本客户端只服务于老师，请登录“律动课堂”"];
                 }else{
                     [[Appsetting sharedInstance] sevaUserInfoWithDict:dict withStr:_password.text];
                     

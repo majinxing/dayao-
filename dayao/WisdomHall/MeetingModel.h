@@ -10,8 +10,8 @@
 
 @interface MeetingModel : NSObject
 @property (nonatomic,copy) NSString * meetingName;//会议名
-@property (nonatomic,copy) NSString * meetingHost;//会议主持人
-@property (nonatomic,copy) NSString * meetingHostId;//会议主持人id
+@property (nonatomic,copy) NSString * meetingHost;//会议创建者
+@property (nonatomic,copy) NSString * meetingHostId;//会议创建者id
 @property (nonatomic,copy) NSString * meetingPlace;//会议地点
 @property (nonatomic,copy) NSString * meetingPlaceId;//会议室的id
 @property (nonatomic,copy) NSString * meetingTime;//会议时间
@@ -37,4 +37,6 @@
 
 
 -(void)setMeetingInfoWithDict:(NSDictionary *)dict;
+//包含与会者信息
+-(void)setSignPeopleWithNSArray:(NSArray *)ary;
 @end

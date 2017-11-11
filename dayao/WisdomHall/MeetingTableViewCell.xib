@@ -169,11 +169,11 @@
                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wsU-Q2-DoO">
                         <rect key="frame" x="197" y="10" width="177" height="123.5"/>
                         <color key="backgroundColor" red="0.32288649678230286" green="0.64060103893280029" blue="0.85886669158935547" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
-                        <state key="normal" title="Button">
+                        <state key="normal" title="二维码">
                             <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         </state>
                         <connections>
-                            <action selector="codePressed:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="gxq-mn-XQA"/>
+                            <action selector="codePressed:" destination="iIk-f6-ygd" eventType="touchUpInside" id="fgU-4k-bM4"/>
                         </connections>
                     </button>
                 </subviews>

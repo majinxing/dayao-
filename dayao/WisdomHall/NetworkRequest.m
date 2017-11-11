@@ -130,4 +130,57 @@
         failure(error);
     }];
 }
+/**
+ *  封装AFN的POST请求
+ *
+ *  @param URLString 网络请求地址
+ *  @param dict      参数(可以是字典或者nil)
+ *  @param succeed   成功后执行success block
+ *  @param failure   失败后执行failure block
+ */
+- (void)POSTImage:(NSString *)URLString image:(UIImage *)uploadImage dict:(id)dict succeed:(void (^)(id data))succeed failure:(void (^)(NSError *error))failure{
+    //创建网络请求管理对象
+    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
+    manager.responseSerializer.acceptableContentTypes = [NSSet setWithObject:@"text/html"];
+    manager.responseSerializer.acceptableContentTypes = [NSSet setWithObjects:@"text/html",@"application/json", @"text/json", nil];
+    manager.requestSerializer = [AFJSONRequestSerializer serializer];
+    [manager.requestSerializer setValue:@"application/json"forHTTPHeaderField:@"Content-Type"];
+    //调出请求头
+    
+    manager.requestSerializer = [AFJSONRequestSerializer serializer];
+    
+    //将token封装入请求头
+    
+    UserModel * user = [[Appsetting sharedInstance] getUsetInfo];
+    
+    [manager.requestSerializer setValue:[NSString stringWithFormat:@"Bearer %@",user.token] forHTTPHeaderField:@"token"];
+    
+    //发送网络请求(请求方式为POST)
+    URLString = [NSString stringWithFormat:@"%@%@",BaseURL,URLString];
+    
+    [manager POST:URLString parameters:dict constructingBodyWithBlock:^(id<AFMultipartFormData>  _Nonnull formData) {
+        
+        NSData *imageData = UIImageJPEGRepresentation(uploadImage,1);
+        
+        NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+        
+        formatter.dateFormat = @"yyyyMMddHHmmss";
+        
+        NSString *str = [formatter stringFromDate:[NSDate date]];
+        
+        NSString *fileName = [NSString stringWithFormat:@"%@.jpg",str];
+        
+        [formData appendPartWithFileData:imageData name:@"myfiles"  fileName:fileName mimeType:@"image/jpg"];       // 上传图片的参数key
+        
+    } progress:^(NSProgress * _Nonnull uploadProgress) {
+        
+    } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+        succeed(responseObject);
+        
+    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+        failure(error);
+        
+    }];
+    
+}
 @end

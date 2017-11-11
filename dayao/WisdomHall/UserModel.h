@@ -12,7 +12,7 @@
 @property (nonatomic,copy) NSString * userPhone;
 @property (nonatomic,copy) NSString * userPassword;
 @property (nonatomic,copy) NSString * userName;
-@property (nonatomic,copy) NSString * userHeadImage;
+@property (nonatomic,copy) NSString * userHeadImageId;
 @property (nonatomic,copy) NSString * school;//学校id
 @property (nonatomic,copy) NSString * schoolName;
 @property (nonatomic,copy) NSString * identity;//身份 老师1 学生2 其他 3

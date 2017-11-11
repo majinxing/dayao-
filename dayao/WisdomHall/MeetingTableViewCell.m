@@ -40,9 +40,9 @@
         _meetName.text = [NSString stringWithFormat:@"会议名称：%@",meetModel.meetingName];
     }
     if ([UIUtils isBlankString:meetModel.meetingHost]) {
-        _meetHost.text = @"主持人：";
+        _meetHost.text = @"创建者：";
     }else{
-        _meetHost.text = [NSString stringWithFormat:@"主持人：%@",meetModel.meetingHost];
+        _meetHost.text = [NSString stringWithFormat:@"创建者：%@",meetModel.meetingHost];
     }
     _meetTime.text = [NSString stringWithFormat:@"时间：%@",meetModel.meetingTime];
     _meetCode.text = [NSString stringWithFormat:@"邀请码：%@",meetModel.meetingId];
@@ -54,7 +54,7 @@
     [strUrl deleteCharactersInRange:NSMakeRange(strUrl.length-3, 3)];
     _meetTime.text = [NSString stringWithFormat:@"时间：%@",strUrl];
     _meetPlace.text = [NSString stringWithFormat:@"教室：%@",classModel.typeRoom];
-    _meetHost.text = [NSString stringWithFormat:@"主持人：%@",classModel.teacherName];
+    _meetHost.text = [NSString stringWithFormat:@"老师：%@",classModel.teacherName];
     _meetCode.text = [NSString stringWithFormat:@"邀请码：%@",classModel.sclassId];
 }
 -(void)addSecondContentView:(MeetingModel *)meetModel{
@@ -134,8 +134,8 @@
 }
 -(void)addThirdContentView:(MeetingModel *)meetModel{
     if ([[NSString stringWithFormat:@"%@",meetModel.signStatus] isEqualToString:@"1"]) {
-        [_signBtn setTitle:@"签到状态：未签到" forState:UIControlStateNormal];
-        [_code setTitle:@"二维码签到" forState:UIControlStateNormal];
+        [_signBtn setTitle:@"一键签到" forState:UIControlStateNormal];
+        [_code setTitle:@"扫码签到" forState:UIControlStateNormal];
         [_signBtn setEnabled:YES];
 
     }else if([[NSString stringWithFormat:@"%@",meetModel.signStatus] isEqualToString:@"2"]){
@@ -144,19 +144,22 @@
         [_signBtn setEnabled:NO];
     }else if ([[NSString stringWithFormat:@"%@",meetModel.signStatus] isEqualToString:@"3"]){
         [_signBtn setTitle:@"签到状态：正在签到，请不要退出界面" forState:UIControlStateNormal];
-        [_code setTitle:@"二维码签到" forState:UIControlStateNormal];
+        [_code setTitle:@"扫码签到" forState:UIControlStateNormal];
         [_signBtn setEnabled:NO];
     }else if ([[NSString stringWithFormat:@"%@",meetModel.signStatus] isEqualToString:@"4"]){
         [_signBtn setTitle:@"签到状态：连接数据流量后再次点击" forState:UIControlStateNormal];
-        [_code setTitle:@"二维码签到" forState:UIControlStateNormal];
+        [_code setTitle:@"扫码签到" forState:UIControlStateNormal];
         [_signBtn setEnabled:YES];
-
+    }else{
+        [_signBtn setTitle:@"一键签到" forState:UIControlStateNormal];
+        [_code setTitle:@"扫码签到" forState:UIControlStateNormal];
+        [_signBtn setEnabled:YES];
     }
 }
 -(void)addThirdContentViewWithClassModel:(ClassModel *)meetModel{
     if ([[NSString stringWithFormat:@"%@",meetModel.signStatus] isEqualToString:@"1"]) {
-        [_signBtn setTitle:@"签到状态：未签到" forState:UIControlStateNormal];
-        [_code setTitle:@"二维码签到" forState:UIControlStateNormal];
+        [_signBtn setTitle:@"一键签到" forState:UIControlStateNormal];
+        [_code setTitle:@"扫码签到" forState:UIControlStateNormal];
         [_signBtn setEnabled:YES];
         
     }else if([[NSString stringWithFormat:@"%@",meetModel.signStatus] isEqualToString:@"2"]){
@@ -165,15 +168,18 @@
         [_signBtn setEnabled:NO];
     }else if ([[NSString stringWithFormat:@"%@",meetModel.signStatus] isEqualToString:@"3"]){
         [_signBtn setTitle:@"签到状态：正在签到，请不要退出界面" forState:UIControlStateNormal];
-        [_code setTitle:@"二维码签到" forState:UIControlStateNormal];
+        [_code setTitle:@"扫码签到" forState:UIControlStateNormal];
 
         [_signBtn setEnabled:NO];
     }else if ([[NSString stringWithFormat:@"%@",meetModel.signStatus] isEqualToString:@"4"]){
         [_signBtn setTitle:@"签到状态：连接数据流量后再次点击" forState:UIControlStateNormal];
-        [_code setTitle:@"二维码签到" forState:UIControlStateNormal];
+        [_code setTitle:@"扫码码签到" forState:UIControlStateNormal];
 
         [_signBtn setEnabled:YES];
-        
+    }else{
+        [_signBtn setTitle:@"一键签到" forState:UIControlStateNormal];
+        [_code setTitle:@"扫码签到" forState:UIControlStateNormal];
+        [_signBtn setEnabled:YES];
     }
 }
 -(void)shareButtonClicked:(UIButton *)btn{

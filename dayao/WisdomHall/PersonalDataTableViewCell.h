@@ -11,6 +11,8 @@
 @protocol PersonalDataTableViewCellDelegate <NSObject>
 
 -(void)textFieldDidChangeDelegate:(UITextField *)textFile;
+-(void)changeSexBtnPressed:(UIButton *)btn;
+-(void)changeHeadImageDelegate:(UIButton *)btn;
 
 @end
 @interface PersonalDataTableViewCell : UITableViewCell
@@ -21,4 +23,5 @@
 @property (nonatomic,strong)NSArray * labelAry;
 + (instancetype)tempTableViewCellWith:(UITableView *)tableView indexPath:(NSIndexPath *)indexPath;
 -(void)setInfo:(NSString *)labelText withTextAry:(NSString *)textText isEdictor:(BOOL)edictor withRow:(NSInteger)n;
+-(void)changeImageIsBool:(BOOL)edictor withImage:(UIImage *)image;
 @end

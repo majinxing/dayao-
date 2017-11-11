@@ -113,12 +113,12 @@
     }
 }
 - (IBAction)registerButtonPressed:(id)sender {
-    if ([[NSString stringWithFormat:@"%@",_Verification] isEqualToString:@"0"]) {
-        DefineThePasswordViewController * definePWVC = [[DefineThePasswordViewController alloc] init];
-        definePWVC.phoneNumber = _phoneNumber;
-        [self.navigationController pushViewController:definePWVC animated:YES];
-        return;
-    }
+//    if ([[NSString stringWithFormat:@"%@",_Verification] isEqualToString:@"0"]) {
+//        DefineThePasswordViewController * definePWVC = [[DefineThePasswordViewController alloc] init];
+//        definePWVC.phoneNumber = _phoneNumber;
+//        [self.navigationController pushViewController:definePWVC animated:YES];
+//        return;
+//    }
     //验证验证码
     [JSMSSDK commitWithPhoneNumber:_phoneNumber verificationCode:_Verification completionHandler:^(id resultObject, NSError *error) {
         

@@ -160,8 +160,8 @@
         
         [self.view addSubview:_typeLab];
     }
-    _typeLab.text = @"正在链接";
-    
+    _typeLab.text = @"正在连接";
+
     
     UIImageView * headIamge = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"chatListCellHead"]];
     

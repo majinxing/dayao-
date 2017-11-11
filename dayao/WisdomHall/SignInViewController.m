@@ -85,9 +85,7 @@ static NSString *cellIdentifier = @"cellIdentifier";
     // 1.注册通知
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(UpdateTheClassPage) name:@"UpdateTheClassPage" object:nil];
-    
-    [UIUtils getInternetDate];
-    
+        
     // Do any additional setup after loading the view from its nib.
 }
 -(void)UpdateTheClassPage{
@@ -145,6 +143,8 @@ static NSString *cellIdentifier = @"cellIdentifier";
             if (aIsHeader) {
                 [_classAry removeAllObjects];
                 _classAry = [NSMutableArray arrayWithCapacity:1];
+                [_dict removeAllObjects];
+                _dict = [[NSMutableDictionary alloc] init];
             }
             dispatch_async(dispatch_get_main_queue(), ^{
                 [strongSelf hideHud];

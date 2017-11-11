@@ -10,7 +10,9 @@
 #import "DYHeader.h"
 
 @interface PersonalDataTableViewCell()<UITextFieldDelegate>
-
+@property (nonatomic,strong)UIButton * btn;
+@property (strong, nonatomic) IBOutlet UIButton *changeImage;
+@property (strong, nonatomic) IBOutlet UIImageView *headImage;
 
 @end
 @implementation PersonalDataTableViewCell
@@ -21,7 +23,10 @@
     _placeholder = [NSArray arrayWithObjects:[NSString stringWithFormat:@"%@",userl.userName],[NSString stringWithFormat:@"%@",userl.studentId],[NSString stringWithFormat:@"%@",userl.schoolName],[NSString stringWithFormat:@"%@",userl.departmentsName],[NSString stringWithFormat:@"%@",userl.professionalName], nil];
     
     _labelAry = [NSArray arrayWithObjects:@"姓名",@"学号",@"学校",@"院系",@"专业", nil];
-    
+    _btn = [UIButton buttonWithType:UIButtonTypeCustom];
+    _btn.frame = CGRectMake(CGRectGetMaxX(_dataLabel.frame), 0, APPLICATION_WIDTH-CGRectGetMaxX(_dataLabel.frame), 50);
+    [_btn addTarget:self action:@selector(changeSex:) forControlEvents:UIControlEventTouchUpInside];
+    _changeImage.enabled = NO;
     // Initialization code
 }
 + (instancetype)tempTableViewCellWith:(UITableView *)tableView indexPath:(NSIndexPath *)indexPath {
@@ -65,11 +70,34 @@
             _textFilePh.enabled = YES ;
             _dataLabel.textColor = [UIColor blueColor];
         }
+        if (n == 8) {
+            [self.contentView addSubview:_btn];
+        }
     }else{
         _dataLabel.alpha = 1;
         _textFilePh.alpha = 1;
         _textFilePh.enabled = NO ;
         _dataLabel.textColor = [UIColor blackColor];
+    }
+}
+-(void)changeImageIsBool:(BOOL)edictor withImage:(UIImage *)image{
+    if (edictor) {
+        _changeImage.enabled = YES;
+    }else{
+        _changeImage.enabled = NO;
+    }
+    if (image.size.height>0) {
+        _headImage.image = image;
+    }
+}
+- (IBAction)changeHeadImage:(UIButton *)sender {
+    if (self.delegate&&[self.delegate respondsToSelector:@selector(changeHeadImageDelegate:)]) {
+        [self.delegate changeHeadImageDelegate:sender];
+    }
+}
+-(void)changeSex:(UIButton *)btn{
+    if (self.delegate&&[self.delegate respondsToSelector:@selector(changeSexBtnPressed:)]) {
+        [self.delegate changeSexBtnPressed:btn];
     }
     
 }

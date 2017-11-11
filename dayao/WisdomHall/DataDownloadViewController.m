@@ -18,6 +18,7 @@
 @property (nonatomic,strong)UITableView * tableView;
 @property  (nonatomic,strong)NSMutableArray * fileAry;
 @property (nonatomic,strong)FileModel * f;
+@property (nonatomic,strong)UIWebView * webView;
 @end
 
 @implementation DataDownloadViewController
@@ -35,6 +36,10 @@
     
     [self addTableView];
     
+    if (!_webView) {
+        _webView = [[UIWebView alloc] initWithFrame:self.view.bounds];
+        _webView.dataDetectorTypes = UIDataDetectorTypeAll;
+    }
     
     // Do any additional setup after loading the view from its nib.
 }
@@ -213,11 +218,9 @@
 
 /** 打开文件 @param filePath 文件路径 */
 -(void)openDocxWithPath:(NSString *)filePath {
-    
     UIDocumentInteractionController *doc= [UIDocumentInteractionController interactionControllerWithURL:[NSURL fileURLWithPath:filePath]];
-    
+        
     doc.delegate = self;
-    
     [doc presentPreviewAnimated:YES];
     
 }

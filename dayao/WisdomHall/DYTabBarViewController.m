@@ -44,6 +44,9 @@
     [self addChildViewControllerWithClassname:[PersonalCenterViewController description] imagename:@"我的(1)" title:@"我的" withSelectImageName:@"我的"];
     
     [self selectApp];
+    
+    [UIUtils getInternetDate];
+
     // Do any additional setup after loading the view from its nib.
 }
 -(void)selectApp{

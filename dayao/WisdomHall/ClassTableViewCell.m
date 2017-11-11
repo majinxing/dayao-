@@ -79,6 +79,7 @@
         }
         if ([UIUtils isBlankString:ss]) {
             [btn setEnabled:NO];
+            [btn setTitle:@"" forState:UIControlStateNormal];
             btn.backgroundColor = [UIColor clearColor];
         }else{
             NSMutableArray * ary = [_dictAry objectForKey:[NSString stringWithFormat:@"%ld",(long)btn.tag]];
