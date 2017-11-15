@@ -54,7 +54,10 @@
         [self showHudInView:self.view hint:NSLocalizedString(@"正在加载数据", @"Load data...")];
     });
     
-    [[NetworkRequest sharedInstance] GET:QueryMeetingRoom dict:nil succeed:^(id data) {
+    UserModel * user = [[Appsetting sharedInstance] getUsetInfo];
+    NSDictionary * dictRoom = [[NSDictionary alloc] initWithObjectsAndKeys:@"1",@"start",@"1000",@"length",[NSString stringWithFormat:@"%@",user.school],@"universityId", nil];
+    
+    [[NetworkRequest sharedInstance] GET:QueryMeetingRoom dict:dictRoom succeed:^(id data) {
         NSArray * ary = [[data objectForKey:@"body"] objectForKey:@"list"];
         
         for (int i = 0; i<ary.count; i++) {

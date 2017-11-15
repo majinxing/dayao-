@@ -88,8 +88,10 @@
     [self.navigationController pushViewController:c animated:YES];
 }
 -(void)getData{
-    
-    [[NetworkRequest sharedInstance] GET:QueryMeetingRoom dict:nil succeed:^(id data) {
+    UserModel * user = [[Appsetting sharedInstance] getUsetInfo];
+    NSDictionary * dictRoom = [[NSDictionary alloc] initWithObjectsAndKeys:@"1",@"start",@"1000",@"length",[NSString stringWithFormat:@"%@",_meetingModel.meetingPlaceId],@"id",[NSString stringWithFormat:@"%@",user.school],@"universityId", nil];
+
+    [[NetworkRequest sharedInstance] GET:QueryMeetingRoom dict:dictRoom succeed:^(id data) {
         //        NSLog(@"%@",data);
         NSArray * ary = [[data objectForKey:@"body"] objectForKey:@"list"];
         for (int i = 0; i<ary.count; i++) {

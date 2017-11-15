@@ -182,9 +182,9 @@ static NSString * cellIdentifier = @"cellIdentifier";
     }];
 }
 -(void)getSelfCreateMeetingList:(NSInteger)page{
-    UserModel * user = [[Appsetting sharedInstance] getUsetInfo];
-    if ([[NSString stringWithFormat:@"%@",user.identity] isEqualToString:@"1"]) {
-        
+//    UserModel * user = [[Appsetting sharedInstance] getUsetInfo];
+//    if ([[NSString stringWithFormat:@"%@",user.identity] isEqualToString:@"1"]) {
+    
 //        NSDictionary * dict = [[NSDictionary alloc] initWithObjectsAndKeys:_userModel.peopleId,@"userId",[UIUtils getTime],@"startTime",@"",@"endTime",[NSString stringWithFormat:@"%ld",(long)page],@"start",nil];
         NSDictionary * dict = [[NSDictionary alloc] initWithObjectsAndKeys:_userModel.peopleId,@"userId",_keyWord,@"keywords",[NSString stringWithFormat:@"%ld",(long)page],@"start", nil];
         [[NetworkRequest sharedInstance] GET:QueryMeeting dict:dict succeed:^(id data) {
@@ -217,7 +217,7 @@ static NSString * cellIdentifier = @"cellIdentifier";
         } failure:^(NSError *error) {
             NSLog(@"失败%@",error);
         }];
-    }
+//    }
 }
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

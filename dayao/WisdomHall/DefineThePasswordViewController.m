@@ -137,7 +137,11 @@
     _labelAry = [[NSMutableArray alloc] initWithObjects:@"用  户  名",@"密      码",@"确认密码",@"身      份",@"工号/学号",@"学      校",@"院      系",@"专      业",@"班      级", nil];
     _textFileAry = [NSMutableArray arrayWithCapacity:4];
     for (int i = 0 ; i<10; i++) {
-        [_textFileAry addObject:@""];
+        if (i == 3) {
+            [_textFileAry addObject:@"老师"];
+        }else{
+            [_textFileAry addObject:@""];
+        }
     }
     _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 64, APPLICATION_WIDTH, APPLICATION_HEIGHT-64) style:UITableViewStylePlain];
     _tableView.dataSource = self;
@@ -273,9 +277,9 @@
 #pragma mark UITextFileDelegae DefinitionPersonalTableViewCellDelegate
 -(void)gggDelegate:(UIButton *)btn{
     if (btn.tag == 3) {
-        _temp = 4;
-        [self addPickView];
-        [self.view endEditing:YES];
+//        _temp = 4;
+//        [self addPickView];
+//        [self.view endEditing:YES];
     }else if (btn.tag == 5){
         SelectSchoolViewController * s = [[SelectSchoolViewController alloc] init];
         s.selectType = SelectSchool;
@@ -387,7 +391,7 @@
     return 1;
 }
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
-    return _m;
+    return 7;
 }
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{

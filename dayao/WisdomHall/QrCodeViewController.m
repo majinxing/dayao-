@@ -53,6 +53,9 @@
             [_dict setObject:md5 forKey:@"checkcode"];
             _codeImageView.image = nil;
             _codeImageView.image = [self qrImageForString:_dict imageSize:220 logoImageSize:220];
+//            if (!_dict) {
+//                [UIUtils showInfoMessage:@""];
+//            }
         }else{
             [_showTimer invalidate];
             [self outView];
