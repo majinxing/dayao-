@@ -43,6 +43,7 @@
 @property (nonatomic,strong)SeatIngModel * seatModel;
 @property (nonatomic,assign)int mac;
 @property (nonatomic,strong)UITableView * tableView;
+@property (nonatomic,assign)BOOL isEnable;
 @end
 
 @implementation TheMeetingInfoViewController
@@ -59,6 +60,11 @@
     
     _mac = 0;
     
+    _isEnable = NO;
+    
+    if ([[NSString stringWithFormat:@"%@",_meetingModel.signStatus] isEqualToString:@"2"]) {
+        _isEnable = YES;
+    }
     [self getData];
     
     [self addTableView];
@@ -237,7 +243,7 @@
             if (!cell) {
                 cell = [[[NSBundle mainBundle] loadNibNamed:@"MeetingTableViewCell" owner:self options:nil] objectAtIndex:2];
             }
-            [cell addThirdContentView:_meetingModel];
+            [cell addThirdContentView:_meetingModel isEnable:_isEnable];
         }
         
     }else if (indexPath.section == 2){
@@ -388,13 +394,14 @@
 -(void)signBtnPressedDelegate:(UIButton *)btn{
     
     [self showHudInView:self.view hint:NSLocalizedString(@"正在加载数据", @"Load data...")];
-    
+
     if (![UIUtils validateWithStartTime:_meetingModel.meetingTime withExpireTime:nil]) {
         [UIUtils showInfoMessage:@"会议开始之后一定时间范围内才可以签到"];
         [self hideHud];
         return;
     }
-    
+    _isEnable = YES;
+    [_tableView reloadData];
     NSMutableDictionary * dictWifi =  [UIUtils getWifiName];
     
     if (![UIUtils isBlankString:[dictWifi objectForKey:@"BSSID"]]) {

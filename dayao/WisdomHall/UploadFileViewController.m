@@ -19,6 +19,7 @@
 @property (strong, nonatomic) IBOutlet UIButton *sendbtn;
 @property (nonatomic,assign)int temp;
 @property (nonatomic,strong)UIAlertView * alter;
+@property (nonatomic,strong)NSString * function;
 @end
 
 @implementation UploadFileViewController
@@ -147,7 +148,7 @@
             NSString *filePath = [documentsDirectory stringByAppendingPathComponent:[NSString stringWithFormat:@"File/%@",f.fileName]]; //docPath为文件名
             
             if (![fileManager fileExistsAtPath:filePath]) {
-                NSLog(@"%s",__func__);
+//                NSLog(@"%s",__func__);
             }
             NSString * str ;
 
@@ -155,35 +156,39 @@
                 str = [NSString stringWithFormat:@"%@",_meeting.meetingId];
                 NSDictionary * dict = [[NSDictionary alloc] initWithObjectsAndKeys:@"9",@"type",@"www",@"description",@"2",@"function",[NSString stringWithFormat:@"%@",str],@"relId",@"2",@"relType",nil];
                 
-                [[TFFileUploadManager shareInstance] uploadFileWithURL:[NSString stringWithFormat:@"%@%@",BaseURL,FileUpload] params:dict fileKey:@"myfiles" filePath:filePath completeHander:^(NSURLResponse *response, NSData *data, NSError *connectionError) {
-                    
-                    if (connectionError) {
-                        NSLog(@"请求出错 %@",connectionError);
-                    }else{
-                        NSLog(@"请求返回：\n%@",response);
+                [[NetworkRequest sharedInstance] POSTImage:FileUpload filePath:filePath dict:dict succeed:^(id data) {
+                    if (i ==_boolAry.count-1) {
+                        [UIUtils showInfoMessage:@"上传完成"];
+                        [self hideHud];
                     }
+                } failure:^(NSError *error) {
+                    if (i ==_boolAry.count-1) {
+                        [UIUtils showInfoMessage:@"上传失败"];
+                    }
+                    [self hideHud];
                 }];
             }else{
                 str = [NSString stringWithFormat:@"%@",_classModel.sclassId];
-                NSDictionary * dict = [[NSDictionary alloc] initWithObjectsAndKeys:@"9",@"type",@"www",@"description",@"2",@"function",[NSString stringWithFormat:@"%@",str],@"relId",@"1",@"relType",nil];
-                
-                [[TFFileUploadManager shareInstance] uploadFileWithURL:[NSString stringWithFormat:@"%@%@",BaseURL,FileUpload] params:dict fileKey:@"myfiles" filePath:filePath completeHander:^(NSURLResponse *response, NSData *data, NSError *connectionError) {
-                    
-                    if (connectionError) {
-                        NSLog(@"请求出错 %@",connectionError);
-                    }else{
-                        NSLog(@"请求返回：\n%@",response);
+                NSDictionary * dict = [[NSDictionary alloc] initWithObjectsAndKeys:@"9",@"type",@"www",@"description",@"3",@"function",[NSString stringWithFormat:@"%@",str],@"relId",@"1",@"relType",nil];
+                [[NetworkRequest sharedInstance] POSTImage:FileUpload filePath:filePath dict:dict succeed:^(id data) {
+                    if (i ==_boolAry.count-1) {
+                        [UIUtils showInfoMessage:@"上传完成"];
+                        [self hideHud];
                     }
+                } failure:^(NSError *error) {
+                    if (i ==_boolAry.count-1) {
+                        [UIUtils showInfoMessage:@"上传失败"];
+                    }
+                    [self hideHud];
                 }];
-
             }
             
         }
     }
-    NSTimer *timer;
-    
-    timer = [NSTimer scheduledTimerWithTimeInterval:5 target:self selector:@selector(doTime) userInfo:nil repeats:NO];
-    
+//    NSTimer *timer;
+//
+//    timer = [NSTimer scheduledTimerWithTimeInterval:5 target:self selector:@selector(doTime) userInfo:nil repeats:NO];
+//
 }
 -(void)doTime{
     [self hideHud];

@@ -55,11 +55,17 @@
     
     if ([_type isEqualToString:@"meeting"]) {
         
-        NSDictionary * dict = [[NSDictionary alloc] initWithObjectsAndKeys:@"2",@"relType",_meeting.meetingId,@"relId",nil];
+        NSDictionary * dict;// = [[NSDictionary alloc] initWithObjectsAndKeys:@"2",@"relType",_meeting.meetingId,@"relId",@"2",@"function",nil];
+        if ([_function isEqualToString:@"5"]) {
+            dict = [[NSDictionary alloc] initWithObjectsAndKeys:@"2",@"relType",_meeting.meetingId,@"relId",@"5",@"function",nil];
+        }else{
+            dict = [[NSDictionary alloc] initWithObjectsAndKeys:@"2",@"relType",_meeting.meetingId,@"relId",@"2",@"function",nil];
+            
+        }
         [[NetworkRequest sharedInstance] GET:FileList dict:dict succeed:^(id data) {
             //            NSLog(@"%@",data);
             [_fileAry removeAllObjects];
-            NSArray * ary = [[data objectForKey:@"body"] objectForKey:@"list"];
+            NSArray * ary = [data objectForKey:@"body"];
             
             for (int i = 0; i<ary.count; i++) {
                 
@@ -84,13 +90,18 @@
         }];
     }else if ([_type isEqualToString:@"classModel"]){
         
-        NSDictionary * dict = [[NSDictionary alloc] initWithObjectsAndKeys:@"1",@"relType",_classModel.sclassId,@"relId",nil];
-        
+        NSDictionary * dict;// = [[NSDictionary alloc] initWithObjectsAndKeys:@"1",@"relType",_classModel.sclassId,@"relId",@"3",@"function",nil];
+        if ([_function isEqualToString:@"5"]) {
+            dict = [[NSDictionary alloc] initWithObjectsAndKeys:@"1",@"relType",_classModel.sclassId,@"relId",@"5",@"function",nil];;
+        }else{
+            dict = [[NSDictionary alloc] initWithObjectsAndKeys:@"1",@"relType",_classModel.sclassId,@"relId",@"3",@"function",nil];;
+            
+        }
         [[NetworkRequest sharedInstance] GET:FileList dict:dict succeed:^(id data) {
-            NSLog(@"%@",data);
+//            NSLog(@"%@",data);
             [_fileAry removeAllObjects];
             
-            NSArray * ary = [[data objectForKey:@"body"] objectForKey:@"list"];
+            NSArray * ary = [data objectForKey:@"body"];
             
             for (int i = 0; i<ary.count; i++) {
                 

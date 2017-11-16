@@ -13,4 +13,5 @@
 @property(nonatomic,strong)MeetingModel * meeting;
 @property(nonatomic,strong)ClassModel * classModel;
 @property(nonatomic,copy)NSString * type;
+@property(nonatomic,copy)NSString * function;
 @end

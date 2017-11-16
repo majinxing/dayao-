@@ -81,13 +81,14 @@
 #define ShareType_Email             @"Email"
 #define ShareType_Copy              @"复制链接"
 
-#define InteractionType_Test        @"测试"
+#define InteractionType_Test        @"测验"
 #define InteractionType_Discuss     @"讨论"
 #define InteractionType_Vote        @"投票"
 #define InteractionType_Responder   @"抢答"
 #define InteractionType_Data        @"文件"
 #define InteractionType_Add         @"更多"
 #define InteractionType_Sit         @"座次"
+#define InteractionType_Picture     @"拍照"
 
 #define Vote_delecate               @"删除"
 #define Vote_Modify                 @"修改"
@@ -183,7 +184,7 @@
 
 #define FileDownload            @"course/resource/download"         //资料下载
 
-#define FileList                @"course/resource/list"             //资料列表
+#define FileList                @"course/resource/select"             //资料列表
 
 #define FileDelegate            @"course/resource/delete"           //删除
 

@@ -24,11 +24,11 @@
 -(void)addFirstContentView:(MeetingModel *)meetModel;
 -(void)addSecondContentView:(MeetingModel *)meetModel;
 -(void)addFourthContentView:(MeetingModel *)meetModel;
--(void)addThirdContentView:(MeetingModel *)meetModel;
+-(void)addThirdContentView:(MeetingModel *)meetModel isEnable:(BOOL)isEnable;
 
 //class
 -(void)addFirstCOntentViewWithClassModel:(ClassModel *)classModel;
 -(void)addSecondContentViewWithClassModel:(ClassModel *)classModel;
 -(void)addFourthContentViewWithClassModel:(ClassModel *)classModel;
--(void)addThirdContentViewWithClassModel:(ClassModel *)meetModel;
+-(void)addThirdContentViewWithClassModel:(ClassModel *)meetModel isEnable:(BOOL)isEnable;
 @end

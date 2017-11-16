@@ -28,6 +28,7 @@
 #import <Foundation/Foundation.h>
 #import <CommonCrypto/CommonDigest.h>
 #import "QrCodeViewController.h"
+#import <AssetsLibrary/AssetsLibrary.h>
 
 #define kScreenWidth [UIScreen mainScreen].bounds.size.width
 
@@ -40,7 +41,7 @@
 @property (nonatomic,strong) ShareView * interaction;
 
 @property (strong, nonatomic, readonly) EMCallSession *callSession;
-
+@property (nonatomic,assign)BOOL isEnable;
 
 
 @property (strong, nonatomic)UserModel * user;
@@ -71,6 +72,7 @@
     _n = 0;
     _m = 0;
     _temp = 0;
+    _isEnable = NO;
     
     [self setNavigationTitle];
     
@@ -127,6 +129,7 @@
                 }else if ([[NSString stringWithFormat:@"%@",s.signStatus] isEqualToString:@"2"]){
                     _selfSignStatus = @"签到状态：已签到";
                     _c.signStatus = @"2";
+                    _isEnable = YES;
                 }
             }
             [_signAry addObject:s];
@@ -360,7 +363,7 @@
             if (!cell) {
                 cell = [[[NSBundle mainBundle] loadNibNamed:@"MeetingTableViewCell" owner:self options:nil] objectAtIndex:2];
             }
-            [cell addThirdContentViewWithClassModel:_c];
+            [cell addThirdContentViewWithClassModel:_c isEnable:_isEnable];
         }
         
     }else if (indexPath.section==2){
@@ -412,7 +415,7 @@
     //        [later show];
     //        return;
     //    }
-    
+    [_interaction hide];
     if ([platform isEqualToString:InteractionType_Vote]){
         VoteViewController * v = [[VoteViewController alloc] init];
         self.hidesBottomBarWhenPushed = YES;
@@ -440,24 +443,40 @@
     else if ([platform isEqualToString:InteractionType_Test]){
         NSLog(@"测试");
         
-        [_interaction hide];
-        self.hidesBottomBarWhenPushed = YES;
-        AllTestViewController * textVC = [[AllTestViewController alloc] init];
-        textVC.classModel = _c;
-        [self.navigationController pushViewController:textVC animated:YES];
+        UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"提示" message:nil preferredStyle:  UIAlertControllerStyleActionSheet];
+        //分别按顺序放入每个按钮；
+        [alert addAction:[UIAlertAction actionWithTitle:@"在线测验" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+            self.hidesBottomBarWhenPushed = YES;
+            AllTestViewController * textVC = [[AllTestViewController alloc] init];
+            textVC.classModel = _c;
+            [self.navigationController pushViewController:textVC animated:YES];
+        }]];
+//        [alert addAction:[UIAlertAction actionWithTitle:@"拍照作答" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+//            [self selectImage];
+//        }]];
+        [alert addAction:[UIAlertAction actionWithTitle:@"问答照片" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+            DataDownloadViewController * d = [[DataDownloadViewController alloc] init];
+            d.classModel = _c;
+            d.type = @"classModel";
+            d.function = @"5";
+            self.hidesBottomBarWhenPushed = YES;
+            [self.navigationController pushViewController: d animated:YES];
+        }]];
         
-    }
-    //    else{
-    //        UIAlertView * later = [[UIAlertView alloc] initWithTitle:nil message:@"未完待续" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil];
-    //        [later show];
-    //        return;
-    //    }
-    
-    if ([platform isEqualToString:InteractionType_Discuss]){
+        [alert addAction:[UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleDestructive handler:^(UIAlertAction * _Nonnull action) {
+            //点击按钮的响应事件；
+        }]];
+        
+        //弹出提示框；
+        [self presentViewController:alert animated:true completion:nil];
+        
+    }else if ([platform isEqualToString:InteractionType_Discuss]){
         DiscussViewController * d = [[DiscussViewController alloc] init];
         self.hidesBottomBarWhenPushed = YES;
         [self.navigationController pushViewController:d animated:YES];
         NSLog(@"讨论");
+    }else if ([platform isEqualToString:InteractionType_Picture]){
+        [self selectImage];
     }else if ([platform isEqualToString:InteractionType_Add]){
         NSLog(@"更多");
     }
@@ -480,7 +499,7 @@
 }
 -(void)signBtnPressedDelegate:(UIButton *)btn{
     [self showHudInView:self.view hint:NSLocalizedString(@"正在加载数据", @"Load data...")];
-
+ 
     if ([[NSString stringWithFormat:@"%@",_c.signStatus] isEqualToString:@"2"]) {
         [UIUtils showInfoMessage:@"已签到"];
         [self hideHud];
@@ -492,7 +511,8 @@
             return;
         }
     }
-    
+    _isEnable = YES;
+    [_tableView reloadData];
     NSMutableDictionary * dictWifi =  [UIUtils getWifiName];
     
     if (![UIUtils isBlankString:[NSString stringWithFormat:@"%@",[dictWifi objectForKey:@"BSSID"]]]) {
@@ -672,6 +692,86 @@
         [output appendFormat:@"%02x", digest[i]];
     
     return output;
+}
+
+//实现button点击事件的回调方法
+- (void)selectImage{
+    
+    //调用系统相册的类
+    UIImagePickerController *pickerController = [[UIImagePickerController alloc]init];
+    
+    //设置选取的照片是否可编辑
+    pickerController.allowsEditing = YES;
+    //设置相册呈现的样式
+    
+//    UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"提示" message:nil preferredStyle:  UIAlertControllerStyleActionSheet];
+//    //分别按顺序放入每个按钮；
+//    [alert addAction:[UIAlertAction actionWithTitle:@"拍照" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        pickerController.sourceType =  UIImagePickerControllerSourceTypeCamera;//图片分组列表样式
+    
+        //选择完成图片或者点击取消按钮都是通过代理来操作我们所需要的逻辑过程
+        pickerController.delegate = self;
+        //使用模态呈现相册
+        [self.navigationController presentViewController:pickerController animated:YES completion:^{
+            
+        }];
+//    }]];
+    
+//    [alert addAction:[UIAlertAction actionWithTitle:@"从相册选择" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+//
+//        pickerController.sourceType =  UIImagePickerControllerSourceTypeSavedPhotosAlbum;//图片分组列表样式
+        //照片的选取样式还有以下两种
+        //UIImagePickerControllerSourceTypePhotoLibrary,直接全部呈现系统相册UIImagePickerControllerSourceTypeSavedPhotosAlbum
+        //UIImagePickerControllerSourceTypeCamera//调取摄像头
+        
+        //选择完成图片或者点击取消按钮都是通过代理来操作我们所需要的逻辑过程
+        pickerController.delegate = self;
+        //使用模态呈现相册
+//        [self.navigationController presentViewController:pickerController animated:YES completion:^{
+//
+//        }];
+//
+//    }]];
+//
+//
+//    [alert addAction:[UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleDestructive handler:^(UIAlertAction * _Nonnull action) {
+//        //点击按钮的响应事件；
+//    }]];
+    
+    //弹出提示框；
+//    [self presentViewController:alert animated:true completion:nil];
+    
+}
+//选择照片完成之后的代理方法
+
+-(void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary<NSString *,id> *)info{
+    
+    //info是所选择照片的信息
+    
+    //    UIImagePickerControllerEditedImage//编辑过的图片
+    //    UIImagePickerControllerOriginalImage//原图
+    
+    //刚才已经看了info中的键值对，可以从info中取出一个UIImage对象，将取出的对象赋给按钮的image
+    
+    UIImage *resultImage = [info objectForKey:@"UIImagePickerControllerEditedImage"];
+    
+    //    NSString * filePath = [info objectForKey:@"UIImagePickerControllerReferenceURL"];
+    UserModel * user = [[Appsetting sharedInstance] getUsetInfo];
+    NSString * str = [NSString stringWithFormat:@"%@-%@-%@",user.userName,user.studentId,[UIUtils getTime]];
+    NSDictionary * dict1 = [[NSDictionary alloc] initWithObjectsAndKeys:@"1",@"type",str,@"description",@"5",@"function",[NSString stringWithFormat:@"%@",_c.sclassId],@"relId",@"1",@"relType",nil];
+    
+    [[NetworkRequest sharedInstance] POSTImage:FileUpload image:resultImage dict:dict1 succeed:^(id data) {
+        NSString * code = [NSString stringWithFormat:@"%@",[[data objectForKey:@"header"] objectForKey:@"code"]];
+        if ([code isEqualToString:@"0000"]) {
+            [UIUtils showInfoMessage:@"上传成功"];
+        }else{
+            [UIUtils showInfoMessage:@"上传失败"];
+        }
+    } failure:^(NSError *error) {
+        [UIUtils showInfoMessage:@"上传失败"];
+    }];
+    //使用模态返回到软件界面
+    [self.navigationController dismissViewControllerAnimated:YES completion:nil];
 }
 /*
  #pragma mark - Navigation
