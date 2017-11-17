@@ -14,6 +14,7 @@
 #import "DYTabBarViewController.h"
 #import "JSMSConstant.h"
 #import "JSMSSDK.h"
+#import "RegisterViewController.h"
 
 @interface WorkingLoginViewController ()<BindPhoneDelegate>
 @property (strong, nonatomic) IBOutlet UITextField *workNumber;
@@ -62,7 +63,11 @@
         if ([str isEqualToString:@"0000"]) {
             NSString * ss = [[data objectForKey:@"body"] objectForKey:@"bind"];
             if ([ss isEqualToString:@"true"]) {
-                [self bindPhoneBtn];
+                RegisterViewController * r = [[RegisterViewController alloc] init];
+                r.type = @"bindPhone";
+                r.workNo = _workNumber.text;
+                r.password = _password.text;
+                [self.navigationController pushViewController:r animated:YES];
             }else{
                 NSMutableDictionary * dict = [[NSMutableDictionary alloc] init];
                 dict = [data objectForKey:@"body"];
@@ -96,83 +101,6 @@
 - (IBAction)phoneLogin:(id)sender {
     TheLoginViewController * login = [[TheLoginViewController alloc] init];
     [self.navigationController pushViewController:login animated:YES];
-}
--(void)bindPhoneBtn{
-    if (_bindPhone == nil) {
-        _bindPhone = [[BindPhone alloc] init];
-        _bindPhone.delegate = self;
-        _bindPhone.frame = CGRectMake(0, 0, APPLICATION_WIDTH, APPLICATION_HEIGHT);
-        [self.view addSubview:_bindPhone];
-    }
-}
-#pragma mark BindPhoneDelegate
--(void)bindPhoneBtnDelegate:(UIButton *)btn{
-    [self.view endEditing:YES];
-    if (btn.tag == 1) {
-        [_bindPhone removeFromSuperview];
-        _bindPhone = nil;
-    }else if (btn.tag == 2){
-        _phone = [NSString stringWithFormat:@"%@",_bindPhone.courseNumber.text];
-        
-        [JSMSSDK getVerificationCodeWithPhoneNumber:_bindPhone.courseNumber.text andTemplateID:@"144851" completionHandler:^(id resultObject, NSError *error) {
-            if (!error) {
-                NSLog(@"Get verification code success!");
-                [_bindPhone addSecondContentView];
-            }else{
-                [UIUtils showInfoMessage:@"发送失败"];
-            }
-        }];
-    }
-}
--(void)bindDelegate:(UIButton *)btn{
-    [self.view endEditing:YES];
-    if (btn.tag == 1) {
-        [_bindPhone removeFromSuperview];
-        _bindPhone = nil;
-    }else if (btn.tag == 2){
-        //验证验证码
-        [JSMSSDK commitWithPhoneNumber:_phone verificationCode:_bindPhone.courseNumber.text completionHandler:^(id resultObject, NSError *error) {
-            
-            if (!error)
-            {
-                [self bindPhoneA];
-            }else
-            {
-                [UIUtils showInfoMessage:@"验证码错误"];
-            }
-        }];
-        
-    }
-    
-}
--(void)bindPhoneA{
-    NSDictionary * dict = [[NSDictionary alloc] initWithObjectsAndKeys:[NSString stringWithFormat:@"%@",_phone],@"phone",_workNumber.text,@"workNo", nil];
-    [[NetworkRequest sharedInstance] POST:BindPhoe dict:dict succeed:^(id data) {
-        NSString * str = [[data objectForKey:@"header"] objectForKey:@"code"];
-        if ([str isEqualToString:@"0000"]) {
-            NSMutableDictionary * dict = [[NSMutableDictionary alloc] init];
-            dict = [data objectForKey:@"body"];
-            NSString * type = [NSString stringWithFormat:@"%@",[dict objectForKey:@"type"]];
-            if ([type isEqualToString:@"2"]) {
-                [UIUtils showInfoMessage:@"您登陆的是学生身份,本客户端只服务与老师，请登录“律动课堂”"];
-            }else{
-                [[Appsetting sharedInstance] sevaUserInfoWithDict:dict withStr:_password.text];
-                
-                ChatHelper * c =[ChatHelper shareHelper];
-                
-                DYTabBarViewController *rootVC = [[DYTabBarViewController alloc] init];
-                
-                [UIApplication sharedApplication].keyWindow.rootViewController = rootVC;
-            }
-        }else if([str isEqualToString:@"1009"]){
-            [UIUtils showInfoMessage:@"绑定失败：手机号已注册"];
-        }
-        [self hideHud];
-    } failure:^(NSError *error) {
-        [UIUtils showInfoMessage:@"绑定失败请检查网络"];
-    }];
-    
-    
 }
 /*
  #pragma mark - Navigation

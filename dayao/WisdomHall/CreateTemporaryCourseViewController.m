@@ -355,7 +355,9 @@
     }else if (btn.tag == 4){
         SelectPeopleToClassViewController * s = [[SelectPeopleToClassViewController alloc] init];
         self.hidesBottomBarWhenPushed = YES;
+        s.selectPeople = [[NSMutableArray alloc] initWithArray:_selectPeopleAry];
         [self.navigationController pushViewController:s animated:YES];
+        [_selectPeopleAry removeAllObjects];
         [s returnText:^(NSMutableArray *returnText) {
             for (int i = 0; i<returnText.count; i++) {
                 SignPeople * s = returnText[i];

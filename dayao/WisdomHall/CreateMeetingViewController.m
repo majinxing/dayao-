@@ -449,8 +449,7 @@
                         allpeople = [_seat.seatColumn[i] intValue]+allpeople;
                     }
                     if (_selectPeopleAry.count>allpeople) {
-                        UIAlertView * alter = [[UIAlertView alloc] initWithTitle:@"会议室座次不够" message:@"您选择的会议室的座位数少于参加会议的人数" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil];
-                        [alter show];
+                        [UIUtils showInfoMessage:@"您选择的会议室的座位数少于参加会议的人数"];
                     }
                 }
                 

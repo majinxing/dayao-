@@ -12,6 +12,8 @@
 #import "UIUtils.h"
 #import "JSMSConstant.h"
 #import "JSMSSDK.h"
+#import "DYTabBarViewController.h"
+#import "ChatHelper.h"
 
 @interface RegisterViewController ()<UITextFieldDelegate>
 @property (strong, nonatomic) IBOutlet UIButton *getVerificationCodeBtn;
@@ -19,6 +21,7 @@
 @property (nonatomic,copy)NSString * Verification;
 @property (strong, nonatomic) IBOutlet UITextField *phoneTextFile;
 @property (strong, nonatomic) IBOutlet UITextField *vTextFile;
+@property (strong, nonatomic) IBOutlet UIButton *nextBtn;
 
 @property (nonatomic,assign)NSInteger _nowSencond;
 
@@ -53,7 +56,13 @@
     [self.navigationController.navigationBar setTitleTextAttributes:@{
                                                                       NSFontAttributeName:[UIFont systemFontOfSize:17],
                                                                       NSForegroundColorAttributeName:[UIColor blackColor]}];
-    self.title = @"注册";
+//    self.title = @"注册";
+    if ([_type isEqualToString:@"bindPhone"]) {
+        self.title = @"绑定手机号";
+        [self.nextBtn setTitle:@"绑定" forState:UIControlStateNormal];
+    }else{
+        self.title = @"注册";
+    }
 }
 - (IBAction)getVerificationCodeButtonPressed:(id)sender {
     
@@ -124,10 +133,14 @@
         
         if (!error)
         {
-            // 验证成功
-            DefineThePasswordViewController * definePWVC = [[DefineThePasswordViewController alloc] init];
-            definePWVC.phoneNumber = _phoneNumber;
-            [self.navigationController pushViewController:definePWVC animated:YES];
+            if ([_type isEqualToString:@"bindPhone"]) {
+                [self bindPhoneA];
+            }else{
+                // 验证成功
+                DefineThePasswordViewController * definePWVC = [[DefineThePasswordViewController alloc] init];
+                definePWVC.phoneNumber = _phoneNumber;
+                [self.navigationController pushViewController:definePWVC animated:YES];
+            }
         }else
         {
             UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"验证码错误" message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: nil];
@@ -135,6 +148,36 @@
             NSLog(@"失败");
         }
     }];
+}
+-(void)bindPhoneA{
+    NSDictionary * dict = [[NSDictionary alloc] initWithObjectsAndKeys:[NSString stringWithFormat:@"%@",_phoneTextFile.text],@"phone",_workNo,@"workNo", nil];
+    [[NetworkRequest sharedInstance] POST:BindPhoe dict:dict succeed:^(id data) {
+        NSString * str = [[data objectForKey:@"header"] objectForKey:@"code"];
+        if ([str isEqualToString:@"0000"]) {
+            NSMutableDictionary * dict = [[NSMutableDictionary alloc] init];
+            dict = [data objectForKey:@"body"];
+            NSString * type = [NSString stringWithFormat:@"%@",[dict objectForKey:@"type"]];
+            if ([type isEqualToString:@"2"]) {
+                [UIUtils showInfoMessage:@"您登陆的是学生身份,本客户端只服务与老师，请登录“律动课堂”"];
+            }else{
+                [[Appsetting sharedInstance] sevaUserInfoWithDict:dict withStr:_password];
+                
+                ChatHelper * c =[ChatHelper shareHelper];
+                
+                DYTabBarViewController *rootVC = [[DYTabBarViewController alloc] init];
+                
+                [UIApplication sharedApplication].keyWindow.rootViewController = rootVC;
+            }
+        }else if([str isEqualToString:@"1009"]){
+            [UIUtils showInfoMessage:@"绑定失败：手机号已注册"];
+        }else{
+            [UIUtils showInfoMessage:@"系统错误"];
+        }
+        [self hideHud];
+    } failure:^(NSError *error) {
+        [UIUtils showInfoMessage:@"绑定失败请检查网络"];
+    }];
+    
     
 }
 

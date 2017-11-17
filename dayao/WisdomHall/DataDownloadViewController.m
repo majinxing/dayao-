@@ -91,8 +91,8 @@
     }else if ([_type isEqualToString:@"classModel"]){
         
         NSDictionary * dict;// = [[NSDictionary alloc] initWithObjectsAndKeys:@"1",@"relType",_classModel.sclassId,@"relId",@"3",@"function",nil];
-        if ([_function isEqualToString:@"5"]) {
-            dict = [[NSDictionary alloc] initWithObjectsAndKeys:@"1",@"relType",_classModel.sclassId,@"relId",@"5",@"function",nil];;
+        if ([_function isEqualToString:@"6"]) {
+            dict = [[NSDictionary alloc] initWithObjectsAndKeys:@"1",@"relType",_classModel.sclassId,@"relId",@"6",@"function",nil];;
         }else{
             dict = [[NSDictionary alloc] initWithObjectsAndKeys:@"1",@"relType",_classModel.sclassId,@"relId",@"3",@"function",nil];;
             

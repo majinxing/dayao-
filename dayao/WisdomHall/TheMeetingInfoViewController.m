@@ -499,6 +499,9 @@
     }else if ([str isEqualToString:@"1008"]){
         [UIUtils showInfoMessage:@"这台手机已经签到一次了，不能重复使用签到，谢谢"];
         _meetingModel.signStatus =@"1";
+    }else if ([str isEqualToString:@"9999"]){
+        _meetingModel.signStatus = @"1";
+        [UIUtils showInfoMessage:@"系统错误"];
     }
     [_tableView reloadData];
 }

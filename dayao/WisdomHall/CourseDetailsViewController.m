@@ -230,6 +230,9 @@
     }else if ([str isEqualToString:@"1008"]){
         [UIUtils showInfoMessage:@"这台手机已经签到一次了，不能重复使用签到，谢谢"];
         _c.signStatus =@"1";
+    }else if ([str isEqualToString:@"9999"]){
+        _c.signStatus = @"1";
+        [UIUtils showInfoMessage:@"系统错误"];
     }
     [_tableView reloadData];
 }
@@ -458,7 +461,7 @@
             DataDownloadViewController * d = [[DataDownloadViewController alloc] init];
             d.classModel = _c;
             d.type = @"classModel";
-            d.function = @"5";
+            d.function = @"6";
             self.hidesBottomBarWhenPushed = YES;
             [self.navigationController pushViewController: d animated:YES];
         }]];
@@ -758,7 +761,7 @@
     //    NSString * filePath = [info objectForKey:@"UIImagePickerControllerReferenceURL"];
     UserModel * user = [[Appsetting sharedInstance] getUsetInfo];
     NSString * str = [NSString stringWithFormat:@"%@-%@-%@",user.userName,user.studentId,[UIUtils getTime]];
-    NSDictionary * dict1 = [[NSDictionary alloc] initWithObjectsAndKeys:@"1",@"type",str,@"description",@"5",@"function",[NSString stringWithFormat:@"%@",_c.sclassId],@"relId",@"1",@"relType",nil];
+    NSDictionary * dict1 = [[NSDictionary alloc] initWithObjectsAndKeys:@"1",@"type",str,@"description",@"6",@"function",[NSString stringWithFormat:@"%@",_c.sclassId],@"relId",@"1",@"relType",nil];
     
     [[NetworkRequest sharedInstance] POSTImage:FileUpload image:resultImage dict:dict1 succeed:^(id data) {
         NSString * code = [NSString stringWithFormat:@"%@",[[data objectForKey:@"header"] objectForKey:@"code"]];

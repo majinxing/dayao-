@@ -11,6 +11,8 @@
 #import "SchoolModel.h"
 #import "SignPeople.h"
 #import "CreateCouresTableViewCell.h"
+#import "MJRefresh.h"
+
 
 @interface SelectPeopleToClassViewController ()<UITableViewDelegate,UITableViewDataSource,UIPickerViewDelegate,UIPickerViewDataSource,CreateCouresTableViewCellDelegate,UISearchBarDelegate>
 @property (nonatomic,strong)UITableView * tableView;
@@ -23,6 +25,7 @@
 @property (nonatomic,strong)UIView * pickerView;
 @property (nonatomic,assign)int temp;//标志位判断选择的是哪一个滚轮
 @property (nonatomic,assign) int n;
+@property (nonatomic,assign) int page;
 
 @property (nonatomic,copy) NSString * facultyId;
 @property (nonatomic,copy) NSString * majorId;
@@ -187,8 +190,74 @@
     _tableView.delegate = self;
     _tableView.dataSource = self;
     _tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
-    
+    __weak SelectPeopleToClassViewController * weakSelf = self;
+    _page = 1;
+    [_tableView addHeaderWithCallback:^{
+        [weakSelf headerRereshing];
+    }];
+    [_tableView addFooterWithCallback:^{
+        [weakSelf footerRereshing];
+    }];
     [self.view addSubview:_tableView];
+}
+-(void)headerRereshing{
+    self.page = 1;
+    [self fetchChatRoomsWithPage:self.page isHeader:YES];
+}
+-(void)footerRereshing{
+    self.page +=1;
+    [self fetchChatRoomsWithPage:self.page isHeader:NO];
+}
+- (void)fetchChatRoomsWithPage:(NSInteger)aPage
+                      isHeader:(BOOL)aIsHeader{
+    NSMutableDictionary * d = [[NSMutableDictionary alloc] init];
+    
+    [d setObject:[NSString stringWithFormat:@"%@",_school.schoolId] forKey:@"universityId"];
+    [d setObject:[NSString stringWithFormat:@"%ld",(long)aPage] forKey:@"start"];
+    [d setObject:@"50" forKey:@"length"];
+    
+    if (![UIUtils isBlankString:[NSString stringWithFormat:@"%@",_school.departmentId]]) {
+        
+        [d setObject:[NSString stringWithFormat:@"%@",_school.departmentId] forKey:@"facultyId"];
+        
+    }
+    if (![UIUtils isBlankString:[NSString stringWithFormat:@"%@",_school.majorId]]){
+        
+        [d setObject:[NSString stringWithFormat:@"%@",_school.majorId] forKey:@"majorId"];
+        
+    }
+    if (![UIUtils isBlankString:[NSString stringWithFormat:@"%@",[NSString stringWithFormat:@"%@",_school.sclassId]]]){
+        [d setObject:[NSString stringWithFormat:@"%@",_school.sclassId] forKey:@"classId"];
+    }
+    
+    
+    [[NetworkRequest sharedInstance] GET:QueryPeople dict:d succeed:^(id data) {
+        NSArray * aty = [[data objectForKey:@"body"] objectForKey:@"list"];
+        if (aIsHeader) {
+            [_dataAry removeAllObjects];
+            [_tableView headerEndRefreshing];
+        }else{
+            [_tableView footerEndRefreshing];
+        }
+        for (int i = 0; i<aty.count; i++) {
+            SignPeople * s = [[SignPeople alloc] init];
+            s.name = [aty[i] objectForKey:@"name"];
+            s.userId = [aty[i] objectForKey:@"id"];
+            s.workNo = [aty[i] objectForKey:@"workNo"];
+            for (int j = 0; j<_selectPeople.count; j++) {
+                SignPeople * sg = _selectPeople[j];
+                if ([[NSString stringWithFormat:@"%@",s.userId] isEqualToString:[NSString stringWithFormat:@"%@",sg.userId]]) {
+                    s.isSelect = YES;
+                    break;
+                }
+            }
+            [_dataAry addObject:s];
+        }
+        [_tableView reloadData];
+    } failure:^(NSError *error) {
+        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"查询失败" message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: nil];
+        [alertView show];
+    }];
     
 }
 -(void)addPickView{
@@ -387,7 +456,7 @@
         
         [d setObject:[NSString stringWithFormat:@"%@",_school.schoolId] forKey:@"universityId"];
         [d setObject:@"1" forKey:@"start"];
-        [d setObject:@"100000" forKey:@"length"];
+        [d setObject:@"50" forKey:@"length"];
         
         if (![UIUtils isBlankString:[NSString stringWithFormat:@"%@",_school.departmentId]]) {
             
