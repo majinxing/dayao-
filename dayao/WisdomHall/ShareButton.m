@@ -119,7 +119,7 @@
         [self setImage:[UIImage imageNamed:@"座次"] forState:UIControlStateNormal];
     }
     if ([type isEqualToString:InteractionType_Picture]) {
-        [self setImage:[UIImage imageNamed:@"拍照"] forState:UIControlStateNormal];
+        [self setImage:[UIImage imageNamed:@"问答"] forState:UIControlStateNormal];
     }
     [self setTitle:type forState:UIControlStateNormal];
 }

@@ -249,7 +249,7 @@
     [[NetworkRequest sharedInstance] POST:CreateQuestion dict:dict succeed:^(id data) {
         NSString * str = [NSString stringWithFormat:@"%@",[[data objectForKey:@"header"] objectForKey:@"code"]];
         if ([str isEqualToString:@"0000"]) {
-            q.questionsID = [data objectForKey:@"body"];
+            q.questionsID = [[data objectForKey:@"body"] objectForKey:@"id"];
             _q = nil;
             _q = [[Questions alloc] init];
             _questionNumber.text = [NSString stringWithFormat:@"总题数：%lu",(unsigned long)_questionArt.count];

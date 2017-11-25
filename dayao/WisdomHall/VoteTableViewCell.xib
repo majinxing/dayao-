@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="12121" systemVersion="16E195" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="13529" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12089"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13527"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -19,7 +19,7 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <label opaque="NO" userInteractionEnabled="NO" alpha="0.65000000000000002" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="创建时间：2017-6-1  17:08" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="m8l-dJ-X2f">
-                        <rect key="frame" x="23" y="55.5" width="232" height="20"/>
+                        <rect key="frame" x="23" y="53" width="232" height="20"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="20" id="HlZ-u9-MBe"/>
                         </constraints>
@@ -28,7 +28,7 @@
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="状态：进行中" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="14w-2H-3wW">
-                        <rect key="frame" x="255" y="55.5" width="100" height="20"/>
+                        <rect key="frame" x="255" y="53" width="100" height="20"/>
                         <color key="backgroundColor" red="0.083215064948145345" green="0.64179063459883834" blue="1" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="20" id="8oB-Dg-CKn"/>
@@ -39,7 +39,7 @@
                         <nil key="highlightedColor"/>
                     </label>
                     <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" scrollEnabled="NO" editable="NO" textAlignment="natural" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="OvE-PQ-9gk">
-                        <rect key="frame" x="15" y="10" width="310" height="35.5"/>
+                        <rect key="frame" x="15" y="10" width="310" height="33"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <fontDescription key="fontDescription" type="system" pointSize="15"/>
                         <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
@@ -52,7 +52,7 @@
                         </constraints>
                     </imageView>
                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Hwk-Xl-MIR">
-                        <rect key="frame" x="325" y="0.0" width="50" height="45"/>
+                        <rect key="frame" x="325" y="0.0" width="50" height="42.5"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="50" id="0Tg-R4-AQW"/>
                         </constraints>
@@ -75,7 +75,7 @@
                     <constraint firstAttribute="trailing" secondItem="OvE-PQ-9gk" secondAttribute="trailing" constant="50" id="boQ-Ub-Hno"/>
                     <constraint firstItem="14w-2H-3wW" firstAttribute="leading" secondItem="m8l-dJ-X2f" secondAttribute="trailing" id="fMg-eD-yYq"/>
                     <constraint firstItem="Hwk-Xl-MIR" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" id="kv8-uh-LGc"/>
-                    <constraint firstItem="m8l-dJ-X2f" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" constant="15" id="ucP-Ua-1Sl"/>
+                    <constraint firstItem="m8l-dJ-X2f" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" constant="7" id="ucP-Ua-1Sl"/>
                 </constraints>
             </tableViewCellContentView>
             <connections>

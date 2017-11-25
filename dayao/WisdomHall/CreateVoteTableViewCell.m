@@ -27,7 +27,13 @@
     [super awakeFromNib];
     _lableText = [[NSString alloc] init];
     _selectNumTextView.delegate = self;
+    _selectTextView.delegate = self;
+    
     // Initialization code
+}
+#pragma mark UITextFieldDelegate
+- (BOOL)textFieldShouldReturn:(UITextField *)textField{
+    return [textField resignFirstResponder];
 }
 -(void)addSelectNumeberWithNumer:(NSString *)number withTag:(int)tag{
     _selectNumTextView.text = number;

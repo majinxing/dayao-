@@ -281,10 +281,10 @@
     
     long n = [expireTime integerValue];
     long m = [mm integerValue];
-    if (m>=5) {
-        startTime = [NSString stringWithFormat:@"%@ %@:%ld",ary[0],ary1[0],m-5];
+    if (m>=10) {
+        startTime = [NSString stringWithFormat:@"%@ %@:%ld",ary[0],ary1[0],m-10];
     }else{
-        startTime = [NSString stringWithFormat:@"%@ %ld:%ld",ary[0],n-1,m-5+60];
+        startTime = [NSString stringWithFormat:@"%@ %ld:%ld",ary[0],n-1,m-10+60];
     }
     
     if (m>=30) {

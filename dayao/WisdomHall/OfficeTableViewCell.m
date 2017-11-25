@@ -75,7 +75,6 @@
                        Leave,
                        Business,
                        Lotus,
-                       Group
                        ];
     
     //水平间距

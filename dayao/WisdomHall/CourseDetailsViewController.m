@@ -412,7 +412,7 @@
 }
 #pragma mark MeetingCellDelegate
 -(void)shareButtonClickedDelegate:(NSString *)platform{
-
+    
     //    if (![platform isEqualToString:InteractionType_Responder]||![platform isEqualToString:InteractionType_Data]) {
     //        UIAlertView * later = [[UIAlertView alloc] initWithTitle:nil message:@"未完待续" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil];
     //        [later show];
@@ -445,41 +445,22 @@
     }
     else if ([platform isEqualToString:InteractionType_Test]){
         NSLog(@"测试");
-        
-        UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"提示" message:nil preferredStyle:  UIAlertControllerStyleActionSheet];
-        //分别按顺序放入每个按钮；
-        [alert addAction:[UIAlertAction actionWithTitle:@"在线测验" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-            self.hidesBottomBarWhenPushed = YES;
-            AllTestViewController * textVC = [[AllTestViewController alloc] init];
-            textVC.classModel = _c;
-            [self.navigationController pushViewController:textVC animated:YES];
-        }]];
-//        [alert addAction:[UIAlertAction actionWithTitle:@"拍照作答" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-//            [self selectImage];
-//        }]];
-        [alert addAction:[UIAlertAction actionWithTitle:@"问答照片" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-            DataDownloadViewController * d = [[DataDownloadViewController alloc] init];
-            d.classModel = _c;
-            d.type = @"classModel";
-            d.function = @"6";
-            self.hidesBottomBarWhenPushed = YES;
-            [self.navigationController pushViewController: d animated:YES];
-        }]];
-        
-        [alert addAction:[UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleDestructive handler:^(UIAlertAction * _Nonnull action) {
-            //点击按钮的响应事件；
-        }]];
-        
-        //弹出提示框；
-        [self presentViewController:alert animated:true completion:nil];
-        
+        self.hidesBottomBarWhenPushed = YES;
+        AllTestViewController * textVC = [[AllTestViewController alloc] init];
+        textVC.classModel = _c;
+        [self.navigationController pushViewController:textVC animated:YES];
     }else if ([platform isEqualToString:InteractionType_Discuss]){
         DiscussViewController * d = [[DiscussViewController alloc] init];
         self.hidesBottomBarWhenPushed = YES;
         [self.navigationController pushViewController:d animated:YES];
         NSLog(@"讨论");
     }else if ([platform isEqualToString:InteractionType_Picture]){
-        [self selectImage];
+        DataDownloadViewController * d = [[DataDownloadViewController alloc] init];
+        d.classModel = _c;
+        d.type = @"classModel";
+        d.function = @"6";
+        self.hidesBottomBarWhenPushed = YES;
+        [self.navigationController pushViewController: d animated:YES];
     }else if ([platform isEqualToString:InteractionType_Add]){
         NSLog(@"更多");
     }
@@ -502,7 +483,7 @@
 }
 -(void)signBtnPressedDelegate:(UIButton *)btn{
     [self showHudInView:self.view hint:NSLocalizedString(@"正在加载数据", @"Load data...")];
- 
+    
     if ([[NSString stringWithFormat:@"%@",_c.signStatus] isEqualToString:@"2"]) {
         [UIUtils showInfoMessage:@"已签到"];
         [self hideHud];
@@ -707,42 +688,42 @@
     pickerController.allowsEditing = YES;
     //设置相册呈现的样式
     
-//    UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"提示" message:nil preferredStyle:  UIAlertControllerStyleActionSheet];
-//    //分别按顺序放入每个按钮；
-//    [alert addAction:[UIAlertAction actionWithTitle:@"拍照" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-        pickerController.sourceType =  UIImagePickerControllerSourceTypeCamera;//图片分组列表样式
+    //    UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"提示" message:nil preferredStyle:  UIAlertControllerStyleActionSheet];
+    //    //分别按顺序放入每个按钮；
+    //    [alert addAction:[UIAlertAction actionWithTitle:@"拍照" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+    pickerController.sourceType =  UIImagePickerControllerSourceTypeCamera;//图片分组列表样式
     
-        //选择完成图片或者点击取消按钮都是通过代理来操作我们所需要的逻辑过程
-        pickerController.delegate = self;
-        //使用模态呈现相册
-        [self.navigationController presentViewController:pickerController animated:YES completion:^{
-            
-        }];
-//    }]];
-    
-//    [alert addAction:[UIAlertAction actionWithTitle:@"从相册选择" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-//
-//        pickerController.sourceType =  UIImagePickerControllerSourceTypeSavedPhotosAlbum;//图片分组列表样式
-        //照片的选取样式还有以下两种
-        //UIImagePickerControllerSourceTypePhotoLibrary,直接全部呈现系统相册UIImagePickerControllerSourceTypeSavedPhotosAlbum
-        //UIImagePickerControllerSourceTypeCamera//调取摄像头
+    //选择完成图片或者点击取消按钮都是通过代理来操作我们所需要的逻辑过程
+    pickerController.delegate = self;
+    //使用模态呈现相册
+    [self.navigationController presentViewController:pickerController animated:YES completion:^{
         
-        //选择完成图片或者点击取消按钮都是通过代理来操作我们所需要的逻辑过程
-        pickerController.delegate = self;
-        //使用模态呈现相册
-//        [self.navigationController presentViewController:pickerController animated:YES completion:^{
-//
-//        }];
-//
-//    }]];
-//
-//
-//    [alert addAction:[UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleDestructive handler:^(UIAlertAction * _Nonnull action) {
-//        //点击按钮的响应事件；
-//    }]];
+    }];
+    //    }]];
+    
+    //    [alert addAction:[UIAlertAction actionWithTitle:@"从相册选择" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+    //
+    //        pickerController.sourceType =  UIImagePickerControllerSourceTypeSavedPhotosAlbum;//图片分组列表样式
+    //照片的选取样式还有以下两种
+    //UIImagePickerControllerSourceTypePhotoLibrary,直接全部呈现系统相册UIImagePickerControllerSourceTypeSavedPhotosAlbum
+    //UIImagePickerControllerSourceTypeCamera//调取摄像头
+    
+    //选择完成图片或者点击取消按钮都是通过代理来操作我们所需要的逻辑过程
+    pickerController.delegate = self;
+    //使用模态呈现相册
+    //        [self.navigationController presentViewController:pickerController animated:YES completion:^{
+    //
+    //        }];
+    //
+    //    }]];
+    //
+    //
+    //    [alert addAction:[UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleDestructive handler:^(UIAlertAction * _Nonnull action) {
+    //        //点击按钮的响应事件；
+    //    }]];
     
     //弹出提示框；
-//    [self presentViewController:alert animated:true completion:nil];
+    //    [self presentViewController:alert animated:true completion:nil];
     
 }
 //选择照片完成之后的代理方法

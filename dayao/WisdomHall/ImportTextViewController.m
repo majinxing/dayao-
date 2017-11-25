@@ -45,7 +45,7 @@
 -(void)getData{
     NSDictionary * dict = [[NSDictionary alloc] initWithObjectsAndKeys:@"1",@"start",@"1000",@"length",nil];
     [[NetworkRequest sharedInstance] GET:QuertyQusetionBank dict:dict succeed:^(id data) {
-        NSArray * ary = [data objectForKey:@"body"];
+        NSArray * ary = [[data objectForKey:@"body"] objectForKey:@"list"];
         for (int i = 0; i<ary.count; i++) {
             QuestionBank * q = [[QuestionBank alloc] init];
             [q setSelfInfoWithDict:ary[i]];
@@ -122,7 +122,7 @@
         NSLog(@"%@",data);
         NSString  * str = [NSString stringWithFormat:@"%@",[[data objectForKey:@"header"] objectForKey:@"code"]];
         if ([str isEqualToString:@"0000"]) {
-            NSArray * ary = [data objectForKey:@"body"];
+            NSArray * ary = [[data objectForKey:@"body"] objectForKey:@"list"];
             NSMutableArray * d = [NSMutableArray arrayWithCapacity:1];
             for (int i = 0; i<ary.count; i++) {
                 Questions * q = [[Questions alloc] init];

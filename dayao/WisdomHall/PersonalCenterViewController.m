@@ -14,6 +14,7 @@
 #import "CompanyProfileViewController.h"
 #import "FeedbackViewController.h"
 #import "DYHeader.h"
+#import "GroupListViewController.h"
 
 @interface PersonalCenterViewController ()<UITableViewDelegate,UITableViewDataSource>
 @property(nonatomic,strong)UITableView * tableview;
@@ -58,7 +59,7 @@
     if (section == 0) {
         return 1;
     }else if (section == 1){
-        return 5;
+        return 6;
     }
     return 0;
 }
@@ -80,30 +81,29 @@
             self.hidesBottomBarWhenPushed = NO;
         }
         else if (indexPath.row == 1){
-//            UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"暂无通知" message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: nil];
-//            [alertView show];
             NoticeViewController * noticeVC = [[NoticeViewController alloc] init];
             self.hidesBottomBarWhenPushed = YES;
             [self.navigationController pushViewController:noticeVC animated:YES];
             self.hidesBottomBarWhenPushed = NO;
-        }
-        else if (indexPath.row == 2) {
+        }else if (indexPath.row == 2){
+            GroupListViewController * g = [[GroupListViewController alloc] init];
+            self.hidesBottomBarWhenPushed = YES;
+            [self.navigationController pushViewController:g animated:YES];
+            self.hidesBottomBarWhenPushed = NO;
+        }else if (indexPath.row == 3) {
             SystemSettingsViewController * systemVC = [[SystemSettingsViewController alloc] init];
             self.hidesBottomBarWhenPushed = YES;
             [self.navigationController pushViewController:systemVC animated:YES];
             self.hidesBottomBarWhenPushed = NO;
-        }else if (indexPath.row == 3){
-//            UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"暂无简介" message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: nil];
-//            [alertView show];
+        }else if (indexPath.row == 4){
             CompanyProfileViewController *cVC = [[CompanyProfileViewController alloc] init];
             self.hidesBottomBarWhenPushed = YES;
             [self.navigationController pushViewController:cVC animated:YES];
             self.hidesBottomBarWhenPushed = NO;
-        }else if (indexPath.row == 4){
+        }else if (indexPath.row == 5){
             FeedbackViewController * f = [[FeedbackViewController alloc] init];
             [self.navigationController pushViewController:f animated:YES];
             self.hidesBottomBarWhenPushed = NO;
-            
         }
     }
 }

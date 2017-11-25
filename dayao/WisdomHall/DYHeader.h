@@ -88,7 +88,7 @@
 #define InteractionType_Data        @"文件"
 #define InteractionType_Add         @"更多"
 #define InteractionType_Sit         @"座次"
-#define InteractionType_Picture     @"拍照"
+#define InteractionType_Picture     @"问答"
 
 #define Vote_delecate               @"删除"
 #define Vote_Modify                 @"修改"

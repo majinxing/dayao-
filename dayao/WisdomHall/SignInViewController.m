@@ -34,8 +34,8 @@
 
 static NSString *cellIdentifier = @"cellIdentifier";
 
-@interface SignInViewController ()<UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout,AlterViewDelegate,JoinCoursDelegate,UITableViewDelegate,UITableViewDataSource,ClassTableViewCellDelegate>
-@property (nonatomic,strong) UICollectionView * collection;
+@interface SignInViewController ()<AlterViewDelegate,JoinCoursDelegate,UITableViewDelegate,UITableViewDataSource,ClassTableViewCellDelegate>
+//@property (nonatomic,strong) UICollectionView * collection;
 @property (nonatomic,strong) UserModel * userModel;
 @property (nonatomic,strong) NSMutableArray * classAry;
 /** @brief 当前加载的页数 */
@@ -147,7 +147,7 @@ static NSString *cellIdentifier = @"cellIdentifier";
                 _dict = [[NSMutableDictionary alloc] init];
             }
             dispatch_async(dispatch_get_main_queue(), ^{
-                [strongSelf hideHud];
+//                [strongSelf hideHud];
                 [strongSelf getDataWithPage:aPage];
             });
             
@@ -178,10 +178,13 @@ static NSString *cellIdentifier = @"cellIdentifier";
             }
             [self getSelfJoinClass:page];
         }else if ([str isEqualToString:@"无效token"]){
+            [self hideHud];
             dispatch_async(dispatch_get_main_queue(), ^{
                 [UIUtils accountWasUnderTheRoof];
-                
             });
+        }else{
+            [self hideHud];
+
         }
     } failure:^(NSError *error) {
         [self hideHud];
@@ -233,6 +236,7 @@ static NSString *cellIdentifier = @"cellIdentifier";
     NSDictionary * dict = [[NSDictionary alloc] initWithObjectsAndKeys:[NSString stringWithFormat:@"%ld",(long)page],@"start",_userModel.peopleId,@"studentId",_dictDay[@"firstDay"],@"actStartTime",_dictDay[@"lastDay"],@"actEndTime",@"1000",@"length",_userModel.school,@"universityId",@"1",@"type",@"2",@"courseType",nil];
     [[NetworkRequest sharedInstance] GET:QueryCourse dict:dict succeed:^(id data) {
         //        NSLog(@"4");
+        [self hideHud];
         NSString * str = [[data objectForKey:@"header"] objectForKey:@"message"];
         if ([str isEqualToString:@"成功"]) {
             NSArray * ary = [[data objectForKey:@"body"] objectForKey:@"list"];
@@ -271,7 +275,6 @@ static NSString *cellIdentifier = @"cellIdentifier";
         
     } failure:^(NSError *error) {
         [self hideHud];
-        
         NSLog(@"%@",error);
     }];
     

@@ -63,7 +63,7 @@
     [_imageAry addObject:@"group_header"];
     
     _labelAry = [NSMutableArray arrayWithCapacity:1];
-    [_labelAry addObject:@"创建群组"];
+    [_labelAry addObject:@"创建讨论组"];
     [_labelAry addObject:@"添加公开讨论组"];
     [_labelAry addObject:@"数学"];
     

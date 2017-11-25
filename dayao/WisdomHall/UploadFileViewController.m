@@ -20,6 +20,8 @@
 @property (nonatomic,assign)int temp;
 @property (nonatomic,strong)UIAlertView * alter;
 @property (nonatomic,strong)NSString * function;
+@property (nonatomic,assign)int n;
+@property (nonatomic,assign)int m;
 @end
 
 @implementation UploadFileViewController
@@ -108,7 +110,7 @@
     
     while((path=[myDirectoryEnumerator nextObject])!=nil)
     {
-
+        
         if (![path isEqualToString:@".DS_Store"]) {
             
             FileModel * f = [[FileModel alloc] init];
@@ -120,17 +122,23 @@
             
             [_boolAry addObject:a];
         }
-       
     }
-    
     [_tableView reloadData];
-
+    
 }
 - (IBAction)sendBtnPressed:(id)sender {
+    _n = 0;
     for (int i = 0; i<_boolAry.count; i++) {
         NSString * str = _boolAry[i];
         if ([str isEqualToString:@"Yes"]) {
-            
+            _n++;
+        }
+    }
+    
+    for (int i = 0; i<_boolAry.count; i++) {
+        NSString * str = _boolAry[i];
+        _m = 1;
+        if ([str isEqualToString:@"Yes"]) {
             dispatch_async(dispatch_get_main_queue(), ^{
                 //获取主线程
                 [self hideHud];
@@ -148,47 +156,59 @@
             NSString *filePath = [documentsDirectory stringByAppendingPathComponent:[NSString stringWithFormat:@"File/%@",f.fileName]]; //docPath为文件名
             
             if (![fileManager fileExistsAtPath:filePath]) {
-//                NSLog(@"%s",__func__);
+                //                NSLog(@"%s",__func__);
             }
             NSString * str ;
-
+            
             if ([_type isEqualToString:@"meeting"]) {
                 str = [NSString stringWithFormat:@"%@",_meeting.meetingId];
                 NSDictionary * dict = [[NSDictionary alloc] initWithObjectsAndKeys:@"9",@"type",@"www",@"description",@"2",@"function",[NSString stringWithFormat:@"%@",str],@"relId",@"2",@"relType",nil];
                 
                 [[NetworkRequest sharedInstance] POSTImage:FileUpload filePath:filePath dict:dict succeed:^(id data) {
-                    if (i ==_boolAry.count-1) {
+                    if (_m == _n) {
                         [UIUtils showInfoMessage:@"上传完成"];
                         [self hideHud];
+                        [self.navigationController popViewControllerAnimated:YES];
+                    }else{
+                        _m++;
                     }
                 } failure:^(NSError *error) {
-                    if (i ==_boolAry.count-1) {
-                        [UIUtils showInfoMessage:@"上传失败"];
+                    if (_m==_n) {
+                        
+                    }else{
+                        _m++;
                     }
+                    [UIUtils showInfoMessage:@"上传失败,请检查网络"];
                     [self hideHud];
                 }];
             }else{
                 str = [NSString stringWithFormat:@"%@",_classModel.sclassId];
                 NSDictionary * dict = [[NSDictionary alloc] initWithObjectsAndKeys:@"9",@"type",@"www",@"description",@"3",@"function",[NSString stringWithFormat:@"%@",str],@"relId",@"1",@"relType",nil];
                 [[NetworkRequest sharedInstance] POSTImage:FileUpload filePath:filePath dict:dict succeed:^(id data) {
-                    if (i ==_boolAry.count-1) {
+                    if (_m == _n) {
                         [UIUtils showInfoMessage:@"上传完成"];
+                        [self.navigationController popViewControllerAnimated:YES];
                         [self hideHud];
+                    }else{
+                        _m++;
                     }
                 } failure:^(NSError *error) {
-                    if (i ==_boolAry.count-1) {
-                        [UIUtils showInfoMessage:@"上传失败"];
+                    if (_m==_n) {
+                        
+                    }else{
+                        _m++;
                     }
+                    [UIUtils showInfoMessage:@"上传失败，请检查网络"];
                     [self hideHud];
                 }];
             }
             
         }
     }
-//    NSTimer *timer;
-//
-//    timer = [NSTimer scheduledTimerWithTimeInterval:5 target:self selector:@selector(doTime) userInfo:nil repeats:NO];
-//
+    //    NSTimer *timer;
+    //
+    //    timer = [NSTimer scheduledTimerWithTimeInterval:5 target:self selector:@selector(doTime) userInfo:nil repeats:NO];
+    //
 }
 -(void)doTime{
     [self hideHud];
@@ -239,7 +259,7 @@
             [_sendbtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
             [_sendbtn setTitle:[NSString stringWithFormat:@"发送(%d)",_temp] forState:UIControlStateNormal];
             [_sendbtn setEnabled:YES];
-
+            
             
         }else{
             _boolAry[sender.tag-1] = @"NO";
@@ -302,13 +322,13 @@
     return 10;
 }
 /*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
+ #pragma mark - Navigation
+ 
+ // In a storyboard-based application, you will often want to do a little preparation before navigation
+ - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+ // Get the new view controller using [segue destinationViewController].
+ // Pass the selected object to the new view controller.
+ }
+ */
 
 @end

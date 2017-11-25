@@ -52,8 +52,22 @@
         
         NSDictionary * dict = [[NSDictionary alloc] initWithObjectsAndKeys:_titleTextFile.text,@"name",@"2",@"status", nil];
         [[NetworkRequest sharedInstance] POST:CreateLib dict:dict succeed:^(id data) {
-            NSLog(@"%@",data);
-            [self queryLibList];
+            NSString * str = [NSString stringWithFormat:@"%@",[[data objectForKey:@"header"] objectForKey:@"code"]];
+            if ([str isEqualToString:@"0000"]) {
+                NSString * str = [NSString stringWithFormat:@"%@",[data objectForKey:@"body"]];
+                _questionModel = [[QuestionBank alloc] init];
+                _questionModel.libId = str;
+                TextModel * t = [[TextModel alloc] init];
+                t.title = _titleTextFile.text;
+                TestQuestionsViewController * tQVC = [[TestQuestionsViewController alloc] init];
+                tQVC.t = t;
+                tQVC.qBank = _questionModel;
+                tQVC.classModel = _classModel;
+                self.hidesBottomBarWhenPushed = YES;
+                [self.navigationController pushViewController:tQVC animated:YES];
+            }else{
+                [UIUtils showInfoMessage:@"创建失败"];
+            }
         } failure:^(NSError *error) {
             NSLog(@"%@",error);
         }];

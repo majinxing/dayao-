@@ -109,6 +109,7 @@
                               InteractionType_Responder,
                               InteractionType_Test,
                               InteractionType_Discuss,
+                              InteractionType_Picture,
                               ];
     
     //水平间距
