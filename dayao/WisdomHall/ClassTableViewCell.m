@@ -33,7 +33,7 @@
 
 - (void)awakeFromNib {
     [super awakeFromNib];
-    _weekday = [[NSMutableArray alloc] initWithObjects:@"星期一",@"星期二",@"星期三",@"星期四",@"星期五",@"星期六",@"星期日", nil];
+    _weekday = [[NSMutableArray alloc] initWithObjects:@"星期一",@"星期二",@"星期三",@"星期四",@"星期五",@"星期六",@"星期天", nil];
     _monday.tag = 1;
     _tuesday.tag = 2;
     _wednesday.tag = 3;
@@ -96,7 +96,6 @@
             btn.layer.cornerRadius = 5;
             btn.titleLabel.lineBreakMode = 0;//这句话很重要，不加这句话加上换行符也没用
             [btn addTarget:self action:@selector(intoTheCurriculum:) forControlEvents:UIControlEventTouchUpInside];
-            
         }
     }
     _weekDay.text = [NSString stringWithFormat:@"%d",index*2+1];

@@ -163,7 +163,7 @@ static NSString *cellIdentifier = @"cellIdentifier";
 -(void)getDataWithPage:(NSInteger)page{
     
     
-    NSDictionary * dict = [[NSDictionary alloc] initWithObjectsAndKeys:[NSString stringWithFormat:@"%ld",(long)page],@"start",_userModel.peopleId,@"teacherId",_dictDay[@"firstDay"],@"actStartTime",_dictDay[@"lastDay"],@"actEndTime",@"1000",@"length",_userModel.school,@"universityId",@"2",@"type",[NSString stringWithFormat:@"%d",[UIUtils getTermId]],@"termId",@"1",@"courseType",nil];
+    NSDictionary * dict = [[NSDictionary alloc] initWithObjectsAndKeys:[NSString stringWithFormat:@"%ld",(long)page],@"start",_userModel.peopleId,@"teacherId",[NSString stringWithFormat:@"%@ 00:00:00",_dictDay[@"firstDay"]],@"actStartTime",[NSString stringWithFormat:@"%@ 23:59:59",_dictDay[@"lastDay"]],@"actEndTime",@"1000",@"length",_userModel.school,@"universityId",@"2",@"type",[NSString stringWithFormat:@"%d",[UIUtils getTermId]],@"termId",@"1",@"courseType",nil];
     
     [[NetworkRequest sharedInstance] GET:QueryCourse dict:dict succeed:^(id data) {
         //        NSLog(@"1");
@@ -176,7 +176,9 @@ static NSString *cellIdentifier = @"cellIdentifier";
                 [c setInfoWithDict:ary[i]];
                 [_classAry addObject:c];
             }
+        
             [self getSelfJoinClass:page];
+//            [self hideHud];
         }else if ([str isEqualToString:@"无效token"]){
             [self hideHud];
             dispatch_async(dispatch_get_main_queue(), ^{
@@ -192,7 +194,7 @@ static NSString *cellIdentifier = @"cellIdentifier";
     }];
 }
 -(void)getSelfJoinClass:(NSInteger)page{
-    NSDictionary * dict = [[NSDictionary alloc] initWithObjectsAndKeys:[NSString stringWithFormat:@"%ld",(long)page],@"start",_userModel.peopleId,@"studentId",_dictDay[@"firstDay"],@"actStartTime",_dictDay[@"lastDay"],@"actEndTime",@"1000",@"length",_userModel.school,@"universityId",@"1",@"type",[NSString stringWithFormat:@"%d",[UIUtils getTermId]],@"termId",@"1",@"courseType",nil];
+    NSDictionary * dict = [[NSDictionary alloc] initWithObjectsAndKeys:[NSString stringWithFormat:@"%ld",(long)page],@"start",_userModel.peopleId,@"studentId",[NSString stringWithFormat:@"%@ 00:00:00",_dictDay[@"firstDay"]],@"actStartTime",[NSString stringWithFormat:@"%@ 23:59:59",_dictDay[@"lastDay"]],@"actEndTime",@"1000",@"length",_userModel.school,@"universityId",@"1",@"type",[NSString stringWithFormat:@"%d",[UIUtils getTermId]],@"termId",@"1",@"courseType",nil];
     
     [[NetworkRequest sharedInstance] GET:QueryCourse dict:dict succeed:^(id data) {
         NSString * str = [[data objectForKey:@"header"] objectForKey:@"message"];
@@ -213,7 +215,7 @@ static NSString *cellIdentifier = @"cellIdentifier";
 //临时
 -(void)getSelfCreateClassType:(NSInteger)page{
     
-    NSDictionary * dict = [[NSDictionary alloc] initWithObjectsAndKeys:[NSString stringWithFormat:@"%ld",(long)page],@"start",_userModel.peopleId,@"teacherId",_dictDay[@"firstDay"],@"actStartTime",_dictDay[@"lastDay"],@"actEndTime",@"1000",@"length",_userModel.school,@"universityId",@"2",@"type",@"2",@"courseType",nil];
+    NSDictionary * dict = [[NSDictionary alloc] initWithObjectsAndKeys:[NSString stringWithFormat:@"%ld",(long)page],@"start",_userModel.peopleId,@"teacherId",[NSString stringWithFormat:@"%@ 00:00:00",_dictDay[@"firstDay"]],@"actStartTime",[NSString stringWithFormat:@"%@ 23:59:59",_dictDay[@"lastDay"]],@"actEndTime",@"1000",@"length",_userModel.school,@"universityId",@"2",@"type",@"2",@"courseType",nil];
     
     [[NetworkRequest sharedInstance] GET:QueryCourse dict:dict succeed:^(id data) {
         NSString * str = [[data objectForKey:@"header"] objectForKey:@"message"];
@@ -233,7 +235,7 @@ static NSString *cellIdentifier = @"cellIdentifier";
 }
 //临时
 -(void)getSelfJoinClassType:(NSInteger)page{
-    NSDictionary * dict = [[NSDictionary alloc] initWithObjectsAndKeys:[NSString stringWithFormat:@"%ld",(long)page],@"start",_userModel.peopleId,@"studentId",_dictDay[@"firstDay"],@"actStartTime",_dictDay[@"lastDay"],@"actEndTime",@"1000",@"length",_userModel.school,@"universityId",@"1",@"type",@"2",@"courseType",nil];
+    NSDictionary * dict = [[NSDictionary alloc] initWithObjectsAndKeys:[NSString stringWithFormat:@"%ld",(long)page],@"start",_userModel.peopleId,@"studentId",[NSString stringWithFormat:@"%@ 00:00:00",_dictDay[@"firstDay"]],@"actStartTime",[NSString stringWithFormat:@"%@ 23:59:59",_dictDay[@"lastDay"]],@"actEndTime",@"1000",@"length",_userModel.school,@"universityId",@"1",@"type",@"2",@"courseType",nil];
     [[NetworkRequest sharedInstance] GET:QueryCourse dict:dict succeed:^(id data) {
         //        NSLog(@"4");
         [self hideHud];
