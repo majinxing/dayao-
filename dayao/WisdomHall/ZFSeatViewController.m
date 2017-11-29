@@ -66,28 +66,38 @@
         NSMutableString *strUrl = [NSMutableString stringWithFormat:@"%@",_seatTable];
         NSArray * ary = [strUrl componentsSeparatedByString:@"\n"];
         NSMutableArray * a = [NSMutableArray arrayWithCapacity:1];
-        
-        NSArray * m = [_seat componentsSeparatedByString:@"排"];
-        NSString * seatM = m[0];
-        NSString * seatN = m[1];
-        seatN = [seatN substringWithRange:NSMakeRange(0,seatN.length-1)];
+        NSString * seatM ;
+        NSString * seatN ;
+        if ([UIUtils isBlankString:_seat]) {
+            
+        }else{
+            if ([UIUtils isBlankString:_type]) {
+                NSArray * m = [_seat componentsSeparatedByString:@"排"];
+                seatM = m[0];
+                seatN = m[1];
+                seatN = [seatN substringWithRange:NSMakeRange(0,seatN.length-1)];
+            }else{
+                seatM = @"m";
+                seatN = @"n";
+            }
+        }
         _temp = 1;
-
         
         for (int j = 0; j<ary.count; j++) {
             NSMutableArray * aa = [NSMutableArray arrayWithCapacity:1];
+            int seatNo = 0;
             for(int i =0; i < [ary[j] length]; i++)
             {
                 NSString * newStr = ary[j];
                 NSString * temp = [newStr substringWithRange:NSMakeRange(i,1)];
-                
                 if ([temp isEqualToString:@"+"]) {
                     NSDictionary * dict = [[NSDictionary alloc] initWithObjectsAndKeys:@"",@"columnId",@"",@"seatNo",@"E",@"st",nil];
                     [aa addObject:dict];
                 }else if ([temp isEqualToString:@"@"]){
+                    seatNo = seatNo + 1;
                     if ([[NSString stringWithFormat:@"%d",j+1] isEqualToString:seatM]&&[[NSString stringWithFormat:@"%d",_temp] isEqualToString:seatN]) {
                         _temp = _temp + 1;
-                        NSDictionary * dict = [[NSDictionary alloc] initWithObjectsAndKeys:[NSString stringWithFormat:@"0%d",j+1],@"columnId",[NSString stringWithFormat:@"%d,%d",j,i],@"seatNo",@"LK",@"st",nil];
+                        NSDictionary * dict = [[NSDictionary alloc] initWithObjectsAndKeys:[NSString stringWithFormat:@"0%d",j+1],@"columnId",[NSString stringWithFormat:@"%d,%d",j+1,seatNo],@"seatNo",@"LK",@"st",nil];
                         /**座位状态 N/表示可以购票 LK／座位已售出 E/表示过道 */
 
                         [aa addObject:dict];
@@ -95,13 +105,17 @@
                         if ([[NSString stringWithFormat:@"%d",j+1] isEqualToString:seatM]) {
                             _temp = _temp + 1;
                         }
-                        NSDictionary * dict = [[NSDictionary alloc] initWithObjectsAndKeys:[NSString stringWithFormat:@"0%d",j+1],@"columnId",[NSString stringWithFormat:@"%d,%d",j,i],@"seatNo",@"N",@"st",nil];
+                        NSDictionary * dict = [[NSDictionary alloc] initWithObjectsAndKeys:[NSString stringWithFormat:@"0%d",j+1],@"columnId",[NSString stringWithFormat:@"%d,%d",j+1,seatNo],@"seatNo",@"N",@"st",nil];
                         [aa addObject:dict];
                     }
+                }else if([temp isEqualToString:@"-"]){
+                    seatNo = seatNo + 1;
+                    NSDictionary * dict = [[NSDictionary alloc] initWithObjectsAndKeys:[NSString stringWithFormat:@"0%d",j+1],@"columnId",[NSString stringWithFormat:@"%d,%d",j+1,seatNo],@"seatNo",@"LK",@"st",nil];
+                    [aa addObject:dict];
                 }
                 
             }
-            NSDictionary * d = [[NSDictionary alloc] initWithObjectsAndKeys:aa,@"columns",[NSString stringWithFormat:@"%d",j+1],@"rowId",[NSString stringWithFormat:@"%d",j+1],@"rowNum",nil];
+            NSDictionary * d = [[NSDictionary alloc] initWithObjectsAndKeys:aa,@"columns",[NSString stringWithFormat:@"%d",j+1],@"rowId",[NSString stringWithFormat:@"%d",j+1],@"rowNum",nil];//与实际数值可能不符
             [a addObject:d];
         }
         UILabel * seatLable = [[UILabel alloc] initWithFrame:CGRectMake(APPLICATION_WIDTH/2-50, 30, 100, 25)];
@@ -138,9 +152,10 @@
     ZFSeatSelectionView *selectionView = [[ZFSeatSelectionView alloc]initWithFrame:CGRectMake(0,64,[UIScreen mainScreen].bounds.size.width, 400)
                                                                         SeatsArray:seatsModelArray
                                                                           HallName:@"讲台"
+                                                                              type:_type
                                                                 seatBtnActionBlock:^(NSMutableArray *selecetedSeats, NSMutableDictionary *allAvailableSeats, NSString *errorStr) {
                                                                     
-                                                                    NSLog(@"=====%zd个选中按钮===========%zd个可选座位==========errorStr====%@=========",selecetedSeats.count,allAvailableSeats.count,errorStr);
+//                                                                    NSLog(@"=====%zd个选中按钮===========%zd个可选座位==========errorStr====%@=========",selecetedSeats.count,allAvailableSeats.count,errorStr);
                                                                     
                                                                     if (errorStr) {
                                                                         //错误信息
@@ -159,13 +174,17 @@
     
     UIButton *sureBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     [sureBtn setTitle:@"确定选座" forState:UIControlStateNormal];
-    [sureBtn setTitleColor:[UIColor redColor] forState:UIControlStateNormal];
+    [sureBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [sureBtn addTarget:self action:@selector(sureBtnAction) forControlEvents:UIControlEventTouchUpInside];
-    [sureBtn setBackgroundColor:[UIColor yellowColor]];
+    [sureBtn setBackgroundColor:[UIColor colorWithHexString:@"#29a7e1"]];
     sureBtn.layer.cornerRadius = 5;
     sureBtn.layer.masksToBounds = YES;
     sureBtn.frame = CGRectMake(200, 550, 100, 50);
-    //[self.view addSubview:sureBtn];
+    if ([UIUtils isBlankString:_type]) {
+        
+    }else{
+        [self.view addSubview:sureBtn];
+    }
 }
 
 -(void)sureBtnAction{
@@ -173,12 +192,31 @@
         [self showMessage:@"您还为选座"];
         return;
     }
-    //验证是否落单
-    if (![ZFSeatSelectionTool verifySelectedSeatsWithSeatsDic:self.allAvailableSeats seatsArray:self.seatsModelArray]) {
-        [self showMessage:@"落单"];
-    }else{
-        [self showMessage:@"选座成功"];
-    }
+//    //验证是否落单
+//    if (![ZFSeatSelectionTool verifySelectedSeatsWithSeatsDic:self.allAvailableSeats seatsArray:self.seatsModelArray]) {
+//        [self showMessage:@"落单"];
+//    }else{
+//        [self showMessage:@"选座成功"];
+//    }
+    ZFSeatButton * z = self.selecetedSeats[0];
+    ZFSeatModel * m = z.seatmodel;
+//    ZFSeatsModel * n = z.seatsmodel;
+    NSArray * a = [m.seatNo componentsSeparatedByString:@","];
+    NSString * seat = [NSString stringWithFormat:@"%d排%d座",[a[0] intValue],[a[1] intValue]];
+    UserModel * user = [[Appsetting sharedInstance] getUsetInfo];
+    NSDictionary * dict = [[NSDictionary alloc] initWithObjectsAndKeys:[NSString stringWithFormat:@"%@",_classModel.sclassId],@"id",user.peopleId,@"studentId",seat,@"seat",_classModel.roomId,@"roomId", nil];
+    [[NetworkRequest sharedInstance] POST:UpdateSeat dict:dict succeed:^(id data) {
+        NSLog(@"%@",data);
+        NSString * str = [NSString stringWithFormat:@"%@",[[data objectForKey:@"header"] objectForKey:@"code"]];
+        if ([str isEqualToString:@"0000"]) {
+            [self showMessage:@"选座成功"];
+            [self.navigationController popViewControllerAnimated:YES];
+        }else if ([str isEqualToString:@"6666"]){
+            [self showMessage:@"座位已经分配"];
+        }
+    } failure:^(NSError *error) {
+        
+    }];
 }
 -(void)showMessage:(NSString *)message{
     UIAlertController *controller = [UIAlertController alertControllerWithTitle:nil message:message preferredStyle:UIAlertControllerStyleAlert];

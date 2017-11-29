@@ -133,9 +133,10 @@
 -(void)initSelectionView:(NSMutableArray *)seatsModelArray{
     __weak typeof(self) weakSelf = self;
     
-    ZFSeatSelectionView *selectionView = [[ZFSeatSelectionView alloc]initWithFrame:CGRectMake(0,64,[UIScreen mainScreen].bounds.size.width, 400)
+    ZFSeatSelectionView *selectionView = [[ZFSeatSelectionView alloc] initWithFrame:CGRectMake(0,64,[UIScreen mainScreen].bounds.size.width, 400)
                                                                         SeatsArray:seatsModelArray
                                                                           HallName:@"讲台"
+                                                                               type:nil
                                                                 seatBtnActionBlock:^(NSMutableArray *selecetedSeats, NSMutableDictionary *allAvailableSeats, NSString *errorStr) {
                                                                     
                                                                     NSLog(@"=====%zd个选中按钮===========%zd个可选座位==========errorStr====%@=========",selecetedSeats.count,allAvailableSeats.count,errorStr);
@@ -165,7 +166,7 @@
     sureBtn.layer.cornerRadius = 5;
     sureBtn.layer.masksToBounds = YES;
     sureBtn.frame = CGRectMake(200, 550, 100, 50);
-    //[self.view addSubview:sureBtn];
+    //[self.view addSubview:sureBtn];mjx
 }
 
 -(void)sureBtnAction{

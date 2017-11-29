@@ -29,10 +29,9 @@
 #import <CommonCrypto/CommonDigest.h>
 #import "QrCodeViewController.h"
 #import <AssetsLibrary/AssetsLibrary.h>
+#import "ZFSeatViewController.h"
 
-#define kScreenWidth [UIScreen mainScreen].bounds.size.width
 
-#define kScreenHeight [UIScreen mainScreen].bounds.size.height
 
 @interface CourseDetailsViewController ()<UIActionSheetDelegate,ShareViewDelegate,UIAlertViewDelegate,UITableViewDelegate,UITableViewDataSource,MeetingTableViewCellDelegate,UINavigationControllerDelegate,UIImagePickerControllerDelegate>
 
@@ -51,9 +50,12 @@
 @property (nonatomic,assign)NSInteger n;//签到人数
 @property (nonatomic,assign)NSInteger m;//未签到人数
 
+
 @property (nonatomic,copy)NSString * selfSignStatus;
+@property (nonatomic,copy)NSString * seatNo;
 @property (nonatomic,assign)int temp;//记录mac不被覆盖
 @property (nonatomic,strong)UITableView * tableView;
+
 @end
 
 @implementation CourseDetailsViewController
@@ -131,6 +133,7 @@
                     _c.signStatus = @"2";
                     _isEnable = YES;
                 }
+                _seatNo = [NSString stringWithFormat:@"%@",s.seat];
             }
             [_signAry addObject:s];
         }
@@ -461,9 +464,32 @@
         d.function = @"6";
         self.hidesBottomBarWhenPushed = YES;
         [self.navigationController pushViewController: d animated:YES];
+    }else if ([platform isEqualToString:InteractionType_Sit]){
+        [self getCourseRoomSeat];
     }else if ([platform isEqualToString:InteractionType_Add]){
         NSLog(@"更多");
     }
+}
+-(void)getCourseRoomSeat{
+    NSDictionary * dict = [[NSDictionary alloc] initWithObjectsAndKeys:[NSString stringWithFormat:@"%@",_c.courseDetailId],@"courseDetailId", nil];
+    [[NetworkRequest sharedInstance] GET:QueryRoomSeat dict:dict succeed:^(id data) {
+//        NSLog(@"%@",data);
+        NSString * str = [NSString stringWithFormat:@"%@",[[data objectForKey:@"header"] objectForKey:@"code"]];
+        if ([str isEqualToString:@"0000"]) {
+            ZFSeatViewController * z = [[ZFSeatViewController alloc] init];
+            z.seatTable = [NSString stringWithFormat:@"%@",[data objectForKey:@"body"]];
+//            z.type = @"class";
+            z.classModel = _c;
+            z.seat = _seatNo;
+            self.hidesBottomBarWhenPushed = YES;
+            [self.navigationController pushViewController:z animated:YES];
+        }else{
+            [UIUtils showInfoMessage:@"获取信息缺失请重新获取"];
+        }
+        
+    } failure:^(NSError *error) {
+        [UIUtils showInfoMessage:@"请求失败，请检查网络"];
+    }];
 }
 -(void)peopleManagementDelegate{
     ClassManagementViewController * classManegeVC = [[ClassManagementViewController alloc] init];

@@ -21,11 +21,14 @@
 
 /** 座位图高度 */
 @property (nonatomic,assign) CGFloat seatViewHeight;
+/** 根据类型判断是否可以选座*/
+@property (nonatomic,copy) NSString * type;
 
 /**  seatsArray座位数组 maxW默认最大座位父控件的宽度 actionBlock按钮点击回调－>传回是当前选中的按钮和全部可选的座位*/
 
 -(instancetype)initWithSeatsArray:(NSMutableArray *)seatsArray
                     maxNomarWidth:(CGFloat)maxW
+                             type:(NSString *)type
                seatBtnActionBlock:(void(^)(ZFSeatButton *seatBtn,NSMutableDictionary *allAvailableSeats))actionBlock;
 
 @end

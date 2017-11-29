@@ -22,5 +22,5 @@
 
 
 
-#define  ZFMaxSelectedSeatsCount 4 //限制最大选座数量
+#define  ZFMaxSelectedSeatsCount 1 //限制最大选座数量 mjx
 #define  ZFExceededMaximumError @"选择座位已达到上限"//提示选择座位超过要求的上限

@@ -15,6 +15,7 @@
 -(instancetype)initWithFrame:(CGRect)frame
                   SeatsArray:(NSMutableArray *)seatsArray
                     HallName:(NSString *)hallName
+                        type:(NSString *)type
           seatBtnActionBlock:(void(^)(NSMutableArray *selecetedSeats,NSMutableDictionary *allAvailableSeats,NSString *errorStr))actionBlock;
 
 @end

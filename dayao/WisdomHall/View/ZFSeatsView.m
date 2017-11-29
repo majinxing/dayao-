@@ -10,6 +10,8 @@
 
 #import "ZFSeatSelectionConfig.h"
 
+#import "DYHeader.h"
+
 @interface ZFSeatsView ()
 
 @property (nonatomic,copy) void (^actionBlock)(ZFSeatButton *seatBtn,NSMutableDictionary *allAvailableSeats);
@@ -29,10 +31,11 @@
 
 -(instancetype)initWithSeatsArray:(NSMutableArray *)seatsArray
                     maxNomarWidth:(CGFloat)maxW
+                             type:(NSString *)type
                seatBtnActionBlock:(void (^)(ZFSeatButton *, NSMutableDictionary *))actionBlock{
     
     if (self = [super init]) {
-        
+        _type = type;
         self.actionBlock = actionBlock;
         
         ZFSeatsModel *seatsModel = seatsArray.firstObject;
@@ -88,7 +91,11 @@
                 
             }
             [seatBtn addTarget:self action:@selector(seatBtnAction:) forControlEvents:UIControlEventTouchUpInside];
-            seatBtn.enabled = NO;//mjx 座位不可点击
+            if (![UIUtils isBlankString:_type]) {
+                
+            }else{
+                seatBtn.enabled = NO;//mjx 座位不可点击
+            }
             [self addSubview:seatBtn];
             
         }
@@ -108,7 +115,7 @@
     }
 
 }
--(void)seatBtnAction:(ZFSeatButton *)seatbtn{
+-(void)seatBtnAction:(ZFSeatButton *)seatbtn{//mjx
     seatbtn.selected = !seatbtn.selected;
     if (seatbtn.selected) {
         seatbtn.seatmodel.st = @"LK";//设置为选中

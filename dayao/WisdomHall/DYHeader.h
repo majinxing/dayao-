@@ -244,5 +244,9 @@
 
 #define BindPhoe                @"course/user/bindPhone"            //绑定手机号
 
+#define QueryRoomSeat           @"course/course/getRoomSeat"        //查询课堂空座
+
+#define UpdateSeat              @"course/course/updateSeat"         //更新座次
+
 
 

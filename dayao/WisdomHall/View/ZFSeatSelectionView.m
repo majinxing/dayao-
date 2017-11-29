@@ -36,6 +36,8 @@
 /**指示框*/
 @property (nonatomic, weak) ZFIndicatorView *indicator;
 
+@property (nonatomic,copy)NSString * type;
+
 @property (nonatomic,copy) void (^actionBlock)(NSMutableArray *, NSMutableDictionary *, NSString *);
 
 @end
@@ -46,21 +48,23 @@
 -(instancetype)initWithFrame:(CGRect)frame
                   SeatsArray:(NSMutableArray *)seatsArray
                     HallName:(NSString *)hallName
+                        type:(NSString *)type
           seatBtnActionBlock:(void (^)(NSMutableArray *, NSMutableDictionary *, NSString *))actionBlock{
     
     if (self = [super initWithFrame:frame]) {//初始化操作
+        self.type = type;
         self.backgroundColor = [UIColor colorWithRed:245.0/255.0
                                                green:245.0/255.0
                                                 blue:245.0/255.0 alpha:1];
         self.actionBlock = actionBlock;
         [self initScrollView];
         [self initappLogo];
-        [self initSeatsView:seatsArray];
+        [self initSeatsView:seatsArray];//回调
         [self initindicator:seatsArray];
         [self initRowIndexView:seatsArray];
         [self initcenterLine:seatsArray];
         [self inithallLogo:hallName];
-        [self  startAnimation];//开场动画
+        [self startAnimation];//开场动画
     }
     return self;
 }
@@ -146,6 +150,7 @@
    __weak typeof(self) weakSelf = self;
     ZFSeatsView *seatView = [[ZFSeatsView alloc]initWithSeatsArray:seatsArray
                                                      maxNomarWidth:self.width
+                                                              type:_type
                                                 seatBtnActionBlock:^(ZFSeatButton *seatBtn, NSMutableDictionary *allAvailableSeats) {
         [weakSelf.indicator updateMiniImageView];
         NSString *errorStr = nil;
@@ -170,6 +175,7 @@
         [weakSelf.seatScrollView zoomToRect:zoomRect animated:YES];
     }];
     self.seatView = seatView;
+    self.seatView.type = _type;
     seatView.frame = CGRectMake(0, 0,seatView.seatViewWidth, seatView.seatViewHeight);
     [self.seatScrollView insertSubview:seatView atIndex:0];
     self.seatScrollView.maximumZoomScale = ZFseastMaxW_H / seatView.seatBtnWidth;
