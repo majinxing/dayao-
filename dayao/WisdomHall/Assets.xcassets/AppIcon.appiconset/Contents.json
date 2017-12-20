@@ -3,67 +3,67 @@
     {
       "size" : "20x20",
       "idiom" : "iphone",
-      "filename" : "logo40x40.png",
+      "filename" : "logo40x40XY.png",
       "scale" : "2x"
     },
     {
       "size" : "20x20",
       "idiom" : "iphone",
-      "filename" : "logo80x80-1.png",
+      "filename" : "logo80x80XY.png",
       "scale" : "3x"
     },
     {
       "size" : "29x29",
       "idiom" : "iphone",
-      "filename" : "logo29x29.png",
+      "filename" : "logo29x29XY.png",
       "scale" : "1x"
     },
     {
       "size" : "29x29",
       "idiom" : "iphone",
-      "filename" : "logo58x58.png",
+      "filename" : "logo57x57XY.png",
       "scale" : "2x"
     },
     {
       "size" : "29x29",
       "idiom" : "iphone",
-      "filename" : "logo87x87.png",
+      "filename" : "logo87x87XY.png",
       "scale" : "3x"
     },
     {
       "size" : "40x40",
       "idiom" : "iphone",
-      "filename" : "logo80x80.png",
+      "filename" : "logo80x80XY-1.png",
       "scale" : "2x"
     },
     {
       "size" : "40x40",
       "idiom" : "iphone",
-      "filename" : "logo120x120.png",
+      "filename" : "logo80x80XY-2.png",
       "scale" : "3x"
     },
     {
       "size" : "57x57",
       "idiom" : "iphone",
-      "filename" : "logo57x57.png",
+      "filename" : "logo57x57XY-1.png",
       "scale" : "1x"
     },
     {
       "size" : "57x57",
       "idiom" : "iphone",
-      "filename" : "logo114x114.png",
+      "filename" : "logo114x114XY.png",
       "scale" : "2x"
     },
     {
       "size" : "60x60",
       "idiom" : "iphone",
-      "filename" : "logo120x120-1.png",
+      "filename" : "logo120x120XY.png",
       "scale" : "2x"
     },
     {
       "size" : "60x60",
       "idiom" : "iphone",
-      "filename" : "logo180x180.png",
+      "filename" : "logo180x180XY.png",
       "scale" : "3x"
     },
     {
@@ -134,7 +134,7 @@
     {
       "size" : "1024x1024",
       "idiom" : "ios-marketing",
-      "filename" : "logo1024x1024.png",
+      "filename" : "logo1024x1024XY.png",
       "scale" : "1x"
     },
     {

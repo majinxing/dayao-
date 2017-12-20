@@ -829,6 +829,7 @@
 +(void)showInfoMessage:(NSString *)str{
     UIAlertView *alter = [[UIAlertView alloc] initWithTitle:nil message:str delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil];
     [alter show];
+    
 }
 
 

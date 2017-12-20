@@ -17,6 +17,7 @@
 @interface PersonalInfoTableViewCell : UITableViewCell
 @property (weak, nonatomic) IBOutlet UILabel *personalNameLabel;
 @property (strong, nonatomic) IBOutlet UIImageView *headImage;
+@property (weak, nonatomic) IBOutlet UILabel *leave;
 
 @property (nonatomic,weak)id<PersonalInfoTableViewCellDelegate>delegate;
 + (instancetype)tempTableViewCellWith:(UITableView *)tableView indexPath:(NSIndexPath *)indexPath array:(NSMutableArray *)ary;

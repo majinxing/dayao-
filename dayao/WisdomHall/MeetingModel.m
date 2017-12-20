@@ -34,6 +34,9 @@
     self.meetingStatus = [dict objectForKey:@"status"];
     self.meetingName = [dict objectForKey:@"name"];
     self.signStatus = [dict objectForKey:@"signStatus"];
+    if ([[NSString stringWithFormat:@"%@",self.signStatus] isEqualToString:@"3"]) {
+        self.signStatus = @"5";
+    }
     self.url = [dict objectForKey:@"url"];
     self.userSeat = [dict objectForKey:@"userSeat"];
     self.workNo = [dict objectForKey:@"workNo"];

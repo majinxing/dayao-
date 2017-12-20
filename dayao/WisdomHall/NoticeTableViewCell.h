@@ -7,7 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "NoticeModel.h"
 
 @interface NoticeTableViewCell : UITableViewCell
--(void)setContentView:(NSString *)time withNoticContent:(NSString *)conten;
+-(void)setContentView:(NoticeModel *)notice;
 @end

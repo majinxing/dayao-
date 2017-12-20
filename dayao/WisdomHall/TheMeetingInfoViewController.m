@@ -342,7 +342,7 @@
             [UIUtils showInfoMessage:@"未获取会场信息，请刷新会场页面信息获取"];
         }
     }else {
-        [UIUtils showInfoMessage:@"未完待续"];
+        [UIUtils showInfoMessage:@"正在加紧步伐开发中，敬请期待"];
         return;
     }
     

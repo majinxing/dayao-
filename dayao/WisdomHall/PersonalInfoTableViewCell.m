@@ -60,6 +60,13 @@
         if (![UIUtils isBlankString:[NSString stringWithFormat:@"%@",ss.pictureId]]) {
             [cell.headImage sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@?resourceId=%@",BaseURL,FileDownload,ss.pictureId]] placeholderImage:[UIImage imageNamed:@"signa.png"]];
         }
+        if ([[NSString stringWithFormat:@"%@",ss.signStatus] isEqualToString:@"3"]) {
+            cell.leave.backgroundColor = [UIColor whiteColor];
+            cell.leave.textColor = [UIColor colorWithHexString:@"#29a7e1"];
+        }else{
+            cell.leave.backgroundColor = [UIColor clearColor];
+            cell.leave.textColor = [UIColor clearColor];
+        }
     }
     return cell;
     

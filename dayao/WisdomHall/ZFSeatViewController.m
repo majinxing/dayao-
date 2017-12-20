@@ -39,7 +39,7 @@
     [maoyanLabel sizeToFit];
     maoyanLabel.font = [UIFont systemFontOfSize:20];
     maoyanLabel.textColor = [UIColor blackColor];
-    
+        
     self.navigationItem.titleView = maoyanLabel;
     self.edgesForExtendedLayout = UIRectEdgeNone;
     self.extendedLayoutIncludesOpaqueBars = NO;
@@ -189,7 +189,7 @@
 
 -(void)sureBtnAction{
     if (!self.selecetedSeats.count) {
-        [self showMessage:@"您还为选座"];
+        [self showMessage:@"您还未选座"];
         return;
     }
 //    //验证是否落单

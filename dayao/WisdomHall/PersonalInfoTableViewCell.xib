@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="13196" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="13771" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13174"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -25,7 +25,7 @@
                         </constraints>
                     </imageView>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="签到方式" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ocv-iU-t8V">
-                        <rect key="frame" x="42.5" y="13" width="100" height="13.5"/>
+                        <rect key="frame" x="42.5" y="16" width="100" height="8"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="100" id="9gc-Di-c8d"/>
                         </constraints>
@@ -68,7 +68,7 @@
                         </connections>
                     </button>
                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="oHx-sZ-hlF">
-                        <rect key="frame" x="247.5" y="10" width="100" height="29.5"/>
+                        <rect key="frame" x="259.5" y="13" width="100" height="24"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="100" id="yQj-Cx-9Ul"/>
                         </constraints>
@@ -97,7 +97,7 @@
                         </constraints>
                     </imageView>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="未签到的学生" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gHs-Pk-ySD">
-                        <rect key="frame" x="65" y="13" width="200" height="26.5"/>
+                        <rect key="frame" x="65" y="16" width="200" height="21"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="200" id="HeA-PZ-h8Q"/>
                         </constraints>
@@ -106,7 +106,7 @@
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="25人" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="589-vD-uH7">
-                        <rect key="frame" x="343" y="13" width="40" height="26.5"/>
+                        <rect key="frame" x="331" y="16" width="40" height="21"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="40" id="5Q9-8E-vO8"/>
                         </constraints>
@@ -171,24 +171,38 @@
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
                     </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="请假" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JXx-90-ckD">
+                        <rect key="frame" x="335" y="15" width="50" height="30"/>
+                        <color key="backgroundColor" red="0.12333631363945952" green="0.62984811174328859" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="50" id="Uz9-Rp-P3R"/>
+                            <constraint firstAttribute="height" constant="30" id="hib-HL-gVm"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                        <color key="textColor" red="0.95174211412987597" green="0.95190887998348472" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
                 </subviews>
                 <constraints>
                     <constraint firstItem="5Ze-h3-lGh" firstAttribute="top" secondItem="ZLR-iH-C0h" secondAttribute="bottom" constant="1" id="3GC-Qq-FIM"/>
+                    <constraint firstItem="JXx-90-ckD" firstAttribute="top" secondItem="9oT-50-fB8" secondAttribute="top" constant="15" id="6Td-58-q9q"/>
                     <constraint firstItem="ZLR-iH-C0h" firstAttribute="leading" secondItem="CW4-qU-sMN" secondAttribute="trailing" constant="25" id="6pM-FW-fmk"/>
                     <constraint firstItem="CW4-qU-sMN" firstAttribute="top" secondItem="9oT-50-fB8" secondAttribute="top" constant="5" id="6sR-M9-wyh"/>
                     <constraint firstItem="5Ze-h3-lGh" firstAttribute="leading" secondItem="CW4-qU-sMN" secondAttribute="trailing" constant="25" id="8as-Oj-jOC"/>
                     <constraint firstItem="ZLR-iH-C0h" firstAttribute="top" secondItem="9oT-50-fB8" secondAttribute="top" constant="5" id="Ehj-RL-Koo"/>
+                    <constraint firstAttribute="trailing" secondItem="JXx-90-ckD" secondAttribute="trailing" constant="10" id="WgJ-LR-OBV"/>
                     <constraint firstAttribute="bottom" secondItem="CW4-qU-sMN" secondAttribute="bottom" constant="5" id="f81-kH-QMn"/>
                     <constraint firstItem="CW4-qU-sMN" firstAttribute="leading" secondItem="9oT-50-fB8" secondAttribute="leading" constant="10" id="voU-sN-JHz"/>
                 </constraints>
             </tableViewCellContentView>
             <connections>
                 <outlet property="headImage" destination="CW4-qU-sMN" id="d6t-Nb-mHB"/>
+                <outlet property="leave" destination="JXx-90-ckD" id="tO4-cs-DNY"/>
                 <outlet property="nameLabel" destination="ZLR-iH-C0h" id="s2T-p0-V4L"/>
                 <outlet property="personalNameLabel" destination="ZLR-iH-C0h" id="gCy-5h-uZP"/>
                 <outlet property="workNo" destination="5Ze-h3-lGh" id="vMt-pu-r5Y"/>
             </connections>
-            <point key="canvasLocation" x="28.5" y="675"/>
+            <point key="canvasLocation" x="-33" y="666"/>
         </tableViewCell>
     </objects>
     <resources>

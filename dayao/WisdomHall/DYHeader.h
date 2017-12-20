@@ -248,5 +248,11 @@
 
 #define UpdateSeat              @"course/course/updateSeat"         //更新座次
 
+#define NoticeReceive           @"course/message/update"            //消息回执
+
+#define Noticedelect            @"course/message/delete"            //删除消息
+
+
+
 
 

@@ -11,4 +11,9 @@
 @interface NoticeModel : NSObject
 @property (nonatomic,copy)NSString * noticeTime;
 @property (nonatomic,copy)NSString * noticeContent;
+@property (nonatomic,copy)NSString * noticeTitle;
+@property (nonatomic,copy)NSString * revert;
+@property (nonatomic,copy)NSString * noticeStatus;
+@property (nonatomic,copy)NSString * noticeId;
+@property (nonatomic,copy)NSString * messageStatus;
 @end

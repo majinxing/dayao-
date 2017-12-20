@@ -205,7 +205,7 @@
         }];
         
     }else if ([platform isEqualToString:Vote_Modify]){
-        [UIUtils showInfoMessage:@"未完待续"];
+        [UIUtils showInfoMessage:@"正在加紧步伐开发中，敬请期待"];
     }
 }
 #pragma mark UITableViewdelegate

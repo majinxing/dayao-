@@ -264,16 +264,11 @@ static NSString *cellIdentifier = @"cellIdentifier";
                 }
             }
         }
-//        [self deleteTheDuplicateData];
         
         _dict = [[NSMutableDictionary alloc] initWithDictionary:[UIUtils CurriculumGroup:_classAry]];
         
         [_tableView reloadData];
-        //        dispatch_async(dispatch_get_main_queue(), ^{
-        //            [self hideHud];
-        //            [_collection reloadData];
-        //
-        //        });
+
         
     } failure:^(NSError *error) {
         [self hideHud];
@@ -325,6 +320,8 @@ static NSString *cellIdentifier = @"cellIdentifier";
     self.hidesBottomBarWhenPushed = YES;
     [self.navigationController pushViewController:s animated:YES];
     self.hidesBottomBarWhenPushed = NO;
+    UIBarButtonItem * selection = [[UIBarButtonItem alloc] initWithTitle:@"搜索" style:UIBarButtonItemStylePlain target:self action:@selector(selectionBtnPressed)];
+    self.navigationItem.leftBarButtonItem = selection;//返回后字体颜色没有复原，暂时重新赋值一下
 }
 /**
  *
@@ -336,8 +333,6 @@ static NSString *cellIdentifier = @"cellIdentifier";
         _join.frame = CGRectMake(0, 0, APPLICATION_WIDTH, APPLICATION_HEIGHT);
         [self.view addSubview:_join];
     }
-    
-    
 }
 /**
  *  创建课程
@@ -384,12 +379,15 @@ static NSString *cellIdentifier = @"cellIdentifier";
             NSString * str = [[data objectForKey:@"header"] objectForKey:@"code"];
             if ([[NSString stringWithFormat:@"%@",str] isEqualToString:@"6680"]) {
                 [UIUtils showInfoMessage:@"该用户已经添加,不能重复添加"];
-            }else{
+            }else if ([[NSString stringWithFormat:@"%@",str] isEqualToString:@"6676"]){
+                [UIUtils showInfoMessage:@"数据异常"];
+            }else if([[NSString stringWithFormat:@"%@",str] isEqualToString:@"0000"]){
                 [UIUtils showInfoMessage:@"加入成功"];
                 [self headerRereshing];
                 [_join removeFromSuperview];
                 _join = nil;
-                
+            }else{
+                [UIUtils showInfoMessage:@"加入失败"];
             }
         } failure:^(NSError *error) {
             [UIUtils showInfoMessage:@"加入失败"];

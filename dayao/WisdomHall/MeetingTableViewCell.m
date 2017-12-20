@@ -179,6 +179,17 @@
             [_code setEnabled:YES];
             [_code setBackgroundColor:[UIColor colorWithHexString:@"#29a7e1"]];
         }
+    }else if ([[NSString stringWithFormat:@"%@",meetModel.signStatus] isEqualToString:@"5"]){
+        [_signBtn setTitle:@"签到状态：请假" forState:UIControlStateNormal];
+        [_code setTitle:@"扫码签到" forState:UIControlStateNormal];
+        [_signBtn setEnabled:NO];
+        if (!isEnable) {
+            [_code setEnabled:NO];
+            [_code setBackgroundColor:[UIColor grayColor]];
+        }else{
+            [_code setEnabled:YES];
+            [_code setBackgroundColor:[UIColor colorWithHexString:@"#29a7e1"]];
+        }
     }else{
         [_signBtn setTitle:@"一键签到" forState:UIControlStateNormal];
         [_code setTitle:@"扫码签到" forState:UIControlStateNormal];
@@ -232,6 +243,17 @@
         [_signBtn setTitle:@"签到状态：连接数据流量后再次点击" forState:UIControlStateNormal];
         [_code setTitle:@"扫码码签到" forState:UIControlStateNormal];
         [_signBtn setEnabled:YES];
+        if (!isEnable) {
+            [_code setEnabled:NO];
+            [_code setBackgroundColor:[UIColor grayColor]];
+        }else{
+            [_code setEnabled:YES];
+            [_code setBackgroundColor:[UIColor colorWithHexString:@"#29a7e1"]];
+        }
+    }else if ([[NSString stringWithFormat:@"%@",meetModel.signStatus] isEqualToString:@"5"]){
+        [_signBtn setTitle:@"签到状态：请假" forState:UIControlStateNormal];
+        [_code setTitle:@"扫码签到" forState:UIControlStateNormal];
+        [_signBtn setEnabled:NO];
         if (!isEnable) {
             [_code setEnabled:NO];
             [_code setBackgroundColor:[UIColor grayColor]];

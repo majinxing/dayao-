@@ -106,8 +106,6 @@
 		8B17370F1EC2EDE400BE3C8F /* MeetingViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8B17370D1EC2EDE400BE3C8F /* MeetingViewController.xib */; };
 		8B1737131EC2F6A700BE3C8F /* NoticeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B1737111EC2F6A700BE3C8F /* NoticeViewController.m */; };
 		8B1737141EC2F6A700BE3C8F /* NoticeViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8B1737121EC2F6A700BE3C8F /* NoticeViewController.xib */; };
-		8B1737181EC2F84900BE3C8F /* NoticeTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B1737161EC2F84900BE3C8F /* NoticeTableViewCell.m */; };
-		8B1737191EC2F84900BE3C8F /* NoticeTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8B1737171EC2F84900BE3C8F /* NoticeTableViewCell.xib */; };
 		8B17371B1EC55A3200BE3C8F /* CoreTelephony.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8B17371A1EC55A3200BE3C8F /* CoreTelephony.framework */; };
 		8B17371D1EC55A3E00BE3C8F /* CoreMotion.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8B17371C1EC55A3E00BE3C8F /* CoreMotion.framework */; };
 		8B17371F1EC55A4E00BE3C8F /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8B17371E1EC55A4E00BE3C8F /* MessageUI.framework */; };
@@ -159,6 +157,10 @@
 		8B32FEA81F4C03C200D9BF23 /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8B32FEA71F4C03C200D9BF23 /* CoreFoundation.framework */; };
 		8B32FEAA1F4C043000D9BF23 /* UserNotifications.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8B32FEA91F4C043000D9BF23 /* UserNotifications.framework */; };
 		8B32FEAC1F4C045900D9BF23 /* libresolv.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 8B32FEAB1F4C045900D9BF23 /* libresolv.tbd */; };
+		8B3516B91FE90552009F42AF /* NoticeDetailsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8B3516B61FE90551009F42AF /* NoticeDetailsViewController.xib */; };
+		8B3516BA1FE90552009F42AF /* NoticeDetailsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B3516B81FE90552009F42AF /* NoticeDetailsViewController.m */; };
+		8B3516BE1FE90600009F42AF /* NoticeTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B3516BB1FE905FF009F42AF /* NoticeTableViewCell.m */; };
+		8B3516BF1FE90600009F42AF /* NoticeTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8B3516BC1FE90600009F42AF /* NoticeTableViewCell.xib */; };
 		8B3CAEC81F75091000BDE092 /* OfficeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B3CAEC61F75091000BDE092 /* OfficeViewController.m */; };
 		8B3CAEC91F75091000BDE092 /* OfficeViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8B3CAEC71F75091000BDE092 /* OfficeViewController.xib */; };
 		8B429C1C1FA8488700084A99 /* QRCodeGenerateVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B429C041FA8488600084A99 /* QRCodeGenerateVC.m */; };
@@ -388,7 +390,6 @@
 		8BF82DE31EE167C300D33473 /* MJRefreshConst.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BF8647C1ECAD21200B7EED4 /* MJRefreshConst.m */; };
 		8BF82DE41EE167C300D33473 /* contactTool.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B9171C61ED3D9D8009686FD /* contactTool.m */; };
 		8BF82DE51EE167C300D33473 /* ContactModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B0DB1321ED5188C0042DF0D /* ContactModel.m */; };
-		8BF82DE61EE167C300D33473 /* NoticeTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B1737161EC2F84900BE3C8F /* NoticeTableViewCell.m */; };
 		8BF82DE71EE167C300D33473 /* SystemSettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BB56D8A1EB31C110023DAFF /* SystemSettingsViewController.m */; };
 		8BF82DE81EE167C300D33473 /* UIUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BB56D691EB037410023DAFF /* UIUtils.m */; };
 		8BF82DE91EE167C300D33473 /* TextModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B8C3D161ECD7A6700E9FB56 /* TextModel.m */; };
@@ -464,7 +465,6 @@
 		8BF82E341EE167C300D33473 /* VoteTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8BF82D801EE001D600D33473 /* VoteTableViewCell.xib */; };
 		8BF82E351EE167C300D33473 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8BA2246A1EADF68500627A1B /* LaunchScreen.storyboard */; };
 		8BF82E361EE167C300D33473 /* TextsTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8B05CB6A1EC0056B0063EC20 /* TextsTableViewCell.xib */; };
-		8BF82E381EE167C300D33473 /* NoticeTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8B1737171EC2F84900BE3C8F /* NoticeTableViewCell.xib */; };
 		8BF82E391EE167C300D33473 /* MeetingViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8B17370D1EC2EDE400BE3C8F /* MeetingViewController.xib */; };
 		8BF82E3A1EE167C300D33473 /* EndTheTestViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8BE877841EBC2E0C00866A34 /* EndTheTestViewController.xib */; };
 		8BF82E3B1EE167C300D33473 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8BA224651EADF68500627A1B /* Main.storyboard */; };
@@ -730,9 +730,6 @@
 		8B1737101EC2F6A700BE3C8F /* NoticeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NoticeViewController.h; sourceTree = "<group>"; };
 		8B1737111EC2F6A700BE3C8F /* NoticeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NoticeViewController.m; sourceTree = "<group>"; };
 		8B1737121EC2F6A700BE3C8F /* NoticeViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = NoticeViewController.xib; sourceTree = "<group>"; };
-		8B1737151EC2F84900BE3C8F /* NoticeTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NoticeTableViewCell.h; sourceTree = "<group>"; };
-		8B1737161EC2F84900BE3C8F /* NoticeTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NoticeTableViewCell.m; sourceTree = "<group>"; };
-		8B1737171EC2F84900BE3C8F /* NoticeTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = NoticeTableViewCell.xib; sourceTree = "<group>"; };
 		8B17371A1EC55A3200BE3C8F /* CoreTelephony.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreTelephony.framework; path = System/Library/Frameworks/CoreTelephony.framework; sourceTree = SDKROOT; };
 		8B17371C1EC55A3E00BE3C8F /* CoreMotion.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMotion.framework; path = System/Library/Frameworks/CoreMotion.framework; sourceTree = SDKROOT; };
 		8B17371E1EC55A4E00BE3C8F /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
@@ -804,6 +801,12 @@
 		8B32FEA91F4C043000D9BF23 /* UserNotifications.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UserNotifications.framework; path = System/Library/Frameworks/UserNotifications.framework; sourceTree = SDKROOT; };
 		8B32FEAB1F4C045900D9BF23 /* libresolv.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libresolv.tbd; path = usr/lib/libresolv.tbd; sourceTree = SDKROOT; };
 		8B32FEAD1F4C052700D9BF23 /* WisdomHall.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = WisdomHall.entitlements; sourceTree = "<group>"; };
+		8B3516B61FE90551009F42AF /* NoticeDetailsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = NoticeDetailsViewController.xib; sourceTree = "<group>"; };
+		8B3516B71FE90552009F42AF /* NoticeDetailsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NoticeDetailsViewController.h; sourceTree = "<group>"; };
+		8B3516B81FE90552009F42AF /* NoticeDetailsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NoticeDetailsViewController.m; sourceTree = "<group>"; };
+		8B3516BB1FE905FF009F42AF /* NoticeTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NoticeTableViewCell.m; sourceTree = "<group>"; };
+		8B3516BC1FE90600009F42AF /* NoticeTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = NoticeTableViewCell.xib; sourceTree = "<group>"; };
+		8B3516BD1FE90600009F42AF /* NoticeTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NoticeTableViewCell.h; sourceTree = "<group>"; };
 		8B3CAEC51F75091000BDE092 /* OfficeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OfficeViewController.h; sourceTree = "<group>"; };
 		8B3CAEC61F75091000BDE092 /* OfficeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OfficeViewController.m; sourceTree = "<group>"; };
 		8B3CAEC71F75091000BDE092 /* OfficeViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = OfficeViewController.xib; sourceTree = "<group>"; };
@@ -1351,9 +1354,9 @@
 				8B1737061EC2BE2B00BE3C8F /* PersonalDataTableViewCell.h */,
 				8B1737071EC2BE2B00BE3C8F /* PersonalDataTableViewCell.m */,
 				8B1737081EC2BE2B00BE3C8F /* PersonalDataTableViewCell.xib */,
-				8B1737151EC2F84900BE3C8F /* NoticeTableViewCell.h */,
-				8B1737161EC2F84900BE3C8F /* NoticeTableViewCell.m */,
-				8B1737171EC2F84900BE3C8F /* NoticeTableViewCell.xib */,
+				8B3516BD1FE90600009F42AF /* NoticeTableViewCell.h */,
+				8B3516BB1FE905FF009F42AF /* NoticeTableViewCell.m */,
+				8B3516BC1FE90600009F42AF /* NoticeTableViewCell.xib */,
 				8B7725081F302E6200D1B521 /* FeedBackTableViewCell.h */,
 				8B7725091F302E6200D1B521 /* FeedBackTableViewCell.m */,
 				8B77250A1F302E6200D1B521 /* FeedBackTableViewCell.xib */,
@@ -1817,6 +1820,9 @@
 				8B1737101EC2F6A700BE3C8F /* NoticeViewController.h */,
 				8B1737111EC2F6A700BE3C8F /* NoticeViewController.m */,
 				8B1737121EC2F6A700BE3C8F /* NoticeViewController.xib */,
+				8B3516B71FE90552009F42AF /* NoticeDetailsViewController.h */,
+				8B3516B81FE90552009F42AF /* NoticeDetailsViewController.m */,
+				8B3516B61FE90551009F42AF /* NoticeDetailsViewController.xib */,
 				8BB56D891EB31C110023DAFF /* SystemSettingsViewController.h */,
 				8BB56D8A1EB31C110023DAFF /* SystemSettingsViewController.m */,
 				8BB56D8B1EB31C110023DAFF /* SystemSettingsViewController.xib */,
@@ -2527,6 +2533,7 @@
 				8BB56D6F1EB05C760023DAFF /* DefineThePasswordViewController.xib in Resources */,
 				8BF82D871EE1573200D33473 /* CreateVoteViewController.xib in Resources */,
 				8B0464401F5FE44F005EEE36 /* QuestionListViewController.xib in Resources */,
+				8B3516BF1FE90600009F42AF /* NoticeTableViewCell.xib in Resources */,
 				8B429C201FA8488700084A99 /* SGQRCode.bundle in Resources */,
 				8B2E16E91EBAD9AF008B7C57 /* AllTheMeetingViewController.xib in Resources */,
 				8B6E61CC1EE292B10040FDC1 /* CreateVoteTableViewCell.xib in Resources */,
@@ -2557,8 +2564,8 @@
 				8B081E0F1F0B766D00493B81 /* SelectMeetingOrClassViewController.xib in Resources */,
 				8B05CB6C1EC0056B0063EC20 /* TextsTableViewCell.xib in Resources */,
 				8BFB946C1EE7F7F1004BB963 /* ResultsOfVoteViewController.xib in Resources */,
-				8B1737191EC2F84900BE3C8F /* NoticeTableViewCell.xib in Resources */,
 				8B081E001F06524000493B81 /* unicode_to_hanyu_pinyin.txt in Resources */,
+				8B3516B91FE90552009F42AF /* NoticeDetailsViewController.xib in Resources */,
 				8B17370F1EC2EDE400BE3C8F /* MeetingViewController.xib in Resources */,
 				8BE877861EBC2E0C00866A34 /* EndTheTestViewController.xib in Resources */,
 				8BA224671EADF68500627A1B /* Main.storyboard in Resources */,
@@ -2628,7 +2635,6 @@
 				8BF82E341EE167C300D33473 /* VoteTableViewCell.xib in Resources */,
 				8BF82E351EE167C300D33473 /* LaunchScreen.storyboard in Resources */,
 				8BF82E361EE167C300D33473 /* TextsTableViewCell.xib in Resources */,
-				8BF82E381EE167C300D33473 /* NoticeTableViewCell.xib in Resources */,
 				8BF82E391EE167C300D33473 /* MeetingViewController.xib in Resources */,
 				8BF82E3A1EE167C300D33473 /* EndTheTestViewController.xib in Resources */,
 				8BF82E3B1EE167C300D33473 /* Main.storyboard in Resources */,
@@ -2704,10 +2710,12 @@
 				8B2F14511F5E93BF00438374 /* StudentSorce.m in Sources */,
 				8B0344C31F920E3A0004228D /* BindPhone.m in Sources */,
 				8B045B981F3458E40021699B /* ZFAppLogoView.m in Sources */,
+				8B3516BE1FE90600009F42AF /* NoticeTableViewCell.m in Sources */,
 				8B429C241FA8488700084A99 /* SGQRCodeScanManager.m in Sources */,
 				8B081E0E1F0B766D00493B81 /* SelectMeetingOrClassViewController.m in Sources */,
 				8B05CB761EC070060063EC20 /* SystemSetingTableViewCell.m in Sources */,
 				8BEE94481F2C780500488651 /* CompanyProfileViewController.m in Sources */,
+				8B3516BA1FE90552009F42AF /* NoticeDetailsViewController.m in Sources */,
 				8B2F14551F5E9BD600438374 /* StudentScoreTableViewCell.m in Sources */,
 				8BCE7CBD1F04E0EA00FE261B /* NetworkRequest.m in Sources */,
 				8B429C1F1FA8488700084A99 /* UIImage+ImageSize.m in Sources */,
@@ -2832,7 +2840,6 @@
 				8B0333F81F8C70190021D495 /* JoinMessageGroupViewController.m in Sources */,
 				8B9171C71ED3D9D8009686FD /* contactTool.m in Sources */,
 				8B0DB1331ED5188C0042DF0D /* ContactModel.m in Sources */,
-				8B1737181EC2F84900BE3C8F /* NoticeTableViewCell.m in Sources */,
 				8B081DE11F06238E00493B81 /* DefinitionPersonalTableViewCell.m in Sources */,
 				8BE24D681F8B6E2200621055 /* GroupPeopleViewController.m in Sources */,
 				8B429C221FA8488700084A99 /* SGQRCodeGenerateManager.m in Sources */,
@@ -2960,7 +2967,6 @@
 				8BF82DE31EE167C300D33473 /* MJRefreshConst.m in Sources */,
 				8BF82DE41EE167C300D33473 /* contactTool.m in Sources */,
 				8BF82DE51EE167C300D33473 /* ContactModel.m in Sources */,
-				8BF82DE61EE167C300D33473 /* NoticeTableViewCell.m in Sources */,
 				8BF82DE71EE167C300D33473 /* SystemSettingsViewController.m in Sources */,
 				8BF82DE81EE167C300D33473 /* UIUtils.m in Sources */,
 				8BF82DE91EE167C300D33473 /* TextModel.m in Sources */,

@@ -83,7 +83,7 @@
         [self.navigationController pushViewController:g animated:YES];
         self.hidesBottomBarWhenPushed = NO;
     }else{
-        [UIUtils showInfoMessage:@"未完待续"];
+        [UIUtils showInfoMessage:@"正在加紧步伐开发中，敬请期待"];
     }
 }
 -(void)signBtnPressedDelegate:(UIButton *)btn{

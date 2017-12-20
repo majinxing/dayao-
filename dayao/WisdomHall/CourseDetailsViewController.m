@@ -88,8 +88,6 @@
     // Do any additional setup after loading the view from its nib.
 }
 -(void)voiceCalls:(NSNotification *)dict{
-    NSLog(@"%@",dict);
-    NSLog(@"%s",__func__);
     EMCallSession * aSession = [dict.userInfo objectForKey:@"session"];
     ConversationVC * c  = [[ConversationVC alloc] init];
     c.callSession = aSession;
@@ -118,7 +116,7 @@
         for (int i = 0; i<ary.count;i++) {
             SignPeople * s = [[SignPeople alloc] init];
             [s setInfoWithDict:ary[i]];
-            if ([[NSString stringWithFormat:@"%@",s.signStatus] isEqualToString:@"1"]) {
+            if ([[NSString stringWithFormat:@"%@",s.signStatus] isEqualToString:@"1"]||[[NSString stringWithFormat:@"%@",s.signStatus] isEqualToString:@"3"]) {
                 _m = _m + 1;
                 [_notSignAry addObject:s];
             }else{
@@ -132,6 +130,10 @@
                     _selfSignStatus = @"签到状态：已签到";
                     _c.signStatus = @"2";
                     _isEnable = YES;
+                }else if ([[NSString stringWithFormat:@"%@",s.signStatus] isEqualToString:@"3"]){
+                    _selfSignStatus = @"签到状态：请假";
+                    _c.signStatus = @"5";
+                    _isEnable = NO;
                 }
                 _seatNo = [NSString stringWithFormat:@"%@",s.seat];
             }
@@ -192,7 +194,6 @@
         [self presentViewController:alert animated:true completion:nil];
         
     }else if([[NSString stringWithFormat:@"%@",_c.courseType] isEqualToString:@"2"]){
-        
         UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"是否确定删除临时性课程" message:nil delegate:nil cancelButtonTitle:@"取消" otherButtonTitles:@"确定",nil];
         alertView.delegate = self;
         alertView.tag = 1001;

@@ -161,7 +161,6 @@ static NSString * cellIdentifier = @"cellIdentifier";
     
     NSDictionary * dict = [[NSDictionary alloc] initWithObjectsAndKeys:[NSString stringWithFormat:@"%ld",(long)page],@"start",_userModel.peopleId,@"teacherId",@"2017-07-01",@"actStartTime",@"1000",@"length",_userModel.school,@"universityId",@"2",@"type",[NSString stringWithFormat:@"%d",[UIUtils getTermId]],@"termId",@"1",@"courseType",_searchStr,@"keywords",nil];
     
-//    NSDictionary * dict = [[NSDictionary alloc] initWithObjectsAndKeys:@"1",@"start",_userModel.peopleId,@"studentId",@"1000",@"length",_userModel.school,@"universityId",@"1",@"type",_searchStr,@"keywords",nil];
     [[NetworkRequest sharedInstance] GET:QueryCourse dict:dict succeed:^(id data) {
         //NSLog(@"%@",data);
         NSString * str = [[data objectForKey:@"header"] objectForKey:@"message"];
@@ -235,6 +234,7 @@ static NSString * cellIdentifier = @"cellIdentifier";
                 [_classModelAry addObject:c];
             }
         }
+        [self deleteTheDuplicateData];
         
         dispatch_async(dispatch_get_main_queue(), ^{
             [_collection reloadData];
@@ -252,7 +252,19 @@ static NSString * cellIdentifier = @"cellIdentifier";
         [self hideHud];
 
     }];
-    
+}
+-(void)deleteTheDuplicateData{
+    for (int i = 0; i<_classModelAry.count; i++) {
+        ClassModel * c = _classModelAry[i];
+        for (int j = i+1; j<_classModelAry.count; j++) {
+            ClassModel * d = _classModelAry[j];
+            NSString * s1 = [NSString stringWithFormat:@"%@",c.sclassId];
+            NSString * s2 = [NSString stringWithFormat:@"%@",d.sclassId];
+            if ([s1 isEqualToString:s2]) {
+                [_classModelAry removeObjectAtIndex:j];
+            }
+        }
+    }
 }
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

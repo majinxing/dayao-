@@ -213,7 +213,10 @@
         // 判断为本地通知
         NSLog(@"iOS10 收到本地通知:{\nbody:%@，\ntitle:%@,\nsubtitle:%@,\nbadge：%@，\nsound：%@，\nuserInfo：%@\n}",body,title,subtitle,badge,sound,userInfo);
     }
-    
+    NoticeViewController * n = [[NoticeViewController alloc] init];
+    _chat = [ChatHelper shareHelper];
+    n.backType = @"TabBar";
+    self.window.rootViewController = [[UINavigationController alloc]initWithRootViewController:n];
     completionHandler();  // 系统要求执行这个方法
 }
 //前台运行时接受推送信息 app未杀死，从前台转后台会走

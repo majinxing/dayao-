@@ -13,11 +13,15 @@
 #import "NoticeModel.h"
 #import "DYTabBarViewController.h"
 #import "ChatHelper.h"
+#import "MJRefresh.h"
+#import "NoticeDetailsViewController.h"
 
 @interface NoticeViewController ()<UITableViewDelegate,UITableViewDataSource>
 @property (nonatomic,strong)UITableView * tableView;
 @property (nonatomic,strong)FMDatabase * db;
 @property (nonatomic,strong)NSMutableArray * noticeAry;
+@property (nonatomic,assign) int page;
+
 @end
 
 @implementation NoticeViewController
@@ -25,8 +29,6 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     _noticeAry = [NSMutableArray arrayWithCapacity:1];
-    
-    [self addData];
     
     [self addTableView];
     
@@ -40,6 +42,22 @@
     _tableView.estimatedRowHeight = 80;
     _tableView.rowHeight = UITableViewAutomaticDimension;
     [self.view addSubview:_tableView];
+    __weak NoticeViewController * weakSelf = self;
+    [_tableView addHeaderWithCallback:^{
+        [weakSelf headerRereshing];
+    }];
+    [_tableView addFooterWithCallback:^{
+        [weakSelf footerRereshing];
+    }];
+    [self headerRereshing];
+}
+-(void)headerRereshing{
+    self.page = 1;
+    [self fetchChatRoomsWithPage:self.page isHeader:YES];
+}
+-(void)footerRereshing{
+    self.page +=1;
+    [self fetchChatRoomsWithPage:self.page isHeader:NO];
 }
 /**
  *  显示navigation的标题
@@ -51,7 +69,7 @@
                                                                       NSFontAttributeName:[UIFont systemFontOfSize:17],
                                                                       NSForegroundColorAttributeName:[UIColor blackColor]}];
     self.title = @"通知";
-   UIBarButtonItem * myButton = [[UIBarButtonItem alloc] initWithTitle:@"< 返回" style:UIBarButtonItemStylePlain target:self action:@selector(back)];
+    UIBarButtonItem * myButton = [[UIBarButtonItem alloc] initWithTitle:@"< 返回" style:UIBarButtonItemStylePlain target:self action:@selector(back)];
     self.navigationItem.leftBarButtonItem = myButton;
 }
 -(void)back{
@@ -67,26 +85,54 @@
     }
     
 }
--(void)addData{
+- (void)fetchChatRoomsWithPage:(NSInteger)aPage
+                      isHeader:(BOOL)aIsHeader{
+    [self hideHud];
+    [self showHudInView:self.view hint:NSLocalizedString(@"正在加载数据", @"Load data...")];
+    __weak typeof(self)weakSelf = self;
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        if (weakSelf) {
+            NoticeViewController * strongSelf = weakSelf;
+            if (aIsHeader) {
+                [_noticeAry removeAllObjects];
+                _noticeAry = [NSMutableArray arrayWithCapacity:1];
+            }
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [strongSelf addDataWithPage:aPage];
+            });
+            
+            if (aIsHeader) {
+                [strongSelf.tableView headerEndRefreshing];
+            }else{
+                [strongSelf.tableView footerEndRefreshing];
+            }
+        }
+    });
+}
+-(void)addDataWithPage:(NSInteger)page{
     
-    NSDictionary * dict = [[NSDictionary alloc] init];
+    NSDictionary * dict = [[NSDictionary alloc] initWithObjectsAndKeys:[NSString stringWithFormat:@"%ld",(long)page],@"start",@"50",@"length", nil];
     
     [[NetworkRequest sharedInstance] GET:QueryNotice dict:dict succeed:^(id data) {
-//        NSLog(@"%@",data);
+    
         NSString * str = [[data objectForKey:@"header"] objectForKey:@"code"];
         if ([str isEqualToString:@"0000"]) {
-            NSArray * ary = [data objectForKey:@"body"];
+            NSArray * ary = [[data objectForKey:@"body"] objectForKey:@"list"];
             for (int i = 0; i<ary.count; i++) {
                 NoticeModel * notice = [[NoticeModel alloc] init];
                 notice.noticeTime = [UIUtils timeWithTimeIntervalString:[ary[i] objectForKey:@"time"]];
-                notice.noticeContent = [ary[i] objectForKey:@"title"];
+                notice.noticeContent = [ary[i] objectForKey:@"inform"];
+                notice.noticeTitle = [ary[i] objectForKey:@"title"];
+                notice.revert = [ary[i] objectForKey:@"revert"];
+                notice.noticeId = [ary[i] objectForKey:@"id"];
+                notice.messageStatus = [ary[i] objectForKey:@"status"];
                 [_noticeAry addObject:notice];
             }
-            [_tableView reloadData];
         }
-        
+        [_tableView reloadData];
+        [self hideHud];
     } failure:^(NSError *error) {
-        
+        [self hideHud];
     }];
 }
 
@@ -114,18 +160,46 @@
     cell.backgroundColor = [UIColor clearColor];
     if ((_noticeAry.count-indexPath.row-1)<_noticeAry.count) {
         NoticeModel * notice = _noticeAry[_noticeAry.count-indexPath.row-1];
-        [cell setContentView:notice.noticeTime withNoticContent:notice.noticeContent];
+        [cell setContentView:notice];
     }
-    
-    
     return cell;
 }
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    NoticeDetailsViewController * notice = [[NoticeDetailsViewController alloc] initWithActionBlock:^(NSString *str) {
+        [self headerRereshing];
+    }];
+    notice.notice = _noticeAry[_noticeAry.count-indexPath.row-1];
+    self.hidesBottomBarWhenPushed = YES;
+    [self.navigationController pushViewController:notice animated:YES];
+    //    self.hidesBottomBarWhenPushed = NO;
 }
-//-(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
-//    return 100;
-//}
+- (NSString *)tableView:(UITableView *)tableView titleForDeleteConfirmationButtonForRowAtIndexPath:(NSIndexPath *)indexPath {
+    return @"删除";
+}
+- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
+    return YES;
+}
+//点击删除
+- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
+    //在这里实现删除操作
+    NoticeModel * notice = _noticeAry[_noticeAry.count-indexPath.row-1];
+    NSDictionary * dict = [[NSDictionary alloc] initWithObjectsAndKeys:[NSString stringWithFormat:@"%@",notice.noticeId],@"id", nil];
+    [[NetworkRequest sharedInstance] POST:Noticedelect dict:dict succeed:^(id data) {
+        
+        NSString * str = [NSString stringWithFormat:@"%@",[[data objectForKey:@"header"] objectForKey:@"code"]];
+        if ([str isEqualToString:@"0000"]) {
+            [self headerRereshing];
+        }else{
+            [UIUtils showInfoMessage:@"删除失败"];
+        }
+    } failure:^(NSError *error) {
+        [UIUtils showInfoMessage:@"删除失败请检查网络"];
+    }];
+}
+-(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
+    return 100;
+}
 -(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
     return 10;
 }
@@ -140,3 +214,4 @@
  */
 
 @end
+
