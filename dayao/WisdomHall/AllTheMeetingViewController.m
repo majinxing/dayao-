@@ -48,7 +48,7 @@ static NSString * cellIdentifier = @"cellIdentifier";
     [self setNavigationTitle];
     
     [self addCollection];
-
+    
     self.view.backgroundColor = RGBA_COLOR(231, 231, 231, 1);
     // 1.注册通知
     
@@ -73,8 +73,8 @@ static NSString * cellIdentifier = @"cellIdentifier";
                                                                       NSForegroundColorAttributeName:[UIColor blackColor]}];
     self.title = @"会议";
     
-//    UIBarButtonItem * selection = [[UIBarButtonItem alloc] initWithTitle:@"搜索" style:UIBarButtonItemStylePlain target:self action:@selector(selectionBtnPressed)];
-//    self.navigationItem.leftBarButtonItem = selection;
+    //    UIBarButtonItem * selection = [[UIBarButtonItem alloc] initWithTitle:@"搜索" style:UIBarButtonItemStylePlain target:self action:@selector(selectionBtnPressed)];
+    //    self.navigationItem.leftBarButtonItem = selection;
     UIBarButtonItem * createMeeting = [[UIBarButtonItem alloc] initWithTitle:@"更多" style:UIBarButtonItemStylePlain target:self action:@selector(createMeeting)];
     self.navigationItem.rightBarButtonItem = createMeeting;
 }
@@ -87,7 +87,7 @@ static NSString * cellIdentifier = @"cellIdentifier";
         CreateMeetingViewController * c = [[CreateMeetingViewController alloc] init];
         self.hidesBottomBarWhenPushed = YES;
         [self.navigationController pushViewController:c animated:YES];
-//        self.hidesBottomBarWhenPushed = NO;
+        //        self.hidesBottomBarWhenPushed = NO;
     }]];
     
     [alert addAction:[UIAlertAction actionWithTitle:@"加入会议" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
@@ -116,7 +116,7 @@ static NSString * cellIdentifier = @"cellIdentifier";
     SelectMeetingOrClassViewController * s = [[SelectMeetingOrClassViewController alloc] init];
     self.hidesBottomBarWhenPushed = YES;
     [self.navigationController pushViewController:s animated:YES];
-//    self.hidesBottomBarWhenPushed = NO;
+    //    self.hidesBottomBarWhenPushed = NO;
 }
 -(void)addAlterView{
     _alterView = [[AlterView alloc] initWithFrame:CGRectMake(60, 200, APPLICATION_WIDTH-120, 120) withLabelText:@"暂无会议"];
@@ -269,6 +269,22 @@ static NSString * cellIdentifier = @"cellIdentifier";
             }
             
         }
+        for (int i = 0 ; i<_meetingModelAry.count; i++) {
+            MeetingModel * c = _meetingModelAry[i];
+            
+            for (int j = i; j<_meetingModelAry.count; j++) {
+                MeetingModel * c1 = _meetingModelAry[j];
+                //date02比date01小
+                if ([[UIUtils compareTimeStartTime:c.meetingTime withExpireTime:c1.meetingTime] isEqualToString:@"-1"]) {
+                    //                    c2 = c1;
+                    MeetingModel *c2 = [[MeetingModel alloc] init];
+                    c2 = c;
+                    [_meetingModelAry setObject:c1 atIndexedSubscript:i];
+                    [_meetingModelAry setObject:c2 atIndexedSubscript:j];
+                    c = _meetingModelAry[i];
+                }
+            }
+        }
         [self hideHud];
         
         [_collection reloadData];
@@ -278,6 +294,25 @@ static NSString * cellIdentifier = @"cellIdentifier";
         
     }];
     
+}
+-(void)ssss{
+    
+    //    for (int i = 0 ; i<_classAry.count; i++) {
+    //        ClassModel * c = _classAry[i];
+    //
+    //        for (int j = i; j<_classAry.count; j++) {
+    //            ClassModel * c1 = _classAry[j];
+    //            //date02比date01小
+    //            if ([[UIUtils compareTimeStartTime:c.actStarTime withExpireTime:c1.actStarTime] isEqualToString:@"-1"]) {
+    //                //                    c2 = c1;
+    //                ClassModel *c2 = [[ClassModel alloc] init];
+    //                c2 = c;
+    //                [_classAry setObject:c1 atIndexedSubscript:i];
+    //                [_classAry setObject:c2 atIndexedSubscript:j];
+    //                c = _classAry[i];
+    //            }
+    //        }
+    //    }
 }
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
@@ -321,7 +356,7 @@ static NSString * cellIdentifier = @"cellIdentifier";
     self.hidesBottomBarWhenPushed = YES;
     mInfo.meetingModel = _meetingModelAry[indexPath.row];
     [self.navigationController pushViewController:mInfo animated:YES];
-//    self.hidesBottomBarWhenPushed=NO;
+    //    self.hidesBottomBarWhenPushed=NO;
     
 }
 //有了初次点击再走这个
@@ -332,7 +367,7 @@ static NSString * cellIdentifier = @"cellIdentifier";
     self.hidesBottomBarWhenPushed = YES;
     mInfo.meetingModel = _meetingModelAry[indexPath.row];
     [self.navigationController pushViewController:mInfo animated:YES];
-//    self.hidesBottomBarWhenPushed=NO;
+    //    self.hidesBottomBarWhenPushed=NO;
     
 }
 #pragma mark UICollectionViewDelegateFlowLayout

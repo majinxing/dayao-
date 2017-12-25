@@ -159,7 +159,7 @@
     }
     cell.backgroundColor = [UIColor clearColor];
     if ((_noticeAry.count-indexPath.row-1)<_noticeAry.count) {
-        NoticeModel * notice = _noticeAry[_noticeAry.count-indexPath.row-1];
+        NoticeModel * notice = _noticeAry[indexPath.row];
         [cell setContentView:notice];
     }
     return cell;
@@ -169,7 +169,7 @@
     NoticeDetailsViewController * notice = [[NoticeDetailsViewController alloc] initWithActionBlock:^(NSString *str) {
         [self headerRereshing];
     }];
-    notice.notice = _noticeAry[_noticeAry.count-indexPath.row-1];
+    notice.notice = _noticeAry[indexPath.row];
     self.hidesBottomBarWhenPushed = YES;
     [self.navigationController pushViewController:notice animated:YES];
     //    self.hidesBottomBarWhenPushed = NO;
@@ -183,7 +183,7 @@
 //点击删除
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
     //在这里实现删除操作
-    NoticeModel * notice = _noticeAry[_noticeAry.count-indexPath.row-1];
+    NoticeModel * notice = _noticeAry[indexPath.row];
     NSDictionary * dict = [[NSDictionary alloc] initWithObjectsAndKeys:[NSString stringWithFormat:@"%@",notice.noticeId],@"id", nil];
     [[NetworkRequest sharedInstance] POST:Noticedelect dict:dict succeed:^(id data) {
         

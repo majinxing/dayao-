@@ -4,7 +4,9 @@
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
+        <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -33,15 +35,6 @@
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" scrollEnabled="NO" editable="NO" text="注意安全" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2kQ-ms-EOJ">
-                        <rect key="frame" x="20" y="41" width="337" height="62.5"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        <fontDescription key="fontDescription" type="system" pointSize="13"/>
-                        <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
-                        <connections>
-                            <outlet property="delegate" destination="KGk-i7-Jjw" id="mvp-OP-B06"/>
-                        </connections>
-                    </textView>
                     <label opaque="NO" userInteractionEnabled="NO" alpha="0.5" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="未读" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kbu-pT-G69">
                         <rect key="frame" x="252" y="103.5" width="40" height="25"/>
                         <constraints>
@@ -72,27 +65,33 @@
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
                     </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="K05-kd-inY">
+                        <rect key="frame" x="36" y="41" width="295" height="62.5"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                        <nil key="textColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
                 </subviews>
                 <constraints>
                     <constraint firstAttribute="bottom" secondItem="uFr-mR-Xpd" secondAttribute="bottom" constant="5" id="5Bh-Km-FeK"/>
                     <constraint firstItem="xiz-gV-Bsx" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="8" id="F56-2L-hxT"/>
                     <constraint firstAttribute="trailing" secondItem="kYN-Xf-HeA" secondAttribute="trailing" constant="150" id="GNR-hX-k8E"/>
+                    <constraint firstItem="K05-kd-inY" firstAttribute="top" secondItem="kYN-Xf-HeA" secondAttribute="bottom" constant="10" id="I9H-OX-PxT"/>
                     <constraint firstItem="kYN-Xf-HeA" firstAttribute="leading" secondItem="xiz-gV-Bsx" secondAttribute="trailing" constant="5" id="Jt8-hL-G8y"/>
+                    <constraint firstAttribute="trailingMargin" secondItem="K05-kd-inY" secondAttribute="trailing" constant="20" id="KJi-M3-Aj1"/>
                     <constraint firstItem="kYN-Xf-HeA" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="6" id="LHF-os-os3"/>
                     <constraint firstAttribute="bottom" secondItem="MB2-JG-ww3" secondAttribute="bottom" constant="5" id="MIu-E2-Lf6"/>
                     <constraint firstItem="xiz-gV-Bsx" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="10" id="P1o-wt-5YV"/>
+                    <constraint firstItem="MB2-JG-ww3" firstAttribute="top" secondItem="K05-kd-inY" secondAttribute="bottom" id="ReQ-bT-aJ9"/>
                     <constraint firstAttribute="bottom" secondItem="kbu-pT-G69" secondAttribute="bottom" constant="5" id="SHz-6a-yPL"/>
                     <constraint firstItem="MB2-JG-ww3" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="10" id="XHx-ke-ddj"/>
-                    <constraint firstItem="2kQ-ms-EOJ" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="20" id="XZK-tP-iRw"/>
-                    <constraint firstItem="MB2-JG-ww3" firstAttribute="top" secondItem="2kQ-ms-EOJ" secondAttribute="bottom" id="dQV-zb-vtj"/>
                     <constraint firstAttribute="trailing" secondItem="uFr-mR-Xpd" secondAttribute="trailing" constant="15" id="tFZ-dc-gta"/>
-                    <constraint firstItem="2kQ-ms-EOJ" firstAttribute="top" secondItem="kYN-Xf-HeA" secondAttribute="bottom" constant="10" id="tyt-ge-ygg"/>
-                    <constraint firstAttribute="trailing" secondItem="2kQ-ms-EOJ" secondAttribute="trailing" constant="10" id="zYM-HN-5wa"/>
+                    <constraint firstItem="K05-kd-inY" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" constant="20" id="vKB-qc-Nd3"/>
                     <constraint firstItem="uFr-mR-Xpd" firstAttribute="leading" secondItem="kbu-pT-G69" secondAttribute="trailing" id="ziZ-wa-nge"/>
                 </constraints>
             </tableViewCellContentView>
             <connections>
-                <outlet property="noteContent" destination="2kQ-ms-EOJ" id="P0z-yc-NyS"/>
+                <outlet property="noteContent" destination="K05-kd-inY" id="18p-8I-Ezc"/>
                 <outlet property="noticeName" destination="kYN-Xf-HeA" id="cZW-Xt-H8i"/>
                 <outlet property="noticeTime" destination="MB2-JG-ww3" id="Y4N-Ix-eXH"/>
                 <outlet property="receipt" destination="uFr-mR-Xpd" id="qLL-w4-S9O"/>

@@ -9,6 +9,7 @@
 #import "MJXChatCellTableViewCell.h"
 #import <Hyphenate/Hyphenate.h>
 #import "DYHeader.h"
+#import "UIImageView+WebCache.h"
 
 #define RGBA_COLOR(R, G, B, A) [UIColor colorWithRed:((R) / 255.0f) green:((G) / 255.0f) blue:((B) / 255.0f) alpha:A]
 
@@ -32,6 +33,14 @@
 @property (weak, nonatomic) IBOutlet UILabel *seventhNameLabel;
 @property (weak, nonatomic) IBOutlet UILabel *eigthNameLabel;
 @property (strong, nonatomic) UIView * bView;
+@property (strong, nonatomic) IBOutlet UIImageView *firstHeadImage;
+@property (weak, nonatomic) IBOutlet UIImageView *secondHeadImage;
+@property (strong, nonatomic) IBOutlet UIImageView *thirdHeadImage;
+@property (strong, nonatomic) IBOutlet UIImageView *fourthHeadImage;
+@property (strong, nonatomic) IBOutlet UIImageView *fifthHeadImage;
+@property (strong, nonatomic) IBOutlet UIImageView *sixthHeadImage;
+@property (strong, nonatomic) IBOutlet UIImageView *seventhHeadImage;
+@property (strong, nonatomic) IBOutlet UIImageView *eigthHeadImage;
 
 @end
 
@@ -109,10 +118,15 @@
         
         _firstTextView.text = textBody.text;
         
-        _firstNameLabel.text = [NSString stringWithFormat:@"%@",message.from];
-        
-//        float f = [self measureSinglelineStringWidth:textBody.text andFont:[UIFont systemFontOfSize:13]];
-        
+        NSDictionary *dict = message.ext;
+        NSString * name = [dict objectForKey:@"name"];
+        NSString * headimage = [dict objectForKey:@"headImage"];
+        _firstNameLabel.text = [NSString stringWithFormat:@"%@",name];
+        if (![UIUtils isBlankString:headimage]) {
+            
+            [_firstHeadImage sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@?resourceId=%@",BaseURL,FileDownload,headimage]] placeholderImage:[UIImage imageNamed:@"h"]];
+            
+        }
         CGSize size = CGSizeMake(APPLICATION_WIDTH, CGFLOAT_MAX);
         
         NSDictionary *dic = [NSDictionary dictionaryWithObjectsAndKeys:[UIFont systemFontOfSize:13],NSFontAttributeName, nil];
@@ -140,7 +154,13 @@
     }else if (n==4){
         EMTextMessageBody *textBody = (EMTextMessageBody *)message.body;
         _fifthTextView.text = textBody.text;
-        _fifthNameLabel.text = message.from;
+        NSDictionary *dict = message.ext;
+        NSString * name = [dict objectForKey:@"name"];
+        NSString * headimage = [dict objectForKey:@"headImage"];
+        _fifthNameLabel.text = [NSString stringWithFormat:@"%@",name];
+        if (![UIUtils isBlankString:headimage]) {
+            [_fifthHeadImage sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@?resourceId=%@",BaseURL,FileDownload,headimage]] placeholderImage:[UIImage imageNamed:@"h"]];
+        }
         float f = [self measureSinglelineStringWidth:textBody.text andFont:[UIFont systemFontOfSize:13]];
         if (f<30) {
             _bView.frame = CGRectMake(0,CGRectGetMaxY(_fifthNameLabel.frame), APPLICATION_WIDTH-35-45-16, 43);

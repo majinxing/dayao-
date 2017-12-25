@@ -12,8 +12,9 @@
 @interface NoticeTableViewCell()<UITextViewDelegate>
 @property (strong, nonatomic) IBOutlet UILabel *noticeName;
 @property (strong, nonatomic) IBOutlet UILabel *noticeTime;
+@property (strong, nonatomic) IBOutlet UILabel *noteContent;
 
-@property (strong, nonatomic) IBOutlet UITextView *noteContent;
+//@property (strong, nonatomic) IBOutlet UITextView *noteContent;
 @property (strong, nonatomic) IBOutlet UILabel *unread;
 @property (strong, nonatomic) IBOutlet UILabel *receipt;
 

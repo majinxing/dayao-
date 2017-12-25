@@ -31,7 +31,6 @@
 		8B045B771F3458820021699B /* NSObject+MJKeyValue.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B045B691F3458820021699B /* NSObject+MJKeyValue.m */; };
 		8B045B781F3458820021699B /* NSObject+MJProperty.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B045B6B1F3458820021699B /* NSObject+MJProperty.m */; };
 		8B045B791F3458820021699B /* NSString+MJExtension.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B045B6D1F3458820021699B /* NSString+MJExtension.m */; };
-		8B045B7C1F3458BB0021699B /* ZFSeatViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B045B7B1F3458BB0021699B /* ZFSeatViewController.m */; };
 		8B045B821F3458CC0021699B /* ZFSeatModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B045B7F1F3458CC0021699B /* ZFSeatModel.m */; };
 		8B045B831F3458CC0021699B /* ZFSeatsModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B045B811F3458CC0021699B /* ZFSeatsModel.m */; };
 		8B045B981F3458E40021699B /* ZFAppLogoView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B045B861F3458E40021699B /* ZFAppLogoView.m */; };
@@ -41,8 +40,6 @@
 		8B045B9C1F3458E40021699B /* ZFRowIndexView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B045B8E1F3458E40021699B /* ZFRowIndexView.m */; };
 		8B045B9D1F3458E40021699B /* ZFSeatButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B045B901F3458E40021699B /* ZFSeatButton.m */; };
 		8B045B9E1F3458E40021699B /* ZFSeatSelectionTool.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B045B931F3458E40021699B /* ZFSeatSelectionTool.m */; };
-		8B045B9F1F3458E40021699B /* ZFSeatSelectionView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B045B951F3458E40021699B /* ZFSeatSelectionView.m */; };
-		8B045BA01F3458E40021699B /* ZFSeatsView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B045B971F3458E40021699B /* ZFSeatsView.m */; };
 		8B045BA31F34595D0021699B /* UIView+Extension.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B045BA21F34595D0021699B /* UIView+Extension.m */; };
 		8B045BA61F3462640021699B /* SeatIngModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B045BA51F3462640021699B /* SeatIngModel.m */; };
 		8B04643F1F5FE44F005EEE36 /* QuestionListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B04643D1F5FE44F005EEE36 /* QuestionListViewController.m */; };
@@ -84,6 +81,9 @@
 		8B081E1A1F0E0FA400493B81 /* SignPeople.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B081E191F0E0FA400493B81 /* SignPeople.m */; };
 		8B0857971F7E3A30009D5AC9 /* WorkingLoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B0857951F7E3A30009D5AC9 /* WorkingLoginViewController.m */; };
 		8B0857981F7E3A30009D5AC9 /* WorkingLoginViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8B0857961F7E3A30009D5AC9 /* WorkingLoginViewController.xib */; };
+		8B087E321FEA563000649094 /* ZFSeatViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B087E311FEA563000649094 /* ZFSeatViewController.m */; };
+		8B087E371FEA564500649094 /* ZFSeatsView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B087E351FEA564400649094 /* ZFSeatsView.m */; };
+		8B087E381FEA564500649094 /* ZFSeatSelectionView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B087E361FEA564500649094 /* ZFSeatSelectionView.m */; };
 		8B0AF7591F4FAF53003858A4 /* UploadFileViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B0AF7571F4FAF53003858A4 /* UploadFileViewController.m */; };
 		8B0AF75A1F4FAF53003858A4 /* UploadFileViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8B0AF7581F4FAF53003858A4 /* UploadFileViewController.xib */; };
 		8B0AF75E1F511AA2003858A4 /* VoteResultTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B0AF75C1F511AA2003858A4 /* VoteResultTableViewCell.m */; };
@@ -603,8 +603,6 @@
 		8B045B6B1F3458820021699B /* NSObject+MJProperty.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+MJProperty.m"; sourceTree = "<group>"; };
 		8B045B6C1F3458820021699B /* NSString+MJExtension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+MJExtension.h"; sourceTree = "<group>"; };
 		8B045B6D1F3458820021699B /* NSString+MJExtension.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+MJExtension.m"; sourceTree = "<group>"; };
-		8B045B7A1F3458BB0021699B /* ZFSeatViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZFSeatViewController.h; sourceTree = "<group>"; };
-		8B045B7B1F3458BB0021699B /* ZFSeatViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZFSeatViewController.m; sourceTree = "<group>"; };
 		8B045B7E1F3458CC0021699B /* ZFSeatModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZFSeatModel.h; sourceTree = "<group>"; };
 		8B045B7F1F3458CC0021699B /* ZFSeatModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZFSeatModel.m; sourceTree = "<group>"; };
 		8B045B801F3458CC0021699B /* ZFSeatsModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZFSeatsModel.h; sourceTree = "<group>"; };
@@ -624,10 +622,6 @@
 		8B045B911F3458E40021699B /* ZFSeatSelectionConfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZFSeatSelectionConfig.h; sourceTree = "<group>"; };
 		8B045B921F3458E40021699B /* ZFSeatSelectionTool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZFSeatSelectionTool.h; sourceTree = "<group>"; };
 		8B045B931F3458E40021699B /* ZFSeatSelectionTool.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZFSeatSelectionTool.m; sourceTree = "<group>"; };
-		8B045B941F3458E40021699B /* ZFSeatSelectionView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZFSeatSelectionView.h; sourceTree = "<group>"; };
-		8B045B951F3458E40021699B /* ZFSeatSelectionView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZFSeatSelectionView.m; sourceTree = "<group>"; };
-		8B045B961F3458E40021699B /* ZFSeatsView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZFSeatsView.h; sourceTree = "<group>"; };
-		8B045B971F3458E40021699B /* ZFSeatsView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZFSeatsView.m; sourceTree = "<group>"; };
 		8B045BA11F34595D0021699B /* UIView+Extension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+Extension.h"; sourceTree = "<group>"; };
 		8B045BA21F34595D0021699B /* UIView+Extension.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+Extension.m"; sourceTree = "<group>"; };
 		8B045BA41F3462640021699B /* SeatIngModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SeatIngModel.h; sourceTree = "<group>"; };
@@ -694,6 +688,12 @@
 		8B0857941F7E3A30009D5AC9 /* WorkingLoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WorkingLoginViewController.h; sourceTree = "<group>"; };
 		8B0857951F7E3A30009D5AC9 /* WorkingLoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WorkingLoginViewController.m; sourceTree = "<group>"; };
 		8B0857961F7E3A30009D5AC9 /* WorkingLoginViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = WorkingLoginViewController.xib; sourceTree = "<group>"; };
+		8B087E301FEA562F00649094 /* ZFSeatViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZFSeatViewController.h; sourceTree = "<group>"; };
+		8B087E311FEA563000649094 /* ZFSeatViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZFSeatViewController.m; sourceTree = "<group>"; };
+		8B087E341FEA564400649094 /* ZFSeatSelectionView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZFSeatSelectionView.h; sourceTree = "<group>"; };
+		8B087E351FEA564400649094 /* ZFSeatsView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZFSeatsView.m; sourceTree = "<group>"; };
+		8B087E361FEA564500649094 /* ZFSeatSelectionView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZFSeatSelectionView.m; sourceTree = "<group>"; };
+		8B087E451FEA573A00649094 /* ZFSeatsView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZFSeatsView.h; sourceTree = "<group>"; };
 		8B0AF7561F4FAF53003858A4 /* UploadFileViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UploadFileViewController.h; sourceTree = "<group>"; };
 		8B0AF7571F4FAF53003858A4 /* UploadFileViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UploadFileViewController.m; sourceTree = "<group>"; };
 		8B0AF7581F4FAF53003858A4 /* UploadFileViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = UploadFileViewController.xib; sourceTree = "<group>"; };
@@ -1259,8 +1259,8 @@
 			children = (
 				8B045B841F3458E40021699B /* View */,
 				8B045B7D1F3458CC0021699B /* Model */,
-				8B045B7A1F3458BB0021699B /* ZFSeatViewController.h */,
-				8B045B7B1F3458BB0021699B /* ZFSeatViewController.m */,
+				8B087E301FEA562F00649094 /* ZFSeatViewController.h */,
+				8B087E311FEA563000649094 /* ZFSeatViewController.m */,
 				8B51AAA01F3EE71900AE034E /* MeetingChooseSeatViewController.h */,
 				8B51AAA11F3EE71900AE034E /* MeetingChooseSeatViewController.m */,
 				8B51AAA21F3EE71900AE034E /* MeetingChooseSeatViewController.xib */,
@@ -1337,10 +1337,10 @@
 				8B045B911F3458E40021699B /* ZFSeatSelectionConfig.h */,
 				8B045B921F3458E40021699B /* ZFSeatSelectionTool.h */,
 				8B045B931F3458E40021699B /* ZFSeatSelectionTool.m */,
-				8B045B941F3458E40021699B /* ZFSeatSelectionView.h */,
-				8B045B951F3458E40021699B /* ZFSeatSelectionView.m */,
-				8B045B961F3458E40021699B /* ZFSeatsView.h */,
-				8B045B971F3458E40021699B /* ZFSeatsView.m */,
+				8B087E341FEA564400649094 /* ZFSeatSelectionView.h */,
+				8B087E361FEA564500649094 /* ZFSeatSelectionView.m */,
+				8B087E451FEA573A00649094 /* ZFSeatsView.h */,
+				8B087E351FEA564400649094 /* ZFSeatsView.m */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -2657,7 +2657,6 @@
 				8B429C1C1FA8488700084A99 /* QRCodeGenerateVC.m in Sources */,
 				8BB56D871EB2E2820023DAFF /* RedefineThePasswordViewController.m in Sources */,
 				8B081DFF1F06524000493B81 /* PinyinHelper.m in Sources */,
-				8B045BA01F3458E40021699B /* ZFSeatsView.m in Sources */,
 				8B081DFA1F06524000493B81 /* ChineseToPinyinResource.m in Sources */,
 				8BCE7CD11F04F07600FE261B /* AFURLSessionManager.m in Sources */,
 				8BFB94611EE6A381004BB963 /* JoinVoteViewController.m in Sources */,
@@ -2671,7 +2670,6 @@
 				8B081E081F0A4AEC00493B81 /* ClassModel.m in Sources */,
 				8B2E16E21EBACAD7008B7C57 /* PersonalCollectionViewCell.m in Sources */,
 				8B081DFC1F06524000493B81 /* NSString+PinYin4Cocoa.m in Sources */,
-				8B045B9F1F3458E40021699B /* ZFSeatSelectionView.m in Sources */,
 				8B0AF75E1F511AA2003858A4 /* VoteResultTableViewCell.m in Sources */,
 				8B2E16DE1EBABBC0008B7C57 /* InteractiveView.m in Sources */,
 				8BF864C71ECAD97300B7EED4 /* UIImage+MultiFormat.m in Sources */,
@@ -2691,7 +2689,6 @@
 				8B045B831F3458CC0021699B /* ZFSeatsModel.m in Sources */,
 				8BF864BF1ECAD97300B7EED4 /* SDWebImageCompat.m in Sources */,
 				8BB56D671EAF3C620023DAFF /* UserModel.m in Sources */,
-				8B045B7C1F3458BB0021699B /* ZFSeatViewController.m in Sources */,
 				8BF8648B1ECAD21200B7EED4 /* MJRefreshHeaderView.m in Sources */,
 				8B1509851F4EA823000127AF /* FileModel.m in Sources */,
 				8B9CCC8C1F14D3B7001833FD /* RecorderView.m in Sources */,
@@ -2715,6 +2712,7 @@
 				8B081E0E1F0B766D00493B81 /* SelectMeetingOrClassViewController.m in Sources */,
 				8B05CB761EC070060063EC20 /* SystemSetingTableViewCell.m in Sources */,
 				8BEE94481F2C780500488651 /* CompanyProfileViewController.m in Sources */,
+				8B087E321FEA563000649094 /* ZFSeatViewController.m in Sources */,
 				8B3516BA1FE90552009F42AF /* NoticeDetailsViewController.m in Sources */,
 				8B2F14551F5E9BD600438374 /* StudentScoreTableViewCell.m in Sources */,
 				8BCE7CBD1F04E0EA00FE261B /* NetworkRequest.m in Sources */,
@@ -2750,6 +2748,7 @@
 				8B2E16ED1EBAD9F3008B7C57 /* InTheMeetingViewController.m in Sources */,
 				8BA224D41EAF25DC00627A1B /* RegisterViewController.m in Sources */,
 				8B17370E1EC2EDE400BE3C8F /* MeetingViewController.m in Sources */,
+				8B087E371FEA564500649094 /* ZFSeatsView.m in Sources */,
 				8BF8648C1ECAD21200B7EED4 /* UIScrollView+MJExtension.m in Sources */,
 				8BF864C81ECAD97300B7EED4 /* UIImageView+HighlightedWebCache.m in Sources */,
 				8BA224A71EAE000000627A1B /* PersonalCenterViewController.m in Sources */,
@@ -2782,6 +2781,7 @@
 				8BCE7CCF1F04F07600FE261B /* AFURLRequestSerialization.m in Sources */,
 				8BFB946B1EE7F7F1004BB963 /* ResultsOfVoteViewController.m in Sources */,
 				8B045B711F3458820021699B /* MJFoundation.m in Sources */,
+				8B087E381FEA564500649094 /* ZFSeatSelectionView.m in Sources */,
 				8BF864BD1ECAD97300B7EED4 /* NSData+ImageContentType.m in Sources */,
 				8B045B771F3458820021699B /* NSObject+MJKeyValue.m in Sources */,
 				8BF82D771EDFB32500D33473 /* CollectionHeadView.m in Sources */,
