@@ -252,6 +252,8 @@
 
 #define Noticedelect            @"course/message/delete"            //删除消息
 
+#define PhotoSign               @"course/course/photoSign"          //拍照签到
+
 
 
 

@@ -163,6 +163,7 @@
 		8B3516BF1FE90600009F42AF /* NoticeTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8B3516BC1FE90600009F42AF /* NoticeTableViewCell.xib */; };
 		8B3CAEC81F75091000BDE092 /* OfficeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B3CAEC61F75091000BDE092 /* OfficeViewController.m */; };
 		8B3CAEC91F75091000BDE092 /* OfficeViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8B3CAEC71F75091000BDE092 /* OfficeViewController.xib */; };
+		8B3CB2DF1FFF6E4A00E1123E /* PhotoPromptBox.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B3CB2DE1FFF6E4A00E1123E /* PhotoPromptBox.m */; };
 		8B429C1C1FA8488700084A99 /* QRCodeGenerateVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B429C041FA8488600084A99 /* QRCodeGenerateVC.m */; };
 		8B429C1D1FA8488700084A99 /* ScanSuccessJumpVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B429C061FA8488600084A99 /* ScanSuccessJumpVC.m */; };
 		8B429C1E1FA8488700084A99 /* SGQRCodeScanningVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B429C081FA8488600084A99 /* SGQRCodeScanningVC.m */; };
@@ -810,6 +811,8 @@
 		8B3CAEC51F75091000BDE092 /* OfficeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OfficeViewController.h; sourceTree = "<group>"; };
 		8B3CAEC61F75091000BDE092 /* OfficeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OfficeViewController.m; sourceTree = "<group>"; };
 		8B3CAEC71F75091000BDE092 /* OfficeViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = OfficeViewController.xib; sourceTree = "<group>"; };
+		8B3CB2DD1FFF6E4900E1123E /* PhotoPromptBox.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PhotoPromptBox.h; sourceTree = "<group>"; };
+		8B3CB2DE1FFF6E4A00E1123E /* PhotoPromptBox.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PhotoPromptBox.m; sourceTree = "<group>"; };
 		8B429C031FA8488600084A99 /* QRCodeGenerateVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QRCodeGenerateVC.h; sourceTree = "<group>"; };
 		8B429C041FA8488600084A99 /* QRCodeGenerateVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QRCodeGenerateVC.m; sourceTree = "<group>"; };
 		8B429C051FA8488600084A99 /* ScanSuccessJumpVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ScanSuccessJumpVC.h; sourceTree = "<group>"; };
@@ -2000,6 +2003,8 @@
 				8B47AB801F96DC6A00DB1B9A /* ClassTableViewCell.h */,
 				8B47AB811F96DC6A00DB1B9A /* ClassTableViewCell.m */,
 				8B47AB821F96DC6A00DB1B9A /* ClassTableViewCell.xib */,
+				8B3CB2DD1FFF6E4900E1123E /* PhotoPromptBox.h */,
+				8B3CB2DE1FFF6E4A00E1123E /* PhotoPromptBox.m */,
 			);
 			name = View;
 			sourceTree = "<group>";
@@ -2739,6 +2744,7 @@
 				8B0AF7621F5179F2003858A4 /* FileDowan.m in Sources */,
 				8B0D960B1F1893A2006796E3 /* CreateCouresTableViewCell.m in Sources */,
 				8B1A50321F75F85C00A11CB2 /* OfficeTableViewCell.m in Sources */,
+				8B3CB2DF1FFF6E4A00E1123E /* PhotoPromptBox.m in Sources */,
 				8BE877901EBD69C000866A34 /* CreateTestViewController.m in Sources */,
 				8B045B781F3458820021699B /* NSObject+MJProperty.m in Sources */,
 				8BFB947A1EE94948004BB963 /* VoteDrawView.m in Sources */,

@@ -28,6 +28,8 @@
 #import <Foundation/Foundation.h>
 #import <CommonCrypto/CommonDigest.h>
 #import "QrCodeViewController.h"
+#import "PhotoPromptBox.h"
+
 
 #define kScreenWidth [UIScreen mainScreen].bounds.size.width
 
@@ -44,6 +46,8 @@
 @property (nonatomic,assign)int mac;
 @property (nonatomic,strong)UITableView * tableView;
 @property (nonatomic,assign)BOOL isEnable;
+@property (nonatomic,strong)PhotoPromptBox * photoView;
+@property (nonatomic,copy) NSString * pictureType;//标明是问答还是签到照片
 @end
 
 @implementation TheMeetingInfoViewController
@@ -149,7 +153,6 @@
         UIBarButtonItem *myButton = [[UIBarButtonItem alloc] initWithTitle:@"删除会议" style:UIBarButtonItemStylePlain target:self action:@selector(deleteMeeting)];
         self.navigationItem.rightBarButtonItem = myButton;
     }
-    
 }
 -(void)deleteMeeting{
     NSDictionary * dict = [[NSDictionary alloc] initWithObjectsAndKeys:_meetingModel.meetingId,@"id", nil];
@@ -485,9 +488,10 @@
         
         _meetingModel.signStatus = @"2";
         
-        [UIUtils showInfoMessage:@"签到成功"];
+//        [UIUtils showInfoMessage:@"签到成功"];
         
         [_tableView reloadData];
+        [self signPictureUpdate];
         // 2.创建通知
         NSNotification *notification =[NSNotification notificationWithName:@"UpdateTheMeetingPage" object:nil userInfo:nil];
         // 3.通过 通知中心 发送 通知
@@ -628,6 +632,95 @@
         [output appendFormat:@"%02x", digest[i]];
     
     return output;
+}
+-(void)signPictureUpdate{
+    if (!_photoView) {
+        _photoView = [[PhotoPromptBox alloc] initWithBlack:^(NSString * str) {
+            
+        } WithTakePictureBlack:^(NSString *str) {
+            [self getPicture];
+            [_photoView removeFromSuperview];
+        }];
+        _photoView.frame = CGRectMake(0, 0, APPLICATION_WIDTH, APPLICATION_HEIGHT);
+    }
+    [self.view addSubview:_photoView];
+}
+-(void)getPicture{
+    //实现button点事件的回调方法
+    //调用系统相册的类
+    UIImagePickerController *pickerController = [[UIImagePickerController alloc]init];
+    
+    //设置选取的照片是否可编辑
+    pickerController.allowsEditing = YES;
+    //设置相册呈现的样式
+    
+    //    UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"提示" message:nil preferredStyle:  UIAlertControllerStyleActionSheet];
+    //    //分别按顺序放入每个按钮；
+    //    [alert addAction:[UIAlertAction actionWithTitle:@"拍照" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+    pickerController.sourceType =  UIImagePickerControllerSourceTypeCamera;//图片分组列表样式
+    
+    //选择完成图片或者点击取消按钮都是通过代理来操作我们所需要的逻辑过程
+    pickerController.delegate = self;
+    //使用模态呈现相册
+    [self.navigationController presentViewController:pickerController animated:YES completion:^{
+        
+    }];
+    //    }]];
+    
+    //    [alert addAction:[UIAlertAction actionWithTitle:@"从相册选择" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+    //
+    //        pickerController.sourceType =  UIImagePickerControllerSourceTypeSavedPhotosAlbum;//图片分组列表样式
+    //        //照片的选取样式还有以下两种
+    //        //UIImagePickerControllerSourceTypePhotoLibrary,直接全部呈现系统相册UIImagePickerControllerSourceTypeSavedPhotosAlbum
+    //        //UIImagePickerControllerSourceTypeCamera//调取摄像头
+    //
+    //        //选择完成图片或者点击取消按钮都是通过代理来操作我们所需要的逻辑过程
+    //        pickerController.delegate = self;
+    //        //使用模态呈现相册
+    //        [self.navigationController presentViewController:pickerController animated:YES completion:^{
+    //
+    //        }];
+    //
+    //    }]];
+    //
+    //
+    //    [alert addAction:[UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleDestructive handler:^(UIAlertAction * _Nonnull action) {
+    //        //点击按钮的响应事件；
+    //    }]];
+    //
+    //    //弹出提示框；
+    //    [self presentViewController:alert animated:true completion:nil];
+    
+}
+//选择照片完成之后的代理方法
+
+-(void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary<NSString *,id> *)info{
+    
+    //info是所选择照片的信息
+    
+    //    UIImagePickerControllerEditedImage//编辑过的图片
+    //    UIImagePickerControllerOriginalImage//原图
+    //刚才已经看了info中的键值对，可以从info中取出一个UIImage对象，将取出的对象赋给按钮的image
+    
+    UIImage *resultImage = [info objectForKey:@"UIImagePickerControllerEditedImage"];
+    
+    //    NSString * filePath = [info objectForKey:@"UIImagePickerControllerReferenceURL"];
+    UserModel * user = [[Appsetting sharedInstance] getUsetInfo];
+    NSString * str = [NSString stringWithFormat:@"%@-%@-%@",user.userName,user.studentId,[UIUtils getTime]];
+    NSDictionary * dict1 = [[NSDictionary alloc] initWithObjectsAndKeys:@"1",@"type",str,@"description",@"10",@"function",[NSString stringWithFormat:@"%@",_meetingModel.meetingId],@"relId",@"2",@"relType",nil];
+    
+    [[NetworkRequest sharedInstance] POSTImage:FileUpload image:resultImage dict:dict1 succeed:^(id data) {
+        NSString * code = [NSString stringWithFormat:@"%@",[[data objectForKey:@"header"] objectForKey:@"code"]];
+        if ([code isEqualToString:@"0000"]) {
+            [UIUtils showInfoMessage:@"上传成功"];
+        }else{
+            [UIUtils showInfoMessage:@"上传失败"];
+        }
+    } failure:^(NSError *error) {
+        [UIUtils showInfoMessage:@"上传失败"];
+    }];
+    //使用模态返回到软件界面
+    [self.navigationController dismissViewControllerAnimated:YES completion:nil];
 }
 /*
  #pragma mark - Navigation

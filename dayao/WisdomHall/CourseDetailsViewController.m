@@ -30,7 +30,7 @@
 #import "QrCodeViewController.h"
 #import <AssetsLibrary/AssetsLibrary.h>
 #import "ZFSeatViewController.h"
-
+#import "PhotoPromptBox.h"
 
 
 @interface CourseDetailsViewController ()<UIActionSheetDelegate,ShareViewDelegate,UIAlertViewDelegate,UITableViewDelegate,UITableViewDataSource,MeetingTableViewCellDelegate,UINavigationControllerDelegate,UIImagePickerControllerDelegate>
@@ -55,6 +55,9 @@
 @property (nonatomic,copy)NSString * seatNo;
 @property (nonatomic,assign)int temp;//记录mac不被覆盖
 @property (nonatomic,strong)UITableView * tableView;
+@property (nonatomic,strong)PhotoPromptBox * photoView;
+@property (nonatomic,copy)NSString * pictureType;//标明是问答还是签到照片
+
 
 @end
 
@@ -214,10 +217,11 @@
         _c.signStatus = @"1";
     }else if ([str isEqualToString:@"0000"]){
         
-        [UIUtils showInfoMessage:@"签到成功"];
+//        [UIUtils showInfoMessage:@"签到成功"];
         _c.signStatus = @"2";
         _selfSignStatus = @"签到状态：已签到";
-        
+        [self signPictureUpdate];
+
         // 2.创建通知
         NSNotification *notification =[NSNotification notificationWithName:@"UpdateTheClassPage" object:nil userInfo:nil];
         // 3.通过 通知中心 发送 通知
@@ -240,8 +244,6 @@
     }
     [_tableView reloadData];
 }
-
-
 
 - (IBAction)interactiveBtnPressed:(id)sender {
     if (!_interaction)
@@ -463,6 +465,7 @@
         d.classModel = _c;
         d.type = @"classModel";
         d.function = @"6";
+        _pictureType = @"QAPicture";
         self.hidesBottomBarWhenPushed = YES;
         [self.navigationController pushViewController: d animated:YES];
     }else if ([platform isEqualToString:InteractionType_Sit]){
@@ -705,9 +708,21 @@
     return output;
 }
 
-//实现button点击事件的回调方法
-- (void)selectImage{
-    
+-(void)signPictureUpdate{
+    if (!_photoView) {
+        _photoView = [[PhotoPromptBox alloc] initWithBlack:^(NSString * str) {
+            
+        } WithTakePictureBlack:^(NSString *str) {
+            [self getPicture];
+            [_photoView removeFromSuperview];
+        }];
+        _photoView.frame = CGRectMake(0, 0, APPLICATION_WIDTH, APPLICATION_HEIGHT);
+    }
+    _pictureType = @"SignPicture";
+    [self.view addSubview:_photoView];
+}
+-(void)getPicture{
+    //实现button点事件的回调方法
     //调用系统相册的类
     UIImagePickerController *pickerController = [[UIImagePickerController alloc]init];
     
@@ -731,13 +746,13 @@
     //    [alert addAction:[UIAlertAction actionWithTitle:@"从相册选择" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
     //
     //        pickerController.sourceType =  UIImagePickerControllerSourceTypeSavedPhotosAlbum;//图片分组列表样式
-    //照片的选取样式还有以下两种
-    //UIImagePickerControllerSourceTypePhotoLibrary,直接全部呈现系统相册UIImagePickerControllerSourceTypeSavedPhotosAlbum
-    //UIImagePickerControllerSourceTypeCamera//调取摄像头
-    
-    //选择完成图片或者点击取消按钮都是通过代理来操作我们所需要的逻辑过程
-    pickerController.delegate = self;
-    //使用模态呈现相册
+    //        //照片的选取样式还有以下两种
+    //        //UIImagePickerControllerSourceTypePhotoLibrary,直接全部呈现系统相册UIImagePickerControllerSourceTypeSavedPhotosAlbum
+    //        //UIImagePickerControllerSourceTypeCamera//调取摄像头
+    //
+    //        //选择完成图片或者点击取消按钮都是通过代理来操作我们所需要的逻辑过程
+    //        pickerController.delegate = self;
+    //        //使用模态呈现相册
     //        [self.navigationController presentViewController:pickerController animated:YES completion:^{
     //
     //        }];
@@ -748,8 +763,8 @@
     //    [alert addAction:[UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleDestructive handler:^(UIAlertAction * _Nonnull action) {
     //        //点击按钮的响应事件；
     //    }]];
-    
-    //弹出提示框；
+    //
+    //    //弹出提示框；
     //    [self presentViewController:alert animated:true completion:nil];
     
 }
@@ -769,18 +784,44 @@
     //    NSString * filePath = [info objectForKey:@"UIImagePickerControllerReferenceURL"];
     UserModel * user = [[Appsetting sharedInstance] getUsetInfo];
     NSString * str = [NSString stringWithFormat:@"%@-%@-%@",user.userName,user.studentId,[UIUtils getTime]];
-    NSDictionary * dict1 = [[NSDictionary alloc] initWithObjectsAndKeys:@"1",@"type",str,@"description",@"6",@"function",[NSString stringWithFormat:@"%@",_c.sclassId],@"relId",@"1",@"relType",nil];
-    
-    [[NetworkRequest sharedInstance] POSTImage:FileUpload image:resultImage dict:dict1 succeed:^(id data) {
-        NSString * code = [NSString stringWithFormat:@"%@",[[data objectForKey:@"header"] objectForKey:@"code"]];
-        if ([code isEqualToString:@"0000"]) {
-            [UIUtils showInfoMessage:@"上传成功"];
-        }else{
+//    NSDictionary * dict1 = [[NSDictionary alloc] initWithObjectsAndKeys:@"1",@"type",str,@"description",@"6",@"function",[NSString stringWithFormat:@"%@",_c.sclassId],@"relId",@"1",@"relType",nil];
+//
+//    [[NetworkRequest sharedInstance] POSTImage:FileUpload image:resultImage dict:dict1 succeed:^(id data) {
+//        NSString * code = [NSString stringWithFormat:@"%@",[[data objectForKey:@"header"] objectForKey:@"code"]];
+//        if ([code isEqualToString:@"0000"]) {
+//            [UIUtils showInfoMessage:@"上传成功"];
+//        }else{
+//            [UIUtils showInfoMessage:@"上传失败"];
+//        }
+//    } failure:^(NSError *error) {
+//        [UIUtils showInfoMessage:@"上传失败"];
+//    }];
+    if ([_pictureType isEqualToString:@"QAPicture"]) {
+        NSDictionary * dict1 = [[NSDictionary alloc] initWithObjectsAndKeys:@"1",@"type",str,@"description",@"6",@"function",[NSString stringWithFormat:@"%@",_c.sclassId],@"relId",@"1",@"relType",nil];
+        
+        [[NetworkRequest sharedInstance] POSTImage:FileUpload image:resultImage dict:dict1 succeed:^(id data) {
+            NSString * code = [NSString stringWithFormat:@"%@",[[data objectForKey:@"header"] objectForKey:@"code"]];
+            if ([code isEqualToString:@"0000"]) {
+                [UIUtils showInfoMessage:@"上传成功"];
+            }else{
+                [UIUtils showInfoMessage:@"上传失败"];
+            }
+        } failure:^(NSError *error) {
             [UIUtils showInfoMessage:@"上传失败"];
-        }
-    } failure:^(NSError *error) {
-        [UIUtils showInfoMessage:@"上传失败"];
-    }];
+        }];
+    }else if ([_pictureType isEqualToString:@"SignPicture"]){
+        NSDictionary * dict1 = [[NSDictionary alloc] initWithObjectsAndKeys:@"1",@"type",str,@"description",@"10",@"function",[NSString stringWithFormat:@"%@",_c.sclassId],@"relId",@"1",@"relType",nil];
+        [[NetworkRequest sharedInstance] POSTImage:FileUpload image:resultImage dict:dict1 succeed:^(id data) {
+            NSString * code = [NSString stringWithFormat:@"%@",[[data objectForKey:@"header"] objectForKey:@"code"]];
+            if ([code isEqualToString:@"0000"]) {
+                [UIUtils showInfoMessage:@"上传成功"];
+            }else{
+                [UIUtils showInfoMessage:@"上传失败"];
+            }
+        } failure:^(NSError *error) {
+            [UIUtils showInfoMessage:@"上传失败"];
+        }];
+    }
     //使用模态返回到软件界面
     [self.navigationController dismissViewControllerAnimated:YES completion:nil];
 }

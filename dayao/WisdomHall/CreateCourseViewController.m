@@ -275,9 +275,9 @@
         }else{
             day = [NSString stringWithFormat:@"%d",_day+1];
         }
-       NSString * str =  [UIUtils weekdayStringFromDate:[NSString stringWithFormat:@"%d-%@-%@",2017+_year,month,day]];
+       NSString * str =  [UIUtils weekdayStringFromDate:[NSString stringWithFormat:@"%d-%@-%@",2018+_year,month,day]];
         if ([str isEqualToString:@"星期一"]) {
-           [_textFileAry setObject:[NSString stringWithFormat:@"%d-%@-%@",2017+_year,month,day] atIndexedSubscript:7];
+           [_textFileAry setObject:[NSString stringWithFormat:@"%d-%@-%@",2018+_year,month,day] atIndexedSubscript:7];
         }else{
             UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"选择的日期并不是周一，请重新选择日期" message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: nil];
             [alertView show];
@@ -374,7 +374,7 @@
         }
     }else if (_temp == 7){
         if (component == 0) {
-            return [NSString stringWithFormat:@"%d",row+2017];
+            return [NSString stringWithFormat:@"%d",row+2018];
         }else if (component == 1){
             return [NSString stringWithFormat:@"%d",row+1];
         }else if(component == 2){

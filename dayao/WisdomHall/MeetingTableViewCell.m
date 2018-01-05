@@ -149,7 +149,7 @@
     }else if([[NSString stringWithFormat:@"%@",meetModel.signStatus] isEqualToString:@"2"]){
         [_signBtn setTitle:@"签到状态：已签到" forState:UIControlStateNormal];
         [_code setTitle:@"生成二维码" forState:UIControlStateNormal];
-        [_signBtn setEnabled:NO];
+        [_signBtn setEnabled:YES];
         if (!isEnable) {
             [_code setEnabled:NO];
             [_code setBackgroundColor:[UIColor grayColor]];
@@ -219,7 +219,7 @@
     }else if([[NSString stringWithFormat:@"%@",meetModel.signStatus] isEqualToString:@"2"]){
         [_signBtn setTitle:@"签到状态：已签到" forState:UIControlStateNormal];
         [_code setTitle:@"生成二维码" forState:UIControlStateNormal];
-        [_signBtn setEnabled:NO];
+        [_signBtn setEnabled:YES];
         if (!isEnable) {
             [_code setEnabled:NO];
             [_code setBackgroundColor:[UIColor grayColor]];
