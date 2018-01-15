@@ -566,7 +566,9 @@
     NSInteger m = [month integerValue];
     NSInteger  n = 0;
     n = (y-2017)*2;
-    if (m>=8) {
+    if (m<2) {
+        n = n - 1;
+    }else if (m>=8) {
         n = n + 1;
     }else{
         n = n + 0;

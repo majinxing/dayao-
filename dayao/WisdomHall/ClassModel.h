@@ -34,6 +34,7 @@
 @property (nonatomic,strong)NSMutableArray * mck;
 @property (nonatomic,copy)NSString * courseType;//1、周期 2、临时
 @property (nonatomic,copy)NSString * backColock;//课程的背景颜色
+@property (nonatomic,copy)NSString * teacherPictureId;
 @property (nonatomic,assign)int n;//已签到
 @property (nonatomic,assign)int m;//未签到
 

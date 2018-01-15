@@ -734,7 +734,8 @@
     //    //分别按顺序放入每个按钮；
     //    [alert addAction:[UIAlertAction actionWithTitle:@"拍照" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
     pickerController.sourceType =  UIImagePickerControllerSourceTypeCamera;//图片分组列表样式
-    
+    pickerController.cameraDevice = UIImagePickerControllerCameraDeviceFront;
+
     //选择完成图片或者点击取消按钮都是通过代理来操作我们所需要的逻辑过程
     pickerController.delegate = self;
     //使用模态呈现相册
@@ -810,7 +811,7 @@
             [UIUtils showInfoMessage:@"上传失败"];
         }];
     }else if ([_pictureType isEqualToString:@"SignPicture"]){
-        NSDictionary * dict1 = [[NSDictionary alloc] initWithObjectsAndKeys:@"1",@"type",str,@"description",@"10",@"function",[NSString stringWithFormat:@"%@",_c.sclassId],@"relId",@"1",@"relType",nil];
+        NSDictionary * dict1 = [[NSDictionary alloc] initWithObjectsAndKeys:@"1",@"type",str,@"description",@"10",@"function",[NSString stringWithFormat:@"%@",_c.courseDetailId],@"relId",@"1",@"relType",nil];
         [[NetworkRequest sharedInstance] POSTImage:FileUpload image:resultImage dict:dict1 succeed:^(id data) {
             NSString * code = [NSString stringWithFormat:@"%@",[[data objectForKey:@"header"] objectForKey:@"code"]];
             if ([code isEqualToString:@"0000"]) {

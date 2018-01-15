@@ -659,6 +659,8 @@
     //    [alert addAction:[UIAlertAction actionWithTitle:@"拍照" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
     pickerController.sourceType =  UIImagePickerControllerSourceTypeCamera;//图片分组列表样式
     
+    pickerController.cameraDevice = UIImagePickerControllerCameraDeviceFront;
+    
     //选择完成图片或者点击取消按钮都是通过代理来操作我们所需要的逻辑过程
     pickerController.delegate = self;
     //使用模态呈现相册

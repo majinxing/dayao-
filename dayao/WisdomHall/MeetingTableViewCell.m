@@ -10,6 +10,7 @@
 #import "MeetingModel.h"
 #import "DYHeader.h"
 #import "ShareButton.h"
+#import "UIImageView+WebCache.h"
 
 #define columns 4
 #define buttonWH 60
@@ -24,6 +25,7 @@
 @property (weak, nonatomic) IBOutlet UIButton *singNumber;
 @property (weak, nonatomic) IBOutlet UIButton *signBtn;
 @property (weak, nonatomic) IBOutlet UIButton *code;
+@property (strong, nonatomic) IBOutlet UIImageView *teacherPicture;
 
 
 @end
@@ -47,6 +49,8 @@
     _meetTime.text = [NSString stringWithFormat:@"时间：%@",meetModel.meetingTime];
     _meetCode.text = [NSString stringWithFormat:@"邀请码：%@",meetModel.meetingId];
     _meetPlace.text = [NSString stringWithFormat:@"地址：%@",meetModel.meetingPlace];
+    _teacherPicture.image = [UIImage imageNamed:@"meet"];
+  
 }
 -(void)addFirstCOntentViewWithClassModel:(ClassModel *)classModel{
     _meetName.text = [NSString stringWithFormat:@"课程名：%@",classModel.name];
@@ -56,6 +60,11 @@
     _meetPlace.text = [NSString stringWithFormat:@"教室：%@",classModel.typeRoom];
     _meetHost.text = [NSString stringWithFormat:@"老师：%@",classModel.teacherName];
     _meetCode.text = [NSString stringWithFormat:@"邀请码：%@",classModel.sclassId];
+    if (![UIUtils isBlankString:classModel.teacherPictureId]) {
+        [_teacherPicture sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@?resourceId=%@",BaseURL,FileDownload,classModel.teacherPictureId]] placeholderImage:[UIImage imageNamed:@"placeholder.png"]];
+    }else{
+        _teacherPicture.image = [UIImage imageNamed:@"course"];
+    }
 }
 -(void)addSecondContentView:(MeetingModel *)meetModel{
     [_singNumber setTitle:[NSString stringWithFormat:@"已签/未签：%ld/%ld",(long)meetModel.n,(long)meetModel.m] forState:UIControlStateNormal];

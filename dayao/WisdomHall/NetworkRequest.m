@@ -160,7 +160,7 @@
     
     [manager POST:URLString parameters:dict constructingBodyWithBlock:^(id<AFMultipartFormData>  _Nonnull formData) {
         
-        NSData *imageData = UIImageJPEGRepresentation(uploadImage,1);
+        NSData *imageData = UIImageJPEGRepresentation(uploadImage,0.5);
         
         UserModel * user = [[Appsetting sharedInstance] getUsetInfo];
         
