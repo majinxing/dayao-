@@ -55,6 +55,13 @@
 		8B064E541F00D8D80004C3D4 /* MJXChatCellTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B064E521F00D8D80004C3D4 /* MJXChatCellTableViewCell.m */; };
 		8B064E551F00D8D80004C3D4 /* MJXChatCellTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8B064E531F00D8D80004C3D4 /* MJXChatCellTableViewCell.xib */; };
 		8B064E581F00F53F0004C3D4 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8B064E571F00F53F0004C3D4 /* Assets.xcassets */; };
+		8B078B3B200F2C0100336ADB /* DAYCalendarView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B078B30200F2C0000336ADB /* DAYCalendarView.m */; };
+		8B078B3C200F2C0100336ADB /* DAYComponentView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B078B34200F2C0000336ADB /* DAYComponentView.m */; };
+		8B078B3D200F2C0100336ADB /* DAYIndicatorView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B078B36200F2C0000336ADB /* DAYIndicatorView.m */; };
+		8B078B3E200F2C0100336ADB /* DAYNavigationBar.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B078B38200F2C0000336ADB /* DAYNavigationBar.m */; };
+		8B078B3F200F2C0100336ADB /* DAYUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B078B3A200F2C0000336ADB /* DAYUtils.m */; };
+		8B078B43200F2EA000336ADB /* CalendarViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B078B41200F2EA000336ADB /* CalendarViewController.m */; };
+		8B078B44200F2EA000336ADB /* CalendarViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8B078B42200F2EA000336ADB /* CalendarViewController.xib */; };
 		8B07DB7E1F78E7E500DC371C /* CreateChatViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B07DB7C1F78E7E500DC371C /* CreateChatViewController.m */; };
 		8B07DB7F1F78E7E500DC371C /* CreateChatViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8B07DB7D1F78E7E500DC371C /* CreateChatViewController.xib */; };
 		8B081DDD1F06013300493B81 /* collegedata.json in Resources */ = {isa = PBXBuildFile; fileRef = 8B081DDC1F06013300493B81 /* collegedata.json */; };
@@ -646,6 +653,20 @@
 		8B064E521F00D8D80004C3D4 /* MJXChatCellTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MJXChatCellTableViewCell.m; sourceTree = "<group>"; };
 		8B064E531F00D8D80004C3D4 /* MJXChatCellTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MJXChatCellTableViewCell.xib; sourceTree = "<group>"; };
 		8B064E571F00F53F0004C3D4 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		8B078B2F200F2C0000336ADB /* DAYCalendarView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DAYCalendarView.h; sourceTree = "<group>"; };
+		8B078B30200F2C0000336ADB /* DAYCalendarView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DAYCalendarView.m; sourceTree = "<group>"; };
+		8B078B31200F2C0000336ADB /* Daysquare.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Daysquare.h; sourceTree = "<group>"; };
+		8B078B33200F2C0000336ADB /* DAYComponentView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DAYComponentView.h; sourceTree = "<group>"; };
+		8B078B34200F2C0000336ADB /* DAYComponentView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DAYComponentView.m; sourceTree = "<group>"; };
+		8B078B35200F2C0000336ADB /* DAYIndicatorView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DAYIndicatorView.h; sourceTree = "<group>"; };
+		8B078B36200F2C0000336ADB /* DAYIndicatorView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DAYIndicatorView.m; sourceTree = "<group>"; };
+		8B078B37200F2C0000336ADB /* DAYNavigationBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DAYNavigationBar.h; sourceTree = "<group>"; };
+		8B078B38200F2C0000336ADB /* DAYNavigationBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DAYNavigationBar.m; sourceTree = "<group>"; };
+		8B078B39200F2C0000336ADB /* DAYUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DAYUtils.h; sourceTree = "<group>"; };
+		8B078B3A200F2C0000336ADB /* DAYUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DAYUtils.m; sourceTree = "<group>"; };
+		8B078B40200F2EA000336ADB /* CalendarViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CalendarViewController.h; sourceTree = "<group>"; };
+		8B078B41200F2EA000336ADB /* CalendarViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CalendarViewController.m; sourceTree = "<group>"; };
+		8B078B42200F2EA000336ADB /* CalendarViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CalendarViewController.xib; sourceTree = "<group>"; };
 		8B07DB7B1F78E7E500DC371C /* CreateChatViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CreateChatViewController.h; sourceTree = "<group>"; };
 		8B07DB7C1F78E7E500DC371C /* CreateChatViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CreateChatViewController.m; sourceTree = "<group>"; };
 		8B07DB7D1F78E7E500DC371C /* CreateChatViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CreateChatViewController.xib; sourceTree = "<group>"; };
@@ -1377,6 +1398,40 @@
 			name = ChatCell;
 			sourceTree = "<group>";
 		};
+		8B078B2D200F2BE400336ADB /* Calendar */ = {
+			isa = PBXGroup;
+			children = (
+				8B078B2E200F2C0000336ADB /* Classes */,
+			);
+			name = Calendar;
+			sourceTree = "<group>";
+		};
+		8B078B2E200F2C0000336ADB /* Classes */ = {
+			isa = PBXGroup;
+			children = (
+				8B078B2F200F2C0000336ADB /* DAYCalendarView.h */,
+				8B078B30200F2C0000336ADB /* DAYCalendarView.m */,
+				8B078B31200F2C0000336ADB /* Daysquare.h */,
+				8B078B32200F2C0000336ADB /* Internal */,
+			);
+			path = Classes;
+			sourceTree = "<group>";
+		};
+		8B078B32200F2C0000336ADB /* Internal */ = {
+			isa = PBXGroup;
+			children = (
+				8B078B33200F2C0000336ADB /* DAYComponentView.h */,
+				8B078B34200F2C0000336ADB /* DAYComponentView.m */,
+				8B078B35200F2C0000336ADB /* DAYIndicatorView.h */,
+				8B078B36200F2C0000336ADB /* DAYIndicatorView.m */,
+				8B078B37200F2C0000336ADB /* DAYNavigationBar.h */,
+				8B078B38200F2C0000336ADB /* DAYNavigationBar.m */,
+				8B078B39200F2C0000336ADB /* DAYUtils.h */,
+				8B078B3A200F2C0000336ADB /* DAYUtils.m */,
+			);
+			path = Internal;
+			sourceTree = "<group>";
+		};
 		8B081DE31F0633CD00493B81 /* Cell */ = {
 			isa = PBXGroup;
 			children = (
@@ -1639,6 +1694,9 @@
 				8B64EB531F1A162F00BF7D0F /* CreateTemporaryCourseViewController.h */,
 				8B64EB541F1A162F00BF7D0F /* CreateTemporaryCourseViewController.m */,
 				8B64EB551F1A162F00BF7D0F /* CreateTemporaryCourseViewController.xib */,
+				8B078B40200F2EA000336ADB /* CalendarViewController.h */,
+				8B078B41200F2EA000336ADB /* CalendarViewController.m */,
+				8B078B42200F2EA000336ADB /* CalendarViewController.xib */,
 			);
 			name = CreateCourse;
 			sourceTree = "<group>";
@@ -1891,6 +1949,7 @@
 		8BA224961EADFF2700627A1B /* FrameWork */ = {
 			isa = PBXGroup;
 			children = (
+				8B078B2D200F2BE400336ADB /* Calendar */,
 				8B429C091FA8488600084A99 /* SGQRCode */,
 				8B429C021FA8488600084A99 /* SGQRController */,
 				8B429C191FA8488600084A99 /* SGQRView */,
@@ -2549,6 +2608,7 @@
 				8B064E551F00D8D80004C3D4 /* MJXChatCellTableViewCell.xib in Resources */,
 				8B4D91151EBDAB1000A4BE34 /* SignListViewController.xib in Resources */,
 				8BA224A81EAE000000627A1B /* PersonalCenterViewController.xib in Resources */,
+				8B078B44200F2EA000336ADB /* CalendarViewController.xib in Resources */,
 				8B2E16DB1EBAB968008B7C57 /* ClassManagementViewController.xib in Resources */,
 				8B0F41311EF522CF001AF4DF /* MJXChatViewController.xib in Resources */,
 				8BE24D611F8B488E00621055 /* GroupListViewController.xib in Resources */,
@@ -2657,6 +2717,7 @@
 				8B027A141EF8F30100600E18 /* TheMeetingInfoViewController.m in Sources */,
 				8B0DB13B1ED6CA4E0042DF0D /* ImportTextViewController.m in Sources */,
 				8B2E16DA1EBAB968008B7C57 /* ClassManagementViewController.m in Sources */,
+				8B078B3B200F2C0100336ADB /* DAYCalendarView.m in Sources */,
 				8BF864C31ECAD97300B7EED4 /* SDWebImageManager.m in Sources */,
 				8B045B9B1F3458E40021699B /* ZFIndicatorView.m in Sources */,
 				8B429C1C1FA8488700084A99 /* QRCodeGenerateVC.m in Sources */,
@@ -2678,14 +2739,17 @@
 				8B0AF75E1F511AA2003858A4 /* VoteResultTableViewCell.m in Sources */,
 				8B2E16DE1EBABBC0008B7C57 /* InteractiveView.m in Sources */,
 				8BF864C71ECAD97300B7EED4 /* UIImage+MultiFormat.m in Sources */,
+				8B078B3C200F2C0100336ADB /* DAYComponentView.m in Sources */,
 				8B64EB5B1F1A2BA900BF7D0F /* SelectClassViewController.m in Sources */,
 				8B7725061F3029CE00D1B521 /* FeedbackViewController.m in Sources */,
+				8B078B43200F2EA000336ADB /* CalendarViewController.m in Sources */,
 				8B045B701F3458820021699B /* MJExtensionConst.m in Sources */,
 				8B2E16D51EB9C1EA008B7C57 /* CourseDetailsViewController.m in Sources */,
 				8B027A181EF8F48800600E18 /* MeetingModel.m in Sources */,
 				8B05CB7B1EC2ABFD0063EC20 /* PersonalInfoViewController.m in Sources */,
 				8B045B821F3458CC0021699B /* ZFSeatModel.m in Sources */,
 				8B045B761F3458820021699B /* NSObject+MJCoding.m in Sources */,
+				8B078B3D200F2C0100336ADB /* DAYIndicatorView.m in Sources */,
 				8B045B9D1F3458E40021699B /* ZFSeatButton.m in Sources */,
 				8B429C261FA8488700084A99 /* SGWebView.m in Sources */,
 				8BE877851EBC2E0C00866A34 /* EndTheTestViewController.m in Sources */,
@@ -2755,6 +2819,7 @@
 				8BA224D41EAF25DC00627A1B /* RegisterViewController.m in Sources */,
 				8B17370E1EC2EDE400BE3C8F /* MeetingViewController.m in Sources */,
 				8B087E371FEA564500649094 /* ZFSeatsView.m in Sources */,
+				8B078B3E200F2C0100336ADB /* DAYNavigationBar.m in Sources */,
 				8BF8648C1ECAD21200B7EED4 /* UIScrollView+MJExtension.m in Sources */,
 				8BF864C81ECAD97300B7EED4 /* UIImageView+HighlightedWebCache.m in Sources */,
 				8BA224A71EAE000000627A1B /* PersonalCenterViewController.m in Sources */,
@@ -2792,6 +2857,7 @@
 				8B045B771F3458820021699B /* NSObject+MJKeyValue.m in Sources */,
 				8BF82D771EDFB32500D33473 /* CollectionHeadView.m in Sources */,
 				8BB56D641EAF38CA0023DAFF /* AppSetingPersongInfo.m in Sources */,
+				8B078B3F200F2C0100336ADB /* DAYUtils.m in Sources */,
 				8B05CB701EC015DB0063EC20 /* PersonalInfoTableViewCell.m in Sources */,
 				8BCE7CCC1F04F07600FE261B /* AFHTTPSessionManager.m in Sources */,
 				8B081E171F0CBA8900493B81 /* ClassRoomModel.m in Sources */,

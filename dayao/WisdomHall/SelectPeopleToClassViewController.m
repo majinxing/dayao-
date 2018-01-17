@@ -472,7 +472,6 @@
             [d setObject:[NSString stringWithFormat:@"%@",_school.sclassId] forKey:@"classId"];
         }
         
-        
         [[NetworkRequest sharedInstance] GET:QueryPeople dict:d succeed:^(id data) {
             NSArray * aty = [[data objectForKey:@"body"] objectForKey:@"list"];
             [_dataAry removeAllObjects];

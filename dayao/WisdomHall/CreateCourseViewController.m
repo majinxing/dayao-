@@ -13,6 +13,7 @@
 #import "ClassRoomModel.h"
 #import "SelectPeopleToClassViewController.h"
 #import "SignPeople.h"
+#import "CalendarViewController.h"
 
 @interface CreateCourseViewController ()<UITableViewDelegate,UITableViewDataSource,DefinitionPersonalTableViewCellDelegate,UIPickerViewDelegate,UIPickerViewDataSource>
 @property (nonatomic,strong)UITableView * tabelView;
@@ -51,6 +52,8 @@
 @property (nonatomic,assign) int numberClass;//一天有多少节课
 
 @property (nonatomic,strong) UserModel * userModel;
+
+
 @end
 
 @implementation CreateCourseViewController
@@ -141,6 +144,9 @@
     self.title = @"创建课堂";
     UIBarButtonItem *myButton = [[UIBarButtonItem alloc] initWithTitle:@"保存" style:UIBarButtonItemStylePlain target:self action:@selector(createAcourse)];
     self.navigationItem.rightBarButtonItem = myButton;
+    
+
+    
 }
 -(void)createAcourse{
    NSDictionary * dict = [UIUtils createCourseWith:_textFileAry ClassRoom:_classRoom joinClassPeople:_selectPeopleAry m1:_m11 m2:_m22 m3:_m33 week:_week class1:_class1 class2:_class2];
@@ -261,35 +267,6 @@
         [_textFileAry setObject:[NSString stringWithFormat:@"第%@周-到%@周-%@上课",str1,str2,str3] atIndexedSubscript:6];
     }else if (_temp == 8){
         [_textFileAry setObject:[NSString stringWithFormat:@"周%d-第%d节-第%d节",_week+1,_class1+1,_class2+1] atIndexedSubscript:8];
-    }else if (_temp == 7){
-        
-        NSString * month;
-        if (_month<9) {
-            month = [NSString stringWithFormat:@"0%d",_month+1];
-        }else{
-            month = [NSString stringWithFormat:@"%d",_month+1];
-        }
-        NSString * day;
-        if (_day<9) {
-            day = [NSString stringWithFormat:@"0%d",_day+1];
-        }else{
-            day = [NSString stringWithFormat:@"%d",_day+1];
-        }
-       NSString * str =  [UIUtils weekdayStringFromDate:[NSString stringWithFormat:@"%d-%@-%@",2018+_year,month,day]];
-        if ([str isEqualToString:@"星期一"]) {
-           [_textFileAry setObject:[NSString stringWithFormat:@"%d-%@-%@",2018+_year,month,day] atIndexedSubscript:7];
-        }else{
-            UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"选择的日期并不是周一，请重新选择日期" message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: nil];
-            [alertView show];
-            
-        }
-        _year1 = _year;
-        _month1 = _month;
-        _day1 = _day;
-        
-        _year = 0;
-        _month = 0;
-        _day = 0;
     }
     
     [_tabelView reloadData];
@@ -499,13 +476,24 @@
         _temp = 8;
         [self addPickView];
     }else if (btn.tag == 7){
-        _temp = 7;
-        [self addPickView];
+        
+        CalendarViewController * vc = [[CalendarViewController alloc] init];
+        self.hidesBottomBarWhenPushed = YES;
+        [self.navigationController pushViewController:vc animated:YES];
+        [vc returnText:^(NSString *str) {
+            if (![UIUtils isBlankString:str]) {
+                NSString * str1 =  [UIUtils weekdayStringFromDate:[NSString stringWithFormat:@"%@",str]];
+                if ([str1 isEqualToString:@"星期一"]) {
+                    [_textFileAry setObject:[NSString stringWithFormat:@"%@",str] atIndexedSubscript:7];
+                }else{
+                    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"选择的日期并不是周一，请重新选择日期" message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: nil];
+                    [alertView show];
+                }
+                [_tabelView reloadData];
+            }
+        }];
     }
-    
 }
-
-
 #pragma mark UITableViewdelegate
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
     return 1;

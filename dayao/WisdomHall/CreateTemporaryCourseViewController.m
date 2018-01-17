@@ -12,6 +12,7 @@
 #import "ClassRoomModel.h"
 #import "SelectPeopleToClassViewController.h"
 #import "SignPeople.h"
+#import "CalendarViewController.h"
 
 @interface CreateTemporaryCourseViewController ()<UITableViewDelegate,UITableViewDataSource,DefinitionPersonalTableViewCellDelegate,UIPickerViewDelegate,UIPickerViewDataSource>
 @property (nonatomic,strong)UITableView * tabelView;
@@ -383,8 +384,15 @@
         _temp = 6;
         [self addPickView];
     }else if (btn.tag == 7){
-        _temp = 7;
-        [self addPickView];
+        CalendarViewController * vc = [[CalendarViewController alloc] init];
+        self.hidesBottomBarWhenPushed = YES;
+        [self.navigationController pushViewController:vc animated:YES];
+        [vc returnText:^(NSString *str) {
+            if (![UIUtils isBlankString:str]) {
+                [_textFileAry setObject:[NSString stringWithFormat:@"%@",str] atIndexedSubscript:7];
+                [_tabelView reloadData];
+            }
+        }];
     }
     
 }
