@@ -117,6 +117,8 @@
 +(BOOL)returnMckIsHave:(NSMutableArray *)localAry withAccept:(NSArray *)acceptAry;
 //获取网络时间
 +(NSDate *)getInternetDate;
+//打水印
++(UIImage *)addWatemarkTextAfteriOS7_WithLogoImage:(UIImage *)logoImage watemarkText:(NSString *)watemarkText;
 @end
 
 

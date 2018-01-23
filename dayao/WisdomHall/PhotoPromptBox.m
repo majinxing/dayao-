@@ -33,7 +33,6 @@
         [self addCotentView];
     }
     return self;
-    
 }
 -(void)addCotentView{
     UIButton * blackView = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -70,6 +69,13 @@
     reminder.text = @"注意：必须拍摄以教室为背景的本人照片";
     reminder.font = [UIFont systemFontOfSize:14];
     [white addSubview:reminder];
+    
+    UIButton * outViewBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    outViewBtn.frame = CGRectMake(240, 0, 40, 40);
+    [outViewBtn setTitle:@"×" forState:UIControlStateNormal];
+    [outViewBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+    [outViewBtn addTarget:self action:@selector(outView) forControlEvents:UIControlEventTouchUpInside];
+    [white addSubview:outViewBtn];
 }
 
 -(void)outView{

@@ -50,6 +50,24 @@
 -(void)viewWillAppear:(BOOL)animated{
     self.navigationController.navigationBarHidden = YES;
 }
+-(void)saveInfo{
+    //手机型号
+    NSString * phoneModel =  [UIUtils deviceVersion];
+    NSDictionary *infoDictionary = [[NSBundle mainBundle] infoDictionary];
+    NSString *app_build = [infoDictionary objectForKey:@"CFBundleVersion"];
+    NSString *system = [infoDictionary objectForKey:@"DTSDKName"];
+    
+    UserModel * user = [[Appsetting sharedInstance] getUsetInfo];
+    
+    NSDictionary * dict = [[NSDictionary alloc] initWithObjectsAndKeys:[NSString stringWithFormat:@"%@",user.userPhone],@"contact",[NSString stringWithFormat:@"手机厂商：Apple\n手机型号：%@\n产品型号：\n设备型号：\n系统版本：ios %@\n App版本：律动校园 %@",phoneModel,system,app_build],@"retroaction",phoneModel,@"phoneModels",app_build,@"version",user.peopleId,@"userId",@"2",@"type",nil];
+    
+    [[NetworkRequest sharedInstance] POST:FeedBack dict:dict succeed:^(id data) {
+        NSLog(@"%@",data);
+        
+    } failure:^(NSError *error) {
+        
+    }];
+}
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
@@ -78,6 +96,8 @@
                     [[Appsetting sharedInstance] sevaUserInfoWithDict:dict withStr:_password.text];
                     
                     ChatHelper * c =[ChatHelper shareHelper];
+                    
+                    [self saveInfo];
                     
                     DYTabBarViewController *rootVC = [[DYTabBarViewController alloc] init];
                     

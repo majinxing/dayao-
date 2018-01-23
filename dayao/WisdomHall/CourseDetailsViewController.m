@@ -31,9 +31,9 @@
 #import <AssetsLibrary/AssetsLibrary.h>
 #import "ZFSeatViewController.h"
 #import "PhotoPromptBox.h"
+#import "AlterView.h"
 
-
-@interface CourseDetailsViewController ()<UIActionSheetDelegate,ShareViewDelegate,UIAlertViewDelegate,UITableViewDelegate,UITableViewDataSource,MeetingTableViewCellDelegate,UINavigationControllerDelegate,UIImagePickerControllerDelegate>
+@interface CourseDetailsViewController ()<UIActionSheetDelegate,ShareViewDelegate,UIAlertViewDelegate,UITableViewDelegate,UITableViewDataSource,MeetingTableViewCellDelegate,UINavigationControllerDelegate,UIImagePickerControllerDelegate,AlterViewDelegate>
 
 @property (nonatomic,strong) InteractiveView * interactiveView;
 @property (nonatomic,strong) ShareView * shareView;
@@ -57,7 +57,7 @@
 @property (nonatomic,strong)UITableView * tableView;
 @property (nonatomic,strong)PhotoPromptBox * photoView;
 @property (nonatomic,copy)NSString * pictureType;//标明是问答还是签到照片
-
+@property (nonatomic,strong)AlterView * alterView;
 
 @end
 
@@ -416,6 +416,10 @@
     }
     return view;
 }
+#pragma mark alterViewDelegate
+-(void)alterViewDeleageRemove{
+    [_alterView removeFromSuperview];
+}
 #pragma mark MeetingCellDelegate
 -(void)shareButtonClickedDelegate:(NSString *)platform{
     
@@ -475,6 +479,8 @@
     }
 }
 -(void)getCourseRoomSeat{
+    [self showHudInView:self.view hint:NSLocalizedString(@"正在加载数据", @"Load data...")];
+
     NSDictionary * dict = [[NSDictionary alloc] initWithObjectsAndKeys:[NSString stringWithFormat:@"%@",_c.courseDetailId],@"courseDetailId", nil];
     [[NetworkRequest sharedInstance] GET:QueryRoomSeat dict:dict succeed:^(id data) {
 //        NSLog(@"%@",data);
@@ -490,9 +496,12 @@
         }else{
             [UIUtils showInfoMessage:@"获取信息缺失请重新获取"];
         }
-        
+        [self hideHud];
+
     } failure:^(NSError *error) {
         [UIUtils showInfoMessage:@"请求失败，请检查网络"];
+        [self hideHud];
+
     }];
 }
 -(void)peopleManagementDelegate{
@@ -511,17 +520,85 @@
     signListVC.ary = _notSignAry;
     [self.navigationController pushViewController:signListVC animated:YES];
 }
+-(void)viewWillAppear:(BOOL)animated{
+    if ([[NSString stringWithFormat:@"%@",_user.peopleId] isEqualToString:[NSString stringWithFormat:@"%@",_c.teacherId]]) {
+        return;
+    }
+    if (![UIUtils validateWithStartTime:_c.actStarTime withExpireTime:nil]) {
+            return;
+    }else{
+        if ([[NSString stringWithFormat:@"%@",_c.signStatus] isEqualToString:@"2"]) {
+            return;
+        }else{
+            [self autoSign];
+        }
+    }
+}
+-(void)autoSign{
+    if (![UIUtils validateWithStartTime:_c.actStarTime withExpireTime:nil]) {
+       
+        return;
+    }else{
+        if ([[NSString stringWithFormat:@"%@",_c.signStatus] isEqualToString:@"2"]) {
+            return;
+        }
+    }
+    
+    _isEnable = YES;
+    [_tableView reloadData];
+    NSMutableDictionary * dictWifi =  [UIUtils getWifiName];
+    
+    if (![UIUtils isBlankString:[NSString stringWithFormat:@"%@",[dictWifi objectForKey:@"BSSID"]]]) {
+        
+        NSString * bssid  = [UIUtils specificationMCKAddress:[dictWifi objectForKey:@"BSSID"]];
+        
+        if ([UIUtils matchingMacWith:_c.mck withMac:bssid]) {
+            _temp = 1;
+            [self signSendIng];
+            [self sendSignInfo];
+            
+        }else if (_temp == 1){
+            
+            [self signSendIng];
+            [self sendSignInfo];
+            
+        }else{
+            self.alterView = [[AlterView alloc] initWithFrame:CGRectMake(20, 100, APPLICATION_WIDTH-40, 100) withAlterStr:@"未连接上教室指定WiFi"];
+            self.alterView.delegate = self;
+            [self.view addSubview:self.alterView];
+            [UIView animateWithDuration:3 animations:^{
+                _alterView.alpha = 0.99;
+            } completion:^(BOOL finished) {
+                [_alterView removeFromSuperview];
+            }];
+        }
+        
+    }else{
+        self.alterView = [[AlterView alloc] initWithFrame:CGRectMake(20, 100, APPLICATION_WIDTH-40, 100) withAlterStr:@"未连接上教室指定WiFi"];
+        self.alterView.delegate = self;
+        [self.view addSubview:self.alterView];
+        [UIView animateWithDuration:3 animations:^{
+            _alterView.alpha = 0.99;
+        } completion:^(BOOL finished) {
+            [_alterView removeFromSuperview];
+        }];
+        
+    }
+}
 -(void)signBtnPressedDelegate:(UIButton *)btn{
     [self showHudInView:self.view hint:NSLocalizedString(@"正在加载数据", @"Load data...")];
-    
-    if ([[NSString stringWithFormat:@"%@",_c.signStatus] isEqualToString:@"2"]) {
-        [UIUtils showInfoMessage:@"已签到"];
+    if (![UIUtils validateWithStartTime:_c.actStarTime withExpireTime:nil]) {
+        if ([[NSString stringWithFormat:@"%@",_c.signStatus] isEqualToString:@"2"]) {
+            [UIUtils showInfoMessage:@"已签到"];
+        }else{
+            [UIUtils showInfoMessage:@"课程开始之后一定时间范围内才可以签到"];
+        }
         [self hideHud];
         return;
     }else{
-        if (![UIUtils validateWithStartTime:_c.actStarTime withExpireTime:nil]) {
-            [UIUtils showInfoMessage:@"课程开始之后一定时间范围内才可以签到"];
+        if ([[NSString stringWithFormat:@"%@",_c.signStatus] isEqualToString:@"2"]) {
             [self hideHud];
+            [self signPictureUpdate];
             return;
         }
     }
@@ -711,7 +788,7 @@
 -(void)signPictureUpdate{
     if (!_photoView) {
         _photoView = [[PhotoPromptBox alloc] initWithBlack:^(NSString * str) {
-            
+            [_photoView removeFromSuperview];
         } WithTakePictureBlack:^(NSString *str) {
             [self getPicture];
             [_photoView removeFromSuperview];
@@ -799,7 +876,6 @@
 //    }];
     if ([_pictureType isEqualToString:@"QAPicture"]) {
         NSDictionary * dict1 = [[NSDictionary alloc] initWithObjectsAndKeys:@"1",@"type",str,@"description",@"6",@"function",[NSString stringWithFormat:@"%@",_c.sclassId],@"relId",@"1",@"relType",nil];
-        
         [[NetworkRequest sharedInstance] POSTImage:FileUpload image:resultImage dict:dict1 succeed:^(id data) {
             NSString * code = [NSString stringWithFormat:@"%@",[[data objectForKey:@"header"] objectForKey:@"code"]];
             if ([code isEqualToString:@"0000"]) {
@@ -812,7 +888,8 @@
         }];
     }else if ([_pictureType isEqualToString:@"SignPicture"]){
         NSDictionary * dict1 = [[NSDictionary alloc] initWithObjectsAndKeys:@"1",@"type",str,@"description",@"10",@"function",[NSString stringWithFormat:@"%@",_c.courseDetailId],@"relId",@"1",@"relType",nil];
-        [[NetworkRequest sharedInstance] POSTImage:FileUpload image:resultImage dict:dict1 succeed:^(id data) {
+        UIImage * image = [UIUtils addWatemarkTextAfteriOS7_WithLogoImage:resultImage watemarkText:[NSString stringWithFormat:@"%@-%@-%@",_user.userName,_user.studentId,[UIUtils getTime]]];
+        [[NetworkRequest sharedInstance] POSTImage:FileUpload image:image dict:dict1 succeed:^(id data) {
             NSString * code = [NSString stringWithFormat:@"%@",[[data objectForKey:@"header"] objectForKey:@"code"]];
             if ([code isEqualToString:@"0000"]) {
                 [UIUtils showInfoMessage:@"上传成功"];
@@ -825,6 +902,7 @@
     }
     //使用模态返回到软件界面
     [self.navigationController dismissViewControllerAnimated:YES completion:nil];
+    
 }
 /*
  #pragma mark - Navigation

@@ -1491,6 +1491,23 @@
     }
     return NO;
 }
+/**
+ * 加文字随意@param logoImage 需要加文字的图片@param watemarkText 文字描述@returns 加好文字的图片
+ */
++ (UIImage *)addWatemarkTextAfteriOS7_WithLogoImage:(UIImage *)logoImage watemarkText:(NSString *)watemarkText{
+    int w = logoImage.size.width;
+    int h = logoImage.size.height;
+    UIGraphicsBeginImageContext(logoImage.size);
+    [[UIColor whiteColor] set];
+    [logoImage drawInRect:CGRectMake(0, 0, w, h)];
+    UIFont * font = [UIFont systemFontOfSize:18.0];
+    [watemarkText drawInRect:CGRectMake(0, h-30, w, 30) withAttributes:@{NSFontAttributeName:font,NSForegroundColorAttributeName:[UIColor whiteColor]}];
+    UIImage * newImage = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    return newImage;
+}
+
+
 @end
 
 

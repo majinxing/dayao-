@@ -306,6 +306,9 @@ static NSString *cellIdentifier = @"cellIdentifier";
     }else if ([[NSString stringWithFormat:@"%@",_userModel.identity] isEqualToString:@"2"]){
         UIBarButtonItem *myButton = [[UIBarButtonItem alloc] initWithTitle:@"加入课程" style:UIBarButtonItemStylePlain target:self action:@selector(joinCourse)];
         self.navigationItem.rightBarButtonItem = myButton;
+    }else{
+        UIBarButtonItem *myButton = [[UIBarButtonItem alloc] initWithTitle:@"创建课程" style:UIBarButtonItemStylePlain target:self action:@selector(createAcourse)];
+        self.navigationItem.rightBarButtonItem = myButton;
     }
     
     UIBarButtonItem * selection = [[UIBarButtonItem alloc] initWithTitle:@"搜索" style:UIBarButtonItemStylePlain target:self action:@selector(selectionBtnPressed)];
@@ -375,6 +378,7 @@ static NSString *cellIdentifier = @"cellIdentifier";
         _join = nil;
     }else if (btn.tag == 2){
         NSDictionary * dict = [[NSDictionary alloc] initWithObjectsAndKeys:[NSString stringWithFormat:@"%@",_join.courseNumber.text],@"id",_userModel.peopleId,@"studentId", nil];
+        [self showHudInView:self.view hint:NSLocalizedString(@"正在加载数据", @"Load data...")];
         [[NetworkRequest sharedInstance] POST:JoinCourse dict:dict succeed:^(id data) {
             NSString * str = [[data objectForKey:@"header"] objectForKey:@"code"];
             if ([[NSString stringWithFormat:@"%@",str] isEqualToString:@"6680"]) {
@@ -389,8 +393,10 @@ static NSString *cellIdentifier = @"cellIdentifier";
             }else{
                 [UIUtils showInfoMessage:@"加入失败"];
             }
+            [self hideHud];
         } failure:^(NSError *error) {
             [UIUtils showInfoMessage:@"加入失败"];
+            [self hideHud];
         }];
     }
 }

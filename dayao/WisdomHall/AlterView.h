@@ -16,4 +16,6 @@
 @interface AlterView : UIView
 @property(nonatomic,weak)id<AlterViewDelegate>delegate;
 -(instancetype)initWithFrame:(CGRect)frame withLabelText:(NSString *)textStr;
+-(instancetype)initWithFrame:(CGRect)frame withAlterStr:(NSString *)str;
+
 @end

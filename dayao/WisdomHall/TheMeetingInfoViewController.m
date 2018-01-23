@@ -29,7 +29,7 @@
 #import <CommonCrypto/CommonDigest.h>
 #import "QrCodeViewController.h"
 #import "PhotoPromptBox.h"
-
+#import "AlterView.h"
 
 #define kScreenWidth [UIScreen mainScreen].bounds.size.width
 
@@ -37,7 +37,7 @@
 
 #define RGBA_COLOR(R, G, B, A) [UIColor colorWithRed:((R) / 255.0f) green:((G) / 255.0f) blue:((B) / 255.0f) alpha:A]
 
-@interface TheMeetingInfoViewController ()<UINavigationControllerDelegate, UIVideoEditorControllerDelegate,UIAlertViewDelegate,UITableViewDelegate,UITableViewDataSource,MeetingTableViewCellDelegate>
+@interface TheMeetingInfoViewController ()<UINavigationControllerDelegate, UIVideoEditorControllerDelegate,UIAlertViewDelegate,UITableViewDelegate,UITableViewDataSource,MeetingTableViewCellDelegate,AlterViewDelegate>
 @property (nonatomic,strong) ShareView * interaction;
 @property (nonatomic,strong)UserModel * user;
 @property (nonatomic,assign)int temp;
@@ -48,6 +48,8 @@
 @property (nonatomic,assign)BOOL isEnable;
 @property (nonatomic,strong)PhotoPromptBox * photoView;
 @property (nonatomic,copy) NSString * pictureType;//标明是问答还是签到照片
+@property (nonatomic,strong)AlterView * alterView;
+
 @end
 
 @implementation TheMeetingInfoViewController
@@ -100,7 +102,7 @@
 -(void)getData{
     UserModel * user = [[Appsetting sharedInstance] getUsetInfo];
     NSDictionary * dictRoom = [[NSDictionary alloc] initWithObjectsAndKeys:@"1",@"start",@"1000",@"length",[NSString stringWithFormat:@"%@",_meetingModel.meetingPlaceId],@"id",[NSString stringWithFormat:@"%@",user.school],@"universityId", nil];
-
+    
     [[NetworkRequest sharedInstance] GET:QueryMeetingRoom dict:dictRoom succeed:^(id data) {
         //        NSLog(@"%@",data);
         NSArray * ary = [[data objectForKey:@"body"] objectForKey:@"list"];
@@ -135,9 +137,7 @@
     self.automaticallyAdjustsScrollViewInsets = NO;
     [self.view addSubview:_tableView];
 }
--(void)viewWillAppear:(BOOL)animated{
-    
-}
+
 /**
  *  显示navigation的标题
  **/
@@ -394,10 +394,77 @@
     self.hidesBottomBarWhenPushed = YES;
     [self.navigationController pushViewController:signListVC animated:YES];
 }
+-(void)viewWillAppear:(BOOL)animated{
+    if (![UIUtils validateWithStartTime:_meetingModel.meetingTime withExpireTime:nil]) {
+        return;
+    }else{
+        if ([[NSString stringWithFormat:@"%@",_meetingModel.signStatus] isEqualToString:@"2"]) {
+            return;
+        }else{
+            if ([[NSString stringWithFormat:@"%@",_user.peopleId] isEqualToString:[NSString stringWithFormat:@"%@",_meetingModel.meetingHostId]]) {
+                return;
+            }else{
+                [self autoSign];
+            }
+        }
+    }
+}
+-(void)autoSign{
+    
+    if (![UIUtils validateWithStartTime:_meetingModel.meetingTime withExpireTime:nil]) {
+
+        return;
+    }
+    _isEnable = YES;
+    [_tableView reloadData];
+    NSMutableDictionary * dictWifi =  [UIUtils getWifiName];
+    
+    if (![UIUtils isBlankString:[dictWifi objectForKey:@"BSSID"]]) {
+        
+        NSString * bssid  = [UIUtils specificationMCKAddress:[dictWifi objectForKey:@"BSSID"]];
+        
+        if ([UIUtils matchingMacWith:_meetingModel.mck withMac:bssid]) {
+            _mac = 1;
+            
+            [self signSendIng];
+            
+            [self sendSignInfo];
+            
+        }else if (_mac == 1){
+            [self signSendIng];
+            
+            [self sendSignInfo];
+        }else{
+            self.alterView = [[AlterView alloc] initWithFrame:CGRectMake(20, 100, APPLICATION_WIDTH-40, 100) withAlterStr:@"未连接上教室指定WiFi"];
+            self.alterView.delegate = self;
+            [self.view addSubview:self.alterView];
+            [UIView animateWithDuration:3 animations:^{
+                _alterView.alpha = 0.99;
+            } completion:^(BOOL finished) {
+                [_alterView removeFromSuperview];
+            }];
+        }
+    }else if (_mac == 1){
+        
+        [self signSendIng];
+        [self sendSignInfo];
+        
+    }else{
+        self.alterView = [[AlterView alloc] initWithFrame:CGRectMake(20, 100, APPLICATION_WIDTH-40, 100) withAlterStr:@"未连接上教室指定WiFi"];
+        self.alterView.delegate = self;
+        [self.view addSubview:self.alterView];
+        [UIView animateWithDuration:3 animations:^{
+            _alterView.alpha = 0.99;
+        } completion:^(BOOL finished) {
+            [_alterView removeFromSuperview];
+        }];
+    }
+    
+}
 -(void)signBtnPressedDelegate:(UIButton *)btn{
     
     [self showHudInView:self.view hint:NSLocalizedString(@"正在加载数据", @"Load data...")];
-
+    
     if (![UIUtils validateWithStartTime:_meetingModel.meetingTime withExpireTime:nil]) {
         [UIUtils showInfoMessage:@"会议开始之后一定时间范围内才可以签到"];
         [self hideHud];
@@ -425,7 +492,7 @@
             [self sendSignInfo];
         }else{
             
-            NSString * s = [UIUtils returnMac:_meetingModel.mck];
+//            NSString * s = [UIUtils returnMac:_meetingModel.mck];
             
             UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:[NSString stringWithFormat:@"请到WiFi列表连接指定的DAYAO或XTU开头的WiFi，再点击签到，若不能跳转请主动在WiFi页面连接无线信号再返回app进行签到，签到完成之后请连接数据流量保证数据传输"] message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: @"取消", nil];
             alertView.delegate = self;
@@ -440,8 +507,8 @@
         [self sendSignInfo];
         
     }else{
+//        NSString * s = [UIUtils returnMac:_meetingModel.mck];
         
-        NSString * s = [UIUtils returnMac:_meetingModel.mck];
         UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:[NSString stringWithFormat:@"请到WiFi列表连接指定的DAYAO或XTU开头的WiFi，若不能跳转请主动在WiFi页面连接无线信号再返回app进行签到，签到完成之后请连接数据流量保证数据传输"] message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: @"取消", nil];
         alertView.delegate = self;
         alertView.tag = 1;
@@ -488,7 +555,7 @@
         
         _meetingModel.signStatus = @"2";
         
-//        [UIUtils showInfoMessage:@"签到成功"];
+        //        [UIUtils showInfoMessage:@"签到成功"];
         
         [_tableView reloadData];
         [self signPictureUpdate];
@@ -636,7 +703,7 @@
 -(void)signPictureUpdate{
     if (!_photoView) {
         _photoView = [[PhotoPromptBox alloc] initWithBlack:^(NSString * str) {
-            
+            [_photoView removeFromSuperview];
         } WithTakePictureBlack:^(NSString *str) {
             [self getPicture];
             [_photoView removeFromSuperview];
@@ -710,8 +777,9 @@
     UserModel * user = [[Appsetting sharedInstance] getUsetInfo];
     NSString * str = [NSString stringWithFormat:@"%@-%@-%@",user.userName,user.studentId,[UIUtils getTime]];
     NSDictionary * dict1 = [[NSDictionary alloc] initWithObjectsAndKeys:@"1",@"type",str,@"description",@"10",@"function",[NSString stringWithFormat:@"%@",_meetingModel.meetingId],@"relId",@"2",@"relType",nil];
-    
-    [[NetworkRequest sharedInstance] POSTImage:FileUpload image:resultImage dict:dict1 succeed:^(id data) {
+    UIImage * image = [UIUtils addWatemarkTextAfteriOS7_WithLogoImage:resultImage watemarkText:[NSString stringWithFormat:@"%@-%@-%@",_user.userName,_user.studentId,[UIUtils getTime]]];
+
+    [[NetworkRequest sharedInstance] POSTImage:FileUpload image:image dict:dict1 succeed:^(id data) {
         NSString * code = [NSString stringWithFormat:@"%@",[[data objectForKey:@"header"] objectForKey:@"code"]];
         if ([code isEqualToString:@"0000"]) {
             [UIUtils showInfoMessage:@"上传成功"];

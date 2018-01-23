@@ -59,6 +59,8 @@
         cell.workNo.text = [NSString stringWithFormat:@"学号 :%@",ss.workNo];
         if (![UIUtils isBlankString:[NSString stringWithFormat:@"%@",ss.pictureId]]) {
             [cell.headImage sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@?resourceId=%@",BaseURL,FileDownload,ss.pictureId]] placeholderImage:[UIImage imageNamed:@"signa.png"]];
+        }else{
+            cell.headImage.image = [UIImage imageNamed:@"headImage"];
         }
         if ([[NSString stringWithFormat:@"%@",ss.signStatus] isEqualToString:@"3"]) {
             cell.leave.backgroundColor = [UIColor whiteColor];

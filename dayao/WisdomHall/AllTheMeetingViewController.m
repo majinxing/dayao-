@@ -191,6 +191,8 @@ static NSString * cellIdentifier = @"cellIdentifier";
         _join = nil;
     }else if (btn.tag == 2){
         NSDictionary * dict = [[NSDictionary alloc] initWithObjectsAndKeys:[NSString stringWithFormat:@"%@",_join.courseNumber.text],@"id",_userModel.peopleId,@"userId", nil];
+        [self showHudInView:self.view hint:NSLocalizedString(@"正在加载数据", @"Load data...")];
+
         [[NetworkRequest sharedInstance] POST:JoinMeeting dict:dict succeed:^(id data) {
             NSString * str = [[data objectForKey:@"header"] objectForKey:@"code"];
             if ([[NSString stringWithFormat:@"%@",str] isEqualToString:@"6680"]) {
@@ -203,8 +205,12 @@ static NSString * cellIdentifier = @"cellIdentifier";
             }else{
                 [UIUtils showInfoMessage:@"会议不存在或会议被删除"];
             }
+            [self hideHud];
+
         } failure:^(NSError *error) {
             [UIUtils showInfoMessage:@"加入失败"];
+            [self hideHud];
+
         }];
     }
 }

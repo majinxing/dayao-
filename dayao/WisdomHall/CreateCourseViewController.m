@@ -98,7 +98,7 @@
 }
 
 -(void)addTabelView{
-    _labelAry = [[NSMutableArray alloc] initWithObjects:@"课堂封面",@"课  程  名",@"老师姓名",@"签到方式",@"上课的人",@"教      室", @"课程周期",@"第一周星期一日期",@"上课时间列表",nil];
+    _labelAry = [[NSMutableArray alloc] initWithObjects:@"课堂封面",@"课  程  名",@"老师姓名",@"签到方式",@"上课的人",@"教      室", @"课程周期",@"开学日期",@"上课时间列表",nil];
     _textFileAry = [NSMutableArray arrayWithCapacity:4];
     for (int i = 0; i<9; i++) {
         [_textFileAry addObject:@""];

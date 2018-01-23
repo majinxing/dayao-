@@ -44,6 +44,8 @@
     _workNo.textAlignment = NSTextAlignmentLeft;
     if (![UIUtils isBlankString:[NSString stringWithFormat:@"%@",sign.pictureId]]) {
        [_headImage sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@?resourceId=%@",BaseURL,FileDownload,sign.pictureId]] placeholderImage:[UIImage imageNamed:@"sign.png"]];
+    }else{
+        _headImage.image = [UIImage imageNamed:@"headImage"];
     }
     
 }
