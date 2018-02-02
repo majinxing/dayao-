@@ -98,7 +98,7 @@ static NSString *cellIdentifier = @"cellIdentifier";
     [UIUtils tokenThePeriodOfValidity];
 }
 -(void)addTableView{
-    _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 64, APPLICATION_WIDTH, APPLICATION_HEIGHT-64-44) style:UITableViewStylePlain];
+    _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0,SafeAreaTopHeight, APPLICATION_WIDTH, APPLICATION_HEIGHT-64-44) style:UITableViewStylePlain];
     _tableView.delegate = self;
     _tableView.dataSource = self;
     _tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
@@ -419,12 +419,6 @@ static NSString *cellIdentifier = @"cellIdentifier";
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     ClassTableViewCell * cell ;
-    //    if (indexPath.row == 0) {
-    ////        cell = [tableView dequeueReusableCellWithIdentifier:@"ClassTableViewCellSecond"];
-    ////        if (!cell) {
-    ////            cell = [[[NSBundle mainBundle] loadNibNamed:@"ClassTableViewCell" owner:self options:nil] objectAtIndex:1];
-    ////        }
-    //    }else{
     cell = [tableView dequeueReusableCellWithIdentifier:@"ClassTableViewCellFirst"];
     if (!cell) {
         cell = [[[NSBundle mainBundle] loadNibNamed:@"ClassTableViewCell" owner:self options:nil] objectAtIndex:0];
@@ -432,7 +426,6 @@ static NSString *cellIdentifier = @"cellIdentifier";
     NSString * str = [NSString stringWithFormat:@"%d",(int)indexPath.row+1];
     NSMutableArray * ary = _dict[str];
     [cell addFirstContentViewWith:(int)indexPath.row withClass:ary];
-    //    }
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     cell.backgroundColor = [UIColor clearColor];
     cell.delegate = self;
@@ -451,7 +444,7 @@ static NSString *cellIdentifier = @"cellIdentifier";
     UIView * view = [[UIView alloc] init];
     view.backgroundColor = RGBA_COLOR(201, 242, 253, 1);
     NSString * month = [UIUtils getMonth];
-    NSMutableArray * day = [UIUtils getWeekAllTimeWithType:nil];
+    NSArray * day = [UIUtils getWeekAllTimeWithType:nil];
     NSMutableArray * ary = [NSMutableArray arrayWithCapacity:1];;
     if (day.count==7) {
         NSArray *  a = @[month,@"周一",@"周二",@"周三",@"周四",@"周五",@"周六",@"周日"];

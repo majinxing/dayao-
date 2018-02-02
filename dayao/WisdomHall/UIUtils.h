@@ -72,7 +72,7 @@
 //会场顺序选座
 +(NSMutableDictionary *)seatingArrangements:(NSString *)seating withNumberPeople:(NSString *)numberPeople;
 //与会人员与座位匹配
-+(NSDictionary *)seatWithPeople:(NSMutableArray *)peopleAry withSeat:(NSMutableArray *)seatAry;
++(NSDictionary *)seatWithPeople:(NSMutableArray *)peopleAry withSeat:(NSMutableArray *)seatAry roomId:(NSString *)roomId;
 //发送群体会议通知
 +(void)sendMeetingInfo:(NSDictionary *)dict;
 //显示信息
@@ -119,6 +119,8 @@
 +(NSDate *)getInternetDate;
 //打水印
 +(UIImage *)addWatemarkTextAfteriOS7_WithLogoImage:(UIImage *)logoImage watemarkText:(NSString *)watemarkText;
+//周期会议时间处理
++(NSMutableArray *)returnAry:(NSString *)startTime withEndTime:(NSString *)endTime room:(NSString *)roomId meetingsFacilitatorList:(NSString *)nameHost monthOrWeek:(NSString *)mRw;
 @end
 
 

@@ -14,6 +14,7 @@
 @optional
 -(void)gggDelegate:(UIButton *)btn;
 -(void)seeSaetPressedDelegate;
+-(void)switchCycleDelegate:(UISwitch *)sender;
 @end
 
 @interface DefinitionPersonalTableViewCell : UITableViewCell
@@ -24,4 +25,5 @@
 -(void)addCourseContentView:(NSString *)infoLabelText withTextFileText:(NSString *)textFile withIndex:(int)n;
 -(void)addTemporaryCourseContentView:(NSString *)infoLabelText withTextFileText:(NSString *)textFile withIndex:(int)n;
 -(void)addMeetingContentView:(NSString *)infoLabelText withTextFileText:(NSString *)textFile withIndex:(int)n;
+-(void)addSwitchState:(NSString *)str;
 @end

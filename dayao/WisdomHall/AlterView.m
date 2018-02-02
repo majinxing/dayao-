@@ -22,6 +22,13 @@
     self = [super initWithFrame:frame];
     if (self) {
         self.backgroundColor = [UIColor whiteColor];
+        self.userInteractionEnabled = YES;
+        
+        self.layer.masksToBounds = YES;
+        self.layer.borderWidth = 0.5;
+        self.layer.borderColor = [UIColor blackColor].CGColor;
+        self.layer.cornerRadius = 5;
+
         [self alterView:str];
     }
     return self;
@@ -48,32 +55,33 @@
     }
 }
 -(void)alterView:(NSString *)alterStr{
-    UILabel * alter1 = [[UILabel alloc] initWithFrame:CGRectMake(20, 20, 280, 20)];
+    UIView * witheat = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.frame.size.width, self.frame.size.height)];
+    witheat.backgroundColor = [UIColor whiteColor];
+    [self addSubview:witheat];
+    
+    UILabel * alter1 = [[UILabel alloc] initWithFrame:CGRectMake(20, 20, 200, 20)];
     alter1.text = @"急速签到失败";
     alter1.font = [UIFont systemFontOfSize:15];
     alter1.textColor = [UIColor redColor];
-    alter1.userInteractionEnabled = NO;
-    [self addSubview:alter1];
+    alter1.userInteractionEnabled = YES;
+    [witheat addSubview:alter1];
     
     UILabel * alter2 = [[UILabel alloc] initWithFrame:CGRectMake(20, CGRectGetMaxY(alter1.frame)+20, 280, 20)];
     alter2.text = [NSString stringWithFormat:@"%@",alterStr];
     alter2.font = [UIFont systemFontOfSize:13];
     alter2.alpha = 0.5;
-    [self addSubview:alter2];
+    alter2.userInteractionEnabled = YES;
+    [witheat addSubview:alter2];
     
     UIButton * back = [UIButton buttonWithType:UIButtonTypeCustom];
-    back.frame = CGRectMake(self.frame.size.width-40, 0, 40, 40);
+    back.frame = CGRectMake(self.frame.size.width-40, 0,40,40);
     [back setTitle:@"×" forState:UIControlStateNormal];
     [back addTarget:self action:@selector(removeSubView) forControlEvents:UIControlEventTouchUpInside];
-//    back.backgroundColor = [UIColor redColor];
     [back setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-    [self addSubview:back];
+    back.userInteractionEnabled = YES;
+    [witheat addSubview:back];
     
-    self.layer.masksToBounds = YES;
-    self.layer.borderWidth = 0.5;
-    self.layer.borderColor = [UIColor blackColor].CGColor;
-    self.layer.cornerRadius = 5;
-
+  
 }
 /*
 // Only override drawRect: if you perform custom drawing.

@@ -12,7 +12,7 @@
 #import "AllTheMeetingViewController.h"
 #import "NoticeViewController.h"
 #import "GroupListViewController.h"
-
+#import "StatisticalViewController.h"
 #import "WisdomHall-Swift.h"
 #import "JPUSHService.h"
 
@@ -49,7 +49,7 @@
     self.title = @"办公";
 }
 -(void)addTableView{
-    _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 64, APPLICATION_WIDTH, APPLICATION_HEIGHT-64-44) style:UITableViewStylePlain];
+    _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0,SafeAreaTopHeight, APPLICATION_WIDTH, APPLICATION_HEIGHT-64-44) style:UITableViewStylePlain];
     _tableView.delegate = self;
     _tableView.dataSource = self;
     _tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
@@ -81,6 +81,11 @@
         GroupListViewController * g = [[GroupListViewController alloc] init];
         self.hidesBottomBarWhenPushed = YES;
         [self.navigationController pushViewController:g animated:YES];
+        self.hidesBottomBarWhenPushed = NO;
+    }else if ([str isEqualToString:Statistical]){
+        StatisticalViewController * vc = [[StatisticalViewController alloc] init];
+        self.hidesBottomBarWhenPushed = YES;
+        [self.navigationController pushViewController:vc animated:YES];
         self.hidesBottomBarWhenPushed = NO;
     }else{
         [UIUtils showInfoMessage:@"正在加紧步伐开发中，敬请期待"];

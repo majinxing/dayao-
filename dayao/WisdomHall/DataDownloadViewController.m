@@ -253,7 +253,11 @@
     
 }
 -(void)addTableView{
+    
     _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0,64, APPLICATION_WIDTH, APPLICATION_HEIGHT-64) style:UITableViewStylePlain];
+//    if (![UIUtils isBlankString:_function]) {
+//        _tableView.frame = CGRectMake(0,0, APPLICATION_WIDTH, APPLICATION_HEIGHT-64-40);
+//    }
     _tableView.delegate = self;
     _tableView.dataSource = self;
     self.automaticallyAdjustsScrollViewInsets = NO;

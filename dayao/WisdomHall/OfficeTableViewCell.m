@@ -75,6 +75,7 @@
                        Leave,
                        Business,
                        Lotus,
+                       Statistical
                        ];
     
     //水平间距

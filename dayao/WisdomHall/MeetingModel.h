@@ -17,7 +17,8 @@
 @property (nonatomic,copy) NSString * meetingTime;//会议时间
 @property (nonatomic,copy) NSString * meetingImage;//会议图片
 @property (nonatomic,copy) NSString * peopleNumber;//会议人数
-@property (nonatomic,copy) NSString * meetingId;//会议id
+@property (nonatomic,copy) NSString * meetingId;//会议模板id
+@property (nonatomic,copy) NSString * meetingDetailId;//会议具体id
 @property (nonatomic,strong) NSMutableArray * mck;//路由器的mac地址
 @property (nonatomic,copy) NSString * createTime;//创建时间
 @property (nonatomic,copy) NSString * imageUrl;//图片
@@ -30,6 +31,7 @@
 @property (nonatomic,copy) NSString * url;
 @property (nonatomic,copy) NSString * userSeat;//座次
 @property (nonatomic,copy) NSString * workNo;
+@property (nonatomic,copy) NSString * seat;//座次表
 @property (nonatomic,strong) NSMutableArray * signAry;//签到人model数组
 @property (nonatomic,strong) NSMutableArray * signNo;//未签到
 @property (nonatomic,assign)NSInteger n;//签到人数

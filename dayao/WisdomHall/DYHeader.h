@@ -28,6 +28,8 @@
 #define APPLICATION_WIDTH [UIScreen mainScreen].bounds.size.width
 
 #define APPLICATION_HEIGHT ([UIScreen mainScreen].bounds.size.height)
+//navigationBar
+#define SafeAreaTopHeight (APPLICATION_HEIGHT == 812.0 ? 88 : 64)
 
 #define MAIN_SCREEN_FRAME     [[UIScreen mainScreen] bounds]
 
@@ -103,6 +105,7 @@
 #define Business                    @"出差"
 #define Lotus                       @"审批"
 #define Group                       @"群组"
+#define Statistical                 @"统计"
 
 //数据库的名字
 #define SQLITE_NAME            @"Dayao"
@@ -154,6 +157,8 @@
 
 #define MeetingDelect           @"course/meeting/delete"            //会议删除
 
+#define MeetingDetailIdDelect   @"course/meeting/detail/delete"     //会议detail删除
+
 #define ClassSign               @"course/course/sign"               //课程签到
 
 #define ClassSign               @"course/course/sign"               //课程签到
@@ -184,7 +189,7 @@
 
 #define FileDownload            @"course/resource/download"         //资料下载
 
-#define FileList                @"course/resource/select"             //资料列表
+#define FileList                @"course/resource/select"           //资料列表
 
 #define FileDelegate            @"course/resource/delete"           //删除
 
@@ -253,6 +258,24 @@
 #define Noticedelect            @"course/message/delete"            //删除消息
 
 #define PhotoSign               @"course/course/photoSign"          //拍照签到
+
+#define QuertyStatistics        @"course/course/statistics"         //按照部门查询
+
+#define QuertyClass             @"course/course/statisticsByCourse" //按照课程查询
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

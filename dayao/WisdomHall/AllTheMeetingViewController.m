@@ -218,9 +218,7 @@ static NSString * cellIdentifier = @"cellIdentifier";
 -(void)getDataWithPage:(NSInteger)page isHeader:(BOOL)isHeader{
     _userModel = [[Appsetting sharedInstance] getUsetInfo];
     
-    NSDictionary * dict = [[NSDictionary alloc] initWithObjectsAndKeys:[NSString stringWithFormat:@"%ld",(long)page],@"start",_userModel.peopleId,@"teacherId",[UIUtils getTime],@"startTime",@"",@"endTime", nil];
-    
-    
+    NSDictionary * dict = [[NSDictionary alloc] initWithObjectsAndKeys:[NSString stringWithFormat:@"%ld",(long)page],@"start",_userModel.peopleId,@"createUser",[UIUtils getTime],@"startTime",@"",@"endTime", nil];
     
     [[NetworkRequest sharedInstance] GET:QueryMeetingSelfCreate dict:dict succeed:^(id data) {
         NSDictionary * dict = [data objectForKey:@"header"];
@@ -247,15 +245,16 @@ static NSString * cellIdentifier = @"cellIdentifier";
         }
         
     } failure:^(NSError *error) {
-        NSLog(@"error %@",error);
+//        NSLog(@"error %@",error);
         [self hideHud];
         
     }];
 }
 -(void)getSelfCreateMeetingList:(NSInteger)page{
-    // UserModel * user = [[Appsetting sharedInstance] getUsetInfo];
+    UserModel * user = [[Appsetting sharedInstance] getUsetInfo];
     
-    NSDictionary * dict = [[NSDictionary alloc] initWithObjectsAndKeys:_userModel.peopleId,@"userId",[UIUtils getTime],@"startTime",@"",@"endTime",[NSString stringWithFormat:@"%ld",(long)page],@"start",nil];
+    NSDictionary * dict = [[NSDictionary alloc] initWithObjectsAndKeys:_userModel.peopleId,@"userId",[UIUtils getTime],@"startTime",@"",@"endTime",[NSString stringWithFormat:@"%ld",(long)page],@"start",[NSString stringWithFormat:@"%@",user.studentId],@"userId",nil];
+    
     [[NetworkRequest sharedInstance] GET:QueryMeeting dict:dict succeed:^(id data) {
         NSArray * d = [[data objectForKey:@"body"] objectForKey:@"list"];
         for (int i = 0; i<d.count; i++) {
@@ -295,7 +294,7 @@ static NSString * cellIdentifier = @"cellIdentifier";
         
         [_collection reloadData];
     } failure:^(NSError *error) {
-        NSLog(@"失败%@",error);
+//        NSLog(@"失败%@",error);
         [self hideHud];
         
     }];
@@ -303,22 +302,6 @@ static NSString * cellIdentifier = @"cellIdentifier";
 }
 -(void)ssss{
     
-    //    for (int i = 0 ; i<_classAry.count; i++) {
-    //        ClassModel * c = _classAry[i];
-    //
-    //        for (int j = i; j<_classAry.count; j++) {
-    //            ClassModel * c1 = _classAry[j];
-    //            //date02比date01小
-    //            if ([[UIUtils compareTimeStartTime:c.actStarTime withExpireTime:c1.actStarTime] isEqualToString:@"-1"]) {
-    //                //                    c2 = c1;
-    //                ClassModel *c2 = [[ClassModel alloc] init];
-    //                c2 = c;
-    //                [_classAry setObject:c1 atIndexedSubscript:i];
-    //                [_classAry setObject:c2 atIndexedSubscript:j];
-    //                c = _classAry[i];
-    //            }
-    //        }
-    //    }
 }
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

@@ -457,7 +457,7 @@
     
     [dict setObject:users.school forKey:@"universityId"];
     
-    [dict setObject:ary[7] forKey:@"startTime"];
+    [dict setObject:ary[5] forKey:@"startTime"];
     
 //    [dict setObject:[NSString stringWithFormat:@"%d",class1+1] forKey:@"startTh"];
     
@@ -497,7 +497,7 @@
     
     [dict setObject:@"0" forKey:@"pictureId"];
     [dict setObject:[NSString stringWithFormat:@"%d",[UIUtils getTermId]] forKey:@"termId"];
-    [dict setObject:ary[7] forKey:@"firstDay"];
+    [dict setObject:ary[5] forKey:@"firstDay"];
     
     if (m3 == 0) {
         NSArray * aryT = [[NSArray alloc] initWithObjects:@{@"startWeek":[NSString stringWithFormat:@"%d",m1+1],@"endWeek":[NSString stringWithFormat:@"%d",m2+1]}, nil];
@@ -787,7 +787,7 @@
     return dict;
 }
 
-+(NSDictionary *)seatWithPeople:(NSMutableArray *)peopleAry withSeat:(NSMutableArray *)seatAry{
++(NSDictionary *)seatWithPeople:(NSMutableArray *)peopleAry withSeat:(NSMutableArray *)seatAry roomId:(NSString *)roomId{
     
     NSMutableArray * ary = [NSMutableArray arrayWithCapacity:1];
     
@@ -798,8 +798,10 @@
         SignPeople * s = peopleAry[i];
         
         s.seat = seatAry[i];
+        NSDictionary * d = @{@"seat":seatAry[i],@"roomId":[NSString stringWithFormat:@"%@",roomId]};
+        NSArray * a = @[d];
         
-        NSDictionary * dict = [[NSDictionary alloc] initWithObjectsAndKeys:[NSString stringWithFormat:@"%@",s.userId],@"userId",seatAry[i],@"seat", nil];
+        NSDictionary * dict = [[NSDictionary alloc] initWithObjectsAndKeys:[NSString stringWithFormat:@"%@",s.userId],@"userId",a,@"seatList", nil];
         
         [ary addObject:dict];
         
@@ -1194,7 +1196,7 @@
     
     NSString *firstDay = [formatter stringFromDate:firstDayOfWeek];
     NSString *lastDay = [formatter stringFromDate:lastDayOfWeek];
-    NSLog(@"%@=======%@",firstDay,lastDay);
+//    NSLog(@"%@=======%@",firstDay,lastDay);
     
 //    NSString *dateStr = [NSString stringWithFormat:@"%@-%@",firstDay,lastDay];
     NSDictionary * dict = [[NSDictionary alloc] initWithObjectsAndKeys:[NSString stringWithFormat:@"%@",firstDay],@"firstDay",[NSString stringWithFormat:@"%@",lastDay],@"lastDay", nil];
@@ -1506,8 +1508,79 @@
     UIGraphicsEndImageContext();
     return newImage;
 }
++(NSMutableArray *)returnAry:(NSString *)startTime withEndTime:(NSString *)endTime room:(NSString *)roomId meetingsFacilitatorList:(NSString *)nameHost monthOrWeek:(NSString *)mRw{
+    UserModel * user = [[Appsetting sharedInstance] getUsetInfo];
+    NSMutableArray * ary = [NSMutableArray arrayWithCapacity:1];
+    NSArray * a1 = @[@{@"userId":[NSString stringWithFormat:@"%@",user.peopleId],@"dsec":@" "}];
+    if ([mRw isEqualToString:@""]) {
+        NSString * newTime = [NSString stringWithFormat:@"%@:00",startTime];
+        NSDictionary * dict = [[NSDictionary alloc] initWithObjectsAndKeys:newTime,@"actStartTime",newTime,@"actEndTime",newTime,@"signStartTime",newTime,@"signEndTime",roomId,@"roomId",a1,@"meetingsFacilitatorList",nil];
+        [ary addObject:dict];
+        
+    }else if([mRw isEqualToString:@"week"]){
+        NSString * newT = [NSString stringWithFormat:@"%@:00",startTime];
 
+        NSDictionary * dict = [[NSDictionary alloc] initWithObjectsAndKeys:newT,@"actStartTime",newT,@"actEndTime",newT,@"signStartTime",newT,@"signEndTime",newT,@"roomId",a1,@"meetingsFacilitatorList",nil];
+        [ary addObject:dict];
+        
 
+        endTime = [NSString stringWithFormat:@"%@ 23:59:59",endTime];
+        while (![[UIUtils compareTimeStartTime:[UIUtils returnStartTime:startTime withWeek:1] withExpireTime:endTime] isEqualToString:@"-1"]) {
+            NSString * newStart = [UIUtils returnStartTime:startTime withWeek:1];
+            startTime = newStart;
+            newStart = [NSString stringWithFormat:@"%@:00",newStart];
+            NSDictionary * dict = [[NSDictionary alloc] initWithObjectsAndKeys:newStart,@"actStartTime",newStart,@"actEndTime",newStart,@"signStartTime",newStart,@"signEndTime",roomId,@"roomId",a1,@"meetingsFacilitatorList",nil];
+            [ary addObject:dict];
+        }
+        
+    }else if ([mRw isEqualToString:@"month"]){
+        NSString * newT = [NSString stringWithFormat:@"%@:00",startTime];
+
+        NSDictionary * dict = [[NSDictionary alloc] initWithObjectsAndKeys:newT,@"actStartTime",newT,@"actEndTime",newT,@"signStartTime",newT,@"signEndTime",roomId,@"roomId",a1,@"meetingsFacilitatorList",nil];
+        
+        [ary addObject:dict];
+        
+        endTime = [NSString stringWithFormat:@"%@ 23:59:59",endTime];
+        while (![[UIUtils compareTimeStartTime:[UIUtils getPriousorLaterDateFromDate:startTime withMonth:1] withExpireTime:endTime] isEqualToString:@"-1"]) {
+            NSString * newStart = [UIUtils getPriousorLaterDateFromDate:startTime withMonth:1];
+            startTime = newStart;
+            newStart = [NSString stringWithFormat:@"%@:00",newStart];
+            NSDictionary * dict = [[NSDictionary alloc] initWithObjectsAndKeys:newStart,@"actStartTime",newStart,@"actEndTime",newStart,@"signStartTime",newStart,@"signEndTime",roomId,@"roomId",a1,@"meetingsFacilitatorList",nil];
+            [ary addObject:dict];
+        }
+    }
+    return ary;
+}
++(NSString *)returnStartTime:(NSString *)startTime  withWeek:(NSInteger)week{
+    
+    NSDateFormatter *dateFormatter = [NSDateFormatter new];
+    [dateFormatter setDateFormat:@"yyyy-MM-dd HH:mm"];
+    NSDate *myDate = [dateFormatter dateFromString:startTime];
+    int days = 7;
+    
+    NSDate *newDate = [myDate dateByAddingTimeInterval:60 * 60 * 24 * days*week];
+    
+    return [dateFormatter stringFromDate:newDate];
+}
++(NSString *)getPriousorLaterDateFromDate:(NSString *)startTime withMonth:(NSInteger)month
+{
+    
+    NSDateFormatter *dateFormatter = [NSDateFormatter new];
+    
+    [dateFormatter setDateFormat:@"yyyy-MM-dd HH:mm"];
+    
+    NSDate *date = [dateFormatter dateFromString:startTime];
+    
+    NSDateComponents *comps = [[NSDateComponents alloc] init];
+
+    [comps setMonth:month];
+
+    NSCalendar *calender = [[NSCalendar alloc] initWithCalendarIdentifier:NSCalendarIdentifierGregorian];
+    
+    NSDate *mDate = [calender dateByAddingComponents:comps toDate:date options:0];
+   
+    return [dateFormatter stringFromDate:mDate];
+}
 @end
 
 

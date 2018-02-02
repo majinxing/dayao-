@@ -32,6 +32,7 @@
 #import "ZFSeatViewController.h"
 #import "PhotoPromptBox.h"
 #import "AlterView.h"
+#import "AllOrPersonalDataViewController.h"
 
 @interface CourseDetailsViewController ()<UIActionSheetDelegate,ShareViewDelegate,UIAlertViewDelegate,UITableViewDelegate,UITableViewDataSource,MeetingTableViewCellDelegate,UINavigationControllerDelegate,UIImagePickerControllerDelegate,AlterViewDelegate>
 
@@ -58,6 +59,7 @@
 @property (nonatomic,strong)PhotoPromptBox * photoView;
 @property (nonatomic,copy)NSString * pictureType;//标明是问答还是签到照片
 @property (nonatomic,strong)AlterView * alterView;
+@property (nonatomic,strong) NSTimer * t;
 
 @end
 
@@ -344,6 +346,22 @@
         }
     }
 }
+#pragma mark NSTimer
+-(void)removeView{
+    NSTimeInterval timeInterval = 3.0 ;
+    
+    _t = [NSTimer scheduledTimerWithTimeInterval:timeInterval
+                                          target:self
+                                        selector:@selector(handleMaxShowTimer:)
+                                        userInfo:nil
+                                         repeats:YES];;
+}
+//触发事件
+-(void)handleMaxShowTimer:(NSTimer *)theTimer
+{
+    [_alterView removeFromSuperview];
+    [_t invalidate];
+}
 #pragma mark UITableViewdelegate
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
     return 3;
@@ -419,6 +437,7 @@
 #pragma mark alterViewDelegate
 -(void)alterViewDeleageRemove{
     [_alterView removeFromSuperview];
+    [_t invalidate];
 }
 #pragma mark MeetingCellDelegate
 -(void)shareButtonClickedDelegate:(NSString *)platform{
@@ -561,28 +580,17 @@
             
             [self signSendIng];
             [self sendSignInfo];
-            
         }else{
             self.alterView = [[AlterView alloc] initWithFrame:CGRectMake(20, 100, APPLICATION_WIDTH-40, 100) withAlterStr:@"未连接上教室指定WiFi"];
             self.alterView.delegate = self;
             [self.view addSubview:self.alterView];
-            [UIView animateWithDuration:3 animations:^{
-                _alterView.alpha = 0.99;
-            } completion:^(BOOL finished) {
-                [_alterView removeFromSuperview];
-            }];
+            [self removeView];
         }
-        
     }else{
         self.alterView = [[AlterView alloc] initWithFrame:CGRectMake(20, 100, APPLICATION_WIDTH-40, 100) withAlterStr:@"未连接上教室指定WiFi"];
         self.alterView.delegate = self;
         [self.view addSubview:self.alterView];
-        [UIView animateWithDuration:3 animations:^{
-            _alterView.alpha = 0.99;
-        } completion:^(BOOL finished) {
-            [_alterView removeFromSuperview];
-        }];
-        
+        [self removeView];
     }
 }
 -(void)signBtnPressedDelegate:(UIButton *)btn{

@@ -80,9 +80,9 @@
     // Do any additional setup after loading the view from its nib.
 }
 -(void)addTabelView{
-    _labelAry = [[NSMutableArray alloc] initWithObjects:@"课堂封面",@"课  程  名",@"老师姓名",@"签到方式",@"上课的人",@"教      室",@"上课时间列表",@"上课的时间",nil];
+    _labelAry = [[NSMutableArray alloc] initWithObjects:@"课堂封面",@"课  程  名",@"上课的人",@"教      室",@"上课时间列表",@"上课的时间",nil];
     _textFileAry = [NSMutableArray arrayWithCapacity:4];
-    for (int i = 0; i<8; i++) {
+    for (int i = 0; i<6; i++) {
         [_textFileAry addObject:@""];
     }
     [_textFileAry setObject:@"头像" atIndexedSubscript:0];
@@ -198,16 +198,9 @@
     [self.bView removeFromSuperview];
     [self.pickerView removeFromSuperview];
     self.pickerView = nil;
-    if (_temp == 3) {
-        if (_n==0) {
-            [_textFileAry setObject:@"一键签到" atIndexedSubscript:3];
-        }else if(_n==1){
-            [_textFileAry setObject:@"头像签到" atIndexedSubscript:3];
-        }
-        _n = 0;
-    }else if (_temp == 6){
-        [_textFileAry setObject:[NSString stringWithFormat:@"第%d节-第%d节",_class1+1,_class2+1] atIndexedSubscript:6];
-    }else if (_temp == 7){
+    if (_temp == 4){
+        [_textFileAry setObject:[NSString stringWithFormat:@"第%d节-第%d节",_class1+1,_class2+1] atIndexedSubscript:4];
+    }else if (_temp == 5){
         
         NSString * month;
         if (_month<9) {
@@ -221,7 +214,7 @@
         }else{
             day = [NSString stringWithFormat:@"%d",_day+1];
         }
-        [_textFileAry setObject:[NSString stringWithFormat:@"%d-%@-%@",2017+_year,month,day] atIndexedSubscript:7];
+        [_textFileAry setObject:[NSString stringWithFormat:@"%d-%@-%@",2017+_year,month,day] atIndexedSubscript:5];
         _year = 0;
         _month = 0;
         _day = 0;
@@ -238,22 +231,18 @@
 #pragma mark UIPickViewDelegate
 
 -(NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView{
-    if (_temp == 3) {
-        return 1;
-    }else if (_temp == 6){
+    if (_temp == 4){
         return 2;
-    }else if (_temp == 7){
+    }else if (_temp == 5){
         return 3;
     }
     return 0;
 }
 - (NSInteger)pickerView:(UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component
 {
-    if (_temp == 3) {
-        return 2;
-    }else if (_temp == 6){
+    if (_temp == 4){
         return 11;
-    }else if (_temp == 7){
+    }else if (_temp == 5){
         if (component == 0) {
             return 12;
         }else if (component == 1){
@@ -267,20 +256,13 @@
 }
 - (NSString *)pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component
 {
-    if (_temp == 3) {
-        
-        if (row==0) {
-            return @"一键签到";
-        }else if(row==1){
-            return @"照片签到";
-        }
-    }else if(_temp == 6){
+   if(_temp == 4){
        if (component == 0){
             return _classAry1[row];
         }else if (component == 1){
             return _classAry2[row];
         }
-    }else if (_temp == 7){
+    }else if (_temp == 5){
         if (component == 0) {
             return [NSString stringWithFormat:@"%d",row+2017];
         }else if (component == 1){
@@ -293,19 +275,13 @@
 }
 - (void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component
 {
-    if (_temp == 3) {
-        if (row == 1) {
-            _n = 1;
-        }else{
-            _n = 0;
-        }
-    }else if (_temp == 6){
+    if (_temp == 4){
         if (component == 0){
             _class1 = (int)row;
         }else if (component == 1){
             _class2 = (int)row;
         }
-    }else if (_temp == 7){
+    }else if (_temp == 5){
         if (component == 0) {
             _year = (int)row;
         }else if (component == 1){
@@ -335,10 +311,7 @@
     
 }
 -(void)gggDelegate:(UIButton *)btn{
-    if (btn.tag == 3) {
-        _temp = 3;
-        [self addPickView];
-    }else if (btn.tag == 5){
+    if (btn.tag == 3){
         [self.view endEditing: YES];
         SelectClassRoomViewController * s = [[SelectClassRoomViewController alloc] init];
         self.hidesBottomBarWhenPushed = YES;
@@ -348,12 +321,12 @@
                 [self.view endEditing:YES];
                 if (![UIUtils isBlankString:[NSString stringWithFormat:@"%@",returnText.classRoomId]]) {
                     _classRoom = returnText;
-                    [_textFileAry setObject:_classRoom.classRoomName atIndexedSubscript:5];
+                    [_textFileAry setObject:_classRoom.classRoomName atIndexedSubscript:3];
                     [_tabelView reloadData];
                 }
             }
         }];
-    }else if (btn.tag == 4){
+    }else if (btn.tag == 2){
         SelectPeopleToClassViewController * s = [[SelectPeopleToClassViewController alloc] init];
         self.hidesBottomBarWhenPushed = YES;
         s.selectPeople = [[NSMutableArray alloc] initWithArray:_selectPeopleAry];
@@ -380,16 +353,16 @@
             }
             
         }];
-    }else if (btn.tag == 6){
-        _temp = 6;
+    }else if (btn.tag == 4){
+        _temp = 4;
         [self addPickView];
-    }else if (btn.tag == 7){
+    }else if (btn.tag == 5){
         CalendarViewController * vc = [[CalendarViewController alloc] init];
         self.hidesBottomBarWhenPushed = YES;
         [self.navigationController pushViewController:vc animated:YES];
         [vc returnText:^(NSString *str) {
             if (![UIUtils isBlankString:str]) {
-                [_textFileAry setObject:[NSString stringWithFormat:@"%@",str] atIndexedSubscript:7];
+                [_textFileAry setObject:[NSString stringWithFormat:@"%@",str] atIndexedSubscript:5];
                 [_tabelView reloadData];
             }
         }];
@@ -403,7 +376,7 @@
     return 1;
 }
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
-    return 8;
+    return 6;
 }
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     

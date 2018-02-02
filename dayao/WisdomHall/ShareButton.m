@@ -121,6 +121,9 @@
     if ([type isEqualToString:InteractionType_Picture]) {
         [self setImage:[UIImage imageNamed:@"问答"] forState:UIControlStateNormal];
     }
+    if ([type isEqualToString:Statistical]) {
+        [self setImage:[UIImage imageNamed:@"统计"] forState:UIControlStateNormal];
+    }
     [self setTitle:type forState:UIControlStateNormal];
 }
 

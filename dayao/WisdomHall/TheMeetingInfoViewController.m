@@ -49,7 +49,7 @@
 @property (nonatomic,strong)PhotoPromptBox * photoView;
 @property (nonatomic,copy) NSString * pictureType;//标明是问答还是签到照片
 @property (nonatomic,strong)AlterView * alterView;
-
+@property (nonatomic,strong) NSTimer * t;
 @end
 
 @implementation TheMeetingInfoViewController
@@ -100,26 +100,10 @@
     [self.navigationController pushViewController:c animated:YES];
 }
 -(void)getData{
-    UserModel * user = [[Appsetting sharedInstance] getUsetInfo];
-    NSDictionary * dictRoom = [[NSDictionary alloc] initWithObjectsAndKeys:@"1",@"start",@"1000",@"length",[NSString stringWithFormat:@"%@",_meetingModel.meetingPlaceId],@"id",[NSString stringWithFormat:@"%@",user.school],@"universityId", nil];
+    _seatModel = [[SeatIngModel alloc] init];
+    _seatModel.seatTable = [NSString stringWithFormat:@"%@",_meetingModel.seat];
     
-    [[NetworkRequest sharedInstance] GET:QueryMeetingRoom dict:dictRoom succeed:^(id data) {
-        //        NSLog(@"%@",data);
-        NSArray * ary = [[data objectForKey:@"body"] objectForKey:@"list"];
-        for (int i = 0; i<ary.count; i++) {
-            SeatIngModel * s = [[SeatIngModel alloc] init];
-            [s setInfoWithDict:ary[i]];
-            if ([[NSString stringWithFormat:@"%@",_meetingModel.meetingPlaceId] isEqualToString:s.seatTableId]) {
-                _seatModel = s;
-                
-                return ;
-            }
-        }
-    } failure:^(NSError *error) {
-        
-    }];
-    
-    NSDictionary * dict = [[NSDictionary alloc] initWithObjectsAndKeys:_meetingModel.meetingId,@"meetingId", nil];
+    NSDictionary * dict = [[NSDictionary alloc] initWithObjectsAndKeys:_meetingModel.meetingDetailId,@"meetingId", nil];
     [[NetworkRequest sharedInstance] GET:QueryMeetingPeople dict:dict succeed:^(id data) {
         //        NSLog(@"%@",data);
         NSArray * ary = [data objectForKey:@"body"];
@@ -130,7 +114,7 @@
     }];
 }
 -(void)addTableView{
-    _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 64, APPLICATION_WIDTH, APPLICATION_HEIGHT) style:UITableViewStylePlain];
+    _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 64, APPLICATION_WIDTH, APPLICATION_HEIGHT-64) style:UITableViewStylePlain];
     _tableView.delegate = self;
     _tableView.dataSource = self;
     _tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
@@ -155,34 +139,77 @@
     }
 }
 -(void)deleteMeeting{
-    NSDictionary * dict = [[NSDictionary alloc] initWithObjectsAndKeys:_meetingModel.meetingId,@"id", nil];
-    [self showHudInView:self.view hint:NSLocalizedString(@"正在提交数据", @"Load data...")];
-    
-    [[NetworkRequest sharedInstance] POST:MeetingDelect dict:dict succeed:^(id data) {
-        NSLog(@"%@",data);
-        NSString * str = [[data objectForKey:@"header"] objectForKey:@"message"];
-        if ([str isEqualToString:@"成功"]) {
-            // 2.创建通知
-            NSNotification *notification =[NSNotification notificationWithName:@"UpdateTheMeetingPage" object:nil userInfo:nil];
-            // 3.通过 通知中心 发送 通知
-            
-            [[NSNotificationCenter defaultCenter] postNotification:notification];
-            
-            [self.navigationController popViewControllerAnimated:YES];
-            [self hideHud];
-            
-        }else{
+
+    UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"提示" message:nil preferredStyle:  UIAlertControllerStyleActionSheet];
+    //分别按顺序放入每个按钮；
+    [alert addAction:[UIAlertAction actionWithTitle:@"是否删除周期会议" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        
+        [self showHudInView:self.view hint:NSLocalizedString(@"正在提交数据", @"Load data...")];
+
+        NSDictionary * dict = [[NSDictionary alloc] initWithObjectsAndKeys:_meetingModel.meetingId,@"id", nil];
+        [[NetworkRequest sharedInstance] POST:MeetingDelect dict:dict succeed:^(id data) {
+            NSLog(@"%@",data);
+            NSString * str = [[data objectForKey:@"header"] objectForKey:@"message"];
+            if ([str isEqualToString:@"成功"]) {
+                // 2.创建通知
+                NSNotification *notification =[NSNotification notificationWithName:@"UpdateTheMeetingPage" object:nil userInfo:nil];
+                // 3.通过 通知中心 发送 通知
+                
+                [[NSNotificationCenter defaultCenter] postNotification:notification];
+                
+                [self.navigationController popViewControllerAnimated:YES];
+                [self hideHud];
+                
+            }else{
+                UIAlertView * alter = [[UIAlertView alloc] initWithTitle:nil message:@"删除会议失败" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil];
+                [alter show];
+                [self hideHud];
+            }
+        } failure:^(NSError *error) {
             UIAlertView * alter = [[UIAlertView alloc] initWithTitle:nil message:@"删除会议失败" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil];
             [alter show];
             [self hideHud];
-        }
-    } failure:^(NSError *error) {
-        UIAlertView * alter = [[UIAlertView alloc] initWithTitle:nil message:@"删除会议失败" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil];
-        [alter show];
-        [self hideHud];
-        
-    }];
+            
+        }];
+      
+    }]];
     
+    [alert addAction:[UIAlertAction actionWithTitle:@"是否删除当前会议" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        [self showHudInView:self.view hint:NSLocalizedString(@"正在提交数据", @"Load data...")];
+        
+        NSDictionary * dict = [[NSDictionary alloc] initWithObjectsAndKeys:_meetingModel.meetingDetailId,@"detailId", nil];
+        
+        [[NetworkRequest sharedInstance] POST:MeetingDetailIdDelect dict:dict succeed:^(id data) {
+            NSLog(@"%@",data);
+            NSString * str = [[data objectForKey:@"header"] objectForKey:@"message"];
+            if ([str isEqualToString:@"成功"]) {
+                // 2.创建通知
+                NSNotification *notification =[NSNotification notificationWithName:@"UpdateTheMeetingPage" object:nil userInfo:nil];
+                // 3.通过 通知中心 发送 通知
+                [[NSNotificationCenter defaultCenter] postNotification:notification];
+                
+                [self.navigationController popViewControllerAnimated:YES];
+                [self hideHud];
+                
+            }else{
+                UIAlertView * alter = [[UIAlertView alloc] initWithTitle:nil message:@"删除会议失败" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil];
+                [alter show];
+                [self hideHud];
+            }
+        } failure:^(NSError *error) {
+            UIAlertView * alter = [[UIAlertView alloc] initWithTitle:nil message:@"删除会议失败" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil];
+            [alter show];
+            [self hideHud];
+            
+        }];
+    }]];
+    
+    [alert addAction:[UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleDestructive handler:^(UIAlertAction * _Nonnull action) {
+        //点击按钮的响应事件；
+    }]];
+    
+    //弹出提示框；
+    [self presentViewController:alert animated:true completion:nil];
 }
 -(void)back{
     [self.navigationController popViewControllerAnimated:YES];
@@ -217,7 +244,27 @@
         }
     }
 }
-
+#pragma mark NSTimer
+-(void)removeView{
+    NSTimeInterval timeInterval = 3.0 ;
+    
+    _t = [NSTimer scheduledTimerWithTimeInterval:timeInterval
+                                          target:self
+                                        selector:@selector(handleMaxShowTimer:)
+                                        userInfo:nil
+                                         repeats:YES];;
+}
+//触发事件
+-(void)handleMaxShowTimer:(NSTimer *)theTimer
+{
+    [_alterView removeFromSuperview];
+    [_t invalidate];
+}
+#pragma mark AlterView
+-(void)alterViewDeleageRemove{
+    [_alterView removeFromSuperview];
+    [_t invalidate];
+}
 #pragma mark UITableViewdelegate
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
     return 3;
@@ -438,11 +485,12 @@
             self.alterView = [[AlterView alloc] initWithFrame:CGRectMake(20, 100, APPLICATION_WIDTH-40, 100) withAlterStr:@"未连接上教室指定WiFi"];
             self.alterView.delegate = self;
             [self.view addSubview:self.alterView];
-            [UIView animateWithDuration:3 animations:^{
-                _alterView.alpha = 0.99;
-            } completion:^(BOOL finished) {
-                [_alterView removeFromSuperview];
-            }];
+            [self removeView];
+//            [UIView animateWithDuration:3 animations:^{
+////                _alterView.alpha = 0.99;
+//            } completion:^(BOOL finished) {
+//                [_alterView removeFromSuperview];
+//            }];
         }
     }else if (_mac == 1){
         
@@ -453,14 +501,15 @@
         self.alterView = [[AlterView alloc] initWithFrame:CGRectMake(20, 100, APPLICATION_WIDTH-40, 100) withAlterStr:@"未连接上教室指定WiFi"];
         self.alterView.delegate = self;
         [self.view addSubview:self.alterView];
-        [UIView animateWithDuration:3 animations:^{
-            _alterView.alpha = 0.99;
-        } completion:^(BOOL finished) {
-            [_alterView removeFromSuperview];
-        }];
+        [self removeView];
+//        [UIView animateWithDuration:3 animations:^{
+//            _alterView.alpha = 0.99;
+//        } completion:^(BOOL finished) {
+//            [_alterView removeFromSuperview];
+//        }];
     }
-    
 }
+
 -(void)signBtnPressedDelegate:(UIButton *)btn{
     
     [self showHudInView:self.view hint:NSLocalizedString(@"正在加载数据", @"Load data...")];
@@ -523,15 +572,15 @@
 -(void)sendSignInfo{
     
     NSString *idfv = [[[UIDevice currentDevice] identifierForVendor] UUIDString];
-    NSDictionary * dict = [[NSDictionary alloc] initWithObjectsAndKeys:_meetingModel.meetingId,@"meetingId",_user.peopleId,@"userId" ,idfv,@"mck",@"2",@"status",nil];
+    NSDictionary * dict = [[NSDictionary alloc] initWithObjectsAndKeys:_meetingModel.meetingDetailId,@"detailId",_user.peopleId,@"userId" ,idfv,@"mck",@"2",@"status",_meetingModel.meetingId,@"meetingId",nil];
     
     [[NetworkRequest sharedInstance] POST:MeetingSign dict:dict succeed:^(id data) {
-        NSLog(@"succedd:%@",data);
+//        NSLog(@"succedd:%@",data);
         [self alter:[[data objectForKey:@"header"] objectForKey:@"code"]];
         [self hideHud];
         
     } failure:^(NSError *error) {
-        NSLog(@"失败：%@",error);
+//        NSLog(@"失败：%@",error);
         UIAlertView * alter = [[UIAlertView alloc] initWithTitle:nil message:@"无网络，请保证数据流量的连接后再次点击签到" delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil];
         alter.tag = 2;
         [alter show];

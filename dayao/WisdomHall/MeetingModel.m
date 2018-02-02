@@ -22,24 +22,32 @@
 }
 -(void)setMeetingInfoWithDict:(NSDictionary *)dict{
     self.meetingId = [dict objectForKey:@"id"];
+    self.meetingDetailId = [NSString stringWithFormat:@"%@",[dict objectForKey:@"detailId"]];
     self.mck = [[NSMutableArray alloc] initWithArray:[[dict objectForKey:@"mck"] componentsSeparatedByString:@";"]];
+    self.seat = [NSString stringWithFormat:@"%@",[dict objectForKey:@"seat"]];
     self.meetingHostId = [dict objectForKey:@"teacherId"];
     self.meetingHost = [dict objectForKey:@"userName"];
-    self.meetingTime = [dict objectForKey:@"time"];
+    self.meetingTime = [dict objectForKey:@"actStartTime"];
     self.meetingPlace = [dict objectForKey:@"roomName"];
-    self.meetingPlaceId = [dict objectForKey:@"roomId"];
-    self.meetingTotal = [dict objectForKey:@"total"];
-    self.signWay = [dict objectForKey:@"signType"];
-    self.imageUrl = [dict objectForKey:@"url"];
-    self.meetingStatus = [dict objectForKey:@"status"];
+//    self.meetingPlaceId = [dict objectForKey:@"roomId"];
+//    self.meetingTotal = [dict objectForKey:@"total"];
+//    self.signWay = [dict objectForKey:@"signType"];
+//    self.imageUrl = [dict objectForKey:@"url"];
+//    self.meetingStatus = [dict objectForKey:@"status"];
     self.meetingName = [dict objectForKey:@"name"];
     self.signStatus = [dict objectForKey:@"signStatus"];
     if ([[NSString stringWithFormat:@"%@",self.signStatus] isEqualToString:@"3"]) {
         self.signStatus = @"5";
     }
-    self.url = [dict objectForKey:@"url"];
+//    self.url = [dict objectForKey:@"url"];
     self.userSeat = [dict objectForKey:@"userSeat"];
-    self.workNo = [dict objectForKey:@"workNo"];
+    NSArray * a = [dict objectForKey:@"facilitatorInfoList"];
+    if (a.count>0) {
+        self.workNo = [a[0] objectForKey:@"workNo"];
+        self.meetingHost = [a[0] objectForKey:@"userName"];
+        self.meetingHostId = [a[0] objectForKey:@"userId"];
+    }
+    
 //    [self setSignPeopleWithNSArray:[dict objectForKey:@"userSeatList"]];
 }
 -(void)setSignPeopleWithNSArray:(NSArray *)ary{

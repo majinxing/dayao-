@@ -14,5 +14,6 @@
     _fileDescription = [dict objectForKey:@"description"];
     _fileId = [dict objectForKey:@"id"];
     _fileCreatTime = [UIUtils timeWithTimeIntervalString:[dict objectForKey:@"createTime"]];
+    
 }
 @end
