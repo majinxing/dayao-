@@ -19,5 +19,6 @@
 @property (nonatomic,copy) NSString * majorId;//专业id
 @property (nonatomic,copy) NSString * sclass;//班级
 @property (nonatomic,copy) NSString * sclassId;//班级id
+@property (nonatomic,strong) NSMutableArray * allIdAry;
 -(void)setInfoWithDict:(NSDictionary *)dict;
 @end

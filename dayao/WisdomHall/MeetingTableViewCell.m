@@ -47,7 +47,7 @@
         _meetHost.text = [NSString stringWithFormat:@"创建者：%@",meetModel.meetingHost];
     }
     _meetTime.text = [NSString stringWithFormat:@"时间：%@",meetModel.meetingTime];
-    _meetCode.text = [NSString stringWithFormat:@"邀请码：%@",meetModel.meetingDetailId];
+    _meetCode.text = [NSString stringWithFormat:@"邀请码：%@",meetModel.meetingId];
     _meetPlace.text = [NSString stringWithFormat:@"地址：%@",meetModel.meetingPlace];
     _teacherPicture.image = [UIImage imageNamed:@"meet"];
   

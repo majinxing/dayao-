@@ -13,6 +13,10 @@
 @property (strong, nonatomic) IBOutlet UILabel *titleLabel;
 @property (strong, nonatomic) IBOutlet UILabel *textLabelStr;
 @property (weak, nonatomic) IBOutlet UIButton *selectBtn;
+@property (strong, nonatomic) IBOutlet UIImageView *departmentImage;
+@property (strong, nonatomic) IBOutlet UIImageView *classImage;
+@property (strong, nonatomic) IBOutlet UIButton *departmentBtn;
+@property (strong, nonatomic) IBOutlet UIButton *classbtn;
 
 @end
 @implementation StatisticalTableViewCell
@@ -25,6 +29,15 @@
     _titleLabel.text = titleStr;
     _textLabelStr.text = [NSString stringWithFormat:@"%@   >",textStr];
 }
+-(void)addContentThirdView:(int)temp{
+    if (temp == 0) {
+        _departmentImage.image = [UIImage imageNamed:@"方形选中-fill"];
+        _classImage.image = [UIImage imageNamed:@"方形未选中"];
+    }else{
+        _departmentImage.image = [UIImage imageNamed:@"方形未选中"];
+        _classImage.image = [UIImage imageNamed:@"方形选中-fill"];
+    }
+}
 - (IBAction)selectBtnPressed:(UIButton *)sender {
     if (self.delegate&&[self.delegate respondsToSelector:@selector(selectBtnPressedDelegate:)]) {
         [self.delegate selectBtnPressedDelegate:sender];
@@ -35,5 +48,15 @@
 
     // Configure the view for the selected state
 }
+- (IBAction)departmentPressed:(UIButton *)sender {
+    if (self.delegate&&[self.delegate respondsToSelector:@selector(departmentPressedDelegate:)]) {
+        [self.delegate departmentPressedDelegate:sender];
+    }
+}
 
+- (IBAction)classPressed:(UIButton *)sender {
+    if (self.delegate&&[self.delegate respondsToSelector:@selector(classPressedDelegate:)]) {
+        [self.delegate classPressedDelegate:sender];
+    }
+}
 @end

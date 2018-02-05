@@ -142,7 +142,7 @@
 
     UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"提示" message:nil preferredStyle:  UIAlertControllerStyleActionSheet];
     //分别按顺序放入每个按钮；
-    [alert addAction:[UIAlertAction actionWithTitle:@"是否删除周期会议" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+    [alert addAction:[UIAlertAction actionWithTitle:@"删除周期会议" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
         
         [self showHudInView:self.view hint:NSLocalizedString(@"正在提交数据", @"Load data...")];
 
@@ -174,7 +174,7 @@
       
     }]];
     
-    [alert addAction:[UIAlertAction actionWithTitle:@"是否删除当前会议" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+    [alert addAction:[UIAlertAction actionWithTitle:@"删除当前会议" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
         [self showHudInView:self.view hint:NSLocalizedString(@"正在提交数据", @"Load data...")];
         
         NSDictionary * dict = [[NSDictionary alloc] initWithObjectsAndKeys:_meetingModel.meetingDetailId,@"detailId", nil];
@@ -515,9 +515,20 @@
     [self showHudInView:self.view hint:NSLocalizedString(@"正在加载数据", @"Load data...")];
     
     if (![UIUtils validateWithStartTime:_meetingModel.meetingTime withExpireTime:nil]) {
-        [UIUtils showInfoMessage:@"会议开始之后一定时间范围内才可以签到"];
+        if ([[NSString stringWithFormat:@"%@",_meetingModel.signStatus] isEqualToString:@"2"]) {
+            [UIUtils showInfoMessage:@"已签到,并已过签到时间不能上传照片"];
+        }else{
+            [UIUtils showInfoMessage:@"会议开始之后一定时间范围内才可以签到"];
+        }
         [self hideHud];
         return;
+    }else{
+        //        signStatus
+        if ([[NSString stringWithFormat:@"%@",_meetingModel.signStatus] isEqualToString:@"2"]) {
+            [self hideHud];
+            [self signPictureUpdate];
+            return;
+        }
     }
     _isEnable = YES;
     [_tableView reloadData];
@@ -824,8 +835,11 @@
     
     //    NSString * filePath = [info objectForKey:@"UIImagePickerControllerReferenceURL"];
     UserModel * user = [[Appsetting sharedInstance] getUsetInfo];
+    
     NSString * str = [NSString stringWithFormat:@"%@-%@-%@",user.userName,user.studentId,[UIUtils getTime]];
-    NSDictionary * dict1 = [[NSDictionary alloc] initWithObjectsAndKeys:@"1",@"type",str,@"description",@"10",@"function",[NSString stringWithFormat:@"%@",_meetingModel.meetingId],@"relId",@"2",@"relType",nil];
+    
+    NSDictionary * dict1 = [[NSDictionary alloc] initWithObjectsAndKeys:@"1",@"type",str,@"description",@"10",@"function",[NSString stringWithFormat:@"%@",_meetingModel.meetingDetailId],@"relId",@"2",@"relType",nil];
+    
     UIImage * image = [UIUtils addWatemarkTextAfteriOS7_WithLogoImage:resultImage watemarkText:[NSString stringWithFormat:@"%@-%@-%@",_user.userName,_user.studentId,[UIUtils getTime]]];
 
     [[NetworkRequest sharedInstance] POSTImage:FileUpload image:image dict:dict1 succeed:^(id data) {

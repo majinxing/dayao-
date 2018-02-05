@@ -10,10 +10,24 @@
 #import "DYHeader.h"
 
 @implementation StatisticalModel
+-(instancetype)init{
+    self = [super init];
+    if (self) {
+        self.allIdAry = [NSMutableArray arrayWithCapacity:1];
+        self.departmentsAry = [NSMutableArray arrayWithCapacity:1];
+        self.professional = [NSMutableArray arrayWithCapacity:1];
+        self.theClass = [NSMutableArray arrayWithCapacity:1];
+    }
+    return self;
+}
 -(BOOL)statisticalModelIsNil{
-    if ([UIUtils isBlankString:self.departments]){
+    if (self.departmentsAry.count>0){
+        
+    }else{
         return NO;
-    }else if ([UIUtils isBlankString:self.startTime]){
+    }
+    
+    if ([UIUtils isBlankString:self.startTime]){
         return NO;
     }else  if ([UIUtils isBlankString:self.endTime]){
         return NO;
@@ -23,17 +37,17 @@
 -(NSMutableDictionary *)returnDict{
     NSMutableDictionary * dict = [[NSMutableDictionary alloc] init];
     [dict setObject:@"500" forKey:@"universityId"];
-    if (![UIUtils isBlankString:self.departments]) {
-        NSArray * ary = @[[NSString stringWithFormat:@"%@",self.departments]];
-        [dict setObject:ary forKey:@"facultyIdList"];
+    if (self.departmentsAry.count>0) {
+
+        [dict setObject:self.departmentsAry forKey:@"facultyIdList"];
     }
-    if (![UIUtils isBlankString:[NSString stringWithFormat:@"%@",self.professional]]) {
-        NSArray * ary = @[[NSString stringWithFormat:@"%@",self.professional]];
-        [dict setObject:ary forKey:@"majorIdList"];
+    if (self.professional.count>0) {
+
+        [dict setObject:self.professional forKey:@"majorIdList"];
     }
-    if (![UIUtils isBlankString:[NSString stringWithFormat:@"%@",self.theClass]]) {
-        NSArray * ary = @[[NSString stringWithFormat:@"%@",self.theClass]];
-        [dict setObject:ary forKey:@"classIdList"];
+    if (self.theClass.count>0) {
+
+        [dict setObject:self.theClass forKey:@"classIdList"];
     }
     if (![UIUtils isBlankString:self.endTime]&&![UIUtils isBlankString:self.startTime]) {
         NSDictionary * d = [[NSDictionary alloc] initWithObjectsAndKeys:[NSString stringWithFormat:@"%@ 00:00:00",self.startTime],@"startTime",[NSString stringWithFormat:@"%@ 23:59:59",self.endTime],@"endTime", nil];

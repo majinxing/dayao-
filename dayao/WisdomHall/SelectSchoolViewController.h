@@ -22,8 +22,11 @@ typedef enum {
 typedef void (^ReturnTextBlock)(SchoolModel *returnText);
 
 @interface SelectSchoolViewController : UIViewController
-@property (nonatomic, copy) ReturnTextBlock returnTextBlock;
+@property (nonatomic,copy) ReturnTextBlock returnTextBlock;
 @property (nonatomic,strong)SchoolModel * s;
-@property (nonatomic, assign)SelectType  selectType;
+@property (nonatomic,assign)SelectType  selectType;
+@property (nonatomic,copy) NSString  * typeSelect;
+@property (nonatomic,strong)NSMutableArray * allIdAry;
+
 - (void)returnText:(ReturnTextBlock)block;
 @end

@@ -40,12 +40,12 @@
         self.signStatus = @"5";
     }
 //    self.url = [dict objectForKey:@"url"];
-    self.userSeat = [dict objectForKey:@"userSeat"];
-    NSArray * a = [dict objectForKey:@"facilitatorInfoList"];
+    self.userSeat = [dict objectForKey:@"userSeat"];    NSArray * a = [dict objectForKey:@"facilitatorInfoList"];
+    self.meetingHostId = [dict objectForKey:@"createUser"];
+
     if (a.count>0) {
         self.workNo = [a[0] objectForKey:@"workNo"];
         self.meetingHost = [a[0] objectForKey:@"userName"];
-        self.meetingHostId = [a[0] objectForKey:@"userId"];
     }
     
 //    [self setSignPeopleWithNSArray:[dict objectForKey:@"userSeatList"]];

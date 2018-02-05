@@ -1510,30 +1510,45 @@
 }
 +(NSMutableArray *)returnAry:(NSString *)startTime withEndTime:(NSString *)endTime room:(NSString *)roomId meetingsFacilitatorList:(NSString *)nameHost monthOrWeek:(NSString *)mRw{
     UserModel * user = [[Appsetting sharedInstance] getUsetInfo];
+    
     NSMutableArray * ary = [NSMutableArray arrayWithCapacity:1];
+    
     NSArray * a1 = @[@{@"userId":[NSString stringWithFormat:@"%@",user.peopleId],@"dsec":@" "}];
+    
     if ([mRw isEqualToString:@""]) {
+        
         NSString * newTime = [NSString stringWithFormat:@"%@:00",startTime];
+        
         NSDictionary * dict = [[NSDictionary alloc] initWithObjectsAndKeys:newTime,@"actStartTime",newTime,@"actEndTime",newTime,@"signStartTime",newTime,@"signEndTime",roomId,@"roomId",a1,@"meetingsFacilitatorList",nil];
+        
         [ary addObject:dict];
         
     }else if([mRw isEqualToString:@"week"]){
+        
         NSString * newT = [NSString stringWithFormat:@"%@:00",startTime];
 
-        NSDictionary * dict = [[NSDictionary alloc] initWithObjectsAndKeys:newT,@"actStartTime",newT,@"actEndTime",newT,@"signStartTime",newT,@"signEndTime",newT,@"roomId",a1,@"meetingsFacilitatorList",nil];
+        NSDictionary * dict = [[NSDictionary alloc] initWithObjectsAndKeys:newT,@"actStartTime",newT,@"actEndTime",newT,@"signStartTime",newT,@"signEndTime",roomId,@"roomId",a1,@"meetingsFacilitatorList",nil];
+        
         [ary addObject:dict];
         
 
         endTime = [NSString stringWithFormat:@"%@ 23:59:59",endTime];
+        
         while (![[UIUtils compareTimeStartTime:[UIUtils returnStartTime:startTime withWeek:1] withExpireTime:endTime] isEqualToString:@"-1"]) {
+            
             NSString * newStart = [UIUtils returnStartTime:startTime withWeek:1];
+            
             startTime = newStart;
+            
             newStart = [NSString stringWithFormat:@"%@:00",newStart];
+            
             NSDictionary * dict = [[NSDictionary alloc] initWithObjectsAndKeys:newStart,@"actStartTime",newStart,@"actEndTime",newStart,@"signStartTime",newStart,@"signEndTime",roomId,@"roomId",a1,@"meetingsFacilitatorList",nil];
+            
             [ary addObject:dict];
         }
         
     }else if ([mRw isEqualToString:@"month"]){
+        
         NSString * newT = [NSString stringWithFormat:@"%@:00",startTime];
 
         NSDictionary * dict = [[NSDictionary alloc] initWithObjectsAndKeys:newT,@"actStartTime",newT,@"actEndTime",newT,@"signStartTime",newT,@"signEndTime",roomId,@"roomId",a1,@"meetingsFacilitatorList",nil];
@@ -1541,14 +1556,21 @@
         [ary addObject:dict];
         
         endTime = [NSString stringWithFormat:@"%@ 23:59:59",endTime];
+        
         while (![[UIUtils compareTimeStartTime:[UIUtils getPriousorLaterDateFromDate:startTime withMonth:1] withExpireTime:endTime] isEqualToString:@"-1"]) {
+            
             NSString * newStart = [UIUtils getPriousorLaterDateFromDate:startTime withMonth:1];
+            
             startTime = newStart;
+            
             newStart = [NSString stringWithFormat:@"%@:00",newStart];
+            
             NSDictionary * dict = [[NSDictionary alloc] initWithObjectsAndKeys:newStart,@"actStartTime",newStart,@"actEndTime",newStart,@"signStartTime",newStart,@"signEndTime",roomId,@"roomId",a1,@"meetingsFacilitatorList",nil];
+            
             [ary addObject:dict];
         }
     }
+    
     return ary;
 }
 +(NSString *)returnStartTime:(NSString *)startTime  withWeek:(NSInteger)week{

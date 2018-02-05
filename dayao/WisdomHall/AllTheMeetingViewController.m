@@ -28,6 +28,10 @@ static NSString * cellIdentifier = @"cellIdentifier";
 @property (nonatomic,assign) int page;
 @property (nonatomic,assign) int temp;
 
+@property (nonatomic,assign) int page1;
+
+@property (nonatomic,assign) int page2;
+
 @property (nonatomic,strong)AlterView * alterView;
 
 @property (nonatomic,strong)JoinCours * join;
@@ -42,6 +46,10 @@ static NSString * cellIdentifier = @"cellIdentifier";
     _meetingModelAry = [NSMutableArray arrayWithCapacity:12];
     
     _temp = 0;
+    
+    _page1 = 1;
+    
+    _page2 = 2;
     
     [self addAlterView];
     
@@ -158,6 +166,11 @@ static NSString * cellIdentifier = @"cellIdentifier";
 #pragma mrak MJR
 -(void)headerRereshing{
     self.page = 1;
+    
+    _page2 = 1;
+    
+    _page1 = 2;
+    
     [self fetchChatRoomsWithPage:self.page isHeader:YES];
 }
 -(void)footerRereshing{
@@ -192,7 +205,7 @@ static NSString * cellIdentifier = @"cellIdentifier";
     }else if (btn.tag == 2){
         NSDictionary * dict = [[NSDictionary alloc] initWithObjectsAndKeys:[NSString stringWithFormat:@"%@",_join.courseNumber.text],@"id",_userModel.peopleId,@"userId", nil];
         [self showHudInView:self.view hint:NSLocalizedString(@"正在加载数据", @"Load data...")];
-
+        
         [[NetworkRequest sharedInstance] POST:JoinMeeting dict:dict succeed:^(id data) {
             NSString * str = [[data objectForKey:@"header"] objectForKey:@"code"];
             if ([[NSString stringWithFormat:@"%@",str] isEqualToString:@"6680"]) {
@@ -206,31 +219,51 @@ static NSString * cellIdentifier = @"cellIdentifier";
                 [UIUtils showInfoMessage:@"会议不存在或会议被删除"];
             }
             [self hideHud];
-
+            
         } failure:^(NSError *error) {
             [UIUtils showInfoMessage:@"加入失败"];
             [self hideHud];
-
+            
         }];
     }
 }
 #pragma mark 获取数据
 -(void)getDataWithPage:(NSInteger)page isHeader:(BOOL)isHeader{
+    if (page>_page1) {
+        [self hideHud];
+        return;
+    }
     _userModel = [[Appsetting sharedInstance] getUsetInfo];
     
-    NSDictionary * dict = [[NSDictionary alloc] initWithObjectsAndKeys:[NSString stringWithFormat:@"%ld",(long)page],@"start",_userModel.peopleId,@"createUser",[UIUtils getTime],@"startTime",@"",@"endTime", nil];
+    NSDictionary * dict = [[NSDictionary alloc] initWithObjectsAndKeys:[NSString stringWithFormat:@"%ld",(long)page],@"start",_userModel.peopleId,@"createUser",[UIUtils getTime],@"startTime",@"",@"endTime",@"20",@"length", nil];
     
     [[NetworkRequest sharedInstance] GET:QueryMeetingSelfCreate dict:dict succeed:^(id data) {
+        
         NSDictionary * dict = [data objectForKey:@"header"];
+        
+        _page1 = [[dict objectForKey:@"lastPage"] intValue];
+        
         if ([[dict objectForKey:@"code"] isEqualToString:@"0000"]) {
             if (isHeader) {
                 [_meetingModelAry removeAllObjects];
             }
             NSArray * d = [[data objectForKey:@"body"] objectForKey:@"list"];
+
             for (int i = 0; i<d.count; i++) {
                 MeetingModel * m = [[MeetingModel alloc] init];
                 [m setMeetingInfoWithDict:d[i]];
-                [_meetingModelAry addObject:m];
+                if (_meetingModelAry.count>0) {
+                    for (int j = 0; j<_meetingModelAry.count; j++) {
+                        MeetingModel * n = _meetingModelAry[j];
+                        if ([[NSString stringWithFormat:@"%@",n.meetingId] isEqualToString:[NSString stringWithFormat:@"%@",m.meetingId]]) {
+                            break;
+                        }else if(j == (_meetingModelAry.count - 1)){
+                            [_meetingModelAry addObject:m];
+                        }
+                    }
+                }else{
+                    [_meetingModelAry addObject:m];
+                }
             }
             [self getSelfCreateMeetingList:page];
             [_collection reloadData];
@@ -238,25 +271,30 @@ static NSString * cellIdentifier = @"cellIdentifier";
             dispatch_async(dispatch_get_main_queue(), ^{
                 [UIUtils accountWasUnderTheRoof];
             });
-            [self hideHud];
             
-        }else{
-            [self hideHud];
         }
-        
+            [self hideHud];
+
     } failure:^(NSError *error) {
-//        NSLog(@"error %@",error);
+        
         [self hideHud];
         
     }];
 }
 -(void)getSelfCreateMeetingList:(NSInteger)page{
+    if (page>_page2) {
+        [self hideHud];
+        return;
+    }
     UserModel * user = [[Appsetting sharedInstance] getUsetInfo];
     
-    NSDictionary * dict = [[NSDictionary alloc] initWithObjectsAndKeys:_userModel.peopleId,@"userId",[UIUtils getTime],@"startTime",@"",@"endTime",[NSString stringWithFormat:@"%ld",(long)page],@"start",[NSString stringWithFormat:@"%@",user.studentId],@"userId",nil];
+    NSDictionary * dict = [[NSDictionary alloc] initWithObjectsAndKeys:_userModel.peopleId,@"userId",[UIUtils getTime],@"startTime",@"",@"endTime",[NSString stringWithFormat:@"%ld",(long)page],@"start",[NSString stringWithFormat:@"%@",user.studentId],@"userId",@"20",@"length",nil];
     
     [[NetworkRequest sharedInstance] GET:QueryMeeting dict:dict succeed:^(id data) {
         NSArray * d = [[data objectForKey:@"body"] objectForKey:@"list"];
+        
+        _page2 = [[dict objectForKey:@"lastPage"] intValue];
+        
         for (int i = 0; i<d.count; i++) {
             MeetingModel * m = [[MeetingModel alloc] init];
             [m setMeetingInfoWithDict:d[i]];
@@ -294,13 +332,13 @@ static NSString * cellIdentifier = @"cellIdentifier";
         
         [_collection reloadData];
     } failure:^(NSError *error) {
-//        NSLog(@"失败%@",error);
+        
         [self hideHud];
         
     }];
     
 }
--(void)ssss{
+-(void)removeCycle{
     
 }
 - (void)didReceiveMemoryWarning {

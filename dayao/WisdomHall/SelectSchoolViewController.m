@@ -29,6 +29,7 @@
     _allSchoolAry = [NSMutableArray arrayWithCapacity:1];
     _allSchoolNameAry = [NSMutableArray arrayWithCapacity:1];
     _selectSchoolAry = [NSMutableArray arrayWithCapacity:1];
+    _allIdAry = [NSMutableArray arrayWithCapacity:1];
     
     [self addTableView];
     
@@ -69,7 +70,13 @@
                 s.schoolId = [d objectForKey:@"id"];
                 [_allSchoolAry addObject:s];
                 [_allSchoolNameAry addObject:s.schoolName];
+        
             }
+//            if (![UIUtils isBlankString:_typeSelect]) {
+//                if (![_typeSelect isEqualToString:@"statistical"]) {
+//                    [_allSchoolNameAry insertObject:@"所有" atIndex:0];
+//                }
+//            }
         } failure:^(NSError *error) {
             NSLog(@"失败 %@",error);
             
@@ -78,6 +85,8 @@
         NSDictionary * dict = [[NSDictionary alloc] initWithObjectsAndKeys:@"",@"level",_s.schoolId,@"parentId",@"",@"name", nil];
         [[NetworkRequest sharedInstance] GET:SchoolDepartMent dict:dict succeed:^(id data) {
 //            NSLog(@"succeed %@",data);
+            [_allIdAry removeAllObjects];
+
             NSArray * ary = [data objectForKey:@"body"];
             for (int i = 0; i<ary.count; i++ ) {
                 SchoolModel * s = [[SchoolModel alloc] init];
@@ -85,8 +94,18 @@
                 s.departmentId = [ary[i] objectForKey:@"id"];
                 [_allSchoolAry addObject:s];
                 [_allSchoolNameAry addObject:s.department];
+                [_allIdAry addObject:[NSString stringWithFormat:@"%@",s.departmentId]];
             }
             _selectSchoolAry = _allSchoolNameAry;
+//            if (![UIUtils isBlankString:_typeSelect]) {
+//                if ([_typeSelect isEqualToString:@"statistical"]) {
+//                    [_selectSchoolAry insertObject:@"所有院系" atIndex:0];
+//                    SchoolModel * s = [[SchoolModel alloc] init];
+//                    s.department = @"所有院系";
+//                    [_allSchoolAry insertObject:s atIndex:0];
+//
+//                }
+//            }
             [_tableView reloadData];
             
         } failure:^(NSError *error) {
@@ -96,6 +115,8 @@
         NSDictionary * dict = [[NSDictionary alloc] initWithObjectsAndKeys:@"",@"level",_s.departmentId,@"parentId",@"",@"name", nil];
         [[NetworkRequest sharedInstance] GET:SchoolDepartMent dict:dict succeed:^(id data) {
 //            NSLog(@"succeed %@",data);
+            [_allIdAry removeAllObjects];
+
             NSArray * ary = [data objectForKey:@"body"];
             for (int i = 0; i<ary.count; i++ ) {
                 SchoolModel * s = [[SchoolModel alloc] init];
@@ -103,8 +124,18 @@
                 s.majorId = [ary[i] objectForKey:@"id"];
                 [_allSchoolAry addObject:s];
                 [_allSchoolNameAry addObject:s.major];
+                [_allIdAry addObject:[NSString stringWithFormat:@"%@",s.majorId]];
+
             }
             _selectSchoolAry = _allSchoolNameAry;
+            if (![UIUtils isBlankString:_typeSelect]) {
+                if ([_typeSelect isEqualToString:@"statistical"]) {
+                    [_selectSchoolAry insertObject:@"所有专业" atIndex:0];
+                    SchoolModel * s = [[SchoolModel alloc] init];
+                    s.major = @"所有专业";
+                    [_allSchoolAry insertObject:s atIndex:0];
+                }
+            }
             [_tableView reloadData];
         } failure:^(NSError *error) {
             NSLog(@"失败 %@",error);
@@ -114,6 +145,8 @@
         NSDictionary * dict = [[NSDictionary alloc] initWithObjectsAndKeys:@"",@"level",_s.majorId,@"parentId",@"",@"name", nil];
         [[NetworkRequest sharedInstance] GET:SchoolDepartMent dict:dict succeed:^(id data) {
 //            NSLog(@"succeed %@",data);
+            [_allIdAry removeAllObjects];
+
             NSArray * ary = [data objectForKey:@"body"];
             for (int i = 0; i<ary.count; i++ ) {
                 SchoolModel * s = [[SchoolModel alloc] init];
@@ -121,8 +154,17 @@
                 s.sclassId = [ary[i] objectForKey:@"id"];
                 [_allSchoolAry addObject:s];
                 [_allSchoolNameAry addObject:s.sclass];
+                [_allIdAry addObject:[NSString stringWithFormat:@"%@",s.sclassId]];
             }
             _selectSchoolAry = _allSchoolNameAry;
+            if (![UIUtils isBlankString:_typeSelect]) {
+                if ([_typeSelect isEqualToString:@"statistical"]) {
+                    [_selectSchoolAry insertObject:@"所有班级" atIndex:0];
+                    SchoolModel * s = [[SchoolModel alloc] init];
+                    s.sclass = @"所有班级";
+                    [_allSchoolAry insertObject:s atIndex:0];
+                }
+            }
             [_tableView reloadData];
         } failure:^(NSError *error) {
             NSLog(@"失败 %@",error);
@@ -320,6 +362,7 @@
     for (int i = 0; i <_allSchoolNameAry.count; i++) {
         if ([str isEqualToString:_allSchoolNameAry[i]]) {
             _s = _allSchoolAry[i];
+            _s.allIdAry = [NSMutableArray arrayWithArray:_allIdAry];
             [self.navigationController popViewControllerAnimated:YES];
             break;
         }

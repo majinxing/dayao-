@@ -188,6 +188,16 @@
         pickerViewD.showsSelectionIndicator = YES;
         self.pickerView.backgroundColor=[UIColor whiteColor];
         
+        if (_temp == 1) {
+            NSString * str = [UIUtils getTime];
+            NSArray * ary = [str componentsSeparatedByString:@"-"];
+            [pickerViewD selectRow:[ary[0] intValue]-2018 inComponent:0 animated:YES];
+            [pickerViewD selectRow:[ary[1] intValue]-1 inComponent:1 animated:YES];
+            [pickerViewD selectRow:[ary[2] intValue]-1 inComponent:2 animated:YES];
+            _year = [ary[0] intValue]-2018;
+            _month = [ary[1] intValue]-1;
+            _day = [ary[2] intValue]-1;
+        }
         
         UIButton *leftButton = [UIButton buttonWithType:UIButtonTypeCustom];
         leftButton.frame = CGRectMake(0, 0, 50, 30);

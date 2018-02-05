@@ -15,13 +15,13 @@
 #import "StatisticalResultModel.h"
 #import "StatisticalResultViewController.h"
 
-@interface StatisticalViewController ()<UITableViewDelegate,UITableViewDataSource,StatisticalTableViewCellDelegate>
+@interface StatisticalViewController ()<UITableViewDelegate,UITableViewDataSource,StatisticalTableViewCellDelegate,UIPickerViewDelegate,UIPickerViewDataSource>
 @property (nonatomic,strong)UITableView * tableView;
 @property (nonatomic,strong)NSArray * titleAry;
 @property (nonatomic,strong)NSMutableArray * textAry;
 @property (nonatomic,strong)StatisticalModel * statistl;
 @property (nonatomic,strong)UIButton * bView;//滚轮的背景
-@property (nonatomic,strong)UIView * pickerView;
+
 @property (nonatomic,assign) int temp;
 @property (nonatomic,strong)NSMutableArray * statisticalAry;
 @end
@@ -38,6 +38,8 @@
     [self setTableView];
     
     _statistl = [[StatisticalModel alloc] init];
+    
+    _temp = 0;
     
     _titleAry = @[@[@"选择院系",@"选择专业(选填)",@"选择班级(选填)"],
                   @[@"开始时间",@"结束时间"],
@@ -63,49 +65,14 @@
     
     _textAry[0][0] = user.departmentsName;
     
-    _statistl.departments = [NSString stringWithFormat:@"%@",user.departments];
+    [_statistl.departmentsAry addObject:[NSString stringWithFormat:@"%@",user.departments]];
     
-    _temp = 0;
+    
     
     _textAry[2][0] = @"按部门";
     // Do any additional setup after loading the view from its nib.
 }
--(void)addPickView{
-    [self.view endEditing: YES];
-    if (!self.pickerView) {
-        self.bView = [UIButton buttonWithType:UIButtonTypeCustom];
-        self.bView.frame = CGRectMake(0, 0, APPLICATION_WIDTH, APPLICATION_HEIGHT);
-        self.bView.backgroundColor = [UIColor blackColor];
-        [self.bView addTarget:self action:@selector(outView) forControlEvents:UIControlEventTouchUpInside];
-        self.bView.alpha = 0.5;
-        self.pickerView = [[UIView alloc] initWithFrame:CGRectMake(0, APPLICATION_HEIGHT - 200 - 30, APPLICATION_WIDTH, 200 + 30)];
-        
-        UIPickerView * pickerViewD = [[UIPickerView alloc] initWithFrame:CGRectMake(0.0,30,APPLICATION_WIDTH,200)];
-        pickerViewD.backgroundColor=[UIColor whiteColor];
-        pickerViewD.delegate = self;
-        pickerViewD.dataSource =  self;
-        pickerViewD.showsSelectionIndicator = YES;
-        self.pickerView.backgroundColor=[UIColor whiteColor];
-        
-        
-        UIButton *leftButton = [UIButton buttonWithType:UIButtonTypeCustom];
-        leftButton.frame = CGRectMake(0, 0, 50, 30);
-        [leftButton setTitle:@"取消" forState:UIControlStateNormal];
-        [leftButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-        [leftButton addTarget:self action:@selector(leftButton) forControlEvents:UIControlEventTouchUpInside];
-        [self.pickerView addSubview:leftButton];
-        
-        UIButton *rightButton = [UIButton buttonWithType:UIButtonTypeCustom];
-        rightButton.frame = CGRectMake(APPLICATION_WIDTH - 50, 0, 50, 30);
-        [rightButton setTitle:@"确认" forState:UIControlStateNormal];
-        [rightButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-        [rightButton addTarget:self action:@selector(rightButton) forControlEvents:UIControlEventTouchUpInside];
-        [self.pickerView addSubview:rightButton];
-        [self.pickerView addSubview:pickerViewD];
-    }
-    [self.view addSubview:_bView];
-    [self.view addSubview:self.pickerView];
-}
+
 -(void)setTableView{
     _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 64, APPLICATION_WIDTH, APPLICATION_HEIGHT-64) style:UITableViewStylePlain];
     _tableView.delegate = self;
@@ -125,24 +92,7 @@
                                                                       NSForegroundColorAttributeName:[UIColor blackColor]}];
     self.title = @"统计";
 }
--(void)outView{
-    [self.bView removeFromSuperview];
-    [self.pickerView removeFromSuperview];
-}
--(void)leftButton{
-    [self.bView removeFromSuperview];
-    [self.pickerView removeFromSuperview];
-}
--(void)rightButton{
-    [self.bView removeFromSuperview];
-    [self.pickerView removeFromSuperview];
-    if (_temp == 0) {
-        _textAry[2][0] = @"按部门";
-    }else if (_temp == 1){
-        _textAry[2][0] = @"按课程";
-    }
-    [_tableView reloadData];
-}
+
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
@@ -155,7 +105,7 @@
             [self showHudInView:self.view hint:NSLocalizedString(@"正在加载数据", @"Load data...")];
             
             [[NetworkRequest sharedInstance] POST:QuertyStatistics dict:dict succeed:^(id data) {
-                NSLog(@"%@",data);
+                //                NSLog(@"%@",data);
                 
                 NSArray * ary = [[data objectForKey:@"body"] objectForKey:@"list"];
                 [_statisticalAry removeAllObjects];
@@ -171,15 +121,15 @@
                 [self hideHud];
             } failure:^(NSError *error) {
                 [self hideHud];
-
+                
                 [UIUtils showInfoMessage:@"请检查网络状态"];
             }];
         }else if(_temp == 1){
             [self showHudInView:self.view hint:NSLocalizedString(@"正在加载数据", @"Load data...")];
-
+            
             [[NetworkRequest sharedInstance] POST:QuertyClass dict:dict succeed:^(id data) {
                 [self hideHud];
-
+                
                 NSArray * ary = [data objectForKey:@"body"];
                 [_statisticalAry removeAllObjects];
                 for (int i = 0; i<ary.count; i++) {
@@ -202,35 +152,15 @@
         [UIUtils showInfoMessage:@"请把信息填写完整"];
     }
 }
-#pragma mark pick
+-(void)departmentPressedDelegate:(UIButton *)btn{
+    _temp = 0;
+    [_tableView reloadData];
+}
+-(void)classPressedDelegate:(UIButton *)btn{
+    _temp =1;
+    [_tableView reloadData];
+}
 
--(NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView{
-    
-    return 1;
-}
-- (NSInteger)pickerView:(UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component
-{
-    return 2;
-}
-- (NSString *)pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component
-{
-    if (row==0) {
-        return @"按部门";
-    }else if(row==1){
-        return @"按课程";
-    }
-    
-    return @"";
-}
-- (void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component
-{
-    if (row==0) {
-        _temp = 0;
-    }else if (row == 1){
-        _temp = 1;
-    }
- 
-}
 #pragma mark UITableViewdelegate
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
     return 3;
@@ -255,6 +185,12 @@
             cell = [[[NSBundle mainBundle] loadNibNamed:@"StatisticalTableViewCell" owner:self options:nil] objectAtIndex:1];
         }
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
+    }else if (indexPath.section==2&&indexPath.row == 0){
+        cell = [tableView dequeueReusableCellWithIdentifier:@"StatisticalTableViewCellThird"];
+        if (!cell) {
+            cell = [[[NSBundle mainBundle] loadNibNamed:@"StatisticalTableViewCell" owner:self options:nil] objectAtIndex:2];
+        }
+        [cell addContentThirdView:_temp];
     }else{
         cell = [tableView dequeueReusableCellWithIdentifier:@"StatisticalTableViewCellFirst"];
         if (!cell) {
@@ -302,62 +238,86 @@
         s.selectType = SelectDepartment;
         s.s = [[SchoolModel alloc] init];
         s.s.schoolId = @"500";
+        s.typeSelect = @"statistical";
         self.hidesBottomBarWhenPushed = YES;
         [self.navigationController pushViewController:s animated:YES];
         [s returnText:^(SchoolModel *returnText) {
             if (returnText) {
                 [self.view endEditing:YES];
                 if (![UIUtils isBlankString:[NSString stringWithFormat:@"%@",returnText.departmentId]]) {
-                    //                    _s.department = returnText.department;
-                    //                    _s.departmentId = returnText.departmentId;
-                    //                    [_textFileAry setObject:_s.department atIndexedSubscript:btn.tag];
-                    _statistl.departments = [NSString stringWithFormat:@"%@",returnText.departmentId];
+                    [_statistl.departmentsAry removeAllObjects];
+                    [_statistl.departmentsAry addObject:[NSString stringWithFormat:@"%@",returnText.departmentId]];
                     _textAry[0][0] = returnText.department;
+                    [_statistl.professional removeAllObjects];
+                    [_statistl.theClass removeAllObjects];
+                    _textAry[0][1] = @"";
+                    _textAry[0][2] = @"";
                     [_tableView reloadData];
                 }
             }
         }];
     }else if (indexPath.section == 0&&indexPath.row ==1){
-        if ([UIUtils isBlankString:[NSString stringWithFormat:@"%@",_statistl.departments]]) {
-            [UIUtils showInfoMessage:@"请先选择院系"];
-        }else{
+        if (_statistl.departmentsAry.count>0) {
             SelectSchoolViewController * s = [[SelectSchoolViewController alloc] init];
             s.selectType = SelectMajor;
             s.s = [[SchoolModel alloc] init];
-            s.s.departmentId = _statistl.departments;
+            s.s.departmentId = _statistl.departmentsAry[0];
+            s.typeSelect = @"statistical";
             self.hidesBottomBarWhenPushed = YES;
             [self.navigationController pushViewController:s animated:YES];
             [s returnText:^(SchoolModel *returnText) {
                 if (returnText) {
                     [self.view endEditing:YES];
-                    if (![UIUtils isBlankString:returnText.major]) {
-                        _statistl.professional = [NSString stringWithFormat:@"%@",returnText.majorId];
+                    if ((![UIUtils isBlankString:returnText.major])&&[returnText.major isEqualToString:@"所有专业"]) {
+                        
+                        [_statistl.professional removeAllObjects];
+                        [_statistl.professional addObjectsFromArray:s.allIdAry];
+                        _textAry[0][1] = returnText.major;
+                        [_tableView reloadData];
+                        
+                    }else if (![UIUtils isBlankString:returnText.major]) {
+                        [_statistl.professional removeAllObjects];
+                        [_statistl.professional addObject:[NSString stringWithFormat:@"%@",returnText.majorId]];
                         _textAry[0][1] = returnText.major;
                         [_tableView reloadData];
                     }
                 }
             }];
+        }else{
+            [UIUtils showInfoMessage:@"请先选择院系"];
         }
     }else if (indexPath.section == 0&&indexPath.row == 2){
-        if ([UIUtils isBlankString:[NSString stringWithFormat:@"%@",_statistl.professional]]) {
-            [UIUtils showInfoMessage:@"请先选择专业"];
-        }else{
+        if(_statistl.professional.count>0){
             SelectSchoolViewController * s = [[SelectSchoolViewController alloc] init];
             s.selectType = SelectClass;
             s.s = [[SchoolModel alloc] init];
-            s.s.majorId = _statistl.professional;
+            s.s.majorId = _statistl.professional[0];
+            s.typeSelect = @"statistical";
+            if (_statistl.professional.count>1) {
+                [UIUtils showInfoMessage:@"查询单一专业才可以选择班级"];
+                return;
+            }
             self.hidesBottomBarWhenPushed = YES;
             [self.navigationController pushViewController:s animated:YES];
             [s returnText:^(SchoolModel *returnText) {
                 if (returnText) {
                     [self.view endEditing:YES];
-                    if (![UIUtils isBlankString:[NSString stringWithFormat:@"%@",returnText.sclassId]]) {
-                        _statistl.theClass = [NSString stringWithFormat:@"%@",returnText.sclassId];
+                    if (![UIUtils isBlankString:returnText.sclass]&&[returnText.sclass isEqualToString:@"所有班级"]) {
+                            [_statistl.theClass removeAllObjects];
+                            [_statistl.theClass addObjectsFromArray:s.allIdAry];
+                            _textAry[0][2] = returnText.sclass;
+                            [_tableView reloadData];
+                        
+                    }else if (![UIUtils isBlankString:[NSString stringWithFormat:@"%@",returnText.sclassId]]) {
+                        [_statistl.theClass removeAllObjects];
+                        [_statistl.theClass addObject:[NSString stringWithFormat:@"%@",returnText.sclassId]];
                         _textAry[0][2] = returnText.sclass;
                         [_tableView reloadData];
                     }
                 }
             }];
+        }else{
+            [UIUtils showInfoMessage:@"请先选择专业"];
         }
     }else if (indexPath.section==1&&indexPath.row==0){
         CalendarViewController * vc = [[CalendarViewController alloc] init];
@@ -381,10 +341,8 @@
                 [_tableView reloadData];
             }
         }];
-    }else if (indexPath.section==2&&indexPath.row==0){
-        [self addPickView];
     }
-
+    
 }
 /*
  #pragma mark - Navigation

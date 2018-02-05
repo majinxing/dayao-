@@ -308,7 +308,7 @@
             }
         }
         
-        NSLog(@"%@",path);
+//        NSLog(@"%@",path);
         
     }
     [self hideHud];
