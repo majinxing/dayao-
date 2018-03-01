@@ -2,12 +2,12 @@
   "images" : [
     {
       "idiom" : "universal",
-      "filename" : "课程.png",
+      "filename" : "course_normal30.png",
       "scale" : "1x"
     },
     {
       "idiom" : "universal",
-      "filename" : "课程(1).png",
+      "filename" : "course_normal60.png",
       "scale" : "2x"
     },
     {

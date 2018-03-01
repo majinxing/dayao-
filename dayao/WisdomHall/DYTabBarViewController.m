@@ -35,6 +35,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    
     [self addChildViewControllerWithClassname:[OfficeViewController description] imagename:@"办公_normal" title:@"办公" withSelectImageName:@"办公"];
     
     [self addChildViewControllerWithClassname:[SignInViewController description] imagename:@"课程(1)" title:@"课程" withSelectImageName:@"课程"];
@@ -46,7 +47,7 @@
     [self selectApp];
     
     [UIUtils getInternetDate];
-
+    
     // Do any additional setup after loading the view from its nib.
 }
 -(void)selectApp{
@@ -58,11 +59,11 @@
     
     NSString *app_Version = [infoDictionary objectForKey:@"CFBundleShortVersionString"];
     NSString *app_build = [infoDictionary objectForKey:@"CFBundleVersion"];
-//    NSLog(@"%@-------%@",app_Version,app_build);
+    //    NSLog(@"%@-------%@",app_Version,app_build);
     
     NSDictionary * dict = [[NSDictionary alloc] initWithObjectsAndKeys:@"2",@"type", nil];
     [[NetworkRequest sharedInstance] GET:QueryApp dict:dict succeed:^(id data) {
-//        NSLog(@"%@",data);
+        //        NSLog(@"%@",data);
         NSString * str = [[data objectForKey:@"body"] objectForKey:@"version"];
         NSString * q = [[data objectForKey:@"body"] objectForKey:@"isAutoUpdate"];
         
@@ -135,10 +136,14 @@
     nav.tabBarItem.title = title;
     //tabbar 普通状态下图片(图片保持原尺寸)
     nav.tabBarItem.image = [[UIImage imageNamed:imagename]imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
+    //    UIImage *homeImageSel = [UIImage imageNamed:@"home_a.png"];
+    //    homeImageSel = [homeImageSel imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
+    //    UITabBarItem *homeItem = [self.tabBar.items objectAtIndex:0];
+    //    homeItem.selectedImage = homeImageSel;
     //tabbar 选择状态下图片
-    nav.tabBarItem.selectedImage =[UIImage imageNamed:selectName];// [[UIImage imageNamed:[selectName stringByAppendingString:@"_press"]] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
+    nav.tabBarItem.selectedImage =[[UIImage imageNamed:selectName] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];//[UIImage imageNamed:selectName];
     //设置字体颜色（选中类型）
-    [nav.tabBarItem setTitleTextAttributes:@{NSForegroundColorAttributeName:[UIColor colorWithHexString:@"#01aeff"]} forState:UIControlStateSelected];
+    [nav.tabBarItem setTitleTextAttributes:@{NSForegroundColorAttributeName:[UIColor colorWithHexString:@"#B1020B"]} forState:UIControlStateSelected];
     //设置字体颜色（普通类型）
     [nav.tabBarItem setTitleTextAttributes:@{NSForegroundColorAttributeName:[UIColor blackColor]} forState:UIControlStateNormal];
     [self addChildViewController:nav];
@@ -159,3 +164,4 @@
  */
 
 @end
+

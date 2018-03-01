@@ -2,12 +2,12 @@
   "images" : [
     {
       "idiom" : "universal",
-      "filename" : "消息(3).png",
+      "filename" : "message_normal30.png",
       "scale" : "1x"
     },
     {
       "idiom" : "universal",
-      "filename" : "消息(2).png",
+      "filename" : "message_normal60.png",
       "scale" : "2x"
     },
     {

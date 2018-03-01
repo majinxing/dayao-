@@ -25,6 +25,10 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor whiteColor];
+    
+    UIImageView * bImage = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"bg3"]];
+    [self.view addSubview:bImage];
+    
     [self addTableView];
     [self setNavigationTitle];
     UserModel * user = [[Appsetting sharedInstance] getUsetInfo];
@@ -53,6 +57,7 @@
     _tableView.delegate = self;
     _tableView.dataSource = self;
     _tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+    _tableView.backgroundColor = [UIColor clearColor];
     self.automaticallyAdjustsScrollViewInsets = NO;
     [self.view addSubview:_tableView];
 }
@@ -72,10 +77,10 @@
         self.hidesBottomBarWhenPushed = YES;
         [self.navigationController pushViewController:noticeVC animated:YES];
         self.hidesBottomBarWhenPushed = NO;
-//        NoticeSwiftViewController * a = [[NoticeSwiftViewController alloc] init];
-//        self.hidesBottomBarWhenPushed = YES;
-//        [self.navigationController pushViewController:a animated:YES];
-//        self.hidesBottomBarWhenPushed = NO;
+        //        NoticeSwiftViewController * a = [[NoticeSwiftViewController alloc] init];
+        //        self.hidesBottomBarWhenPushed = YES;
+        //        [self.navigationController pushViewController:a animated:YES];
+        //        self.hidesBottomBarWhenPushed = NO;
         
     }else if ([str isEqualToString:Group]){
         GroupListViewController * g = [[GroupListViewController alloc] init];
@@ -97,7 +102,7 @@
 }
 #pragma mark UITableViewdelegate
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
-    return 2;
+    return 1;
 }
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
     return 1;
@@ -105,20 +110,20 @@
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     OfficeTableViewCell * cell;
-    if (indexPath.section == 0) {
-        cell = [tableView dequeueReusableCellWithIdentifier:@"OfficeTableViewCellFirst"];
-        if (!cell) {
-            cell = [[[NSBundle mainBundle] loadNibNamed:@"OfficeTableViewCell" owner:self options:nil] objectAtIndex:0];
-        }
-        [cell signState];
-    }else{
-        cell = [tableView dequeueReusableCellWithIdentifier:@"OfficeTableViewCellSecond"];
-        if (!cell) {
-            cell = [[[NSBundle mainBundle] loadNibNamed:@"OfficeTableViewCell" owner:self options:nil] objectAtIndex:1];
-            [cell addSecondContentView];
-        }
-        
+    //    if (indexPath.section == 0) {
+    //        cell = [tableView dequeueReusableCellWithIdentifier:@"OfficeTableViewCellFirst"];
+    //        if (!cell) {
+    //            cell = [[[NSBundle mainBundle] loadNibNamed:@"OfficeTableViewCell" owner:self options:nil] objectAtIndex:0];
+    //        }
+    //        [cell signState];
+    //    }else{
+    cell = [tableView dequeueReusableCellWithIdentifier:@"OfficeTableViewCellSecond"];
+    if (!cell) {
+        cell = [[[NSBundle mainBundle] loadNibNamed:@"OfficeTableViewCell" owner:self options:nil] objectAtIndex:1];
+        [cell addSecondContentView];
     }
+    
+    //    }
     cell.delegate = self;
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     return cell;
@@ -127,43 +132,44 @@
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
-    if (indexPath.section == 0) {
-        return 160;
-    }
-    return 200;
+    //    if (indexPath.section == 0) {
+    //        return 160;
+    //    }
+    return APPLICATION_HEIGHT-64-44;
 }
 -(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
-    return 20;
+    return 0;
 }
--(UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section{
-    if (section == 0) {
-        UIView * view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, APPLICATION_WIDTH, 20)];
-        view.backgroundColor = RGBA_COLOR(236, 236, 236, 1);
-        UILabel * l = [[UILabel alloc] initWithFrame:CGRectMake(10, 0, 40, 20)];
-        l.text = @"签到";
-        l.font = [UIFont systemFontOfSize:14];
-        [view addSubview:l];
-        return view;
-    }else{
-        UIView * view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, APPLICATION_WIDTH, 20)];
-        view.backgroundColor = RGBA_COLOR(236, 236, 236, 1);
-        UILabel * l = [[UILabel alloc] initWithFrame:CGRectMake(10, 0, 40, 20)];
-        l.text = @"办公";
-        l.font = [UIFont systemFontOfSize:14];
-        [view addSubview:l];
-        return view;
-
-    }
-    return nil;
-}
+//-(UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section{
+////    if (section == 0) {
+////        UIView * view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, APPLICATION_WIDTH, 20)];
+////        view.backgroundColor = RGBA_COLOR(236, 236, 236, 1);
+////        UILabel * l = [[UILabel alloc] initWithFrame:CGRectMake(10, 0, 40, 20)];
+////        l.text = @"签到";
+////        l.font = [UIFont systemFontOfSize:14];
+////        [view addSubview:l];
+////        return view;
+////    }else{
+//        UIView * view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, APPLICATION_WIDTH, 20)];
+//        view.backgroundColor = RGBA_COLOR(236, 236, 236, 1);
+//        UILabel * l = [[UILabel alloc] initWithFrame:CGRectMake(10, 0, 40, 20)];
+//        l.text = @"办公";
+//        l.font = [UIFont systemFontOfSize:14];
+//        [view addSubview:l];
+//        return view;
+//
+////    }
+//    return nil;
+//}
 /*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
+ #pragma mark - Navigation
+ 
+ // In a storyboard-based application, you will often want to do a little preparation before navigation
+ - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+ // Get the new view controller using [segue destinationViewController].
+ // Pass the selected object to the new view controller.
+ }
+ */
 
 @end
+

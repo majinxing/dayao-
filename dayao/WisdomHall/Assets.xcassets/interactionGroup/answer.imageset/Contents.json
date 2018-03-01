@@ -2,11 +2,11 @@
   "images" : [
     {
       "idiom" : "universal",
-      "filename" : "yuyin.png",
       "scale" : "1x"
     },
     {
       "idiom" : "universal",
+      "filename" : "voice_light.png",
       "scale" : "2x"
     },
     {
