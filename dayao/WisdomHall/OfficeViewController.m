@@ -30,7 +30,8 @@
     [self.view addSubview:bImage];
     
     [self addTableView];
-    [self setNavigationTitle];
+    
+    //    [self setNavigationTitle];
     UserModel * user = [[Appsetting sharedInstance] getUsetInfo];
 #pragma mark - 推送别名设置
     
@@ -40,6 +41,12 @@
         }];
     });
     // Do any additional setup after loading the view from its nib.
+}
+-(void)viewWillAppear:(BOOL)animated{
+    self.navigationController.navigationBarHidden = YES; //设置隐藏
+}
+-(void)viewWillDisappear:(BOOL)animated{
+    self.navigationController.navigationBarHidden = NO; //设置隐藏
 }
 /**
  *  显示navigation的标题

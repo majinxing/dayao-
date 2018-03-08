@@ -41,13 +41,13 @@
     [self.navigationController.navigationBar setTitleTextAttributes:@{
                                                                       NSFontAttributeName:[UIFont systemFontOfSize:17],
                                                                       NSForegroundColorAttributeName:[UIColor blackColor]}];
-    self.title = @"创建测试";
+    self.title = @"创建测验";
     UIBarButtonItem *myButton = [[UIBarButtonItem alloc] initWithTitle:@"下一步" style:UIBarButtonItemStylePlain target:self action:@selector(createText)];
     self.navigationItem.rightBarButtonItem = myButton;
 }
 -(void)createText{
     if ([UIUtils isBlankString:_titleTextFile.text]) {
-        [UIUtils showInfoMessage:@"请填写试卷名字"];
+        [UIUtils showInfoMessage:@"请填写测验名字"];
     }else{
         
         NSDictionary * dict = [[NSDictionary alloc] initWithObjectsAndKeys:_titleTextFile.text,@"name",@"2",@"status", nil];

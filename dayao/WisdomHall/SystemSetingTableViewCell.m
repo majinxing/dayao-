@@ -56,6 +56,7 @@
     }else if (indexPath.section == 0){
         cell.userName.text = cell.user.userName;
         cell.workNo.text = cell.user.studentId;
+        cell.workNo.textColor = RGBA_COLOR(165, 0, 22, 1);
         UserModel * user = [[Appsetting sharedInstance] getUsetInfo];
         if (![UIUtils isBlankString:[NSString stringWithFormat:@"%@",user.userHeadImageId]]) {
             [cell.headImage sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@?resourceId=%@",BaseURL,FileDownload,user.userHeadImageId]] placeholderImage:[UIImage imageNamed:@"placeholder.png"]];

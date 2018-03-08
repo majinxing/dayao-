@@ -298,21 +298,32 @@ static NSString *cellIdentifier = @"cellIdentifier";
     //[self.navigationController.navigationBar setBarTintColor:[UIColor blackColor]];
     [self.navigationController.navigationBar setTitleTextAttributes:@{
                                                                       NSFontAttributeName:[UIFont systemFontOfSize:17],
-                                                                      NSForegroundColorAttributeName:[UIColor blackColor]}];
+                                                                      NSForegroundColorAttributeName:[UIColor whiteColor]}];
     self.title = @"本周课程";
     if ([[NSString stringWithFormat:@"%@",_userModel.identity] isEqualToString:@"1"]) {
         UIBarButtonItem *myButton = [[UIBarButtonItem alloc] initWithTitle:@"创建课程" style:UIBarButtonItemStylePlain target:self action:@selector(createAcourse)];
+        [myButton setTintColor:[UIColor whiteColor]];
         self.navigationItem.rightBarButtonItem = myButton;
     }else if ([[NSString stringWithFormat:@"%@",_userModel.identity] isEqualToString:@"2"]){
         UIBarButtonItem *myButton = [[UIBarButtonItem alloc] initWithTitle:@"加入课程" style:UIBarButtonItemStylePlain target:self action:@selector(joinCourse)];
+        [myButton setTintColor:[UIColor whiteColor]];
+
         self.navigationItem.rightBarButtonItem = myButton;
     }else{
         UIBarButtonItem *myButton = [[UIBarButtonItem alloc] initWithTitle:@"创建课程" style:UIBarButtonItemStylePlain target:self action:@selector(createAcourse)];
+        [myButton setTintColor:[UIColor whiteColor]];
+
         self.navigationItem.rightBarButtonItem = myButton;
     }
     
     UIBarButtonItem * selection = [[UIBarButtonItem alloc] initWithTitle:@"搜索" style:UIBarButtonItemStylePlain target:self action:@selector(selectionBtnPressed)];
+    [selection setTintColor:[UIColor whiteColor]];
+
     self.navigationItem.leftBarButtonItem = selection;
+    
+    [self.navigationController.navigationBar setBarTintColor:RGBA_COLOR(165, 0, 22, 1)];
+    
+    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
 }
 /**
  * 搜索

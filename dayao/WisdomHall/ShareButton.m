@@ -124,6 +124,15 @@
     if ([type isEqualToString:Statistical]) {
         [self setImage:[UIImage imageNamed:@"统计"] forState:UIControlStateNormal];
     }
+    if ([type isEqualToString:CourseCloud]) {
+        [self setImage:[UIImage imageNamed:@"云-4"] forState:UIControlStateNormal];
+    }
+    if ([type isEqualToString:SecondHand]) {
+        [self setImage:[UIImage imageNamed:@"商城1"] forState:UIControlStateNormal];
+    }
+    if ([type isEqualToString:CampusLife]) {
+        [self setImage:[UIImage imageNamed:@"生活"] forState:UIControlStateNormal];
+    }
     [self setTitle:type forState:UIControlStateNormal];
 }
 
