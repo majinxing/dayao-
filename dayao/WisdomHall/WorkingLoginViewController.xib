@@ -150,9 +150,9 @@
                     <nil key="highlightedColor"/>
                 </label>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="81o-qW-6we">
-                    <rect key="frame" x="213" y="622" width="65" height="45"/>
+                    <rect key="frame" x="213" y="621" width="65" height="46"/>
                     <constraints>
-                        <constraint firstAttribute="height" constant="45" id="fCe-qz-wPM"/>
+                        <constraint firstAttribute="height" constant="46" id="fCe-qz-wPM"/>
                         <constraint firstAttribute="width" constant="65" id="vaa-ue-5cq"/>
                     </constraints>
                 </button>
