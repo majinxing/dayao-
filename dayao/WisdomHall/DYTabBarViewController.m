@@ -15,6 +15,7 @@
 #import "TheMessageViewController.h"
 #import "OfficeViewController.h"
 #import "DiscussViewController.h"
+#import "UIImageView+WebCache.h"
 
 @interface DYTabBarViewController ()<UIAlertViewDelegate>
 @property (nonatomic,copy)NSString * url;
@@ -34,7 +35,6 @@
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
     
     [self addChildViewControllerWithClassname:[OfficeViewController description] imagename:@"办公_normal" title:@"办公" withSelectImageName:@"办公"];
     
@@ -100,6 +100,7 @@
     } failure:^(NSError *error) {
         
     }];
+    
 }
 #pragma mark Alter
 -(void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{

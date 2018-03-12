@@ -78,7 +78,6 @@
                          InteractionType_Data,
                          InteractionType_Vote,
                          InteractionType_Responder,
-                         InteractionType_Discuss,
                          InteractionType_Sit
                          ];
     UserModel * user = [[Appsetting sharedInstance] getUsetInfo];
@@ -87,7 +86,6 @@
                   InteractionType_Data,
                   InteractionType_Vote,
                   InteractionType_Responder,
-                  InteractionType_Discuss,
                   ];
     }
     //水平间距
@@ -117,7 +115,6 @@
                               InteractionType_Vote,
                               InteractionType_Responder,
                               InteractionType_Test,
-                              InteractionType_Discuss,
                               InteractionType_Picture,
                               InteractionType_Sit
                               ];

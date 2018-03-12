@@ -89,6 +89,14 @@
     userInfo.userHeadImageId = [_mySettingData objectForKey:@"user_pictureId"];
     return userInfo;
 }
+-(void)saveImage:(NSString *)str{
+    [_mySettingData setValue:str forKey:@"back_image"];
+    [_mySettingData synchronize];
+}
+-(NSString *)getImage{
+    NSString * str1 = [_mySettingData objectForKey:@"back_image"];
+    return str1;
+}
 -(BOOL)isLogin{
     NSString * isLogin = [_mySettingData objectForKey:@"is_Login"];
     if ([isLogin isEqualToString:@"1"]) {

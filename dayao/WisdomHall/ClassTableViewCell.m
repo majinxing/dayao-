@@ -102,6 +102,9 @@
     
     _sclass.text = [NSString stringWithFormat:@"%d",index*2+2];
     
+//    _weekDay.textColor = [UIColor whiteColor];
+//    _sclass.textColor = [UIColor whiteColor];
+    
 }
 -(void)intoTheCurriculum:(UIButton *)btn{
     //    NSString * str = [NSString stringWithFormat:@"%@",_index];

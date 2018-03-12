@@ -19,4 +19,7 @@
 -(void)getOut;
 //获取其他的个人信息
 -(void)saveUserOtherInfo:(NSDictionary *)dict;
+//背景图片
+-(void)saveImage:(NSString *)str;
+-(NSString *)getImage;
 @end

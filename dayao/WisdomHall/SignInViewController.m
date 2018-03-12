@@ -298,32 +298,32 @@ static NSString *cellIdentifier = @"cellIdentifier";
     //[self.navigationController.navigationBar setBarTintColor:[UIColor blackColor]];
     [self.navigationController.navigationBar setTitleTextAttributes:@{
                                                                       NSFontAttributeName:[UIFont systemFontOfSize:17],
-                                                                      NSForegroundColorAttributeName:[UIColor whiteColor]}];
+                                                                      NSForegroundColorAttributeName:[UIColor blackColor]}];
     self.title = @"本周课程";
     if ([[NSString stringWithFormat:@"%@",_userModel.identity] isEqualToString:@"1"]) {
         UIBarButtonItem *myButton = [[UIBarButtonItem alloc] initWithTitle:@"创建课程" style:UIBarButtonItemStylePlain target:self action:@selector(createAcourse)];
-        [myButton setTintColor:[UIColor whiteColor]];
+//        [myButton setTintColor:[UIColor whiteColor]];
         self.navigationItem.rightBarButtonItem = myButton;
     }else if ([[NSString stringWithFormat:@"%@",_userModel.identity] isEqualToString:@"2"]){
         UIBarButtonItem *myButton = [[UIBarButtonItem alloc] initWithTitle:@"加入课程" style:UIBarButtonItemStylePlain target:self action:@selector(joinCourse)];
-        [myButton setTintColor:[UIColor whiteColor]];
+//        [myButton setTintColor:[UIColor whiteColor]];
 
         self.navigationItem.rightBarButtonItem = myButton;
     }else{
         UIBarButtonItem *myButton = [[UIBarButtonItem alloc] initWithTitle:@"创建课程" style:UIBarButtonItemStylePlain target:self action:@selector(createAcourse)];
-        [myButton setTintColor:[UIColor whiteColor]];
+//        [myButton setTintColor:[UIColor whiteColor]];
 
         self.navigationItem.rightBarButtonItem = myButton;
     }
     
     UIBarButtonItem * selection = [[UIBarButtonItem alloc] initWithTitle:@"搜索" style:UIBarButtonItemStylePlain target:self action:@selector(selectionBtnPressed)];
-    [selection setTintColor:[UIColor whiteColor]];
+//    [selection setTintColor:[UIColor whiteColor]];
 
     self.navigationItem.leftBarButtonItem = selection;
     
-    [self.navigationController.navigationBar setBarTintColor:RGBA_COLOR(165, 0, 22, 1)];
-    
-    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
+//    [self.navigationController.navigationBar setBarTintColor:RGBA_COLOR(213, 0, 68, 1)];
+    //UIStatusBarStyleLightContent 白色
+    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleDefault];
 }
 /**
  * 搜索
@@ -463,10 +463,10 @@ static NSString *cellIdentifier = @"cellIdentifier";
             if (i == 0) {
                 [ary addObject:month];
             }else
-            [ary addObject: [NSString stringWithFormat:@"%@", [NSString stringWithFormat:@"%@\n%@",day[i-1],a[i]]]];
+                [ary addObject: [NSString stringWithFormat:@"%@", [NSString stringWithFormat:@"%@\n%@",day[i-1],a[i]]]];
         }
     }else{
-       ary = [[NSMutableArray alloc] initWithArray:@[month,@"周一",@"周二",@"周三",@"周四",@"周五",@"周六",@"周日"]];
+        ary = [[NSMutableArray alloc] initWithArray:@[month,@"周一",@"周二",@"周三",@"周四",@"周五",@"周六",@"周日"]];
     }
     for (int i =0; i<8; i++) {
         UILabel * label = [[UILabel alloc] initWithFrame:CGRectMake(i*APPLICATION_WIDTH/8, 0, APPLICATION_WIDTH/8, 50)];

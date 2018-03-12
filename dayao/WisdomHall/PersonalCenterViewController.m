@@ -41,11 +41,10 @@
     //[self.navigationController.navigationBar setBarTintColor:[UIColor blackColor]];
     [self.navigationController.navigationBar setTitleTextAttributes:@{
                                                                       NSFontAttributeName:[UIFont systemFontOfSize:17],
-                                                                      NSForegroundColorAttributeName:[UIColor whiteColor]}];
+                                                                      NSForegroundColorAttributeName:[UIColor blackColor]}];
     self.title = @"我的";
-    [self.navigationController.navigationBar setBarTintColor:RGBA_COLOR(165, 0, 22, 1)];
-    
-    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
+   // [self.navigationController.navigationBar setBarTintColor:RGBA_COLOR(165, 0, 22, 1)];
+    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleDefault];
 }
 -(void)viewWillAppear:(BOOL)animated{
     [_tableview reloadData];

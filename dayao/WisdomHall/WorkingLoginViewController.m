@@ -21,6 +21,11 @@
 @property (strong, nonatomic) IBOutlet UITextField *password;
 @property (nonatomic,strong)BindPhone * bindPhone;
 @property (nonatomic,copy)NSString * phone;
+@property (strong, nonatomic) IBOutlet UIButton *InSchoolBtn;
+@property (strong, nonatomic) IBOutlet UIButton *OutSchool;
+@property (strong, nonatomic) IBOutlet UIImageView *inSchoolImage;
+@property (strong, nonatomic) IBOutlet UIImageView *outSchoolImage;
+
 @end
 
 @implementation WorkingLoginViewController

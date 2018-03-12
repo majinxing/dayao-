@@ -218,6 +218,7 @@
     n.backType = @"TabBar";
     self.window.rootViewController = [[UINavigationController alloc]initWithRootViewController:n];
     completionHandler();  // 系统要求执行这个方法
+    
 }
 //前台运行时接受推送信息 app未杀死，从前台转后台会走
 - (void)application:(UIApplication *)application

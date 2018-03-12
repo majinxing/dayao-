@@ -15,19 +15,27 @@
 #import "StatisticalViewController.h"
 #import "WisdomHall-Swift.h"
 #import "JPUSHService.h"
+#import "UIImageView+WebCache.h"
 
 @interface OfficeViewController ()<UITableViewDelegate,UITableViewDataSource,OfficeTableViewCellDelegate>
 @property (nonatomic,strong)UITableView * tableView;
+@property (nonatomic,strong)UIImageView * bImage;
 @end
 
 @implementation OfficeViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
     self.view.backgroundColor = [UIColor whiteColor];
     
-    UIImageView * bImage = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"bg3"]];
-    [self.view addSubview:bImage];
+    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
+
+    _bImage = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"timg"]];
+    
+    _bImage.frame = CGRectMake(0, 0, APPLICATION_WIDTH, APPLICATION_HEIGHT-44);
+    
+    [self.view addSubview:_bImage];
     
     [self addTableView];
     
@@ -40,7 +48,35 @@
             NSLog(@"%d-------------%@,-------------%@",iResCode,iTags,iAlias);
         }];
     });
+    
+//    [self setimage];
     // Do any additional setup after loading the view from its nib.
+}
+-(void)setimage{
+    
+    NSDictionary * d = [[NSDictionary alloc] initWithObjectsAndKeys:@"1",@"function", nil];
+    
+    [[NetworkRequest sharedInstance] GET:QueryAdvertising dict:d succeed:^(id data) {
+        NSArray * ary = [data objectForKey:@"body"];
+        if (ary.count>0) {
+            NSString * str = [NSString stringWithFormat:@"%@",[ary[0] objectForKey:@"id"]];
+            [[Appsetting sharedInstance] saveImage:str];
+
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [_bImage sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@?resourceId=%@",BaseURL,FileDownload,str]] placeholderImage:[UIImage imageNamed:@"placeholder.png"]];
+            });
+        }else{
+            dispatch_async(dispatch_get_main_queue(), ^{
+                NSString * str = [[Appsetting sharedInstance] getImage];
+                [_bImage sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@?resourceId=%@",BaseURL,FileDownload,str]] placeholderImage:[UIImage imageNamed:@"placeholder.png"]];
+            });
+        }
+    } failure:^(NSError *error) {
+        dispatch_async(dispatch_get_main_queue(), ^{
+            NSString * str = [[Appsetting sharedInstance] getImage];
+            [_bImage sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@?resourceId=%@",BaseURL,FileDownload,str]] placeholderImage:[UIImage imageNamed:@"placeholder.png"]];
+        });
+    }];
 }
 -(void)viewWillAppear:(BOOL)animated{
     self.navigationController.navigationBarHidden = YES; //设置隐藏
@@ -58,6 +94,7 @@
                                                                       NSFontAttributeName:[UIFont systemFontOfSize:17],
                                                                       NSForegroundColorAttributeName:[UIColor blackColor]}];
     self.title = @"办公";
+    
 }
 -(void)addTableView{
     _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0,SafeAreaTopHeight, APPLICATION_WIDTH, APPLICATION_HEIGHT-64-44) style:UITableViewStylePlain];
