@@ -16,6 +16,7 @@
 #import "WisdomHall-Swift.h"
 #import "JPUSHService.h"
 #import "UIImageView+WebCache.h"
+#import "NoticeDetailsViewController.h"
 
 @interface OfficeViewController ()<UITableViewDelegate,UITableViewDataSource,OfficeTableViewCellDelegate>
 @property (nonatomic,strong)UITableView * tableView;
@@ -143,6 +144,16 @@
 -(void)signBtnPressedDelegate:(UIButton *)btn{
     [UIUtils dailyCheck];
     [_tableView reloadData];
+}
+-(void)noticeBtnPressedDelegateOfficeCellDelegate:(NoticeModel *)notice{
+    NoticeDetailsViewController * notice1 = [[NoticeDetailsViewController alloc] initWithActionBlock:^(NSString *str) {
+        
+    }];
+    notice1.notice = notice;
+    self.hidesBottomBarWhenPushed = YES;
+    [self.navigationController pushViewController:notice1 animated:YES];
+    self.hidesBottomBarWhenPushed = NO;
+
 }
 #pragma mark UITableViewdelegate
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{

@@ -29,7 +29,7 @@
 -(void)addContentView:(FileModel *)f withIndex:(int)n{
     _fileName.text = f.fileName;
     if (f.isLocal) {
-        _downloadImage.image = [UIImage imageNamed:@""];
+        _downloadImage.image = [UIImage imageNamed:@"ww"];
         [_downloadBtn setEnabled:NO];
     }
     _downloadBtn.tag = n;

@@ -10,13 +10,13 @@
 #import "DYHeader.h"
 #import "ShareButton.h"
 #import "FMDBTool.h"
-
+#import "CollectionHeadView.h"
 
 #define columns 3
 #define buttonWH 60
 #define marginHeight 8
 
-@interface OfficeTableViewCell()
+@interface OfficeTableViewCell()<CollectionHeadViewDelegate>
 @property (strong, nonatomic) IBOutlet UIButton *signBtn;
 @property (strong, nonatomic) IBOutlet UILabel *signIN;
 @property (strong, nonatomic) IBOutlet UILabel *signBack;
@@ -25,6 +25,8 @@
 @property (nonatomic,strong)UIView *fLineView;
 @property (nonatomic,strong)UIView *sLineView;
 @property (nonatomic,strong)UIView *tLineView;
+@property (nonatomic,strong)CollectionHeadView *collectionHeadView;
+
 @end
 @implementation OfficeTableViewCell
 
@@ -39,6 +41,10 @@
     _fLineView = [[UIView alloc] init];
     _sLineView = [[UIView alloc] init];
     _tLineView = [[UIView alloc] init];
+
+    _collectionHeadView = [CollectionHeadView sharedInstance];
+    
+    _collectionHeadView.delegate = self;
     [self signState];
     self.backgroundColor = [UIColor clearColor];
     //    [self addSecondContentView];
@@ -125,6 +131,10 @@
     [_btnView addSubview:view];
     
     [self.contentView addSubview:_btnView];
+    
+    _collectionHeadView.frame = CGRectMake(10,APPLICATION_HEIGHT-20-100-140-100, ScrollViewW,ScrollViewH);
+    
+    [self.contentView addSubview:_collectionHeadView];
 }
 - (void)shareButtonClicked:(UIButton *)button
 {
@@ -138,11 +148,15 @@
         [self.delegate signBtnPressedDelegate:sender];
     }
 }
-
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
     [super setSelected:selected animated:animated];
     
     // Configure the view for the selected state
 }
-
+#pragma dark CollectionHeadViewDelegate
+-(void)noticeBtnPressedDelegate:(NoticeModel *)notice{
+    if (self.delegate &&[self.delegate respondsToSelector:@selector(noticeBtnPressedDelegateOfficeCellDelegate:)]) {
+        [self.delegate noticeBtnPressedDelegateOfficeCellDelegate:notice];
+    }
+}
 @end

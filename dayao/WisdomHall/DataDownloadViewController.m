@@ -297,7 +297,7 @@
     myDirectoryEnumerator=[myFileManager enumeratorAtPath:path];
     
     //列举目录内容，可以遍历子目录
-    NSLog(@"用enumeratorAtPath:显示目录%@的内容：",path);
+   // NSLog(@"用enumeratorAtPath:显示目录%@的内容：",path);
     
     while((path=[myDirectoryEnumerator nextObject])!=nil)
     {
@@ -396,7 +396,7 @@
     
     NSString *documentsDirectory = [paths lastObject];
     
-    NSLog(@"app_home_doc: %@",documentsDirectory);
+    //NSLog(@"app_home_doc: %@",documentsDirectory);
     
     //    NSFileManager *fileManager = [NSFileManager defaultManager];
     
@@ -550,7 +550,7 @@
     
     if (!saveError) {
         
-        NSLog(@"save success");
+       // NSLog(@"save success");
         
         [self checkTheLocalFile:_fileAry];
         
@@ -560,7 +560,7 @@
         
     }else{
         
-        NSLog(@"save error:%@",saveError.localizedDescription);
+        //NSLog(@"save error:%@",saveError.localizedDescription);
         
     }
     [self hideHud];
@@ -570,7 +570,7 @@
 /** * 写数据 * * @param session 会话对象 * @param downloadTask 下载任务 * @param bytesWritten 本次写入的数据大小 * @param totalBytesWritten 下载的数据总大小 * @param totalBytesExpectedToWrite 文件的总大小 */
 -(void)URLSession:(NSURLSession *)session downloadTask:(NSURLSessionDownloadTask *)downloadTask didWriteData:(int64_t)bytesWritten totalBytesWritten:(int64_t)totalBytesWritten totalBytesExpectedToWrite:(int64_t)totalBytesExpectedToWrite {
     //获得文件的下载进度
-//    NSLog(@"%f",1.0 * totalBytesWritten/totalBytesExpectedToWrite);
+   // NSLog(@"%f",1.0 * totalBytesWritten/totalBytesExpectedToWrite);
     
 }
 

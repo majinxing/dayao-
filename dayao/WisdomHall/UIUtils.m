@@ -1090,14 +1090,14 @@
             BOOL rs = [FMDBTool insertWithDB:db tableName:DAILYCHECK_TABLE_NAME withSqlStr:sql];
             
             if (!rs) {
-                NSLog(@"失败");
+                //NSLog(@"失败");
             }
         }else if ([str isEqualToString:@"签退正常"]) {
             NSString * sql = [NSString stringWithFormat:@"insert into %@ (userID,signBack,signBackState,date) values ('%@','%@','%@','%@')",DAILYCHECK_TABLE_NAME,[NSString stringWithFormat:@"%@",user.peopleId],[UIUtils getCurrentDate],[NSString stringWithFormat:@"正常"],[UIUtils getTime]];
             BOOL rs = [FMDBTool insertWithDB:db tableName:DAILYCHECK_TABLE_NAME withSqlStr:sql];
             
             if (!rs) {
-                NSLog(@"失败");
+               // NSLog(@"失败");
             }
         }else if ([str isEqualToString:@"签退早退"]){
             NSString * sql = [NSString stringWithFormat:@"insert into %@ (userID,signBack,signBackState,date) values ('%@','%@','%@','%@')",DAILYCHECK_TABLE_NAME,[NSString stringWithFormat:@"%@",user.peopleId],[UIUtils getCurrentDate],[NSString stringWithFormat:@"早退"],[UIUtils getTime]];
