@@ -11,7 +11,6 @@
 #import "NoticeModel.h"
 #import "MBProgressHUD.h"
 
-static dispatch_once_t onceToken;
 
 @interface CollectionHeadView()<UIScrollViewDelegate>
 @property (nonatomic,strong)NSTimer * rotateTimer;
@@ -68,6 +67,9 @@ static dispatch_once_t onceToken;
     } failure:^(NSError *error) {
 
     }];
+}
+-(void)onceSetNil{
+    onceToken = 0;
 }
 -(void)addScrollView{
     if (_ary.count>0) {
@@ -155,7 +157,8 @@ static dispatch_once_t onceToken;
     _myPageControl = [[UIPageControl alloc] initWithFrame:CGRectMake(0, 50, CGRectGetWidth(self.frame), 20)];
     _myPageControl.numberOfPages = _temp;
     _myPageControl.currentPage = 0;
-    [self addSubview:_myPageControl];
+   
+    //[self addSubview:_myPageControl]; 小白点
     
     //启动定时器
     _rotateTimer = [NSTimer scheduledTimerWithTimeInterval:3 target:self selector:@selector(changeView) userInfo:nil repeats:YES];

@@ -21,6 +21,7 @@
 #import <Bugly/Bugly.h>
 #import "JSMSSDK.h"
 #import "JSMSConstant.h"
+#import "CollectionHeadView.h"
 
 // 引入JPush功能所需头文件
 #import "JPUSHService.h"
@@ -144,6 +145,8 @@
     // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
     [[EMClient sharedClient] applicationDidEnterBackground:application];
     _chat.outOrIn = @"out";
+    [[CollectionHeadView sharedInstance] onceSetNil];
+
 }
 
 
@@ -151,6 +154,10 @@
     // Called as part of the transition from the background to the active state; here you can undo many of the changes made on entering the background.
     [[EMClient sharedClient] applicationWillEnterForeground:application];
     _chat.outOrIn = @"In";
+    CollectionHeadView * v = [CollectionHeadView sharedInstance];
+    if (v) {
+        
+    }
 }
 
 

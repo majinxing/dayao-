@@ -40,12 +40,12 @@
  **/
 -(void)setNavigationTitle{
     [UIApplication sharedApplication].statusBarStyle = UIStatusBarStyleLightContent;
-    //[self.navigationController.navigationBar setBarTintColor:[UIColor blackColor]];
-    [self.navigationController.navigationBar setTitleTextAttributes:@{
-                                                                      NSFontAttributeName:[UIFont systemFontOfSize:17],
-                                                                      NSForegroundColorAttributeName:[UIColor blackColor]}];
+  
     self.title = @"意见反馈";
     UIBarButtonItem * myButton = [[UIBarButtonItem alloc] initWithTitle:@"提交" style:UIBarButtonItemStylePlain target:self action:@selector(saveInfo)];
+    
+    [myButton setTintColor:[UIColor whiteColor]];
+
     self.navigationItem.rightBarButtonItem = myButton;
 }
 -(void)saveInfo{

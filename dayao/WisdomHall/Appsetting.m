@@ -104,6 +104,54 @@
     }
     return NO;
 }
+-(void)setThemeColor:(UIColor *)color{
+    NSString *colorStr = [self toStrByUIColor:color];
+    [_mySettingData setValue:colorStr forKey:@"theme_color"];
+    [_mySettingData synchronize];
+}
+-(UIColor *)getThemeColor{
+    if (![UIUtils isBlankString:[_mySettingData objectForKey:@"theme_color"]]) {
+        UIColor *color = [self toUIColorByStr:[_mySettingData objectForKey:@"theme_color"]];
+        return color;
+    }
+    return RGBA_COLOR(213, 0, 68, 1);
+}
+// 颜色 转字符串（16进制）
+-(NSString*)toStrByUIColor:(UIColor*)color{
+    CGFloat r, g, b, a;
+    [color getRed:&r green:&g blue:&b alpha:&a];
+    int rgb = (int) (r * 255.0f)<<16 | (int) (g * 255.0f)<<8 | (int) (b * 255.0f)<<0;
+    return [NSString stringWithFormat:@"%06x", rgb];
+}
+// 颜色 字符串转16进制
+-(UIColor*)toUIColorByStr:(NSString*)colorStr{
+    
+    NSString *cString = [[colorStr stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]] uppercaseString];
+    if ([cString hasPrefix:@"#"]) cString = [cString substringFromIndex:1];
+    if ([cString length] != 6) return [UIColor blackColor];
+    
+    // Separate into r, g, b substrings
+    NSRange range;
+    range.location = 0;
+    range.length = 2;
+    NSString *rString = [cString substringWithRange:range];
+    range.location = 2;
+    NSString *gString = [cString substringWithRange:range];
+    range.location = 4;
+    NSString *bString = [cString substringWithRange:range];
+    // Scan values
+    unsigned int r, g, b;
+    
+    [[NSScanner scannerWithString:rString] scanHexInt:&r];
+    [[NSScanner scannerWithString:gString] scanHexInt:&g];
+    [[NSScanner scannerWithString:bString] scanHexInt:&b];
+    
+    return [UIColor colorWithRed:((float) r / 255.0f)
+                           green:((float) g / 255.0f)
+                            blue:((float) b / 255.0f)
+                           alpha:1.0f];
+}
+
 -(NSString *)getUserPhone{
     NSString * phone = [_mySettingData objectForKey:@"user_phone"];
     return phone;

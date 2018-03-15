@@ -130,10 +130,6 @@
  **/
 -(void)setNavigationTitle{
     [UIApplication sharedApplication].statusBarStyle = UIStatusBarStyleLightContent;
-    //[self.navigationController.navigationBar setBarTintColor:[UIColor blackColor]];
-    [self.navigationController.navigationBar setTitleTextAttributes:@{
-                                                                      NSFontAttributeName:[UIFont systemFontOfSize:17],
-                                                                      NSForegroundColorAttributeName:[UIColor blackColor]}];
     if ([UIUtils isBlankString:_function]) {
         self.title = @"文件";
         UserModel * user = [[Appsetting sharedInstance] getUsetInfo];
@@ -141,7 +137,8 @@
         if ([[NSString stringWithFormat:@"%@",_meeting.meetingHostId] isEqualToString:[NSString stringWithFormat:@"%@",user.peopleId]]) {
             
             UIBarButtonItem * createMeeting = [[UIBarButtonItem alloc] initWithTitle:@"上传资料" style:UIBarButtonItemStylePlain target:self action:@selector(uploadLocalFile)];
-            
+            [createMeeting setTintColor:[UIColor whiteColor]];
+
             self.navigationItem.rightBarButtonItem = createMeeting;
             
         }
@@ -149,12 +146,16 @@
             
             UIBarButtonItem * createMeeting = [[UIBarButtonItem alloc] initWithTitle:@"上传资料" style:UIBarButtonItemStylePlain target:self action:@selector(uploadLocalFile)];
             
+            [createMeeting setTintColor:[UIColor whiteColor]];
+
             self.navigationItem.rightBarButtonItem = createMeeting;
         }
     }else{
         self.title = @"问答";
         UIBarButtonItem * createMeeting = [[UIBarButtonItem alloc] initWithTitle:@"上传解答" style:UIBarButtonItemStylePlain target:self action:@selector(selectImage)];
         
+        [createMeeting setTintColor:[UIColor whiteColor]];
+
         self.navigationItem.rightBarButtonItem = createMeeting;
     }
 }

@@ -15,6 +15,7 @@
 #import "FeedbackViewController.h"
 #import "DYHeader.h"
 #import "GroupListViewController.h"
+#import "ChangeThemeInfoViewController.h"
 
 @interface PersonalCenterViewController ()<UITableViewDelegate,UITableViewDataSource>
 @property(nonatomic,strong)UITableView * tableview;
@@ -38,10 +39,7 @@
  **/
 -(void)setNavigationTitle{
     [UIApplication sharedApplication].statusBarStyle = UIStatusBarStyleLightContent;
-    //[self.navigationController.navigationBar setBarTintColor:[UIColor blackColor]];
-    [self.navigationController.navigationBar setTitleTextAttributes:@{
-                                                                      NSFontAttributeName:[UIFont systemFontOfSize:17],
-                                                                      NSForegroundColorAttributeName:[UIColor blackColor]}];
+ 
     self.title = @"我的";
    // [self.navigationController.navigationBar setBarTintColor:RGBA_COLOR(165, 0, 22, 1)];
     [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleDefault];
@@ -83,14 +81,14 @@
             self.hidesBottomBarWhenPushed = NO;
         }
         else if (indexPath.row == 1){
-            NoticeViewController * noticeVC = [[NoticeViewController alloc] init];
-            self.hidesBottomBarWhenPushed = YES;
-            [self.navigationController pushViewController:noticeVC animated:YES];
-            self.hidesBottomBarWhenPushed = NO;
-        }else if (indexPath.row == 2){
             GroupListViewController * g = [[GroupListViewController alloc] init];
             self.hidesBottomBarWhenPushed = YES;
             [self.navigationController pushViewController:g animated:YES];
+            self.hidesBottomBarWhenPushed = NO;
+        }else if (indexPath.row == 2){
+            ChangeThemeInfoViewController * vc = [[ChangeThemeInfoViewController alloc] init];
+            self.hidesBottomBarWhenPushed = YES;
+            [self.navigationController pushViewController:vc animated:YES];
             self.hidesBottomBarWhenPushed = NO;
         }else if (indexPath.row == 3) {
             SystemSettingsViewController * systemVC = [[SystemSettingsViewController alloc] init];

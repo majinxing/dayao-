@@ -9,10 +9,13 @@
 #import <UIKit/UIKit.h>
 #import "NoticeModel.h"
 
+static dispatch_once_t onceToken;
+
 @protocol CollectionHeadViewDelegate <NSObject>
 -(void)noticeBtnPressedDelegate:(NoticeModel *)notice;
 @end
 @interface CollectionHeadView : UIView
 @property (nonatomic,weak)id<CollectionHeadViewDelegate>delegate;
 +(CollectionHeadView *)sharedInstance;
+-(void)onceSetNil;
 @end

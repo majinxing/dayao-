@@ -8,6 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import "UserModel.h"
+#import "DYHeader.h"
 
 @interface Appsetting : NSObject
 @property NSUserDefaults * mySettingData;
@@ -22,4 +23,10 @@
 //背景图片
 -(void)saveImage:(NSString *)str;
 -(NSString *)getImage;
+//存储主题颜色
+-(void)setThemeColor:(UIColor *)color;
+//获取主题颜色
+-(UIColor *)getThemeColor;
+// 颜色 转字符串（16进制）
+-(NSString*)toStrByUIColor:(UIColor*)color;
 @end

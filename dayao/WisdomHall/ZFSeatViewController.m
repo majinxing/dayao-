@@ -38,7 +38,7 @@
     maoyanLabel.text = @"座次表";
     [maoyanLabel sizeToFit];
     maoyanLabel.font = [UIFont systemFontOfSize:20];
-    maoyanLabel.textColor = [UIColor blackColor];
+    maoyanLabel.textColor = [UIColor whiteColor];
         
     self.navigationItem.titleView = maoyanLabel;
     self.edgesForExtendedLayout = UIRectEdgeNone;

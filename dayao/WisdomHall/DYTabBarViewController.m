@@ -16,6 +16,7 @@
 #import "OfficeViewController.h"
 #import "DiscussViewController.h"
 #import "UIImageView+WebCache.h"
+#import "NavBarNavigationController.h"
 
 @interface DYTabBarViewController ()<UIAlertViewDelegate>
 @property (nonatomic,copy)NSString * url;
@@ -132,7 +133,7 @@
     //通过名字获取到类方法
     UIViewController *vc = [[NSClassFromString(classname) alloc] init];
     //设置导航
-    UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:vc];
+    NavBarNavigationController *nav = [[NavBarNavigationController alloc] initWithRootViewController:vc];
     //tabbar 显示文字
     nav.tabBarItem.title = title;
     //tabbar 普通状态下图片(图片保持原尺寸)

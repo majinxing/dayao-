@@ -18,6 +18,7 @@
 //#endif
 #define ScreenWidth [[UIScreen mainScreen] bounds].size.width
 #define ScreenHeight [[UIScreen mainScreen] bounds].size.height
+
 #define Is_Iphone (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone)
 #define Is_Iphone_X (Is_Iphone && ScreenHeight == 812.0)
 #define NaviHeight Is_Iphone_X ? 88 : 64
@@ -72,7 +73,7 @@
 #import "NetworkRequest.h"
 #import "Appsetting.h"
 #import "UserModel.h"
-
+#import "ThemeTool.h"
 
 #define Collection_height 120
 #define CodeEffectiveTime 6
@@ -113,6 +114,8 @@
 #define CourseCloud                 @"课程云"
 #define SecondHand                  @"二手市场"
 #define CampusLife                  @"校园生活"
+
+#define ThemeColorChangeNotification @"ThemeColorChangeNotification"//更改主题的通知
 
 //数据库的名字
 #define SQLITE_NAME            @"Dayao"

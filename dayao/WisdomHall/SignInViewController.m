@@ -296,28 +296,26 @@ static NSString *cellIdentifier = @"cellIdentifier";
 -(void)setNavigationTitle{
     [UIApplication sharedApplication].statusBarStyle = UIStatusBarStyleLightContent;
     //[self.navigationController.navigationBar setBarTintColor:[UIColor blackColor]];
-    [self.navigationController.navigationBar setTitleTextAttributes:@{
-                                                                      NSFontAttributeName:[UIFont systemFontOfSize:17],
-                                                                      NSForegroundColorAttributeName:[UIColor blackColor]}];
+
     self.title = @"本周课程";
     if ([[NSString stringWithFormat:@"%@",_userModel.identity] isEqualToString:@"1"]) {
         UIBarButtonItem *myButton = [[UIBarButtonItem alloc] initWithTitle:@"创建课程" style:UIBarButtonItemStylePlain target:self action:@selector(createAcourse)];
-//        [myButton setTintColor:[UIColor whiteColor]];
+        [myButton setTintColor:[UIColor whiteColor]];
         self.navigationItem.rightBarButtonItem = myButton;
     }else if ([[NSString stringWithFormat:@"%@",_userModel.identity] isEqualToString:@"2"]){
         UIBarButtonItem *myButton = [[UIBarButtonItem alloc] initWithTitle:@"加入课程" style:UIBarButtonItemStylePlain target:self action:@selector(joinCourse)];
-//        [myButton setTintColor:[UIColor whiteColor]];
+        [myButton setTintColor:[UIColor whiteColor]];
 
         self.navigationItem.rightBarButtonItem = myButton;
     }else{
         UIBarButtonItem *myButton = [[UIBarButtonItem alloc] initWithTitle:@"创建课程" style:UIBarButtonItemStylePlain target:self action:@selector(createAcourse)];
-//        [myButton setTintColor:[UIColor whiteColor]];
+        [myButton setTintColor:[UIColor whiteColor]];
 
         self.navigationItem.rightBarButtonItem = myButton;
     }
     
     UIBarButtonItem * selection = [[UIBarButtonItem alloc] initWithTitle:@"搜索" style:UIBarButtonItemStylePlain target:self action:@selector(selectionBtnPressed)];
-//    [selection setTintColor:[UIColor whiteColor]];
+    [selection setTintColor:[UIColor whiteColor]];
 
     self.navigationItem.leftBarButtonItem = selection;
     

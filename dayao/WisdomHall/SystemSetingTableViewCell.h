@@ -9,7 +9,12 @@
 #import <UIKit/UIKit.h>
 #import "DYHeader.h"
 
+@protocol SystemSetingTableViewCellDelegate <NSObject>
+-(void)outAPPBtnPressedDelegate;
+@end
+
 @interface SystemSetingTableViewCell : UITableViewCell
+@property (nonatomic,weak) id<SystemSetingTableViewCellDelegate>delegate;
 @property (strong, nonatomic) IBOutlet UILabel *timeLabel;
 @property (strong, nonatomic) IBOutlet UILabel *setingLabel;
 @property (strong, nonatomic) IBOutlet UIImageView *headImage;
