@@ -143,9 +143,14 @@
     //    UITabBarItem *homeItem = [self.tabBar.items objectAtIndex:0];
     //    homeItem.selectedImage = homeImageSel;
     //tabbar 选择状态下图片
-    nav.tabBarItem.selectedImage =[[UIImage imageNamed:selectName] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];//[UIImage imageNamed:selectName];
+    UIImage * i = [[Appsetting sharedInstance] grayscale:[UIImage imageNamed:selectName]];
+    
+    nav.tabBarItem.selectedImage = [i imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
+    
+    UIColor * selectColor = [[Appsetting sharedInstance] getThemeColor];
+
     //设置字体颜色（选中类型）
-    [nav.tabBarItem setTitleTextAttributes:@{NSForegroundColorAttributeName:[UIColor colorWithHexString:@"#B1020B"]} forState:UIControlStateSelected];
+    [nav.tabBarItem setTitleTextAttributes:@{NSForegroundColorAttributeName:selectColor} forState:UIControlStateSelected];
     //设置字体颜色（普通类型）
     [nav.tabBarItem setTitleTextAttributes:@{NSForegroundColorAttributeName:[UIColor blackColor]} forState:UIControlStateNormal];
     [self addChildViewController:nav];

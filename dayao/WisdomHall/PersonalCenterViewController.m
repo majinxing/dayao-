@@ -32,6 +32,8 @@
     _tableview.dataSource = self;
     _tableview.separatorStyle = NO;
     [self.view addSubview:_tableview];
+    [UIApplication sharedApplication].statusBarStyle = UIStatusBarStyleLightContent;
+
     // Do any additional setup after loading the view from its nib.
 }
 /**

@@ -49,7 +49,8 @@
             NSLog(@"%d-------------%@,-------------%@",iResCode,iTags,iAlias);
         }];
     });
-    
+    [UIApplication sharedApplication].statusBarStyle = UIStatusBarStyleLightContent;
+
 //    [self setimage];
     // Do any additional setup after loading the view from its nib.
 }

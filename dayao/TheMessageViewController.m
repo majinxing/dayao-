@@ -43,6 +43,9 @@
     [self setNavigationTitle];
     
     [self addTableView];
+    
+    [UIApplication sharedApplication].statusBarStyle = UIStatusBarStyleLightContent;
+
     // Do any additional setup after loading the view from its nib.
 }
 /**

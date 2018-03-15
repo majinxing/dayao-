@@ -103,7 +103,16 @@
             advertisingIdentifier:advertisingId];
     
     [JSMSSDK registerWithAppKey:@"03501087af85ae095660e55e"];//极光短信注册
+    
+    [[NSNotificationCenter defaultCenter]
+     addObserver:self
+     selector:@selector(reloadView)
+     name:ThemeColorChangeNotification object:nil];
     return YES;
+}
+-(void)reloadView{
+    DYTabBarViewController * tab = [[DYTabBarViewController alloc] init];
+    self.window.rootViewController = tab;
 }
 -(void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken{
     /// Required - 注册 DeviceToken

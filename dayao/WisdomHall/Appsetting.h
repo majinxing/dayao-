@@ -29,4 +29,6 @@
 -(UIColor *)getThemeColor;
 // 颜色 转字符串（16进制）
 -(NSString*)toStrByUIColor:(UIColor*)color;
+//改变切图颜色
+-(UIImage*)grayscale:(UIImage*)anImage;
 @end

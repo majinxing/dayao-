@@ -30,7 +30,7 @@
 -(void)setThemeColor{
     UIColor * color = [[ThemeTool shareInstance] getThemeColor];
     NSString * colorStr = [[Appsetting sharedInstance] toStrByUIColor:color];
-    UIColor * c = RGBA_COLOR(213, 0, 68, 1);
+    UIColor * c = RGBA_COLOR(217, 0, 21, 1);
     NSString * cStr = [[Appsetting sharedInstance] toStrByUIColor:c];
     
     if ([colorStr isEqualToString:cStr]) {
@@ -48,7 +48,7 @@
 }
 - (IBAction)changeTheme:(UIButton *)sender {
     if (sender.tag == 1) {
-        [[ThemeTool shareInstance] setThemeColor:RGBA_COLOR(213, 0, 68, 1)];
+        [[ThemeTool shareInstance] setThemeColor:RGBA_COLOR(217, 0, 21, 1)];
         [self setThemeColor];
     }else{
         [[ThemeTool shareInstance] setThemeColor:[UIColor colorWithHexString:@"#29a7e1"]];

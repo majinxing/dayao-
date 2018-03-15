@@ -85,7 +85,8 @@ static NSString *cellIdentifier = @"cellIdentifier";
     // 1.注册通知
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(UpdateTheClassPage) name:@"UpdateTheClassPage" object:nil];
-        
+    [UIApplication sharedApplication].statusBarStyle = UIStatusBarStyleLightContent;
+
     // Do any additional setup after loading the view from its nib.
 }
 -(void)UpdateTheClassPage{

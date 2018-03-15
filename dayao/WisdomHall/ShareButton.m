@@ -63,47 +63,69 @@
     }
     if ([type isEqualToString:InteractionType_Test]) {
         
-        [self setImage:[UIImage imageNamed:@"text"] forState:UIControlStateNormal];
+        UIImage * i = [[Appsetting sharedInstance] grayscale:[UIImage imageNamed:@"text"]];
+        [self setImage:i forState:UIControlStateNormal];
     }
     if ([type isEqualToString:InteractionType_Vote]) {
         
-        [self setImage:[UIImage imageNamed:@"Vote"] forState:UIControlStateNormal];
+        UIImage * i = [[Appsetting sharedInstance] grayscale:[UIImage imageNamed:@"Vote"]];
+        [self setImage:i forState:UIControlStateNormal];
     }
     if ([type isEqualToString:InteractionType_Discuss]) {
         
-        [self setImage:[UIImage imageNamed:@"discussed"] forState:UIControlStateNormal];
+        UIImage * i = [[Appsetting sharedInstance] grayscale:[UIImage imageNamed:@"discussed"]];
+        [self setImage:i forState:UIControlStateNormal];
     }
     if ([type isEqualToString:InteractionType_Responder]) {
-        
-        [self setImage:[UIImage imageNamed:@"answer"] forState:UIControlStateNormal];
+        UIImage * i = [[Appsetting sharedInstance] grayscale:[UIImage imageNamed:@"answer"]];
+        [self setImage:i forState:UIControlStateNormal];
+      
     }
     if ([type isEqualToString:InteractionType_Add]) {
         
-        [self setImage:[UIImage imageNamed:@"add"] forState:UIControlStateNormal];
+        UIImage * i = [[Appsetting sharedInstance] grayscale:[UIImage imageNamed:@"add"]];
+        
+        [self setImage:i forState:UIControlStateNormal];
     }
     if ([type isEqualToString:InteractionType_Data]) {
-        [self setImage:[UIImage imageNamed:@"form"] forState:UIControlStateNormal];
+        UIImage * i = [[Appsetting sharedInstance] grayscale:[UIImage imageNamed:@"form"]];
+        
+        [self setImage:i forState:UIControlStateNormal];
     }
     if ([type isEqualToString:Vote_Stop]) {
-        [self setImage:[UIImage imageNamed:@"stop"] forState:UIControlStateNormal];
+        UIImage * i = [[Appsetting sharedInstance] grayscale:[UIImage imageNamed:@"stop"]];
+        
+        [self setImage:i forState:UIControlStateNormal];
     }
     if ([type isEqualToString:Vote_Stare]) {
-        [self setImage:[UIImage imageNamed:@"start"] forState:UIControlStateNormal];
+        UIImage * i = [[Appsetting sharedInstance] grayscale:[UIImage imageNamed:@"start"]];
+        
+        [self setImage:i forState:UIControlStateNormal];
     }
     if ([type isEqualToString:Vote_delecate]) {
-        [self setImage:[UIImage imageNamed:@"delect"] forState:UIControlStateNormal];
+        UIImage * i = [[Appsetting sharedInstance] grayscale:[UIImage imageNamed:@"delect"]];
+        
+        [self setImage:i forState:UIControlStateNormal];
     }
     if ([type isEqualToString:Vote_Modify]) {
-        [self setImage:[UIImage imageNamed:@"modify"] forState:UIControlStateNormal];
+        UIImage * i = [[Appsetting sharedInstance] grayscale:[UIImage imageNamed:@"modify"]];
+        
+        [self setImage:i forState:UIControlStateNormal];
     }
     if ([type isEqualToString:Test_Scores_Query]) {
-        [self setImage:[UIImage imageNamed:@"查询"] forState:UIControlStateNormal];
+        UIImage * i = [[Appsetting sharedInstance] grayscale:[UIImage imageNamed:@"查询"]];
+        [self setImage:i forState:UIControlStateNormal];
+        
     }
     if ([type isEqualToString:Meeting]) {
-        [self setImage:[UIImage imageNamed:@"会议"] forState:UIControlStateNormal];
+        UIImage * i = [[Appsetting sharedInstance] grayscale:[UIImage imageNamed:@"会议"]];
+        [self setImage:i forState:UIControlStateNormal];
+        
     }
     if ([type isEqualToString:Announcement]) {
-        [self setImage:[UIImage imageNamed:@"通知"] forState:UIControlStateNormal];
+        UIImage * i = [[Appsetting sharedInstance] grayscale:[UIImage imageNamed:@"通知"]];
+        [self setImage:i forState:UIControlStateNormal];
+        
     }
     if ([type isEqualToString:Leave]) {
         [self setImage:[UIImage imageNamed:@"请假"] forState:UIControlStateNormal];
@@ -113,16 +135,18 @@
         [self setImage:[UIImage imageNamed:@"审批"] forState:UIControlStateNormal];
     }
     if ([type isEqualToString:Group]) {
-        [self setImage:[UIImage imageNamed:@"群组"] forState:UIControlStateNormal];
-    }
+        UIImage * i = [[Appsetting sharedInstance] grayscale:[UIImage imageNamed:@"群组"]];
+        [self setImage:i forState:UIControlStateNormal];    }
     if ([type isEqualToString:InteractionType_Sit]) {
-        [self setImage:[UIImage imageNamed:@"座次"] forState:UIControlStateNormal];
-    }
+        UIImage * i = [[Appsetting sharedInstance] grayscale:[UIImage imageNamed:@"座次"]];
+        [self setImage:i forState:UIControlStateNormal];    }
     if ([type isEqualToString:InteractionType_Picture]) {
-        [self setImage:[UIImage imageNamed:@"问答"] forState:UIControlStateNormal];
+        UIImage * i = [[Appsetting sharedInstance] grayscale:[UIImage imageNamed:@"问答"]];
+        [self setImage:i forState:UIControlStateNormal];
     }
     if ([type isEqualToString:Statistical]) {
-        [self setImage:[UIImage imageNamed:@"统计"] forState:UIControlStateNormal];
+        UIImage * i = [[Appsetting sharedInstance] grayscale:[UIImage imageNamed:@"统计"]];
+        [self setImage:i forState:UIControlStateNormal];
     }
     if ([type isEqualToString:CourseCloud]) {
         [self setImage:[UIImage imageNamed:@"云-4"] forState:UIControlStateNormal];

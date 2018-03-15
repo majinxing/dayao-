@@ -150,10 +150,10 @@
             <rect key="frame" x="0.0" y="0.0" width="567" height="88"/>
             <autoresizingMask key="autoresizingMask"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="FpN-KD-7T6" id="yqM-nJ-6nm" customClass="ClassTableViewCell">
-                <rect key="frame" x="0.0" y="0.0" width="567" height="87.5"/>
+                <rect key="frame" x="0.0" y="0.0" width="567" height="88"/>
                 <autoresizingMask key="autoresizingMask"/>
             </tableViewCellContentView>
-            <point key="canvasLocation" x="48.5" y="305"/>
+            <point key="canvasLocation" x="-106" y="318"/>
         </tableViewCell>
     </objects>
 </document>
