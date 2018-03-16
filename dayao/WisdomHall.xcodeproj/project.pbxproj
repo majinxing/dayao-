@@ -65,6 +65,13 @@
 		8B05CB7C1EC2ABFD0063EC20 /* PersonalInfoViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8B05CB7A1EC2ABFD0063EC20 /* PersonalInfoViewController.xib */; };
 		8B064E541F00D8D80004C3D4 /* MJXChatCellTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B064E521F00D8D80004C3D4 /* MJXChatCellTableViewCell.m */; };
 		8B064E551F00D8D80004C3D4 /* MJXChatCellTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8B064E531F00D8D80004C3D4 /* MJXChatCellTableViewCell.xib */; };
+		8B078431205BA559004E826B /* HKClipperHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B078429205BA558004E826B /* HKClipperHelper.m */; };
+		8B078432205BA559004E826B /* HKImageClipperViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B07842B205BA558004E826B /* HKImageClipperViewController.m */; };
+		8B078433205BA559004E826B /* HKClipperVeiw.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B07842E205BA558004E826B /* HKClipperVeiw.m */; };
+		8B078434205BA559004E826B /* UIImage+ClipperExtends.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B078430205BA558004E826B /* UIImage+ClipperExtends.m */; };
+		8B07843F205BA563004E826B /* HKViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B078439205BA563004E826B /* HKViewController.m */; };
+		8B078440205BA563004E826B /* UIBarButtonItem+Extends.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B07843C205BA563004E826B /* UIBarButtonItem+Extends.m */; };
+		8B078441205BA563004E826B /* UIImage+Extends.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B07843E205BA563004E826B /* UIImage+Extends.m */; };
 		8B078B3B200F2C0100336ADB /* DAYCalendarView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B078B30200F2C0000336ADB /* DAYCalendarView.m */; };
 		8B078B3C200F2C0100336ADB /* DAYComponentView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B078B34200F2C0000336ADB /* DAYComponentView.m */; };
 		8B078B3D200F2C0100336ADB /* DAYIndicatorView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B078B36200F2C0000336ADB /* DAYIndicatorView.m */; };
@@ -689,6 +696,20 @@
 		8B064E511F00D8D80004C3D4 /* MJXChatCellTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MJXChatCellTableViewCell.h; sourceTree = "<group>"; };
 		8B064E521F00D8D80004C3D4 /* MJXChatCellTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MJXChatCellTableViewCell.m; sourceTree = "<group>"; };
 		8B064E531F00D8D80004C3D4 /* MJXChatCellTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MJXChatCellTableViewCell.xib; sourceTree = "<group>"; };
+		8B078428205BA558004E826B /* HKClipperHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HKClipperHelper.h; sourceTree = "<group>"; };
+		8B078429205BA558004E826B /* HKClipperHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HKClipperHelper.m; sourceTree = "<group>"; };
+		8B07842A205BA558004E826B /* HKImageClipperViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HKImageClipperViewController.h; sourceTree = "<group>"; };
+		8B07842B205BA558004E826B /* HKImageClipperViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HKImageClipperViewController.m; sourceTree = "<group>"; };
+		8B07842D205BA558004E826B /* HKClipperVeiw.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HKClipperVeiw.h; sourceTree = "<group>"; };
+		8B07842E205BA558004E826B /* HKClipperVeiw.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HKClipperVeiw.m; sourceTree = "<group>"; };
+		8B07842F205BA558004E826B /* UIImage+ClipperExtends.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+ClipperExtends.h"; sourceTree = "<group>"; };
+		8B078430205BA558004E826B /* UIImage+ClipperExtends.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+ClipperExtends.m"; sourceTree = "<group>"; };
+		8B078438205BA563004E826B /* HKViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HKViewController.h; sourceTree = "<group>"; };
+		8B078439205BA563004E826B /* HKViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HKViewController.m; sourceTree = "<group>"; };
+		8B07843B205BA563004E826B /* UIBarButtonItem+Extends.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIBarButtonItem+Extends.h"; sourceTree = "<group>"; };
+		8B07843C205BA563004E826B /* UIBarButtonItem+Extends.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIBarButtonItem+Extends.m"; sourceTree = "<group>"; };
+		8B07843D205BA563004E826B /* UIImage+Extends.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+Extends.h"; sourceTree = "<group>"; };
+		8B07843E205BA563004E826B /* UIImage+Extends.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+Extends.m"; sourceTree = "<group>"; };
 		8B078B2F200F2C0000336ADB /* DAYCalendarView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DAYCalendarView.h; sourceTree = "<group>"; };
 		8B078B30200F2C0000336ADB /* DAYCalendarView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DAYCalendarView.m; sourceTree = "<group>"; };
 		8B078B31200F2C0000336ADB /* Daysquare.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Daysquare.h; sourceTree = "<group>"; };
@@ -1456,6 +1477,74 @@
 			name = ChatCell;
 			sourceTree = "<group>";
 		};
+		8B078426205BA558004E826B /* HKClipper */ = {
+			isa = PBXGroup;
+			children = (
+				8B078427205BA558004E826B /* HKClipperHelper */,
+				8B07842C205BA558004E826B /* HKClipperView */,
+			);
+			path = HKClipper;
+			sourceTree = "<group>";
+		};
+		8B078427205BA558004E826B /* HKClipperHelper */ = {
+			isa = PBXGroup;
+			children = (
+				8B078428205BA558004E826B /* HKClipperHelper.h */,
+				8B078429205BA558004E826B /* HKClipperHelper.m */,
+				8B07842A205BA558004E826B /* HKImageClipperViewController.h */,
+				8B07842B205BA558004E826B /* HKImageClipperViewController.m */,
+			);
+			path = HKClipperHelper;
+			sourceTree = "<group>";
+		};
+		8B07842C205BA558004E826B /* HKClipperView */ = {
+			isa = PBXGroup;
+			children = (
+				8B07842D205BA558004E826B /* HKClipperVeiw.h */,
+				8B07842E205BA558004E826B /* HKClipperVeiw.m */,
+				8B07842F205BA558004E826B /* UIImage+ClipperExtends.h */,
+				8B078430205BA558004E826B /* UIImage+ClipperExtends.m */,
+			);
+			path = HKClipperView;
+			sourceTree = "<group>";
+		};
+		8B078435205BA563004E826B /* General */ = {
+			isa = PBXGroup;
+			children = (
+				8B078436205BA563004E826B /* CommonBase */,
+				8B07843A205BA563004E826B /* Extends */,
+			);
+			path = General;
+			sourceTree = "<group>";
+		};
+		8B078436205BA563004E826B /* CommonBase */ = {
+			isa = PBXGroup;
+			children = (
+				8B078437205BA563004E826B /* HKViewController */,
+			);
+			path = CommonBase;
+			sourceTree = "<group>";
+		};
+		8B078437205BA563004E826B /* HKViewController */ = {
+			isa = PBXGroup;
+			children = (
+				8B078438205BA563004E826B /* HKViewController.h */,
+				8B078439205BA563004E826B /* HKViewController.m */,
+			);
+			path = HKViewController;
+			sourceTree = "<group>";
+		};
+		8B07843A205BA563004E826B /* Extends */ = {
+			isa = PBXGroup;
+			children = (
+				8B07843B205BA563004E826B /* UIBarButtonItem+Extends.h */,
+				8B07843C205BA563004E826B /* UIBarButtonItem+Extends.m */,
+				8B07843D205BA563004E826B /* UIImage+Extends.h */,
+				8B07843E205BA563004E826B /* UIImage+Extends.m */,
+			);
+			path = Extends;
+			sourceTree = "<group>";
+		};
 		8B078B2D200F2BE400336ADB /* Calendar */ = {
 			isa = PBXGroup;
 			children = (
@@ -2029,6 +2118,8 @@
 		8BA224961EADFF2700627A1B /* FrameWork */ = {
 			isa = PBXGroup;
 			children = (
+				8B078426205BA558004E826B /* HKClipper */,
+				8B078435205BA563004E826B /* General */,
 				8B078B2D200F2BE400336ADB /* Calendar */,
 				8B429C091FA8488600084A99 /* SGQRCode */,
 				8B429C021FA8488600084A99 /* SGQRController */,
@@ -2817,6 +2908,7 @@
 				8B429C1C1FA8488700084A99 /* QRCodeGenerateVC.m in Sources */,
 				8BB56D871EB2E2820023DAFF /* RedefineThePasswordViewController.m in Sources */,
 				8B081DFF1F06524000493B81 /* PinyinHelper.m in Sources */,
+				8B078431205BA559004E826B /* HKClipperHelper.m in Sources */,
 				8B081DFA1F06524000493B81 /* ChineseToPinyinResource.m in Sources */,
 				8BCE7CD11F04F07600FE261B /* AFURLSessionManager.m in Sources */,
 				8BFB94611EE6A381004BB963 /* JoinVoteViewController.m in Sources */,
@@ -2851,6 +2943,7 @@
 				8BE877851EBC2E0C00866A34 /* EndTheTestViewController.m in Sources */,
 				8B043A0120206DAF0039195F /* StatisticalResultTableViewCell.m in Sources */,
 				8B2E16F71EBADA5D008B7C57 /* TheMeetingEndedViewController.m in Sources */,
+				8B078433205BA559004E826B /* HKClipperVeiw.m in Sources */,
 				8BA2249D1EADFFA400627A1B /* SignInViewController.m in Sources */,
 				8B045B831F3458CC0021699B /* ZFSeatsModel.m in Sources */,
 				8BF864BF1ECAD97300B7EED4 /* SDWebImageCompat.m in Sources */,
@@ -2900,6 +2993,7 @@
 				8BA224C11EAEF5CB00627A1B /* TheLoginViewController.m in Sources */,
 				8B2E16F21EBADA2F008B7C57 /* TheMeetingNotStartViewController.m in Sources */,
 				8BFB945D1EE53B2D004BB963 /* VoteModel.m in Sources */,
+				8B078432205BA559004E826B /* HKImageClipperViewController.m in Sources */,
 				8BE8776C1EBAF82E00866A34 /* ShareButton.m in Sources */,
 				8BA224611EADF68500627A1B /* AppDelegate.m in Sources */,
 				8B0AF7621F5179F2003858A4 /* FileDowan.m in Sources */,
@@ -2918,12 +3012,14 @@
 				8B087E371FEA564500649094 /* ZFSeatsView.m in Sources */,
 				8B40E11E2058D176000E6C2F /* NavBarNavigationController.m in Sources */,
 				8B078B3E200F2C0100336ADB /* DAYNavigationBar.m in Sources */,
+				8B07843F205BA563004E826B /* HKViewController.m in Sources */,
 				8BF8648C1ECAD21200B7EED4 /* UIScrollView+MJExtension.m in Sources */,
 				8BF864C81ECAD97300B7EED4 /* UIImageView+HighlightedWebCache.m in Sources */,
 				8BA224A71EAE000000627A1B /* PersonalCenterViewController.m in Sources */,
 				8B77250B1F302E6200D1B521 /* FeedBackTableViewCell.m in Sources */,
 				8B1737131EC2F6A700BE3C8F /* NoticeViewController.m in Sources */,
 				8B045B741F3458820021699B /* MJPropertyType.m in Sources */,
+				8B078441205BA563004E826B /* UIImage+Extends.m in Sources */,
 				8BE913991EEF7EF000000282 /* DiscussListTableViewCell.m in Sources */,
 				8BF8648A1ECAD21200B7EED4 /* MJRefreshFooterView.m in Sources */,
 				8BE24D641F8B528600621055 /* GroupModel.m in Sources */,
@@ -2940,6 +3036,7 @@
 				8BF8648D1ECAD21200B7EED4 /* UIScrollView+MJRefresh.m in Sources */,
 				8B51AAA31F3EE71900AE034E /* MeetingChooseSeatViewController.m in Sources */,
 				8BA2245E1EADF68500627A1B /* main.m in Sources */,
+				8B078440205BA563004E826B /* UIBarButtonItem+Extends.m in Sources */,
 				8B9CCC921F17204B001833FD /* SelectPeopleToClassViewController.m in Sources */,
 				8BE877701EBC1CA800866A34 /* TextViewController.m in Sources */,
 				8B2F145A1F5E9D7200438374 /* StudentScoreViewController.m in Sources */,
@@ -2980,6 +3077,7 @@
 				8B0F8E851F59460400993B0B /* QuestionBank.m in Sources */,
 				8B7D5D8C1EB96C430068058E /* CollectionFlowLayout.m in Sources */,
 				8BF82D721EDEC50E00D33473 /* DiscussViewController.m in Sources */,
+				8B078434205BA559004E826B /* UIImage+ClipperExtends.m in Sources */,
 				8BF864BE1ECAD97300B7EED4 /* SDImageCache.m in Sources */,
 				8BE913A41EEFB80000000282 /* MBProgressHUD.m in Sources */,
 				8B045B731F3458820021699B /* MJPropertyKey.m in Sources */,

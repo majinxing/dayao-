@@ -43,7 +43,7 @@ static NSString * cellIdentifier = @"cellIdentifier";
 
     _page1 = 1;
     
-    _page2 = 2;
+    _page2 = 1;
     
     [self addSeachBar];
     
@@ -164,7 +164,7 @@ static NSString * cellIdentifier = @"cellIdentifier";
 }
 -(void)getDataWithPage:(NSInteger)page isHeader:(BOOL)isHeader{
     if (page>_page1) {
-        [self hideHud];
+        [self getSelfCreateMeetingList:page];
         return;
     }
     
@@ -174,8 +174,7 @@ static NSString * cellIdentifier = @"cellIdentifier";
     
     [[NetworkRequest sharedInstance] GET:QueryMeetingSelfCreate dict:dict succeed:^(id data) {
         NSDictionary * dict = [data objectForKey:@"header"];
-        
-        _page1 = [[dict objectForKey:@"lastPage"] intValue];
+        _page1 = [[[data objectForKey:@"body"] objectForKey:@"pages"] intValue];
         
         if ([[dict objectForKey:@"code"] isEqualToString:@"0000"]) {
             if (isHeader) {
@@ -215,6 +214,7 @@ static NSString * cellIdentifier = @"cellIdentifier";
 }
 -(void)getSelfCreateMeetingList:(NSInteger)page{
     if (page>_page2) {
+        [_collection reloadData];
         [self hideHud];
         return;
     }
@@ -222,12 +222,11 @@ static NSString * cellIdentifier = @"cellIdentifier";
     
     NSDictionary * dict = [[NSDictionary alloc] initWithObjectsAndKeys:_userModel.peopleId,@"userId",[UIUtils getTime],@"startTime",@"",@"endTime",[NSString stringWithFormat:@"%ld",(long)page],@"start",[NSString stringWithFormat:@"%@",user.studentId],@"userId",@"20",@"length",_keyWord,@"keywords",nil];
     
-    //    NSDictionary * dict = [[NSDictionary alloc] initWithObjectsAndKeys:_userModel.peopleId,@"userId",_keyWord,@"keywords",[NSString stringWithFormat:@"%ld",(long)page],@"start", nil];
     
     [[NetworkRequest sharedInstance] GET:QueryMeeting dict:dict succeed:^(id data) {
         NSArray * d = [[data objectForKey:@"body"] objectForKey:@"list"];
         
-        _page2 = [[dict objectForKey:@"lastPage"] intValue];
+        _page2 = [[[data objectForKey:@"body"] objectForKey:@"pages"] intValue];
         
         for (int i = 0; i<d.count; i++) {
             MeetingModel * m = [[MeetingModel alloc] init];

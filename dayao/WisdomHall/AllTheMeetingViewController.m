@@ -49,7 +49,7 @@ static NSString * cellIdentifier = @"cellIdentifier";
     
     _page1 = 1;
     
-    _page2 = 2;
+    _page2 = 1;
     
     [self addAlterView];
     
@@ -230,7 +230,7 @@ static NSString * cellIdentifier = @"cellIdentifier";
 #pragma mark 获取数据
 -(void)getDataWithPage:(NSInteger)page isHeader:(BOOL)isHeader{
     if (page>_page1) {
-        [self hideHud];
+        [self getSelfCreateMeetingList:page];
         return;
     }
     _userModel = [[Appsetting sharedInstance] getUsetInfo];
@@ -241,7 +241,7 @@ static NSString * cellIdentifier = @"cellIdentifier";
         
         NSDictionary * dict = [data objectForKey:@"header"];
         
-        _page1 = [[dict objectForKey:@"lastPage"] intValue];
+        _page1 = [[[data objectForKey:@"body"] objectForKey:@"pages"] intValue];
         
         if ([[dict objectForKey:@"code"] isEqualToString:@"0000"]) {
             if (isHeader) {
@@ -283,6 +283,7 @@ static NSString * cellIdentifier = @"cellIdentifier";
 }
 -(void)getSelfCreateMeetingList:(NSInteger)page{
     if (page>_page2) {
+        [_collection reloadData];
         [self hideHud];
         return;
     }
@@ -293,7 +294,7 @@ static NSString * cellIdentifier = @"cellIdentifier";
     [[NetworkRequest sharedInstance] GET:QueryMeeting dict:dict succeed:^(id data) {
         NSArray * d = [[data objectForKey:@"body"] objectForKey:@"list"];
         
-        _page2 = [[dict objectForKey:@"lastPage"] intValue];
+        _page2 = [[[data objectForKey:@"body"] objectForKey:@"pages"] intValue];
         
         for (int i = 0; i<d.count; i++) {
             MeetingModel * m = [[MeetingModel alloc] init];
