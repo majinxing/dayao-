@@ -15,6 +15,7 @@
 @property (strong, nonatomic) IBOutlet UILabel *workNumber;
 
 @property (weak, nonatomic) IBOutlet UIImageView *setingImage;
+@property (strong, nonatomic) IBOutlet UIButton *outBtn;
 
 
 @property (nonatomic,strong)NSArray * textAry;
@@ -29,6 +30,7 @@
     _user = [[Appsetting sharedInstance] getUsetInfo];
     _headImage.layer.masksToBounds = YES;
     _headImage.layer.cornerRadius = 55;
+    _outBtn.backgroundColor = [[Appsetting sharedInstance] getThemeColor];
     // Initialization code
 }
 + (instancetype)tempTableViewCellWith:(UITableView *)tableView indexPath:(NSIndexPath *)indexPath {

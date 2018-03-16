@@ -7,7 +7,7 @@
 //
 
 #import "StatisticalTableViewCell.h"
-
+#import "DYHeader.h"
 
 @interface StatisticalTableViewCell()
 @property (strong, nonatomic) IBOutlet UILabel *titleLabel;
@@ -23,6 +23,7 @@
 
 - (void)awakeFromNib {
     [super awakeFromNib];
+    _selectBtn.backgroundColor = [[ThemeTool shareInstance] getThemeColor];
     // Initialization code
 }
 -(void)addContentView:(NSString *)titleStr withText:(NSString *)textStr{
@@ -31,11 +32,12 @@
 }
 -(void)addContentThirdView:(int)temp{
     if (temp == 0) {
-        _departmentImage.image = [UIImage imageNamed:@"方形选中-fill"];
-        _classImage.image = [UIImage imageNamed:@"方形未选中"];
+        
+        _departmentImage.image = [[Appsetting sharedInstance] grayscale:[UIImage imageNamed:@"方形选中-fill"]];
+        _classImage.image = [[Appsetting sharedInstance] grayscale:[UIImage imageNamed:@"方形未选中"]];
     }else{
-        _departmentImage.image = [UIImage imageNamed:@"方形未选中"];
-        _classImage.image = [UIImage imageNamed:@"方形选中-fill"];
+        _departmentImage.image = [[Appsetting sharedInstance] grayscale:[UIImage imageNamed:@"方形未选中"]];
+        _classImage.image = [[Appsetting sharedInstance] grayscale:[UIImage imageNamed:@"方形选中-fill"]];
     }
 }
 - (IBAction)selectBtnPressed:(UIButton *)sender {

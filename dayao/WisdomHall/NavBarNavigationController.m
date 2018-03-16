@@ -9,6 +9,7 @@
 #import "NavBarNavigationController.h"
 #import "DYHeader.h"
 
+
 @implementation NavBarNavigationController
 -(void)setColor{
     self.navigationBar.barTintColor = [[ThemeTool shareInstance] getThemeColor];

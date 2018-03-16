@@ -15,7 +15,7 @@
             <rect key="frame" x="0.0" y="0.0" width="408" height="110"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
-                <rect key="frame" x="0.0" y="0.0" width="408" height="109.5"/>
+                <rect key="frame" x="0.0" y="0.0" width="408" height="110"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="时间" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="koa-06-UPZ">
@@ -44,7 +44,7 @@
             <rect key="frame" x="0.0" y="0.0" width="408" height="141"/>
             <autoresizingMask key="autoresizingMask"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="79n-wC-OlH" id="4UQ-JU-zSV">
-                <rect key="frame" x="0.0" y="0.0" width="408" height="140.5"/>
+                <rect key="frame" x="0.0" y="0.0" width="408" height="141"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ic_default_avatar" translatesAutoresizingMaskIntoConstraints="NO" id="kxV-9w-8fV">
@@ -119,7 +119,7 @@
             <rect key="frame" x="0.0" y="0.0" width="402" height="49"/>
             <autoresizingMask key="autoresizingMask"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="EpJ-3e-0ic" id="s7X-c0-g1p">
-                <rect key="frame" x="0.0" y="0.0" width="402" height="48.5"/>
+                <rect key="frame" x="0.0" y="0.0" width="402" height="49"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="yanzheng_bu" translatesAutoresizingMaskIntoConstraints="NO" id="Gf3-dD-PGP">
@@ -164,7 +164,7 @@
             <rect key="frame" x="0.0" y="0.0" width="398" height="70"/>
             <autoresizingMask key="autoresizingMask"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="L8F-57-XJt" id="Ga2-q4-THa">
-                <rect key="frame" x="0.0" y="0.0" width="398" height="69.5"/>
+                <rect key="frame" x="0.0" y="0.0" width="398" height="70"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="更换主题" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="das-wN-KMD">
@@ -201,7 +201,7 @@
             <rect key="frame" x="0.0" y="0.0" width="408" height="92"/>
             <autoresizingMask key="autoresizingMask"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="akF-kW-V29" id="dbK-cx-6JU">
-                <rect key="frame" x="0.0" y="0.0" width="408" height="91.5"/>
+                <rect key="frame" x="0.0" y="0.0" width="408" height="92"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="SWe-4J-Rtv">
@@ -222,6 +222,9 @@
                     <constraint firstItem="SWe-4J-Rtv" firstAttribute="leading" secondItem="dbK-cx-6JU" secondAttribute="leading" constant="20" id="naB-Y5-nIJ"/>
                 </constraints>
             </tableViewCellContentView>
+            <connections>
+                <outlet property="outBtn" destination="SWe-4J-Rtv" id="Ejc-2f-Rk9"/>
+            </connections>
             <point key="canvasLocation" x="70" y="711"/>
         </tableViewCell>
     </objects>
