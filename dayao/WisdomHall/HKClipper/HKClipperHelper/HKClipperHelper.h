@@ -18,7 +18,7 @@
 + (instancetype)shareManager;
 @property (nonatomic, copy) void(^clippedImageHandler)(UIImage *img);
 @property (nonatomic, assign) CGSize clippedImgSize;
-@property (nonatomic, weak) NavBarNavigationController *nav;
+@property (nonatomic, weak) UINavigationController *nav;
 @property (nonatomic, assign) ClipperType clipperType;
 @property (nonatomic, assign) BOOL systemEditing;
 @property (nonatomic, assign) BOOL isSystemType;

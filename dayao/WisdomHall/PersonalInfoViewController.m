@@ -10,6 +10,7 @@
 #import "PersonalDataTableViewCell.h"
 #import "DYHeader.h"
 #import "HKClipperHelper.h"
+#import "NavBarNavigationController.h"
 
 @interface PersonalInfoViewController ()<UITableViewDelegate,UITableViewDataSource,UITextFieldDelegate,PersonalDataTableViewCellDelegate,UINavigationControllerDelegate,UIImagePickerControllerDelegate>
 @property (nonatomic,strong)UITableView * tableView;
