@@ -20,7 +20,7 @@
     NSString *docPath = [docArray lastObject];
     NSString *sqliteName = [NSString stringWithFormat:@"%@.sqlite",name];
     NSString *sqlitePath = [docPath stringByAppendingPathComponent:sqliteName];
-    NSLog(@"数据库的存储路径\n %@",sqlitePath);
+//    NSLog(@"数据库的存储路径\n %@",sqlitePath);
     //初始化数据库
     return [FMDatabase databaseWithPath:sqlitePath];
 }

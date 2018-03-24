@@ -30,11 +30,13 @@
 #import "JoinCours.h"
 #import "WorkingLoginViewController.h"
 #import "ClassTableViewCell.h"
+#import "SynchronousCourseView.h"
 
 
 static NSString *cellIdentifier = @"cellIdentifier";
 
-@interface SignInViewController ()<AlterViewDelegate,JoinCoursDelegate,UITableViewDelegate,UITableViewDataSource,ClassTableViewCellDelegate>
+@interface SignInViewController ()<AlterViewDelegate,JoinCoursDelegate,UITableViewDelegate,UITableViewDataSource,ClassTableViewCellDelegate,SynchronousCourseViewDelegate>
+
 //@property (nonatomic,strong) UICollectionView * collection;
 @property (nonatomic,strong) UserModel * userModel;
 @property (nonatomic,strong) NSMutableArray * classAry;
@@ -51,6 +53,7 @@ static NSString *cellIdentifier = @"cellIdentifier";
 
 @property (nonatomic,strong)NSMutableDictionary * dict;
 @property (nonatomic,strong)NSDictionary * dictDay;
+@property (nonatomic,strong)SynchronousCourseView * synCourseView;
 @end
 
 @implementation SignInViewController
@@ -60,11 +63,11 @@ static NSString *cellIdentifier = @"cellIdentifier";
     self.page = 0;
     self.temp = 0;
     self.view.backgroundColor = [UIColor whiteColor];//RGBA_COLOR(231, 231, 231, 1);
-//    UIImageView * i = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, APPLICATION_WIDTH, APPLICATION_HEIGHT)];
-//
-//    i.image = [UIImage imageNamed:@"bg3"];
-//
-//    [self.view addSubview:i];
+
+    _synCourseView = [[SynchronousCourseView alloc] initWithFrame: CGRectMake(0, 0, APPLICATION_WIDTH, 0)];
+    _synCourseView.delegate = self;
+    
+//    [self.view addSubview:_synCourseView];
     
     _classAry = [NSMutableArray arrayWithCapacity:10];
     
@@ -300,7 +303,7 @@ static NSString *cellIdentifier = @"cellIdentifier";
 
     self.title = @"本周课程";
     if ([[NSString stringWithFormat:@"%@",_userModel.identity] isEqualToString:@"1"]) {
-        UIBarButtonItem *myButton = [[UIBarButtonItem alloc] initWithTitle:@"创建课程" style:UIBarButtonItemStylePlain target:self action:@selector(createAcourse)];
+        UIBarButtonItem *myButton = [[UIBarButtonItem alloc] initWithTitle:@"更多" style:UIBarButtonItemStylePlain target:self action:@selector(createAcourse)];
         [myButton setTintColor:[UIColor whiteColor]];
         self.navigationItem.rightBarButtonItem = myButton;
     }else if ([[NSString stringWithFormat:@"%@",_userModel.identity] isEqualToString:@"2"]){
@@ -309,7 +312,7 @@ static NSString *cellIdentifier = @"cellIdentifier";
 
         self.navigationItem.rightBarButtonItem = myButton;
     }else{
-        UIBarButtonItem *myButton = [[UIBarButtonItem alloc] initWithTitle:@"创建课程" style:UIBarButtonItemStylePlain target:self action:@selector(createAcourse)];
+        UIBarButtonItem *myButton = [[UIBarButtonItem alloc] initWithTitle:@"更多" style:UIBarButtonItemStylePlain target:self action:@selector(createAcourse)];
         [myButton setTintColor:[UIColor whiteColor]];
 
         self.navigationItem.rightBarButtonItem = myButton;
@@ -351,7 +354,29 @@ static NSString *cellIdentifier = @"cellIdentifier";
  *  创建课程
  **/
 -(void)createAcourse{
-    [self setAlterAction];
+    UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"提示" message:nil preferredStyle:  UIAlertControllerStyleActionSheet];
+    //分别按顺序放入每个按钮；
+    [alert addAction:[UIAlertAction actionWithTitle:@"同步课程" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        //点击按钮的响应事件；
+        [UIView animateWithDuration:2.5 animations:^{
+            
+            _synCourseView.frame = CGRectMake(0, 0, APPLICATION_WIDTH, APPLICATION_HEIGHT);
+            [self.view addSubview:_synCourseView];
+        }completion:^(BOOL finished) {
+            
+            
+        }];
+    }]];
+    //分别按顺序放入每个按钮；
+    [alert addAction:[UIAlertAction actionWithTitle:@"创建课程" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        //点击按钮的响应事件；
+        [self setAlterAction];
+    }]];
+    [alert addAction:[UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleDestructive handler:^(UIAlertAction * _Nonnull action) {
+        //点击按钮的响应事件；
+    }]];
+    //弹出提示框；
+    [self presentViewController:alert animated:true completion:nil];
 }
 -(void)setAlterAction{
     UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"提示" message:nil preferredStyle:  UIAlertControllerStyleActionSheet];
@@ -419,6 +444,32 @@ static NSString *cellIdentifier = @"cellIdentifier";
     // Dispose of any resources that can be recreated.
 }
 
+#pragma mark SynchronousCourseViewDelegate
+-(void)submitDelegateWithAccount:(NSString *)count withPassword:(NSString *)password{
+    
+    NSDictionary * dict = [[NSDictionary alloc] initWithObjectsAndKeys:count,@"loginStr",password,@"password",[NSString stringWithFormat:@"%@",_userModel.school],@"universityId", nil];
+  
+    [self showHudInView:self.view hint:NSLocalizedString(@"正在加载数据", @"Load data...")];
+    [[NetworkRequest sharedInstance] POST:SyncCourse dict:dict succeed:^(id data) {
+        NSString * code  = [[data objectForKey:@"header"] objectForKey:@"code"];
+        if (![UIUtils isBlankString:code]) {
+            if ([code isEqualToString:@"0000"]) {
+                [self headerRereshing];
+                [_synCourseView removeFromSuperview];
+            }
+        }else{
+            [UIUtils showInfoMessage:@"同步课程失败，请稍后再试"];
+        }
+          [self hideHud];
+    } failure:^(NSError *error) {
+        [UIUtils showInfoMessage:@"同步课程失败，请稍后再试"];
+        [_synCourseView removeFromSuperview];
+        [self hideHud];
+    }];
+}
+-(void)outViewDelegate{
+    [_synCourseView removeFromSuperview];
+}
 #pragma mark UITableViewdelegate
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
     return 1;

@@ -61,7 +61,9 @@
         cell.workNo.textColor = [UIColor blackColor];
         UserModel * user = [[Appsetting sharedInstance] getUsetInfo];
         if (![UIUtils isBlankString:[NSString stringWithFormat:@"%@",user.userHeadImageId]]) {
-            [cell.headImage sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@?resourceId=%@",BaseURL,FileDownload,user.userHeadImageId]] placeholderImage:[UIImage imageNamed:@"placeholder.png"]];
+            UserModel * user = [[Appsetting sharedInstance] getUsetInfo];
+            NSString * baseUrl = user.host;
+            [cell.headImage sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@/%@?resourceId=%@",baseUrl,FileDownload,user.userHeadImageId]] placeholderImage:[UIImage imageNamed:@"placeholder.png"]];
             cell.headImage.frame = CGRectMake(18, 18, 110, 100);
         }
         

@@ -33,6 +33,7 @@
 #import "PhotoPromptBox.h"
 #import "AlterView.h"
 #import "AllOrPersonalDataViewController.h"
+#import "HomeWorkViewController.h"
 
 @interface CourseDetailsViewController ()<UIActionSheetDelegate,ShareViewDelegate,UIAlertViewDelegate,UITableViewDelegate,UITableViewDataSource,MeetingTableViewCellDelegate,UINavigationControllerDelegate,UIImagePickerControllerDelegate,AlterViewDelegate>
 
@@ -491,7 +492,13 @@
         [self.navigationController pushViewController: d animated:YES];
     }else if ([platform isEqualToString:InteractionType_Sit]){
         [self getCourseRoomSeat];
-    }else if ([platform isEqualToString:InteractionType_Add]){
+    }else if ([platform isEqualToString:InteractionType_Homework]){
+        HomeWorkViewController * vc = [[HomeWorkViewController alloc] init];
+        self.hidesBottomBarWhenPushed = YES;
+        vc.c = _c;
+        [self.navigationController pushViewController:vc animated:YES];
+    }
+    else if ([platform isEqualToString:InteractionType_Add]){
         NSLog(@"更多");
     }
 }

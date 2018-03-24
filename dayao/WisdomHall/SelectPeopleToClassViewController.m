@@ -40,6 +40,9 @@
 @property (nonatomic,strong) UserModel * user;
 @property (nonatomic,strong) SchoolModel * school;
 
+@property (nonatomic,assign) int page1;//记录分页下限的
+
+
 @end
 
 @implementation SelectPeopleToClassViewController
@@ -48,11 +51,13 @@
     [super viewDidLoad];
     _pickAry = [NSMutableArray arrayWithCapacity:1];
     _dataAry = [NSMutableArray arrayWithCapacity:1];
-    
+    _page1 = 1;
     if (!_selectPeople) {
         _selectPeople = [NSMutableArray arrayWithCapacity:1];
 
     }
+    
+    [self setNavigationTitle];
     
     _user = [[Appsetting sharedInstance] getUsetInfo];
     _school = [[SchoolModel alloc] init];
@@ -60,6 +65,13 @@
     [self addTableView];
     [self addButton];
     // Do any additional setup after loading the view from its nib.
+}
+/**
+ *  显示navigation的标题
+ **/
+-(void)setNavigationTitle{
+    [UIApplication sharedApplication].statusBarStyle = UIStatusBarStyleLightContent;
+    self.title = @"";
 }
 - (void)returnText:(RreturnTextBlock)block {
     self.returnTextBlock = block;
@@ -229,9 +241,19 @@
     if (![UIUtils isBlankString:[NSString stringWithFormat:@"%@",[NSString stringWithFormat:@"%@",_school.sclassId]]]){
         [d setObject:[NSString stringWithFormat:@"%@",_school.sclassId] forKey:@"classId"];
     }
-    
+    if (aPage>_page1) {
+        if (aIsHeader) {
+            [_dataAry removeAllObjects];
+            [_tableView headerEndRefreshing];
+        }else{
+            [_tableView footerEndRefreshing];
+        }
+        return;
+    }
     
     [[NetworkRequest sharedInstance] GET:QueryPeople dict:d succeed:^(id data) {
+        _page1 = [[[data objectForKey:@"body"] objectForKey:@"pages"] intValue];
+
         NSArray * aty = [[data objectForKey:@"body"] objectForKey:@"list"];
         if (aIsHeader) {
             [_dataAry removeAllObjects];
@@ -255,6 +277,12 @@
         }
         [_tableView reloadData];
     } failure:^(NSError *error) {
+        if (aIsHeader) {
+            [_dataAry removeAllObjects];
+            [_tableView headerEndRefreshing];
+        }else{
+            [_tableView footerEndRefreshing];
+        }
         UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"查询失败" message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: nil];
         [alertView show];
     }];
@@ -408,6 +436,8 @@
         
         [[NetworkRequest sharedInstance] GET:SchoolDepartMent dict:dict succeed:^(id data) {
             //            NSLog(@"%@",data);
+            _page1 = [[[data objectForKey:@"body"] objectForKey:@"pages"] intValue];
+
             NSArray * ary = [data objectForKey:@"body"];
             [_pickAry removeAllObjects];
             for (int i = 0; i<ary.count; i++) {

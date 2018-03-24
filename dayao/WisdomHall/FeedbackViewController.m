@@ -52,7 +52,7 @@
   //  [self.view endEditing:YES];
 
     for (int i = 0; i<_textAry.count; i++) {
-        if ([UIUtils isBlankString:_textAry[i]]) {
+         if ([UIUtils isBlankString:_textAry[i]]) {
             UIAlertView * alter = [[UIAlertView alloc] initWithTitle:nil message:@"请把信息填写完整在提交" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil];
             [alter show];
             return;

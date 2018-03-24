@@ -19,6 +19,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor whiteColor];
+    [self setNavigationTitle];
     [self getData];
     [self addTableView];
     // Do any additional setup after loading the view from its nib.
@@ -47,6 +48,20 @@
 
 
     }];
+}
+/**
+ *  显示navigation的标题
+ **/
+-(void)setNavigationTitle{
+    [UIApplication sharedApplication].statusBarStyle = UIStatusBarStyleLightContent;
+    
+    self.title = @"创建课堂";
+    UIBarButtonItem *myButton = [[UIBarButtonItem alloc] initWithTitle:@"保存" style:UIBarButtonItemStylePlain target:self action:@selector(createAcourse)];
+    [myButton setTintColor:[UIColor whiteColor]];
+    self.navigationItem.rightBarButtonItem = myButton;
+    
+    
+    
 }
 -(void)addTableView{
     _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 64, APPLICATION_WIDTH, APPLICATION_HEIGHT-64) style:UITableViewStylePlain];

@@ -95,6 +95,7 @@
 #define InteractionType_Add         @"更多"
 #define InteractionType_Sit         @"座次"
 #define InteractionType_Picture     @"问答"
+#define InteractionType_Homework    @"作业"
 
 #define Vote_delecate               @"删除"
 #define Vote_Modify                 @"修改"
@@ -134,6 +135,8 @@
 
 //接口 192.168.1.81:8080 api.dayaokeji.com 内网：xtuapi.dayaokeji.com
 #define BaseURL                 @"http://api.dayaokeji.com/"
+
+#define SchoolList              @"http://www.dayaokeji.com/ldxy_serverlist.html" //   获取学校数据
 
 #define Login                   @"course/user/login"                //登录
 
@@ -273,11 +276,13 @@
 
 #define QuertyClass             @"course/course/statisticsByCourse" //按照课程查询
 
+#define SyncCourse              @"course/sync/course"               //同步课程信息
 
+#define CourseWorkList          @"course/classwork/list"            //作业列表
 
+#define CreateHomework            @"course/classwork/create"          //创建作业
 
-
-
+#define DeleteHomework          @"course/classwork/delete"          //删除作业
 
 
 

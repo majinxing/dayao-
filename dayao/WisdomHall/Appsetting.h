@@ -9,6 +9,8 @@
 #import <Foundation/Foundation.h>
 #import "UserModel.h"
 #import "DYHeader.h"
+#import "SchoolModel.h"
+
 
 @interface Appsetting : NSObject
 @property NSUserDefaults * mySettingData;
@@ -31,4 +33,8 @@
 -(NSString*)toStrByUIColor:(UIColor*)color;
 //改变切图颜色
 -(UIImage*)grayscale:(UIImage*)anImage;
+//获取学校数据
+-(SchoolModel *)getUserSchool;
+//存储学校数据
+-(void)saveUserSchool:(SchoolModel *)school;
 @end
