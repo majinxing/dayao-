@@ -180,6 +180,15 @@
     [_mySettingData synchronize];
     
 }
+-(void)setAppState{
+    [_mySettingData setValue:@"0" forKey:@"appState"];
+    [_mySettingData synchronize];
+}
+-(NSString *)getAppState{
+    [_mySettingData setValue:@"0" forKey:@"appState"];
+    [_mySettingData synchronize];
+    return nil;
+}
 -(void)insertedIntoNoticeTable:(NSString *)noticeTime{
     
     _db = [FMDBTool createDBWithName:SQLITE_NAME];

@@ -36,7 +36,7 @@
     [self addSubview:view1];
     
     UILabel * titleLable = [[UILabel alloc] initWithFrame:CGRectMake(10, 20, view1.frame.size.width-20, 40)];
-    titleLable.text = @"请输入您登陆学校教务处的账号和密码，以便我们同步您的课程数据";
+    titleLable.text = @"请输入湘潭大学信息门户的账号和密码，以便我们同步您的课程数据";
     titleLable.numberOfLines = 0;
     titleLable.font = [UIFont systemFontOfSize:14];
     titleLable.textAlignment = NSTextAlignmentCenter;
@@ -50,7 +50,7 @@
     accountLab.alpha = 0.7;
     [view1 addSubview:accountLab];
     
-    _accountFile = [[UITextField alloc] initWithFrame:CGRectMake(CGRectGetMaxX(accountLab.frame)+10, CGRectGetMaxY(titleLable.frame)+20, 80, 20)];
+    _accountFile = [[UITextField alloc] initWithFrame:CGRectMake(CGRectGetMaxX(accountLab.frame)+10, CGRectGetMaxY(titleLable.frame)+20, 200, 20)];
     
     _accountFile.placeholder = @"账号";
     _accountFile.font = [UIFont systemFontOfSize:14];

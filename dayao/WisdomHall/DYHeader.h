@@ -118,6 +118,8 @@
 
 #define ThemeColorChangeNotification @"ThemeColorChangeNotification"//更改主题的通知
 
+#define InApp                  @"InApp"                            //app是否在前台通知
+#define OutApp                 @"OutApp"                           //app是否在前台通知
 //数据库的名字
 #define SQLITE_NAME            @"Dayao"
 
@@ -280,11 +282,11 @@
 
 #define CourseWorkList          @"course/classwork/list"            //作业列表
 
-#define CreateHomework            @"course/classwork/create"          //创建作业
+#define CreateHomework          @"course/classwork/create"          //创建作业
 
 #define DeleteHomework          @"course/classwork/delete"          //删除作业
 
-
+#define ChangeAppState          @"course/user/changeAppState"       //app状态改变
 
 
 

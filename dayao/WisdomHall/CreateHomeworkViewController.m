@@ -10,9 +10,10 @@
 #import "HomeworkCreateTableViewCell.h"
 #import "DYHeader.h"
 #import "CalendarViewController.h"
+#import "ImageBrowserViewController.h"
+#import "imageBigView.h"
 
-
-@interface CreateHomeworkViewController ()<UITableViewDelegate,UITableViewDataSource,HomeworkCreateTableViewCellDelegate,UINavigationControllerDelegate,UIImagePickerControllerDelegate>
+@interface CreateHomeworkViewController ()<UITableViewDelegate,UITableViewDataSource,HomeworkCreateTableViewCellDelegate,UINavigationControllerDelegate,UIImagePickerControllerDelegate,ImageBrowserViewControllerDelegate,imageBigViewDelegate>
 @property (nonatomic,strong) UITableView * tableView;
 @property (nonatomic,strong) NSMutableArray * imageAry;
 @property (nonatomic,strong) UserModel * user;
@@ -21,6 +22,9 @@
 @property (nonatomic,strong) NSString * homeworkId;
 @property (nonatomic,assign) int imageNum;
 @property (nonatomic,strong) NSMutableArray * failureAry;
+@property (nonatomic,weak) UIViewController *handleVC;
+@property (nonatomic,strong) imageBigView * v;
+
 @end
 
 @implementation CreateHomeworkViewController
@@ -63,6 +67,10 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
+#pragma mark imageBigViewDelegate
+-(void)outViewDelegate{
+    [_v removeFromSuperview];
+}
 #pragma mark HomeworkCreateTableViewCellDelegate
 -(void)textViewDidChangeDelegate:(UITextView *)textView{
     _homeworkStr = textView.text;
@@ -72,8 +80,17 @@
     _imageNum = (int)btn.tag;
     if (_edit) {
         [self getPicture];
+    }else{
+        if (!_v) {
+            _v = [[imageBigView alloc] initWithFrame:CGRectMake(0, 0, APPLICATION_WIDTH, APPLICATION_HEIGHT)];
+        }
+        
+        [_v addImageView:_homeworkModel.homeworkAry[_imageNum -2]];
+        _v.delegate = self;
+        [self.view addSubview:_v];
     }
 }
+
 -(void)selectTimeBtnPressedDelegate{
     CalendarViewController * vc = [[CalendarViewController alloc] init];
     self.hidesBottomBarWhenPushed = YES;
@@ -99,23 +116,31 @@
     NSDictionary * dict = [[NSDictionary alloc] initWithObjectsAndKeys:_homeworkStr,@"content",@"作业",@"describe",[NSString stringWithFormat:@"%@",_c.sclassId],@"courseId",[NSString stringWithFormat:@"%@ 00:00:00",_endTime],@"finishTime", nil];
     
     [[NetworkRequest sharedInstance] POST:CreateHomework dict:dict succeed:^(id data) {
-        NSLog(@"%@",data);
         NSString *code = [[data objectForKey:@"header"] objectForKey:@"code"];
         if (![UIUtils isBlankString:code]) {
             if ([code isEqualToString:@"0000"]) {
                 _homeworkId = [data objectForKey:@"body"];
                 if (_imageAry.count>0) {
                     [self sendImageWithImage:_imageAry[0]];
+                }else{
+                    [self hideHud];
+                    
+                    [UIUtils showInfoMessage:@"作业创建成功"];
+
+                    [self.navigationController popViewControllerAnimated:YES];
                 }
             }else{
                 [UIUtils showInfoMessage:@"作业创建失败"];
+                [self hideHud];
             }
         }else{
             [UIUtils showInfoMessage:@"作业创建失败"];
+            [self hideHud];
         }
         
     } failure:^(NSError *error) {
-        
+        [UIUtils showInfoMessage:@"作业创建失败"];
+        [self hideHud];
     }];
 }
 -(void)sendImageWithImage:(UIImage *)image{
@@ -138,6 +163,7 @@
                 }else{
                      [self hideHud];
                     [UIUtils showInfoMessage:@"上传成功"];
+                    [self.navigationController popViewControllerAnimated:YES];
                 }
             }
             
@@ -154,6 +180,7 @@
                 }else{
                      [self hideHud];
                     [UIUtils showInfoMessage:@"上传成功"];
+                    [self.navigationController popViewControllerAnimated:YES];
                 }
             }
         }
@@ -170,6 +197,7 @@
             }else{
                  [self hideHud];
                 [UIUtils showInfoMessage:@"上传成功"];
+                [self.navigationController popViewControllerAnimated:YES];
             }
         }
     }];

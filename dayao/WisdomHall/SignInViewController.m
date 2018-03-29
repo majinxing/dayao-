@@ -52,7 +52,9 @@ static NSString *cellIdentifier = @"cellIdentifier";
 @property (nonatomic,strong)UITableView * tableView;
 
 @property (nonatomic,strong)NSMutableDictionary * dict;
-@property (nonatomic,strong)NSDictionary * dictDay;
+
+@property (nonatomic,strong)NSDictionary * dictDay;//获取本周周一和周末的日期
+
 @property (nonatomic,strong)SynchronousCourseView * synCourseView;
 @end
 
@@ -61,20 +63,21 @@ static NSString *cellIdentifier = @"cellIdentifier";
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.page = 0;
+    
     self.temp = 0;
+    
     self.view.backgroundColor = [UIColor whiteColor];//RGBA_COLOR(231, 231, 231, 1);
 
     _synCourseView = [[SynchronousCourseView alloc] initWithFrame: CGRectMake(0, 0, APPLICATION_WIDTH, 0)];
-    _synCourseView.delegate = self;
     
-//    [self.view addSubview:_synCourseView];
+    _synCourseView.delegate = self;
     
     _classAry = [NSMutableArray arrayWithCapacity:10];
     
     _userModel = [[Appsetting sharedInstance] getUsetInfo];
     
     _dictDay = [UIUtils getWeekTimeWithType:nil];
-    //    NSLog(@"%@",dict);
+    
     
     [self addAlterView];
     
@@ -88,6 +91,7 @@ static NSString *cellIdentifier = @"cellIdentifier";
     // 1.注册通知
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(UpdateTheClassPage) name:@"UpdateTheClassPage" object:nil];
+    
     [UIApplication sharedApplication].statusBarStyle = UIStatusBarStyleLightContent;
 
     // Do any additional setup after loading the view from its nib.
@@ -182,7 +186,7 @@ static NSString *cellIdentifier = @"cellIdentifier";
             }
         
             [self getSelfJoinClass:page];
-//            [self hideHud];
+
         }else if ([str isEqualToString:@"无效token"]){
             [self hideHud];
             dispatch_async(dispatch_get_main_queue(), ^{

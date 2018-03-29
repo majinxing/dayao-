@@ -23,6 +23,9 @@
 @end
 
 @implementation DYTabBarViewController
+-(void)dealloc{
+    
+}
 /**
  *  单例初始化
  */
@@ -49,6 +52,8 @@
     
     [UIUtils getInternetDate];
     
+    [[NSNotificationCenter defaultCenter] postNotificationName:InApp object:nil];
+
     // Do any additional setup after loading the view from its nib.
 }
 -(void)selectApp{

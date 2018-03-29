@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		8B01482F206650D70037A107 /* imageBigView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B01482E206650D70037A107 /* imageBigView.m */; };
 		8B0207151F8DA4DB00CE3B8C /* NoticeSwiftViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B0207131F8DA4DB00CE3B8C /* NoticeSwiftViewController.swift */; };
 		8B0207161F8DA4DB00CE3B8C /* NoticeSwiftViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8B0207141F8DA4DB00CE3B8C /* NoticeSwiftViewController.xib */; };
 		8B027A141EF8F30100600E18 /* TheMeetingInfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B027A121EF8F30100600E18 /* TheMeetingInfoViewController.m */; };
@@ -605,6 +606,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		8B01482D206650D70037A107 /* imageBigView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = imageBigView.h; sourceTree = "<group>"; };
+		8B01482E206650D70037A107 /* imageBigView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = imageBigView.m; sourceTree = "<group>"; };
 		8B0207121F8DA4DA00CE3B8C /* WisdomHall-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "WisdomHall-Bridging-Header.h"; sourceTree = "<group>"; };
 		8B0207131F8DA4DB00CE3B8C /* NoticeSwiftViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NoticeSwiftViewController.swift; sourceTree = "<group>"; };
 		8B0207141F8DA4DB00CE3B8C /* NoticeSwiftViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = NoticeSwiftViewController.xib; sourceTree = "<group>"; };
@@ -1682,6 +1685,8 @@
 				8B084DCE2064DBB3004B9C7C /* HomeworkCreateTableViewCell.h */,
 				8B084DCF2064DBB3004B9C7C /* HomeworkCreateTableViewCell.m */,
 				8B084DD02064DBB3004B9C7C /* HomeworkCreateTableViewCell.xib */,
+				8B01482D206650D70037A107 /* imageBigView.h */,
+				8B01482E206650D70037A107 /* imageBigView.m */,
 			);
 			name = homeWorkView;
 			sourceTree = "<group>";
@@ -3150,6 +3155,7 @@
 				8B078434205BA559004E826B /* UIImage+ClipperExtends.m in Sources */,
 				8BF864BE1ECAD97300B7EED4 /* SDImageCache.m in Sources */,
 				8BE913A41EEFB80000000282 /* MBProgressHUD.m in Sources */,
+				8B01482F206650D70037A107 /* imageBigView.m in Sources */,
 				8B045B731F3458820021699B /* MJPropertyKey.m in Sources */,
 				8BF864711ECACAE800B7EED4 /* FMDatabaseQueue.m in Sources */,
 				8B0439FC2020691C0039195F /* StatisticalResultViewController.m in Sources */,
@@ -3424,6 +3430,7 @@
 					"$(PROJECT_DIR)/WisdomHall",
 					"$(PROJECT_DIR)/SDK/Required",
 					"$(PROJECT_DIR)/SDK/SMSSDK",
+					"$(PROJECT_DIR)/WisdomHall/XinSuiFang/Rong_Cloud_iOS_IMLib_SDK_v2_7_3_stable",
 				);
 				GCC_PREFIX_HEADER = "";
 				HEADER_SEARCH_PATHS = "$(PROJECT_DIR)/WisdomHall/Bugly.framework";
@@ -3438,6 +3445,7 @@
 					"$(PROJECT_DIR)/WisdomHall/lupai/wechatSDK",
 					"$(SRCROOT)/Lib",
 					"$(PROJECT_DIR)/WisdomHall/JsmsSDK",
+					"$(PROJECT_DIR)/WisdomHall/XinSuiFang/Rong_Cloud_iOS_IMLib_SDK_v2_7_3_stable",
 				);
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_BUNDLE_IDENTIFIER = com.dayaokeji.rhythm;
@@ -3629,6 +3637,7 @@
 					"$(PROJECT_DIR)/WisdomHall",
 					"$(PROJECT_DIR)/SDK/Required",
 					"$(PROJECT_DIR)/SDK/SMSSDK",
+					"$(PROJECT_DIR)/WisdomHall/XinSuiFang/Rong_Cloud_iOS_IMLib_SDK_v2_7_3_stable",
 				);
 				GCC_PREFIX_HEADER = "";
 				HEADER_SEARCH_PATHS = "$(PROJECT_DIR)/WisdomHall/Bugly.framework";
@@ -3643,6 +3652,7 @@
 					"$(PROJECT_DIR)/WisdomHall/lupai/wechatSDK",
 					"$(SRCROOT)/Lib",
 					"$(PROJECT_DIR)/WisdomHall/JsmsSDK",
+					"$(PROJECT_DIR)/WisdomHall/XinSuiFang/Rong_Cloud_iOS_IMLib_SDK_v2_7_3_stable",
 				);
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_BUNDLE_IDENTIFIER = com.dayaokeji.rhythm;
@@ -3681,6 +3691,7 @@
 					"$(PROJECT_DIR)/WisdomHall",
 					"$(PROJECT_DIR)/SDK/Required",
 					"$(PROJECT_DIR)/SDK/SMSSDK",
+					"$(PROJECT_DIR)/WisdomHall/XinSuiFang/Rong_Cloud_iOS_IMLib_SDK_v2_7_3_stable",
 				);
 				GCC_PREFIX_HEADER = "";
 				HEADER_SEARCH_PATHS = "$(PROJECT_DIR)/WisdomHall/Bugly.framework";
@@ -3695,6 +3706,7 @@
 					"$(PROJECT_DIR)/WisdomHall/lupai/wechatSDK",
 					"$(SRCROOT)/Lib",
 					"$(PROJECT_DIR)/WisdomHall/JsmsSDK",
+					"$(PROJECT_DIR)/WisdomHall/XinSuiFang/Rong_Cloud_iOS_IMLib_SDK_v2_7_3_stable",
 				);
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_BUNDLE_IDENTIFIER = com.dayaokeji.rhythm;

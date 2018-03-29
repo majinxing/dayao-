@@ -121,6 +121,8 @@
 +(UIImage *)addWatemarkTextAfteriOS7_WithLogoImage:(UIImage *)logoImage watemarkText:(NSString *)watemarkText;
 //周期会议时间处理
 +(NSMutableArray *)returnAry:(NSString *)startTime withEndTime:(NSString *)endTime room:(NSString *)roomId meetingsFacilitatorList:(NSString *)nameHost monthOrWeek:(NSString *)mRw;
+//修改屏幕亮度
++(BOOL)didUserPressLockButton;
 @end
 
 

@@ -1479,7 +1479,6 @@
     NSDate *confromTimesp = [NSDate dateWithTimeIntervalSince1970:[time doubleValue]];
     
     NSString *dateTime = [formatter stringFromDate:confromTimesp];
-    
     return dateTime;
 }
 +(BOOL)returnMckIsHave:(NSMutableArray *)localAry withAccept:(NSArray *)acceptAry{
@@ -1603,6 +1602,19 @@
     NSDate *mDate = [calender dateByAddingComponents:comps toDate:date options:0];
    
     return [dateFormatter stringFromDate:mDate];
+}
+//修改屏幕亮度
+
++(BOOL)didUserPressLockButton{
+    //获取屏幕亮度
+    CGFloat oldBrightness = [UIScreen mainScreen].brightness;
+    //以较小的数量改变屏幕亮度
+    [UIScreen mainScreen].brightness = oldBrightness + (oldBrightness <= 0.01 ? (0.01) : (-0.01)); CGFloat newBrightness = [UIScreen mainScreen].brightness;
+    //恢复屏幕亮度
+    [UIScreen mainScreen].brightness = oldBrightness;
+    //判断屏幕亮度是否能够被改变
+    return oldBrightness != newBrightness;
+    
 }
 @end
 

@@ -45,6 +45,7 @@
 @property (nonatomic,assign) CGFloat rowHeight;
 @property (nonatomic,assign) BOOL selectSchoolBtnStatus;
 @property (nonatomic,strong) SchoolModel * userSchool;
+@property (nonatomic,strong) UserModel * user;
 @end
 
 @implementation WorkingLoginViewController
@@ -65,14 +66,14 @@
     
     self.automaticallyAdjustsScrollViewInsets = NO;
     
-    UserModel * user = [[Appsetting sharedInstance] getUsetInfo];
+    _user = [[Appsetting sharedInstance] getUsetInfo];
     
-    _workNumber.text = user.studentId;
+    _workNumber.text = _user.studentId;
     
-    _password.text = user.userPassword;
+    _password.text = _user.userPassword;
     
-    if (![UIUtils isBlankString:user.schoolName]) {
-        [_selectSchoolBtn setTitle:user.schoolName forState:UIControlStateNormal];
+    if (![UIUtils isBlankString:_user.schoolName]&&![UIUtils isBlankString:_user.host]) {
+        [_selectSchoolBtn setTitle:_user.schoolName forState:UIControlStateNormal];
     }
     
     [self setTableView];
@@ -138,12 +139,21 @@
 }
 - (IBAction)login:(id)sender {
     [self showHudInView:self.view hint:NSLocalizedString(@"正在登陆请稍后……", @"Load data...")];
-    
+    _user = [[Appsetting sharedInstance] getUsetInfo];
+    if ([UIUtils isBlankString:_user.host]) {
+        [UIUtils showInfoMessage:@"请先选择学校"];
+        [self hideHud];
+        return;
+    }
     NSDictionary * dict = [[NSDictionary alloc] initWithObjectsAndKeys:@"500",@"universityId",_workNumber.text,@"loginStr",_password.text,@"password", nil];
     [[NetworkRequest sharedInstance] POST:Login dict:dict succeed:^(id data) {
         NSString * str = [[data objectForKey:@"header"] objectForKey:@"code"];
         if ([str isEqualToString:@"0000"]) {
+            
             NSString * ss = [[data objectForKey:@"body"] objectForKey:@"bind"];
+            
+            [[NSNotificationCenter defaultCenter] postNotificationName:InApp object:nil];
+
             if ([ss isEqualToString:@"true"]) {
                 RegisterViewController * r = [[RegisterViewController alloc] init];
                 r.type = @"bindPhone";

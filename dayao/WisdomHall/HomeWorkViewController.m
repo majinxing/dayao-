@@ -11,11 +11,18 @@
 #import "HomeworkListTableViewCell.h"
 #import "CreateHomeworkViewController.h"
 #import "Homework.h"
+#import "MJRefresh.h"
 
 @interface HomeWorkViewController ()<UITableViewDataSource,UITableViewDelegate>
 @property (nonatomic,strong) UITableView * tableView;
 @property (nonatomic,strong) UserModel * user;
 @property (nonatomic,strong) NSMutableArray * dataAry;
+@property (nonatomic,assign) int page;
+@property (nonatomic,assign) int temp;
+
+@property (nonatomic,assign) int page1;
+
+@property (nonatomic,assign) int page2;
 @end
 
 @implementation HomeWorkViewController
@@ -28,14 +35,17 @@
     
     _user = [[Appsetting sharedInstance] getUsetInfo];
     
+    _page1 = 1;
+    
+    _page2 = 1;
+    
     [self addTableView];
     
     [self setNavigationTitle];
     
-    [self getData];
     // Do any additional setup after loading the view from its nib.
 }
--(void)getData{
+-(void)getDataWithPage:(int)page{
     NSDictionary * dict = [[NSDictionary alloc] initWithObjectsAndKeys:[NSString stringWithFormat:@"%@",_c.sclassId],@"courseId", nil];
     [[NetworkRequest sharedInstance] GET:CourseWorkList dict:dict succeed:^(id data) {
         
@@ -45,9 +55,11 @@
             [h setValueWithDict:ary[i]];
             [_dataAry addObject:h];
         }
+        [self hideHud];
         [_tableView reloadData];
     } failure:^(NSError *error) {
         [UIUtils showInfoMessage:@"请求失败请"];
+        [self hideHud];
     }];
 }
 /**
@@ -76,7 +88,56 @@
     _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, NaviHeight, APPLICATION_WIDTH,APPLICATION_HEIGHT-64) style:UITableViewStylePlain];
     _tableView.delegate = self;
     _tableView.dataSource = self;
+    __weak HomeWorkViewController * weakSelf = self;
+    [_tableView addHeaderWithCallback:^{
+        [weakSelf headerRereshing];
+    }];
+//    [_tableView addFooterWithCallback:^{
+//        [weakSelf footerRereshing];
+//    }];
+    
+    [self headerRereshing];
     [self.view addSubview:_tableView];
+}
+#pragma mrak MJR
+-(void)headerRereshing{
+    self.page = 1;
+//
+//    _page2 = 1;
+//
+//    _page1 = 2;
+    
+    [self fetchChatRoomsWithPage:self.page isHeader:YES];
+}
+-(void)footerRereshing{
+    self.page +=1;
+    [self fetchChatRoomsWithPage:self.page isHeader:NO];
+}
+- (void)fetchChatRoomsWithPage:(NSInteger)aPage
+                      isHeader:(BOOL)aIsHeader{
+    [self hideHud];
+    [self showHudInView:self.view hint:NSLocalizedString(@"正在加载数据", @"Load data...")];
+    __weak typeof(self)weakSelf = self;
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        if (weakSelf) {
+            HomeWorkViewController * strongSelf = weakSelf;
+            if (aIsHeader) {
+                [_dataAry removeAllObjects];
+                _dataAry = [NSMutableArray arrayWithCapacity:1];
+                
+            }
+            dispatch_async(dispatch_get_main_queue(), ^{
+                //                [strongSelf hideHud];
+                [strongSelf getDataWithPage:aPage];
+            });
+
+            if (aIsHeader) {
+                [strongSelf.tableView headerEndRefreshing];
+            }else{
+                [strongSelf.tableView footerEndRefreshing];
+            }
+        }
+    });
 }
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
@@ -96,8 +157,11 @@
     if (!cell) {
         cell = [[[NSBundle mainBundle] loadNibNamed:@"HomeworkListTableViewCell" owner:self options:nil] objectAtIndex:0];
     }
-    Homework * h = _dataAry[indexPath.row];
-    [cell addContentViewWith:h];
+    if (indexPath.row<_dataAry.count) {
+        Homework * h = _dataAry[indexPath.row];
+        [cell addContentViewWith:h];
+    }
+    
     return cell;
 }
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
