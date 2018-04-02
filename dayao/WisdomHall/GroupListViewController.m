@@ -84,7 +84,8 @@
             [_tableView reloadData];
         }
     } failure:^(NSError *error) {
-        
+        [UIUtils showInfoMessage:@"获取数据失败，请检查网络"];
+
     }];
 }
 - (void)didReceiveMemoryWarning {
@@ -162,7 +163,8 @@
             [self.navigationController pushViewController:classManegeVC animated:YES];
         }
     } failure:^(NSError *error) {
-        
+        [UIUtils showInfoMessage:@"获取数据失败，请检查网络"];
+
     }];
 }
 /*

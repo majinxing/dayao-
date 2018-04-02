@@ -12,7 +12,8 @@
 @interface VoteTableViewCell()
 
 @property (strong, nonatomic) IBOutlet UILabel *voteState;
-@property (strong, nonatomic) IBOutlet UITextView *voteTitle;
+@property (strong, nonatomic) IBOutlet UILabel *voteTitle;
+
 @property (strong, nonatomic) IBOutlet UILabel *voteCreateTime;
 
 @property (assign,nonatomic) int temp;
@@ -22,7 +23,8 @@
 
 - (void)awakeFromNib {
     [super awakeFromNib];
-    [self addContentView];
+    
+    [_voteTitle endEditing:NO];
     // Initialization code
 }
 -(void)addContentView{

@@ -17,7 +17,7 @@
 @property (nonatomic,strong)UITableView * tableView;
 @property (nonatomic,strong)VoteModel * voteModel;
 @property (nonatomic,strong)NSMutableArray * labeAry;
-@property (nonatomic,assign)int rowNumber;
+@property (nonatomic,assign)int rowNumber;//cell的显示行数
 @property (nonatomic,assign)int temp;
 @end
 
@@ -117,13 +117,19 @@
 -(void)addInfo{
     _voteModel = [[VoteModel alloc] init];
     
+    _voteModel.selectAry = [NSMutableArray arrayWithCapacity:6];
+    
+    for (int i = 0; i<4; i++) {
+        [_voteModel.selectAry addObject:@""];
+    }
+    
     _labeAry = [NSMutableArray arrayWithCapacity:4];
     
     [_labeAry addObject:@"请输入投票主题"];
     
     [_labeAry addObject:@"请输入描述"];
     
-    _rowNumber = 2;
+    _rowNumber = 7;
 }
 -(void)addSelect{
     UIButton * btn = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -131,7 +137,7 @@
     [btn addTarget:self action:@selector(addSelects:) forControlEvents:UIControlEventTouchUpInside];
     btn.backgroundColor = RGBA_COLOR(63,187,168, 1);
     [btn setTitle:@"添加选项" forState:UIControlStateNormal];
-    [self.view addSubview:btn];
+//    [self.view addSubview:btn];
 }
 -(void)addSelects:(UIButton *)btn{
     _rowNumber = _rowNumber +1;
@@ -139,7 +145,7 @@
     [_tableView reloadData];
 }
 -(void)addTableView{
-    _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 64,APPLICATION_WIDTH, APPLICATION_HEIGHT-64-50) style:UITableViewStylePlain];
+    _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 64,APPLICATION_WIDTH, APPLICATION_HEIGHT-64) style:UITableViewStylePlain];
     _tableView.delegate = self;
     _tableView.dataSource = self;
 //    _tableView.backgroundColor = [UIColor clearColor];
@@ -181,16 +187,22 @@
         cell = [_tableView dequeueReusableCellWithIdentifier:@"CreateVoteTableViewCellSecond"];
     }else if(indexPath.row == 0){
         cell = [_tableView dequeueReusableCellWithIdentifier:@"CreateVoteTableViewCellFirst"];
-    }else if (indexPath.row >1){
+    }else if (indexPath.row >1&&(indexPath.row<(_rowNumber-1))){
         cell = [_tableView dequeueReusableCellWithIdentifier:@"CreateVoteTableViewCellThird"];
+    } else if (indexPath.row==_rowNumber-1){
+        cell = [_tableView dequeueReusableCellWithIdentifier:@"CreateVoteTableViewCellFourth"];
     }
+    
     if (!cell) {
         if (indexPath.row == 1) {
             cell = [[[NSBundle mainBundle] loadNibNamed:@"CreateVoteTableViewCell" owner:nil options:nil] objectAtIndex:1];
         }else if(indexPath.row == 0){
             cell = [[[NSBundle mainBundle] loadNibNamed:@"CreateVoteTableViewCell" owner:nil options:nil] objectAtIndex:0];
-        }else if (indexPath.row>1){
-         cell = [[[NSBundle mainBundle] loadNibNamed:@"CreateVoteTableViewCell" owner:nil options:nil] objectAtIndex:2];
+        }else if (indexPath.row>1&&(indexPath.row<(_rowNumber-1))){
+            cell = [[[NSBundle mainBundle] loadNibNamed:@"CreateVoteTableViewCell" owner:nil options:nil] objectAtIndex:2];
+        }
+        else if (indexPath.row==_rowNumber-1){
+            cell = [[[NSBundle mainBundle] loadNibNamed:@"CreateVoteTableViewCell" owner:nil options:nil] objectAtIndex:3];
         }
     }
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
@@ -199,10 +211,13 @@
         [cell addTableTextWithTextFile:_labeAry[indexPath.row] with:_voteModel.title withTag:(int)indexPath.row];
     }else if (indexPath.row == 1){
         [cell addSelectNumeberWithNumer:_voteModel.largestNumbe withTag:(int)indexPath.row];
-    }else if (indexPath.row>1){
-        [cell addSelectInfo:[NSString stringWithFormat:@"选项%d：",indexPath.row-1] withSelectText:_voteModel.selectAry[indexPath.row-2] withTag:(int)indexPath.row];
+    }else if (indexPath.row>1&&(indexPath.row<(_rowNumber-1))){
+        [cell addSelectInfo:[NSString stringWithFormat:@"选项%ld：",indexPath.row-1] withSelectText:_voteModel.selectAry[indexPath.row-2] withTag:(int)indexPath.row];
+    }else if (indexPath.row==_rowNumber-1){
+        
     }
     cell.delegate = self;
+    
     return cell;
     
 }
@@ -214,13 +229,24 @@
 -(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
     return 10;
 }
+-(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
+    if (indexPath.row == 0) {
+        return 150;
+    }
+    return 50;
+}
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView{
     
 }
 #pragma mark textFileTextChangeDelegate
--(void)textFileTextChangeDelegate:(UITextView *)textFile{
-    [_voteModel changeText:textFile];
+////
+//-(void)textFileTextChangeDelegate:(UITextView *)textFile{
+//    [_voteModel changeText:textFile];
+//}
+-(void)textViewBeginChangeDelegate:(UITextView *)textView{
+    NSLog(@"%ld",textView.tag);
 }
+//投票数目
 -(void)textFieldDidChangeDelegate:(UITextField *)textFile{
     _voteModel.largestNumbe = textFile.text;
 }

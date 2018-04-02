@@ -132,11 +132,9 @@
     }else if ([[NSString stringWithFormat:@"%@",_classModel.teacherWorkNo] isEqualToString:[NSString stringWithFormat:@"%@",_user.studentId]]) {
         UIBarButtonItem *myButton = [[UIBarButtonItem alloc] initWithTitle:@"新建投票" style:UIBarButtonItemStylePlain target:self action:@selector(createVote)];
         [myButton setTintColor:[UIColor whiteColor]];
-
         self.navigationItem.rightBarButtonItem = myButton;
     }
     
-
 }
 
 -(void)createVote{
@@ -150,6 +148,7 @@
         c.classModel = _classModel;
         c.type = @"classModel";
     }
+    
     [self.navigationController pushViewController:c animated:YES];
 }
 - (void)didReceiveMemoryWarning {

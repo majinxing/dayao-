@@ -102,8 +102,7 @@
             [self hideHud];
 
             NSLog(@"%@",error);
-            UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"服务器连接失败" message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: nil];
-            [alertView show];
+            [UIUtils showInfoMessage:@"发送数据失败，请检查网络"];
             
         }];
     }else{

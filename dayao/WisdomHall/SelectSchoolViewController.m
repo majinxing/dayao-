@@ -78,7 +78,7 @@
 //                }
 //            }
         } failure:^(NSError *error) {
-            NSLog(@"失败 %@",error);
+            [UIUtils showInfoMessage:@"发送数据失败，请检查网络"];
             
         }];
     }else if (_selectType == SelectDepartment){
@@ -97,18 +97,12 @@
                 [_allIdAry addObject:[NSString stringWithFormat:@"%@",s.departmentId]];
             }
             _selectSchoolAry = _allSchoolNameAry;
-//            if (![UIUtils isBlankString:_typeSelect]) {
-//                if ([_typeSelect isEqualToString:@"statistical"]) {
-//                    [_selectSchoolAry insertObject:@"所有院系" atIndex:0];
-//                    SchoolModel * s = [[SchoolModel alloc] init];
-//                    s.department = @"所有院系";
-//                    [_allSchoolAry insertObject:s atIndex:0];
-//
-//                }
-//            }
+
             [_tableView reloadData];
             
         } failure:^(NSError *error) {
+            [UIUtils showInfoMessage:@"发送数据失败，请检查网络"];
+
             NSLog(@"失败 %@",error);
         }];
     }else if (_selectType == SelectMajor){
@@ -139,6 +133,8 @@
             [_tableView reloadData];
         } failure:^(NSError *error) {
             NSLog(@"失败 %@",error);
+            [UIUtils showInfoMessage:@"发送数据失败，请检查网络"];
+
         }];
 
     }else if (_selectType == SelectClass){
@@ -168,6 +164,8 @@
             [_tableView reloadData];
         } failure:^(NSError *error) {
             NSLog(@"失败 %@",error);
+            [UIUtils showInfoMessage:@"发送数据失败，请检查网络"];
+
         }];
 
     }

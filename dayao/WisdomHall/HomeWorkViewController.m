@@ -58,7 +58,7 @@
         [self hideHud];
         [_tableView reloadData];
     } failure:^(NSError *error) {
-        [UIUtils showInfoMessage:@"请求失败请"];
+        [UIUtils showInfoMessage:@"请求失败请，请检查网络"];
         [self hideHud];
     }];
 }

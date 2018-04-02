@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="12121" systemVersion="16E195" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="13771" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12089"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -20,13 +20,17 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <label opaque="NO" userInteractionEnabled="NO" alpha="0.5" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="请输入主题" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="q25-aC-5Bg">
-                        <rect key="frame" x="13" y="13" width="340" height="32.5"/>
+                        <rect key="frame" x="10" y="10" width="300" height="25"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="300" id="C0B-HT-PvK"/>
+                            <constraint firstAttribute="height" constant="25" id="er9-1F-YZs"/>
+                        </constraints>
                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" scrollEnabled="NO" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="kxD-vO-MSP">
-                        <rect key="frame" x="5" y="5" width="356" height="48.5"/>
+                    <textView clipsSubviews="YES" multipleTouchEnabled="YES" tag="1" contentMode="scaleToFill" scrollEnabled="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kxD-vO-MSP">
+                        <rect key="frame" x="10" y="10" width="346" height="41.5"/>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                         <fontDescription key="fontDescription" type="system" pointSize="15"/>
                         <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
@@ -43,17 +47,15 @@
                     </view>
                 </subviews>
                 <constraints>
-                    <constraint firstItem="kxD-vO-MSP" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="5" id="7lw-V0-yDJ"/>
-                    <constraint firstItem="kxD-vO-MSP" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="5" id="AA9-Ct-3dI"/>
+                    <constraint firstItem="q25-aC-5Bg" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="10" id="0XR-aH-kOJ"/>
                     <constraint firstAttribute="trailing" secondItem="jbO-xL-gFX" secondAttribute="trailing" constant="5" id="Aeu-0f-3In"/>
-                    <constraint firstItem="q25-aC-5Bg" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" constant="5" id="IMS-wk-evr"/>
-                    <constraint firstAttribute="bottomMargin" secondItem="q25-aC-5Bg" secondAttribute="bottom" constant="5" id="Mku-Kk-6Ad"/>
-                    <constraint firstAttribute="trailingMargin" secondItem="q25-aC-5Bg" secondAttribute="trailing" constant="5" id="Stf-Lo-leg"/>
+                    <constraint firstItem="kxD-vO-MSP" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="10" id="KRh-aR-DhF"/>
+                    <constraint firstItem="kxD-vO-MSP" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="10" id="MTk-pw-ecL"/>
                     <constraint firstItem="jbO-xL-gFX" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="5" id="U2L-iM-bLv"/>
-                    <constraint firstAttribute="bottom" secondItem="kxD-vO-MSP" secondAttribute="bottom" constant="5" id="e2s-gg-OAg"/>
                     <constraint firstAttribute="bottom" secondItem="jbO-xL-gFX" secondAttribute="bottom" constant="1" id="ftd-96-beI"/>
-                    <constraint firstItem="q25-aC-5Bg" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" constant="5" id="tbW-Gw-dDE"/>
-                    <constraint firstAttribute="trailing" secondItem="kxD-vO-MSP" secondAttribute="trailing" constant="5" id="z4g-6h-dL6"/>
+                    <constraint firstItem="q25-aC-5Bg" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="10" id="gMV-Kf-2IK"/>
+                    <constraint firstItem="jbO-xL-gFX" firstAttribute="top" secondItem="kxD-vO-MSP" secondAttribute="bottom" constant="5" id="iJ4-Km-7AC"/>
+                    <constraint firstAttribute="trailing" secondItem="kxD-vO-MSP" secondAttribute="trailing" constant="10" id="mjO-lN-tMI"/>
                 </constraints>
             </tableViewCellContentView>
             <connections>
@@ -70,7 +72,7 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="最大可选项" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XC0-Vr-yzZ">
-                        <rect key="frame" x="13" y="13" width="100" height="34.5"/>
+                        <rect key="frame" x="21" y="16" width="100" height="29"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="100" id="o1C-hu-QXN"/>
                         </constraints>
@@ -79,7 +81,7 @@
                         <nil key="highlightedColor"/>
                     </label>
                     <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="zmV-bL-ML6">
-                        <rect key="frame" x="118" y="5" width="243" height="50.5"/>
+                        <rect key="frame" x="126" y="5" width="235" height="50.5"/>
                         <nil key="textColor"/>
                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                         <textInputTraits key="textInputTraits"/>
@@ -121,7 +123,7 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="选项1：" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dsN-qd-PgA">
-                        <rect key="frame" x="13" y="13" width="60" height="20"/>
+                        <rect key="frame" x="21" y="16" width="60" height="20"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="20" id="l25-CV-RT5"/>
                             <constraint firstAttribute="width" constant="60" id="uhJ-tW-XPk"/>
@@ -131,7 +133,7 @@
                         <nil key="highlightedColor"/>
                     </label>
                     <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" scrollEnabled="NO" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="WWT-aA-srW">
-                        <rect key="frame" x="78" y="8" width="273" height="79.5"/>
+                        <rect key="frame" x="86" y="11" width="257" height="74"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                         <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
@@ -164,6 +166,30 @@
                 <outlet property="selectTextView" destination="WWT-aA-srW" id="nnz-ye-bvR"/>
             </connections>
             <point key="canvasLocation" x="56" y="330.5"/>
+        </tableViewCell>
+        <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="CreateVoteTableViewCellFourth" rowHeight="77" id="jxM-di-66p" customClass="CreateVoteTableViewCell">
+            <rect key="frame" x="0.0" y="0.0" width="364" height="77"/>
+            <autoresizingMask key="autoresizingMask"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="jxM-di-66p" id="SYS-Ds-DLs">
+                <rect key="frame" x="0.0" y="0.0" width="364" height="76.5"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="sUc-en-cJT">
+                        <rect key="frame" x="10" y="10" width="344" height="56.5"/>
+                        <color key="backgroundColor" red="0.2769240697" green="0.62253773609999996" blue="0.92941176469999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <state key="normal" title="点击添加选项">
+                            <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        </state>
+                    </button>
+                </subviews>
+                <constraints>
+                    <constraint firstAttribute="trailing" secondItem="sUc-en-cJT" secondAttribute="trailing" constant="10" id="7gC-Kk-AsU"/>
+                    <constraint firstAttribute="bottom" secondItem="sUc-en-cJT" secondAttribute="bottom" constant="10" id="EdF-EZ-CTW"/>
+                    <constraint firstItem="sUc-en-cJT" firstAttribute="leading" secondItem="SYS-Ds-DLs" secondAttribute="leading" constant="10" id="I1F-Nx-w33"/>
+                    <constraint firstItem="sUc-en-cJT" firstAttribute="top" secondItem="SYS-Ds-DLs" secondAttribute="top" constant="10" id="LbA-gH-zex"/>
+                </constraints>
+            </tableViewCellContentView>
+            <point key="canvasLocation" x="56" y="500.5"/>
         </tableViewCell>
     </objects>
 </document>

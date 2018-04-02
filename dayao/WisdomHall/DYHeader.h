@@ -76,7 +76,7 @@
 #import "ThemeTool.h"
 
 #define Collection_height 120
-#define CodeEffectiveTime 6
+#define CodeEffectiveTime 10 //二维码有效时长
 
 #define ShareType_Weixin_Friend     @"微信好友"
 #define ShareType_Weixin_Circle     @"朋友圈"

@@ -250,9 +250,9 @@
         }
         return;
     }
-    
+
     [[NetworkRequest sharedInstance] GET:QueryPeople dict:d succeed:^(id data) {
-        _page1 = [[[data objectForKey:@"body"] objectForKey:@"pages"] intValue];
+//        _page1 = [[[data objectForKey:@"body"] objectForKey:@"pages"] intValue];
 
         NSArray * aty = [[data objectForKey:@"body"] objectForKey:@"list"];
         if (aIsHeader) {
@@ -347,7 +347,6 @@
             _school.departmentId = s.departmentId;
             [_departments setTitle:_school.department forState:UIControlStateNormal];
         }
-        
     }else if (_temp == 2){
         if (_n<_pickAry.count) {
             SchoolModel * s = _pickAry[_n];
@@ -436,7 +435,6 @@
         
         [[NetworkRequest sharedInstance] GET:SchoolDepartMent dict:dict succeed:^(id data) {
             //            NSLog(@"%@",data);
-            _page1 = [[[data objectForKey:@"body"] objectForKey:@"pages"] intValue];
 
             NSArray * ary = [data objectForKey:@"body"];
             [_pickAry removeAllObjects];
@@ -504,6 +502,11 @@
         
         [[NetworkRequest sharedInstance] GET:QueryPeople dict:d succeed:^(id data) {
             NSArray * aty = [[data objectForKey:@"body"] objectForKey:@"list"];
+            NSString * s = [NSString stringWithFormat:@"%@",[[data objectForKey:@"body"] objectForKey:@"pages"]];
+            if (![UIUtils isBlankString:s]) {
+                _page1 = [s intValue];
+            }
+
             [_dataAry removeAllObjects];
             for (int i = 0; i<aty.count; i++) {
                 SignPeople * s = [[SignPeople alloc] init];

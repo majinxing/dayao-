@@ -10,8 +10,10 @@
 
 
 @protocol CreateVoteTableViewCellDelegate <NSObject>
--(void)textFileTextChangeDelegate:(UITextView *)textFile;
+
 -(void)textFieldDidChangeDelegate:(UITextField *)textFile;
+
+-(void)textViewBeginChangeDelegate:(UITextView *)textView;
 
 @end
 @interface CreateVoteTableViewCell : UITableViewCell

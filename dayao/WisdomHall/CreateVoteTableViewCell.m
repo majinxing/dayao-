@@ -28,7 +28,7 @@
     _lableText = [[NSString alloc] init];
     _selectNumTextView.delegate = self;
     _selectTextView.delegate = self;
-    
+    _textFile.delegate = self;
     // Initialization code
 }
 #pragma mark UITextFieldDelegate
@@ -45,7 +45,7 @@
 -(void)addSelectInfo:(NSString *)selectNumber withSelectText:(NSString *)selectText withTag:(int)tag{
     _selectLabel.text = selectNumber;
     _selectTextView.text = selectText;
-    _selectTextView.tag = tag;
+    _selectTextView.tag = tag+1;
     _selectTextView.layer.masksToBounds = YES;
     _selectTextView.layer.cornerRadius = 5;
     _selectTextView.layer.borderWidth = 1;
@@ -75,54 +75,13 @@
 }
 
 #pragma mark textViewDelegate
-
--(BOOL)textViewShouldBeginEditing:(UITextView *)textView{
-    return YES;
-}
-- (void)textViewDidChange:(UITextView *)textView{
-    CGRect bounds = textView.bounds;
-    // 计算 text view 的高度
-    CGSize maxSize = CGSizeMake(bounds.size.width, CGFLOAT_MAX);
-    CGSize newSize = [textView sizeThatFits:maxSize];
-    bounds.size = newSize;
-    textView.bounds = bounds;
-    // 让 table view 重新计算高度
-    UITableView *tableView = [self tableView];
-    
-    [tableView beginUpdates];
-    [tableView endUpdates];
-    
-    if (textView.text.length>0) {
-        _titleLabel.text = @"";
-    }else if (textView.text.length == 0){
-        _titleLabel.text = _lableText;
-    }
-    
-    [self voteTextFileTextChange:textView];
-    
-//    [self returnTextViewTithLabel:_labelText.text withTextViewText:textView.text];
-}
--(void)voteTextFileTextChange:(UITextView *)textView{
-    if (self.delegate&&[self.delegate respondsToSelector:@selector(textFileTextChangeDelegate:)]) {
-        [self.delegate textFileTextChangeDelegate:textView];
+-(void)textViewDidBeginEditing:(UITextView *)textView{
+    if (self.delegate&&[self.delegate respondsToSelector:@selector(textViewBeginChangeDelegate:)]) {
+        [self.delegate textViewBeginChangeDelegate:textView];
     }
 }
 
 
--(BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString*)text
-{
-    if ([text isEqualToString:@"\n"]) {
-        [textView resignFirstResponder];
-        return NO;
-    }
-    return YES;
-}
-- (UITableView *)tableView
-{
-    UIView *tableView = self.superview;
-    while (![tableView isKindOfClass:[UITableView class]] && tableView) {
-        tableView = tableView.superview;
-    }
-    return (UITableView *)tableView;
-}
+
+
 @end

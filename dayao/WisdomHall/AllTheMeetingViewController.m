@@ -384,7 +384,7 @@ static NSString * cellIdentifier = @"cellIdentifier";
     self.hidesBottomBarWhenPushed = YES;
     mInfo.meetingModel = _meetingModelAry[indexPath.row];
     [self.navigationController pushViewController:mInfo animated:YES];
-    //    self.hidesBottomBarWhenPushed=NO;
+    self.hidesBottomBarWhenPushed = YES;
     
 }
 //有了初次点击再走这个
@@ -395,7 +395,7 @@ static NSString * cellIdentifier = @"cellIdentifier";
     self.hidesBottomBarWhenPushed = YES;
     mInfo.meetingModel = _meetingModelAry[indexPath.row];
     [self.navigationController pushViewController:mInfo animated:YES];
-    //    self.hidesBottomBarWhenPushed=NO;
+    self.hidesBottomBarWhenPushed = YES;
     
 }
 #pragma mark UICollectionViewDelegateFlowLayout

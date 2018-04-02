@@ -26,7 +26,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     //时间间隔
-    NSTimeInterval timeInterval = CodeEffectiveTime ;
+    NSTimeInterval timeInterval = 5 ;
     //定时器
     _showTimer = [NSTimer scheduledTimerWithTimeInterval:timeInterval
                                                   target:self
@@ -35,7 +35,7 @@
                                                  repeats:YES];
     [_showTimer fire];
 //    _codeImageView.image = [self qrImageForString:_dict imageSize:220 logoImageSize:220];
-    _textLabel.text = [NSString stringWithFormat:@"注意：二维码将每3秒钟重新生成，请即时提供给同学签到"];
+    _textLabel.text = [NSString stringWithFormat:@"注意：二维码将每5秒钟重新生成，请即时提供给同学签到"];
     // Do any additional setup after loading the view from its nib.
 }
 -(void)handleMaxShowTimer:(NSTimer *)theTimer{

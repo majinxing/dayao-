@@ -215,7 +215,7 @@
             [self showMessage:@"座位已经分配"];
         }
     } failure:^(NSError *error) {
-        
+        [self showMessage:@"发送数据失败，请检查网络"];
     }];
 }
 -(void)showMessage:(NSString *)message{
