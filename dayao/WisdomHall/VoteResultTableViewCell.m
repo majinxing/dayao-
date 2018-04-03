@@ -45,7 +45,7 @@
     CGFloat b = _garyView.frame.size.width;
     
     
-    _redView.frame = CGRectMake(0,0, a*b, 10);
+    _redView.frame = CGRectMake(0,0,a*b, 10);
  
     
     _percentage.text = [NSString stringWithFormat:@"%.0f%%",a*100];

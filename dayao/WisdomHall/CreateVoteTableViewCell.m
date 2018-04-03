@@ -18,6 +18,7 @@
 
 @property (strong, nonatomic) IBOutlet UILabel *selectLabel;
 @property (weak, nonatomic) IBOutlet UITextView *selectTextView;
+@property (weak, nonatomic) IBOutlet UIButton *delectBtn;
 
 
 @end
@@ -50,6 +51,7 @@
     _selectTextView.layer.cornerRadius = 5;
     _selectTextView.layer.borderWidth = 1;
     _selectTextView.layer.borderColor = RGBA_COLOR(224,224,224, 1).CGColor;
+    _delectBtn.tag = tag+1;
 }
 
 -(void)addTableTextWithTextFile:(NSString *)labelText with:(NSString *)textFile withTag:(int)tag{
@@ -60,7 +62,24 @@
     }
     _lableText = labelText;
     _textFile.text = textFile;
-    _textFile.tag = tag;
+    _textFile.tag = 111;
+    
+}
+- (IBAction)delectSelectNumber:(UIButton *)sender {
+    if (self.delegate&&[self.delegate respondsToSelector:@selector(delectSelectNumberDelegate:)]) {
+        
+        [self.delegate delectSelectNumberDelegate:sender];
+    }
+}
+
+- (IBAction)addSelectNumber:(UIButton *)sender {
+    
+    if (self.delegate&&[self.delegate respondsToSelector:@selector(addSelectNumberDelegate:)]) {
+        
+        [self.delegate addSelectNumberDelegate:sender];
+        
+    }
+    
 }
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
     [super setSelected:selected animated:animated];

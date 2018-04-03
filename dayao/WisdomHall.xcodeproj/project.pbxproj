@@ -310,6 +310,8 @@
 		8BCE7CCF1F04F07600FE261B /* AFURLRequestSerialization.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BCE7CC71F04F07600FE261B /* AFURLRequestSerialization.m */; };
 		8BCE7CD01F04F07600FE261B /* AFURLResponseSerialization.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BCE7CC91F04F07600FE261B /* AFURLResponseSerialization.m */; };
 		8BCE7CD11F04F07600FE261B /* AFURLSessionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BCE7CCB1F04F07600FE261B /* AFURLSessionManager.m */; };
+		8BE00D6020731165001FE812 /* EditerTextViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BE00D5E20731165001FE812 /* EditerTextViewController.m */; };
+		8BE00D6120731165001FE812 /* EditerTextViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8BE00D5F20731165001FE812 /* EditerTextViewController.xib */; };
 		8BE24D601F8B488E00621055 /* GroupListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BE24D5E1F8B488E00621055 /* GroupListViewController.m */; };
 		8BE24D611F8B488E00621055 /* GroupListViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8BE24D5F1F8B488E00621055 /* GroupListViewController.xib */; };
 		8BE24D641F8B528600621055 /* GroupModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BE24D631F8B528600621055 /* GroupModel.m */; };
@@ -1106,6 +1108,9 @@
 		8BCE7CC91F04F07600FE261B /* AFURLResponseSerialization.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFURLResponseSerialization.m; sourceTree = "<group>"; };
 		8BCE7CCA1F04F07600FE261B /* AFURLSessionManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFURLSessionManager.h; sourceTree = "<group>"; };
 		8BCE7CCB1F04F07600FE261B /* AFURLSessionManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFURLSessionManager.m; sourceTree = "<group>"; };
+		8BE00D5D20731165001FE812 /* EditerTextViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = EditerTextViewController.h; sourceTree = "<group>"; };
+		8BE00D5E20731165001FE812 /* EditerTextViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = EditerTextViewController.m; sourceTree = "<group>"; };
+		8BE00D5F20731165001FE812 /* EditerTextViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = EditerTextViewController.xib; sourceTree = "<group>"; };
 		8BE24D5D1F8B488E00621055 /* GroupListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GroupListViewController.h; sourceTree = "<group>"; };
 		8BE24D5E1F8B488E00621055 /* GroupListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GroupListViewController.m; sourceTree = "<group>"; };
 		8BE24D5F1F8B488E00621055 /* GroupListViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = GroupListViewController.xib; sourceTree = "<group>"; };
@@ -2518,6 +2523,9 @@
 				8BFB94681EE7F7F1004BB963 /* ResultsOfVoteViewController.h */,
 				8BFB94691EE7F7F1004BB963 /* ResultsOfVoteViewController.m */,
 				8BFB946A1EE7F7F1004BB963 /* ResultsOfVoteViewController.xib */,
+				8BE00D5D20731165001FE812 /* EditerTextViewController.h */,
+				8BE00D5E20731165001FE812 /* EditerTextViewController.m */,
+				8BE00D5F20731165001FE812 /* EditerTextViewController.xib */,
 			);
 			name = Vote;
 			sourceTree = "<group>";
@@ -2807,6 +2815,7 @@
 				8B9171CC1ED41BC7009686FD /* QuestionsTableViewCell.xib in Resources */,
 				8B64EB5C1F1A2BA900BF7D0F /* SelectClassViewController.xib in Resources */,
 				8B7D5D831EB961260068058E /* CreateCourseViewController.xib in Resources */,
+				8BE00D6120731165001FE812 /* EditerTextViewController.xib in Resources */,
 				8B0CD5A4201F01DA00A2270D /* StatisticalViewController.xib in Resources */,
 				8B7D5D911EB9782C0068058E /* CourseCollectionViewCell.xib in Resources */,
 				8B0AF75A1F4FAF53003858A4 /* UploadFileViewController.xib in Resources */,
@@ -3199,6 +3208,7 @@
 				8BA41B761F9F0D6B00B9886E /* MeetingTableViewCell.m in Sources */,
 				8BF833F11F4AE086000F13E1 /* VoteOption.m in Sources */,
 				8BEE943B1F29DBF900488651 /* NoticeModel.m in Sources */,
+				8BE00D6020731165001FE812 /* EditerTextViewController.m in Sources */,
 				8BCE7CAD1F033AE100FE261B /* HYDelegate.m in Sources */,
 				8BB56D6A1EB037410023DAFF /* UIUtils.m in Sources */,
 				8B0CD5A3201F01DA00A2270D /* StatisticalViewController.m in Sources */,

@@ -79,6 +79,9 @@
             
             [self.contentView addSubview:image];
         }
+        
+        [_endTime setEnabled:NO];
+
     }else{
         for (int i = 0; i<ary.count; i++) {
             UIButton *btn = (UIButton *)[self.contentView viewWithTag:i+2];
@@ -96,8 +99,9 @@
     
     
 }
--(void)addContentFirstView:(NSString *)str{
+-(void)addContentFirstView:(NSString *)str withEditor:(BOOL)editor{
     _textFile.text = str;
+    _textFile.editable = editor;
 }
 - (IBAction)selectTime:(UIButton *)sender {
     if (self.delegate &&[self.delegate respondsToSelector:@selector(selectTimeBtnPressedDelegate)]) {

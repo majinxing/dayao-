@@ -297,7 +297,7 @@
         if (!cell) {
             cell = [[[NSBundle mainBundle] loadNibNamed:@"HomeworkCreateTableViewCell" owner:self options:nil] objectAtIndex:0];
         }
-        [cell addContentFirstView:_homeworkStr];
+        [cell addContentFirstView:_homeworkStr withEditor:_edit];
     }else if (indexPath.row ==1){
         cell = [tableView dequeueReusableCellWithIdentifier:@"HomeworkCreateTableViewCellSecond"];
         if (!cell) {

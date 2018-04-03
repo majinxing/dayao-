@@ -176,10 +176,21 @@
         
         NSDictionary * dict = [[NSDictionary alloc] initWithObjectsAndKeys:_voteModel.voteId,@"id", nil];
         [[NetworkRequest sharedInstance] POST:VoteDelect dict:dict succeed:^(id data) {
-            [self getData];
-            [_vote hide];
-        } failure:^(NSError *error) {
+            NSString * str = [[data objectForKey:@"header"] objectForKey:@"code"];
+            if (![UIUtils isBlankString:str]) {
+                if ([str isEqualToString:@"6677"]) {
+                    [UIUtils showInfoMessage:@"删除投票失败,投票状态未结束"];
+                }else{
+                    [self getData];
+                    [_vote hide];
+                }
+            }else{
+                [self getData];
+                [_vote hide];
+            }
             
+        } failure:^(NSError *error) {
+            [UIUtils showInfoMessage:@"删除失败，请检查网络"];
         }];
         
     }else if ([platform isEqualToString:Vote_Stop]){

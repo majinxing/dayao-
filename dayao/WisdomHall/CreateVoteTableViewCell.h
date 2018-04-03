@@ -15,6 +15,10 @@
 
 -(void)textViewBeginChangeDelegate:(UITextView *)textView;
 
+-(void)addSelectNumberDelegate:(UIButton *)sender;
+
+-(void)delectSelectNumberDelegate:(UIButton *)sender;
+
 @end
 @interface CreateVoteTableViewCell : UITableViewCell
 

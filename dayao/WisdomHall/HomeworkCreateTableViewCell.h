@@ -18,5 +18,5 @@
 @property (nonatomic,weak)id<HomeworkCreateTableViewCellDelegate>delegate;
 @property (strong, nonatomic) IBOutlet UIButton *sendHomework;
 -(void)setbtnImageWithAry:(NSMutableArray *)ary withEndTime:(NSString *)time edit:(BOOL)edit;
--(void)addContentFirstView:(NSString *)str;
+-(void)addContentFirstView:(NSString *)str withEditor:(BOOL)editor;
 @end

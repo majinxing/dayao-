@@ -19,7 +19,7 @@
                 <rect key="frame" x="0.0" y="0.0" width="366" height="58.5"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <label opaque="NO" userInteractionEnabled="NO" alpha="0.5" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="请输入主题" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="q25-aC-5Bg">
+                    <label opaque="NO" userInteractionEnabled="NO" alpha="0.5" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="请填写投票内容" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="q25-aC-5Bg">
                         <rect key="frame" x="10" y="10" width="300" height="25"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="300" id="C0B-HT-PvK"/>
@@ -32,7 +32,7 @@
                     <textView clipsSubviews="YES" multipleTouchEnabled="YES" tag="1" contentMode="scaleToFill" scrollEnabled="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kxD-vO-MSP">
                         <rect key="frame" x="10" y="10" width="346" height="41.5"/>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                        <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
                         <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                         <connections>
                             <outlet property="delegate" destination="KGk-i7-Jjw" id="DrI-hX-kbM"/>
@@ -115,15 +115,15 @@
             </connections>
             <point key="canvasLocation" x="57" y="183.5"/>
         </tableViewCell>
-        <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="CreateVoteTableViewCellThird" rowHeight="101" id="iiM-TB-olN" customClass="CreateVoteTableViewCell">
-            <rect key="frame" x="0.0" y="0.0" width="364" height="101"/>
+        <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="CreateVoteTableViewCellThird" rowHeight="77" id="iiM-TB-olN" customClass="CreateVoteTableViewCell">
+            <rect key="frame" x="0.0" y="0.0" width="374" height="77"/>
             <autoresizingMask key="autoresizingMask"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="iiM-TB-olN" id="84S-jN-pJv">
-                <rect key="frame" x="0.0" y="0.0" width="364" height="100.5"/>
+                <rect key="frame" x="0.0" y="0.0" width="374" height="76.5"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="选项1：" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dsN-qd-PgA">
-                        <rect key="frame" x="21" y="16" width="60" height="20"/>
+                        <rect key="frame" x="41" y="16" width="60" height="20"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="20" id="l25-CV-RT5"/>
                             <constraint firstAttribute="width" constant="60" id="uhJ-tW-XPk"/>
@@ -133,7 +133,7 @@
                         <nil key="highlightedColor"/>
                     </label>
                     <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" scrollEnabled="NO" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="WWT-aA-srW">
-                        <rect key="frame" x="86" y="11" width="257" height="74"/>
+                        <rect key="frame" x="106" y="11" width="247" height="50"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                         <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
@@ -142,30 +142,52 @@
                         </connections>
                     </textView>
                     <view alpha="0.29999999999999999" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="nrh-xd-P1T">
-                        <rect key="frame" x="5" y="98.5" width="354" height="1"/>
+                        <rect key="frame" x="5" y="74.5" width="364" height="1"/>
                         <color key="backgroundColor" red="0.1346565672588832" green="0.1346565672588832" blue="0.1346565672588832" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="1" id="wFo-5B-hVw"/>
                         </constraints>
                     </view>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ic_delete" translatesAutoresizingMaskIntoConstraints="NO" id="aD6-gf-Gdw">
+                        <rect key="frame" x="10" y="10" width="25" height="25"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="25" id="5Oj-hY-dR7"/>
+                            <constraint firstAttribute="height" constant="25" id="yJJ-EK-5OH"/>
+                        </constraints>
+                    </imageView>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="GDz-Jc-bVv">
+                        <rect key="frame" x="0.0" y="0.0" width="41" height="50"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="50" id="Qbo-df-gup"/>
+                        </constraints>
+                        <connections>
+                            <action selector="delectSelectNumber:" destination="iiM-TB-olN" eventType="touchUpInside" id="hTX-Rg-ObS"/>
+                        </connections>
+                    </button>
                 </subviews>
                 <constraints>
                     <constraint firstItem="dsN-qd-PgA" firstAttribute="top" secondItem="84S-jN-pJv" secondAttribute="topMargin" constant="5" id="4RW-0D-VVs"/>
                     <constraint firstItem="WWT-aA-srW" firstAttribute="top" secondItem="84S-jN-pJv" secondAttribute="topMargin" id="6mt-29-bo4"/>
                     <constraint firstAttribute="bottom" secondItem="nrh-xd-P1T" secondAttribute="bottom" constant="1" id="Dr0-zf-121"/>
+                    <constraint firstItem="GDz-Jc-bVv" firstAttribute="leading" secondItem="84S-jN-pJv" secondAttribute="leading" id="EI1-Bg-gag"/>
+                    <constraint firstItem="aD6-gf-Gdw" firstAttribute="leading" secondItem="84S-jN-pJv" secondAttribute="leading" constant="10" id="EhS-8c-lPz"/>
+                    <constraint firstItem="dsN-qd-PgA" firstAttribute="leading" secondItem="GDz-Jc-bVv" secondAttribute="trailing" id="Eo4-kx-AY4"/>
                     <constraint firstAttribute="trailing" secondItem="nrh-xd-P1T" secondAttribute="trailing" constant="5" id="GfD-6T-zXS"/>
-                    <constraint firstItem="dsN-qd-PgA" firstAttribute="leading" secondItem="84S-jN-pJv" secondAttribute="leadingMargin" constant="5" id="Lkh-rs-qDa"/>
+                    <constraint firstItem="GDz-Jc-bVv" firstAttribute="top" secondItem="84S-jN-pJv" secondAttribute="top" id="I73-qU-ZNZ"/>
+                    <constraint firstItem="dsN-qd-PgA" firstAttribute="leading" secondItem="84S-jN-pJv" secondAttribute="leadingMargin" constant="25" id="Lkh-rs-qDa"/>
                     <constraint firstItem="nrh-xd-P1T" firstAttribute="leading" secondItem="84S-jN-pJv" secondAttribute="leading" constant="5" id="YBx-TP-MZv"/>
                     <constraint firstItem="WWT-aA-srW" firstAttribute="leading" secondItem="dsN-qd-PgA" secondAttribute="trailing" constant="5" id="cfc-8y-fce"/>
                     <constraint firstAttribute="trailingMargin" secondItem="WWT-aA-srW" secondAttribute="trailing" constant="5" id="mmJ-9n-vmx"/>
                     <constraint firstAttribute="bottomMargin" secondItem="WWT-aA-srW" secondAttribute="bottom" constant="5" id="xzs-U1-9aL"/>
+                    <constraint firstItem="aD6-gf-Gdw" firstAttribute="top" secondItem="84S-jN-pJv" secondAttribute="top" constant="10" id="yOn-yh-GUl"/>
                 </constraints>
             </tableViewCellContentView>
             <connections>
+                <outlet property="delectBtn" destination="GDz-Jc-bVv" id="fRq-3q-Lfx"/>
                 <outlet property="selectLabel" destination="dsN-qd-PgA" id="VKf-eB-QJV"/>
                 <outlet property="selectTextView" destination="WWT-aA-srW" id="nnz-ye-bvR"/>
             </connections>
-            <point key="canvasLocation" x="56" y="330.5"/>
+            <point key="canvasLocation" x="61" y="302.5"/>
         </tableViewCell>
         <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="CreateVoteTableViewCellFourth" rowHeight="77" id="jxM-di-66p" customClass="CreateVoteTableViewCell">
             <rect key="frame" x="0.0" y="0.0" width="364" height="77"/>
@@ -175,21 +197,27 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="sUc-en-cJT">
-                        <rect key="frame" x="10" y="10" width="344" height="56.5"/>
+                        <rect key="frame" x="10" y="5" width="344" height="66.5"/>
                         <color key="backgroundColor" red="0.2769240697" green="0.62253773609999996" blue="0.92941176469999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <state key="normal" title="点击添加选项">
                             <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         </state>
+                        <connections>
+                            <action selector="addSelectNumber:" destination="jxM-di-66p" eventType="touchUpInside" id="e52-h9-i1o"/>
+                        </connections>
                     </button>
                 </subviews>
                 <constraints>
                     <constraint firstAttribute="trailing" secondItem="sUc-en-cJT" secondAttribute="trailing" constant="10" id="7gC-Kk-AsU"/>
-                    <constraint firstAttribute="bottom" secondItem="sUc-en-cJT" secondAttribute="bottom" constant="10" id="EdF-EZ-CTW"/>
+                    <constraint firstAttribute="bottom" secondItem="sUc-en-cJT" secondAttribute="bottom" constant="5" id="EdF-EZ-CTW"/>
                     <constraint firstItem="sUc-en-cJT" firstAttribute="leading" secondItem="SYS-Ds-DLs" secondAttribute="leading" constant="10" id="I1F-Nx-w33"/>
-                    <constraint firstItem="sUc-en-cJT" firstAttribute="top" secondItem="SYS-Ds-DLs" secondAttribute="top" constant="10" id="LbA-gH-zex"/>
+                    <constraint firstItem="sUc-en-cJT" firstAttribute="top" secondItem="SYS-Ds-DLs" secondAttribute="top" constant="5" id="LbA-gH-zex"/>
                 </constraints>
             </tableViewCellContentView>
             <point key="canvasLocation" x="56" y="500.5"/>
         </tableViewCell>
     </objects>
+    <resources>
+        <image name="ic_delete" width="129" height="128"/>
+    </resources>
 </document>

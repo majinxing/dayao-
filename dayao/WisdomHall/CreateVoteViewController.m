@@ -10,7 +10,7 @@
 #import "DYHeader.h"
 #import "CreateVoteTableViewCell.h"
 #import "VoteModel.h"
-
+#import "EditerTextViewController.h"
 
 
 @interface CreateVoteViewController ()<UITableViewDataSource,UITableViewDelegate,CreateVoteTableViewCellDelegate>
@@ -24,7 +24,7 @@
 @implementation CreateVoteViewController
 
 -(void)dealloc{
-     NSLog(@"%s",__func__);
+    NSLog(@"%s",__func__);
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -34,8 +34,6 @@
     [self addTableView];
     
     [self addInfo];
-    
-    [self addSelect];
     
     [self keyboardNotification];
     // Do any additional setup after loading the view from its nib.
@@ -52,16 +50,32 @@
     self.title = @"投票";
     UIBarButtonItem *myButton = [[UIBarButtonItem alloc] initWithTitle:@"提交" style:UIBarButtonItemStylePlain target:self action:@selector(saveVote)];
     [myButton setTintColor:[UIColor whiteColor]];
-
+    
     self.navigationItem.rightBarButtonItem = myButton;
-//    UIBarButtonItem * backbtn = [[UIBarButtonItem alloc] initWithTitle:nil style:UIBarButtonItemStylePlain target:self action:@selector(back)];
-//    self.navigationItem.leftBarButtonItem = backbtn;
+    
 }
 
 -(void)saveVote{
     [self showHudInView:self.view hint:NSLocalizedString(@"正在加载数据", @"Load data...")];
     if ([_type isEqualToString:@"meeting"]) {
-        NSDictionary * dict = [[NSDictionary alloc] initWithObjectsAndKeys:_voteModel.title,@"title",_voteModel.largestNumbe,@"type",_voteModel.selectAry,@"contentList",_meetModel.meetingId,@"relId",@"2",@"relType",nil];
+        NSMutableArray * ary = [NSMutableArray arrayWithCapacity:1];
+        
+        for (int i = 0; i<_voteModel.selectAry.count; i++) {
+            
+            if (![UIUtils isBlankString:_voteModel.selectAry[i]]) {
+                [ary addObject:_voteModel.selectAry[i]];
+                
+            }
+        }
+        if (ary.count>0) {
+            
+        }else{
+            [UIUtils showInfoMessage:@"投票选项不能为空"];
+            [self hideHud];
+            return;
+        }
+        
+        NSDictionary * dict = [[NSDictionary alloc] initWithObjectsAndKeys:_voteModel.title,@"title",_voteModel.largestNumbe,@"type",ary,@"contentList",_meetModel.meetingId,@"relId",@"2",@"relType",nil];
         
         [[NetworkRequest sharedInstance] POST:CreateVote dict:dict succeed:^(id data) {
             NSString *str = [[data objectForKey:@"header"] objectForKey:@"message"];
@@ -80,9 +94,23 @@
             [self hideHud];
             NSLog(@"%@",error);
         }];
-
+        
     }else{
-        NSDictionary * dict = [[NSDictionary alloc] initWithObjectsAndKeys:_voteModel.title,@"title",_voteModel.largestNumbe,@"type",_voteModel.selectAry,@"contentList",_classModel.sclassId,@"relId",@"1",@"relType",nil];
+        NSMutableArray * ary = [NSMutableArray arrayWithCapacity:1];
+        for (int i = 0; i<_voteModel.selectAry.count; i++) {
+            if (![UIUtils isBlankString:_voteModel.selectAry[i]]) {
+                [ary addObject:_voteModel.selectAry[i]];
+            }
+        }
+        if (ary.count>0) {
+            
+        }else{
+            [UIUtils showInfoMessage:@"投票选项不能为空"];
+            
+            [self hideHud];
+            return;
+        }
+        NSDictionary * dict = [[NSDictionary alloc] initWithObjectsAndKeys:_voteModel.title,@"title",_voteModel.largestNumbe,@"type",ary,@"contentList",_classModel.sclassId,@"relId",@"1",@"relType",nil];
         
         [[NetworkRequest sharedInstance] POST:CreateVote dict:dict succeed:^(id data) {
             NSString *str = [[data objectForKey:@"header"] objectForKey:@"message"];
@@ -101,9 +129,9 @@
             [self hideHud];
             NSLog(@"%@",error);
         }];
-
+        
     }
-  
+    
 }
 /**
  * 键盘监听
@@ -131,24 +159,12 @@
     
     _rowNumber = 7;
 }
--(void)addSelect{
-    UIButton * btn = [UIButton buttonWithType:UIButtonTypeCustom];
-    btn.frame = CGRectMake(0, APPLICATION_HEIGHT-50, APPLICATION_WIDTH, 50);
-    [btn addTarget:self action:@selector(addSelects:) forControlEvents:UIControlEventTouchUpInside];
-    btn.backgroundColor = RGBA_COLOR(63,187,168, 1);
-    [btn setTitle:@"添加选项" forState:UIControlStateNormal];
-//    [self.view addSubview:btn];
-}
--(void)addSelects:(UIButton *)btn{
-    _rowNumber = _rowNumber +1;
-    [_voteModel.selectAry addObject:@""];
-    [_tableView reloadData];
-}
+
 -(void)addTableView{
     _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 64,APPLICATION_WIDTH, APPLICATION_HEIGHT-64) style:UITableViewStylePlain];
     _tableView.delegate = self;
     _tableView.dataSource = self;
-//    _tableView.backgroundColor = [UIColor clearColor];
+    //    _tableView.backgroundColor = [UIColor clearColor];
     _tableView.estimatedRowHeight = 60;
     _tableView.rowHeight = UITableViewAutomaticDimension;
     _tableView.separatorStyle = NO;
@@ -231,33 +247,106 @@
 }
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
     if (indexPath.row == 0) {
+        if (![UIUtils isBlankString:_voteModel.title]) {
+            float  h = [self heightForString:_voteModel.title andWidth:APPLICATION_WIDTH-20];
+            if (h>150) {
+                return h;
+            }
+        }
         return 150;
+    }else if (indexPath.row>1&&(indexPath.row<(_rowNumber-1))) {
+        if (![UIUtils isBlankString:_voteModel.selectAry[indexPath.row-2]]) {
+            float  h = [self heightForString:_voteModel.selectAry[indexPath.row-2] andWidth:APPLICATION_WIDTH-103];
+            if (h>50) {
+                return h;
+            }
+        }
     }
+    
     return 50;
 }
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView{
     
 }
+
+- (float)heightForString:(NSString *)value andWidth:(float)width{
+    
+    UITextView * textView = [[UITextView alloc] init];
+    
+    //获取当前文本的属性
+    NSAttributedString *attrStr = [[NSAttributedString alloc] initWithString:value];
+    
+    textView.attributedText = attrStr;
+    
+    NSRange range = NSMakeRange(0, attrStr.length);
+    
+    // 获取该段attributedString的属性字典
+    
+    CGSize sizeToFit = [value boundingRectWithSize:CGSizeMake(width - 16.0, 900)
+                        // 用于计算文本绘制时占据的矩形块
+                                           options:NSStringDrawingUsesLineFragmentOrigin | NSStringDrawingUsesFontLeading // 文本绘制时的附加选项
+                                        attributes:@{NSFontAttributeName: [UIFont systemFontOfSize:14]} // 文字的属性
+                                           context:nil].size;
+    // context上下文。包括一些信息，例如如何调整字间距以及缩放。该对象包含的信息将用于文本绘制。该参数可为nil
+    
+    return sizeToFit.height + 49.0;
+    
+}
+
+
 #pragma mark textFileTextChangeDelegate
-////
-//-(void)textFileTextChangeDelegate:(UITextView *)textFile{
-//    [_voteModel changeText:textFile];
-//}
+-(void)addSelectNumberDelegate:(UIButton *)sender{
+    _rowNumber = _rowNumber + 1;
+    [_voteModel.selectAry addObject:@""];
+    [_tableView reloadData];
+}
+-(void)delectSelectNumberDelegate:(UIButton *)sender{
+    if ((sender.tag-3)<_voteModel.selectAry.count) {
+        [_voteModel.selectAry removeObjectAtIndex:sender.tag-3];
+        _rowNumber = _rowNumber - 1;
+        [_tableView reloadData];
+    }
+}
 -(void)textViewBeginChangeDelegate:(UITextView *)textView{
-    NSLog(@"%ld",textView.tag);
+    
+    EditerTextViewController * vc = [[EditerTextViewController alloc] initWithText:^(NSString *text) {
+        if (textView.tag == 111) {
+            _voteModel.title = text;
+        }else if (textView.tag>1){
+            if (![UIUtils isBlankString:text]) {
+                if ((textView.tag-3)<_voteModel.selectAry.count) {
+                    [_voteModel.selectAry setObject:text atIndexedSubscript:textView.tag-3];
+                }
+            }
+        }
+        
+        [_tableView reloadData];
+    }];
+    if (textView.tag == 111) {
+        vc.textStr = _voteModel.title;
+    }else{
+        if ((textView.tag-3)<_voteModel.selectAry.count) {
+            vc.textStr = _voteModel.selectAry[textView.tag-3];
+        }
+    }
+    [self.navigationController pushViewController:vc animated:YES];
+    
+    self.hidesBottomBarWhenPushed = YES;
+    
+    [self.view endEditing:YES];
 }
 //投票数目
 -(void)textFieldDidChangeDelegate:(UITextField *)textFile{
     _voteModel.largestNumbe = textFile.text;
 }
 /*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
+ #pragma mark - Navigation
+ 
+ // In a storyboard-based application, you will often want to do a little preparation before navigation
+ - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+ // Get the new view controller using [segue destinationViewController].
+ // Pass the selected object to the new view controller.
+ }
+ */
 
 @end
