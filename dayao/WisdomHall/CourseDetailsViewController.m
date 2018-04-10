@@ -610,6 +610,8 @@
         return;
     }else{
         if ([[NSString stringWithFormat:@"%@",_c.signStatus] isEqualToString:@"2"]) {
+//            [UIUtils showInfoMessage:@"已签到"];
+
             [self hideHud];
             [self signPictureUpdate];
             return;
@@ -799,6 +801,10 @@
 }
 
 -(void)signPictureUpdate{
+    if (![[NSString stringWithFormat:@"%@",_c.signWay] isEqualToString:@"9"]) {
+        [UIUtils showInfoMessage:@"已签到"];
+        return;
+    }
     if (!_photoView) {
         _photoView = [[PhotoPromptBox alloc] initWithBlack:^(NSString * str) {
             [_photoView removeFromSuperview];

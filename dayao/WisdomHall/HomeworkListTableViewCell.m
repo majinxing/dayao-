@@ -14,6 +14,7 @@
 @property (strong, nonatomic) IBOutlet UITextField *homeworkInfo;
 @property (strong, nonatomic) IBOutlet UIImageView *homeworkImage;
 @property (strong, nonatomic) IBOutlet UILabel *imageNumber;
+@property (strong, nonatomic) IBOutlet UILabel *timeLabel;
 @end
 
 @implementation HomeworkListTableViewCell
@@ -28,6 +29,13 @@
     _homeworkInfo.text = homework.homeworkInfo;
     [_homeworkInfo setEnabled:NO];
     _imageNumber.text = homework.homeworkImageNumber;
+    
+    if (![UIUtils isBlankString:[NSString stringWithFormat:@"%@",homework.endTime]]) {
+        NSArray * ary = [[NSString stringWithFormat:@"%@",homework.endTime] componentsSeparatedByString:@" "];
+        if (ary.count>0) {
+            _timeLabel.text = [NSString stringWithFormat:@"截止时间：%@",ary[0]];
+        }
+    }
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {

@@ -198,7 +198,7 @@ static NSString *cellIdentifier = @"cellIdentifier";
         }
     } failure:^(NSError *error) {
         [self hideHud];
-        NSLog(@"%@",error);
+        [UIUtils showInfoMessage:@"请求失败，请检查网络"];
     }];
 }
 -(void)getSelfJoinClass:(NSInteger)page{
@@ -217,7 +217,6 @@ static NSString *cellIdentifier = @"cellIdentifier";
         [self getSelfCreateClassType:page];
     } failure:^(NSError *error) {
         [self hideHud];
-        NSLog(@"%@",error);
     }];
 }
 //临时
@@ -238,7 +237,6 @@ static NSString *cellIdentifier = @"cellIdentifier";
         [self getSelfJoinClassType:page];
     } failure:^(NSError *error) {
         [self hideHud];
-        NSLog(@"%@",error);
     }];
 }
 //临时
@@ -280,7 +278,6 @@ static NSString *cellIdentifier = @"cellIdentifier";
         
     } failure:^(NSError *error) {
         [self hideHud];
-        NSLog(@"%@",error);
     }];
     
 }

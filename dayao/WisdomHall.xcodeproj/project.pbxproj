@@ -138,6 +138,7 @@
 		8B0F41301EF522CF001AF4DF /* MJXChatViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B0F412E1EF522CF001AF4DF /* MJXChatViewController.m */; };
 		8B0F41311EF522CF001AF4DF /* MJXChatViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8B0F412F1EF522CF001AF4DF /* MJXChatViewController.xib */; };
 		8B0F8E851F59460400993B0B /* QuestionBank.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B0F8E841F59460400993B0B /* QuestionBank.m */; };
+		8B14396F207AF9730016707D /* selectPeopleView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B14396E207AF9730016707D /* selectPeopleView.m */; };
 		8B1509821F4E7A6F000127AF /* TFFileUploadManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B1509811F4E7A6F000127AF /* TFFileUploadManager.m */; };
 		8B1509851F4EA823000127AF /* FileModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B1509841F4EA823000127AF /* FileModel.m */; };
 		8B16FE732047EC4A0000E9B7 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8B16FE722047EC4A0000E9B7 /* Assets.xcassets */; };
@@ -836,6 +837,8 @@
 		8B0F412F1EF522CF001AF4DF /* MJXChatViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MJXChatViewController.xib; sourceTree = "<group>"; };
 		8B0F8E831F59460400993B0B /* QuestionBank.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QuestionBank.h; sourceTree = "<group>"; };
 		8B0F8E841F59460400993B0B /* QuestionBank.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QuestionBank.m; sourceTree = "<group>"; };
+		8B14396D207AF9730016707D /* selectPeopleView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = selectPeopleView.h; sourceTree = "<group>"; };
+		8B14396E207AF9730016707D /* selectPeopleView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = selectPeopleView.m; sourceTree = "<group>"; };
 		8B1509801F4E7A6F000127AF /* TFFileUploadManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TFFileUploadManager.h; sourceTree = "<group>"; };
 		8B1509811F4E7A6F000127AF /* TFFileUploadManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TFFileUploadManager.m; sourceTree = "<group>"; };
 		8B1509831F4EA823000127AF /* FileModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FileModel.h; sourceTree = "<group>"; };
@@ -1702,6 +1705,8 @@
 				8B0D96081F1893A2006796E3 /* CreateCouresTableViewCell.h */,
 				8B0D96091F1893A2006796E3 /* CreateCouresTableViewCell.m */,
 				8B0D960A1F1893A2006796E3 /* CreateCouresTableViewCell.xib */,
+				8B14396D207AF9730016707D /* selectPeopleView.h */,
+				8B14396E207AF9730016707D /* selectPeopleView.m */,
 			);
 			name = CreateCourserCell;
 			sourceTree = "<group>";
@@ -2733,7 +2738,7 @@
 						CreatedOnToolsVersion = 8.3;
 						DevelopmentTeam = AM9UTP2CL3;
 						LastSwiftMigration = 0830;
-						ProvisioningStyle = Automatic;
+						ProvisioningStyle = Manual;
 						SystemCapabilities = {
 							com.apple.BackgroundModes = {
 								enabled = 1;
@@ -2990,6 +2995,7 @@
 				8B081DFF1F06524000493B81 /* PinyinHelper.m in Sources */,
 				8B078431205BA559004E826B /* HKClipperHelper.m in Sources */,
 				8B081DFA1F06524000493B81 /* ChineseToPinyinResource.m in Sources */,
+				8B14396F207AF9730016707D /* selectPeopleView.m in Sources */,
 				8BCE7CD11F04F07600FE261B /* AFURLSessionManager.m in Sources */,
 				8BFB94611EE6A381004BB963 /* JoinVoteViewController.m in Sources */,
 				8B081DEB1F0645E600493B81 /* SchoolModel.m in Sources */,
@@ -3424,10 +3430,10 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = WisdomHall/WisdomHall.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Distribution: yao zhiqiang (AM9UTP2CL3)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				CODE_SIGN_STYLE = Automatic;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: yao zhiqiang (AM9UTP2CL3)";
+				CODE_SIGN_STYLE = Manual;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = AM9UTP2CL3;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -3445,7 +3451,7 @@
 				GCC_PREFIX_HEADER = "";
 				HEADER_SEARCH_PATHS = "$(PROJECT_DIR)/WisdomHall/Bugly.framework";
 				INFOPLIST_FILE = WisdomHall/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
@@ -3460,8 +3466,8 @@
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_BUNDLE_IDENTIFIER = com.dayaokeji.rhythm;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "";
-				PROVISIONING_PROFILE_SPECIFIER = "";
+				PROVISIONING_PROFILE = "fad4d958-fbb6-4b6b-98b9-bc5a8207f738";
+				PROVISIONING_PROFILE_SPECIFIER = rhythmTeacherOnline;
 				SWIFT_OBJC_BRIDGING_HEADER = "WisdomHall/WisdomHall-Bridging-Header.h";
 				SWIFT_VERSION = 3.0;
 				TARGETED_DEVICE_FAMILY = 1;
@@ -3631,10 +3637,10 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = WisdomHall/WisdomHall.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Distribution: yao zhiqiang (AM9UTP2CL3)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				CODE_SIGN_STYLE = Automatic;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: yao zhiqiang (AM9UTP2CL3)";
+				CODE_SIGN_STYLE = Manual;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = AM9UTP2CL3;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -3652,7 +3658,7 @@
 				GCC_PREFIX_HEADER = "";
 				HEADER_SEARCH_PATHS = "$(PROJECT_DIR)/WisdomHall/Bugly.framework";
 				INFOPLIST_FILE = WisdomHall/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
@@ -3667,8 +3673,8 @@
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_BUNDLE_IDENTIFIER = com.dayaokeji.rhythm;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "";
-				PROVISIONING_PROFILE_SPECIFIER = "";
+				PROVISIONING_PROFILE = "fad4d958-fbb6-4b6b-98b9-bc5a8207f738";
+				PROVISIONING_PROFILE_SPECIFIER = rhythmTeacherOnline;
 				SWIFT_OBJC_BRIDGING_HEADER = "WisdomHall/WisdomHall-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 3.0;
@@ -3685,10 +3691,10 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = WisdomHall/WisdomHall.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Distribution: yao zhiqiang (AM9UTP2CL3)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				CODE_SIGN_STYLE = Automatic;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: yao zhiqiang (AM9UTP2CL3)";
+				CODE_SIGN_STYLE = Manual;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = AM9UTP2CL3;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -3706,7 +3712,7 @@
 				GCC_PREFIX_HEADER = "";
 				HEADER_SEARCH_PATHS = "$(PROJECT_DIR)/WisdomHall/Bugly.framework";
 				INFOPLIST_FILE = WisdomHall/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
@@ -3721,8 +3727,8 @@
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_BUNDLE_IDENTIFIER = com.dayaokeji.rhythm;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "";
-				PROVISIONING_PROFILE_SPECIFIER = "";
+				PROVISIONING_PROFILE = "fad4d958-fbb6-4b6b-98b9-bc5a8207f738";
+				PROVISIONING_PROFILE_SPECIFIER = rhythmTeacherOnline;
 				SWIFT_OBJC_BRIDGING_HEADER = "WisdomHall/WisdomHall-Bridging-Header.h";
 				SWIFT_VERSION = 3.0;
 				TARGETED_DEVICE_FAMILY = 1;

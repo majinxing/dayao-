@@ -29,7 +29,9 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
     _user = [[Appsetting sharedInstance] getUsetInfo];
+    
     _dataAry = [NSMutableArray arrayWithCapacity:1];
 //    [self getData];
     [self addTableView];
@@ -132,7 +134,10 @@
     }else if ([[NSString stringWithFormat:@"%@",_classModel.teacherWorkNo] isEqualToString:[NSString stringWithFormat:@"%@",_user.studentId]]) {
         UIBarButtonItem *myButton = [[UIBarButtonItem alloc] initWithTitle:@"新建投票" style:UIBarButtonItemStylePlain target:self action:@selector(createVote)];
         [myButton setTintColor:[UIColor whiteColor]];
+        
+        
         self.navigationItem.rightBarButtonItem = myButton;
+    
     }
     
 }
@@ -140,7 +145,6 @@
 -(void)createVote{
     
     CreateVoteViewController * c = [[CreateVoteViewController alloc] init];
-    self.hidesBottomBarWhenPushed = YES;
     if ([_type isEqualToString:@"meeting"]) {
         c.meetModel = _meetModel;
         c.type = @"meeting";
@@ -150,6 +154,8 @@
     }
     
     [self.navigationController pushViewController:c animated:YES];
+    self.hidesBottomBarWhenPushed = YES;
+
 }
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

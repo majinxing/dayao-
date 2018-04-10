@@ -16,6 +16,7 @@
 @property (nonatomic,copy) NSString * userId;
 @property (nonatomic,copy) NSString * workNo;
 @property (nonatomic,copy) NSString * pictureId;
+@property (nonatomic,copy) NSString * type;//区分身份
 @property (nonatomic,assign) BOOL isSelect;
 
 

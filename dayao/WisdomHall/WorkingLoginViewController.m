@@ -172,10 +172,13 @@
                     ChatHelper * c =[ChatHelper shareHelper];
                     
                     [self saveInfo];
+                    dispatch_async(dispatch_get_main_queue(), ^{
+                        DYTabBarViewController *rootVC = [[DYTabBarViewController alloc] init];
+                        
+                        [UIApplication sharedApplication].keyWindow.rootViewController = rootVC;
+                    });
                     
-                    DYTabBarViewController *rootVC = [[DYTabBarViewController alloc] init];
                     
-                    [UIApplication sharedApplication].keyWindow.rootViewController = rootVC;
                 }
                 [self hideHud];
             }

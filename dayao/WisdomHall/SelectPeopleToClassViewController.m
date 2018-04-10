@@ -20,6 +20,7 @@
 @property (strong, nonatomic) IBOutlet UIButton *professional;
 @property (strong, nonatomic) IBOutlet UIButton *theClass;
 @property (strong, nonatomic) IBOutlet UIButton *search;
+@property (strong, nonatomic) IBOutlet UILabel *lable;
 
 @property (nonatomic,strong)UIButton * bView;//滚轮的背景
 @property (nonatomic,strong)UIView * pickerView;
@@ -60,9 +61,13 @@
     [self setNavigationTitle];
     
     _user = [[Appsetting sharedInstance] getUsetInfo];
+    
     _school = [[SchoolModel alloc] init];
+    
     _school.schoolId = _user.school;
+    
     [self addTableView];
+    
     [self addButton];
     // Do any additional setup after loading the view from its nib.
 }
@@ -72,6 +77,7 @@
 -(void)setNavigationTitle{
     [UIApplication sharedApplication].statusBarStyle = UIStatusBarStyleLightContent;
     self.title = @"";
+    
 }
 - (void)returnText:(RreturnTextBlock)block {
     self.returnTextBlock = block;
@@ -100,32 +106,16 @@
     [back addTarget:self action:@selector(back) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:back];
     
-    UIButton * fuzzySearch = [UIButton buttonWithType:UIButtonTypeCustom];
-    fuzzySearch.frame = CGRectMake(APPLICATION_WIDTH/2-100, 30, 100, 30);
-    [fuzzySearch setTitle:@"范围搜索" forState:UIControlStateNormal];
-    [fuzzySearch setTitleColor:[UIColor colorWithHexString:@"#29a7e1"] forState:UIControlStateNormal];
-    fuzzySearch.titleLabel.font = [UIFont systemFontOfSize:15];
-    [fuzzySearch addTarget:self action:@selector(searchType:) forControlEvents:UIControlEventTouchUpInside];
-    fuzzySearch.tag = 1001;
-    [self.view addSubview:fuzzySearch];
-    
-    UIButton * accurateSearch = [UIButton buttonWithType:UIButtonTypeCustom];
-    accurateSearch.frame = CGRectMake(APPLICATION_WIDTH/2, 30, 100, 30);
-    [accurateSearch setTitle:@"精确搜索" forState:UIControlStateNormal];
-    [accurateSearch setTitleColor:[UIColor colorWithHexString:@"#29a7e1"] forState:UIControlStateNormal];
-    accurateSearch.titleLabel.font = [UIFont systemFontOfSize:15];
-    [accurateSearch addTarget:self action:@selector(searchType:) forControlEvents:UIControlEventTouchUpInside];
-    accurateSearch.tag = 1002;
-    [self.view addSubview:accurateSearch];
     
     UIButton * selectAll = [UIButton buttonWithType:UIButtonTypeCustom];
     selectAll.frame = CGRectMake(APPLICATION_WIDTH-100, 20, 100,44);
-    [selectAll setTitle:@"全选" forState:UIControlStateNormal];
+    [selectAll setTitle:@"确定" forState:UIControlStateNormal];
     [selectAll setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
     selectAll.titleLabel.font = [UIFont systemFontOfSize:15];
     [selectAll addTarget:self action:@selector(searchType:) forControlEvents:UIControlEventTouchUpInside];
     selectAll.tag = 1003;
     [self.view addSubview:selectAll];
+    
     
     
     _departments.layer.masksToBounds = YES;
@@ -150,50 +140,66 @@
     _theClass.layer.cornerRadius = 5;
     [_theClass setTitleColor:[UIColor colorWithHexString:@"#29a7e1"] forState:UIControlStateNormal];
     
-    _search.layer.masksToBounds = YES;
-    _search.layer.borderColor = [UIColor colorWithHexString:@"#29a7e1"].CGColor;
-    _search.layer.borderWidth = 0.5;
-    _search.layer.cornerRadius = 5;
-    [_search setTitleColor:[UIColor colorWithHexString:@"#29a7e1"] forState:UIControlStateNormal];
+//    _lable.layer.masksToBounds = YES;
+//    _lable.layer.borderColor = [UIColor colorWithHexString:@"#29a7e1"].CGColor;
+//    _lable.layer.borderWidth = 0.5;
+//    _lable.layer.cornerRadius = 5;
+    [_lable setTextColor:[UIColor colorWithHexString:@"#29a7e1"]];
+//    [_lable setTitleColor:[UIColor colorWithHexString:@"#29a7e1"] forState:UIControlStateNormal];
+    
     [self addSeachBar];
 }
 -(void)addSeachBar{
-    _mySearchBar = [[UISearchBar alloc] initWithFrame:CGRectMake(0, 64, APPLICATION_WIDTH, 45)];
-    _mySearchBar.backgroundColor = [UIColor clearColor];
+    _mySearchBar = [[UISearchBar alloc] initWithFrame:CGRectMake(60, 22, APPLICATION_WIDTH-140, 40)];
+    
+    _mySearchBar.backgroundColor = [UIColor whiteColor];
     //去掉搜索框背景
     
+//    [[_mySearchBar.subviews objectAtIndex:0] removeFromSuperview];
     //1.
-    for (UIView *subview in _mySearchBar.subviews)
-        
-    {
-        
-        if ([subview isKindOfClass:NSClassFromString(@"UISearchBarBackground")])
-            
+    for (UIView *view in _mySearchBar.subviews) {
+        if ([view isKindOfClass:NSClassFromString(@"UIView")]&&view.subviews.count>0)
         {
-            
-            [subview removeFromSuperview];
-            
+            view.backgroundColor = [UIColor whiteColor];
+            [[view.subviews objectAtIndex:0] removeFromSuperview];
             break;
             
         }
         
     }
+    
+    
+ 
     _mySearchBar.delegate = self;
     _mySearchBar.searchBarStyle = UISearchBarStyleDefault;
     //这个可以加方法 取消的方法
     //_mySearchBar.showsCancelButton = YES;
     _mySearchBar.tintColor = [UIColor blackColor];
-    [_mySearchBar setPlaceholder:@"搜索精确信息：姓名/学号"];
+    [_mySearchBar setPlaceholder:@"输入姓名或学号精确搜索"];
     //[_mySearchBar setBackgroundImage:[UIImage imageNamed:@"search-1"]];
     _mySearchBar.showsScopeBar = YES;
+    
+    UITextField *searchField = [_mySearchBar valueForKey:@"_searchField"];
+    
+    if (searchField) {
+     
+        [searchField setValue:[UIFont systemFontOfSize:14] forKeyPath:@"_placeholderLabel.font"];
+        
+    }
+    
+    
+    
     //    [_mySearchBar sizeToFit];
     //_mySearchBar.hidden = YES;  ///隐藏搜索框
     [self.view addSubview:self.mySearchBar];
     //    [self.mySearchBar becomeFirstResponder];
-    [_mySearchBar setHidden:YES];
+//    [_mySearchBar setHidden:YES];
 }
 
 -(void)back{
+    
+    [_selectPeople removeAllObjects];
+    
     [self.navigationController popViewControllerAnimated:YES];
 }
 -(void)addTableView{
@@ -360,48 +366,41 @@
             _school.sclass = s.sclass;
             _school.sclassId = s.sclassId;
             [_theClass setTitle:_school.sclass forState:UIControlStateNormal];
+            
         }
     }
+     [self selectPeopleWithTitle];
 }
 -(void)searchType:(UIButton *)btn{
-    if (btn.tag == 1001) {
-        [_departments setHidden: NO];
-        [_professional setHidden:NO];
-        [_theClass setHidden:NO];
-        [_search setHidden:NO];
-        [_mySearchBar setHidden:YES];
-    }else if (btn.tag == 1002){
-        [_departments setHidden: YES];
-        [_professional setHidden:YES];
-        [_theClass setHidden:YES];
-        [_search setHidden:YES];
-        [_mySearchBar setHidden:NO];
-    }else if (btn.tag == 1003){
-        if ([btn.titleLabel.text isEqualToString:@"全选"]) {
-            [_selectPeople removeAllObjects];
-            for (int i = 0; i<_dataAry.count; i++) {
-                SignPeople * s = _dataAry[i];
-                s.isSelect = YES;
-                [_selectPeople addObject:s];
-            }
-            [_tableView reloadData];
-            [btn setTitle:@"取消全选" forState:UIControlStateNormal];
-        }else if ([btn.titleLabel.text isEqualToString:@"取消全选"]) {
-            for (int i = 0; i<_dataAry.count; i++) {
-                SignPeople * s = _dataAry[i];
-                s.isSelect = NO;
-                for (int j = 0; j<_selectPeople.count; j++) {
-                    SignPeople *sg = _selectPeople[j];
-                    if ([[NSString stringWithFormat:@"%@",s.userId] isEqualToString:[NSString stringWithFormat:@"%@",sg.userId]]) {
-                        [_selectPeople removeObjectAtIndex:j];
-                        break;
-                    }
-                }
-            }
-            [btn setTitle:@"全选" forState:UIControlStateNormal];
-            [_tableView reloadData];
-        }
-    }
+    
+    [self.navigationController popViewControllerAnimated:YES];
+    
+//    if (btn.tag == 1003){
+//        if ([btn.titleLabel.text isEqualToString:@"全选"]) {
+//            [_selectPeople removeAllObjects];
+//            for (int i = 0; i<_dataAry.count; i++) {
+//                SignPeople * s = _dataAry[i];
+//                s.isSelect = YES;
+//                [_selectPeople addObject:s];
+//            }
+//            [_tableView reloadData];
+//            [btn setTitle:@"取消全选" forState:UIControlStateNormal];
+//        }else if ([btn.titleLabel.text isEqualToString:@"取消全选"]) {
+//            for (int i = 0; i<_dataAry.count; i++) {
+//                SignPeople * s = _dataAry[i];
+//                s.isSelect = NO;
+//                for (int j = 0; j<_selectPeople.count; j++) {
+//                    SignPeople *sg = _selectPeople[j];
+//                    if ([[NSString stringWithFormat:@"%@",s.userId] isEqualToString:[NSString stringWithFormat:@"%@",sg.userId]]) {
+//                        [_selectPeople removeObjectAtIndex:j];
+//                        break;
+//                    }
+//                }
+//            }
+//            [btn setTitle:@"全选" forState:UIControlStateNormal];
+//            [_tableView reloadData];
+//        }
+//    }
 }
 
 - (IBAction)selectPeople:(UIButton *)sender {
@@ -426,7 +425,7 @@
         }];
     }else if (sender.tag == 2){
         if ([UIUtils isBlankString:[NSString stringWithFormat:@"%@",_school.departmentId]]) {
-            UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"请先选择学校" message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: nil];
+            UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"请先选择院系" message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: nil];
             [alertView show];
             return;
         }
@@ -453,7 +452,7 @@
             [alertView show];
         }];
     }else if (sender.tag == 3){
-        if ([UIUtils isBlankString:[NSString stringWithFormat:@"_school.departmentId"]]) {
+        if ([UIUtils isBlankString:[NSString stringWithFormat:@"%@",_school.major]]) {
             UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"请先选择专业" message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: nil];
             [alertView show];
             return;
@@ -478,60 +477,61 @@
             [alertView show];
         }];
         
-    }else if (sender.tag == 4){
+    }
         
-        NSMutableDictionary * d = [[NSMutableDictionary alloc] init];
+}
+-(void)selectPeopleWithTitle{
+    NSMutableDictionary * d = [[NSMutableDictionary alloc] init];
+    
+    [d setObject:[NSString stringWithFormat:@"%@",_school.schoolId] forKey:@"universityId"];
+    [d setObject:@"1" forKey:@"start"];
+    [d setObject:@"50" forKey:@"length"];
+    
+    if (![UIUtils isBlankString:[NSString stringWithFormat:@"%@",_school.departmentId]]) {
         
-        [d setObject:[NSString stringWithFormat:@"%@",_school.schoolId] forKey:@"universityId"];
-        [d setObject:@"1" forKey:@"start"];
-        [d setObject:@"50" forKey:@"length"];
-        
-        if (![UIUtils isBlankString:[NSString stringWithFormat:@"%@",_school.departmentId]]) {
-            
-            [d setObject:[NSString stringWithFormat:@"%@",_school.departmentId] forKey:@"facultyId"];
-            
-        }
-        if (![UIUtils isBlankString:[NSString stringWithFormat:@"%@",_school.majorId]]){
-            
-            [d setObject:[NSString stringWithFormat:@"%@",_school.majorId] forKey:@"majorId"];
-            
-        }
-        if (![UIUtils isBlankString:[NSString stringWithFormat:@"%@",[NSString stringWithFormat:@"%@",_school.sclassId]]]){
-            [d setObject:[NSString stringWithFormat:@"%@",_school.sclassId] forKey:@"classId"];
-        }
-        
-        [[NetworkRequest sharedInstance] GET:QueryPeople dict:d succeed:^(id data) {
-            NSArray * aty = [[data objectForKey:@"body"] objectForKey:@"list"];
-            NSString * s = [NSString stringWithFormat:@"%@",[[data objectForKey:@"body"] objectForKey:@"pages"]];
-            if (![UIUtils isBlankString:s]) {
-                _page1 = [s intValue];
-            }
-
-            [_dataAry removeAllObjects];
-            for (int i = 0; i<aty.count; i++) {
-                SignPeople * s = [[SignPeople alloc] init];
-                s.name = [aty[i] objectForKey:@"name"];
-                s.userId = [aty[i] objectForKey:@"id"];
-                s.workNo = [aty[i] objectForKey:@"workNo"];
-                for (int j = 0; j<_selectPeople.count; j++) {
-                    SignPeople * sg = _selectPeople[j];
-                    if ([[NSString stringWithFormat:@"%@",s.userId] isEqualToString:[NSString stringWithFormat:@"%@",sg.userId]]) {
-                        s.isSelect = YES;
-                        break;
-                    }
-                }
-                [_dataAry addObject:s];
-            }
-            [_tableView reloadData];
-        } failure:^(NSError *error) {
-            UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"查询失败" message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: nil];
-            [alertView show];
-        }];
+        [d setObject:[NSString stringWithFormat:@"%@",_school.departmentId] forKey:@"facultyId"];
         
     }
+    if (![UIUtils isBlankString:[NSString stringWithFormat:@"%@",_school.majorId]]){
+        
+        [d setObject:[NSString stringWithFormat:@"%@",_school.majorId] forKey:@"majorId"];
+        
+    }
+    if (![UIUtils isBlankString:[NSString stringWithFormat:@"%@",[NSString stringWithFormat:@"%@",_school.sclassId]]]){
+        [d setObject:[NSString stringWithFormat:@"%@",_school.sclassId] forKey:@"classId"];
+    }
+    
+    [[NetworkRequest sharedInstance] GET:QueryPeople dict:d succeed:^(id data) {
+        NSArray * aty = [[data objectForKey:@"body"] objectForKey:@"list"];
+        NSString * s = [NSString stringWithFormat:@"%@",[[data objectForKey:@"body"] objectForKey:@"pages"]];
+        if (![UIUtils isBlankString:s]) {
+            _page1 = [s intValue];
+        }
+        
+        [_dataAry removeAllObjects];
+        for (int i = 0; i<aty.count; i++) {
+            SignPeople * s = [[SignPeople alloc] init];
+            s.name = [aty[i] objectForKey:@"name"];
+            s.userId = [aty[i] objectForKey:@"id"];
+            s.workNo = [aty[i] objectForKey:@"workNo"];
+            s.type = [aty[i] objectForKey:@"type"];
+            
+            for (int j = 0; j<_selectPeople.count; j++) {
+                SignPeople * sg = _selectPeople[j];
+                if ([[NSString stringWithFormat:@"%@",s.userId] isEqualToString:[NSString stringWithFormat:@"%@",sg.userId]]) {
+                    s.isSelect = YES;
+                    break;
+                }
+            }
+            [_dataAry addObject:s];
+        }
+        [_tableView reloadData];
+    } failure:^(NSError *error) {
+        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"查询失败" message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: nil];
+        [alertView show];
+    }];
     
 }
-
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.

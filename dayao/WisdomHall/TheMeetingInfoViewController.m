@@ -760,6 +760,9 @@
     return output;
 }
 -(void)signPictureUpdate{
+    if (![[NSString stringWithFormat:@"%@",_meetingModel.signWay] isEqualToString:@"9"]) {
+        return;
+    }
     if (!_photoView) {
         _photoView = [[PhotoPromptBox alloc] initWithBlack:^(NSString * str) {
             [_photoView removeFromSuperview];

@@ -13,7 +13,7 @@
 #import "ImageBrowserViewController.h"
 #import "imageBigView.h"
 
-@interface CreateHomeworkViewController ()<UITableViewDelegate,UITableViewDataSource,HomeworkCreateTableViewCellDelegate,UINavigationControllerDelegate,UIImagePickerControllerDelegate,ImageBrowserViewControllerDelegate,imageBigViewDelegate>
+@interface CreateHomeworkViewController ()<UITableViewDelegate,UITableViewDataSource,HomeworkCreateTableViewCellDelegate,UINavigationControllerDelegate,UIImagePickerControllerDelegate,imageBigViewDelegate>
 @property (nonatomic,strong) UITableView * tableView;
 @property (nonatomic,strong) NSMutableArray * imageAry;
 @property (nonatomic,strong) UserModel * user;
@@ -31,6 +31,8 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    _user = [[Appsetting sharedInstance] getUsetInfo];
     
     self.view.backgroundColor = [UIColor whiteColor];
     
@@ -53,8 +55,31 @@
         
         _imageAry = _homeworkModel.homeworkAry;
     }
+    
+    [self setNavigationTitle];
+    
     [self addTableView];
     // Do any additional setup after loading the view from its nib.
+}
+-(void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event{
+    [self.view endEditing:YES];
+}
+/**
+ *  显示navigation的标题
+ **/
+-(void)setNavigationTitle{
+    [UIApplication sharedApplication].statusBarStyle = UIStatusBarStyleLightContent;
+    
+    self.title = @"创建作业";
+    
+    UIBarButtonItem *myButton = [[UIBarButtonItem alloc] initWithTitle:@"发布作业" style:UIBarButtonItemStylePlain target:self action:@selector(sendHomeworkPressedDelegate:)];
+    [myButton setTintColor:[UIColor whiteColor]];
+    
+    if ([[NSString stringWithFormat:@"%@",_c.teacherWorkNo] isEqualToString:[NSString stringWithFormat:@"%@",_user.studentId]]) {
+        if (_edit) {
+            self.navigationItem.rightBarButtonItem = myButton;
+        }
+    }
 }
 -(void)addTableView{
     _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, NaviHeight, APPLICATION_WIDTH,APPLICATION_HEIGHT-64) style:UITableViewStylePlain];
@@ -77,6 +102,8 @@
 }
 -(void)selectImageBtnDelegate:(UIButton *)btn{
     
+    [self.view endEditing:YES];
+    
     _imageNum = (int)btn.tag;
     if (_edit) {
         [self getPicture];
@@ -92,6 +119,9 @@
 }
 
 -(void)selectTimeBtnPressedDelegate{
+    
+    [self.view endEditing:YES];
+    
     CalendarViewController * vc = [[CalendarViewController alloc] init];
     self.hidesBottomBarWhenPushed = YES;
     [self.navigationController pushViewController:vc animated:YES];
@@ -287,7 +317,7 @@
     return 1;
 }
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
-    return 3;
+    return 2;
 }
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{

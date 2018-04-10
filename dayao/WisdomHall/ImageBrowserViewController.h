@@ -23,6 +23,7 @@ typedef NS_ENUM(NSUInteger,PhotoBroswerVCType) {
 };
 
 @protocol ImageBrowserViewControllerDelegate <NSObject>
+
 -(void)imageBrowserVCDeleteImageButtonPressed:(UIButton *) btn;
 
 

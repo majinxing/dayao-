@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="12121" systemVersion="16E195" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="13771" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12089"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
         <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -13,8 +13,8 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="SelectPeopleToClassViewController">
             <connections>
                 <outlet property="departments" destination="o2i-Nl-lQv" id="Wzj-eb-Icw"/>
+                <outlet property="lable" destination="EwV-qe-OwC" id="ejA-RV-Zsq"/>
                 <outlet property="professional" destination="cJF-EO-n5M" id="6oL-3T-tad"/>
-                <outlet property="search" destination="ljB-cM-INq" id="zil-yp-qio"/>
                 <outlet property="theClass" destination="quj-Ue-xKu" id="NzV-Ro-erb"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
@@ -25,43 +25,19 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <button opaque="NO" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="o2i-Nl-lQv">
-                    <rect key="frame" x="5" y="80" width="83.5" height="20"/>
-                    <constraints>
-                        <constraint firstAttribute="height" constant="20" id="nve-EH-0R6"/>
-                    </constraints>
+                    <rect key="frame" x="92" y="80" width="92" height="21"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
                     <state key="normal" title="院  系"/>
                     <connections>
                         <action selector="selectPeople:" destination="-1" eventType="touchUpInside" id="S8M-MF-QCg"/>
                     </connections>
                 </button>
                 <button opaque="NO" tag="2" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cJF-EO-n5M">
-                    <rect key="frame" x="93.5" y="80" width="83.5" height="20"/>
-                    <constraints>
-                        <constraint firstAttribute="height" constant="20" id="oCx-3J-eUP"/>
-                    </constraints>
+                    <rect key="frame" x="186" y="80" width="92" height="21"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
                     <state key="normal" title="专  业"/>
                     <connections>
                         <action selector="selectPeople:" destination="-1" eventType="touchUpInside" id="Xov-QC-JIy"/>
-                    </connections>
-                </button>
-                <button opaque="NO" tag="3" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="quj-Ue-xKu">
-                    <rect key="frame" x="182" y="80" width="88.5" height="20"/>
-                    <constraints>
-                        <constraint firstAttribute="height" constant="20" id="ywx-xF-Ypu"/>
-                    </constraints>
-                    <state key="normal" title="班  级"/>
-                    <connections>
-                        <action selector="selectPeople:" destination="-1" eventType="touchUpInside" id="2sv-TJ-6RX"/>
-                    </connections>
-                </button>
-                <button opaque="NO" tag="4" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ljB-cM-INq">
-                    <rect key="frame" x="275.5" y="80" width="94.5" height="20"/>
-                    <constraints>
-                        <constraint firstAttribute="height" constant="20" id="Roq-2O-wFC"/>
-                    </constraints>
-                    <state key="normal" title="搜  索"/>
-                    <connections>
-                        <action selector="selectPeople:" destination="-1" eventType="touchUpInside" id="oRV-73-acC"/>
                     </connections>
                 </button>
                 <view alpha="0.29999999999999999" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="n0F-XK-79A">
@@ -71,24 +47,44 @@
                         <constraint firstAttribute="height" constant="1" id="7Nm-Yz-FYk"/>
                     </constraints>
                 </view>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="模糊搜索" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="EwV-qe-OwC">
+                    <rect key="frame" x="0.0" y="80" width="94" height="21"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="21" id="Ejj-yV-qrQ"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                    <color key="textColor" red="0.48489421606063843" green="0.7864728569984436" blue="0.92759490013122559" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <button opaque="NO" tag="3" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="quj-Ue-xKu">
+                    <rect key="frame" x="280" y="80" width="92" height="21"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                    <state key="normal" title="班  级"/>
+                    <connections>
+                        <action selector="selectPeople:" destination="-1" eventType="touchUpInside" id="2sv-TJ-6RX"/>
+                    </connections>
+                </button>
             </subviews>
             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
-                <constraint firstItem="o2i-Nl-lQv" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="80" id="0Q1-vz-LPR"/>
-                <constraint firstItem="o2i-Nl-lQv" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="5" id="2Dz-la-NAr"/>
-                <constraint firstItem="cJF-EO-n5M" firstAttribute="width" secondItem="i5M-Pr-FkT" secondAttribute="width" multiplier="8/36" id="3u9-9O-b0T"/>
+                <constraint firstItem="cJF-EO-n5M" firstAttribute="leading" secondItem="o2i-Nl-lQv" secondAttribute="trailing" constant="2" id="1As-oE-KyE"/>
+                <constraint firstItem="EwV-qe-OwC" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="2m3-eu-R1c"/>
+                <constraint firstItem="o2i-Nl-lQv" firstAttribute="height" secondItem="EwV-qe-OwC" secondAttribute="height" id="AZf-7a-Nc0"/>
                 <constraint firstItem="n0F-XK-79A" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="64" id="DNX-tS-Bgg"/>
-                <constraint firstItem="quj-Ue-xKu" firstAttribute="width" secondItem="i5M-Pr-FkT" secondAttribute="width" multiplier="8/36" constant="5" id="FzG-6e-eCB"/>
-                <constraint firstItem="cJF-EO-n5M" firstAttribute="leading" secondItem="o2i-Nl-lQv" secondAttribute="trailing" constant="5" id="LgE-bF-6JZ"/>
-                <constraint firstItem="ljB-cM-INq" firstAttribute="leading" secondItem="quj-Ue-xKu" secondAttribute="trailing" constant="5" id="NRC-TX-bCK"/>
-                <constraint firstItem="ljB-cM-INq" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="80" id="PNo-ZF-Pvz"/>
-                <constraint firstAttribute="trailing" secondItem="ljB-cM-INq" secondAttribute="trailing" constant="5" id="XDg-di-oYb"/>
-                <constraint firstItem="quj-Ue-xKu" firstAttribute="leading" secondItem="cJF-EO-n5M" secondAttribute="trailing" constant="5" id="ZMH-WA-sQL"/>
+                <constraint firstItem="o2i-Nl-lQv" firstAttribute="top" secondItem="EwV-qe-OwC" secondAttribute="top" id="SHZ-VR-KW6"/>
+                <constraint firstItem="quj-Ue-xKu" firstAttribute="leading" secondItem="cJF-EO-n5M" secondAttribute="trailing" constant="2" id="W7t-Ja-Srf"/>
+                <constraint firstItem="cJF-EO-n5M" firstAttribute="top" secondItem="o2i-Nl-lQv" secondAttribute="top" id="bCT-9c-8OC"/>
+                <constraint firstItem="quj-Ue-xKu" firstAttribute="height" secondItem="cJF-EO-n5M" secondAttribute="height" id="fAD-Gh-s1r"/>
                 <constraint firstAttribute="trailing" secondItem="n0F-XK-79A" secondAttribute="trailing" id="gYg-IZ-WMg"/>
-                <constraint firstItem="o2i-Nl-lQv" firstAttribute="width" secondItem="i5M-Pr-FkT" secondAttribute="width" multiplier="8/36" id="je5-X7-wuR"/>
-                <constraint firstItem="cJF-EO-n5M" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="80" id="ln0-JW-WhX"/>
-                <constraint firstItem="quj-Ue-xKu" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="80" id="xvG-3p-xql"/>
+                <constraint firstItem="o2i-Nl-lQv" firstAttribute="leading" secondItem="EwV-qe-OwC" secondAttribute="trailing" constant="-2" id="i1V-a7-DF7"/>
+                <constraint firstItem="o2i-Nl-lQv" firstAttribute="width" secondItem="EwV-qe-OwC" secondAttribute="width" constant="-2" id="p0C-lk-aKR"/>
+                <constraint firstItem="cJF-EO-n5M" firstAttribute="height" secondItem="o2i-Nl-lQv" secondAttribute="height" id="qKS-y5-C9n"/>
+                <constraint firstItem="EwV-qe-OwC" firstAttribute="top" secondItem="n0F-XK-79A" secondAttribute="bottom" constant="15" id="r7Z-si-kra"/>
+                <constraint firstItem="quj-Ue-xKu" firstAttribute="width" secondItem="cJF-EO-n5M" secondAttribute="width" id="vhK-Fc-fTi"/>
                 <constraint firstItem="n0F-XK-79A" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="yJH-wz-T5D"/>
+                <constraint firstItem="quj-Ue-xKu" firstAttribute="top" secondItem="cJF-EO-n5M" secondAttribute="top" id="yYA-Gp-h3u"/>
+                <constraint firstItem="EwV-qe-OwC" firstAttribute="width" secondItem="i5M-Pr-FkT" secondAttribute="width" multiplier="1/4" id="ycJ-mi-GZu"/>
+                <constraint firstItem="cJF-EO-n5M" firstAttribute="width" secondItem="o2i-Nl-lQv" secondAttribute="width" id="zsg-zX-Hdy"/>
             </constraints>
         </view>
     </objects>
