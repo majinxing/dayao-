@@ -46,7 +46,7 @@
 }
 -(void)createText{
     if ([UIUtils isBlankString:_titleTextFile.text]) {
-        [UIUtils showInfoMessage:@"请填写测验名字"];
+        [UIUtils showInfoMessage:@"请填写测验名字" withVC:self];
     }else{
         
         NSDictionary * dict = [[NSDictionary alloc] initWithObjectsAndKeys:_titleTextFile.text,@"name",@"2",@"status", nil];
@@ -65,7 +65,7 @@
                 self.hidesBottomBarWhenPushed = YES;
                 [self.navigationController pushViewController:tQVC animated:YES];
             }else{
-                [UIUtils showInfoMessage:@"创建失败"];
+                [UIUtils showInfoMessage:@"创建失败" withVC:self];
             }
         } failure:^(NSError *error) {
             NSLog(@"%@",error);
@@ -91,10 +91,10 @@
             self.hidesBottomBarWhenPushed = YES;
             [self.navigationController pushViewController:tQVC animated:YES];
         }else{
-            [UIUtils showInfoMessage:@"创建失败"];
+            [UIUtils showInfoMessage:@"创建失败" withVC:self];
         }
     } failure:^(NSError *error) {
-        [UIUtils showInfoMessage:@"创建失败，请检查网络"];
+        [UIUtils showInfoMessage:@"创建失败，请检查网络" withVC:self];
     }];
 }
 -(QuestionBank *)seleCreateLib:(NSArray *)ary{

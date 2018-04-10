@@ -43,7 +43,7 @@
         [self hideHud];
     } failure:^(NSError *error) {
         NSLog(@"失败%@",error);
-        [UIUtils showInfoMessage:@"暂无数据"];
+        [UIUtils showInfoMessage:@"暂无数据" withVC:self];
         [self hideHud];
 
 

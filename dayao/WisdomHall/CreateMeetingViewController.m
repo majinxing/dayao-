@@ -144,13 +144,13 @@
             
             [self.navigationController popViewControllerAnimated:YES];
         }else{
-            [UIUtils showInfoMessage:@"系统错误"];
+            [UIUtils showInfoMessage:@"系统错误" withVC:self];
         }
         [self hideHud];
 
     } failure:^(NSError *error) {
         [self hideHud];
-        [UIUtils showInfoMessage:@"创建失败，请检查网络"];
+        [UIUtils showInfoMessage:@"创建失败，请检查网络" withVC:self];
     }];
     
 }
@@ -226,7 +226,7 @@
     [self.pickerView removeFromSuperview];
     self.pickerView = nil;
     if (_temp == 2) {
-        [UIUtils showInfoMessage:@"请将信息选择完整"];
+        [UIUtils showInfoMessage:@"请将信息选择完整" withVC:self];
         _textFileAry[3] = @"";
         [_tableView reloadData];
     }
@@ -474,7 +474,7 @@
                         allpeople = [_seat.seatColumn[i] intValue]+allpeople;
                     }
                     if (_selectPeopleAry.count>allpeople) {
-                        [UIUtils showInfoMessage:@"您选择的会议室的座位数少于参加会议的人数"];
+                        [UIUtils showInfoMessage:@"您选择的会议室的座位数少于参加会议的人数" withVC:self];
                     }
                 }
                 

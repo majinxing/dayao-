@@ -119,7 +119,7 @@
             } failure:^(NSError *error) {
                 [self hideHud];
                 
-                [UIUtils showInfoMessage:@"请检查网络状态"];
+                [UIUtils showInfoMessage:@"请检查网络状态" withVC:self];
             }];
         }else if(_temp == 1){
             [self showHudInView:self.view hint:NSLocalizedString(@"正在加载数据", @"Load data...")];
@@ -140,13 +140,13 @@
                 [self.navigationController pushViewController:vc animated:YES];
             } failure:^(NSError *error) {
                 [self hideHud];
-                [UIUtils showInfoMessage:@"请检查网络状态"];
+                [UIUtils showInfoMessage:@"请检查网络状态" withVC:self];
             }];
         }else{
-            [UIUtils showInfoMessage:@"请选择查询结果形式"];
+            [UIUtils showInfoMessage:@"请选择查询结果形式" withVC:self];
         }
     }else{
-        [UIUtils showInfoMessage:@"请把信息填写完整"];
+        [UIUtils showInfoMessage:@"请把信息填写完整" withVC:self];
     }
 }
 -(void)departmentPressedDelegate:(UIButton *)btn{
@@ -281,7 +281,7 @@
                 }
             }];
         }else{
-            [UIUtils showInfoMessage:@"请先选择院系"];
+            [UIUtils showInfoMessage:@"请先选择院系" withVC:self];
         }
     }else if (indexPath.section == 0&&indexPath.row == 2){
         if(_statistl.professional.count>0){
@@ -291,7 +291,7 @@
             s.s.majorId = _statistl.professional[0];
             s.typeSelect = @"statistical";
             if (_statistl.professional.count>1) {
-                [UIUtils showInfoMessage:@"查询单一专业才可以选择班级"];
+                [UIUtils showInfoMessage:@"查询单一专业才可以选择班级" withVC:self];
                 return;
             }
             self.hidesBottomBarWhenPushed = YES;
@@ -314,7 +314,7 @@
                 }
             }];
         }else{
-            [UIUtils showInfoMessage:@"请先选择专业"];
+            [UIUtils showInfoMessage:@"请先选择专业" withVC:self];
         }
     }else if (indexPath.section==1&&indexPath.row==0){
         CalendarViewController * vc = [[CalendarViewController alloc] init];

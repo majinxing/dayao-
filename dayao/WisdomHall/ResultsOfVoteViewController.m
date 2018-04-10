@@ -66,7 +66,7 @@
             _n = _n + [v.count intValue];
         }
         if (_n==0) {
-            [UIUtils showInfoMessage:@"暂无投票数据"];
+            [UIUtils showInfoMessage:@"暂无投票数据" withVC:self];
         }else{
             [_tableView reloadData];
         }

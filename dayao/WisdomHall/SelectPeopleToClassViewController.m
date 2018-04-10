@@ -453,8 +453,7 @@
         }];
     }else if (sender.tag == 3){
         if ([UIUtils isBlankString:[NSString stringWithFormat:@"%@",_school.major]]) {
-            UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"请先选择专业" message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: nil];
-            [alertView show];
+            [UIUtils showInfoMessage:@"请先选择专业" withVC:self];
             return;
         }
         NSDictionary * dict = [[NSDictionary alloc] initWithObjectsAndKeys:[NSString stringWithFormat:@"%@",_school.majorId],@"parentId",@"",@"level",@"",@"name", nil];
@@ -532,6 +531,7 @@
     }];
     
 }
+
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
@@ -676,6 +676,7 @@
 -(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
     return 10;
 }
+
 /*
  #pragma mark - Navigation
  

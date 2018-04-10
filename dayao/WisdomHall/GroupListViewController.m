@@ -84,7 +84,7 @@
             [_tableView reloadData];
         }
     } failure:^(NSError *error) {
-        [UIUtils showInfoMessage:@"获取数据失败，请检查网络"];
+        [UIUtils showInfoMessage:@"获取数据失败，请检查网络" withVC:self];
 
     }];
 }
@@ -163,7 +163,7 @@
             [self.navigationController pushViewController:classManegeVC animated:YES];
         }
     } failure:^(NSError *error) {
-        [UIUtils showInfoMessage:@"获取数据失败，请检查网络"];
+        [UIUtils showInfoMessage:@"获取数据失败，请检查网络" withVC:self];
 
     }];
 }

@@ -208,13 +208,13 @@
 -(void)alter:(NSString *) str{
     [self hideHud];
     if ([str isEqualToString:@"1002"]) {
-        [UIUtils showInfoMessage:@"暂不能签到"];
+        [UIUtils showInfoMessage:@"暂不能签到" withVC:self];
         _c.signStatus = @"1";
     }else if ([str isEqualToString:@"1003"]){
-        [UIUtils showInfoMessage:@"已签到"];
+        [UIUtils showInfoMessage:@"已签到" withVC:self];
         _c.signStatus = @"2";
     }else if ([str isEqualToString:@"1004"]){
-        [UIUtils showInfoMessage:@"没有参加课程"];
+        [UIUtils showInfoMessage:@"没有参加课程" withVC:self];
         _c.signStatus = @"1";
     }else if ([str isEqualToString:@"0000"]){
         
@@ -231,17 +231,17 @@
         
         //  _signNumber.text = @"签到状态：已签到";
     }else if ([str isEqualToString:@"5000"]){
-        [UIUtils showInfoMessage:@"签到失败"];
+        [UIUtils showInfoMessage:@"签到失败" withVC:self];
         _c.signStatus = @"1";
     }else if ([str isEqualToString:@"1016"]){
-        [UIUtils showInfoMessage:@"暂不能签到"];
+        [UIUtils showInfoMessage:@"暂不能签到" withVC:self];
         _c.signStatus = @"1";
     }else if ([str isEqualToString:@"1008"]){
-        [UIUtils showInfoMessage:@"这台手机已经签到一次了，不能重复使用签到，谢谢"];
+        [UIUtils showInfoMessage:@"这台手机已经签到一次了，不能重复使用签到，谢谢" withVC:self];
         _c.signStatus =@"1";
     }else if ([str isEqualToString:@"9999"]){
         _c.signStatus = @"1";
-        [UIUtils showInfoMessage:@"系统错误"];
+        [UIUtils showInfoMessage:@"系统错误" withVC:self];
     }
     [_tableView reloadData];
 }
@@ -287,11 +287,11 @@
                     
                     [self.navigationController popViewControllerAnimated:YES];
                 }else{
-                    [UIUtils showInfoMessage:@"课程删除失败"];
+                    [UIUtils showInfoMessage:@"课程删除失败" withVC:self];
                 }
                 
             } failure:^(NSError *error) {
-                [UIUtils showInfoMessage:@"课程删除失败"];
+                [UIUtils showInfoMessage:@"课程删除失败" withVC:self];
             }];
         }
     }else if (alertView.tag == 1002){
@@ -310,11 +310,11 @@
                     
                     [self.navigationController popViewControllerAnimated:YES];
                 }else{
-                    [UIUtils showInfoMessage:@"课程删除失败"];
+                    [UIUtils showInfoMessage:@"课程删除失败" withVC:self];
                 }
                 
             } failure:^(NSError *error) {
-                [UIUtils showInfoMessage:@"课程删除失败"];
+                [UIUtils showInfoMessage:@"课程删除失败" withVC:self];
                 
             }];
         }
@@ -335,11 +335,11 @@
                     
                     [self.navigationController popViewControllerAnimated:YES];
                 }else{
-                    [UIUtils showInfoMessage:@"课程删除失败"];
+                    [UIUtils showInfoMessage:@"课程删除失败" withVC:self];
                 }
                 
             } failure:^(NSError *error) {
-                [UIUtils showInfoMessage:@"课程删除失败"];
+                [UIUtils showInfoMessage:@"课程删除失败" withVC:self];
             }];
             
         }
@@ -518,12 +518,12 @@
             self.hidesBottomBarWhenPushed = YES;
             [self.navigationController pushViewController:z animated:YES];
         }else{
-            [UIUtils showInfoMessage:@"获取信息缺失请重新获取"];
+            [UIUtils showInfoMessage:@"获取信息缺失请重新获取" withVC:self];
         }
         [self hideHud];
 
     } failure:^(NSError *error) {
-        [UIUtils showInfoMessage:@"请求失败，请检查网络"];
+        [UIUtils showInfoMessage:@"请求失败，请检查网络" withVC:self];
         [self hideHud];
 
     }];
@@ -549,7 +549,7 @@
         return;
     }
     if (![UIUtils validateWithStartTime:_c.actStarTime withExpireTime:nil]) {
-            return;
+        return;
     }else{
         if ([[NSString stringWithFormat:@"%@",_c.signStatus] isEqualToString:@"2"]) {
             return;
@@ -602,9 +602,9 @@
     [self showHudInView:self.view hint:NSLocalizedString(@"正在加载数据", @"Load data...")];
     if (![UIUtils validateWithStartTime:_c.actStarTime withExpireTime:nil]) {
         if ([[NSString stringWithFormat:@"%@",_c.signStatus] isEqualToString:@"2"]) {
-            [UIUtils showInfoMessage:@"已签到"];
+            [UIUtils showInfoMessage:@"已签到" withVC:self];
         }else{
-            [UIUtils showInfoMessage:@"课程开始之后一定时间范围内才可以签到"];
+            [UIUtils showInfoMessage:@"课程开始之后一定时间范围内才可以签到" withVC:self];
         }
         [self hideHud];
         return;
@@ -680,7 +680,7 @@
 -(void)codePressedDelegate:(UIButton *)btn{
     if ([btn.titleLabel.text isEqualToString:@"扫码签到"]) {
         if (![UIUtils validateWithStartTime:_c.actStarTime withExpireTime:nil]) {
-            [UIUtils showInfoMessage:@"课程开始之后一定时间范围内才可以签到"];
+            [UIUtils showInfoMessage:@"课程开始之后一定时间范围内才可以签到" withVC:self];
             return;
         }
         //     1、 获取摄像设备
@@ -753,10 +753,10 @@
                 q.dict = dict;
                 [self.navigationController pushViewController:q animated:YES];
             }else{
-                [UIUtils showInfoMessage:@"请在连接指定的DAYAO或XTU开头的WiFi下生成二维码"];
+                [UIUtils showInfoMessage:@"请在连接指定的DAYAO或XTU开头的WiFi下生成二维码" withVC:self];
             }
         }else{
-            [UIUtils showInfoMessage:@"请在连接指定的DAYAO或XTU开头的WiFi下生成二维码"];
+            [UIUtils showInfoMessage:@"请在连接指定的DAYAO或XTU开头的WiFi下生成二维码" withVC:self];
         }
     }
 }
@@ -773,16 +773,16 @@
                 if ([UIUtils returnMckIsHave:_c.mck withAccept:loc_array]) {
                     [self sendSignInfo];
                 }else{
-                    [UIUtils showInfoMessage:@"二维码有误，请重新扫描或者连接指定WiFi签到"];
+                    [UIUtils showInfoMessage:@"二维码有误，请重新扫描或者连接指定WiFi签到" withVC:self];
                 }
             }else{
-                [UIUtils showInfoMessage:@"二维码失效，请重新扫描或者连接指定WiFi签到"];
+                [UIUtils showInfoMessage:@"二维码失效，请重新扫描或者连接指定WiFi签到" withVC:self];
             }
         }else{
-            [UIUtils showInfoMessage:@"二维码失效，请重新扫描或者连接指定WiFi签到"];
+            [UIUtils showInfoMessage:@"二维码失效，请重新扫描或者连接指定WiFi签到" withVC:self];
         }
     }else{
-        [UIUtils showInfoMessage:@"二维码失效，请重新扫描或者连接指定WiFi签到"];
+        [UIUtils showInfoMessage:@"二维码失效，请重新扫描或者连接指定WiFi签到" withVC:self];
     }
     
 }
@@ -802,7 +802,7 @@
 
 -(void)signPictureUpdate{
     if (![[NSString stringWithFormat:@"%@",_c.signWay] isEqualToString:@"9"]) {
-        [UIUtils showInfoMessage:@"已签到"];
+        [UIUtils showInfoMessage:@"已签到" withVC:self];
         return;
     }
     if (!_photoView) {
@@ -898,12 +898,12 @@
         [[NetworkRequest sharedInstance] POSTImage:FileUpload image:resultImage dict:dict1 succeed:^(id data) {
             NSString * code = [NSString stringWithFormat:@"%@",[[data objectForKey:@"header"] objectForKey:@"code"]];
             if ([code isEqualToString:@"0000"]) {
-                [UIUtils showInfoMessage:@"上传成功"];
+                [UIUtils showInfoMessage:@"上传成功" withVC:self];
             }else{
-                [UIUtils showInfoMessage:@"上传失败"];
+                [UIUtils showInfoMessage:@"上传失败" withVC:self];
             }
         } failure:^(NSError *error) {
-            [UIUtils showInfoMessage:@"上传失败"];
+            [UIUtils showInfoMessage:@"上传失败" withVC:self];
         }];
     }else if ([_pictureType isEqualToString:@"SignPicture"]){
         NSDictionary * dict1 = [[NSDictionary alloc] initWithObjectsAndKeys:@"1",@"type",str,@"description",@"10",@"function",[NSString stringWithFormat:@"%@",_c.courseDetailId],@"relId",@"1",@"relType",nil];
@@ -911,12 +911,12 @@
         [[NetworkRequest sharedInstance] POSTImage:FileUpload image:image dict:dict1 succeed:^(id data) {
             NSString * code = [NSString stringWithFormat:@"%@",[[data objectForKey:@"header"] objectForKey:@"code"]];
             if ([code isEqualToString:@"0000"]) {
-                [UIUtils showInfoMessage:@"上传成功"];
+                [UIUtils showInfoMessage:@"上传成功" withVC:self];
             }else{
-                [UIUtils showInfoMessage:@"上传失败"];
+                [UIUtils showInfoMessage:@"上传失败" withVC:self];
             }
         } failure:^(NSError *error) {
-            [UIUtils showInfoMessage:@"上传失败"];
+            [UIUtils showInfoMessage:@"上传失败" withVC:self];
         }];
     }
     //使用模态返回到软件界面

@@ -70,7 +70,7 @@
         if (ary.count>0) {
             
         }else{
-            [UIUtils showInfoMessage:@"投票选项不能为空"];
+            [UIUtils showInfoMessage:@"投票选项不能为空" withVC:self];
             [self hideHud];
             return;
         }
@@ -80,16 +80,16 @@
         [[NetworkRequest sharedInstance] POST:CreateVote dict:dict succeed:^(id data) {
             NSString *str = [[data objectForKey:@"header"] objectForKey:@"message"];
             if ([str isEqualToString:@"成功"]) {
-                [UIUtils showInfoMessage:@"创建成功"];
+                [UIUtils showInfoMessage:@"创建成功" withVC:self];
                 [self.navigationController popViewControllerAnimated:YES];
             }else{
-                [UIUtils showInfoMessage:@"创建失败"];
+                [UIUtils showInfoMessage:@"创建失败" withVC:self];
                 
             }
             [self hideHud];
             NSLog(@"%@",data);
         } failure:^(NSError *error) {
-            [UIUtils showInfoMessage:@"创建失败"];
+            [UIUtils showInfoMessage:@"创建失败" withVC:self];
             
             [self hideHud];
             NSLog(@"%@",error);
@@ -105,7 +105,7 @@
         if (ary.count>0) {
             
         }else{
-            [UIUtils showInfoMessage:@"投票选项不能为空"];
+            [UIUtils showInfoMessage:@"投票选项不能为空" withVC:self];
             
             [self hideHud];
             return;
@@ -115,16 +115,16 @@
         [[NetworkRequest sharedInstance] POST:CreateVote dict:dict succeed:^(id data) {
             NSString *str = [[data objectForKey:@"header"] objectForKey:@"message"];
             if ([str isEqualToString:@"成功"]) {
-                [UIUtils showInfoMessage:@"创建成功"];
+                [UIUtils showInfoMessage:@"创建成功" withVC:self];
                 [self.navigationController popViewControllerAnimated:YES];
             }else{
-                [UIUtils showInfoMessage:@"创建失败"];
+                [UIUtils showInfoMessage:@"创建失败" withVC:self];
                 
             }
             [self hideHud];
             NSLog(@"%@",data);
         } failure:^(NSError *error) {
-            [UIUtils showInfoMessage:@"创建失败"];
+            [UIUtils showInfoMessage:@"创建失败" withVC:self];
             
             [self hideHud];
             NSLog(@"%@",error);

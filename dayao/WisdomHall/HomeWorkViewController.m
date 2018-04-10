@@ -58,7 +58,7 @@
         [self hideHud];
         [_tableView reloadData];
     } failure:^(NSError *error) {
-        [UIUtils showInfoMessage:@"请求失败，请检查网络"];
+        [UIUtils showInfoMessage:@"请求失败，请检查网络" withVC:self];
         [self hideHud];
     }];
 }
@@ -189,10 +189,10 @@
                 [_dataAry removeObjectAtIndex:indexPath.row];
                 [_tableView reloadData];
             }else{
-                [UIUtils showInfoMessage:@"删除失败"];
+                [UIUtils showInfoMessage:@"删除失败" withVC:self];
             }
         } failure:^(NSError *error) {
-            [UIUtils showInfoMessage:@"删除失败"];
+            [UIUtils showInfoMessage:@"删除失败" withVC:self];
         }];
     }
 }

@@ -66,7 +66,7 @@
             if (_dataAry.count>0) {
                 
             }else{
-                [UIUtils showInfoMessage:@"暂无数据"];
+                [UIUtils showInfoMessage:@"暂无数据" withVC:self];
             }
             [self hideHud];
             [_tableview reloadData];
@@ -89,7 +89,7 @@
             if (_dataAry.count>0) {
                 
             }else{
-                [UIUtils showInfoMessage:@"暂无数据"];
+                [UIUtils showInfoMessage:@"暂无数据" withVC:self];
             }
             [self hideHud];
             [_tableview reloadData];
@@ -185,7 +185,7 @@
             NSString * str = [[data objectForKey:@"header"] objectForKey:@"code"];
             if (![UIUtils isBlankString:str]) {
                 if ([str isEqualToString:@"6677"]) {
-                    [UIUtils showInfoMessage:@"删除投票失败,投票状态未结束"];
+                    [UIUtils showInfoMessage:@"删除投票失败,投票状态未结束" withVC:self];
                 }else{
                     [self getData];
                     [_vote hide];
@@ -196,7 +196,7 @@
             }
             
         } failure:^(NSError *error) {
-            [UIUtils showInfoMessage:@"删除失败，请检查网络"];
+            [UIUtils showInfoMessage:@"删除失败，请检查网络" withVC:self];
         }];
         
     }else if ([platform isEqualToString:Vote_Stop]){
@@ -216,11 +216,11 @@
             [self getData];
             [_vote hide];
         } failure:^(NSError *error) {
-            [UIUtils showInfoMessage:@"开始失败，请检查网络"];
+            [UIUtils showInfoMessage:@"开始失败，请检查网络" withVC:self];
         }];
         
     }else if ([platform isEqualToString:Vote_Modify]){
-        [UIUtils showInfoMessage:@"正在加紧步伐开发中，敬请期待"];
+        [UIUtils showInfoMessage:@"正在加紧步伐开发中，敬请期待" withVC:self];
     }
 }
 #pragma mark UITableViewdelegate

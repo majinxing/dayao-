@@ -164,9 +164,9 @@
             
             [self.navigationController popViewControllerAnimated:YES];
         }else if ([str isEqualToString:@"系统错误"]){
-            [UIUtils showInfoMessage:@"系统错误"];
+            [UIUtils showInfoMessage:@"系统错误" withVC:self];
         }else{
-            [UIUtils showInfoMessage:@"创建失败，请填写完整课堂信息并且按照提示的格式"];
+            [UIUtils showInfoMessage:@"创建失败，请填写完整课堂信息并且按照提示的格式" withVC:self];
         }
         [self hideHud];
     } failure:^(NSError *error) {

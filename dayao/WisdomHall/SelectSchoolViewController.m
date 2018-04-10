@@ -78,7 +78,7 @@
 //                }
 //            }
         } failure:^(NSError *error) {
-            [UIUtils showInfoMessage:@"发送数据失败，请检查网络"];
+            [UIUtils showInfoMessage:@"发送数据失败，请检查网络" withVC:self];
             
         }];
     }else if (_selectType == SelectDepartment){
@@ -101,7 +101,7 @@
             [_tableView reloadData];
             
         } failure:^(NSError *error) {
-            [UIUtils showInfoMessage:@"发送数据失败，请检查网络"];
+            [UIUtils showInfoMessage:@"发送数据失败，请检查网络" withVC:self];
 
             NSLog(@"失败 %@",error);
         }];
@@ -133,7 +133,7 @@
             [_tableView reloadData];
         } failure:^(NSError *error) {
             NSLog(@"失败 %@",error);
-            [UIUtils showInfoMessage:@"发送数据失败，请检查网络"];
+            [UIUtils showInfoMessage:@"发送数据失败，请检查网络" withVC:self];
 
         }];
 
@@ -164,7 +164,7 @@
             [_tableView reloadData];
         } failure:^(NSError *error) {
             NSLog(@"失败 %@",error);
-            [UIUtils showInfoMessage:@"发送数据失败，请检查网络"];
+            [UIUtils showInfoMessage:@"发送数据失败，请检查网络" withVC:self];
 
         }];
 

@@ -78,7 +78,7 @@
                 dict = [data objectForKey:@"body"];
                 NSString * type = [NSString stringWithFormat:@"%@",[dict objectForKey:@"type"]];
                 if ([type isEqualToString:@"2"]) {
-                    [UIUtils showInfoMessage:@"您的身份是学生，本客户端只支持老师，请登录“律动课堂”"];
+                    [UIUtils showInfoMessage:@"您的身份是学生，本客户端只支持老师，请登录“律动课堂”" withVC:self];
                 }else{
                     [[Appsetting sharedInstance] sevaUserInfoWithDict:dict withStr:str];
                     
@@ -102,7 +102,7 @@
             [self hideHud];
 
             NSLog(@"%@",error);
-            [UIUtils showInfoMessage:@"发送数据失败，请检查网络"];
+            [UIUtils showInfoMessage:@"发送数据失败，请检查网络" withVC:self];
             
         }];
     }else{

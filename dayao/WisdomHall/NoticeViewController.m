@@ -190,10 +190,10 @@
         if ([str isEqualToString:@"0000"]) {
             [self headerRereshing];
         }else{
-            [UIUtils showInfoMessage:@"删除失败"];
+            [UIUtils showInfoMessage:@"删除失败" withVC:self];
         }
     } failure:^(NSError *error) {
-        [UIUtils showInfoMessage:@"删除失败请检查网络"];
+        [UIUtils showInfoMessage:@"删除失败请检查网络" withVC:self];
     }];
 }
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
