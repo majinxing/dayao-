@@ -84,7 +84,7 @@
     self.navigationController.navigationBarHidden = YES; //设置隐藏
 }
 -(void)viewWillDisappear:(BOOL)animated{
-    self.navigationController.navigationBarHidden = NO; //设置隐藏
+//    self.navigationController.navigationBarHidden = NO; //设置隐藏
 }
 /**
  *  显示navigation的标题

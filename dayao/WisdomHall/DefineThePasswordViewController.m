@@ -63,13 +63,13 @@
         if ([_textFileAry[i] isEqualToString:@""]) {
             if ([_textFileAry[3] isEqualToString:@"老师"]) {
                 if (i<=6) {
-                    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"请填写完整" message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: nil];
-                    [alertView show];
+                    [UIUtils showInfoMessage:@"请填写完整" withVC:self];
+                    
                     return;
                 }
             }else{
-                UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"请填写完整" message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: nil];
-                [alertView show];
+                [UIUtils showInfoMessage:@"请填写完整" withVC:self];
+
                 return;
             }
         }
@@ -111,17 +111,18 @@
         if ([[[data objectForKey:@"header"] objectForKey:@"code"] isEqualToString:@"0000"]) {
             for (UIViewController *controller in self.navigationController.viewControllers) {
                 if ([controller isKindOfClass:[TheLoginViewController class]]) {
-                    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"注册成功请登录" message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: nil];
-                    [alertView show];
-                    [self.navigationController popToViewController:controller animated:YES];
+                    [UIUtils showInfoMessage:@"注册成功请登录" withVC:self];
+                    [self dismissViewControllerAnimated:YES completion:^{
+                        [self.navigationController popToViewController:controller animated:YES];
+                    }];
                 }
             }
         }else if ([[[data objectForKey:@"header"] objectForKey:@"code"] isEqualToString:@"1009"]){
-            UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"手机号码已经注册" message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: nil];
-            [alertView show];
+            
+            [UIUtils showInfoMessage:@"手机号码已经注册" withVC:self];
+            
         }else{
-            UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"注册失败" message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: nil];
-            [alertView show];
+            [UIUtils showInfoMessage:@"注册失败" withVC:self];
         }
         
     } failure:^(NSError *error) {
@@ -298,8 +299,7 @@
         }];
     }else if (btn.tag == 6){
         if ([UIUtils isBlankString:[NSString stringWithFormat:@"%@",_s.schoolId]]) {
-            UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"请先选择学校" message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: nil];
-            [alertView show];
+            [UIUtils showInfoMessage:@"请选择学校" withVC:self];
         }else{
             SelectSchoolViewController * s = [[SelectSchoolViewController alloc] init];
             s.selectType = SelectDepartment;
@@ -321,8 +321,9 @@
         }
     }else if (btn.tag == 7){
         if ([UIUtils isBlankString:[NSString stringWithFormat:@"%@",_s.departmentId]]) {
-            UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"请先选择院系" message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: nil];
-            [alertView show];
+            
+            [UIUtils showInfoMessage:@"请选择院系" withVC:self];
+            
         }else{
             SelectSchoolViewController * s = [[SelectSchoolViewController alloc] init];
             s.selectType = SelectMajor;
@@ -350,8 +351,9 @@
 
     }else if (btn.tag == 8){
         if ([UIUtils isBlankString:[NSString stringWithFormat:@"%@",_s.majorId]]) {
-            UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"请先选择专业" message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: nil];
-            [alertView show];
+            
+            [UIUtils showInfoMessage:@"请选择专业" withVC:self];
+            
         }else{
             SelectSchoolViewController * s = [[SelectSchoolViewController alloc] init];
             s.selectType = SelectClass;

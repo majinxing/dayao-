@@ -69,18 +69,18 @@
 }
 -(void)alter:(NSString *) str{
     if ([str isEqualToString:@"1002"]) {
-        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"现在还不能签到" message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: nil];
-        [alertView show];
+        [UIUtils showInfoMessage:@"现在还不能签到" withVC:self];
+       
     }else if ([str isEqualToString:@"1003"]){
-        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"已经签到" message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: nil];
-        [alertView show];
+        [UIUtils showInfoMessage:@"已经签到" withVC:self];
+        
     }else if ([str isEqualToString:@"1004"]){
-        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"没有参加课程" message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: nil];
-        [alertView show];
+        [UIUtils showInfoMessage:@"没有参加课程" withVC:self];
+      
     }else if ([str isEqualToString:@"0000"]){
         
-        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"签到成功" message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: nil];
-        [alertView show];
+        [UIUtils showInfoMessage:@"签到成功" withVC:self];
+        
         _meetingModel.n = _meetingModel.n + 1;
         // 2.创建通知
         NSNotification *notification =[NSNotification notificationWithName:@"SignSucceed" object:nil userInfo:nil];
@@ -93,8 +93,8 @@
 //        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"" message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: nil];
 //        [alertView show];
     }else if ([str isEqualToString:@"1008"]){
-        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"不可以用同一台手机签到多个用户" message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: nil];
-        [alertView show];
+        [UIUtils showInfoMessage:@"不可以用同一台手机签到多个用户" withVC:self];
+        
     }
 }
 #pragma mark  UITableViewdelegate

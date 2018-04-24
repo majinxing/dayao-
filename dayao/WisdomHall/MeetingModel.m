@@ -25,7 +25,7 @@
     self.meetingDetailId = [NSString stringWithFormat:@"%@",[dict objectForKey:@"detailId"]];
     self.mck = [[NSMutableArray alloc] initWithArray:[[dict objectForKey:@"mck"] componentsSeparatedByString:@";"]];
     self.seat = [NSString stringWithFormat:@"%@",[dict objectForKey:@"seat"]];
-    self.meetingHostId = [dict objectForKey:@"teacherId"];
+//    self.meetingHostId = [dict objectForKey:@"teacherId"];
     self.meetingHost = [dict objectForKey:@"userName"];
     self.meetingTime = [dict objectForKey:@"actStartTime"];
     self.meetingPlace = [dict objectForKey:@"roomName"];
@@ -40,7 +40,10 @@
         self.signStatus = @"5";
     }
 //    self.url = [dict objectForKey:@"url"];
-    self.userSeat = [dict objectForKey:@"userSeat"];    NSArray * a = [dict objectForKey:@"facilitatorInfoList"];
+    self.userSeat = [dict objectForKey:@"userSeat"];
+    
+    NSArray * a = [dict objectForKey:@"facilitatorInfoList"];
+    
     self.meetingHostId = [dict objectForKey:@"createUser"];
 
     if (a.count>0) {

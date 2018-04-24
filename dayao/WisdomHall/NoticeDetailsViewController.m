@@ -29,7 +29,19 @@
     [super viewDidLoad];
     [self addContentView];
     [self sendRevert];
+    [self setNavigationTitle];
     // Do any additional setup after loading the view from its nib.
+}
+-(void)viewWillAppear:(BOOL)animated{
+        self.navigationController.navigationBarHidden = NO; //设置隐藏
+}
+/**
+ *  显示navigation的标题
+ **/
+-(void)setNavigationTitle{
+    [UIApplication sharedApplication].statusBarStyle = UIStatusBarStyleLightContent;
+    
+    self.title = @"通知详情";
 }
 -(void)addContentView{
     _noticeTitle.text = _notice.noticeTitle;

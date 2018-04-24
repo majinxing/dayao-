@@ -289,8 +289,8 @@
         }else{
             [_tableView footerEndRefreshing];
         }
-        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"查询失败" message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: nil];
-        [alertView show];
+        [UIUtils showInfoMessage:@"查询失败" withVC:self];
+        
     }];
     
 }
@@ -420,13 +420,12 @@
             [self addPickView];
             
         } failure:^(NSError *error) {
-            UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"查询失败" message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: nil];
-            [alertView show];
+            [UIUtils showInfoMessage:@"查询失败" withVC:self];
         }];
     }else if (sender.tag == 2){
         if ([UIUtils isBlankString:[NSString stringWithFormat:@"%@",_school.departmentId]]) {
-            UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"请先选择院系" message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: nil];
-            [alertView show];
+            [UIUtils showInfoMessage:@"请先选择院系" withVC:self];
+            
             return;
         }
         
@@ -448,8 +447,7 @@
             [self addPickView];
             
         } failure:^(NSError *error) {
-            UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"查询失败" message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: nil];
-            [alertView show];
+            [UIUtils showInfoMessage:@"查询失败" withVC:self];
         }];
     }else if (sender.tag == 3){
         if ([UIUtils isBlankString:[NSString stringWithFormat:@"%@",_school.major]]) {
@@ -472,8 +470,8 @@
             [self addPickView];
             
         } failure:^(NSError *error) {
-            UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"查询失败" message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: nil];
-            [alertView show];
+            [UIUtils showInfoMessage:@"查询失败" withVC:self];
+
         }];
         
     }
@@ -526,8 +524,8 @@
         }
         [_tableView reloadData];
     } failure:^(NSError *error) {
-        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"查询失败" message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: nil];
-        [alertView show];
+        [UIUtils showInfoMessage:@"查询失败" withVC:self];
+
     }];
     
 }

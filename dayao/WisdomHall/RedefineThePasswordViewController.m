@@ -35,9 +35,8 @@
     if ([_password.text isEqualToString:_confirmPassword.text]) {
         if ([UIUtils isBlankString:_password.text]) {
             [self hideHud];
-
-            UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"密码不能为空" message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: nil];
-            [alertView show];
+            [UIUtils showInfoMessage:@"密码不能为空" withVC:self];
+            
         }else{
 
             NSDictionary * dict = [[NSDictionary alloc] initWithObjectsAndKeys:_phoneNumber,@"phone",_password.text,@"password",nil];
@@ -48,9 +47,10 @@
 
                 for (UIViewController *controller in self.navigationController.viewControllers) {
                     if ([controller isKindOfClass:[TheLoginViewController class]]) {
-                        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"修改密码成功请登录" message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: nil];
-                        [alertView show];
-                        [self.navigationController popToViewController:controller animated:YES];
+                        [UIUtils showInfoMessage:@"修改密码成功请登录" withVC:self];
+                        [self dismissViewControllerAnimated:YES completion:^{
+                            [self.navigationController popToViewController:controller animated:YES];
+                        }];
                     }
                 }
 //                DYTabBarViewController *rootVC = [[DYTabBarViewController alloc] init];
@@ -62,8 +62,7 @@
             }];
         }
     }else{
-        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"两次输入密码不一致" message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: nil];
-        [alertView show];
+        [UIUtils showInfoMessage:@"两次密码输入不一致" withVC:self];
     }
     
 }

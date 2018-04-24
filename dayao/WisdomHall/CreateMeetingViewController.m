@@ -91,8 +91,9 @@
     
     for (int i = 0; i<_textFileAry.count; i++) {
         if ([UIUtils isBlankString:_textFileAry[i]]) {
-            UIAlertView * alter = [[UIAlertView alloc] initWithTitle:nil message:@"请填写完整会议信息" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil];
-            [alter show];
+            
+            [UIUtils showInfoMessage:@"请填写完整会议信息" withVC:self];
+           
             return;
         }
     }
@@ -103,26 +104,32 @@
     [dict setObject:_textFileAry[0] forKey:@"name"];
     
     [dict setObject:@"0" forKey:@"pictureId"];
+    
+    NSDictionary * d = [UIUtils seatWithPeople:_selectPeopleAry withSeat:_searAry roomId:_seat.seatTableId];
+    
+    NSMutableArray * arySeat = [d objectForKey:@"peopleWithSeat"];
+    
+    NSMutableArray * aryUserId = [d objectForKey:@"peopleId"];
+    
+    [dict setObject:aryUserId forKey:@"userList"];
+    
     if ([_textFileAry[2] isEqualToString:@"no"]) {
-        NSMutableArray * ar = [UIUtils returnAry:_textFileAry[1] withEndTime:_textFileAry[1] room:_seat.seatTableId meetingsFacilitatorList:user.userName monthOrWeek:@""];
+        NSMutableArray * ar = [UIUtils returnAry:_textFileAry[1] withEndTime:_textFileAry[1] room:_seat.seatTableId meetingsFacilitatorList:user.userName monthOrWeek:@"" seatAry:arySeat];
+        
         [dict setObject:ar forKey:@"detailList"];
     }else{
         NSArray *aa = [_textFileAry[3] componentsSeparatedByString:@" "];
         if ([aa[1] isEqualToString:@"按周"]) {
-            NSMutableArray * ar = [UIUtils returnAry:_textFileAry[1] withEndTime:aa[0] room:_seat.seatTableId meetingsFacilitatorList:user.userName monthOrWeek:@"week"];
+            NSMutableArray * ar = [UIUtils returnAry:_textFileAry[1] withEndTime:aa[0] room:_seat.seatTableId meetingsFacilitatorList:user.userName monthOrWeek:@"week" seatAry:arySeat];
             [dict setObject:ar forKey:@"detailList"];
         }else{
-            NSMutableArray * ar = [UIUtils returnAry:_textFileAry[1] withEndTime:aa[0] room:_seat.seatTableId meetingsFacilitatorList:user.userName monthOrWeek:@"month"];
+            NSMutableArray * ar = [UIUtils returnAry:_textFileAry[1] withEndTime:aa[0] room:_seat.seatTableId meetingsFacilitatorList:user.userName monthOrWeek:@"month" seatAry:arySeat];
             [dict setObject:ar forKey:@"detailList"];
         }
     }
     
     
-    NSDictionary * d = [UIUtils seatWithPeople:_selectPeopleAry withSeat:_searAry roomId:_seat.seatTableId];
-    
-    NSMutableArray * ary = [d objectForKey:@"peopleWithSeat"];
-    
-    [dict setObject:ary forKey:@"userList"];
+   
     
     
     [self showHudInView:self.view hint:NSLocalizedString(@"正在提交数据", @"Load data...")];
@@ -136,13 +143,11 @@
             
             [[NSNotificationCenter defaultCenter] postNotification:notification];
             
-            UIAlertView * alter = [[UIAlertView alloc] initWithTitle:nil message:@"会议创建成功" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil];
+            [UIUtils showInfoMessage:@"会议创建成功" withVC:self];
+            [self dismissViewControllerAnimated:YES completion:^{
+                [self.navigationController popViewControllerAnimated:YES];
+            }];
             
-            [alter show];
-            
-//            [UIUtils sendMeetingInfo:sendDict]; 发送环信消息，提示会议创建成功
-            
-            [self.navigationController popViewControllerAnimated:YES];
         }else{
             [UIUtils showInfoMessage:@"系统错误" withVC:self];
         }
@@ -418,8 +423,7 @@
                         }
                         
                         if (_selectPeopleAry.count>allpeople) {
-                            UIAlertView * alter = [[UIAlertView alloc] initWithTitle:@"会议室座次不够" message:@"您选择的会议室的座位数少于参加会议的人数" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil];
-                            [alter show];
+                            [UIUtils showInfoMessage:@"您选择的会议室的座位数少于参加会议的人数" withVC:self];
                         }
                         
                     }
@@ -521,11 +525,13 @@
 }
 -(void)seeSaetPressedDelegate{
     if ([UIUtils isBlankString:_seat.seatTable]) {
-        UIAlertView * alter = [[UIAlertView alloc] initWithTitle:nil message:@"请先选择会议室" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil];
-        [alter show];
+        
+        [UIUtils showInfoMessage:@"请先选择会议室" withVC:self];
+        
     }else if ([UIUtils isBlankString:_textFileAry[4]]){
-        UIAlertView * alter = [[UIAlertView alloc] initWithTitle:nil message:@"请先选择参加会议的人员" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil];
-        [alter show];
+        
+        [UIUtils showInfoMessage:@"请先选择参加会议的人员" withVC:self];
+        
     }else{
         MeetingChooseSeatViewController * z = [[MeetingChooseSeatViewController alloc] init];
         

@@ -81,7 +81,9 @@
             NSString *str = [[data objectForKey:@"header"] objectForKey:@"message"];
             if ([str isEqualToString:@"成功"]) {
                 [UIUtils showInfoMessage:@"创建成功" withVC:self];
-                [self.navigationController popViewControllerAnimated:YES];
+                [self dismissViewControllerAnimated:YES completion:^{
+                    [self.navigationController popViewControllerAnimated:YES];
+                }];
             }else{
                 [UIUtils showInfoMessage:@"创建失败" withVC:self];
                 
@@ -116,7 +118,9 @@
             NSString *str = [[data objectForKey:@"header"] objectForKey:@"message"];
             if ([str isEqualToString:@"成功"]) {
                 [UIUtils showInfoMessage:@"创建成功" withVC:self];
-                [self.navigationController popViewControllerAnimated:YES];
+                [self dismissViewControllerAnimated:YES completion:^{
+                    [self.navigationController popViewControllerAnimated:YES];
+                }];
             }else{
                 [UIUtils showInfoMessage:@"创建失败" withVC:self];
                 

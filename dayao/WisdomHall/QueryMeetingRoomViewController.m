@@ -75,13 +75,13 @@
         if (_meetingRoomAry.count>0) {
             
         }else{
-            UIAlertView * alter = [[UIAlertView alloc] initWithTitle:nil message:@"暂时没有会议室" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil];
-            [alter show];
+            [UIUtils showInfoMessage:@"暂时没有会议室" withVC:self];
+            
         }
         [self hideHud];
     } failure:^(NSError *error) {
-        UIAlertView * alter = [[UIAlertView alloc] initWithTitle:nil message:@"暂时没有会议室" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil];
-        [alter show];
+        [UIUtils showInfoMessage:@"请检查网络连接状态" withVC:self];
+
         [self hideHud];
 
     }];

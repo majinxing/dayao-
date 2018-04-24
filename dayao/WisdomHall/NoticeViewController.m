@@ -51,6 +51,10 @@
     }];
     [self headerRereshing];
 }
+-(void)viewWillAppear:(BOOL)animated{
+        self.navigationController.navigationBarHidden = NO; //设置隐藏
+
+}
 -(void)headerRereshing{
     self.page = 1;
     [self fetchChatRoomsWithPage:self.page isHeader:YES];

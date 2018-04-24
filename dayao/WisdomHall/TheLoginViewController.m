@@ -94,8 +94,8 @@
             }else{
                 [self hideHud];
 
-                UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"密码错误" message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: nil];
-                [alertView show];
+                [UIUtils showInfoMessage:@"密码错误" withVC:self];
+        
             }
             
         } failure:^(NSError *error) {
@@ -107,9 +107,7 @@
         }];
     }else{
         [self hideHud];
-
-        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"请输入正确的手机号" message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: nil];
-        [alertView show];
+        [UIUtils showInfoMessage:@"请输入正确的手机号" withVC:self];
     }
     
 }

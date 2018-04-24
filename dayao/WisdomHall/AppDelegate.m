@@ -170,8 +170,11 @@ performFetchWithCompletionHandler:(void (^)(UIBackgroundFetchResult))completionH
 }
 
 - (void)applicationDidEnterBackground:(UIApplication *)application {
-    [[EMClient sharedClient] applicationDidEnterBackground:application];
-    _chat.outOrIn = @"out";
+//    [[EMClient sharedClient] applicationDidEnterBackground:application];
+//    _chat.outOrIn = @"out";
+    
+    [_chat getOut];
+   
     [[CollectionHeadView sharedInstance] onceSetNil];
     
     if ([UIUtils didUserPressLockButton]) {
@@ -267,7 +270,12 @@ performFetchWithCompletionHandler:(void (^)(UIBackgroundFetchResult))completionH
 - (void)applicationWillEnterForeground:(UIApplication *)application {
     // Called as part of the transition from the background to the active state; here you can undo many of the changes made on entering the background.
     [[EMClient sharedClient] applicationWillEnterForeground:application];
-    _chat.outOrIn = @"In";
+    
+    [_chat getOut];
+    
+    _chat = [ChatHelper shareHelper];
+    
+    
     CollectionHeadView * v = [CollectionHeadView sharedInstance];
     
     [self.myTimer invalidate];

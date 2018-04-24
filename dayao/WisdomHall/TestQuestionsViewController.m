@@ -127,7 +127,9 @@
                 [UIUtils showInfoMessage:@"创建成功" withVC:self];
                 for (UIViewController *controller in self.navigationController.viewControllers) {
                     if ([controller isKindOfClass:[AllTestViewController class]]) {
-                        [self.navigationController popToViewController:controller animated:YES];
+                        [self dismissViewControllerAnimated:YES completion:^{
+                            [self.navigationController popToViewController:controller animated:YES];
+                        }];
                     }
                 }
             }else if ([str isEqualToString:@"6682"]){

@@ -118,6 +118,7 @@ static dispatch_once_t onceToken;
         
         if (!error2) {
             NSLog(@"登录成功");
+            [[EMClient sharedClient].options setIsAutoLogin:YES];
         }else{
             NSLog(@"环信登录失败%@",error);
         }

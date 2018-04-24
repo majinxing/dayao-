@@ -15,7 +15,7 @@
 
 #import <Hyphenate/Hyphenate.h>
 
-@interface ConversationVC ()<EMCallManagerDelegate>
+@interface ConversationVC ()<EMCallManagerDelegate,AVAudioPlayerDelegate>
 
 @property (nonatomic,strong)UIView * videoView;
 
@@ -29,6 +29,9 @@
 @property (nonatomic,assign) int n;
 @property (nonatomic,assign) int m;
 
+@property (nonatomic,strong) AVAudioPlayer *audioPlayer;
+
+@property (nonatomic,assign) EMCallEndReason reasonA;
 
 @end
 
@@ -40,6 +43,9 @@
         [[EMClient sharedClient].callManager endCall:_callSession.callId reason:EMCallEndReasonDecline];
         _callSession = nil;
     }
+    if (self.reasonBlock != nil) {
+        self.reasonBlock(_reasonA);
+    }
     [self.navigationController setNavigationBarHidden:NO animated:YES];
 }
 
@@ -47,20 +53,21 @@
     [self.navigationController setNavigationBarHidden:YES animated:YES];
     
     if (!_callSession) {
-
-//        视频之前，设置全局的音视频属性，具体属性有哪些请查看头文件 *EMCallOptions*
+        [self playMusic:@"call"];
+        
+        //        视频之前，设置全局的音视频属性，具体属性有哪些请查看头文件 *EMCallOptions*
         
         EMCallOptions *options = [[EMClient sharedClient].callManager getCallOptions];
         //当对方不在线时，是否给对方发送离线消息和推送，并等待对方回应
         
-        options.isSendPushIfOffline = YES;
+        options.isSendPushIfOffline = NO;
         
         [[EMClient sharedClient].callManager setCallOptions:options];
         if (_call == CALLED) {
             [self createUI];
             return;
         }
-       // NSString * string = ([[[EMClient sharedClient] currentUsername] isEqualToString:@"aaaaa111"])?@"aaaaa1111":@"aaaaa111";
+        // NSString * string = ([[[EMClient sharedClient] currentUsername] isEqualToString:@"aaaaa111"])?@"aaaaa1111":@"aaaaa111";
         
         //15243670131"
         [[EMClient sharedClient].callManager startCall:EMCallTypeVoice remoteName:_HyNumaber ext:nil completion:^(EMCallSession *aCallSession, EMError *aError) {
@@ -69,12 +76,16 @@
                 _callSession = aCallSession;
                 [self createUI];
             }else{
-                    [self.navigationController popViewControllerAnimated:YES];
-
+                [self dismissViewControllerAnimated:YES completion:^{
+                    
+                }];
+                
+                
             }
             
         }];
     }else{
+        [self playMusic:@"called"];
         
         [self createUI];
     }
@@ -89,18 +100,31 @@
     image.image = [UIImage imageNamed:@"callBg"];
     [self.view addSubview:image];
     [[EMClient sharedClient].callManager addDelegate:self delegateQueue:dispatch_get_main_queue()];
-
+    
     // Do any additional setup after loading the view.
 }
-
+-(void)playMusic:(NSString *)str{
+    // 1.获取要播放音频文件的URL
+    NSURL *fileURL = [[NSBundle mainBundle]URLForResource:str withExtension:@".mp3"];
+    // 2.创建 AVAudioPlayer 对象
+    self.audioPlayer = [[AVAudioPlayer alloc]initWithContentsOfURL:fileURL error:nil];
+    
+    // 3.设置循环播放
+    self.audioPlayer.numberOfLoops = -1;
+    self.audioPlayer.delegate = self;
+    // 4.开始播放
+    [self.audioPlayer play];
+}
 -(void)createUI{
     [[UIApplication sharedApplication] setIdleTimerDisabled:YES];//休眠关闭
-
+    
     if (!_hangupBtn) {
         
-        _hangupBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+        _hangupBtn = [UIButton buttonWithType:UIButtonTypeSystem];
         
-        _hangupBtn.frame = CGRectMake(30, APPLICATION_HEIGHT-60, APPLICATION_WIDTH-60, 40);
+        [_hangupBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+
+        _hangupBtn.frame = CGRectMake(30, APPLICATION_HEIGHT-70, APPLICATION_WIDTH-60, 40);
         
         _hangupBtn.backgroundColor = [UIColor redColor];
         if (_call == CALLED) {
@@ -116,19 +140,19 @@
         
         [self.view addSubview:_hangupBtn];
     }
-    UIButton * btn = [UIButton buttonWithType:UIButtonTypeCustom];
-    
-    btn.frame = CGRectMake(APPLICATION_WIDTH/2+40, CGRectGetMaxY(_hangupBtn.frame)-40-100-30, 100, 100);
-    
-    [btn setBackgroundImage:[UIImage imageNamed:@"call_out"] forState:UIControlStateNormal];
-    
-    [btn addTarget:self action:@selector(callSilence:) forControlEvents:UIControlEventTouchUpInside];
-    
-    [self.view addSubview:btn];
+//    UIButton * btn = [UIButton buttonWithType:UIButtonTypeCustom];
+//
+//    btn.frame = CGRectMake(APPLICATION_WIDTH/2+40, CGRectGetMaxY(_hangupBtn.frame)-40-100-30, 100, 100);
+//
+//    [btn setBackgroundImage:[UIImage imageNamed:@"call_out"] forState:UIControlStateNormal];
+//
+//    [btn addTarget:self action:@selector(callSilence:) forControlEvents:UIControlEventTouchUpInside];
+//
+//    [self.view addSubview:btn];
     
     UIButton * handsFree = [UIButton buttonWithType:UIButtonTypeCustom];
     
-    handsFree.frame = CGRectMake(APPLICATION_WIDTH/2-140, CGRectGetMaxY(_hangupBtn.frame)-40-100-30, 100, 100);
+    handsFree.frame = CGRectMake(APPLICATION_WIDTH/2-50, CGRectGetMaxY(_hangupBtn.frame)-40-100-30, 100, 100);
     
     [handsFree setBackgroundImage:[UIImage imageNamed:@"call_silence"] forState:UIControlStateNormal];
     
@@ -161,7 +185,7 @@
         [self.view addSubview:_typeLab];
     }
     _typeLab.text = @"正在连接";
-
+    
     
     UIImageView * headIamge = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"chatListCellHead"]];
     
@@ -195,7 +219,7 @@
         [self.view addSubview:_callSession.localVideoView];
         
     }
-
+    
     [self.view bringSubviewToFront:_hangupBtn];
     
     
@@ -211,7 +235,7 @@
         [btn setBackgroundImage:[UIImage imageNamed:@"call_out"] forState:UIControlStateNormal];
         [self setSpeakerOff];
     }
-
+    
 }
 - (void)setSpeakerOff
 
@@ -233,7 +257,7 @@
     
     
     
-//    _isSpeakerOn = [self checkSpeakerOn];
+    //    _isSpeakerOn = [self checkSpeakerOn];
     
 }
 - (void)setSpeakerOn
@@ -256,14 +280,14 @@
     
     
     
-//    _isSpeakerOn = [self checkSpeakerOn];
-//
-//    _isHeadsetOn = NO;
-//
+    //    _isSpeakerOn = [self checkSpeakerOn];
+    //
+    //    _isHeadsetOn = NO;
+    //
     
     
     //[self resetOutputTarget];
-
+    
 }
 - (BOOL)checkSpeakerOn
 
@@ -311,15 +335,15 @@
         _m = 1;
         [btn setBackgroundImage:[UIImage imageNamed:@"call_silence_h"] forState:UIControlStateNormal];
         [self.callSession pauseVoice];
-
-
+        
+        
     }else if(_m == 1){
         _m = 0;
         [btn setBackgroundImage:[UIImage imageNamed:@"call_silence"] forState:UIControlStateNormal];
         [self.callSession resumeVoice];
-
+        
     }
-   
+    
 }
 /*!
  *  \~chinese
@@ -347,7 +371,8 @@
     
     NSLog(@"callDidAccept 同意通话");
     _typeLab.text = @"正在通话中";
-
+    [_audioPlayer stop];
+    
     
 }
 
@@ -369,20 +394,28 @@
     [[AVAudioSession sharedInstance] setActive:NO error:nil];
     [[EMClient sharedClient].callManager removeDelegate:self];
     
+    _reasonA = aReason;
+
     _callSession = nil;
     if (self.navigationController.viewControllers.count>1) {
-        [self.navigationController popViewControllerAnimated:YES];
+        [self dismissViewControllerAnimated:YES completion:^{
+            
+        }];
     }else{
-        [self.navigationController popViewControllerAnimated:YES];
-
-//        DYTabBarViewController *rootVC = [DYTabBarViewController sharedInstance];
-//        [UIApplication sharedApplication].keyWindow.rootViewController = rootVC;
+        [self dismissViewControllerAnimated:YES completion:^{
+            
+        }];
+        
+        //        DYTabBarViewController *rootVC = [DYTabBarViewController sharedInstance];
+        //        [UIApplication sharedApplication].keyWindow.rootViewController = rootVC;
     }
-
+    
     //[self.navigationController popViewControllerAnimated:YES];
-
+    
 }
-
+-(void)returnReason:(refused)reasonBlock{
+    _reasonBlock = reasonBlock;
+}
 /*!
  *  \~chinese
  *  用户A和用户B正在通话中，用户A中断或者继续数据流传输时，用户B会收到该回调
@@ -394,7 +427,7 @@
                       type:(EMCallStreamingStatus)aType{
     
     NSLog(@"callStateDidChange 用户A和用户B正在通话中，用户A中断或者继续数据流传输");
-
+    
 }
 
 
@@ -406,6 +439,7 @@
     EMError * error = [[EMClient sharedClient].callManager answerIncomingCall:_callSession.callId];
     
     if (error) {
+        [_audioPlayer stop];
         
         NSLog(@"receiveBtnClick errorDescription = %@",error.errorDescription);
         [[EMClient sharedClient].callManager endCall:_callSession.callId reason:EMCallEndReasonFailed];
@@ -425,12 +459,12 @@
         [[EMClient sharedClient].callManager endCall:_callSession.callId reason:EMCallEndReasonDecline];
         _callSession = nil;
     }
-//    if (self.call == CALLING) {
-        [self.navigationController popViewControllerAnimated:YES];
-//    }else{
-//        DYTabBarViewController *rootVC = [DYTabBarViewController sharedInstance];
-//        [UIApplication sharedApplication].keyWindow.rootViewController = rootVC;
-//    }
+    //    if (self.call == CALLING) {
+    [self.navigationController popViewControllerAnimated:YES];
+    //    }else{
+    //        DYTabBarViewController *rootVC = [DYTabBarViewController sharedInstance];
+    //        [UIApplication sharedApplication].keyWindow.rootViewController = rootVC;
+    //    }
 }
 
 
@@ -456,19 +490,20 @@
     
 }
 
+
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
 
 /*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
+ #pragma mark - Navigation
+ 
+ // In a storyboard-based application, you will often want to do a little preparation before navigation
+ - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+ // Get the new view controller using [segue destinationViewController].
+ // Pass the selected object to the new view controller.
+ }
+ */
 
 @end

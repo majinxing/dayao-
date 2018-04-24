@@ -64,7 +64,10 @@
                 tQVC.classModel = _classModel;
                 self.hidesBottomBarWhenPushed = YES;
                 [self.navigationController pushViewController:tQVC animated:YES];
-            }else{
+            }else if ([str isEqualToString:@"6682"]){
+                [UIUtils showInfoMessage:@"试卷名字重名，请重新写试卷名字" withVC:self];
+            }
+            else{
                 [UIUtils showInfoMessage:@"创建失败" withVC:self];
             }
         } failure:^(NSError *error) {

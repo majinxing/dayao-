@@ -16,6 +16,7 @@
 #import "JSMSSDK.h"
 #import "RegisterViewController.h"
 #import "SchoolModel.h"
+#import "ForgotPasswordViewController.h"
 
 #define AnimateTime 0.25f   // 下拉动画时间
 
@@ -54,13 +55,15 @@
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor whiteColor];
     
+    _titleAry = [NSMutableArray arrayWithCapacity:1];
+
+    
     [self getSchoolList];
 
     _password.secureTextEntry = YES;
     
     _selectSchoolBtnStatus = NO;
     
-    _titleAry = [NSMutableArray arrayWithCapacity:1];
     
 //    _selectSchoolBtn.backgroundColor = [UIColor clearColor];
     
@@ -106,7 +109,7 @@
             [_titleAry addObject:s];
         }
     } failure:^(NSError *error) {
-        NSLog(@"%@",error);
+        
     }];
 }
 -(void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event{
@@ -127,7 +130,7 @@
     NSDictionary * dict = [[NSDictionary alloc] initWithObjectsAndKeys:[NSString stringWithFormat:@"%@",user.userPhone],@"contact",[NSString stringWithFormat:@"手机厂商：Apple\n手机型号：%@\n产品型号：\n设备型号：\n系统版本：ios %@\n App版本：律动校园 %@",phoneModel,system,app_build],@"retroaction",phoneModel,@"phoneModels",app_build,@"version",user.peopleId,@"userId",@"2",@"type",nil];
     
     [[NetworkRequest sharedInstance] POST:FeedBack dict:dict succeed:^(id data) {
-        NSLog(@"%@",data);
+        
         
     } failure:^(NSError *error) {
         
@@ -172,6 +175,7 @@
                     ChatHelper * c =[ChatHelper shareHelper];
                     
                     [self saveInfo];
+                    
                     dispatch_async(dispatch_get_main_queue(), ^{
                         DYTabBarViewController *rootVC = [[DYTabBarViewController alloc] init];
                         
@@ -203,11 +207,45 @@
     [self.view addSubview:_listView]; // 将下拉视图添加到控件的俯视图上
     
     if(_selectSchoolBtnStatus == NO) {
-        [self showDropDown];
+        if (_titleAry.count>0) {
+            [self showDropDown];
+        }else{
+            [self showHudInView:self.view hint:NSLocalizedString(@"正在加载数据", @"Load data...")];
+            [[NetworkRequest sharedInstance] GETSchool:SchoolList dict:nil succeed:^(id data) {
+                NSString * str = [NSString stringWithFormat:@"%@",[[data objectForKey:@"header"] objectForKey:@"message"]];
+                if ([str isEqualToString:@"成功"]) {
+                    NSArray * ary = [data objectForKey:@"body"];
+                    for (int i = 0; i<ary.count; i++) {
+                        SchoolModel * s = [[SchoolModel alloc] init];
+                        [s setInfoWithDict:ary[i]];
+                        [_titleAry addObject:s];
+                    }
+                    
+                    [self showDropDown];
+
+                }else{
+                    [UIUtils showInfoMessage:str withVC:self];
+                }
+                [self hideHud];
+                [_tableView reloadData];
+            } failure:^(NSError *error) {
+                [self hideHud];
+                [UIUtils showInfoMessage:@"网络连接失败，请检查网络" withVC:self];
+            }];
+        }
     }
     else {
         [self hideDropDown];
     }
+}
+- (IBAction)forgetPassword:(id)sender {
+    ForgotPasswordViewController * forgetVC = [[ForgotPasswordViewController alloc] init];
+    // self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"返回" style:UIBarButtonItemStylePlain target:nil action:nil];
+    // 方式二
+    UIBarButtonItem * backButtonItem = [[UIBarButtonItem alloc] init];
+    backButtonItem.title = @"返回";
+    self.navigationItem.backBarButtonItem = backButtonItem;
+    [self.navigationController pushViewController:forgetVC animated:YES];
 }
 - (void)showDropDown{   // 显示下拉列表
     
@@ -285,6 +323,8 @@
     
     [_selectSchoolBtn setTitle:s.schoolName forState:UIControlStateNormal];
     
+//    s.schoolHost = @"http://192.168.1.100:8080";
+
     [[Appsetting sharedInstance] saveUserSchool:s];
     
     [self hideDropDown];

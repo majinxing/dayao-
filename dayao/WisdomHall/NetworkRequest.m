@@ -12,7 +12,10 @@
 #import "AppDelegate.h"
 #import <UIKit/UIKit.h>
 
+//#define Local @"http://192.168.1.100:8080";//@"http://api.dayaokeji.com";//
+
 @implementation NetworkRequest
+
 +(instancetype)sharedInstance{
     static NetworkRequest *tools;
     
@@ -160,6 +163,7 @@
     UserModel * user = [[Appsetting sharedInstance] getUsetInfo];
     
     [manager.requestSerializer setValue:[NSString stringWithFormat:@"Bearer %@",user.token] forHTTPHeaderField:@"token"];
+    
     NSString * baseUrl = user.host;
 
     //发送网络请求(请求方式为POST)

@@ -293,6 +293,8 @@
 		8BA224D51EAF25DC00627A1B /* RegisterViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8BA224D31EAF25DC00627A1B /* RegisterViewController.xib */; };
 		8BA41B761F9F0D6B00B9886E /* MeetingTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BA41B741F9F0D6B00B9886E /* MeetingTableViewCell.m */; };
 		8BA41B771F9F0D6B00B9886E /* MeetingTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8BA41B751F9F0D6B00B9886E /* MeetingTableViewCell.xib */; };
+		8BB47BAA20896EBD005407D9 /* called.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 8BB47BA920896EBD005407D9 /* called.mp3 */; };
+		8BB47BAC20896EEC005407D9 /* call.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 8BB47BAB20896EEC005407D9 /* call.mp3 */; };
 		8BB56D641EAF38CA0023DAFF /* AppSetingPersongInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BB56D631EAF38CA0023DAFF /* AppSetingPersongInfo.m */; };
 		8BB56D671EAF3C620023DAFF /* UserModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BB56D661EAF3C620023DAFF /* UserModel.m */; };
 		8BB56D6A1EB037410023DAFF /* UIUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BB56D691EB037410023DAFF /* UIUtils.m */; };
@@ -1077,6 +1079,8 @@
 		8BA41B731F9F0D6B00B9886E /* MeetingTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MeetingTableViewCell.h; sourceTree = "<group>"; };
 		8BA41B741F9F0D6B00B9886E /* MeetingTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MeetingTableViewCell.m; sourceTree = "<group>"; };
 		8BA41B751F9F0D6B00B9886E /* MeetingTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MeetingTableViewCell.xib; sourceTree = "<group>"; };
+		8BB47BA920896EBD005407D9 /* called.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = called.mp3; sourceTree = "<group>"; };
+		8BB47BAB20896EEC005407D9 /* call.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = call.mp3; sourceTree = "<group>"; };
 		8BB56D621EAF38CA0023DAFF /* AppSetingPersongInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppSetingPersongInfo.h; sourceTree = "<group>"; };
 		8BB56D631EAF38CA0023DAFF /* AppSetingPersongInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppSetingPersongInfo.m; sourceTree = "<group>"; };
 		8BB56D651EAF3C620023DAFF /* UserModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserModel.h; sourceTree = "<group>"; };
@@ -1980,6 +1984,8 @@
 				8B4E5CD3206091C500C12EAD /* SchoolList.plist */,
 				8BA224651EADF68500627A1B /* Main.storyboard */,
 				8B16FE722047EC4A0000E9B7 /* Assets.xcassets */,
+				8BB47BAB20896EEC005407D9 /* call.mp3 */,
+				8BB47BA920896EBD005407D9 /* called.mp3 */,
 				8BA2246A1EADF68500627A1B /* LaunchScreen.storyboard */,
 				8BA2246D1EADF68500627A1B /* Info.plist */,
 				8BA2245C1EADF68500627A1B /* Supporting Files */,
@@ -2759,7 +2765,8 @@
 					};
 					8BA2247C1EADF68500627A1B = {
 						CreatedOnToolsVersion = 8.3;
-						ProvisioningStyle = Manual;
+						DevelopmentTeam = AM9UTP2CL3;
+						ProvisioningStyle = Automatic;
 						TestTargetID = 8BA224581EADF68500627A1B;
 					};
 					8BF82D881EE167C300D33473 = {
@@ -2863,6 +2870,7 @@
 				8B429C201FA8488700084A99 /* SGQRCode.bundle in Resources */,
 				8B043A0220206DAF0039195F /* StatisticalResultTableViewCell.xib in Resources */,
 				8B2E16E91EBAD9AF008B7C57 /* AllTheMeetingViewController.xib in Resources */,
+				8BB47BAA20896EBD005407D9 /* called.mp3 in Resources */,
 				8B40E12320591BE8000E6C2F /* ChangeThemeInfoViewController.xib in Resources */,
 				8B6E61CC1EE292B10040FDC1 /* CreateVoteTableViewCell.xib in Resources */,
 				8BE877711EBC1CA800866A34 /* TextViewController.xib in Resources */,
@@ -2875,6 +2883,7 @@
 				8B2E16DB1EBAB968008B7C57 /* ClassManagementViewController.xib in Resources */,
 				8B0F41311EF522CF001AF4DF /* MJXChatViewController.xib in Resources */,
 				8BE24D611F8B488E00621055 /* GroupListViewController.xib in Resources */,
+				8BB47BAC20896EEC005407D9 /* call.mp3 in Resources */,
 				8BF864871ECAD21200B7EED4 /* MJRefresh.bundle in Resources */,
 				8B0207161F8DA4DB00CE3B8C /* NoticeSwiftViewController.xib in Resources */,
 				8B17374F1EC5AC3600BE3C8F /* CreateTextTableViewCell.xib in Resources */,
@@ -3433,7 +3442,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = AM9UTP2CL3;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -3451,7 +3460,7 @@
 				GCC_PREFIX_HEADER = "";
 				HEADER_SEARCH_PATHS = "$(PROJECT_DIR)/WisdomHall/Bugly.framework";
 				INFOPLIST_FILE = WisdomHall/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
@@ -3493,7 +3502,9 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
-				DEVELOPMENT_TEAM = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = AM9UTP2CL3;
 				INFOPLIST_FILE = WisdomHallUITests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.dayao.WisdomHallUITests;
@@ -3640,7 +3651,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = AM9UTP2CL3;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -3658,7 +3669,7 @@
 				GCC_PREFIX_HEADER = "";
 				HEADER_SEARCH_PATHS = "$(PROJECT_DIR)/WisdomHall/Bugly.framework";
 				INFOPLIST_FILE = WisdomHall/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
@@ -3694,7 +3705,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = AM9UTP2CL3;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -3712,7 +3723,7 @@
 				GCC_PREFIX_HEADER = "";
 				HEADER_SEARCH_PATHS = "$(PROJECT_DIR)/WisdomHall/Bugly.framework";
 				INFOPLIST_FILE = WisdomHall/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
@@ -3768,7 +3779,9 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
-				DEVELOPMENT_TEAM = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = AM9UTP2CL3;
 				INFOPLIST_FILE = WisdomHallUITests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.dayao.WisdomHallUITests;
@@ -3782,7 +3795,9 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
-				DEVELOPMENT_TEAM = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = AM9UTP2CL3;
 				INFOPLIST_FILE = WisdomHallUITests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.dayao.WisdomHallUITests;

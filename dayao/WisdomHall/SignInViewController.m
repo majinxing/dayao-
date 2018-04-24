@@ -102,9 +102,7 @@ static NSString *cellIdentifier = @"cellIdentifier";
 -(void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event{
     [self.view endEditing:YES];
 }
--(void)viewWillAppear:(BOOL)animated{
-    [UIUtils tokenThePeriodOfValidity];
-}
+
 -(void)addTableView{
     _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0,SafeAreaTopHeight, APPLICATION_WIDTH, APPLICATION_HEIGHT-64-44) style:UITableViewStylePlain];
     _tableView.delegate = self;
@@ -198,6 +196,8 @@ static NSString *cellIdentifier = @"cellIdentifier";
         }
     } failure:^(NSError *error) {
         [self hideHud];
+        [_tableView reloadData];
+        
         [UIUtils showInfoMessage:@"请求失败，请检查网络" withVC:self];
     }];
 }
@@ -217,6 +217,7 @@ static NSString *cellIdentifier = @"cellIdentifier";
         [self getSelfCreateClassType:page];
     } failure:^(NSError *error) {
         [self hideHud];
+        [_tableView reloadData];
     }];
 }
 //临时
@@ -237,6 +238,7 @@ static NSString *cellIdentifier = @"cellIdentifier";
         [self getSelfJoinClassType:page];
     } failure:^(NSError *error) {
         [self hideHud];
+        [_tableView reloadData];
     }];
 }
 //临时
@@ -278,6 +280,7 @@ static NSString *cellIdentifier = @"cellIdentifier";
         
     } failure:^(NSError *error) {
         [self hideHud];
+        [_tableView reloadData];
     }];
     
 }
@@ -420,7 +423,7 @@ static NSString *cellIdentifier = @"cellIdentifier";
             if ([[NSString stringWithFormat:@"%@",str] isEqualToString:@"6680"]) {
                 [UIUtils showInfoMessage:@"该用户已经添加,不能重复添加" withVC:self];
             }else if ([[NSString stringWithFormat:@"%@",str] isEqualToString:@"6676"]){
-                [UIUtils showInfoMessage:@"数据异常" withVC:self];
+                [UIUtils showInfoMessage:@"课堂已经被删除或者不存在" withVC:self];
             }else if([[NSString stringWithFormat:@"%@",str] isEqualToString:@"0000"]){
                 [UIUtils showInfoMessage:@"加入成功" withVC:self];
                 [self headerRereshing];

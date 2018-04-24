@@ -6,6 +6,7 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
+        <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -99,20 +100,6 @@
                         <action selector="login:" destination="-1" eventType="touchUpInside" id="aK0-MM-dob"/>
                     </connections>
                 </button>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TUV-bb-Fwq">
-                    <rect key="frame" x="30" y="471" width="200" height="30"/>
-                    <constraints>
-                        <constraint firstAttribute="width" constant="200" id="2ea-PF-GTv"/>
-                        <constraint firstAttribute="height" constant="30" id="g7e-ZQ-KGj"/>
-                    </constraints>
-                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                    <state key="normal" title="手机号登录&gt;&gt;">
-                        <color key="titleColor" red="0.22499465939999999" green="0.68172186609999996" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                    </state>
-                    <connections>
-                        <action selector="phoneLogin:" destination="-1" eventType="touchUpInside" id="NAH-NX-cGo"/>
-                    </connections>
-                </button>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="qGf-rL-oI5">
                     <rect key="frame" x="30" y="256" width="315" height="1"/>
                     <color key="backgroundColor" red="0.76071935892105103" green="0.76082736253738403" blue="0.76068538427352905" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -152,14 +139,28 @@
                         <constraint firstAttribute="height" constant="10" id="UYb-FT-xiL"/>
                     </constraints>
                 </imageView>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="j9A-3T-LKp">
+                    <rect key="frame" x="187.5" y="627" width="187.5" height="40"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="40" id="KCZ-FA-Gl6"/>
+                    </constraints>
+                    <state key="normal" title="忘记密码">
+                        <color key="titleColor" red="0.22499465939999999" green="0.68172186609999996" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    </state>
+                    <connections>
+                        <action selector="forgetPassword:" destination="-1" eventType="touchUpInside" id="wxy-g0-6Bp"/>
+                    </connections>
+                </button>
             </subviews>
             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
                 <constraint firstItem="TV1-Ue-QC5" firstAttribute="leading" secondItem="OkK-Vt-WYw" secondAttribute="trailing" constant="10" id="0mk-GY-pUs"/>
+                <constraint firstItem="j9A-3T-LKp" firstAttribute="width" secondItem="Y2T-i6-A69" secondAttribute="width" multiplier="1/2" id="20f-t3-emV"/>
                 <constraint firstItem="OkK-Vt-WYw" firstAttribute="top" secondItem="tcQ-Lk-skX" secondAttribute="top" constant="200" id="7Vu-gr-5dA"/>
+                <constraint firstAttribute="bottom" secondItem="j9A-3T-LKp" secondAttribute="bottom" id="8TE-mF-s5N"/>
                 <constraint firstItem="AZ0-N4-ZzG" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="30" id="8x1-7a-TIH"/>
                 <constraint firstItem="bkL-SI-ogz" firstAttribute="leading" secondItem="AZ0-N4-ZzG" secondAttribute="trailing" constant="10" id="ANg-6d-R4O"/>
-                <constraint firstItem="TUV-bb-Fwq" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="30" id="CpN-fg-wg3"/>
+                <constraint firstAttribute="trailing" secondItem="j9A-3T-LKp" secondAttribute="trailing" id="B6q-CI-bM1"/>
                 <constraint firstItem="tcQ-Lk-skX" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="70" id="D6K-Z8-2W2"/>
                 <constraint firstItem="7nS-05-YSq" firstAttribute="top" secondItem="AZ0-N4-ZzG" secondAttribute="bottom" constant="12.5" id="DYi-8T-cRz"/>
                 <constraint firstAttribute="trailing" secondItem="qGf-rL-oI5" secondAttribute="trailing" constant="30" id="EKw-kD-8n1"/>
@@ -168,7 +169,6 @@
                 <constraint firstItem="tcQ-Lk-skX" firstAttribute="centerX" secondItem="Y2T-i6-A69" secondAttribute="centerX" id="ILO-IR-c46"/>
                 <constraint firstItem="KGi-J9-wnQ" firstAttribute="top" secondItem="7nS-05-YSq" secondAttribute="bottom" constant="50" id="Iao-71-mRs"/>
                 <constraint firstAttribute="bottom" secondItem="Y2T-i6-A69" secondAttribute="bottom" id="J9w-8N-V34"/>
-                <constraint firstItem="TUV-bb-Fwq" firstAttribute="top" secondItem="KGi-J9-wnQ" secondAttribute="bottom" constant="30" id="KQu-8z-fYT"/>
                 <constraint firstItem="OkK-Vt-WYw" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="30" id="Kvm-b0-Bhk"/>
                 <constraint firstItem="AZ0-N4-ZzG" firstAttribute="top" secondItem="3Dy-oS-flA" secondAttribute="bottom" constant="12.5" id="NcW-jq-pcG"/>
                 <constraint firstItem="3Dy-oS-flA" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="30" id="PjF-if-Orw"/>

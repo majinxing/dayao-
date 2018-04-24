@@ -72,7 +72,10 @@
     _textAry[2][0] = @"按部门";
     // Do any additional setup after loading the view from its nib.
 }
+-(void)viewWillAppear:(BOOL)animated{
+        self.navigationController.navigationBarHidden = NO; //设置隐藏
 
+}
 -(void)setTableView{
     _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 64, APPLICATION_WIDTH, APPLICATION_HEIGHT-64) style:UITableViewStylePlain];
     _tableView.delegate = self;

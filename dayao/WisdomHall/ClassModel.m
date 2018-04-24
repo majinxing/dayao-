@@ -7,6 +7,7 @@
 //
 
 #import "ClassModel.h"
+#import "DYHeader.h"
 
 @implementation ClassModel
 -(void)setInfoWithDict:(NSDictionary *)dict{
@@ -43,7 +44,15 @@
     self.teacherWorkNo = [dict objectForKey:@"teacherWorkNo"];
     self.courseType = [dict objectForKey:@"courseType"];
     self.signStatus = [dict objectForKey:@"signStatus"];
-
+    NSString * str = [NSString stringWithFormat:@"%@",[dict objectForKey:@"signStartTime"]];
+    if (![UIUtils isBlankString:str]) {
+        self.signStartTime = str;//[dict objectForKey:@"actStartTime"];
+        self.signStartTime = [self.signStartTime stringByReplacingOccurrencesOfString:@"\n" withString:@" "];
+        self.signStartTime = [self.signStartTime stringByReplacingOccurrencesOfString:@"\t" withString:@""];
+        self.signStartTime = [UIUtils timeAddTenMin:self.signStartTime];
+    }else{
+        self.signStartTime = [NSString stringWithFormat:@"%@",self.actStarTime];
+    }
 }
 @end
 

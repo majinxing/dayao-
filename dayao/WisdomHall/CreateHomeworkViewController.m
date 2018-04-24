@@ -111,10 +111,11 @@
         if (!_v) {
             _v = [[imageBigView alloc] initWithFrame:CGRectMake(0, 0, APPLICATION_WIDTH, APPLICATION_HEIGHT)];
         }
-        
-        [_v addImageView:_homeworkModel.homeworkAry[_imageNum -2]];
-        _v.delegate = self;
-        [self.view addSubview:_v];
+    if(_homeworkModel.homeworkAry.count>0&&(_imageNum-2)<_homeworkModel.homeworkAry.count) {
+            [_v addImageView:_homeworkModel.homeworkAry[_imageNum -2]];
+            _v.delegate = self;
+            [self.view addSubview:_v];
+        }
     }
 }
 
@@ -156,8 +157,11 @@
                     [self hideHud];
                     
                     [UIUtils showInfoMessage:@"作业创建成功" withVC:self];
+                    
+                    [self dismissViewControllerAnimated:YES completion:^{
+                        [self.navigationController popViewControllerAnimated:YES];
 
-                    [self.navigationController popViewControllerAnimated:YES];
+                    }];
                 }
             }else{
                 [UIUtils showInfoMessage:@"作业创建失败" withVC:self];
@@ -193,7 +197,11 @@
                 }else{
                      [self hideHud];
                     [UIUtils showInfoMessage:@"上传成功" withVC:self];
-                    [self.navigationController popViewControllerAnimated:YES];
+                    [self dismissViewControllerAnimated:YES completion:^{
+                        [self.navigationController popViewControllerAnimated:YES];
+                        
+                    }];
+                    
                 }
             }
             
@@ -210,7 +218,11 @@
                 }else{
                      [self hideHud];
                     [UIUtils showInfoMessage:@"上传成功" withVC:self];
-                    [self.navigationController popViewControllerAnimated:YES];
+                    [self dismissViewControllerAnimated:YES completion:^{
+                        [self.navigationController popViewControllerAnimated:YES];
+                        
+                    }];
+                    
                 }
             }
         }
@@ -227,7 +239,11 @@
             }else{
                  [self hideHud];
                 [UIUtils showInfoMessage:@"上传成功" withVC:self];
-                [self.navigationController popViewControllerAnimated:YES];
+                [self dismissViewControllerAnimated:YES completion:^{
+                    [self.navigationController popViewControllerAnimated:YES];
+                    
+                }];
+                
             }
         }
     }];
@@ -290,6 +306,7 @@
     
     //    UIImagePickerControllerEditedImage//编辑过的图片
     //    UIImagePickerControllerOriginalImage//原图
+    
     
     //刚才已经看了info中的键值对，可以从info中取出一个UIImage对象，将取出的对象赋给按钮的image
     

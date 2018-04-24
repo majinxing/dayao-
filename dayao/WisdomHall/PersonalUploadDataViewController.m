@@ -20,6 +20,8 @@
 @property (nonatomic,strong)FileModel * f;
 @property (nonatomic,strong)UIWebView * webView;
 @property (nonatomic,strong)UserModel * user;
+@property (nonatomic,assign) int temp;
+@property (nonatomic,strong)UIView * lineView;
 @end
 
 @implementation PersonalUploadDataViewController
@@ -33,9 +35,12 @@
     
     _user = [[Appsetting sharedInstance] getUsetInfo];
     
+    _temp = 0;
+    
     [self setNavigationTitle];
     
     //    [self getData];
+    [self addBtn];
     
     [self addTableView];
     
@@ -43,9 +48,58 @@
         _webView = [[UIWebView alloc] initWithFrame:self.view.bounds];
         _webView.dataDetectorTypes = UIDataDetectorTypeAll;
     }
+    
     // Do any additional setup after loading the view from its nib.
 }
-
+-(void)addBtn{
+    _lineView = [[UIView alloc] init];
+    _lineView.backgroundColor = [UIColor colorWithHexString:@"#01aeff" alpha:1.0f];
+    
+    NSArray *title=[NSArray arrayWithObjects:@"全部问答",@"个人问答",nil];
+    //添加点击按钮
+    for (int i = 0; i<title.count; i++) {
+        UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
+        //        button.backgroundColor = [UIColor greenColor];
+        button.frame = CGRectMake(APPLICATION_WIDTH/title.count*i,64,APPLICATION_WIDTH/title.count,40);
+        [button setTitle:title[i] forState:UIControlStateNormal];
+        
+        [button setTitleColor:[UIColor colorWithHexString:@"#999999" alpha:1.0f]
+                     forState:UIControlStateNormal];
+        [button setTitleColor:[UIColor colorWithHexString:@"#01aeff" alpha:1.0f]
+                     forState:UIControlStateSelected];
+        button.titleLabel.textAlignment = NSTextAlignmentCenter;
+        if (i==0) {
+            button.selected = YES;
+        }
+        //
+        //文字大小
+        button.titleLabel.font = [UIFont systemFontOfSize:13];
+        button.tag = i+1;
+        //设置点击事件
+        [button addTarget:self action:@selector(titleClick:) forControlEvents:UIControlEventTouchUpInside];
+        [self.view addSubview:button];
+    }
+    _lineView.frame = CGRectMake(0, 64+40, APPLICATION_WIDTH/2, 1);
+    [self.view addSubview:_lineView];
+    
+}
+-(void)titleClick:(UIButton *)btn{
+    if (btn.tag == 1) {
+        UIButton *button=(UIButton *)[self.view viewWithTag:2];
+        button.selected=NO;
+        btn.selected = YES;
+        _temp = 0;
+        [self getData];
+        _lineView.frame = CGRectMake(0, 64+40, APPLICATION_WIDTH/2, 1);
+    }else{
+        UIButton *button=(UIButton *)[self.view viewWithTag:1];
+        button.selected=NO;
+        btn.selected = YES;
+        _temp = 1;
+        [self getData];
+        _lineView.frame = CGRectMake(APPLICATION_WIDTH/2, 64+40, APPLICATION_WIDTH/2, 1);
+    }
+}
 -(void)viewWillAppear:(BOOL)animated{
     [self getData];
 }
@@ -56,46 +110,11 @@
         [self showHudInView:self.view hint:NSLocalizedString(@"正在加载数据", @"Load data...")];
     });
     
-    if ([_type isEqualToString:@"meeting"]) {
-        
-        NSDictionary * dict;// = [[NSDictionary alloc] initWithObjectsAndKeys:@"2",@"relType",_meeting.meetingId,@"relId",@"2",@"function",nil];
-        if ([_function isEqualToString:@"5"]) {
-            dict = [[NSDictionary alloc] initWithObjectsAndKeys:@"2",@"relType",_meeting.meetingId,@"relId",@"5",@"function",nil];
-        }else{
-            dict = [[NSDictionary alloc] initWithObjectsAndKeys:@"2",@"relType",_meeting.meetingId,@"relId",@"2",@"function",nil];
-            
-        }
-        [[NetworkRequest sharedInstance] GET:FileList dict:dict succeed:^(id data) {
-            //            NSLog(@"%@",data);
-            [_fileAry removeAllObjects];
-            NSArray * ary = [data objectForKey:@"body"];
-            
-            for (int i = 0; i<ary.count; i++) {
-                
-                FileModel * f = [[FileModel alloc] init];
-                [f setInfoWithDict:ary[i]];
-                [_fileAry addObject:f];
-                
-            }
-            [self checkTheLocalFile:_fileAry];
-            
-            if (_fileAry.count>0) {
-                
-            }else{
-                [UIUtils showInfoMessage:@"暂无数据" withVC:self];
-            }
-            
-        } failure:^(NSError *error) {
-            
-            [UIUtils showInfoMessage:@"暂无数据" withVC:self];
-            
-            [self hideHud];
-        }];
-    }else if ([_type isEqualToString:@"classModel"]){
+    if ([_type isEqualToString:@"classModel"]){
         
         NSDictionary * dict;// = [[NSDictionary alloc] initWithObjectsAndKeys:@"1",@"relType",_classModel.sclassId,@"relId",@"3",@"function",nil];
         if ([_function isEqualToString:@"6"]) {
-            dict = [[NSDictionary alloc] initWithObjectsAndKeys:@"1",@"relType",_classModel.sclassId,@"relId",@"6",@"function",nil];;
+            dict = [[NSDictionary alloc] initWithObjectsAndKeys:@"1",@"relType",_classModel.courseDetailId,@"relId",@"6",@"function",nil];;
         }else{
             dict = [[NSDictionary alloc] initWithObjectsAndKeys:@"1",@"relType",_classModel.sclassId,@"relId",@"3",@"function",nil];;
             
@@ -105,17 +124,25 @@
             [_fileAry removeAllObjects];
             
             NSArray * ary = [data objectForKey:@"body"];
-            
-            for (int i = 0; i<ary.count; i++) {
-                FileModel * f = [[FileModel alloc] init];
-                [f setInfoWithDict:ary[i]];
-                NSArray *ary1 = [f.fileName componentsSeparatedByString:@"-"];
-                if (![UIUtils isBlankString:ary1[0]]) {
-                    if ([_user.userName isEqualToString:ary1[0]]) {
-                        [_fileAry addObject:f];
+            if (_temp == 0) {
+                for (int i = 0; i<ary.count; i++) {
+                    FileModel * f = [[FileModel alloc] init];
+                    [f setInfoWithDict:ary[i]];
+                    [_fileAry addObject:f];
+                }
+            }else{
+                for (int i = 0; i<ary.count; i++) {
+                    FileModel * f = [[FileModel alloc] init];
+                    [f setInfoWithDict:ary[i]];
+                    NSArray *ary1 = [f.fileName componentsSeparatedByString:@"-"];
+                    if (![UIUtils isBlankString:ary1[0]]) {
+                        if ([_user.userName isEqualToString:ary1[0]]) {
+                            [_fileAry addObject:f];
+                        }
                     }
                 }
             }
+            
             [self checkTheLocalFile:_fileAry];
             
             if (_fileAry.count>0) {
@@ -125,6 +152,8 @@
             }
             
         } failure:^(NSError *error) {
+            [UIUtils showInfoMessage:@"获取数据失败，请检查网络" withVC:self];
+            
             [self hideHud];
         }];
     }
@@ -136,7 +165,7 @@
  **/
 -(void)setNavigationTitle{
     [UIApplication sharedApplication].statusBarStyle = UIStatusBarStyleLightContent;
- 
+    
     if ([UIUtils isBlankString:_function]) {
         self.title = @"文件";
         UserModel * user = [[Appsetting sharedInstance] getUsetInfo];
@@ -145,8 +174,6 @@
             
             UIBarButtonItem * createMeeting = [[UIBarButtonItem alloc] initWithTitle:@"上传资料" style:UIBarButtonItemStylePlain target:self action:@selector(uploadLocalFile)];
             
-            [createMeeting setTintColor:[UIColor whiteColor]];
-
             self.navigationItem.rightBarButtonItem = createMeeting;
             
         }
@@ -154,16 +181,12 @@
             
             UIBarButtonItem * createMeeting = [[UIBarButtonItem alloc] initWithTitle:@"上传资料" style:UIBarButtonItemStylePlain target:self action:@selector(uploadLocalFile)];
             
-            [createMeeting setTintColor:[UIColor whiteColor]];
-
             self.navigationItem.rightBarButtonItem = createMeeting;
         }
     }else{
         self.title = @"问答";
         UIBarButtonItem * createMeeting = [[UIBarButtonItem alloc] initWithTitle:@"上传解答" style:UIBarButtonItemStylePlain target:self action:@selector(selectImage)];
         
-        [createMeeting setTintColor:[UIColor whiteColor]];
-
         self.navigationItem.rightBarButtonItem = createMeeting;
     }
 }
@@ -184,37 +207,15 @@
     
     //选择完成图片或者点击取消按钮都是通过代理来操作我们所需要的逻辑过程
     pickerController.delegate = self;
+    
+    //    [self addSomeElements:pickerController];
+    
     //使用模态呈现相册
     [self.navigationController presentViewController:pickerController animated:YES completion:^{
         
     }];
-    //    }]];
-    
-    //    [alert addAction:[UIAlertAction actionWithTitle:@"从相册选择" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-    //
-    //        pickerController.sourceType =  UIImagePickerControllerSourceTypeSavedPhotosAlbum;//图片分组列表样式
-    //        //照片的选取样式还有以下两种
-    //        //UIImagePickerControllerSourceTypePhotoLibrary,直接全部呈现系统相册UIImagePickerControllerSourceTypeSavedPhotosAlbum
-    //        //UIImagePickerControllerSourceTypeCamera//调取摄像头
-    //
-    //        //选择完成图片或者点击取消按钮都是通过代理来操作我们所需要的逻辑过程
-    //        pickerController.delegate = self;
-    //        //使用模态呈现相册
-    //        [self.navigationController presentViewController:pickerController animated:YES completion:^{
-    //
-    //        }];
-    //
-    //    }]];
-    //
-    //
-    //    [alert addAction:[UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleDestructive handler:^(UIAlertAction * _Nonnull action) {
-    //        //点击按钮的响应事件；
-    //    }]];
-    //
-    //    //弹出提示框；
-    //    [self presentViewController:alert animated:true completion:nil];
-    
 }
+
 //选择照片完成之后的代理方法
 
 -(void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary<NSString *,id> *)info{
@@ -226,25 +227,29 @@
     
     
     //刚才已经看了info中的键值对，可以从info中取出一个UIImage对象，将取出的对象赋给按钮的image
-    
-    UIImage *resultImage = [info objectForKey:@"UIImagePickerControllerEditedImage"];
-    
-    //    NSString * filePath = [info objectForKey:@"UIImagePickerControllerReferenceURL"];
-    UserModel * user = [[Appsetting sharedInstance] getUsetInfo];
-    NSString * str = [NSString stringWithFormat:@"%@-%@-%@",user.userName,user.studentId,[UIUtils getTime]];
-    NSDictionary * dict1 = [[NSDictionary alloc] initWithObjectsAndKeys:@"1",@"type",str,@"description",@"6",@"function",[NSString stringWithFormat:@"%@",_classModel.sclassId],@"relId",@"1",@"relType",nil];
-    
-    [[NetworkRequest sharedInstance] POSTImage:FileUpload image:resultImage dict:dict1 succeed:^(id data) {
-        NSString * code = [NSString stringWithFormat:@"%@",[[data objectForKey:@"header"] objectForKey:@"code"]];
-        if ([code isEqualToString:@"0000"]) {
-            [UIUtils showInfoMessage:@"上传成功" withVC:self];
-            [self getData];
-        }else{
+    dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
+    // 异步执行任务创建方法
+    dispatch_async(queue, ^{
+        UIImage *resultImage = [info objectForKey:@"UIImagePickerControllerEditedImage"];
+        
+        //    NSString * filePath = [info objectForKey:@"UIImagePickerControllerReferenceURL"];
+        UserModel * user = [[Appsetting sharedInstance] getUsetInfo];
+        NSString * str = [NSString stringWithFormat:@"%@-%@-%@",user.userName,user.studentId,[UIUtils getTime]];
+        NSDictionary * dict1 = [[NSDictionary alloc] initWithObjectsAndKeys:@"1",@"type",str,@"description",@"6",@"function",[NSString stringWithFormat:@"%@",_classModel.courseDetailId],@"relId",@"1",@"relType",nil];
+        
+        [[NetworkRequest sharedInstance] POSTImage:FileUpload image:resultImage dict:dict1 succeed:^(id data) {
+            NSString * code = [NSString stringWithFormat:@"%@",[[data objectForKey:@"header"] objectForKey:@"code"]];
+            if ([code isEqualToString:@"0000"]) {
+                [UIUtils showInfoMessage:@"上传成功" withVC:self];
+                [self getData];
+            }else{
+                [UIUtils showInfoMessage:@"上传失败" withVC:self];
+            }
+        } failure:^(NSError *error) {
             [UIUtils showInfoMessage:@"上传失败" withVC:self];
-        }
-    } failure:^(NSError *error) {
-        [UIUtils showInfoMessage:@"上传失败" withVC:self];
-    }];
+        }];
+    });
+    
     //使用模态返回到软件界面
     [self.navigationController dismissViewControllerAnimated:YES completion:nil];
 }
@@ -262,7 +267,7 @@
     
 }
 -(void)addTableView{
-    _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0,0, APPLICATION_WIDTH, APPLICATION_HEIGHT-64-40) style:UITableViewStylePlain];
+    _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0,64+41, APPLICATION_WIDTH, APPLICATION_HEIGHT-64-41) style:UITableViewStylePlain];
     _tableView.delegate = self;
     _tableView.dataSource = self;
     self.automaticallyAdjustsScrollViewInsets = NO;
@@ -302,7 +307,7 @@
     myDirectoryEnumerator=[myFileManager enumeratorAtPath:path];
     
     //列举目录内容，可以遍历子目录
-//    NSLog(@"用enumeratorAtPath:显示目录%@的内容：",path);
+    //    NSLog(@"用enumeratorAtPath:显示目录%@的内容：",path);
     
     while((path=[myDirectoryEnumerator nextObject])!=nil)
     {
@@ -313,7 +318,7 @@
             }
         }
         
-//        NSLog(@"%@",path);
+        //        NSLog(@"%@",path);
         
     }
     [self hideHud];
@@ -401,7 +406,7 @@
     
     NSString *documentsDirectory = [paths lastObject];
     
-//    NSLog(@"app_home_doc: %@",documentsDirectory);
+    //    NSLog(@"app_home_doc: %@",documentsDirectory);
     
     //    NSFileManager *fileManager = [NSFileManager defaultManager];
     
@@ -409,13 +414,19 @@
     
     [self showHudInView:self.view hint:NSLocalizedString(@"正在下载数据", @"Load data...")];
     
+    UserModel * user = [[Appsetting sharedInstance] getUsetInfo];
     
-    NSString *urlString = [NSString stringWithFormat:@"%@%@?",BaseURL,FileDownload];
+    NSString * baseURL = user.host;
+    
+    NSString *urlString = [NSString stringWithFormat:@"%@/%@?",baseURL,FileDownload];
     
     urlString = [urlString stringByAppendingString:[NSString stringWithFormat:@"resourceId=%@",f.fileId]];
     
     [self downloadFileWithURL:urlString];
 }
+
+
+
 
 #pragma mark UITableViewdelegate
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
@@ -457,8 +468,11 @@
     
     if (![fileManager fileExistsAtPath:filePath]) {
         if (![UIUtils isBlankString:f.fileName]) {
+            UserModel * user = [[Appsetting sharedInstance] getUsetInfo];
             
-            NSString *urlString = [NSString stringWithFormat:@"%@%@?",BaseURL,FileDownload];
+            NSString * baseURL = user.host;
+            
+            NSString *urlString = [NSString stringWithFormat:@"%@/%@?",baseURL,FileDownload];
             
             urlString = [urlString stringByAppendingString:[NSString stringWithFormat:@"resourceId=%@",f.fileId]];
             
@@ -493,6 +507,7 @@
     
     // 从列表中删除
     FileModel * f = _fileAry[indexPath.row];
+    NSArray *ary1 = [f.fileName componentsSeparatedByString:@"-"];
     
     if ([[NSString stringWithFormat:@"%@",_meeting.meetingHostId] isEqualToString:[NSString stringWithFormat:@"%@",user.peopleId]]) {
         NSDictionary * dict = [[NSDictionary alloc] initWithObjectsAndKeys:[NSString stringWithFormat:@"%@",f.fileId],@"id", nil];
@@ -500,19 +515,22 @@
         [[NetworkRequest sharedInstance] POST:FileDelegate dict:dict succeed:^(id data) {
             
         } failure:^(NSError *error) {
-            
+            [UIUtils showInfoMessage:@"删除失败，请检查网络" withVC:self];
         }];
     }
     if ([[NSString stringWithFormat:@"%@",_classModel.teacherWorkNo] isEqualToString:[NSString stringWithFormat:@"%@",user.studentId]]) {
-        NSDictionary * dict = [[NSDictionary alloc] initWithObjectsAndKeys:[NSString stringWithFormat:@"%@",f.fileId],@"id", nil];
         
-        [[NetworkRequest sharedInstance] POST:FileDelegate dict:dict succeed:^(id data) {
+    }else if (![UIUtils isBlankString:ary1[0]]) {
+        if ([_user.userName isEqualToString:ary1[0]]) {
+            NSDictionary * dict = [[NSDictionary alloc] initWithObjectsAndKeys:[NSString stringWithFormat:@"%@",f.fileId],@"id", nil];
             
-        } failure:^(NSError *error) {
-            
-        }];
+            [[NetworkRequest sharedInstance] POST:FileDelegate dict:dict succeed:^(id data) {
+                
+            } failure:^(NSError *error) {
+                [UIUtils showInfoMessage:@"删除失败，请检查网络" withVC:self];
+            }];
+        }
     }
-    
     
     [_fileAry removeObjectAtIndex:indexPath.row];
     
@@ -555,7 +573,7 @@
     
     if (!saveError) {
         
-//        NSLog(@"save success");
+        //        NSLog(@"save success");
         
         [self checkTheLocalFile:_fileAry];
         
@@ -565,7 +583,7 @@
         
     }else{
         
-//        NSLog(@"save error:%@",saveError.localizedDescription);
+        //        NSLog(@"save error:%@",saveError.localizedDescription);
         
     }
     [self hideHud];
@@ -583,31 +601,77 @@
 -(void)URLSession:(NSURLSession *)session downloadTask:(NSURLSessionDownloadTask *)downloadTask didResumeAtOffset:(int64_t)fileOffset expectedTotalBytes:(int64_t)expectedTotalBytes {
     
 }
-///** * 当下载完成的时候调用 * * @param location 文件的临时存储路径 */
-//-(void)URLSession:(NSURLSession *)session downloadTask:(NSURLSessionDownloadTask *)downloadTask didFinishDownloadingToURL:(NSURL *)location {
-//
-//    NSLog(@"%@",location);
-//
-//    //1 拼接文件全路径
-//
-//    NSString *fullPath = [[NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) lastObject] stringByAppendingPathComponent:downloadTask.response.suggestedFilename];
-//
-//    //2 剪切文件
-//    [[NSFileManager defaultManager]moveItemAtURL:location toURL:[NSURL fileURLWithPath:fullPath] error:nil]; NSLog(@"%@",fullPath);
-//}
 
 /** * 请求结束 */
 -(void)URLSession:(NSURLSession *)session task:(NSURLSessionTask *)task didCompleteWithError:(NSError *)error {
     
 }
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
+-(UIView *)findView:(UIView *)aView withName:(NSString *)name{
+    
+    Class cl = [aView class];
+    
+    NSString *desc = [cl description];
+    
+    
+    
+    if ([name isEqualToString:desc])
+        
+        return aView;
+    
+    
+    
+    for (NSUInteger i = 0; i < [aView.subviews count]; i++)
+        
+    {
+        
+        UIView *subView = [aView.subviews objectAtIndex:i];
+        
+        subView = [self findView:subView withName:name];
+        
+        if (subView)
+            
+            return subView;
+        
+    }
+    
+    return nil;
+    
 }
-*/
+
+-(void)addSomeElements:(UIViewController *)viewController{
+    
+    
+    UIView *PLCameraView=[self findView:viewController.view withName:@"PLCropOverlay"];
+    
+    UIView *bottomBar=[self findView:PLCameraView withName:@"PLCropOverlayBottomBar"];
+    
+    UIImageView *bottomBarImageForSave = [bottomBar.subviews objectAtIndex:0];
+    
+    UIButton *retakeButton=[bottomBarImageForSave.subviews objectAtIndex:0];
+    
+    [retakeButton setTitle:@"重拍"forState:UIControlStateNormal]; //左下角按钮
+    
+    UIButton *useButton=[bottomBarImageForSave.subviews objectAtIndex:1];
+    
+    [useButton setTitle:@"上传"forState:UIControlStateNormal]; //右下角按钮
+    
+}
+
+- (void)navigationController:(UINavigationController *)navigationController willShowViewController:(UIViewController *)viewController animated:(BOOL)animated{
+    
+    [self addSomeElements:viewController];
+    
+}
+/*
+ #pragma mark - Navigation
+ 
+ // In a storyboard-based application, you will often want to do a little preparation before navigation
+ - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+ // Get the new view controller using [segue destinationViewController].
+ // Pass the selected object to the new view controller.
+ }
+ */
+
 
 @end
+

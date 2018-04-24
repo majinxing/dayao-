@@ -153,16 +153,20 @@
 //        NSLog(@"%@",data);
         NSString * str = [[data objectForKey:@"header"] objectForKey:@"message"];
         if ([str isEqualToString:@"成功"]) {
-            UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"创建成功" message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: nil];
-            [alertView show];
-            [alertView setHidden:YES];
             // 2.创建通知
             NSNotification *notification =[NSNotification notificationWithName:@"UpdateTheClassPage" object:nil userInfo:nil];
             // 3.通过 通知中心 发送 通知
             
             [[NSNotificationCenter defaultCenter] postNotification:notification];
             
-            [self.navigationController popViewControllerAnimated:YES];
+            [UIUtils showInfoMessage:@"创建成功" withVC:self];
+            
+            [self dismissViewControllerAnimated:YES completion:^{
+                [self.navigationController popViewControllerAnimated:YES];
+
+            }];
+            
+            
         }else if ([str isEqualToString:@"系统错误"]){
             [UIUtils showInfoMessage:@"系统错误" withVC:self];
         }else{
@@ -170,9 +174,9 @@
         }
         [self hideHud];
     } failure:^(NSError *error) {
-        NSLog(@"%@",error);
-        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"创建失败，请填写完整课堂信息并且按照提示的格式" message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: nil];
-        [alertView show];
+        
+        [UIUtils showInfoMessage:@"创建失败，请填写完整课堂信息并且按照提示的格式" withVC:self];
+        
         [self hideHud];
     }];
     
@@ -457,8 +461,8 @@
                 if ([str1 isEqualToString:@"星期一"]) {
                     [_textFileAry setObject:[NSString stringWithFormat:@"%@",str] atIndexedSubscript:5];
                 }else{
-                    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"选择的日期并不是周一，请重新选择日期" message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: nil];
-                    [alertView show];
+                    [UIUtils showInfoMessage:@"选择的日期并不是周一，请选择该课程开始周的周一的日期" withVC:self];
+                    
                 }
                 [_tabelView reloadData];
             }

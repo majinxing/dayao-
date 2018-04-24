@@ -713,9 +713,12 @@
     ChatHelper * c =[ChatHelper shareHelper];
     [c getOut];
     WorkingLoginViewController * userLogin = [[WorkingLoginViewController alloc] init];
+    
     [UIApplication sharedApplication].keyWindow.rootViewController =[[UINavigationController alloc] initWithRootViewController:userLogin];
-    UIAlertView * alter = [[UIAlertView alloc] initWithTitle:nil message:@"账号在另一台设备登录，请重新登录或修改密码" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil];
-    [alter show];
+    [UIUtils showInfoMessage:@"账号在另一台设备登录，请重新登录或修改密码" withVC:userLogin];
+//    UIAlertView * alter = [[UIAlertView alloc] initWithTitle:nil message:@"账号在另一台设备登录，请重新登录或修改密码" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil];
+//    [alter show];
+    
     return ;
     
 }
@@ -789,7 +792,9 @@
 
 +(NSDictionary *)seatWithPeople:(NSMutableArray *)peopleAry withSeat:(NSMutableArray *)seatAry roomId:(NSString *)roomId{
     
-    NSMutableArray * ary = [NSMutableArray arrayWithCapacity:1];
+    NSMutableArray * aryUserid = [NSMutableArray arrayWithCapacity:1];
+    
+    NSMutableArray * arySeat = [NSMutableArray arrayWithCapacity:1];
     
     NSMutableArray * seatPeo = [NSMutableArray arrayWithCapacity:1];
     
@@ -798,16 +803,19 @@
         SignPeople * s = peopleAry[i];
         
         s.seat = seatAry[i];
-        NSDictionary * d = @{@"seat":seatAry[i],@"roomId":[NSString stringWithFormat:@"%@",roomId]};
-        NSArray * a = @[d];
         
-        NSDictionary * dict = [[NSDictionary alloc] initWithObjectsAndKeys:[NSString stringWithFormat:@"%@",s.userId],@"userId",a,@"seatList", nil];
+        NSDictionary * d = @{@"seat":seatAry[i],@"userId":[NSString stringWithFormat:@"%@",s.userId]};
         
-        [ary addObject:dict];
+        
+        NSDictionary * dict = [[NSDictionary alloc] initWithObjectsAndKeys:[NSString stringWithFormat:@"%@",s.userId],@"userId",nil];
+        
+        [aryUserid addObject:dict];
+        
+        [arySeat addObject:d];
         
         [seatPeo addObject:s];
     }
-    NSDictionary * dict = [[NSDictionary alloc] initWithObjectsAndKeys:ary,@"peopleWithSeat",seatPeo,@"seatPeople", nil];
+    NSDictionary * dict = [[NSDictionary alloc] initWithObjectsAndKeys:arySeat,@"peopleWithSeat",aryUserid,@"peopleId",seatPeo,@"seatPeople", nil];
     
     return dict;
 }
@@ -1352,7 +1360,7 @@
 +(NSDictionary *)dictionaryWithJsonString:(NSString *)jsonString {
     
     if (jsonString == nil) {
-        [UIUtils showInfoMessage:@"扫描二维码有误，请重新扫描或者连接指定WiFi签到" withVC:self];
+        [UIUtils showInfoMessage:@"扫描二维码有误解析失败，请重新扫描或者连接指定WiFi签到" withVC:self];
         return nil;
         
     }
@@ -1370,7 +1378,7 @@
     if(err) {
         
         NSLog(@"json解析失败：%@",err);
-        [UIUtils showInfoMessage:@"扫描二维码失效，请重新扫描或者连接指定WiFi签到" withVC:self];
+        [UIUtils showInfoMessage:@"扫描二维码有误解析失败，请重新扫描或者连接指定WiFi签到" withVC:self];
         return nil;
         
     }
@@ -1523,18 +1531,18 @@
     UIGraphicsEndImageContext();
     return newImage;
 }
-+(NSMutableArray *)returnAry:(NSString *)startTime withEndTime:(NSString *)endTime room:(NSString *)roomId meetingsFacilitatorList:(NSString *)nameHost monthOrWeek:(NSString *)mRw{
++(NSMutableArray *)returnAry:(NSString *)startTime withEndTime:(NSString *)endTime room:(NSString *)roomId meetingsFacilitatorList:(NSString *)nameHost monthOrWeek:(NSString *)mRw seatAry:(NSMutableArray *)arySeat{
     UserModel * user = [[Appsetting sharedInstance] getUsetInfo];
     
     NSMutableArray * ary = [NSMutableArray arrayWithCapacity:1];
-    
-    NSArray * a1 = @[@{@"userId":[NSString stringWithFormat:@"%@",user.peopleId],@"dsec":@" "}];
+//
+    NSArray * a1 = @[@{@"userId":[NSString stringWithFormat:@"%@",user.peopleId],@"dsec":@"老师"}];
     
     if ([mRw isEqualToString:@""]) {
         
         NSString * newTime = [NSString stringWithFormat:@"%@:00",startTime];
         
-        NSDictionary * dict = [[NSDictionary alloc] initWithObjectsAndKeys:newTime,@"actStartTime",newTime,@"actEndTime",newTime,@"signStartTime",newTime,@"signEndTime",roomId,@"roomId",a1,@"meetingsFacilitatorList",nil];
+        NSDictionary * dict = [[NSDictionary alloc] initWithObjectsAndKeys:newTime,@"actStartTime",newTime,@"actEndTime",newTime,@"signStartTime",newTime,@"signEndTime",roomId,@"roomId",a1,@"meetingsFacilitatorList",arySeat,@"seatList",nil];
         
         [ary addObject:dict];
         
@@ -1630,6 +1638,46 @@
     //判断屏幕亮度是否能够被改变
     return oldBrightness != newBrightness;
     
+}
++(NSString *)timeAddTenMin:(NSString *)time{
+    
+    NSArray *ary = [time componentsSeparatedByString:@" "];
+    NSString * expireTime = ary[1];
+    NSMutableArray * ary1 = [expireTime componentsSeparatedByString:@":"];
+    expireTime = ary1[0];
+    NSString * mm = ary1[1];
+    
+    
+    
+    long n = [expireTime integerValue];
+    long m = [mm integerValue];
+    
+    
+    if (m>=50) {
+        if (n == 24) {
+            n = 1;
+            m = m + 10 - 60;
+            ary1[0] = [NSString stringWithFormat:@"%ld",n];
+            ary1[1] = [NSString stringWithFormat:@"%ld",m];
+            
+        }else {
+            n = n+1;
+            m = m + 10 - 60;
+            
+            ary1[0] = [NSString stringWithFormat:@"%ld",n];
+            ary1[1] = [NSString stringWithFormat:@"%ld",m];
+            
+        }
+    }else{
+        m = m + 10;
+        ary1[1] = [NSString stringWithFormat:@"%ld",m];
+        
+    }
+    
+    
+    expireTime = [NSString stringWithFormat:@"%@ %@:%@",ary[0],ary1[0],ary1[1]];
+    
+    return expireTime;
 }
 @end
 

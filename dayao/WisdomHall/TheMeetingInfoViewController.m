@@ -81,9 +81,7 @@
     
     //    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(changeSignNumber) name:@"SignSucceed" object:nil];
     
-    // 1.注册通知
-    
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(voiceCalls:) name:@"VoiceCalls" object:nil];
+
     
     // Do any additional setup after loading the view from its nib.
 }
@@ -166,13 +164,13 @@
                 [self hideHud];
                 
             }else{
-                UIAlertView * alter = [[UIAlertView alloc] initWithTitle:nil message:@"删除会议失败" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil];
-                [alter show];
+                [UIUtils showInfoMessage:@"删除会议失败" withVC:self];
+
                 [self hideHud];
             }
         } failure:^(NSError *error) {
-            UIAlertView * alter = [[UIAlertView alloc] initWithTitle:nil message:@"删除会议失败" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil];
-            [alter show];
+            [UIUtils showInfoMessage:@"请检查网络连接状态" withVC:self];
+
             [self hideHud];
             
         }];
@@ -197,13 +195,13 @@
                 [self hideHud];
                 
             }else{
-                UIAlertView * alter = [[UIAlertView alloc] initWithTitle:nil message:@"删除会议失败" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil];
-                [alter show];
+                [UIUtils showInfoMessage:@"删除会议失败" withVC:self];
+
                 [self hideHud];
             }
         } failure:^(NSError *error) {
-            UIAlertView * alter = [[UIAlertView alloc] initWithTitle:nil message:@"删除会议失败" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil];
-            [alter show];
+            [UIUtils showInfoMessage:@"请检查网络连接状态" withVC:self];
+
             [self hideHud];
             
         }];
@@ -361,8 +359,20 @@
             
             self.hidesBottomBarWhenPushed = YES;
             
-            [self.navigationController pushViewController:c animated:YES];
-            
+            [self presentViewController:c animated:YES completion:^{
+                
+            }];
+            [c returnReason:^(EMCallEndReason reason) {
+                if (reason == EMCallEndReasonRemoteOffline) {
+                    [UIUtils showInfoMessage:@"抢答还没开始呢，不要太心急哦~" withVC:self];
+                }else if (reason == EMCallEndReasonBusy){
+                    [UIUtils showInfoMessage:@"已有人抢答成功，下次手速要更快哦~" withVC:self];
+                }else if (reason == EMCallEndReasonHangup){
+                    
+                }else {
+                    [UIUtils showInfoMessage:@"抢答貌似失败了呢~" withVC:self];
+                }
+            }];
         }else{
             [UIUtils showInfoMessage:@"不能呼叫自己" withVC:self];
         }
@@ -558,11 +568,20 @@
         }else{
             
 //            NSString * s = [UIUtils returnMac:_meetingModel.mck];
+            NSString * str = [NSString stringWithFormat:@"请到WiFi列表连接指定的DAYAO或XTU开头的WiFi，若不能跳转请主动在WiFi页面连接无线信号再返回app进行签到，点击签到按钮若网络情况不好，请断开WiFi连接数据流量再次点击签到"];
             
-            UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:[NSString stringWithFormat:@"请到WiFi列表连接指定的DAYAO或XTU开头的WiFi，再点击签到，若不能跳转请主动在WiFi页面连接无线信号再返回app进行签到，签到完成之后请连接数据流量保证数据传输"] message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: @"取消", nil];
-            alertView.delegate = self;
-            alertView.tag = 1;
-            [alertView show];
+            UIAlertController *alertC = [UIAlertController alertControllerWithTitle:@"温馨提示" message:str preferredStyle:(UIAlertControllerStyleAlert)];
+            
+            UIAlertAction *alertA = [UIAlertAction actionWithTitle:@"确定" style:(UIAlertActionStyleDefault) handler:^(UIAlertAction * _Nonnull action) {
+                
+                [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"prefs:root=WIFI"]];
+                
+            }];
+            
+            [alertC addAction:alertA];
+            
+            [self presentViewController:alertC animated:YES completion:nil];
+            
             [self hideHud];
         }
         
@@ -574,10 +593,19 @@
     }else{
 //        NSString * s = [UIUtils returnMac:_meetingModel.mck];
         
-        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:[NSString stringWithFormat:@"请到WiFi列表连接指定的DAYAO或XTU开头的WiFi，若不能跳转请主动在WiFi页面连接无线信号再返回app进行签到，签到完成之后请连接数据流量保证数据传输"] message:nil delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: @"取消", nil];
-        alertView.delegate = self;
-        alertView.tag = 1;
-        [alertView show];
+        NSString * str = [NSString stringWithFormat:@"请到WiFi列表连接指定的DAYAO或XTU开头的WiFi，若不能跳转请主动在WiFi页面连接无线信号再返回app进行签到，点击签到按钮若网络情况不好，请断开WiFi连接数据流量再次点击签到"];
+        
+        UIAlertController *alertC = [UIAlertController alertControllerWithTitle:@"温馨提示" message:str preferredStyle:(UIAlertControllerStyleAlert)];
+        
+        UIAlertAction *alertA = [UIAlertAction actionWithTitle:@"确定" style:(UIAlertActionStyleDefault) handler:^(UIAlertAction * _Nonnull action) {
+            
+            [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"prefs:root=WIFI"]];
+            
+        }];
+        
+        [alertC addAction:alertA];
+        
+        [self presentViewController:alertC animated:YES completion:nil];
         [self hideHud];
     }
 }
@@ -596,10 +624,19 @@
         [self hideHud];
         
     } failure:^(NSError *error) {
-//        NSLog(@"失败：%@",error);
-        UIAlertView * alter = [[UIAlertView alloc] initWithTitle:nil message:@"无网络，请保证数据流量的连接后再次点击签到" delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil];
-        alter.tag = 2;
-        [alter show];
+         NSString * str = [NSString stringWithFormat:@"签到失败请重新签到，请保证数据流量的连接"];
+        
+        UIAlertController *alertC = [UIAlertController alertControllerWithTitle:@"温馨提示" message:str preferredStyle:(UIAlertControllerStyleAlert)];
+        
+        UIAlertAction *alertA = [UIAlertAction actionWithTitle:@"确定" style:(UIAlertActionStyleDefault) handler:^(UIAlertAction * _Nonnull action) {
+            
+            [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"prefs:root=WIFI"]];
+            
+        }];
+        
+        [alertC addAction:alertA];
+        
+        [self presentViewController:alertC animated:YES completion:nil];
         [self hideHud];
         _meetingModel.signStatus = @"4";
         [_tableView reloadData];
@@ -620,7 +657,7 @@
         
         _meetingModel.signStatus = @"2";
         
-        //        [UIUtils showInfoMessage:@"签到成功"];
+//        [UIUtils showInfoMessage:@"签到成功" withVC:self];
         
         [_tableView reloadData];
         [self signPictureUpdate];
@@ -767,6 +804,8 @@
 }
 -(void)signPictureUpdate{
     if (![[NSString stringWithFormat:@"%@",_meetingModel.signWay] isEqualToString:@"9"]) {
+        [UIUtils showInfoMessage:@"已签到" withVC:self];
+
         return;
     }
     if (!_photoView) {
@@ -838,28 +877,32 @@
     //    UIImagePickerControllerEditedImage//编辑过的图片
     //    UIImagePickerControllerOriginalImage//原图
     //刚才已经看了info中的键值对，可以从info中取出一个UIImage对象，将取出的对象赋给按钮的image
-    
-    UIImage *resultImage = [info objectForKey:@"UIImagePickerControllerEditedImage"];
-    
-    //    NSString * filePath = [info objectForKey:@"UIImagePickerControllerReferenceURL"];
-    UserModel * user = [[Appsetting sharedInstance] getUsetInfo];
-    
-    NSString * str = [NSString stringWithFormat:@"%@-%@-%@",user.userName,user.studentId,[UIUtils getTime]];
-    
-    NSDictionary * dict1 = [[NSDictionary alloc] initWithObjectsAndKeys:@"1",@"type",str,@"description",@"10",@"function",[NSString stringWithFormat:@"%@",_meetingModel.meetingDetailId],@"relId",@"2",@"relType",nil];
-    
-    UIImage * image = [UIUtils addWatemarkTextAfteriOS7_WithLogoImage:resultImage watemarkText:[NSString stringWithFormat:@"%@-%@-%@",_user.userName,_user.studentId,[UIUtils getTime]]];
-
-    [[NetworkRequest sharedInstance] POSTImage:FileUpload image:image dict:dict1 succeed:^(id data) {
-        NSString * code = [NSString stringWithFormat:@"%@",[[data objectForKey:@"header"] objectForKey:@"code"]];
-        if ([code isEqualToString:@"0000"]) {
-            [UIUtils showInfoMessage:@"上传成功" withVC:self];
-        }else{
+    dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
+    // 异步执行任务创建方法
+    dispatch_async(queue, ^{
+        UIImage *resultImage = [info objectForKey:@"UIImagePickerControllerEditedImage"];
+        
+        //    NSString * filePath = [info objectForKey:@"UIImagePickerControllerReferenceURL"];
+        UserModel * user = [[Appsetting sharedInstance] getUsetInfo];
+        
+        NSString * str = [NSString stringWithFormat:@"%@-%@-%@",user.userName,user.studentId,[UIUtils getTime]];
+        
+        NSDictionary * dict1 = [[NSDictionary alloc] initWithObjectsAndKeys:@"1",@"type",str,@"description",@"10",@"function",[NSString stringWithFormat:@"%@",_meetingModel.meetingDetailId],@"relId",@"2",@"relType",nil];
+        
+        UIImage * image = [UIUtils addWatemarkTextAfteriOS7_WithLogoImage:resultImage watemarkText:[NSString stringWithFormat:@"%@-%@-%@",_user.userName,_user.studentId,[UIUtils getTime]]];
+        
+        [[NetworkRequest sharedInstance] POSTImage:FileUpload image:image dict:dict1 succeed:^(id data) {
+            NSString * code = [NSString stringWithFormat:@"%@",[[data objectForKey:@"header"] objectForKey:@"code"]];
+            if ([code isEqualToString:@"0000"]) {
+                [UIUtils showInfoMessage:@"上传成功" withVC:self];
+            }else{
+                [UIUtils showInfoMessage:@"上传失败" withVC:self];
+            }
+        } failure:^(NSError *error) {
             [UIUtils showInfoMessage:@"上传失败" withVC:self];
-        }
-    } failure:^(NSError *error) {
-        [UIUtils showInfoMessage:@"上传失败" withVC:self];
-    }];
+        }];
+    });
+   
     //使用模态返回到软件界面
     [self.navigationController dismissViewControllerAnimated:YES completion:nil];
 }
