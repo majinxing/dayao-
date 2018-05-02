@@ -13,7 +13,7 @@
 #import "FMDatabase.h"
 #import "DYHeader.h"
 #import "TextModel.h"
-#import "TextListViewController.h"
+
 #import "CreateTestViewController.h"
 #import "MJRefresh.h"
 #import "ShareView.h"
@@ -247,10 +247,7 @@
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     
-    TextListViewController * listVC = [[TextListViewController alloc] init];
-    listVC.t = _dataAry[indexPath.row];
-    self.hidesBottomBarWhenPushed = YES;
-    [self.navigationController pushViewController:listVC animated:YES];
+   
     
 }
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{

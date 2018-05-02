@@ -433,7 +433,7 @@
             break;
         }
     }
-    [dict setObject:ary[1] forKey:@"name"];
+    [dict setObject:ary[0] forKey:@"name"];
     
     UserModel * users = [[Appsetting sharedInstance] getUsetInfo];
     
@@ -457,7 +457,7 @@
     
     [dict setObject:users.school forKey:@"universityId"];
     
-    [dict setObject:ary[5] forKey:@"startTime"];
+    [dict setObject:ary[4] forKey:@"startTime"];
     
 //    [dict setObject:[NSString stringWithFormat:@"%d",class1+1] forKey:@"startTh"];
     
@@ -481,7 +481,7 @@
             break;
         }
     }
-    [dict setObject:ary[1] forKey:@"name"];
+    [dict setObject:ary[0] forKey:@"name"];
     UserModel * users = [[Appsetting sharedInstance] getUsetInfo];
     [dict setObject:[NSString stringWithFormat:@"%@",users.peopleId] forKey:@"teacherId"];
     
@@ -497,7 +497,7 @@
     
     [dict setObject:@"0" forKey:@"pictureId"];
     [dict setObject:[NSString stringWithFormat:@"%d",[UIUtils getTermId]] forKey:@"termId"];
-    [dict setObject:ary[5] forKey:@"firstDay"];
+    [dict setObject:ary[4] forKey:@"firstDay"];
     
     if (m3 == 0) {
         NSArray * aryT = [[NSArray alloc] initWithObjects:@{@"startWeek":[NSString stringWithFormat:@"%d",m1+1],@"endWeek":[NSString stringWithFormat:@"%d",m2+1]}, nil];
@@ -1436,7 +1436,7 @@
  
  */
 
-+ (BOOL)dateTimeDifferenceWithStartTime:(NSString *)startTime{
++ (BOOL)dateTimeDifferenceWithStartTime:(NSString *)startTime withTime:(int)time{
     
     NSDateFormatter *date = [[NSDateFormatter alloc]init];
     
@@ -1479,7 +1479,7 @@
     if (abs((int)dateCom.minute+(int)minute)>0) {
         return NO;
     }
-    if (abs((int)dateCom.second+(int)second)<CodeEffectiveTime) {
+    if (abs((int)dateCom.second+(int)second)<time) {
         return YES;
     }
     return NO;
@@ -1678,6 +1678,33 @@
     expireTime = [NSString stringWithFormat:@"%@ %@:%@",ary[0],ary1[0],ary1[1]];
     
     return expireTime;
+}
+//对缓存wifi进行判断
++(BOOL)determineWifiAndtimeCorrect:(NSMutableArray *)macAry{
+    
+    NSDictionary * dict = [[Appsetting sharedInstance] getWifiMacAndTime];
+    NSString * mac = [dict objectForKey:@"WIFI_mac"];
+    NSString * time = [dict objectForKey:@"WIFI_time"];
+    if ([UIUtils isBlankString:mac]) {
+        return NO;
+    }else{
+        if ([UIUtils matchingMacWith:macAry withMac:mac]) {
+            if ([UIUtils isBlankString:time]) {
+                return NO;
+            }else{
+                if([UIUtils dateTimeDifferenceWithStartTime:time withTime:60]) {
+                    return YES;
+                }else{
+                    return NO;
+                }
+                
+            }
+        }else{
+            return NO;
+        }
+    }
+    return NO;
+    
 }
 @end
 

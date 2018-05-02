@@ -16,6 +16,7 @@
 #import "DYHeader.h"
 #import "GroupListViewController.h"
 #import "ChangeThemeInfoViewController.h"
+#import "AboutUSViewController.h"
 
 @interface PersonalCenterViewController ()<UITableViewDelegate,UITableViewDataSource>
 @property(nonatomic,strong)UITableView * tableview;
@@ -98,7 +99,7 @@
             [self.navigationController pushViewController:systemVC animated:YES];
             self.hidesBottomBarWhenPushed = NO;
         }else if (indexPath.row == 4){
-            CompanyProfileViewController *cVC = [[CompanyProfileViewController alloc] init];
+            AboutUSViewController *cVC = [[AboutUSViewController alloc] init];
             self.hidesBottomBarWhenPushed = YES;
             [self.navigationController pushViewController:cVC animated:YES];
             self.hidesBottomBarWhenPushed = NO;

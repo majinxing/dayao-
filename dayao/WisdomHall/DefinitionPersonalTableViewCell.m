@@ -61,21 +61,21 @@
     _textFile.placeholder = infoLabelText;
     _textFile.text = textFile;
     _textFile.delegate = self;
-    if (n==3){
-        _g.frame = CGRectMake(CGRectGetMaxX(_infoLabel.frame), 0,400, 60);
-        _g.tag = 3;
-    }else if (n == 2){
+    if (n==2){
         _g.frame = CGRectMake(CGRectGetMaxX(_infoLabel.frame), 0,400, 60);
         _g.tag = 2;
+    }else if (n == 1){
+        _g.frame = CGRectMake(CGRectGetMaxX(_infoLabel.frame), 0,400, 60);
+        _g.tag = 1;
+    }else if (n == 3){
+        _g.frame = CGRectMake(CGRectGetMaxX(_infoLabel.frame), 0,400, 60);
+        _g.tag = 3;
     }else if (n == 4){
         _g.frame = CGRectMake(CGRectGetMaxX(_infoLabel.frame), 0,400, 60);
         _g.tag = 4;
     }else if (n == 5){
         _g.frame = CGRectMake(CGRectGetMaxX(_infoLabel.frame), 0,400, 60);
         _g.tag = 5;
-    }else if (n == 6){
-        _g.frame = CGRectMake(CGRectGetMaxX(_infoLabel.frame), 0,400, 60);
-        _g.tag = 6;
     }
     
     [_textFile addTarget:self action:@selector(textFileDidChange:) forControlEvents:UIControlEventEditingChanged];
@@ -128,18 +128,18 @@
     _textFile.placeholder = infoLabelText;
     _textFile.text = textFile;
     _textFile.delegate = self;
-    if (n==3){
-        _g.frame = CGRectMake(CGRectGetMaxX(_infoLabel.frame), 0,400, 60);
-        _g.tag = 3;
-    }else if (n == 2){
+    if (n==2){
         _g.frame = CGRectMake(CGRectGetMaxX(_infoLabel.frame), 0,400, 60);
         _g.tag = 2;
+    }else if (n == 1){
+        _g.frame = CGRectMake(CGRectGetMaxX(_infoLabel.frame), 0,400, 60);
+        _g.tag = 1;
+    }else if (n == 3){
+        _g.frame = CGRectMake(CGRectGetMaxX(_infoLabel.frame), 0,400, 60);
+        _g.tag = 3;
     }else if (n == 4){
         _g.frame = CGRectMake(CGRectGetMaxX(_infoLabel.frame), 0,400, 60);
         _g.tag = 4;
-    }else if (n == 5){
-        _g.frame = CGRectMake(CGRectGetMaxX(_infoLabel.frame), 0,400, 60);
-        _g.tag = 5;
     }
     
     [_textFile addTarget:self action:@selector(textFileDidChange:) forControlEvents:UIControlEventEditingChanged];

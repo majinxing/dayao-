@@ -105,7 +105,7 @@
  * 开始到结束的时间差
  
  */
-+ (BOOL)dateTimeDifferenceWithStartTime:(NSString *)startTime;
++ (BOOL)dateTimeDifferenceWithStartTime:(NSString *)startTime withTime:(int)time;
 //获取当前时间戳
 + (NSString*)getCurrentTime;
 //json格式字符串转字典：
@@ -127,6 +127,8 @@
 +(BOOL)didUserPressLockButton;
 //时间加10分钟
 +(NSString *)timeAddTenMin:(NSString *)time;
+//对缓存的wifi进行判断
++(BOOL)determineWifiAndtimeCorrect:(NSMutableArray *)macAry;
 @end
 
 

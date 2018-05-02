@@ -191,8 +191,10 @@ static NSString *cellIdentifier = @"cellIdentifier";
                 [UIUtils accountWasUnderTheRoof];
             });
         }else{
+            [UIUtils showInfoMessage:str withVC:self];
             [self hideHud];
-
+            [_tableView reloadData];
+            return ;
         }
     } failure:^(NSError *error) {
         [self hideHud];

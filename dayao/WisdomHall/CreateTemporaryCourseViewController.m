@@ -80,12 +80,12 @@
     // Do any additional setup after loading the view from its nib.
 }
 -(void)addTabelView{
-    _labelAry = [[NSMutableArray alloc] initWithObjects:@"课堂封面",@"课  程  名",@"上课的人",@"教      室",@"上课时间列表",@"上课的时间",nil];
+    _labelAry = [[NSMutableArray alloc] initWithObjects:@"课  程  名",@"上课的人",@"教      室",@"上课时间列表",@"上课的时间",nil];
     _textFileAry = [NSMutableArray arrayWithCapacity:4];
-    for (int i = 0; i<6; i++) {
+    for (int i = 0; i<5; i++) {
         [_textFileAry addObject:@""];
     }
-    [_textFileAry setObject:@"头像" atIndexedSubscript:0];
+//    [_textFileAry setObject:@"头像" atIndexedSubscript:0];
     
     _tabelView = [[UITableView alloc] initWithFrame:CGRectMake(0, 64, APPLICATION_WIDTH, APPLICATION_HEIGHT-64) style:UITableViewStylePlain];
     self.automaticallyAdjustsScrollViewInsets = NO;
@@ -120,7 +120,9 @@
 }
 -(void)createAcourse{
     NSDictionary * dict = [UIUtils createTemporaryCourseWith:_textFileAry ClassRoom:_classRoom joinClassPeople:_selectPeopleAry week:_week class1:_class1 class2:_class2];
+    
     [self showHudInView:self.view hint:NSLocalizedString(@"正在创建课程", @"Load data...")];
+    
     [[NetworkRequest sharedInstance] POST:CreateTemporaryCourse dict:dict succeed:^(id data) {
         NSString * str =[[data objectForKey:@"header"] objectForKey:@"code"];
         if ([[NSString stringWithFormat:@"%@",str] isEqualToString:@"0000"]) {
@@ -136,7 +138,6 @@
         }
         else{
             [UIUtils showInfoMessage:@"创建失败，请填写完整课堂信息并且按照提示的格式" withVC:self];
-            
         }
         [self hideHud];
     } failure:^(NSError *error) {
@@ -197,9 +198,9 @@
     [self.bView removeFromSuperview];
     [self.pickerView removeFromSuperview];
     self.pickerView = nil;
-    if (_temp == 4){
-        [_textFileAry setObject:[NSString stringWithFormat:@"第%d节-第%d节",_class1+1,_class2+1] atIndexedSubscript:4];
-    }else if (_temp == 5){
+    if (_temp == 3){
+        [_textFileAry setObject:[NSString stringWithFormat:@"第%d节-第%d节",_class1+1,_class2+1] atIndexedSubscript:3];
+    }else if (_temp == 4){
         
         NSString * month;
         if (_month<9) {
@@ -213,7 +214,7 @@
         }else{
             day = [NSString stringWithFormat:@"%d",_day+1];
         }
-        [_textFileAry setObject:[NSString stringWithFormat:@"%d-%@-%@",2017+_year,month,day] atIndexedSubscript:5];
+        [_textFileAry setObject:[NSString stringWithFormat:@"%d-%@-%@",2017+_year,month,day] atIndexedSubscript:4];
         _year = 0;
         _month = 0;
         _day = 0;
@@ -230,18 +231,18 @@
 #pragma mark UIPickViewDelegate
 
 -(NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView{
-    if (_temp == 4){
+    if (_temp == 3){
         return 2;
-    }else if (_temp == 5){
+    }else if (_temp == 4){
         return 3;
     }
     return 0;
 }
 - (NSInteger)pickerView:(UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component
 {
-    if (_temp == 4){
+    if (_temp == 3){
         return 11;
-    }else if (_temp == 5){
+    }else if (_temp == 4){
         if (component == 0) {
             return 12;
         }else if (component == 1){
@@ -255,13 +256,13 @@
 }
 - (NSString *)pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component
 {
-   if(_temp == 4){
+   if(_temp == 3){
        if (component == 0){
             return _classAry1[row];
         }else if (component == 1){
             return _classAry2[row];
         }
-    }else if (_temp == 5){
+    }else if (_temp == 4){
         if (component == 0) {
             return [NSString stringWithFormat:@"%d",row+2017];
         }else if (component == 1){
@@ -274,13 +275,13 @@
 }
 - (void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component
 {
-    if (_temp == 4){
+    if (_temp == 3){
         if (component == 0){
             _class1 = (int)row;
         }else if (component == 1){
             _class2 = (int)row;
         }
-    }else if (_temp == 5){
+    }else if (_temp == 4){
         if (component == 0) {
             _year = (int)row;
         }else if (component == 1){
@@ -310,7 +311,7 @@
     
 }
 -(void)gggDelegate:(UIButton *)btn{
-    if (btn.tag == 3){
+    if (btn.tag == 2){
         [self.view endEditing: YES];
         SelectClassRoomViewController * s = [[SelectClassRoomViewController alloc] init];
         self.hidesBottomBarWhenPushed = YES;
@@ -320,12 +321,12 @@
                 [self.view endEditing:YES];
                 if (![UIUtils isBlankString:[NSString stringWithFormat:@"%@",returnText.classRoomId]]) {
                     _classRoom = returnText;
-                    [_textFileAry setObject:_classRoom.classRoomName atIndexedSubscript:3];
+                    [_textFileAry setObject:_classRoom.classRoomName atIndexedSubscript:2];
                     [_tabelView reloadData];
                 }
             }
         }];
-    }else if (btn.tag == 2){
+    }else if (btn.tag == 1){
         SelectPeopleToClassViewController * s = [[SelectPeopleToClassViewController alloc] init];
         self.hidesBottomBarWhenPushed = YES;
         s.selectPeople = [[NSMutableArray alloc] initWithArray:_selectPeopleAry];
@@ -352,16 +353,16 @@
             }
             
         }];
-    }else if (btn.tag == 4){
-        _temp = 4;
+    }else if (btn.tag == 3){
+        _temp = 3;
         [self addPickView];
-    }else if (btn.tag == 5){
+    }else if (btn.tag == 4){
         CalendarViewController * vc = [[CalendarViewController alloc] init];
         self.hidesBottomBarWhenPushed = YES;
         [self.navigationController pushViewController:vc animated:YES];
         [vc returnText:^(NSString *str) {
             if (![UIUtils isBlankString:str]) {
-                [_textFileAry setObject:[NSString stringWithFormat:@"%@",str] atIndexedSubscript:5];
+                [_textFileAry setObject:[NSString stringWithFormat:@"%@",str] atIndexedSubscript:4];
                 [_tabelView reloadData];
             }
         }];
@@ -375,23 +376,23 @@
     return 1;
 }
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
-    return 6;
+    return 5;
 }
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     
     DefinitionPersonalTableViewCell * cell ;
-    if (indexPath.row == 0) {
-        cell = [tableView dequeueReusableCellWithIdentifier:@"DefinitionPersonalTableViewCellSecond"];
-    }else{
+//    if (indexPath.row == 0) {
+//        cell = [tableView dequeueReusableCellWithIdentifier:@"DefinitionPersonalTableViewCellSecond"];
+//    }else{
         cell = [tableView dequeueReusableCellWithIdentifier:@"DefinitionPersonalTableViewCellFirst"];
-    }
+//    }
     
     if (!cell) {
-        if (indexPath.row == 0) {
-            cell = [[[NSBundle mainBundle] loadNibNamed:@"DefinitionPersonalTableViewCell" owner:self options:nil] objectAtIndex:1];
-        }else{
+//        if (indexPath.row == 0) {
+//            cell = [[[NSBundle mainBundle] loadNibNamed:@"DefinitionPersonalTableViewCell" owner:self options:nil] objectAtIndex:1];
+//        }else{
             cell = [[[NSBundle mainBundle] loadNibNamed:@"DefinitionPersonalTableViewCell" owner:self options:nil] objectAtIndex:0];
-        }
+//        }
         
     }
     [cell addTemporaryCourseContentView:_labelAry[indexPath.row] withTextFileText:_textFileAry[indexPath.row] withIndex:(int)indexPath.row];
@@ -406,9 +407,9 @@
     
 }
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
-    if (indexPath.row == 0) {
-        return 80;
-    }
+//    if (indexPath.row == 0) {
+//        return 80;
+//    }
     return 60;
 }
 -(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{

@@ -43,6 +43,8 @@
 
 @property (nonatomic,assign) int page1;//记录分页下限的
 
+@property (nonatomic,strong)UIButton * selectAllBtn;
+
 
 @end
 
@@ -118,6 +120,7 @@
     
     
     
+    
     _departments.layer.masksToBounds = YES;
     _departments.layer.borderColor = [UIColor colorWithHexString:@"#29a7e1"].CGColor;
     _departments.layer.borderWidth = 0.5;
@@ -148,6 +151,49 @@
 //    [_lable setTitleColor:[UIColor colorWithHexString:@"#29a7e1"] forState:UIControlStateNormal];
     
     [self addSeachBar];
+    
+    _selectAllBtn = [UIButton buttonWithType:UIButtonTypeSystem];
+    _selectAllBtn.frame = CGRectMake(APPLICATION_WIDTH-45, APPLICATION_HEIGHT-100, 38, 38);
+    [_selectAllBtn setTitle:@"全选" forState:UIControlStateNormal];
+    
+    [_selectAllBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    
+    [_selectAllBtn setBackgroundColor:[UIColor colorWithHexString:@"#29a7e1"]];
+    
+    [_selectAllBtn addTarget:self action:@selector(selectAllPeople) forControlEvents:UIControlEventTouchUpInside];
+    
+    _selectAllBtn.layer.masksToBounds = YES;
+    _selectAllBtn.layer.cornerRadius = 19;
+    
+    [self.view addSubview:_selectAllBtn];
+}
+-(void)selectAllPeople{
+    
+            if ([_selectAllBtn.titleLabel.text isEqualToString:@"全选"]) {
+                [_selectPeople removeAllObjects];
+                for (int i = 0; i<_dataAry.count; i++) {
+                    SignPeople * s = _dataAry[i];
+                    s.isSelect = YES;
+                    [_selectPeople addObject:s];
+                }
+                [_tableView reloadData];
+                [_selectAllBtn setTitle:@"取消" forState:UIControlStateNormal];
+            }else if ([_selectAllBtn.titleLabel.text isEqualToString:@"取消"]) {
+                for (int i = 0; i<_dataAry.count; i++) {
+                    SignPeople * s = _dataAry[i];
+                    s.isSelect = NO;
+                    for (int j = 0; j<_selectPeople.count; j++) {
+                        SignPeople *sg = _selectPeople[j];
+                        if ([[NSString stringWithFormat:@"%@",s.userId] isEqualToString:[NSString stringWithFormat:@"%@",sg.userId]]) {
+                            [_selectPeople removeObjectAtIndex:j];
+                            break;
+                        }
+                    }
+                }
+                [_selectAllBtn setTitle:@"全选" forState:UIControlStateNormal];
+                [_tableView reloadData];
+            }
+    
 }
 -(void)addSeachBar{
     _mySearchBar = [[UISearchBar alloc] initWithFrame:CGRectMake(60, 22, APPLICATION_WIDTH-140, 40)];

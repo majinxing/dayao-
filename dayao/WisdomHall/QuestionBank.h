@@ -12,5 +12,7 @@
 @property (nonatomic,copy)NSString * statues ;//题库状态
 @property (nonatomic,copy)NSString * libId;//题库id
 @property (nonatomic,copy)NSString * libName;//题库名字
+
+
 -(void)setSelfInfoWithDict:(NSDictionary *)dict;
 @end

@@ -7,14 +7,14 @@
 //
 
 #import "CreateTestViewController.h"
-#import "TextListViewController.h"
+
 #import "TextModel.h"
 #import "DYHeader.h"
-#import "CreateTextTableViewCell.h"
+
 #import "QuestionBank.h"
 #import "TestQuestionsViewController.h"
 
-@interface CreateTestViewController ()<CreateTextTableViewCellDelegate>
+@interface CreateTestViewController ()
 @property(nonatomic,strong)TextModel * textModel;
 @property(nonatomic,strong)QuestionBank * questionModel;
 @end

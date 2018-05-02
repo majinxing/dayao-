@@ -26,7 +26,9 @@
 
 @implementation PersonalInfoViewController
 
-- (void)viewDidLoad {     [super viewDidLoad];
+- (void)viewDidLoad {
+    
+    [super viewDidLoad];
     
     [self setNavigationTitle];
     [self getData];
@@ -47,6 +49,7 @@
         _user = [[Appsetting sharedInstance] getUsetInfo];
         _textAry =  [UIUtils returnAry:_user];
         UserModel * user = [[Appsetting sharedInstance] getUsetInfo];
+        
          _headImage = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@?resourceId=%@",BaseURL,FileDownload,user.userHeadImageId]]]];
         [_tableView reloadData];
     } failure:^(NSError *error) {
@@ -102,7 +105,7 @@
             
         }];
         
-        NSDictionary * dict1 = [[NSDictionary alloc] initWithObjectsAndKeys:@"1",@"type",@"www",@"description",@"4",@"function",nil];
+        NSDictionary * dict1 = [[NSDictionary alloc] initWithObjectsAndKeys:@"1",@"type",@"www",@"description",@"4",@"function",@"true",@"deleteOld",nil];
         if (_headImage) {
             [[NetworkRequest sharedInstance] POSTImage:FileUpload image:_headImage dict:dict1 succeed:^(id data) {
                 //            NSLog(@"%@",data);

@@ -635,6 +635,9 @@
             [self signSendIng];
             [self sendSignInfo];
             
+        }else if ([UIUtils determineWifiAndtimeCorrect:_c.mck]){
+            [self signSendIng];
+            [self sendSignInfo];
         }else{
 
             [self hideHud];
@@ -800,7 +803,7 @@
         NSString * checkcodeLocal = [NSString stringWithFormat:@"%@dayaokeji",date];
         NSString * md5 = [self md5:checkcodeLocal];
         if ([md5 isEqualToString:checkcode]) {
-            if ([UIUtils dateTimeDifferenceWithStartTime:dateTime]) {
+            if ([UIUtils dateTimeDifferenceWithStartTime:dateTime withTime:CodeEffectiveTime]) {
                 if ([UIUtils returnMckIsHave:_c.mck withAccept:loc_array]) {
                     [self sendSignInfo];
                 }else{
@@ -916,7 +919,7 @@
         NSString * str = [NSString stringWithFormat:@"%@-%@-%@",user.userName,user.studentId,[UIUtils getTime]];
         
         if ([_pictureType isEqualToString:@"QAPicture"]) {
-            NSDictionary * dict1 = [[NSDictionary alloc] initWithObjectsAndKeys:@"1",@"type",str,@"description",@"6",@"function",[NSString stringWithFormat:@"%@",_c.sclassId],@"relId",@"1",@"relType",nil];
+            NSDictionary * dict1 = [[NSDictionary alloc] initWithObjectsAndKeys:@"1",@"type",str,@"description",@"6",@"function",[NSString stringWithFormat:@"%@",_c.sclassId],@"relId",@"false",@"deleteOld",nil];
             [[NetworkRequest sharedInstance] POSTImage:FileUpload image:resultImage dict:dict1 succeed:^(id data) {
                 NSString * code = [NSString stringWithFormat:@"%@",[[data objectForKey:@"header"] objectForKey:@"code"]];
                 if ([code isEqualToString:@"0000"]) {
@@ -928,7 +931,7 @@
                 [UIUtils showInfoMessage:@"上传失败" withVC:self];
             }];
         }else if ([_pictureType isEqualToString:@"SignPicture"]){
-            NSDictionary * dict1 = [[NSDictionary alloc] initWithObjectsAndKeys:@"1",@"type",str,@"description",@"10",@"function",[NSString stringWithFormat:@"%@",_c.courseDetailId],@"relId",@"1",@"relType",nil];
+            NSDictionary * dict1 = [[NSDictionary alloc] initWithObjectsAndKeys:@"1",@"type",str,@"description",@"10",@"function",[NSString stringWithFormat:@"%@",_c.courseDetailId],@"relId",@"ture",@"deleteOld",nil];
             UIImage * image = [UIUtils addWatemarkTextAfteriOS7_WithLogoImage:resultImage watemarkText:[NSString stringWithFormat:@"%@-%@-%@",_user.userName,_user.studentId,[UIUtils getTime]]];
             [[NetworkRequest sharedInstance] POSTImage:FileUpload image:image dict:dict1 succeed:^(id data) {
                 NSString * code = [NSString stringWithFormat:@"%@",[[data objectForKey:@"header"] objectForKey:@"code"]];

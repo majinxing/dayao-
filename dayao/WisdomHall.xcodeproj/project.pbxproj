@@ -48,8 +48,6 @@
 		8B045B9E1F3458E40021699B /* ZFSeatSelectionTool.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B045B931F3458E40021699B /* ZFSeatSelectionTool.m */; };
 		8B045BA31F34595D0021699B /* UIView+Extension.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B045BA21F34595D0021699B /* UIView+Extension.m */; };
 		8B045BA61F3462640021699B /* SeatIngModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B045BA51F3462640021699B /* SeatIngModel.m */; };
-		8B04643F1F5FE44F005EEE36 /* QuestionListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B04643D1F5FE44F005EEE36 /* QuestionListViewController.m */; };
-		8B0464401F5FE44F005EEE36 /* QuestionListViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8B04643E1F5FE44F005EEE36 /* QuestionListViewController.xib */; };
 		8B0502E920214CB60030CF75 /* StatisticalDetailsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B0502E720214CB60030CF75 /* StatisticalDetailsViewController.m */; };
 		8B0502EA20214CB60030CF75 /* StatisticalDetailsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8B0502E820214CB60030CF75 /* StatisticalDetailsViewController.xib */; };
 		8B0502EE20219CEC0030CF75 /* PersonalUploadDataViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B0502EC20219CEC0030CF75 /* PersonalUploadDataViewController.m */; };
@@ -167,8 +165,6 @@
 		8B17373F1EC55B9800BE3C8F /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8B17373E1EC55B9800BE3C8F /* CoreGraphics.framework */; };
 		8B1737491EC58BE400BE3C8F /* TestQuestionsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B1737471EC58BE400BE3C8F /* TestQuestionsViewController.m */; };
 		8B17374A1EC58BE400BE3C8F /* TestQuestionsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8B1737481EC58BE400BE3C8F /* TestQuestionsViewController.xib */; };
-		8B17374E1EC5AC3600BE3C8F /* CreateTextTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B17374C1EC5AC3600BE3C8F /* CreateTextTableViewCell.m */; };
-		8B17374F1EC5AC3600BE3C8F /* CreateTextTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8B17374D1EC5AC3600BE3C8F /* CreateTextTableViewCell.xib */; };
 		8B1A502C1F75EB7000A11CB2 /* TheMessageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B1A502A1F75EB7000A11CB2 /* TheMessageViewController.m */; };
 		8B1A502D1F75EB7000A11CB2 /* TheMessageViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8B1A502B1F75EB7000A11CB2 /* TheMessageViewController.xib */; };
 		8B1A50321F75F85C00A11CB2 /* OfficeTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B1A50301F75F85C00A11CB2 /* OfficeTableViewCell.m */; };
@@ -203,6 +199,8 @@
 		8B3516BA1FE90552009F42AF /* NoticeDetailsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B3516B81FE90552009F42AF /* NoticeDetailsViewController.m */; };
 		8B3516BE1FE90600009F42AF /* NoticeTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B3516BB1FE905FF009F42AF /* NoticeTableViewCell.m */; };
 		8B3516BF1FE90600009F42AF /* NoticeTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8B3516BC1FE90600009F42AF /* NoticeTableViewCell.xib */; };
+		8B396B17208F1C3E00F20060 /* AboutUSViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B396B14208F1C3C00F20060 /* AboutUSViewController.m */; };
+		8B396B18208F1C3E00F20060 /* AboutUSViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8B396B15208F1C3D00F20060 /* AboutUSViewController.xib */; };
 		8B3CAEC81F75091000BDE092 /* OfficeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B3CAEC61F75091000BDE092 /* OfficeViewController.m */; };
 		8B3CAEC91F75091000BDE092 /* OfficeViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8B3CAEC71F75091000BDE092 /* OfficeViewController.xib */; };
 		8B3CB2DF1FFF6E4A00E1123E /* PhotoPromptBox.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B3CB2DE1FFF6E4A00E1123E /* PhotoPromptBox.m */; };
@@ -253,13 +251,9 @@
 		8B8C3D171ECD7A6700E9FB56 /* TextModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B8C3D161ECD7A6700E9FB56 /* TextModel.m */; };
 		8B9171C11ED2B7D9009686FD /* Questions.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B9171C01ED2B7D9009686FD /* Questions.m */; };
 		8B9171C71ED3D9D8009686FD /* contactTool.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B9171C61ED3D9D8009686FD /* contactTool.m */; };
-		8B9171CB1ED41BC7009686FD /* QuestionsTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B9171C91ED41BC7009686FD /* QuestionsTableViewCell.m */; };
-		8B9171CC1ED41BC7009686FD /* QuestionsTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8B9171CA1ED41BC7009686FD /* QuestionsTableViewCell.xib */; };
 		8B9B58471EC97DEC0010A1F1 /* WisdomHallTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B9B58451EC97DEC0010A1F1 /* WisdomHallTests.m */; };
 		8B9B584A1EC97E030010A1F1 /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 8B9B58481EC97E030010A1F1 /* Info.plist */; };
 		8B9B584B1EC97E030010A1F1 /* WisdomHallUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B9B58491EC97E030010A1F1 /* WisdomHallUITests.m */; };
-		8B9B584F1EC998080010A1F1 /* TextListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B9B584D1EC998080010A1F1 /* TextListViewController.m */; };
-		8B9B58501EC998080010A1F1 /* TextListViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8B9B584E1EC998080010A1F1 /* TextListViewController.xib */; };
 		8B9CCB881F1468D6001833FD /* Hyphenate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8B9CCB861F1468D6001833FD /* Hyphenate.framework */; };
 		8B9CCB891F1468D6001833FD /* Hyphenate.podspec in Resources */ = {isa = PBXBuildFile; fileRef = 8B9CCB871F1468D6001833FD /* Hyphenate.podspec */; };
 		8B9CCB8A1F14693B001833FD /* Hyphenate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8B9CCB861F1468D6001833FD /* Hyphenate.framework */; };
@@ -320,6 +314,10 @@
 		8BE24D641F8B528600621055 /* GroupModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BE24D631F8B528600621055 /* GroupModel.m */; };
 		8BE24D681F8B6E2200621055 /* GroupPeopleViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BE24D661F8B6E2200621055 /* GroupPeopleViewController.m */; };
 		8BE24D691F8B6E2200621055 /* GroupPeopleViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8BE24D671F8B6E2200621055 /* GroupPeopleViewController.xib */; };
+		8BE3F3CD2099908A00C22678 /* QuestionModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BE3F3CC2099908A00C22678 /* QuestionModel.m */; };
+		8BE3F3D02099920600C22678 /* optionsModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BE3F3CF2099920600C22678 /* optionsModel.m */; };
+		8BE3F3D4209996D600C22678 /* ChoiceQuestionTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BE3F3D2209996D600C22678 /* ChoiceQuestionTableViewCell.m */; };
+		8BE3F3D5209996D600C22678 /* ChoiceQuestionTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8BE3F3D3209996D600C22678 /* ChoiceQuestionTableViewCell.xib */; };
 		8BE877691EBAF7A800866A34 /* ShareView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BE877681EBAF7A800866A34 /* ShareView.m */; };
 		8BE8776C1EBAF82E00866A34 /* ShareButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BE8776B1EBAF82E00866A34 /* ShareButton.m */; };
 		8BE877701EBC1CA800866A34 /* TextViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BE8776E1EBC1CA800866A34 /* TextViewController.m */; };
@@ -339,6 +337,13 @@
 		8BE9139D1EEFB7C500000282 /* UIViewController+HUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BE9139C1EEFB7C500000282 /* UIViewController+HUD.m */; };
 		8BE913A31EEFB80000000282 /* MBProgressHUD+Add.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BE913A01EEFB80000000282 /* MBProgressHUD+Add.m */; };
 		8BE913A41EEFB80000000282 /* MBProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BE913A21EEFB80000000282 /* MBProgressHUD.m */; };
+		8BED4EED20994782004DF322 /* ChoiceQuestionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BED4EEB20994782004DF322 /* ChoiceQuestionViewController.m */; };
+		8BED4EEE20994782004DF322 /* ChoiceQuestionViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8BED4EEC20994782004DF322 /* ChoiceQuestionViewController.xib */; };
+		8BED4EF2209947B4004DF322 /* EssayQuestionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BED4EF0209947B4004DF322 /* EssayQuestionViewController.m */; };
+		8BED4EF3209947B4004DF322 /* EssayQuestionViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8BED4EF1209947B4004DF322 /* EssayQuestionViewController.xib */; };
+		8BED4EF7209947E4004DF322 /* TOFQuestionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BED4EF5209947E4004DF322 /* TOFQuestionViewController.m */; };
+		8BED4EF8209947E4004DF322 /* TOFQuestionViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8BED4EF6209947E4004DF322 /* TOFQuestionViewController.xib */; };
+		8BED4EFB20995900004DF322 /* ChooseTopicView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BED4EFA20995900004DF322 /* ChooseTopicView.m */; };
 		8BEE943B1F29DBF900488651 /* NoticeModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BEE943A1F29DBF900488651 /* NoticeModel.m */; };
 		8BEE94481F2C780500488651 /* CompanyProfileViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BEE94461F2C780500488651 /* CompanyProfileViewController.m */; };
 		8BEE94491F2C780500488651 /* CompanyProfileViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8BEE94471F2C780500488651 /* CompanyProfileViewController.xib */; };
@@ -381,8 +386,6 @@
 		8BF82DA01EE167C300D33473 /* UIColor+HexString.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BA224B71EAED53D00627A1B /* UIColor+HexString.m */; };
 		8BF82DA11EE167C300D33473 /* TextsTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B05CB691EC0056B0063EC20 /* TextsTableViewCell.m */; };
 		8BF82DA21EE167C300D33473 /* SystemSetingTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B05CB741EC070060063EC20 /* SystemSetingTableViewCell.m */; };
-		8BF82DA31EE167C300D33473 /* QuestionsTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B9171C91ED41BC7009686FD /* QuestionsTableViewCell.m */; };
-		8BF82DA41EE167C300D33473 /* CreateTextTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B17374C1EC5AC3600BE3C8F /* CreateTextTableViewCell.m */; };
 		8BF82DA51EE167C300D33473 /* AllTestViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BE877741EBC2D6B00866A34 /* AllTestViewController.m */; };
 		8BF82DA61EE167C300D33473 /* Questions.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B9171C01ED2B7D9009686FD /* Questions.m */; };
 		8BF82DA71EE167C300D33473 /* MJRefreshBaseView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BF8647A1ECAD21200B7EED4 /* MJRefreshBaseView.m */; };
@@ -428,7 +431,6 @@
 		8BF82DD31EE167C300D33473 /* SDImageCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BF864A11ECAD97300B7EED4 /* SDImageCache.m */; };
 		8BF82DD41EE167C300D33473 /* FMDatabaseQueue.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BF8646A1ECACAE800B7EED4 /* FMDatabaseQueue.m */; };
 		8BF82DD51EE167C300D33473 /* ShareView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BE877681EBAF7A800866A34 /* ShareView.m */; };
-		8BF82DD61EE167C300D33473 /* TextListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B9B584D1EC998080010A1F1 /* TextListViewController.m */; };
 		8BF82DD71EE167C300D33473 /* DefineThePasswordViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BB56D6C1EB05C760023DAFF /* DefineThePasswordViewController.m */; };
 		8BF82DD81EE167C300D33473 /* AllTheMeetingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B2E16E61EBAD9AF008B7C57 /* AllTheMeetingViewController.m */; };
 		8BF82DD91EE167C300D33473 /* InTheTestViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BE8777E1EBC2DE000866A34 /* InTheTestViewController.m */; };
@@ -480,7 +482,6 @@
 		8BF82E0F1EE167C300D33473 /* SystemSetingTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8B05CB751EC070060063EC20 /* SystemSetingTableViewCell.xib */; };
 		8BF82E101EE167C300D33473 /* PersonalInfoViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8B05CB7A1EC2ABFD0063EC20 /* PersonalInfoViewController.xib */; };
 		8BF82E111EE167C300D33473 /* PersonalCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8B2E16E11EBACAD7008B7C57 /* PersonalCollectionViewCell.xib */; };
-		8BF82E121EE167C300D33473 /* TextListViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8B9B584E1EC998080010A1F1 /* TextListViewController.xib */; };
 		8BF82E131EE167C300D33473 /* PersonalDataTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8B1737081EC2BE2B00BE3C8F /* PersonalDataTableViewCell.xib */; };
 		8BF82E141EE167C300D33473 /* InTheTestViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8BE8777F1EBC2DE000866A34 /* InTheTestViewController.xib */; };
 		8BF82E151EE167C300D33473 /* TheMeetingEndedViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8B2E16F61EBADA5D008B7C57 /* TheMeetingEndedViewController.xib */; };
@@ -489,7 +490,6 @@
 		8BF82E181EE167C300D33473 /* ImportTextViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8B0DB13A1ED6CA4E0042DF0D /* ImportTextViewController.xib */; };
 		8BF82E191EE167C300D33473 /* RegisterViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8BA224D31EAF25DC00627A1B /* RegisterViewController.xib */; };
 		8BF82E1A1EE167C300D33473 /* SignInViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8BA2249C1EADFFA400627A1B /* SignInViewController.xib */; };
-		8BF82E1B1EE167C300D33473 /* QuestionsTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8B9171CA1ED41BC7009686FD /* QuestionsTableViewCell.xib */; };
 		8BF82E1C1EE167C300D33473 /* CreateCourseViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8B7D5D811EB961260068058E /* CreateCourseViewController.xib */; };
 		8BF82E1D1EE167C300D33473 /* CourseCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8B7D5D8F1EB9782C0068058E /* CourseCollectionViewCell.xib */; };
 		8BF82E1E1EE167C300D33473 /* RedefineThePasswordViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8BB56D861EB2E2820023DAFF /* RedefineThePasswordViewController.xib */; };
@@ -510,7 +510,6 @@
 		8BF82E2D1EE167C300D33473 /* PersonalCenterViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8BA224A61EAE000000627A1B /* PersonalCenterViewController.xib */; };
 		8BF82E2E1EE167C300D33473 /* ClassManagementViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8B2E16D91EBAB968008B7C57 /* ClassManagementViewController.xib */; };
 		8BF82E2F1EE167C300D33473 /* MJRefresh.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 8BF864771ECAD21200B7EED4 /* MJRefresh.bundle */; };
-		8BF82E301EE167C300D33473 /* CreateTextTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8B17374D1EC5AC3600BE3C8F /* CreateTextTableViewCell.xib */; };
 		8BF82E311EE167C300D33473 /* NotStartTestingViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8BE8777A1EBC2D8E00866A34 /* NotStartTestingViewController.xib */; };
 		8BF82E321EE167C300D33473 /* TheLoginViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8BA224C01EAEF5CB00627A1B /* TheLoginViewController.xib */; };
 		8BF82E331EE167C300D33473 /* CreateTestViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8BE8778F1EBD69C000866A34 /* CreateTestViewController.xib */; };
@@ -688,9 +687,6 @@
 		8B045BA21F34595D0021699B /* UIView+Extension.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+Extension.m"; sourceTree = "<group>"; };
 		8B045BA41F3462640021699B /* SeatIngModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SeatIngModel.h; sourceTree = "<group>"; };
 		8B045BA51F3462640021699B /* SeatIngModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SeatIngModel.m; sourceTree = "<group>"; };
-		8B04643C1F5FE44F005EEE36 /* QuestionListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QuestionListViewController.h; sourceTree = "<group>"; };
-		8B04643D1F5FE44F005EEE36 /* QuestionListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QuestionListViewController.m; sourceTree = "<group>"; };
-		8B04643E1F5FE44F005EEE36 /* QuestionListViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = QuestionListViewController.xib; sourceTree = "<group>"; };
 		8B0502E620214CB60030CF75 /* StatisticalDetailsViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = StatisticalDetailsViewController.h; sourceTree = "<group>"; };
 		8B0502E720214CB60030CF75 /* StatisticalDetailsViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = StatisticalDetailsViewController.m; sourceTree = "<group>"; };
 		8B0502E820214CB60030CF75 /* StatisticalDetailsViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = StatisticalDetailsViewController.xib; sourceTree = "<group>"; };
@@ -877,9 +873,6 @@
 		8B1737461EC58BE400BE3C8F /* TestQuestionsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestQuestionsViewController.h; sourceTree = "<group>"; };
 		8B1737471EC58BE400BE3C8F /* TestQuestionsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TestQuestionsViewController.m; sourceTree = "<group>"; };
 		8B1737481EC58BE400BE3C8F /* TestQuestionsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TestQuestionsViewController.xib; sourceTree = "<group>"; };
-		8B17374B1EC5AC3600BE3C8F /* CreateTextTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CreateTextTableViewCell.h; sourceTree = "<group>"; };
-		8B17374C1EC5AC3600BE3C8F /* CreateTextTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CreateTextTableViewCell.m; sourceTree = "<group>"; };
-		8B17374D1EC5AC3600BE3C8F /* CreateTextTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CreateTextTableViewCell.xib; sourceTree = "<group>"; };
 		8B1A50291F75EB7000A11CB2 /* TheMessageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TheMessageViewController.h; sourceTree = "<group>"; };
 		8B1A502A1F75EB7000A11CB2 /* TheMessageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TheMessageViewController.m; sourceTree = "<group>"; };
 		8B1A502B1F75EB7000A11CB2 /* TheMessageViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TheMessageViewController.xib; sourceTree = "<group>"; };
@@ -932,6 +925,9 @@
 		8B3516BB1FE905FF009F42AF /* NoticeTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NoticeTableViewCell.m; sourceTree = "<group>"; };
 		8B3516BC1FE90600009F42AF /* NoticeTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = NoticeTableViewCell.xib; sourceTree = "<group>"; };
 		8B3516BD1FE90600009F42AF /* NoticeTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NoticeTableViewCell.h; sourceTree = "<group>"; };
+		8B396B14208F1C3C00F20060 /* AboutUSViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AboutUSViewController.m; sourceTree = "<group>"; };
+		8B396B15208F1C3D00F20060 /* AboutUSViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AboutUSViewController.xib; sourceTree = "<group>"; };
+		8B396B16208F1C3E00F20060 /* AboutUSViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AboutUSViewController.h; sourceTree = "<group>"; };
 		8B3CAEC51F75091000BDE092 /* OfficeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OfficeViewController.h; sourceTree = "<group>"; };
 		8B3CAEC61F75091000BDE092 /* OfficeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OfficeViewController.m; sourceTree = "<group>"; };
 		8B3CAEC71F75091000BDE092 /* OfficeViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = OfficeViewController.xib; sourceTree = "<group>"; };
@@ -1018,16 +1014,10 @@
 		8B9171C01ED2B7D9009686FD /* Questions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Questions.m; sourceTree = "<group>"; };
 		8B9171C51ED3D9D8009686FD /* contactTool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = contactTool.h; sourceTree = "<group>"; };
 		8B9171C61ED3D9D8009686FD /* contactTool.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = contactTool.m; sourceTree = "<group>"; };
-		8B9171C81ED41BC7009686FD /* QuestionsTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QuestionsTableViewCell.h; sourceTree = "<group>"; };
-		8B9171C91ED41BC7009686FD /* QuestionsTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QuestionsTableViewCell.m; sourceTree = "<group>"; };
-		8B9171CA1ED41BC7009686FD /* QuestionsTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = QuestionsTableViewCell.xib; sourceTree = "<group>"; };
 		8B9B58441EC97DEC0010A1F1 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		8B9B58451EC97DEC0010A1F1 /* WisdomHallTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WisdomHallTests.m; sourceTree = "<group>"; };
 		8B9B58481EC97E030010A1F1 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		8B9B58491EC97E030010A1F1 /* WisdomHallUITests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WisdomHallUITests.m; sourceTree = "<group>"; };
-		8B9B584C1EC998080010A1F1 /* TextListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TextListViewController.h; sourceTree = "<group>"; };
-		8B9B584D1EC998080010A1F1 /* TextListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TextListViewController.m; sourceTree = "<group>"; };
-		8B9B584E1EC998080010A1F1 /* TextListViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TextListViewController.xib; sourceTree = "<group>"; };
 		8B9CCB861F1468D6001833FD /* Hyphenate.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Hyphenate.framework; sourceTree = "<group>"; };
 		8B9CCB871F1468D6001833FD /* Hyphenate.podspec */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Hyphenate.podspec; sourceTree = "<group>"; };
 		8B9CCC881F14D3B7001833FD /* RecorderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RecorderView.h; sourceTree = "<group>"; };
@@ -1126,6 +1116,13 @@
 		8BE24D651F8B6E2200621055 /* GroupPeopleViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GroupPeopleViewController.h; sourceTree = "<group>"; };
 		8BE24D661F8B6E2200621055 /* GroupPeopleViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GroupPeopleViewController.m; sourceTree = "<group>"; };
 		8BE24D671F8B6E2200621055 /* GroupPeopleViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = GroupPeopleViewController.xib; sourceTree = "<group>"; };
+		8BE3F3CB2099908A00C22678 /* QuestionModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QuestionModel.h; sourceTree = "<group>"; };
+		8BE3F3CC2099908A00C22678 /* QuestionModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QuestionModel.m; sourceTree = "<group>"; };
+		8BE3F3CE2099920600C22678 /* optionsModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = optionsModel.h; sourceTree = "<group>"; };
+		8BE3F3CF2099920600C22678 /* optionsModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = optionsModel.m; sourceTree = "<group>"; };
+		8BE3F3D1209996D600C22678 /* ChoiceQuestionTableViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ChoiceQuestionTableViewCell.h; sourceTree = "<group>"; };
+		8BE3F3D2209996D600C22678 /* ChoiceQuestionTableViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ChoiceQuestionTableViewCell.m; sourceTree = "<group>"; };
+		8BE3F3D3209996D600C22678 /* ChoiceQuestionTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ChoiceQuestionTableViewCell.xib; sourceTree = "<group>"; };
 		8BE877671EBAF7A800866A34 /* ShareView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShareView.h; sourceTree = "<group>"; };
 		8BE877681EBAF7A800866A34 /* ShareView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShareView.m; sourceTree = "<group>"; };
 		8BE8776A1EBAF82E00866A34 /* ShareButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShareButton.h; sourceTree = "<group>"; };
@@ -1157,6 +1154,17 @@
 		8BE913A01EEFB80000000282 /* MBProgressHUD+Add.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "MBProgressHUD+Add.m"; sourceTree = "<group>"; };
 		8BE913A11EEFB80000000282 /* MBProgressHUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MBProgressHUD.h; sourceTree = "<group>"; };
 		8BE913A21EEFB80000000282 /* MBProgressHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MBProgressHUD.m; sourceTree = "<group>"; };
+		8BED4EEA20994782004DF322 /* ChoiceQuestionViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ChoiceQuestionViewController.h; sourceTree = "<group>"; };
+		8BED4EEB20994782004DF322 /* ChoiceQuestionViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ChoiceQuestionViewController.m; sourceTree = "<group>"; };
+		8BED4EEC20994782004DF322 /* ChoiceQuestionViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ChoiceQuestionViewController.xib; sourceTree = "<group>"; };
+		8BED4EEF209947B4004DF322 /* EssayQuestionViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = EssayQuestionViewController.h; sourceTree = "<group>"; };
+		8BED4EF0209947B4004DF322 /* EssayQuestionViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = EssayQuestionViewController.m; sourceTree = "<group>"; };
+		8BED4EF1209947B4004DF322 /* EssayQuestionViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = EssayQuestionViewController.xib; sourceTree = "<group>"; };
+		8BED4EF4209947E4004DF322 /* TOFQuestionViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TOFQuestionViewController.h; sourceTree = "<group>"; };
+		8BED4EF5209947E4004DF322 /* TOFQuestionViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TOFQuestionViewController.m; sourceTree = "<group>"; };
+		8BED4EF6209947E4004DF322 /* TOFQuestionViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TOFQuestionViewController.xib; sourceTree = "<group>"; };
+		8BED4EF920995900004DF322 /* ChooseTopicView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ChooseTopicView.h; sourceTree = "<group>"; };
+		8BED4EFA20995900004DF322 /* ChooseTopicView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ChooseTopicView.m; sourceTree = "<group>"; };
 		8BEE94391F29DBF900488651 /* NoticeModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NoticeModel.h; sourceTree = "<group>"; };
 		8BEE943A1F29DBF900488651 /* NoticeModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NoticeModel.m; sourceTree = "<group>"; };
 		8BEE94451F2C780500488651 /* CompanyProfileViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CompanyProfileViewController.h; sourceTree = "<group>"; };
@@ -1784,6 +1792,11 @@
 			children = (
 				8B2F144C1F5D2D1900438374 /* SelectQuestion.h */,
 				8B2F144D1F5D2D1900438374 /* SelectQuestion.m */,
+				8BED4EF920995900004DF322 /* ChooseTopicView.h */,
+				8BED4EFA20995900004DF322 /* ChooseTopicView.m */,
+				8BE3F3D1209996D600C22678 /* ChoiceQuestionTableViewCell.h */,
+				8BE3F3D2209996D600C22678 /* ChoiceQuestionTableViewCell.m */,
+				8BE3F3D3209996D600C22678 /* ChoiceQuestionTableViewCell.xib */,
 			);
 			name = View;
 			sourceTree = "<group>";
@@ -2138,6 +2151,9 @@
 				8B40E11F20591BE7000E6C2F /* ChangeThemeInfoViewController.h */,
 				8B40E12020591BE7000E6C2F /* ChangeThemeInfoViewController.m */,
 				8B40E12120591BE7000E6C2F /* ChangeThemeInfoViewController.xib */,
+				8B396B16208F1C3E00F20060 /* AboutUSViewController.h */,
+				8B396B14208F1C3C00F20060 /* AboutUSViewController.m */,
+				8B396B15208F1C3D00F20060 /* AboutUSViewController.xib */,
 				8B05CB721EC06FD60063EC20 /* Cell */,
 				8B0207121F8DA4DA00CE3B8C /* WisdomHall-Bridging-Header.h */,
 			);
@@ -2191,6 +2207,10 @@
 				8B0439F720205D900039195F /* StatisticalResultModel.m */,
 				8B084DC62064D320004B9C7C /* Homework.h */,
 				8B084DC72064D320004B9C7C /* Homework.m */,
+				8BE3F3CB2099908A00C22678 /* QuestionModel.h */,
+				8BE3F3CC2099908A00C22678 /* QuestionModel.m */,
+				8BE3F3CE2099920600C22678 /* optionsModel.h */,
+				8BE3F3CF2099920600C22678 /* optionsModel.m */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -2396,6 +2416,7 @@
 		8BE877721EBC1CB200866A34 /* TextViewController */ = {
 			isa = PBXGroup;
 			children = (
+				8BED4EE92099462E004DF322 /* TextVC */,
 				8B2F144B1F5D2C4900438374 /* View */,
 				8BF3ADB51F56B9C3002BD6DA /* delectVC */,
 				8BE877871EBD579C00866A34 /* TextVCCell */,
@@ -2405,9 +2426,6 @@
 				8BE8778D1EBD69C000866A34 /* CreateTestViewController.h */,
 				8BE8778E1EBD69C000866A34 /* CreateTestViewController.m */,
 				8BE8778F1EBD69C000866A34 /* CreateTestViewController.xib */,
-				8B9B584C1EC998080010A1F1 /* TextListViewController.h */,
-				8B9B584D1EC998080010A1F1 /* TextListViewController.m */,
-				8B9B584E1EC998080010A1F1 /* TextListViewController.xib */,
 				8B2F14571F5E9D7200438374 /* StudentScoreViewController.h */,
 				8B2F14581F5E9D7200438374 /* StudentScoreViewController.m */,
 				8B2F14591F5E9D7200438374 /* StudentScoreViewController.xib */,
@@ -2417,9 +2435,6 @@
 				8B0DB1381ED6CA4E0042DF0D /* ImportTextViewController.h */,
 				8B0DB1391ED6CA4E0042DF0D /* ImportTextViewController.m */,
 				8B0DB13A1ED6CA4E0042DF0D /* ImportTextViewController.xib */,
-				8B04643C1F5FE44F005EEE36 /* QuestionListViewController.h */,
-				8B04643D1F5FE44F005EEE36 /* QuestionListViewController.m */,
-				8B04643E1F5FE44F005EEE36 /* QuestionListViewController.xib */,
 			);
 			name = TextViewController;
 			sourceTree = "<group>";
@@ -2430,12 +2445,6 @@
 				8B05CB681EC0056B0063EC20 /* TextsTableViewCell.h */,
 				8B05CB691EC0056B0063EC20 /* TextsTableViewCell.m */,
 				8B05CB6A1EC0056B0063EC20 /* TextsTableViewCell.xib */,
-				8B17374B1EC5AC3600BE3C8F /* CreateTextTableViewCell.h */,
-				8B17374C1EC5AC3600BE3C8F /* CreateTextTableViewCell.m */,
-				8B17374D1EC5AC3600BE3C8F /* CreateTextTableViewCell.xib */,
-				8B9171C81ED41BC7009686FD /* QuestionsTableViewCell.h */,
-				8B9171C91ED41BC7009686FD /* QuestionsTableViewCell.m */,
-				8B9171CA1ED41BC7009686FD /* QuestionsTableViewCell.xib */,
 				8B2F14521F5E9BD600438374 /* StudentScoreTableViewCell.h */,
 				8B2F14531F5E9BD600438374 /* StudentScoreTableViewCell.m */,
 				8B2F14541F5E9BD600438374 /* StudentScoreTableViewCell.xib */,
@@ -2462,6 +2471,22 @@
 				8BE913A21EEFB80000000282 /* MBProgressHUD.m */,
 			);
 			path = MBProgressHUD;
+			sourceTree = "<group>";
+		};
+		8BED4EE92099462E004DF322 /* TextVC */ = {
+			isa = PBXGroup;
+			children = (
+				8BED4EEA20994782004DF322 /* ChoiceQuestionViewController.h */,
+				8BED4EEB20994782004DF322 /* ChoiceQuestionViewController.m */,
+				8BED4EEC20994782004DF322 /* ChoiceQuestionViewController.xib */,
+				8BED4EEF209947B4004DF322 /* EssayQuestionViewController.h */,
+				8BED4EF0209947B4004DF322 /* EssayQuestionViewController.m */,
+				8BED4EF1209947B4004DF322 /* EssayQuestionViewController.xib */,
+				8BED4EF4209947E4004DF322 /* TOFQuestionViewController.h */,
+				8BED4EF5209947E4004DF322 /* TOFQuestionViewController.m */,
+				8BED4EF6209947E4004DF322 /* TOFQuestionViewController.xib */,
+			);
+			name = TextVC;
 			sourceTree = "<group>";
 		};
 		8BF3ADB51F56B9C3002BD6DA /* delectVC */ = {
@@ -2811,7 +2836,6 @@
 				8B05CB7C1EC2ABFD0063EC20 /* PersonalInfoViewController.xib in Resources */,
 				8B0AF75F1F511AA2003858A4 /* VoteResultTableViewCell.xib in Resources */,
 				8B2E16E31EBACAD7008B7C57 /* PersonalCollectionViewCell.xib in Resources */,
-				8B9B58501EC998080010A1F1 /* TextListViewController.xib in Resources */,
 				8B17370A1EC2BE2B00BE3C8F /* PersonalDataTableViewCell.xib in Resources */,
 				8BE877811EBC2DE000866A34 /* InTheTestViewController.xib in Resources */,
 				8B2E16F81EBADA5D008B7C57 /* TheMeetingEndedViewController.xib in Resources */,
@@ -2821,10 +2845,10 @@
 				8BA224AE1EAE00B000627A1B /* DYTabBarViewController.xib in Resources */,
 				8B0DB13C1ED6CA4E0042DF0D /* ImportTextViewController.xib in Resources */,
 				8BA224D51EAF25DC00627A1B /* RegisterViewController.xib in Resources */,
+				8BED4EEE20994782004DF322 /* ChoiceQuestionViewController.xib in Resources */,
 				8B0502EF20219CEC0030CF75 /* PersonalUploadDataViewController.xib in Resources */,
 				8BA2249E1EADFFA400627A1B /* SignInViewController.xib in Resources */,
 				8B3CAEC91F75091000BDE092 /* OfficeViewController.xib in Resources */,
-				8B9171CC1ED41BC7009686FD /* QuestionsTableViewCell.xib in Resources */,
 				8B64EB5C1F1A2BA900BF7D0F /* SelectClassViewController.xib in Resources */,
 				8B7D5D831EB961260068058E /* CreateCourseViewController.xib in Resources */,
 				8BE00D6120731165001FE812 /* EditerTextViewController.xib in Resources */,
@@ -2846,6 +2870,7 @@
 				8B2E16EE1EBAD9F3008B7C57 /* InTheMeetingViewController.xib in Resources */,
 				8B05CB711EC015DB0063EC20 /* PersonalInfoTableViewCell.xib in Resources */,
 				8BF7D3661F3D7D700087D35D /* CreateMeetingViewController.xib in Resources */,
+				8B396B18208F1C3E00F20060 /* AboutUSViewController.xib in Resources */,
 				8B2E16D61EB9C1EA008B7C57 /* CourseDetailsViewController.xib in Resources */,
 				8B0333F41F8C50950021D495 /* GroupListTableViewCell.xib in Resources */,
 				8BFB94621EE6A381004BB963 /* JoinVoteViewController.xib in Resources */,
@@ -2861,11 +2886,11 @@
 				8BA41B771F9F0D6B00B9886E /* MeetingTableViewCell.xib in Resources */,
 				8BA224A31EADFFE500627A1B /* InteractiveViewController.xib in Resources */,
 				8BE9139A1EEF7EF000000282 /* DiscussListTableViewCell.xib in Resources */,
+				8BE3F3D5209996D600C22678 /* ChoiceQuestionTableViewCell.xib in Resources */,
 				8B1737141EC2F6A700BE3C8F /* NoticeViewController.xib in Resources */,
 				8BA224D01EAF258B00627A1B /* ForgotPasswordViewController.xib in Resources */,
 				8BB56D6F1EB05C760023DAFF /* DefineThePasswordViewController.xib in Resources */,
 				8BF82D871EE1573200D33473 /* CreateVoteViewController.xib in Resources */,
-				8B0464401F5FE44F005EEE36 /* QuestionListViewController.xib in Resources */,
 				8B3516BF1FE90600009F42AF /* NoticeTableViewCell.xib in Resources */,
 				8B429C201FA8488700084A99 /* SGQRCode.bundle in Resources */,
 				8B043A0220206DAF0039195F /* StatisticalResultTableViewCell.xib in Resources */,
@@ -2873,6 +2898,7 @@
 				8BB47BAA20896EBD005407D9 /* called.mp3 in Resources */,
 				8B40E12320591BE8000E6C2F /* ChangeThemeInfoViewController.xib in Resources */,
 				8B6E61CC1EE292B10040FDC1 /* CreateVoteTableViewCell.xib in Resources */,
+				8BED4EF3209947B4004DF322 /* EssayQuestionViewController.xib in Resources */,
 				8BE877711EBC1CA800866A34 /* TextViewController.xib in Resources */,
 				8B47AB841F96DC6A00DB1B9A /* ClassTableViewCell.xib in Resources */,
 				8B081DE81F063AE900493B81 /* SelectSchoolViewController.xib in Resources */,
@@ -2880,13 +2906,13 @@
 				8B4D91151EBDAB1000A4BE34 /* SignListViewController.xib in Resources */,
 				8BA224A81EAE000000627A1B /* PersonalCenterViewController.xib in Resources */,
 				8B078B44200F2EA000336ADB /* CalendarViewController.xib in Resources */,
+				8BED4EF8209947E4004DF322 /* TOFQuestionViewController.xib in Resources */,
 				8B2E16DB1EBAB968008B7C57 /* ClassManagementViewController.xib in Resources */,
 				8B0F41311EF522CF001AF4DF /* MJXChatViewController.xib in Resources */,
 				8BE24D611F8B488E00621055 /* GroupListViewController.xib in Resources */,
 				8BB47BAC20896EEC005407D9 /* call.mp3 in Resources */,
 				8BF864871ECAD21200B7EED4 /* MJRefresh.bundle in Resources */,
 				8B0207161F8DA4DB00CE3B8C /* NoticeSwiftViewController.xib in Resources */,
-				8B17374F1EC5AC3600BE3C8F /* CreateTextTableViewCell.xib in Resources */,
 				8BE8777C1EBC2D8E00866A34 /* NotStartTestingViewController.xib in Resources */,
 				8B429C2A1FA84B0600084A99 /* QrCodeViewController.xib in Resources */,
 				8BA224C21EAEF5CB00627A1B /* TheLoginViewController.xib in Resources */,
@@ -2940,7 +2966,6 @@
 				8BF82E0F1EE167C300D33473 /* SystemSetingTableViewCell.xib in Resources */,
 				8BF82E101EE167C300D33473 /* PersonalInfoViewController.xib in Resources */,
 				8BF82E111EE167C300D33473 /* PersonalCollectionViewCell.xib in Resources */,
-				8BF82E121EE167C300D33473 /* TextListViewController.xib in Resources */,
 				8BF82E131EE167C300D33473 /* PersonalDataTableViewCell.xib in Resources */,
 				8BF82E141EE167C300D33473 /* InTheTestViewController.xib in Resources */,
 				8BF82E151EE167C300D33473 /* TheMeetingEndedViewController.xib in Resources */,
@@ -2949,7 +2974,6 @@
 				8BF82E181EE167C300D33473 /* ImportTextViewController.xib in Resources */,
 				8BF82E191EE167C300D33473 /* RegisterViewController.xib in Resources */,
 				8BF82E1A1EE167C300D33473 /* SignInViewController.xib in Resources */,
-				8BF82E1B1EE167C300D33473 /* QuestionsTableViewCell.xib in Resources */,
 				8BF82E1C1EE167C300D33473 /* CreateCourseViewController.xib in Resources */,
 				8BF82E1D1EE167C300D33473 /* CourseCollectionViewCell.xib in Resources */,
 				8BF82E1E1EE167C300D33473 /* RedefineThePasswordViewController.xib in Resources */,
@@ -2970,7 +2994,6 @@
 				8BF82E2D1EE167C300D33473 /* PersonalCenterViewController.xib in Resources */,
 				8BF82E2E1EE167C300D33473 /* ClassManagementViewController.xib in Resources */,
 				8BF82E2F1EE167C300D33473 /* MJRefresh.bundle in Resources */,
-				8BF82E301EE167C300D33473 /* CreateTextTableViewCell.xib in Resources */,
 				8BF82E311EE167C300D33473 /* NotStartTestingViewController.xib in Resources */,
 				8BF82E321EE167C300D33473 /* TheLoginViewController.xib in Resources */,
 				8BF82E331EE167C300D33473 /* CreateTestViewController.xib in Resources */,
@@ -3029,6 +3052,7 @@
 				8B078B43200F2EA000336ADB /* CalendarViewController.m in Sources */,
 				8B045B701F3458820021699B /* MJExtensionConst.m in Sources */,
 				8B2E16D51EB9C1EA008B7C57 /* CourseDetailsViewController.m in Sources */,
+				8BE3F3D4209996D600C22678 /* ChoiceQuestionTableViewCell.m in Sources */,
 				8B027A181EF8F48800600E18 /* MeetingModel.m in Sources */,
 				8B05CB7B1EC2ABFD0063EC20 /* PersonalInfoViewController.m in Sources */,
 				8B045B821F3458CC0021699B /* ZFSeatModel.m in Sources */,
@@ -3040,6 +3064,7 @@
 				8B043A0120206DAF0039195F /* StatisticalResultTableViewCell.m in Sources */,
 				8B2E16F71EBADA5D008B7C57 /* TheMeetingEndedViewController.m in Sources */,
 				8B078433205BA559004E826B /* HKClipperVeiw.m in Sources */,
+				8B396B17208F1C3E00F20060 /* AboutUSViewController.m in Sources */,
 				8BA2249D1EADFFA400627A1B /* SignInViewController.m in Sources */,
 				8B045B831F3458CC0021699B /* ZFSeatsModel.m in Sources */,
 				8BF864BF1ECAD97300B7EED4 /* SDWebImageCompat.m in Sources */,
@@ -3074,10 +3099,9 @@
 				8B429C1F1FA8488700084A99 /* UIImage+ImageSize.m in Sources */,
 				8B045BA31F34595D0021699B /* UIView+Extension.m in Sources */,
 				8B0AF7591F4FAF53003858A4 /* UploadFileViewController.m in Sources */,
-				8B9171CB1ED41BC7009686FD /* QuestionsTableViewCell.m in Sources */,
-				8B17374E1EC5AC3600BE3C8F /* CreateTextTableViewCell.m in Sources */,
 				8BCE7CCE1F04F07600FE261B /* AFSecurityPolicy.m in Sources */,
 				8BE877761EBC2D6B00866A34 /* AllTestViewController.m in Sources */,
+				8BED4EF2209947B4004DF322 /* EssayQuestionViewController.m in Sources */,
 				8B9171C11ED2B7D9009686FD /* Questions.m in Sources */,
 				8BF864881ECAD21200B7EED4 /* MJRefreshBaseView.m in Sources */,
 				8BFB94661EE79745004BB963 /* JoinVoteTableViewCell.m in Sources */,
@@ -3121,6 +3145,7 @@
 				8BF8648A1ECAD21200B7EED4 /* MJRefreshFooterView.m in Sources */,
 				8BE24D641F8B528600621055 /* GroupModel.m in Sources */,
 				8BE24D601F8B488E00621055 /* GroupListViewController.m in Sources */,
+				8BED4EED20994782004DF322 /* ChoiceQuestionViewController.m in Sources */,
 				8BF82D811EE001D600D33473 /* VoteTableViewCell.m in Sources */,
 				8B429C2B1FA84B0600084A99 /* QrCodeViewController.m in Sources */,
 				8BF8646E1ECACAE800B7EED4 /* FMDatabase.m in Sources */,
@@ -3146,6 +3171,7 @@
 				8BCE7CCF1F04F07600FE261B /* AFURLRequestSerialization.m in Sources */,
 				8BFB946B1EE7F7F1004BB963 /* ResultsOfVoteViewController.m in Sources */,
 				8B045B711F3458820021699B /* MJFoundation.m in Sources */,
+				8BE3F3D02099920600C22678 /* optionsModel.m in Sources */,
 				8B087E381FEA564500649094 /* ZFSeatSelectionView.m in Sources */,
 				8BF864BD1ECAD97300B7EED4 /* NSData+ImageContentType.m in Sources */,
 				8B045B771F3458820021699B /* NSObject+MJKeyValue.m in Sources */,
@@ -3178,6 +3204,7 @@
 				8BF82D721EDEC50E00D33473 /* DiscussViewController.m in Sources */,
 				8B078434205BA559004E826B /* UIImage+ClipperExtends.m in Sources */,
 				8BF864BE1ECAD97300B7EED4 /* SDImageCache.m in Sources */,
+				8BED4EF7209947E4004DF322 /* TOFQuestionViewController.m in Sources */,
 				8BE913A41EEFB80000000282 /* MBProgressHUD.m in Sources */,
 				8B01482F206650D70037A107 /* imageBigView.m in Sources */,
 				8B045B731F3458820021699B /* MJPropertyKey.m in Sources */,
@@ -3187,11 +3214,11 @@
 				8B0CD5A8201F152700A2270D /* StatisticalTableViewCell.m in Sources */,
 				8B07DB7E1F78E7E500DC371C /* CreateChatViewController.m in Sources */,
 				8B045B791F3458820021699B /* NSString+MJExtension.m in Sources */,
-				8B9B584F1EC998080010A1F1 /* TextListViewController.m in Sources */,
 				8B2F144E1F5D2D1900438374 /* SelectQuestion.m in Sources */,
 				8BB56D6E1EB05C760023DAFF /* DefineThePasswordViewController.m in Sources */,
 				8B2E16E81EBAD9AF008B7C57 /* AllTheMeetingViewController.m in Sources */,
 				8B40E11B2058B3C3000E6C2F /* ThemeTool.m in Sources */,
+				8BE3F3CD2099908A00C22678 /* QuestionModel.m in Sources */,
 				8BE877801EBC2DE000866A34 /* InTheTestViewController.m in Sources */,
 				8B1A502C1F75EB7000A11CB2 /* TheMessageViewController.m in Sources */,
 				8B045B751F3458820021699B /* NSObject+MJClass.m in Sources */,
@@ -3201,7 +3228,6 @@
 				8BF864751ECACBEC00B7EED4 /* FMDBTool.m in Sources */,
 				8B084DD52064F660004B9C7C /* SynchronousCourseView.m in Sources */,
 				8BF864721ECACAE800B7EED4 /* FMResultSet.m in Sources */,
-				8B04643F1F5FE44F005EEE36 /* QuestionListViewController.m in Sources */,
 				8BE913A31EEFB80000000282 /* MBProgressHUD+Add.m in Sources */,
 				8B7D5D901EB9782C0068058E /* CourseCollectionViewCell.m in Sources */,
 				8B081E051F09DC2F00493B81 /* Foundation+Log.m in Sources */,
@@ -3215,6 +3241,7 @@
 				8B9171C71ED3D9D8009686FD /* contactTool.m in Sources */,
 				8B0DB1331ED5188C0042DF0D /* ContactModel.m in Sources */,
 				8B081DE11F06238E00493B81 /* DefinitionPersonalTableViewCell.m in Sources */,
+				8BED4EFB20995900004DF322 /* ChooseTopicView.m in Sources */,
 				8BE24D681F8B6E2200621055 /* GroupPeopleViewController.m in Sources */,
 				8B429C221FA8488700084A99 /* SGQRCodeGenerateManager.m in Sources */,
 				8BB56D8C1EB31C110023DAFF /* SystemSettingsViewController.m in Sources */,
@@ -3283,8 +3310,6 @@
 				8BF82DA01EE167C300D33473 /* UIColor+HexString.m in Sources */,
 				8BF82DA11EE167C300D33473 /* TextsTableViewCell.m in Sources */,
 				8BF82DA21EE167C300D33473 /* SystemSetingTableViewCell.m in Sources */,
-				8BF82DA31EE167C300D33473 /* QuestionsTableViewCell.m in Sources */,
-				8BF82DA41EE167C300D33473 /* CreateTextTableViewCell.m in Sources */,
 				8BF82DA51EE167C300D33473 /* AllTestViewController.m in Sources */,
 				8BF82DA61EE167C300D33473 /* Questions.m in Sources */,
 				8BF82DA71EE167C300D33473 /* MJRefreshBaseView.m in Sources */,
@@ -3330,7 +3355,6 @@
 				8BF82DD31EE167C300D33473 /* SDImageCache.m in Sources */,
 				8BF82DD41EE167C300D33473 /* FMDatabaseQueue.m in Sources */,
 				8BF82DD51EE167C300D33473 /* ShareView.m in Sources */,
-				8BF82DD61EE167C300D33473 /* TextListViewController.m in Sources */,
 				8BF82DD71EE167C300D33473 /* DefineThePasswordViewController.m in Sources */,
 				8BF82DD81EE167C300D33473 /* AllTheMeetingViewController.m in Sources */,
 				8BF82DD91EE167C300D33473 /* InTheTestViewController.m in Sources */,

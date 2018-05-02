@@ -565,6 +565,9 @@
             [self signSendIng];
             
             [self sendSignInfo];
+        }else if ([UIUtils determineWifiAndtimeCorrect:_meetingModel.mck]){
+            [self signSendIng];
+            [self sendSignInfo];
         }else{
             
 //            NSString * s = [UIUtils returnMac:_meetingModel.mck];
@@ -772,7 +775,7 @@
         NSString * checkcodeLocal = [NSString stringWithFormat:@"%@dayaokeji",date];
         NSString * md5 = [self md5:checkcodeLocal];
         if ([md5 isEqualToString:checkcode]) {
-            if ([UIUtils dateTimeDifferenceWithStartTime:dateTime]) {
+            if ([UIUtils dateTimeDifferenceWithStartTime:dateTime withTime:CodeEffectiveTime]) {
                 if ([UIUtils returnMckIsHave:_meetingModel.mck withAccept:loc_array]) {
                     [self sendSignInfo];
                 }else{
@@ -887,7 +890,7 @@
         
         NSString * str = [NSString stringWithFormat:@"%@-%@-%@",user.userName,user.studentId,[UIUtils getTime]];
         
-        NSDictionary * dict1 = [[NSDictionary alloc] initWithObjectsAndKeys:@"1",@"type",str,@"description",@"10",@"function",[NSString stringWithFormat:@"%@",_meetingModel.meetingDetailId],@"relId",@"2",@"relType",nil];
+        NSDictionary * dict1 = [[NSDictionary alloc] initWithObjectsAndKeys:@"1",@"type",str,@"description",@"10",@"function",[NSString stringWithFormat:@"%@",_meetingModel.meetingDetailId],@"relId",@"true",@"deleteOld",nil];
         
         UIImage * image = [UIUtils addWatemarkTextAfteriOS7_WithLogoImage:resultImage watemarkText:[NSString stringWithFormat:@"%@-%@-%@",_user.userName,_user.studentId,[UIUtils getTime]]];
         

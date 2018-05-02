@@ -235,7 +235,7 @@
         //    NSString * filePath = [info objectForKey:@"UIImagePickerControllerReferenceURL"];
         UserModel * user = [[Appsetting sharedInstance] getUsetInfo];
         NSString * str = [NSString stringWithFormat:@"%@-%@-%@",user.userName,user.studentId,[UIUtils getTime]];
-        NSDictionary * dict1 = [[NSDictionary alloc] initWithObjectsAndKeys:@"1",@"type",str,@"description",@"6",@"function",[NSString stringWithFormat:@"%@",_classModel.courseDetailId],@"relId",@"1",@"relType",nil];
+        NSDictionary * dict1 = [[NSDictionary alloc] initWithObjectsAndKeys:@"1",@"type",str,@"description",@"6",@"function",[NSString stringWithFormat:@"%@",_classModel.courseDetailId],@"relId",@"false",@"deleteOld",nil];
         
         [[NetworkRequest sharedInstance] POSTImage:FileUpload image:resultImage dict:dict1 succeed:^(id data) {
             NSString * code = [NSString stringWithFormat:@"%@",[[data objectForKey:@"header"] objectForKey:@"code"]];
