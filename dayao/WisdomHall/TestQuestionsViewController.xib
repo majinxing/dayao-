@@ -10,6 +10,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="TestQuestionsViewController">
             <connections>
+                <outlet property="addTitleBtn" destination="1kK-Td-Nqi" id="fnl-hQ-JfR"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>

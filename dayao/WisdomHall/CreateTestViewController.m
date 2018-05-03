@@ -49,7 +49,7 @@
         [UIUtils showInfoMessage:@"请填写测验名字" withVC:self];
     }else{
         
-        NSDictionary * dict = [[NSDictionary alloc] initWithObjectsAndKeys:_titleTextFile.text,@"name",@"2",@"status", nil];
+        NSDictionary * dict = [[NSDictionary alloc] initWithObjectsAndKeys:_titleTextFile.text,@"name",@"1",@"status", nil];
         [[NetworkRequest sharedInstance] POST:CreateLib dict:dict succeed:^(id data) {
             NSString * str = [NSString stringWithFormat:@"%@",[[data objectForKey:@"header"] objectForKey:@"code"]];
             if ([str isEqualToString:@"0000"]) {
@@ -62,7 +62,9 @@
                 tQVC.t = t;
                 tQVC.qBank = _questionModel;
                 tQVC.classModel = _classModel;
+                tQVC.editable = YES;
                 self.hidesBottomBarWhenPushed = YES;
+                
                 [self.navigationController pushViewController:tQVC animated:YES];
             }else if ([str isEqualToString:@"6682"]){
                 [UIUtils showInfoMessage:@"试卷名字重名，请重新写试卷名字" withVC:self];

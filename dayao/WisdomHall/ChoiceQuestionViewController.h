@@ -11,6 +11,8 @@
 
 @interface ChoiceQuestionViewController : UIViewController
 @property (nonatomic,assign)BOOL selectMore;//是否多选
+
 @property (nonatomic,strong)QuestionModel * questionModel;
+
 @property (nonatomic,assign)BOOL editable;
 @end

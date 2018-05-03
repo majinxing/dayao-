@@ -17,6 +17,12 @@
         
         _questionTitleImageIdAry = [NSMutableArray arrayWithCapacity:1];
         
+        _qustionScore = @"5";
+        
+        _questionDifficulty = @"5";
+        
+        _blankAry = [NSMutableArray arrayWithCapacity:1];
+        
         [self addOptions];
     }
     return self;
@@ -27,6 +33,19 @@
         optionsModel * o = [[optionsModel alloc] init];
         [_qustionOptionsAry addObject:o];
     }
+}
+-(void)addContenWithDict:(NSDictionary *)dict{
+//    _questionId = [NSString stringWithFormat:@"%@",[dict objectForKey:@""]];
+    _questionTitle = [dict objectForKey:@"content"];
+    _titleType = [NSString stringWithFormat:@"%@",[dict objectForKey:@"type"]];
+    _questionTitleImageIdAry = [dict objectForKey:@"resourceList"];
     
+    NSArray * ary = [dict objectForKey:@"choiceInfoList"];
+    [_qustionOptionsAry removeAllObjects];
+    for (int i = 0; i<ary.count; i++) {
+        optionsModel * opt = [[optionsModel alloc] init];
+        [opt setContentWithDict:ary[i]];
+        [_qustionOptionsAry addObject:opt];
+    }
 }
 @end

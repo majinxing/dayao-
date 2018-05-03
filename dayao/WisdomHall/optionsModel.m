@@ -17,4 +17,12 @@
     }
     return self;
 }
+-(void)setContentWithDict:(NSDictionary *)dict{
+    _questionId = [NSString stringWithFormat:@"%@",[dict objectForKey:@"questionId"]];
+    _optionId = [NSString stringWithFormat:@"%@",[dict objectForKey:@"id"]];
+    _optionsTitle = [dict objectForKey:@"content"];
+    _index = [dict objectForKey:@"index"];
+    _optionsImageIdAry = [dict objectForKey:@"resourceList"];
+    
+}
 @end

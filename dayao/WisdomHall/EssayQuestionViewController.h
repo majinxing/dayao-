@@ -8,6 +8,10 @@
 
 #import <UIKit/UIKit.h>
 
-@interface EssayQuestionViewController : UIViewController
+#import "QuestionModel.h"
 
+@interface EssayQuestionViewController : UIViewController
+@property (nonatomic,strong)QuestionModel * questionModel;
+
+@property (nonatomic,assign)BOOL editable;
 @end

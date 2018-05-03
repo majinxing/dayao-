@@ -7,7 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-
+#import "UIImageView+WebCache.h"
 @protocol PersonalDataTableViewCellDelegate <NSObject>
 
 -(void)textFieldDidChangeDelegate:(UITextField *)textFile;

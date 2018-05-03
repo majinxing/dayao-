@@ -27,6 +27,7 @@
 }
 
 -(void)setHeight:(CGFloat)height{
+    
     [super setHeight:height];
     
     [self setNeedsDisplay];

@@ -7,7 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "QuestionModel.h"
 
 @interface TOFQuestionViewController : UIViewController
 
+@property (nonatomic,strong)QuestionModel * questionModel;
+
+@property (nonatomic,assign)BOOL editable;
 @end

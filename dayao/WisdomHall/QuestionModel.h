@@ -16,4 +16,14 @@
 @property (nonatomic,copy) NSString * questionDifficulty;//难度
 @property (nonatomic,copy) NSString * questionAnswer;//题目答案
 @property (nonatomic,strong) NSMutableArray * qustionOptionsAry;//选择题选项数组
+
+@property (nonatomic,strong) NSMutableArray * blankAry;//填空题答案数组
+
+@property (nonatomic,assign) BOOL selectMore;//是否多选
+
+@property (nonatomic,copy) NSString * titleType;//题目类型
+
+@property (nonatomic,copy)NSString * questionId;//题目id
+
+-(void)addContenWithDict:(NSDictionary *)dict;
 @end

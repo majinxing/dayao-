@@ -20,6 +20,8 @@
 #import "StudentSorce.h"
 #import "StudentScoreViewController.h"
 
+#import "TestQuestionsViewController.h"
+
 @interface AllTestViewController ()<UITableViewDelegate,UITableViewDataSource,TextsTableViewCellDelegate,ShareViewDelegate>
 @property (nonatomic,strong)UITableView * tableView;
 @property (nonatomic,strong)FMDatabase *db;
@@ -246,8 +248,11 @@
 }
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
-    
-   
+    TestQuestionsViewController * vc = [[TestQuestionsViewController alloc] init];
+    vc.t = _dataAry[indexPath.row];
+    vc.editable = NO;
+    self.hidesBottomBarWhenPushed = YES;
+    [self.navigationController pushViewController: vc animated:YES];
     
 }
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{

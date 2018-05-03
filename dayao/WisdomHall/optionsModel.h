@@ -12,5 +12,8 @@
 @property (nonatomic,copy) NSString * optionsTitle;
 @property (nonatomic,strong) NSMutableArray * optionsImageAry;
 @property (nonatomic,strong) NSMutableArray * optionsImageIdAry;
-
+@property (nonatomic,copy) NSString *optionId;//选项id
+@property (nonatomic,copy) NSString *index;//序号
+@property (nonatomic,copy) NSString * questionId;//问题id
+-(void)setContentWithDict:(NSDictionary *)dict;
 @end

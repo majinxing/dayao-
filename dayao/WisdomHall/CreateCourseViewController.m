@@ -106,7 +106,9 @@
 //    [_textFileAry setObject:@"" atIndexedSubscript:0];
     
     _tabelView = [[UITableView alloc] initWithFrame:CGRectMake(0, 64, APPLICATION_WIDTH, APPLICATION_HEIGHT-64) style:UITableViewStylePlain];
+    
     self.automaticallyAdjustsScrollViewInsets = NO;
+    
     _tabelView.dataSource = self;
     _tabelView.delegate = self;
     [self.view addSubview:_tabelView];
