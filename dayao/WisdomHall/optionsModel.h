@@ -15,5 +15,8 @@
 @property (nonatomic,copy) NSString *optionId;//选项id
 @property (nonatomic,copy) NSString *index;//序号
 @property (nonatomic,copy) NSString * questionId;//问题id
+@property (nonatomic,assign) BOOL edit;
 -(void)setContentWithDict:(NSDictionary *)dict;
+
+-(float)returnOptionHeight;
 @end

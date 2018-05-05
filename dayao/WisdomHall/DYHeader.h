@@ -288,7 +288,7 @@
 
 #define ChangeAppState          @"course/user/changeAppState"       //app状态改变
 
-
+#define UploadTemp              @"course/resource/uploadTemp"       //上传临时文件
 
 
 

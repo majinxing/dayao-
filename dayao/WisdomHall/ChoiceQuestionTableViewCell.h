@@ -16,15 +16,21 @@
 -(void)selectDifficultyDelegate:(UIButton *)sender;
 -(void)thirthSelectOptionsImageBtnDelegate:(UIButton *)sender;
 -(void)addOptionsDelegate:(UIButton *)sender;
+-(void)thirthSelectOptionDelegate:(UIButton *)sender;
+-(void)textViewDidChangeDelegate:(UITextView *)textView;
+
+-(void)deleAnswerImageDelegate:(UIButton *)sender;
 @end
 
 @interface ChoiceQuestionTableViewCell : UITableViewCell
 
 @property (nonatomic,weak)id<ChoiceQuestionTableViewCellDelegate>delegate;
 
--(void)addFirstTitleTextView:(NSString *)textStr withImageAry:(NSMutableArray *)ary withIsEdit:(BOOL)edit;
+-(void)addFirstTitleTextView:(NSString *)textStr withImageAry:(NSMutableArray *)ary withIsEdit:(BOOL)edit ;
 
 -(void)setScoreAndDifficult:(NSString *)score withDifficult:(NSString *)difficult withEdit:(BOOL)edit;
 
--(void)addOptionWithModel:(optionsModel *)optionsModel withEdit:(BOOL)edit withIndexRow:(int)row;
+-(void)addOptionWithModel:(optionsModel *)optionsModel withEdit:(BOOL)edit withIndexRow:(int)row withISelected:(BOOL)isSelected;
+
+-(void)addSeventhTextViewWithStr:(NSString *)str;
 @end

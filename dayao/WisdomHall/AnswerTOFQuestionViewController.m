@@ -1,17 +1,16 @@
 //
-//  TOFQuestionViewController.m
+//  AnswerTOFQuestionViewController.m
 //  WisdomHall
 //
-//  Created by XTU-TI on 2018/5/2.
+//  Created by XTU-TI on 2018/5/4.
 //  Copyright © 2018年 majinxing. All rights reserved.
 //
 
-#import "TOFQuestionViewController.h"
+#import "AnswerTOFQuestionViewController.h"
 #import "DYHeader.h"
 #import "ChoiceQuestionTableViewCell.h"
 #import "optionsModel.h"
-
-@interface TOFQuestionViewController ()<UITableViewDelegate,UITableViewDataSource,ChoiceQuestionTableViewCellDelegate,UINavigationControllerDelegate,UIImagePickerControllerDelegate,UIPickerViewDelegate,UIPickerViewDataSource>
+@interface AnswerTOFQuestionViewController ()<UITableViewDelegate,UITableViewDataSource,ChoiceQuestionTableViewCellDelegate,UINavigationControllerDelegate,UIImagePickerControllerDelegate,UIPickerViewDelegate,UIPickerViewDataSource>
 @property (nonatomic,strong)UITableView * tableView;
 
 @property (nonatomic,assign)int temp;//标记选择的模块
@@ -29,13 +28,13 @@
 
 @end
 
-@implementation TOFQuestionViewController
+@implementation AnswerTOFQuestionViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     _user = [[Appsetting sharedInstance] getUsetInfo];
     
-    _scoreAry = @[@"1",@"2",@"3",@"4",@"5",@"6",@"7"];
+    
     
     self.view.backgroundColor = [UIColor whiteColor];
     
@@ -43,7 +42,6 @@
 
     // Do any additional setup after loading the view from its nib.
 }
-
 -(void)addTableView{
     _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0,0, APPLICATION_WIDTH, APPLICATION_HEIGHT-104) style:UITableViewStylePlain];
     _tableView.delegate = self;
@@ -111,19 +109,21 @@
     
     self.pickerView = nil;
     
-    if (_temp == 2) {
-        _questionModel.qustionScore = [NSString stringWithFormat:@"%@",_scoreAry[_score]];
-    }else if (_temp == 3){
-        _questionModel.questionDifficulty = [NSString stringWithFormat:@"%@",_scoreAry[_score]];
-    }
-    //    [_tableView reloadData];
     
-    //    NSIndexSet *indexSet=[[NSIndexSet alloc]initWithIndex:1];
-    //
-    //    [_tableView reloadSections:indexSet withRowAnimation:UITableViewRowAnimationNone];
-    NSIndexPath *indexPath=[NSIndexPath indexPathForRow:0 inSection:1];
+    _questionModel.questionAnswer = [NSString stringWithFormat:@"%@",_questionModel.answerOptions[_score]];
     
-    [_tableView reloadRowsAtIndexPaths:[NSArray arrayWithObjects:indexPath,nil] withRowAnimation:UITableViewRowAnimationNone];
+    [_tableView reloadData];
+//    }else if (_temp == 3){
+//        _questionModel.questionDifficulty = [NSString stringWithFormat:@"%@",_scoreAry[_score]];
+//    }
+//    //    [_tableView reloadData];
+//
+//    //    NSIndexSet *indexSet=[[NSIndexSet alloc]initWithIndex:1];
+//    //
+//    //    [_tableView reloadSections:indexSet withRowAnimation:UITableViewRowAnimationNone];
+//    NSIndexPath *indexPath=[NSIndexPath indexPathForRow:0 inSection:1];
+//
+//    [_tableView reloadRowsAtIndexPaths:[NSArray arrayWithObjects:indexPath,nil] withRowAnimation:UITableViewRowAnimationNone];
 }
 
 
@@ -135,12 +135,17 @@
 }
 - (NSInteger)pickerView:(UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component
 {
+    if (_questionModel.answerOptions.count>0) {
+        return _questionModel.answerOptions.count;
+    }
     
-    return _scoreAry.count;
+    return 2;
 }
 - (NSString *)pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component
 {
-    return _scoreAry[row];
+    if (_questionModel.answerOptions.count == 2) {
+        return _questionModel.answerOptions[row];
+    }
     
     return @"2016";
 }
@@ -150,19 +155,11 @@
     
 }
 #pragma mark ChoiceQuestionTableViewCellDelegate
+-(void)textViewDidChangeDelegate:(UITextView *)textView{
+    _score = 0;
+    [self addPickView];
+}
 
-//选分数
--(void)selectScoreDeleate:(UIButton *)sender{
-    _temp = 2;
-    _score = 0;
-    [self addPickView];
-}
-//选难度
--(void)selectDifficultyDelegate:(UIButton *)sender{
-    _temp = 3;
-    _score = 0;
-    [self addPickView];
-}
 //题干选择图片
 -(void)firstSelectImageBtnDelegate:(UIButton *)sender{
     _temp = 1;
@@ -220,15 +217,13 @@
 }
 #pragma mark UITableViewdelegate
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
-    return 3;
+    return 2;
 }
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
     if (section ==0) {
         return 1;
     }else if (section == 1){
         return 1;
-    }else if (section == 2){
-          return 2;
     }
     return 0;
 }
@@ -244,17 +239,10 @@
             cell = [[[NSBundle mainBundle] loadNibNamed:@"ChoiceQuestionTableViewCell" owner:nil options:nil] objectAtIndex:0];
             
         }else if (indexPath.section == 1){
-            
-            cell = [tableView dequeueReusableCellWithIdentifier:@"ChoiceQuestionTableViewCellSecond"];
-            
-            cell = [[[NSBundle mainBundle] loadNibNamed:@"ChoiceQuestionTableViewCell" owner:nil options:nil] objectAtIndex:1];
-            
-            
-        }else if (indexPath.section == 2){
-            if (indexPath.row ==1) {
-                cell = [tableView dequeueReusableCellWithIdentifier:@"ChoiceQuestionTableViewCellSixth"];
+            if (indexPath.row == 0) {
+                cell = [tableView dequeueReusableCellWithIdentifier:@"ChoiceQuestionTableViewCellSeventh"];
                 
-                cell = [[[NSBundle mainBundle] loadNibNamed:@"ChoiceQuestionTableViewCell" owner:nil options:nil] objectAtIndex:5];
+                cell = [[[NSBundle mainBundle] loadNibNamed:@"ChoiceQuestionTableViewCell" owner:nil options:nil] objectAtIndex:6];
             }else{
                 cell = [tableView dequeueReusableCellWithIdentifier:@"ChoiceQuestionTableViewCellFourth"];
                 
@@ -268,10 +256,12 @@
     [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
     
     if (indexPath.section == 0) {
+        
         [cell addFirstTitleTextView:_questionModel.questionTitle withImageAry:_questionModel.questionTitleImageAry withIsEdit:_editable];
-    }else if(indexPath.section == 1){
-        [cell setScoreAndDifficult:_questionModel.qustionScore withDifficult:_questionModel.questionDifficulty withEdit:_editable];
+    }else{
+        [cell addSeventhTextViewWithStr:_questionModel.questionAnswer];
     }
+    
     return cell;
 }
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
@@ -287,8 +277,6 @@
             }
             return 200;
         }
-    }else if (indexPath.section == 1){
-        return 110;
     }
     return 60;
 }
@@ -296,7 +284,7 @@
     return 30;
 }
 -(UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section{
-    NSArray * ary = @[@"题目内容",@"选择分值与难易程度",@"参考答案:请按照填空的顺序添加答案"];
+    NSArray * ary = @[@"题目内容",@"答案"];
     UIView * view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, APPLICATION_WIDTH, 30)];
     view.backgroundColor = RGBA_COLOR(236, 236, 236, 1);
     UILabel * l = [[UILabel alloc] initWithFrame:CGRectMake(10, 5, 300, 20)];
@@ -306,14 +294,14 @@
     
     l.text = ary[(int)section];
     if ((int)section == 0) {
-        UILabel * ll = [[UILabel alloc] initWithFrame:CGRectMake(APPLICATION_WIDTH-100, 5, 80, 20)];
+        UILabel * ll = [[UILabel alloc] initWithFrame:CGRectMake(APPLICATION_WIDTH-200, 5, 180, 20)];
         ll.textAlignment = NSTextAlignmentRight;
         
         ll.font = [UIFont systemFontOfSize:15];
         
         [view addSubview:ll];
         
-        ll.text = @"题型：判断";
+        ll.text = [NSString stringWithFormat:@"题型：判断 %@ 分",_questionModel.qustionScore];
         
     }
     return view;
@@ -345,8 +333,10 @@
                 [_questionModel.questionTitleImageAry addObject:resultImage];
             }
             [_tableView reloadData];
+            
         }else if (_temp>4){
             if ((_temp-5)<_questionModel.qustionOptionsAry.count&&(_temp-5)>=0) {
+                
                 optionsModel * optionModel = _questionModel.qustionOptionsAry[_temp-5];
                 if ((_pictureNum-1)<optionModel.optionsImageAry.count&&(_pictureNum-1)>=0) {
                     
@@ -368,6 +358,7 @@
     [self.navigationController dismissViewControllerAnimated:YES completion:nil];
     
 }
+
 /*
 #pragma mark - Navigation
 

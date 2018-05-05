@@ -15,4 +15,5 @@
 @property (nonatomic,copy) NSString * number;
 @property (nonatomic,weak)id<imageBigViewDelegate>delegate;
 -(void)addImageView:(NSString *)str;
+-(void)addImageViewWithImage:(UIImage  *)image1;
 @end

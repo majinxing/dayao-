@@ -333,9 +333,8 @@
         if (indexPath.row==_questionModel.qustionOptionsAry.count) {
             
         }else{
-            [cell addOptionWithModel:_questionModel.qustionOptionsAry[indexPath.row] withEdit:_editable withIndexRow:(int)indexPath.row];
+            [cell addOptionWithModel:_questionModel.qustionOptionsAry[indexPath.row] withEdit:_editable withIndexRow:(int)indexPath.row withISelected:NO];
         }
-        
     }
     
     return cell;
@@ -345,14 +344,13 @@
 }
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
     if (indexPath.section == 0) {
-        return 480;
+
+        return [_questionModel returnTitleHeight];
+        
     }else if (indexPath.section == 1){
         return 110;
     }else if (indexPath.section == 2){
-        if (indexPath.row == _questionModel.qustionOptionsAry.count) {
-            return 60;
-        }
-        return 300;
+        return [_questionModel returnOptionHeight:(int)indexPath.row];
     }
     return 60;
 }

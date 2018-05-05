@@ -111,7 +111,7 @@
         if (!_v) {
             _v = [[imageBigView alloc] initWithFrame:CGRectMake(0, 0, APPLICATION_WIDTH, APPLICATION_HEIGHT)];
         }
-    if(_homeworkModel.homeworkAry.count>0&&(_imageNum-2)<_homeworkModel.homeworkAry.count) {
+        if(_homeworkModel.homeworkAry.count>0&&(_imageNum-2)<_homeworkModel.homeworkAry.count) {
             [_v addImageView:_homeworkModel.homeworkAry[_imageNum -2]];
             _v.delegate = self;
             [self.view addSubview:_v];
@@ -141,7 +141,7 @@
         [UIUtils showInfoMessage:@"请输入作业截止时间" withVC:self];
         return;
     }
-   
+    
     [self showHudInView:self.view hint:NSLocalizedString(@"正在上传数据", @"Load data...")];
     
     NSDictionary * dict = [[NSDictionary alloc] initWithObjectsAndKeys:_homeworkStr,@"content",@"作业",@"describe",[NSString stringWithFormat:@"%@",_c.sclassId],@"courseId",[NSString stringWithFormat:@"%@ 00:00:00",_endTime],@"finishTime", nil];
@@ -160,7 +160,7 @@
                     
                     [self dismissViewControllerAnimated:YES completion:^{
                         [self.navigationController popViewControllerAnimated:YES];
-
+                        
                     }];
                 }
             }else{
@@ -182,21 +182,22 @@
     
     NSDictionary * dict1 = [[NSDictionary alloc] initWithObjectsAndKeys:@"1",@"type",str,@"description",@"11",@"function",_homeworkId,@"relId",@"false",@"deleteOld",nil];
     
+    
     [[NetworkRequest sharedInstance] POSTImage:FileUpload image:image dict:dict1 succeed:^(id data) {
         NSString * code = [NSString stringWithFormat:@"%@",[[data objectForKey:@"header"] objectForKey:@"code"]];
         if ([code isEqualToString:@"0000"]) {
-//            [UIUtils showInfoMessage:@"上传成功"];
+            //            [UIUtils showInfoMessage:@"上传成功"];
             if (_imageAry.count>1) {
                 [_imageAry removeObjectAtIndex:0];
                 [self sendImageWithImage:_imageAry[0]];
                 
             }else if(_imageAry.count == 1){
                 if (_failureAry.count>0) {
-                     [self hideHud];
+                    [self hideHud];
                     [UIUtils showInfoMessage:[NSString stringWithFormat:@"有%ld张照片上传失败",_failureAry.count] withVC:self];
                     
                 }else{
-                     [self hideHud];
+                    [self hideHud];
                     [UIUtils showInfoMessage:@"上传成功" withVC:self];
                     [self dismissViewControllerAnimated:YES completion:^{
                         [self.navigationController popViewControllerAnimated:YES];
@@ -214,10 +215,10 @@
             }else if(_imageAry.count == 1){
                 [_failureAry addObject:_imageAry[0]];
                 if (_failureAry.count>0) {
-                     [self hideHud];
+                    [self hideHud];
                     [UIUtils showInfoMessage:[NSString stringWithFormat:@"有%ld张照片上传失败",_failureAry.count] withVC:self];
                 }else{
-                     [self hideHud];
+                    [self hideHud];
                     [UIUtils showInfoMessage:@"上传成功" withVC:self];
                     [self dismissViewControllerAnimated:YES completion:^{
                         [self.navigationController popViewControllerAnimated:YES];
@@ -235,10 +236,10 @@
         }else if(_imageAry.count == 1){
             [_failureAry addObject:_imageAry[0]];
             if (_failureAry.count>0) {
-                 [self hideHud];
+                [self hideHud];
                 [UIUtils showInfoMessage:[NSString stringWithFormat:@"有%ld张照片上传失败",_failureAry.count] withVC:self];
             }else{
-                 [self hideHud];
+                [self hideHud];
                 [UIUtils showInfoMessage:@"上传成功" withVC:self];
                 [self dismissViewControllerAnimated:YES completion:^{
                     [self.navigationController popViewControllerAnimated:YES];
@@ -313,17 +314,24 @@
     
     UIImage *resultImage = [info objectForKey:@"UIImagePickerControllerOriginalImage"];
     
-    
-    //    UserModel * user = [[Appsetting sharedInstance] getUsetInfo];
-    dispatch_async(dispatch_get_main_queue(), ^{
-        
+    dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
+    // 异步执行任务创建方法
+    dispatch_async(queue, ^{
         if ((_imageNum-2)<_imageAry.count) {
             [_imageAry replaceObjectAtIndex:(_imageNum-2) withObject:resultImage];
         }else{
             [_imageAry addObject:resultImage];
         }
-        [_tableView reloadData];
+        
+        //    UserModel * user = [[Appsetting sharedInstance] getUsetInfo];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            
+            
+            [_tableView reloadData];
+        });
     });
+    
+    
     
     
     //使用模态返回到软件界面

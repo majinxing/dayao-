@@ -1,17 +1,17 @@
 //
-//  TOFQuestionViewController.m
+//  AnswerChoiceQuestionViewController.m
 //  WisdomHall
 //
-//  Created by XTU-TI on 2018/5/2.
+//  Created by XTU-TI on 2018/5/4.
 //  Copyright © 2018年 majinxing. All rights reserved.
 //
 
-#import "TOFQuestionViewController.h"
+#import "AnswerChoiceQuestionViewController.h"
 #import "DYHeader.h"
 #import "ChoiceQuestionTableViewCell.h"
 #import "optionsModel.h"
 
-@interface TOFQuestionViewController ()<UITableViewDelegate,UITableViewDataSource,ChoiceQuestionTableViewCellDelegate,UINavigationControllerDelegate,UIImagePickerControllerDelegate,UIPickerViewDelegate,UIPickerViewDataSource>
+@interface AnswerChoiceQuestionViewController ()<UITableViewDelegate,UITableViewDataSource,ChoiceQuestionTableViewCellDelegate,UINavigationControllerDelegate,UIImagePickerControllerDelegate,UIPickerViewDelegate,UIPickerViewDataSource>
 @property (nonatomic,strong)UITableView * tableView;
 
 @property (nonatomic,assign)int temp;//标记选择的模块
@@ -26,24 +26,29 @@
 @property (nonatomic,strong)NSArray * scoreAry;//存储分数
 
 @property (nonatomic,assign) int score;//标记转轮的位置
-
 @end
 
-@implementation TOFQuestionViewController
+@implementation AnswerChoiceQuestionViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
     _user = [[Appsetting sharedInstance] getUsetInfo];
     
     _scoreAry = @[@"1",@"2",@"3",@"4",@"5",@"6",@"7"];
     
     self.view.backgroundColor = [UIColor whiteColor];
     
+    //    [self setQuestionModel];
+    
     [self addTableView];
-
     // Do any additional setup after loading the view from its nib.
 }
 
+-(void)setQuestionModel{
+    _questionModel = [[QuestionModel alloc] init];
+    
+}
 -(void)addTableView{
     _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0,0, APPLICATION_WIDTH, APPLICATION_HEIGHT-104) style:UITableViewStylePlain];
     _tableView.delegate = self;
@@ -58,117 +63,68 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
--(void)addPickView{
-    [self.view endEditing: YES];
-    if (!self.pickerView) {
-        self.bView = [UIButton buttonWithType:UIButtonTypeCustom];
-        self.bView.frame = CGRectMake(0, 0, APPLICATION_WIDTH, APPLICATION_HEIGHT-104);
-        self.bView.backgroundColor = [UIColor blackColor];
-        [self.bView addTarget:self action:@selector(outView) forControlEvents:UIControlEventTouchUpInside];
-        self.bView.alpha = 0.5;
-        self.pickerView = [[UIView alloc] initWithFrame:CGRectMake(0, APPLICATION_HEIGHT - 200 - 30 - 104, APPLICATION_WIDTH, 200 + 30)];
-        
-        UIPickerView * pickerViewD = [[UIPickerView alloc] initWithFrame:CGRectMake(0.0,30,APPLICATION_WIDTH,200)];
-        pickerViewD.backgroundColor=[UIColor whiteColor];
-        pickerViewD.delegate = self;
-        pickerViewD.dataSource =  self;
-        pickerViewD.showsSelectionIndicator = YES;
-        self.pickerView.backgroundColor=[UIColor whiteColor];
-        
-        
-        UIButton *leftButton = [UIButton buttonWithType:UIButtonTypeCustom];
-        leftButton.frame = CGRectMake(0, 0, 50, 30);
-        [leftButton setTitle:@"取消" forState:UIControlStateNormal];
-        [leftButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-        [leftButton addTarget:self action:@selector(leftButton) forControlEvents:UIControlEventTouchUpInside];
-        [self.pickerView addSubview:leftButton];
-        
-        UIButton *rightButton = [UIButton buttonWithType:UIButtonTypeCustom];
-        rightButton.frame = CGRectMake(APPLICATION_WIDTH - 50, 0, 50, 30);
-        [rightButton setTitle:@"确认" forState:UIControlStateNormal];
-        [rightButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-        [rightButton addTarget:self action:@selector(rightButton) forControlEvents:UIControlEventTouchUpInside];
-        [self.pickerView addSubview:rightButton];
-        [self.pickerView addSubview:pickerViewD];
-    }
-    [self.view addSubview:_bView];
-    [self.view addSubview:self.pickerView];
-}
--(void)outView{
-    [self.bView removeFromSuperview];
-    [self.pickerView removeFromSuperview];
-    self.pickerView = nil;
-}
--(void)leftButton{
-    [self.bView removeFromSuperview];
-    [self.pickerView removeFromSuperview];
-    self.pickerView = nil;
-}
--(void)rightButton{
-    [self.bView removeFromSuperview];
-    
-    [self.pickerView removeFromSuperview];
-    
-    self.pickerView = nil;
-    
-    if (_temp == 2) {
-        _questionModel.qustionScore = [NSString stringWithFormat:@"%@",_scoreAry[_score]];
-    }else if (_temp == 3){
-        _questionModel.questionDifficulty = [NSString stringWithFormat:@"%@",_scoreAry[_score]];
-    }
-    //    [_tableView reloadData];
-    
-    //    NSIndexSet *indexSet=[[NSIndexSet alloc]initWithIndex:1];
-    //
-    //    [_tableView reloadSections:indexSet withRowAnimation:UITableViewRowAnimationNone];
-    NSIndexPath *indexPath=[NSIndexPath indexPathForRow:0 inSection:1];
-    
-    [_tableView reloadRowsAtIndexPaths:[NSArray arrayWithObjects:indexPath,nil] withRowAnimation:UITableViewRowAnimationNone];
-}
 
-
-#pragma mark UIPickViewDelegate
-
--(NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView{
-    
-    return 1;
-}
-- (NSInteger)pickerView:(UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component
-{
-    
-    return _scoreAry.count;
-}
-- (NSString *)pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component
-{
-    return _scoreAry[row];
-    
-    return @"2016";
-}
-- (void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component
-{
-    _score = (int)row;
-    
-}
 #pragma mark ChoiceQuestionTableViewCellDelegate
+//被选中
+-(void)thirthSelectOptionDelegate:(UIButton *)sender{
+    if ([_questionModel.titleType isEqualToString:@"1"]) {
+        
+        NSString * s = [NSString stringWithFormat:@"%c",(int)sender.tag];
+        
+        if ([[NSString stringWithFormat:@"%@",_questionModel.questionAnswer] isEqualToString:s]) {
+            _questionModel.questionAnswer = @"";
+        }else{
+            _questionModel.questionAnswer = [NSString stringWithFormat:@"%c",(int)sender.tag];
+        }
+    }else{
+        NSString *string = [NSString stringWithFormat:@"%@",_questionModel.questionAnswer];
+        
+        NSString * s = [NSString stringWithFormat:@"%c",(int)sender.tag];
+        //字条串是否包含有某字符串
+        if ([string rangeOfString:s].location == NSNotFound) {
+            if ([UIUtils isBlankString:string]) {
+                _questionModel.questionAnswer = [NSString stringWithFormat:@"%c",(int)sender.tag];
+            }else{
+                _questionModel.questionAnswer = [_questionModel.questionAnswer stringByAppendingString:[NSString stringWithFormat:@",%c",(int)sender.tag]];
+            }
+        } else {
+            NSMutableArray *array = [[NSMutableArray alloc] initWithArray:[string componentsSeparatedByString:@","]];
+            [array removeObject:s];
+            _questionModel.questionAnswer = @"";
+            for (int i = 0; i<array.count; i++) {
+                if (i == 0) {
+                    _questionModel.questionAnswer = [NSString stringWithFormat:@"%@",array[0]];
+                }else{
+                    _questionModel.questionAnswer = [_questionModel.questionAnswer stringByAppendingString:[NSString stringWithFormat:@"%@",array[i]]];
+                }
 
-//选分数
--(void)selectScoreDeleate:(UIButton *)sender{
-    _temp = 2;
-    _score = 0;
-    [self addPickView];
+            }
+            NSLog(@"string 包含 martin");
+        }
+    }
+    [_tableView reloadData];
 }
-//选难度
--(void)selectDifficultyDelegate:(UIButton *)sender{
-    _temp = 3;
-    _score = 0;
-    [self addPickView];
+-(void)addOptionsDelegate:(UIButton *)sender{
+    
+    optionsModel * option = [[optionsModel alloc] init];
+    
+    [_questionModel.qustionOptionsAry addObject:option];
+    
+    [_tableView reloadData];
 }
-//题干选择图片
--(void)firstSelectImageBtnDelegate:(UIButton *)sender{
-    _temp = 1;
-    _pictureNum = (int)sender.tag;
-    [self selectPicture];
+-(void)thirthSelectOptionsImageBtnDelegate:(UIButton *)sender{
+    if (_editable) {
+        _temp = (int)sender.tag/1000+4;
+        
+        _pictureNum = (int)sender.tag%1000;
+        
+        [self selectPicture];
+    }else{
+        
+    }
+    
 }
+
 -(void)selectPicture{
     //实现button点事件的回调方法
     //调用系统相册的类
@@ -220,15 +176,18 @@
 }
 #pragma mark UITableViewdelegate
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
-    return 3;
+    return 2;
 }
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
     if (section ==0) {
         return 1;
     }else if (section == 1){
-        return 1;
-    }else if (section == 2){
-          return 2;
+        if (_editable) {
+            return _questionModel.qustionOptionsAry.count+1;
+        }else{
+            return _questionModel.qustionOptionsAry.count;
+            
+        }
     }
     return 0;
 }
@@ -243,22 +202,15 @@
             
             cell = [[[NSBundle mainBundle] loadNibNamed:@"ChoiceQuestionTableViewCell" owner:nil options:nil] objectAtIndex:0];
             
-        }else if (indexPath.section == 1){
-            
-            cell = [tableView dequeueReusableCellWithIdentifier:@"ChoiceQuestionTableViewCellSecond"];
-            
-            cell = [[[NSBundle mainBundle] loadNibNamed:@"ChoiceQuestionTableViewCell" owner:nil options:nil] objectAtIndex:1];
-            
-            
-        }else if (indexPath.section == 2){
-            if (indexPath.row ==1) {
-                cell = [tableView dequeueReusableCellWithIdentifier:@"ChoiceQuestionTableViewCellSixth"];
+        }else if(indexPath.section == 1){
+            if (indexPath.row==_questionModel.qustionOptionsAry.count) {
+                cell = [tableView dequeueReusableCellWithIdentifier:@"ChoiceQuestionTableViewCellFifth"];
                 
-                cell = [[[NSBundle mainBundle] loadNibNamed:@"ChoiceQuestionTableViewCell" owner:nil options:nil] objectAtIndex:5];
+                cell = [[[NSBundle mainBundle] loadNibNamed:@"ChoiceQuestionTableViewCell" owner:nil options:nil] objectAtIndex:4];
             }else{
-                cell = [tableView dequeueReusableCellWithIdentifier:@"ChoiceQuestionTableViewCellFourth"];
+                cell = [tableView dequeueReusableCellWithIdentifier:@"ChoiceQuestionTableViewCellThird"];
                 
-                cell = [[[NSBundle mainBundle] loadNibNamed:@"ChoiceQuestionTableViewCell" owner:nil options:nil] objectAtIndex:3];
+                cell = [[[NSBundle mainBundle] loadNibNamed:@"ChoiceQuestionTableViewCell" owner:nil options:nil] objectAtIndex:2];
             }
             
         }
@@ -268,10 +220,33 @@
     [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
     
     if (indexPath.section == 0) {
-        [cell addFirstTitleTextView:_questionModel.questionTitle withImageAry:_questionModel.questionTitleImageAry withIsEdit:_editable];
-    }else if(indexPath.section == 1){
-        [cell setScoreAndDifficult:_questionModel.qustionScore withDifficult:_questionModel.questionDifficulty withEdit:_editable];
+        if (_editable) {
+            [cell addFirstTitleTextView:_questionModel.questionTitle withImageAry:_questionModel.questionTitleImageAry withIsEdit:_editable];
+            
+        }else{
+            [cell addFirstTitleTextView:_questionModel.questionTitle withImageAry:_questionModel.questionTitleImageIdAry withIsEdit:_editable];
+        }
+        
+    }else if (indexPath.section == 1){
+        if (indexPath.row==_questionModel.qustionOptionsAry.count) {
+            
+        }else{
+            NSString *string = [NSString stringWithFormat:@"%@",_questionModel.questionAnswer];
+            
+            NSString * s = [NSString stringWithFormat:@"%c",65+(int)indexPath.row];
+            //字条串是否包含有某字符串
+            if ([string rangeOfString:s].location == NSNotFound) {
+                [cell addOptionWithModel:_questionModel.qustionOptionsAry[indexPath.row] withEdit:_editable withIndexRow:(int)indexPath.row withISelected:NO];
+
+                NSLog(@"string 不存在 martin");
+            } else {
+                [cell addOptionWithModel:_questionModel.qustionOptionsAry[indexPath.row] withEdit:_editable withIndexRow:(int)indexPath.row withISelected:YES];
+
+                NSLog(@"string 包含 martin");
+            }
+        }
     }
+    
     return cell;
 }
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
@@ -279,16 +254,11 @@
 }
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
     if (indexPath.section == 0) {
-        if (_editable) {
-            return 480;
-        }else{
-            if (_questionModel.questionTitleImageIdAry.count>0||_questionModel.questionTitleImageAry.count>0) {
-                return 480;
-            }
-            return 200;
-        }
+        
+        return [_questionModel returnTitleHeight];
+        
     }else if (indexPath.section == 1){
-        return 110;
+        return [_questionModel returnOptionHeight:(int)indexPath.row];
     }
     return 60;
 }
@@ -296,24 +266,28 @@
     return 30;
 }
 -(UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section{
-    NSArray * ary = @[@"题目内容",@"选择分值与难易程度",@"参考答案:请按照填空的顺序添加答案"];
+    NSArray * ary = @[@"题目内容",@"选项",@"参考答案"];
     UIView * view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, APPLICATION_WIDTH, 30)];
     view.backgroundColor = RGBA_COLOR(236, 236, 236, 1);
-    UILabel * l = [[UILabel alloc] initWithFrame:CGRectMake(10, 5, 300, 20)];
+    UILabel * l = [[UILabel alloc] initWithFrame:CGRectMake(10, 5, 200, 20)];
     l.font = [UIFont systemFontOfSize:15];
     
     [view addSubview:l];
     
     l.text = ary[(int)section];
+    
     if ((int)section == 0) {
-        UILabel * ll = [[UILabel alloc] initWithFrame:CGRectMake(APPLICATION_WIDTH-100, 5, 80, 20)];
+        UILabel * ll = [[UILabel alloc] initWithFrame:CGRectMake(APPLICATION_WIDTH-200, 5, 180, 20)];
         ll.textAlignment = NSTextAlignmentRight;
         
         ll.font = [UIFont systemFontOfSize:15];
         
         [view addSubview:ll];
-        
-        ll.text = @"题型：判断";
+        if ([_questionModel.titleType isEqualToString:@"1"]) {
+            ll.text = [NSString stringWithFormat:@"题型：单选 %@ 分",_questionModel.qustionScore];
+        }else{
+            ll.text = [NSString stringWithFormat:@"题型：多选 %@ 分",_questionModel.qustionScore];
+        }
         
     }
     return view;
@@ -368,6 +342,7 @@
     [self.navigationController dismissViewControllerAnimated:YES completion:nil];
     
 }
+
 /*
 #pragma mark - Navigation
 

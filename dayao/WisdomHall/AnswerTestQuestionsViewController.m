@@ -1,29 +1,25 @@
 //
-//  TestQuestionsViewController.m
+//  AnswerTestQuestionsViewController.m
 //  WisdomHall
 //
-//  Created by XTU-TI on 2017/5/12.
-//  Copyright © 2017年 majinxing. All rights reserved.
-// 展示试卷内容的
+//  Created by XTU-TI on 2018/5/4.
+//  Copyright © 2018年 majinxing. All rights reserved.
+//
 
-#import "TestQuestionsViewController.h"
+#import "AnswerTestQuestionsViewController.h"
 #import "DYHeader.h"
-
-#import "UIUtils.h"
-#import "contactTool.h"
 
 #import "QuestionsTableViewCell.h"
 
-
-
 #import "ImportTextViewController.h"
-#import "AllTestViewController.h"
-#import "ChoiceQuestionViewController.h"
-#import "EssayQuestionViewController.h"
-#import "TOFQuestionViewController.h"
+
+#import "AnswerChoiceQuestionViewController.h"
+#import "AnswerEssayQuestionViewController.h"
+#import "AnswerTOFQuestionViewController.h"
+
 #import "ChooseTopicView.h"
 
-@interface TestQuestionsViewController ()<UITextViewDelegate,ChooseTopicViewDelegate>
+@interface AnswerTestQuestionsViewController ()<UITextViewDelegate,ChooseTopicViewDelegate>
 @property (nonatomic,strong)UITableView *tableView;
 
 @property (nonatomic,strong)UserModel * user;
@@ -34,18 +30,19 @@
 
 @property (nonatomic,strong)ChooseTopicView * chooseTopic;
 
-@property (nonatomic,strong)ChoiceQuestionViewController * choiceQVC;
+@property (nonatomic,strong)AnswerChoiceQuestionViewController * choiceQVC;
 
-@property (nonatomic,strong)EssayQuestionViewController * essayQVC;
+@property (nonatomic,strong)AnswerEssayQuestionViewController * essayQVC;
+
 @property (strong, nonatomic) IBOutlet UIButton *addTitleBtn;//增加题目按钮
 
-@property (nonatomic,strong)TOFQuestionViewController * tOFQVC;
-
+@property (nonatomic,strong)AnswerTOFQuestionViewController * tOFQVC;
 @end
 
-@implementation TestQuestionsViewController
+@implementation AnswerTestQuestionsViewController
 
 - (void)viewDidLoad {
+    [super viewDidLoad];
     [super viewDidLoad];
     
     [self setNavigationTitle];
@@ -71,16 +68,12 @@
         [self getData];
     }
     
-    
-    
-    //    // 1.注册通知
-    //
-    //    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(selectQuestion:) name:@"selectQuestion" object:nil];
-    
     // Do any additional setup after loading the view from its nib.
 }
+
 -(void)getData{
     NSDictionary * dict = [[NSDictionary alloc] initWithObjectsAndKeys:[NSString stringWithFormat:@"%@",_t.textId],@"examId",[NSString stringWithFormat:@"%@",_user.peopleId],@"userId",nil];
+    
     [[NetworkRequest sharedInstance] GET:QueryQuestionList dict:dict succeed:^(id data) {
         NSLog(@"%@",data);
         NSString * str = [NSString stringWithFormat:@"%@",[[data objectForKey:@"header"] objectForKey:@"code"]];
@@ -146,14 +139,37 @@
     
     self.title = @"试题";
     
-    UIBarButtonItem *myButton = [[UIBarButtonItem alloc] initWithTitle:@"更多" style:UIBarButtonItemStylePlain target:self action:@selector(more)];
+    UIBarButtonItem *myButton = [[UIBarButtonItem alloc] initWithTitle:@"交卷" style:UIBarButtonItemStylePlain target:self action:@selector(more)];
     
     [myButton setTintColor:[UIColor whiteColor]];
     
     self.navigationItem.rightBarButtonItem = myButton;
 }
+
+
 -(void)more{
+    NSMutableArray * dataAry = [NSMutableArray arrayWithCapacity:1];
     
+    for (int i = 0;i<_allQuestionAry.count; i++) {
+        QuestionModel *q = _allQuestionAry[i];
+        
+        NSMutableDictionary * dict = [[NSMutableDictionary alloc] initWithObjectsAndKeys:[NSString stringWithFormat:@"%@",q.questionId],@"examQuestionId",[NSString stringWithFormat:@"%@",q.questionAnswer],@"answer",nil];
+        if (q.questionAnswerImageIdAry.count>0) {
+            [dict setObject:q.questionAnswerImageIdAry forKey:@"resourceList"];
+        }
+        
+        [dataAry addObject:dict];
+    }
+    NSDictionary * d = [[NSDictionary alloc] initWithObjectsAndKeys:[NSString stringWithFormat:@"%@",_t.textId],@"id",dataAry,@"examAnswerList",nil];
+    
+    [[NetworkRequest sharedInstance] POST:HandIn dict:d succeed:^(id data) {
+        NSLog(@"%@",data);
+        NSString * message = [NSString stringWithFormat:@"%@",[[data objectForKey:@"header"] objectForKey:@"message"]];
+        [UIUtils showInfoMessage:message withVC:self];
+    } failure:^(NSError *error) {
+        NSLog(@"%@",error);
+
+    }];
 }
 - (IBAction)addQuestion:(UIButton *)sender {
     if (!_chooseTopic) {
@@ -191,6 +207,9 @@
 }
 //顶部滑框选择试题
 -(void)titleClick:(UIButton *)btn{
+    
+    [self.view endEditing:YES];
+    
     if (btn.tag-1<_allQuestionAry.count) {
         QuestionModel * q = _allQuestionAry[btn.tag-1];
         if ([q.titleType isEqualToString:@"1"]||[q.titleType isEqualToString:@"2"]) {
@@ -198,7 +217,7 @@
             [_tOFQVC.view removeFromSuperview];
             
             if (!_choiceQVC) {
-                _choiceQVC = [[ChoiceQuestionViewController alloc] init];
+                _choiceQVC = [[AnswerChoiceQuestionViewController alloc] init];
             }
             _choiceQVC.editable = _editable;
             
@@ -220,7 +239,7 @@
             [_choiceQVC.view removeFromSuperview];
             [_essayQVC.view removeFromSuperview];
             if (!_tOFQVC) {
-                _tOFQVC = [[TOFQuestionViewController alloc] init];
+                _tOFQVC = [[AnswerTOFQuestionViewController alloc] init];
             }
             _tOFQVC.editing = _editable;
             
@@ -240,7 +259,7 @@
             [_choiceQVC.view removeFromSuperview];
             [_tOFQVC.view removeFromSuperview];
             if (!_essayQVC) {
-                _essayQVC = [[EssayQuestionViewController alloc] init];
+                _essayQVC = [[AnswerEssayQuestionViewController alloc] init];
             }
             
             _essayQVC.editable = _editable;
@@ -258,6 +277,7 @@
             [self.view sendSubviewToBack:_essayQVC.view];
         }
     }
+    
 }
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
@@ -292,7 +312,7 @@
         [_tOFQVC.view removeFromSuperview];
         
         if (!_choiceQVC) {
-            _choiceQVC = [[ChoiceQuestionViewController alloc] init];
+            _choiceQVC = [[AnswerChoiceQuestionViewController alloc] init];
         }
         _choiceQVC.editable = _editable;
         
@@ -325,7 +345,7 @@
         [_essayQVC.view removeFromSuperview];
         
         if (!_tOFQVC) {
-            _tOFQVC = [[TOFQuestionViewController alloc] init];
+            _tOFQVC = [[AnswerTOFQuestionViewController alloc] init];
         }
         _tOFQVC.editable = _editable;
         
@@ -345,7 +365,7 @@
         [_choiceQVC.view removeFromSuperview];
         [_tOFQVC.view removeFromSuperview];
         if (!_essayQVC) {
-            _essayQVC = [[EssayQuestionViewController alloc] init];
+            _essayQVC = [[AnswerEssayQuestionViewController alloc] init];
         }
         
         _essayQVC.editable = _editable;
@@ -370,13 +390,13 @@
 }
 
 /*
- #pragma mark - Navigation
- 
- // In a storyboard-based application, you will often want to do a little preparation before navigation
- - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
- // Get the new view controller using [segue destinationViewController].
- // Pass the selected object to the new view controller.
- }
- */
+#pragma mark - Navigation
+
+// In a storyboard-based application, you will often want to do a little preparation before navigation
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    // Get the new view controller using [segue destinationViewController].
+    // Pass the selected object to the new view controller.
+}
+*/
 
 @end

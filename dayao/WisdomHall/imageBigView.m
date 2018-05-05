@@ -19,7 +19,7 @@
     return self;
 }
 -(void)addImageView:(NSString *)str{
-    UIImageView * image = [[UIImageView alloc] initWithFrame:CGRectMake(10,80, APPLICATION_WIDTH-20, APPLICATION_HEIGHT-64-20)];
+    UIImageView * image = [[UIImageView alloc] initWithFrame:CGRectMake(10,0, APPLICATION_WIDTH-20, APPLICATION_HEIGHT-104)];
     
     UserModel * user = [[Appsetting sharedInstance] getUsetInfo];
     
@@ -35,6 +35,21 @@
     
     [self addSubview:btn];
 }
+-(void)addImageViewWithImage:(UIImage  *)image1{
+    
+    UIImageView * image = [[UIImageView alloc] initWithFrame:CGRectMake(10,0, APPLICATION_WIDTH-20, APPLICATION_HEIGHT-104)];
+    
+    image.image = image1;
+    
+    UIButton * btn = [UIButton buttonWithType:UIButtonTypeCustom];
+    btn.frame = CGRectMake(0, 64, APPLICATION_WIDTH, APPLICATION_HEIGHT);
+    [btn addTarget:self action:@selector(outView) forControlEvents:UIControlEventTouchUpInside];
+    
+    [self addSubview:image];
+    
+    [self addSubview:btn];
+}
+
 -(void)outView{
     if (self.delegate&&[self.delegate respondsToSelector:@selector(outViewDelegate)]) {
         [self.delegate outViewDelegate];

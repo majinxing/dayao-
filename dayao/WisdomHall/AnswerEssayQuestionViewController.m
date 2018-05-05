@@ -1,17 +1,20 @@
 //
-//  EssayQuestionViewController.m
+//  AnswerEssayQuestionViewController.m
 //  WisdomHall
 //
-//  Created by XTU-TI on 2018/5/2.
+//  Created by XTU-TI on 2018/5/4.
 //  Copyright © 2018年 majinxing. All rights reserved.
 //
 
-#import "EssayQuestionViewController.h"
+#import "AnswerEssayQuestionViewController.h"
 #import "DYHeader.h"
 #import "ChoiceQuestionTableViewCell.h"
 #import "optionsModel.h"
+#import "EditPageView.h"
+#import "imageBigView.h"
 
-@interface EssayQuestionViewController ()<UITableViewDelegate,UITableViewDataSource,ChoiceQuestionTableViewCellDelegate,UINavigationControllerDelegate,UIImagePickerControllerDelegate,UIPickerViewDelegate,UIPickerViewDataSource>
+@interface AnswerEssayQuestionViewController ()<UITableViewDelegate,UITableViewDataSource,ChoiceQuestionTableViewCellDelegate,UINavigationControllerDelegate,UIImagePickerControllerDelegate,UIPickerViewDelegate,UIPickerViewDataSource,EditPageViewDelegate,imageBigViewDelegate>
+
 @property (nonatomic,strong)UITableView * tableView;
 
 @property (nonatomic,assign)int temp;//标记选择的模块
@@ -28,12 +31,15 @@
 
 @property (nonatomic,assign) int score;//标记转轮的位置@end
 
+@property (nonatomic,strong)EditPageView * editPageView;
+
+@property (nonatomic,strong) imageBigView * v;
+
 @end
 
-@implementation EssayQuestionViewController
+@implementation AnswerEssayQuestionViewController
 
 - (void)viewDidLoad {
-    
     [super viewDidLoad];
     
     _user = [[Appsetting sharedInstance] getUsetInfo];
@@ -146,8 +152,52 @@
     _score = (int)row;
     
 }
-#pragma mark ChoiceQuestionTableViewCellDelegate
+#pragma mark imageBigViewDelegate
+-(void)outViewDelegate{
+    [_v removeFromSuperview];
+}
+#pragma mark EditPageViewDelegate
+-(void)saveTextStrDelegate:(UIButton *)btn{
+    if (btn.tag ==1) {
+        
+    }else{
+        _questionModel.questionAnswer = _editPageView.textView.text;
+        
+        [_tableView reloadData];
+    }
+    
+    [self.view endEditing:YES];
+    
+    [_editPageView removeFromSuperview];
+    
+    _editPageView  = nil;
 
+}
+#pragma mark ChoiceQuestionTableViewCellDelegate
+-(void)deleAnswerImageDelegate:(UIButton *)sender{
+    int n = (int)sender.tag-1001;
+    if (n<_questionModel.questionAnswerImageAry.count&&n>=0) {
+        [_questionModel.questionAnswerImageAry removeObjectAtIndex:n];
+    }
+    
+    if (n<_questionModel.questionAnswerImageIdAry.count&&n>=0) {
+        
+        [_questionModel.questionAnswerImageIdAry removeObjectAtIndex:n];
+    }
+    [_tableView reloadData];
+}
+-(void)textViewDidChangeDelegate:(UITextView *)textView{
+    if (!_editPageView) {
+        _editPageView = [[EditPageView alloc] init];
+    }
+    _editPageView.textView.text = _questionModel.questionAnswer;
+    
+    _editPageView.frame = CGRectMake(0, 0, APPLICATION_WIDTH, APPLICATION_HEIGHT);
+    
+    _editPageView.delegate = self;
+    
+    [self.view addSubview:_editPageView];
+}
 //选分数
 -(void)selectScoreDeleate:(UIButton *)sender{
     _temp = 2;
@@ -162,74 +212,118 @@
 }
 //题干选择图片
 -(void)firstSelectImageBtnDelegate:(UIButton *)sender{
-    _temp = 1;
-    _pictureNum = (int)sender.tag;
-    [self selectPicture];
+    
+    UIImage *i = sender.currentBackgroundImage;
+
+    float f = i.size.width;
+    if (!_v) {
+        _v = [[imageBigView alloc] initWithFrame:CGRectMake(0, 0, APPLICATION_WIDTH, APPLICATION_HEIGHT-104)];
+    }
+    
+    _v.delegate = self;
+    
+    if (f>0) {
+    
+        if((sender.tag-101)<_questionModel.questionAnswerImageAry.count&&_questionModel.questionAnswerImageAry.count>0) {
+            
+            [_v addImageViewWithImage:_questionModel.questionAnswerImageAry[sender.tag-101]];
+            
+            [self.view addSubview:_v];
+            
+        }else{
+            _temp = 1;
+            _pictureNum = (int)sender.tag;
+            [self selectPicture];
+        }
+    }else{
+        
+        if ((sender.tag-101)<_questionModel.questionTitleImageIdAry.count&&_questionModel.questionTitleImageIdAry.count>0) {
+            
+            [_v addImageView:_questionModel.questionTitleImageIdAry[sender.tag-101]];
+            
+            [self.view addSubview:_v];
+            
+        }
+    }
 }
 -(void)selectPicture{
-    //实现button点事件的回调方法
-    //调用系统相册的类
+        //实现button点事件的回调方法
+        //调用系统相册的类
     UIImagePickerController *pickerController = [[UIImagePickerController alloc]init];
     
-    //设置选取的照片是否可编辑
+        //设置选取的照片是否可编辑
     
-    //   pickerController.allowsEditing = YES;
+        //   pickerController.allowsEditing = YES;
+    pickerController.sourceType =  UIImagePickerControllerSourceTypeCamera;//图片分组列表样式
+    pickerController.cameraDevice = UIImagePickerControllerCameraDeviceRear;
     
-    //设置相册呈现的样式
-    
-    UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"提示" message:nil preferredStyle:  UIAlertControllerStyleActionSheet];
-    //分别按顺序放入每个按钮；
-    [alert addAction:[UIAlertAction actionWithTitle:@"拍照" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-        pickerController.sourceType =  UIImagePickerControllerSourceTypeCamera;//图片分组列表样式
-        pickerController.cameraDevice = UIImagePickerControllerCameraDeviceRear;
+    //选择完成图片或者点击取消按钮都是通过代理来操作我们所需要的逻辑过程
+    pickerController.delegate = self;
+    //使用模态呈现相册
+    [self.navigationController presentViewController:pickerController animated:YES completion:^{
         
-        //选择完成图片或者点击取消按钮都是通过代理来操作我们所需要的逻辑过程
-        pickerController.delegate = self;
-        //使用模态呈现相册
-        [self.navigationController presentViewController:pickerController animated:YES completion:^{
-            
-        }];
-    }]];
-    
-    [alert addAction:[UIAlertAction actionWithTitle:@"从相册选择" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-        
-        pickerController.sourceType =  UIImagePickerControllerSourceTypeSavedPhotosAlbum;//图片分组列表样式
-        //照片的选取样式还有以下两种
-        //UIImagePickerControllerSourceTypePhotoLibrary,直接全部呈现系统相册UIImagePickerControllerSourceTypeSavedPhotosAlbum
-        //UIImagePickerControllerSourceTypeCamera//调取摄像头
-        
-        //选择完成图片或者点击取消按钮都是通过代理来操作我们所需要的逻辑过程
-        pickerController.delegate = self;
-        //使用模态呈现相册
-        [self.navigationController presentViewController:pickerController animated:YES completion:^{
-            
-        }];
-        
-    }]];
-    
-    
-    [alert addAction:[UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleDestructive handler:^(UIAlertAction * _Nonnull action) {
-        //点击按钮的响应事件；
-    }]];
-    
-    //弹出提示框；
-    [self presentViewController:alert animated:true completion:nil];
+    }];
+//    //实现button点事件的回调方法
+//    //调用系统相册的类
+//    UIImagePickerController *pickerController = [[UIImagePickerController alloc]init];
+//
+//    //设置选取的照片是否可编辑
+//
+//    //   pickerController.allowsEditing = YES;
+//
+//    //设置相册呈现的样式
+//
+//    UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"提示" message:nil preferredStyle:  UIAlertControllerStyleActionSheet];
+//    //分别按顺序放入每个按钮；
+//    [alert addAction:[UIAlertAction actionWithTitle:@"拍照" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+//        pickerController.sourceType =  UIImagePickerControllerSourceTypeCamera;//图片分组列表样式
+//        pickerController.cameraDevice = UIImagePickerControllerCameraDeviceRear;
+//
+//        //选择完成图片或者点击取消按钮都是通过代理来操作我们所需要的逻辑过程
+//        pickerController.delegate = self;
+//        //使用模态呈现相册
+//        [self.navigationController presentViewController:pickerController animated:YES completion:^{
+//
+//        }];
+//    }]];
+//
+//    [alert addAction:[UIAlertAction actionWithTitle:@"从相册选择" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+//
+//        pickerController.sourceType =  UIImagePickerControllerSourceTypeSavedPhotosAlbum;//图片分组列表样式
+//        //照片的选取样式还有以下两种
+//        //UIImagePickerControllerSourceTypePhotoLibrary,直接全部呈现系统相册UIImagePickerControllerSourceTypeSavedPhotosAlbum
+//        //UIImagePickerControllerSourceTypeCamera//调取摄像头
+//
+//        //选择完成图片或者点击取消按钮都是通过代理来操作我们所需要的逻辑过程
+//        pickerController.delegate = self;
+//        //使用模态呈现相册
+//        [self.navigationController presentViewController:pickerController animated:YES completion:^{
+//
+//        }];
+//
+//    }]];
+//
+//
+//    [alert addAction:[UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleDestructive handler:^(UIAlertAction * _Nonnull action) {
+//        //点击按钮的响应事件；
+//    }]];
+//
+//    //弹出提示框；
+//    [self presentViewController:alert animated:true completion:nil];
 }
 #pragma mark UITableViewdelegate
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
-    return 3;
+    return 2;
 }
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
     if (section ==0) {
         return 1;
     }else if (section == 1){
-        return 1;
-    }else if (section == 2){
         if ([_questionModel.titleType isEqualToString:@"4"]) {
             if (_editable) {
                 return _questionModel.blankAry.count+3;
             }else{
-                return _questionModel.blankAry.count;
+                return 1;//_questionModel.blankAry.count;
             }
         }else{
             if (_editable) {
@@ -253,38 +347,20 @@
             
         }else if (indexPath.section == 1){
             
-            cell = [tableView dequeueReusableCellWithIdentifier:@"ChoiceQuestionTableViewCellSecond"];
-            
-            cell = [[[NSBundle mainBundle] loadNibNamed:@"ChoiceQuestionTableViewCell" owner:nil options:nil] objectAtIndex:1];
-            
-            
-        }else if (indexPath.section == 2){
-            
             if ([_questionModel.titleType  isEqualToString:@"4"]) {
-                if(indexPath.row == _questionModel.blankAry.count+3-2){
-                    cell = [tableView dequeueReusableCellWithIdentifier:@"ChoiceQuestionTableViewCellFifth"];
-                    
-                    cell = [[[NSBundle mainBundle] loadNibNamed:@"ChoiceQuestionTableViewCell" owner:nil options:nil] objectAtIndex:4];
-                    
-                    
-                }else if (indexPath.row == _questionModel.blankAry.count+3-1) {
-                    cell = [tableView dequeueReusableCellWithIdentifier:@"ChoiceQuestionTableViewCellSixth"];
-                    
-                    cell = [[[NSBundle mainBundle] loadNibNamed:@"ChoiceQuestionTableViewCell" owner:nil options:nil] objectAtIndex:5];
-                }else{
                     cell = [tableView dequeueReusableCellWithIdentifier:@"ChoiceQuestionTableViewCellSeventh"];
                     
                     cell = [[[NSBundle mainBundle] loadNibNamed:@"ChoiceQuestionTableViewCell" owner:nil options:nil] objectAtIndex:6];
-                }
+//                }
             }else{
                 if (indexPath.row ==1) {
                     cell = [tableView dequeueReusableCellWithIdentifier:@"ChoiceQuestionTableViewCellSixth"];
                     
                     cell = [[[NSBundle mainBundle] loadNibNamed:@"ChoiceQuestionTableViewCell" owner:nil options:nil] objectAtIndex:5];
                 }else{
-                    cell = [tableView dequeueReusableCellWithIdentifier:@"ChoiceQuestionTableViewCellFourth"];
+                    cell = [tableView dequeueReusableCellWithIdentifier:@"ChoiceQuestionTableViewCellFirst"];
                     
-                    cell = [[[NSBundle mainBundle] loadNibNamed:@"ChoiceQuestionTableViewCell" owner:nil options:nil] objectAtIndex:3];
+                    cell = [[[NSBundle mainBundle] loadNibNamed:@"ChoiceQuestionTableViewCell" owner:nil options:nil] objectAtIndex:0];
                 }
             }
             
@@ -297,12 +373,17 @@
     if (indexPath.section == 0) {
         if (_editable) {
             [cell addFirstTitleTextView:_questionModel.questionTitle withImageAry:_questionModel.questionTitleImageAry withIsEdit:_editable];
-
+            
         }else{
             [cell addFirstTitleTextView:_questionModel.questionTitle withImageAry:_questionModel.questionTitleImageIdAry withIsEdit:_editable];
         }
     }else if(indexPath.section == 1){
-        [cell setScoreAndDifficult:_questionModel.qustionScore withDifficult:_questionModel.questionDifficulty withEdit:_editable];
+        if ([_questionModel.titleType  isEqualToString:@"5"]) {
+            //问答。可上传图片
+            [cell addFirstTitleTextView:_questionModel.questionAnswer withImageAry:_questionModel.questionAnswerImageAry withIsEdit:YES];
+        }else{
+            [cell addSeventhTextViewWithStr:_questionModel.questionAnswer];
+        }
     }
     return cell;
 }
@@ -320,6 +401,9 @@
             return 200;
         }
     }else if (indexPath.section == 1){
+        if ([_questionModel.titleType  isEqualToString:@"5"]) {
+            return 400;
+        }
         return 110;
     }
     return 60;
@@ -328,7 +412,7 @@
     return 30;
 }
 -(UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section{
-    NSArray * ary = @[@"题目内容",@"选择分值与难易程度",@"参考答案"];
+    NSArray * ary = @[@"题目内容",@"答案"];
     UIView * view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, APPLICATION_WIDTH, 30)];
     view.backgroundColor = RGBA_COLOR(236, 236, 236, 1);
     UILabel * l = [[UILabel alloc] initWithFrame:CGRectMake(10, 5, 200, 20)];
@@ -345,9 +429,9 @@
         
         [view addSubview:ll];
         if ([_questionModel.titleType isEqualToString:@"4"]) {
-            ll.text = @"题型：填空";
+            ll.text = [NSString stringWithFormat:@"题型：填空 %@ 分",_questionModel.qustionScore];
         }else{
-            ll.text = @"题型：问答";
+            ll.text = [NSString stringWithFormat:@"题型：问答 %@ 分",_questionModel.qustionScore];
         }
         
     }
@@ -366,42 +450,89 @@
     //    UIImagePickerControllerEditedImage//编辑过的图片
     //    UIImagePickerControllerOriginalImage//原图
     
-    
+    UIImage *resultImage = [info objectForKey:@"UIImagePickerControllerOriginalImage"];
+
     //刚才已经看了info中的键值对，可以从info中取出一个UIImage对象，将取出的对象赋给按钮的image
     
-    UIImage *resultImage = [info objectForKey:@"UIImagePickerControllerOriginalImage"];
-    
-    
-    dispatch_async(dispatch_get_main_queue(), ^{
+    dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
+    // 异步执行任务创建方法
+    dispatch_async(queue, ^{
+        
+        
         if (_temp == 1) {
-            if ((_pictureNum - 101)<_questionModel.questionTitleImageAry.count&&(_pictureNum-101>=0)) {
-                [_questionModel.questionTitleImageAry replaceObjectAtIndex:(_pictureNum - 101) withObject:resultImage];
+            if ((_pictureNum - 101)<_questionModel.questionAnswerImageAry.count) {
+                [_questionModel.questionAnswerImageAry replaceObjectAtIndex:(_pictureNum - 101) withObject:resultImage];
             }else{
-                [_questionModel.questionTitleImageAry addObject:resultImage];
-            }
-            [_tableView reloadData];
-        }else if (_temp>4){
-            if ((_temp-5)<_questionModel.qustionOptionsAry.count&&(_temp-5)>=0) {
-                optionsModel * optionModel = _questionModel.qustionOptionsAry[_temp-5];
-                if ((_pictureNum-1)<optionModel.optionsImageAry.count&&(_pictureNum-1)>=0) {
-                    
-                    [optionModel.optionsImageAry replaceObjectAtIndex:(_pictureNum - 1) withObject:resultImage];
-                    
-                }else{
-                    
-                    [optionModel.optionsImageAry addObject:resultImage];
-                    
-                }
-                [_questionModel.qustionOptionsAry replaceObjectAtIndex:_temp-5 withObject:optionModel];
+                [_questionModel.questionAnswerImageAry addObject:resultImage];
             }
         }
-        [_tableView reloadData];
+        
+
+        dispatch_async(dispatch_get_main_queue(), ^{
+            
+
+            [_tableView reloadData];
+            
+        });
+        
     });
     
-    
     //使用模态返回到软件界面
-    [self.navigationController dismissViewControllerAnimated:YES completion:nil];
+    [self.navigationController dismissViewControllerAnimated:YES completion:^{
+        
+        [self sendImage:resultImage with:_pictureNum];
+
+    }];
     
+
+}
+-(void)sendImage:(UIImage *)image with:(int)index{
+    
+    [self showHudInView:self.view hint:NSLocalizedString(@"正在上传数据", @"Load data...")];
+
+//    NSString * str = [NSString stringWithFormat:@"%@-%@-%@",_user.userName,_user.studentId,[UIUtils getTime]];
+//
+//    NSDictionary * dict1 = [[NSDictionary alloc] initWithObjectsAndKeys:@"1",@"type",str,@"description",@"21",@"function",_questionModel.questionId,@"relId",@"false",@"deleteOld",nil];
+    
+    __weak AnswerEssayQuestionViewController * weakSelf = self;
+
+    NSData *imageData = UIImageJPEGRepresentation(image,0.5);
+    
+    NSArray * ary = [NSArray arrayWithObject:imageData];
+    
+    NSDictionary * dict = [[NSDictionary alloc] initWithObjectsAndKeys:ary,@"myfiles", nil];
+    
+    [[NetworkRequest sharedInstance] POSTImage:UploadTemp image:image dict:dict succeed:^(id data) {
+        NSString * str = [NSString stringWithFormat:@"%@",[[data objectForKey:@"header"] objectForKey:@"code"]];
+        if ([str isEqualToString:@"0000"]) {
+            
+            NSArray * ary = [data objectForKey:@"body"];
+            
+            NSString * idid = @"";
+            
+            if (ary.count>0) {
+                
+                idid = [NSString stringWithFormat:@"%@",ary[0]];
+            }
+            if ((_pictureNum - 101)<_questionModel.questionAnswerImageIdAry.count) {
+                
+                [_questionModel.questionAnswerImageIdAry replaceObjectAtIndex:(_pictureNum - 101) withObject:idid];
+                
+            }else{
+                
+                [_questionModel.questionAnswerImageIdAry addObject:idid];
+                
+            }
+            [self hideHud];
+        }else{
+            [weakSelf sendImage:image with:index];
+        }
+    } failure:^(NSError *error) {
+        
+        [self hideHud];
+        
+        [UIUtils showInfoMessage:@"上传失败，请检查网络" withVC:self];
+    }];
 }
 /*
 #pragma mark - Navigation

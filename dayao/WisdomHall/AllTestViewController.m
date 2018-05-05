@@ -22,6 +22,8 @@
 
 #import "TestQuestionsViewController.h"
 
+#import "AnswerTestQuestionsViewController.h"
+
 @interface AllTestViewController ()<UITableViewDelegate,UITableViewDataSource,TextsTableViewCellDelegate,ShareViewDelegate>
 @property (nonatomic,strong)UITableView * tableView;
 @property (nonatomic,strong)FMDatabase *db;
@@ -248,7 +250,7 @@
 }
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
-    TestQuestionsViewController * vc = [[TestQuestionsViewController alloc] init];
+    AnswerTestQuestionsViewController * vc = [[AnswerTestQuestionsViewController alloc] init];
     vc.t = _dataAry[indexPath.row];
     vc.editable = NO;
     self.hidesBottomBarWhenPushed = YES;
