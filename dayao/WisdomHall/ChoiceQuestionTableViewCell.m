@@ -91,9 +91,8 @@
     _deleImageBtnAry = [NSMutableArray arrayWithCapacity:1];
     
     for (int i = 0; i<6;i++) {
-        UIButton *btn = (UIButton *)[self.contentView viewWithTag:i+101];
         
-        UIImageView * image = [[UIImageView alloc] initWithFrame:CGRectMake(btn.frame.origin.x, btn.frame.origin.y, btn.frame.size.width, btn.frame.size.height)];
+        UIImageView * image = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, APPLICATION_WIDTH/3-20,APPLICATION_WIDTH/3-20)];
         
         [_imageAry addObject:image];
         
@@ -102,7 +101,7 @@
     for (int i = 0; i<3; i++) {
         UIButton *btn = (UIButton *)[self.contentView viewWithTag:i+1];
         
-        UIImageView * image = [[UIImageView alloc] initWithFrame:CGRectMake(btn.frame.origin.x, btn.frame.origin.y, btn.frame.size.width, btn.frame.size.height)];
+        UIImageView * image = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, APPLICATION_WIDTH/3-30, APPLICATION_WIDTH/3-30)];
         
         [_optionsImageAry addObject:image];
     }
@@ -139,13 +138,15 @@
             
             [image sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@/%@?resourceId=%@",baseUrl,FileDownload,ary[i]]] placeholderImage:[UIImage imageNamed:@"placeholder.png"]];
             
-            [self.contentView addSubview:image];
             
             UIButton *btn1 = [self viewWithTag:i+101];
             
             [btn1 setBackgroundImage:[UIImage imageNamed:@""] forState:UIControlStateNormal];
             
             [btn1 setEnabled:YES];
+            
+            [btn1 addSubview:image];
+
         }
     }else{
         
@@ -228,8 +229,7 @@
         if (optionsM.optionsImageIdAry.count>0) {
             
         }else{
-            _optionBtnAwith.constant -= (APPLICATION_WIDTH/3-20);
-            
+            [_thirdBtnA removeFromSuperview];
         }
         
         for (int i=0; i<optionsM.optionsImageIdAry.count; i++) {
@@ -241,13 +241,14 @@
             
             [image sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@/%@?resourceId=%@",baseUrl,FileDownload,optionsM.optionsImageIdAry[i]]] placeholderImage:[UIImage imageNamed:@"placeholder.png"]];
             
-            [self.contentView addSubview:image];
             
             UIButton *btn1 = [self viewWithTag:i+(row+1)*1000+1];
             
             [btn1 setBackgroundImage:[UIImage imageNamed:@""] forState:UIControlStateNormal];
 
             [btn1 setEnabled:YES];
+            
+            [btn1 addSubview:image];
         }
     }else{
         

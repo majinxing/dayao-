@@ -395,16 +395,10 @@
         if (_editable) {
             return 480;
         }else{
-            if (_questionModel.questionTitleImageIdAry.count>0||_questionModel.questionTitleImageAry.count>0) {
-                return 480;
-            }
-            return 200;
+            return  [_questionModel returnTitleHeight];
         }
     }else if (indexPath.section == 1){
-        if ([_questionModel.titleType  isEqualToString:@"5"]) {
-            return 400;
-        }
-        return 110;
+       return [_questionModel returnAnswerHeight];
     }
     return 60;
 }

@@ -7,6 +7,7 @@
 //
 
 #import "optionsModel.h"
+#import "DYHeader.h"
 
 @implementation optionsModel
 -(instancetype)init{
@@ -29,11 +30,29 @@
         return 200;
     }else{
         if (_optionsImageAry.count>0||_optionsImageIdAry.count>0) {
-            return 200;
+            return [self returnTextHeight]+APPLICATION_WIDTH/3;
         }else{
-            return 70;
+            return [self returnTextHeight];
         }
     }
     return 0;
+}
+-(float)returnTextHeight{
+    UITextView * textView1 = [[UITextView alloc] init];
+    textView1.text = self.optionsTitle;
+    
+    CGSize size = CGSizeMake( APPLICATION_WIDTH-65-20, CGFLOAT_MAX);
+    NSDictionary *dic = [NSDictionary dictionaryWithObjectsAndKeys:[UIFont systemFontOfSize:14],NSFontAttributeName, nil];
+    
+    CGFloat curheight = [textView1.text boundingRectWithSize:size
+                                                     options:NSStringDrawingUsesLineFragmentOrigin | NSStringDrawingUsesFontLeading
+                                                  attributes:dic
+                                                     context:nil].size.height;
+    
+    if (curheight<50&&curheight>0) {
+        return 50;
+    }else{
+        return curheight+20;
+    }
 }
 @end

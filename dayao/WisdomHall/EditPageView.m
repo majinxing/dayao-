@@ -58,7 +58,7 @@
     
     [self addSubview:_textView];
     
-    _textView.frame = CGRectMake(10, 0, APPLICATION_WIDTH-20, APPLICATION_HEIGHT/2-80);
+    _textView.frame = CGRectMake(10, 0, APPLICATION_WIDTH-20, APPLICATION_HEIGHT/2-80-40);
     
     UIButton * cancle = [UIButton buttonWithType:UIButtonTypeSystem];
     

@@ -87,11 +87,19 @@
         return 480;
     }else{
         if (_questionTitleImageAry.count>0||_questionTitleImageIdAry.count>0) {
-            return 480;
+            return [self returnTextHeight:_questionTitle]+(APPLICATION_WIDTH/3*2)+40;
         }else{
-            return 200;
+            return [self returnTextHeight:_questionTitle];
         }
     }
+    return 0;
+}
+-(float)returnAnswerHeight{
+    
+    
+    return [self returnTextHeight:_questionAnswer]+(APPLICATION_WIDTH/3*2)+40;
+    
+    
     return 0;
 }
 -(float)returnOptionHeight:(int)index{
@@ -116,5 +124,22 @@
             [_questionAnswerImageAry addObject:result];
         }
     }
+}
+-(float)returnTextHeight:(NSString *)str{
+    UITextView * textView = [[UITextView alloc] init];
+    textView.text = str;
+    
+    CGSize size = CGSizeMake( APPLICATION_WIDTH-10-15, CGFLOAT_MAX);
+    NSDictionary *dic = [NSDictionary dictionaryWithObjectsAndKeys:[UIFont systemFontOfSize:14],NSFontAttributeName, nil];
+    
+    CGFloat curheight = [textView.text boundingRectWithSize:size
+                                                    options:NSStringDrawingUsesLineFragmentOrigin | NSStringDrawingUsesFontLeading
+                                                 attributes:dic
+                                                    context:nil].size.height;
+    
+    if (curheight<50) {
+        return 50;
+    }
+    return curheight+20;
 }
 @end

@@ -12,6 +12,10 @@
 -(void)outViewDelegate;
 @end
 @interface imageBigView : UIView
+
+@property (nonatomic,strong) UIImageView * imageview;
+
+
 @property (nonatomic,copy) NSString * number;
 @property (nonatomic,weak)id<imageBigViewDelegate>delegate;
 -(void)addImageView:(NSString *)str;

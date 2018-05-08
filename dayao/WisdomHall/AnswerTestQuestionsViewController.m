@@ -143,9 +143,29 @@
     
     [myButton setTintColor:[UIColor whiteColor]];
     
-    self.navigationItem.rightBarButtonItem = myButton;
+//    self.navigationItem.rightBarButtonItem = myButton;
+    
+    UIBarButtonItem *backItem = [[UIBarButtonItem alloc]initWithTitle:@"<返回" style:UIBarButtonItemStylePlain target:self action:@selector(back)];
+    
+    [backItem setTintColor:[UIColor whiteColor]];
+    
+//    self.navigationItem.leftBarButtonItem = backItem;
 }
+-(void)back{
+    UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"提示" message:@"返回后将不保存答题信息，若想保存请交卷保存" preferredStyle:  UIAlertControllerStyleActionSheet];
+    //分别按顺序放入每个按钮；
+    [alert addAction:[UIAlertAction actionWithTitle:@"退出页面" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        [self.navigationController popViewControllerAnimated: YES];
+    
+    }]];
+    
 
+    [alert addAction:[UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleDestructive handler:^(UIAlertAction * _Nonnull action) {
+        //点击按钮的响应事件；
+    }]];
+    //弹出提示框；
+    [self presentViewController:alert animated:true completion:nil];
+}
 
 -(void)more{
     NSMutableArray * dataAry = [NSMutableArray arrayWithCapacity:1];

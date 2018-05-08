@@ -109,7 +109,7 @@
         [self getPicture];
     }else{
         if (!_v) {
-            _v = [[imageBigView alloc] initWithFrame:CGRectMake(0, 0, APPLICATION_WIDTH, APPLICATION_HEIGHT)];
+            _v = [[imageBigView alloc] initWithFrame:CGRectMake(0, 0, APPLICATION_WIDTH, APPLICATION_HEIGHT-64)];
         }
         if(_homeworkModel.homeworkAry.count>0&&(_imageNum-2)<_homeworkModel.homeworkAry.count) {
             [_v addImageView:_homeworkModel.homeworkAry[_imageNum -2]];

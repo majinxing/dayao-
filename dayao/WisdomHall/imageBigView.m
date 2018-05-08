@@ -14,38 +14,38 @@
 -(instancetype)initWithFrame:(CGRect)frame{
     self = [super initWithFrame:frame];
     if (self) {
+        _imageview = [[UIImageView alloc] initWithFrame:CGRectMake(10,40, APPLICATION_WIDTH-20, self.frame.size.height- 80)];
         self.backgroundColor = [UIColor whiteColor];
     }
     return self;
 }
 -(void)addImageView:(NSString *)str{
-    UIImageView * image = [[UIImageView alloc] initWithFrame:CGRectMake(10,0, APPLICATION_WIDTH-20, APPLICATION_HEIGHT-104)];
+    
     
     UserModel * user = [[Appsetting sharedInstance] getUsetInfo];
     
     NSString * baseUrl = user.host;
     
-    [image sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@/%@?resourceId=%@",baseUrl,FileDownload,str]] placeholderImage:[UIImage imageNamed:@"placeholder.png"]];
+    [_imageview sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@/%@?resourceId=%@",baseUrl,FileDownload,str]] placeholderImage:[UIImage imageNamed:@"placeholder.png"]];
     
     UIButton * btn = [UIButton buttonWithType:UIButtonTypeCustom];
     btn.frame = CGRectMake(0, 64, APPLICATION_WIDTH, APPLICATION_HEIGHT);
     [btn addTarget:self action:@selector(outView) forControlEvents:UIControlEventTouchUpInside];
     
-    [self addSubview:image];
+    [self addSubview:_imageview];
     
     [self addSubview:btn];
 }
 -(void)addImageViewWithImage:(UIImage  *)image1{
     
-    UIImageView * image = [[UIImageView alloc] initWithFrame:CGRectMake(10,0, APPLICATION_WIDTH-20, APPLICATION_HEIGHT-104)];
     
-    image.image = image1;
+    _imageview.image = image1;
     
     UIButton * btn = [UIButton buttonWithType:UIButtonTypeCustom];
     btn.frame = CGRectMake(0, 64, APPLICATION_WIDTH, APPLICATION_HEIGHT);
     [btn addTarget:self action:@selector(outView) forControlEvents:UIControlEventTouchUpInside];
     
-    [self addSubview:image];
+    [self addSubview:_imageview];
     
     [self addSubview:btn];
 }

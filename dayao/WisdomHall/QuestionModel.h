@@ -45,4 +45,6 @@
 -(float)returnTitleHeight;//返回题目高度
 
 -(float)returnOptionHeight:(int)index;//返回选项高度
+
+-(float)returnAnswerHeight;
 @end

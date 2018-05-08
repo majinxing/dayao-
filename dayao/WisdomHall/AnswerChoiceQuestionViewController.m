@@ -10,8 +10,9 @@
 #import "DYHeader.h"
 #import "ChoiceQuestionTableViewCell.h"
 #import "optionsModel.h"
+#import "imageBigView.h"
 
-@interface AnswerChoiceQuestionViewController ()<UITableViewDelegate,UITableViewDataSource,ChoiceQuestionTableViewCellDelegate,UINavigationControllerDelegate,UIImagePickerControllerDelegate,UIPickerViewDelegate,UIPickerViewDataSource>
+@interface AnswerChoiceQuestionViewController ()<UITableViewDelegate,UITableViewDataSource,ChoiceQuestionTableViewCellDelegate,UINavigationControllerDelegate,UIImagePickerControllerDelegate,UIPickerViewDelegate,UIPickerViewDataSource,imageBigViewDelegate>
 @property (nonatomic,strong)UITableView * tableView;
 
 @property (nonatomic,assign)int temp;//标记选择的模块
@@ -26,6 +27,9 @@
 @property (nonatomic,strong)NSArray * scoreAry;//存储分数
 
 @property (nonatomic,assign) int score;//标记转轮的位置
+
+@property (nonatomic,strong) imageBigView * v;
+
 @end
 
 @implementation AnswerChoiceQuestionViewController
@@ -63,8 +67,25 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
-
+#pragma mark imageBigViewDelegate
+-(void)outViewDelegate{
+    [_v removeFromSuperview];
+}
 #pragma mark ChoiceQuestionTableViewCellDelegate
+-(void)firstSelectImageBtnDelegate:(UIButton *)sender{
+    if (!_v) {
+        _v = [[imageBigView alloc] initWithFrame:CGRectMake(0, 0, APPLICATION_WIDTH, APPLICATION_HEIGHT-104)];
+    }
+    _v.delegate = self;
+    
+    if ((sender.tag-101)<_questionModel.questionTitleImageIdAry.count&&_questionModel.questionTitleImageIdAry.count>0) {
+        
+        [_v addImageView:_questionModel.questionTitleImageIdAry[sender.tag-101]];
+        
+        [self.view addSubview:_v];
+        
+    }
+}
 //被选中
 -(void)thirthSelectOptionDelegate:(UIButton *)sender{
     if ([_questionModel.titleType isEqualToString:@"1"]) {
@@ -120,7 +141,23 @@
         
         [self selectPicture];
     }else{
+        if (!_v) {
+            _v = [[imageBigView alloc] initWithFrame:CGRectMake(0, 0, APPLICATION_WIDTH, APPLICATION_HEIGHT-104)];
+        }
+        _v.delegate = self;
         
+        _temp = (int)sender.tag/1000+4;
+        
+        _pictureNum = (int)sender.tag%1000;
+        
+        optionsModel * opt = _questionModel.qustionOptionsAry[_temp-5];
+        
+        if ((_pictureNum-1)<opt.optionsImageIdAry.count&&opt.optionsImageIdAry.count>0) {
+            
+            [_v addImageView:opt.optionsImageIdAry[_pictureNum-1]];
+            
+            [self.view addSubview:_v];
+        }
     }
     
 }

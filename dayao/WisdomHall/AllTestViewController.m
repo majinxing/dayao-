@@ -148,10 +148,14 @@
         NSDictionary * dict = [[NSDictionary alloc] initWithObjectsAndKeys:_t.textId,@"id", nil];
         [[NetworkRequest sharedInstance] POST:DelecateText dict:dict succeed:^(id data) {
             NSString * str = [NSString stringWithFormat:@"%@",[[data objectForKey:@"header"] objectForKey:@"code"]];
-            if ([str isEqualToString:@"6676"]) {
-                [UIUtils showInfoMessage:@"删除考试失败，只有考试结束之后才能删除" withVC:self];
-            }else{
+            NSString * s = [NSString stringWithFormat:@"%@",[[data objectForKey:@"header"] objectForKey:@"message"]];
+
+            if ([str isEqualToString:@"0000"]) {
                 [self getData];
+
+            }else{
+                [UIUtils showInfoMessage:s withVC:self];
+
             }
             [_vote hide];
         } failure:^(NSError *error) {
@@ -165,10 +169,12 @@
         [[NetworkRequest sharedInstance] POST:StopText dict:dict succeed:^(id data) {
             NSLog(@"%@",data);
             NSString * str = [NSString stringWithFormat:@"%@",[[data objectForKey:@"header"] objectForKey:@"code"]];
-            if ([str isEqualToString:@"6676"]) {
-                [UIUtils showInfoMessage:@"考试已结束" withVC:self];
-            }else{
+            NSString * s = [NSString stringWithFormat:@"%@",[[data objectForKey:@"header"] objectForKey:@"message"]];
+            if ([str isEqualToString:@"0000"]) {
                 [self getData];
+
+            }else{
+                [UIUtils showInfoMessage:s withVC:self];
             }
             [_vote hide];
         } failure:^(NSError *error) {
@@ -181,10 +187,15 @@
         [[NetworkRequest sharedInstance] POST:StartText dict:dict succeed:^(id data) {
             NSLog(@"%@",data);
             NSString * str = [NSString stringWithFormat:@"%@",[[data objectForKey:@"header"] objectForKey:@"code"]];
-            if ([str isEqualToString:@"6676"]) {
-                [UIUtils showInfoMessage:@"考试已结束" withVC:self];
-            }else{
+            
+            NSString * s = [NSString stringWithFormat:@"%@",[[data objectForKey:@"header"] objectForKey:@"message"]];
+
+            if ([str isEqualToString:@"0000"]) {
                 [self getData];
+
+            }else{
+                [UIUtils showInfoMessage:s withVC:self];
+
             }
             [_vote hide];
             
@@ -197,6 +208,7 @@
         [[NetworkRequest sharedInstance] GET:QuertyTestScores dict:dict succeed:^(id data) {
             NSLog(@"%@",data);
             NSString * str = [NSString stringWithFormat:@"%@",[[data objectForKey:@"header"] objectForKey:@"code"]];
+            
             if ([str isEqualToString:@"0000"]) {
                 NSMutableArray * ary = [NSMutableArray arrayWithCapacity:1];
                 NSArray * a = [data objectForKey:@"body"];
