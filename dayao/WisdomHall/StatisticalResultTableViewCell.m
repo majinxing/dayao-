@@ -28,6 +28,8 @@
 @property (strong, nonatomic) IBOutlet UIView *bSecView;
 
 @property (strong, nonatomic) IBOutlet UILabel *teacherSecName;
+@property (strong, nonatomic) IBOutlet UILabel *leaveEarlyLab;
+@property (strong, nonatomic) IBOutlet UILabel *lateLab;
 
 @end
 
@@ -71,30 +73,45 @@
 -(void)addSecContentView:(StatisticalResultModel *)s{
     _nameSecLabel.text = [NSString stringWithFormat:@"名        称：   %@",s.resultName];
     _totalSecLabel.text = [NSString stringWithFormat:@"应到人数：   %@人",s.totalNum];
-    _actSecLabel.text = [NSString stringWithFormat:@"实到人数：   %@人",s.actNum];
+    
+    int actInt = [[NSString stringWithFormat:@"%@",s.actNum] intValue]+[[NSString stringWithFormat:@"%@",s.leaveEarlyNum] intValue]+[[NSString stringWithFormat:@"%@",s.lateNum] intValue];
+    
+    _actSecLabel.text = [NSString stringWithFormat:@"实到人数：   %d人",actInt];
     _leaveSecLabel.text = [NSString stringWithFormat:@"请假人数：   %@人",s.leaveNum];
-    _absenceSecLabel.text = [NSString stringWithFormat:@"缺勤人数：   %@人",s.absenceNum];
+    
+    int absenceInt = [[NSString stringWithFormat:@"%@",s.totalNum] intValue] - actInt;
+    
+    _absenceSecLabel.text = [NSString stringWithFormat:@"缺勤人数：   %d人",absenceInt];
+    
+    _leaveEarlyLab.text = [NSString stringWithFormat:@"早退人数：   %@",s.leaveEarlyNum];
+    
+    _lateLab.text = [NSString stringWithFormat:@"迟到人数：   %@",s.lateNum];
+    
     _teacherSecName.text = [NSString stringWithFormat:@"教师名字：   %@",s.teacherName];
+    
     if ([UIUtils isBlankString:_teacherSecName.text]) {
 //        _teacherSecName.frame.size.height = 0;
     }
-    _colorView.frame = CGRectMake(0, 0, self.bSecView.frame.size.width*[s.attendanceRate doubleValue]/100, 21);
     
-    _rateSecLabel.text = [NSString stringWithFormat:@"%.0f%%",[s.attendanceRate doubleValue]];
+    double attendanceRate = (double)actInt/[[NSString stringWithFormat:@"%@",s.totalNum] doubleValue]*100;
+    
+    _colorView.frame = CGRectMake(0, 0, self.bSecView.frame.size.width*attendanceRate/100, 21);
+    
+    _rateSecLabel.text = [NSString stringWithFormat:@"%.0f%%",attendanceRate];
     
     [self.bSecView addSubview:_colorView];
     
-    if (0<=[s.attendanceRate doubleValue]&&[s.attendanceRate doubleValue]<=20) {
+    if (0<=attendanceRate&&attendanceRate<=20) {
         _colorView.backgroundColor = [UIColor colorWithHexString:@"#e51c23"];
         _rateSecLabel.textColor = [UIColor colorWithHexString:@"#e51c23"];
         
-    }else if (20<[s.attendanceRate doubleValue]&&[s.attendanceRate doubleValue]<=60) {
+    }else if (20<attendanceRate&&attendanceRate<=60) {
         _colorView.backgroundColor = [UIColor colorWithHexString:@"#eb3d52"];
         _rateSecLabel.textColor = [UIColor colorWithHexString:@"#eb3d52"];
-    }else if (60<[s.attendanceRate doubleValue]&&[s.attendanceRate doubleValue]<=80) {
+    }else if (60<attendanceRate&&attendanceRate<=80) {
         _colorView.backgroundColor = [UIColor colorWithHexString:@"#45b033"];
         _rateSecLabel.textColor = [UIColor colorWithHexString:@"#45b033"];
-    }else if (80<[s.attendanceRate doubleValue]&&[s.attendanceRate doubleValue]<=100) {
+    }else if (80<attendanceRate&&attendanceRate<=100) {
         _colorView.backgroundColor = [UIColor colorWithHexString:@"#259b24"];
         _rateSecLabel.textColor = [UIColor colorWithHexString:@"#259b24"];
     }

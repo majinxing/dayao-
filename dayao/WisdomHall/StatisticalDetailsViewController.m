@@ -73,7 +73,7 @@
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
-    return 205;
+    return 250;
 }
 -(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
     return 10;

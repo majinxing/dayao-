@@ -8,6 +8,7 @@
 
 #import "MeetingModel.h"
 #import "SignPeople.h"
+#import "DYHeader.h"
 
 @implementation MeetingModel
 -(instancetype)init{
@@ -25,21 +26,29 @@
     self.meetingDetailId = [NSString stringWithFormat:@"%@",[dict objectForKey:@"detailId"]];
     self.mck = [[NSMutableArray alloc] initWithArray:[[dict objectForKey:@"mck"] componentsSeparatedByString:@";"]];
     self.seat = [NSString stringWithFormat:@"%@",[dict objectForKey:@"seat"]];
-//    self.meetingHostId = [dict objectForKey:@"teacherId"];
+
     self.meetingHost = [dict objectForKey:@"userName"];
     self.meetingTime = [dict objectForKey:@"actStartTime"];
-    self.meetingPlace = [dict objectForKey:@"roomName"];
-//    self.meetingPlaceId = [dict objectForKey:@"roomId"];
-//    self.meetingTotal = [dict objectForKey:@"total"];
-    self.signWay = [dict objectForKey:@"signWay"];
-//    self.imageUrl = [dict objectForKey:@"url"];
-//    self.meetingStatus = [dict objectForKey:@"status"];
-    self.meetingName = [dict objectForKey:@"name"];
-    self.signStatus = [dict objectForKey:@"signStatus"];
-    if ([[NSString stringWithFormat:@"%@",self.signStatus] isEqualToString:@"3"]) {
-        self.signStatus = @"5";
+    
+    NSString * str = [NSString stringWithFormat:@"%@",[dict objectForKey:@"signStartTime"]];
+
+    if (![UIUtils isBlankString:str]) {
+        self.signStartTime = str;//[dict objectForKey:@"actStartTime"];
+        self.signStartTime = [self.signStartTime stringByReplacingOccurrencesOfString:@"\n" withString:@" "];
+        self.signStartTime = [self.signStartTime stringByReplacingOccurrencesOfString:@"\t" withString:@""];
+        self.signStartTime = [UIUtils timeAddTenMin:self.signStartTime];
+    }else{
+        self.signStartTime = [NSString stringWithFormat:@"%@",self.meetingTime];
     }
-//    self.url = [dict objectForKey:@"url"];
+    
+    self.meetingPlace = [dict objectForKey:@"roomName"];
+
+    self.signWay = [dict objectForKey:@"signWay"];
+
+    self.meetingName = [dict objectForKey:@"name"];
+    
+    self.signStatus = [NSString stringWithFormat:@"%@",[dict objectForKey:@"signStatus"]];
+    
     self.userSeat = [dict objectForKey:@"userSeat"];
     
     NSArray * a = [dict objectForKey:@"facilitatorInfoList"];

@@ -137,6 +137,14 @@
                     _isEnable = YES;
                 }else if ([[NSString stringWithFormat:@"%@",s.signStatus] isEqualToString:@"3"]){
                     _selfSignStatus = @"签到状态：请假";
+                    _c.signStatus = @"3";
+                    _isEnable = NO;
+                }else if ([[NSString stringWithFormat:@"%@",s.signStatus] isEqualToString:@"4"]){
+                    _selfSignStatus = @"签到状态：迟到";
+                    _c.signStatus = @"4";
+                    _isEnable = NO;
+                }else if ([[NSString stringWithFormat:@"%@",s.signStatus] isEqualToString:@"5"]){
+                    _selfSignStatus = @"签到状态：早退";
                     _c.signStatus = @"5";
                     _isEnable = NO;
                 }
@@ -548,10 +556,10 @@
     if ([[NSString stringWithFormat:@"%@",_user.peopleId] isEqualToString:[NSString stringWithFormat:@"%@",_c.teacherId]]) {
         return;
     }
-    if (![UIUtils validateWithStartTime:_c.actStarTime withExpireTime:nil]) {
+    if (![UIUtils validateWithStartTime:_c.signStartTime withExpireTime:nil]) {
         return;
     }else{
-        if ([[NSString stringWithFormat:@"%@",_c.signStatus] isEqualToString:@"2"]) {
+        if (![[NSString stringWithFormat:@"%@",_c.signStatus] isEqualToString:@"1"]) {
             return;
         }else{
             [self autoSign];
@@ -559,11 +567,11 @@
     }
 }
 -(void)autoSign{
-    if (![UIUtils validateWithStartTime:_c.actStarTime withExpireTime:nil]) {
-       
+    if (![UIUtils validateWithStartTime:_c.signStartTime withExpireTime:nil]) {
+        
         return;
     }else{
-        if ([[NSString stringWithFormat:@"%@",_c.signStatus] isEqualToString:@"2"]) {
+        if (![[NSString stringWithFormat:@"%@",_c.signStatus] isEqualToString:@"1"]) {
             return;
         }
     }
@@ -675,7 +683,7 @@
     }
 }
 -(void)signSendIng{
-    _c.signStatus = @"3";
+    _c.signStatus = @"300";
     [_tableView reloadData];
 }
 -(void)sendSignInfo{
@@ -683,9 +691,27 @@
     
     NSDictionary * dict = [[NSDictionary alloc] initWithObjectsAndKeys:_c.sclassId,@"Id",_c.courseDetailId,@"courseDetailId",_user.peopleId,@"userId" ,idfv,@"mck",@"2",@"status",nil];
     [[NetworkRequest sharedInstance] POST:ClassSign dict:dict succeed:^(id data) {
-        NSLog(@"succedd:%@",data);
-        [self alter:[[data objectForKey:@"header"] objectForKey:@"code"]];
+        NSString *message = [NSString stringWithFormat:@"%@",[[data objectForKey:@"header"] objectForKey:@"message"]];
+        
+        _c.signStatus = [NSString stringWithFormat:@"%@",[[data objectForKey:@"body"] objectForKey:@"status"]];
+        
+        _c.courseSignId = [NSString stringWithFormat:@"%@",[[data objectForKey:@"body"] objectForKey:@"id"]];
+        
+        if (![_c.signStatus isEqualToString:@"1"]) {
+            [self signPictureUpdate];
+            // 2.创建通知
+            NSNotification *notification =[NSNotification notificationWithName:@"UpdateTheClassPage" object:nil userInfo:nil];
+            // 3.通过 通知中心 发送 通知
+            
+            [[NSNotificationCenter defaultCenter] postNotification:notification];
+        }else{
+            [UIUtils showInfoMessage:message withVC:self];
+        }
+        
         [self hideHud];
+        
+        [_tableView reloadData];
+        
     } failure:^(NSError *error) {
       
         NSString * str = [NSString stringWithFormat:@"签到失败请重新签到，请保证数据流量的连接"];
@@ -702,14 +728,14 @@
         
         [self presentViewController:alertC animated:YES completion:nil];
         
-        _c.signStatus = @"4";
+        _c.signStatus = @"400";
         
         [_tableView reloadData];
     }];
 }
 
 -(void)codePressedDelegate:(UIButton *)btn{
-    if ([btn.titleLabel.text isEqualToString:@"扫码签到"]) {
+    if ([_c.signStatus isEqualToString:@"1"]) {
         if (![UIUtils validateWithStartTime:_c.signStartTime withExpireTime:nil]) {
             [UIUtils showInfoMessage:@"课程开始之后一定时间范围内才可以签到" withVC:self];
             return;

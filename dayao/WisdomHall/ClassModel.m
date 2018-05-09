@@ -43,7 +43,7 @@
     
     self.teacherWorkNo = [dict objectForKey:@"teacherWorkNo"];
     self.courseType = [dict objectForKey:@"courseType"];
-    self.signStatus = [dict objectForKey:@"signStatus"];
+    self.signStatus = [NSString stringWithFormat:@"%@",[dict objectForKey:@"signStatus"]];
     NSString * str = [NSString stringWithFormat:@"%@",[dict objectForKey:@"signStartTime"]];
     if (![UIUtils isBlankString:str]) {
         self.signStartTime = str;//[dict objectForKey:@"actStartTime"];
@@ -53,6 +53,8 @@
     }else{
         self.signStartTime = [NSString stringWithFormat:@"%@",self.actStarTime];
     }
+    _courseSignId = [NSString stringWithFormat:@"%@",[dict objectForKey:@"courseSignId"]];
+
 }
 @end
 

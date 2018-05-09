@@ -19,7 +19,9 @@
     _absenceNum = [NSString stringWithFormat:@"%@",[dict objectForKey:@"absenceNum"]];
     _leaveNum = [NSString stringWithFormat:@"%@",[dict objectForKey:@"leaveNum"]];
     _actNum = [NSString stringWithFormat:@"%@",[dict objectForKey:@"actNum"]];
+    _lateNum = [NSString stringWithFormat:@"%@",[dict objectForKey:@"lateNum"]];
     _attendanceRate = [NSString stringWithFormat:@"%@",[dict objectForKey:@"attendanceRate"]];
     _teacherName = [NSString stringWithFormat:@"%@",[dict objectForKey:@"teacherName"]];
+    _leaveEarlyNum = [NSString stringWithFormat:@"%@",[dict objectForKey:@"leaveEarlyNum"]];
 }
 @end

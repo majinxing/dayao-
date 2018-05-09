@@ -26,6 +26,7 @@
 @property (weak, nonatomic) IBOutlet UIButton *signBtn;
 @property (weak, nonatomic) IBOutlet UIButton *code;
 @property (strong, nonatomic) IBOutlet UIImageView *teacherPicture;
+@property (strong, nonatomic) IBOutlet NSLayoutConstraint *imageWidth;
 
 @property (strong,nonatomic) UIImageView * signCode;
 
@@ -63,6 +64,7 @@
     }
 }
 -(void)addFirstCOntentViewWithClassModel:(ClassModel *)classModel{
+    _imageWidth.constant -=(APPLICATION_WIDTH/2+40);
     _meetName.text = [NSString stringWithFormat:@"课程名：%@",classModel.name];
     NSMutableString *strUrl = [NSMutableString stringWithFormat:@"%@",classModel.time];
     [strUrl deleteCharactersInRange:NSMakeRange(strUrl.length-3, 3)];
@@ -181,7 +183,7 @@
             [_code setEnabled:YES];
             [_code setBackgroundColor:[UIColor colorWithHexString:@"#29a7e1"]];
         }
-    }else if ([[NSString stringWithFormat:@"%@",meetModel.signStatus] isEqualToString:@"3"]){
+    }else if ([[NSString stringWithFormat:@"%@",meetModel.signStatus] isEqualToString:@"300"]){
         [_signBtn setTitle:@"签到状态：正在签到，请不要退出界面" forState:UIControlStateNormal];
         [_code setTitle:@"扫码签到" forState:UIControlStateNormal];
         [_signBtn setEnabled:NO];
@@ -192,7 +194,7 @@
             [_code setEnabled:YES];
             [_code setBackgroundColor:[UIColor colorWithHexString:@"#29a7e1"]];
         }
-    }else if ([[NSString stringWithFormat:@"%@",meetModel.signStatus] isEqualToString:@"4"]){
+    }else if ([[NSString stringWithFormat:@"%@",meetModel.signStatus] isEqualToString:@"400"]){
         [_signBtn setTitle:@"签到状态：连接数据流量后再次点击" forState:UIControlStateNormal];
         [_code setTitle:@"扫码签到" forState:UIControlStateNormal];
         [_signBtn setEnabled:YES];
@@ -203,8 +205,30 @@
             [_code setEnabled:YES];
             [_code setBackgroundColor:[UIColor colorWithHexString:@"#29a7e1"]];
         }
-    }else if ([[NSString stringWithFormat:@"%@",meetModel.signStatus] isEqualToString:@"5"]){
+    }else if ([[NSString stringWithFormat:@"%@",meetModel.signStatus] isEqualToString:@"3"]){
         [_signBtn setTitle:@"签到状态：请假" forState:UIControlStateNormal];
+        [_code setTitle:@"扫码签到" forState:UIControlStateNormal];
+        [_signBtn setEnabled:NO];
+        if (!isEnable) {
+            [_code setEnabled:NO];
+            [_code setBackgroundColor:[UIColor grayColor]];
+        }else{
+            [_code setEnabled:YES];
+            [_code setBackgroundColor:[UIColor colorWithHexString:@"#29a7e1"]];
+        }
+    }else if ([[NSString stringWithFormat:@"%@",meetModel.signStatus] isEqualToString:@"4"]){
+        [_signBtn setTitle:@"签到状态：迟到" forState:UIControlStateNormal];
+        [_code setTitle:@"扫码签到" forState:UIControlStateNormal];
+        [_signBtn setEnabled:NO];
+        if (!isEnable) {
+            [_code setEnabled:NO];
+            [_code setBackgroundColor:[UIColor grayColor]];
+        }else{
+            [_code setEnabled:YES];
+            [_code setBackgroundColor:[UIColor colorWithHexString:@"#29a7e1"]];
+        }
+    }else if ([[NSString stringWithFormat:@"%@",meetModel.signStatus] isEqualToString:@"5"]){
+        [_signBtn setTitle:@"签到状态：早退" forState:UIControlStateNormal];
         [_code setTitle:@"扫码签到" forState:UIControlStateNormal];
         [_signBtn setEnabled:NO];
         if (!isEnable) {
@@ -227,8 +251,8 @@
         }
     }
 }
--(void)addThirdContentViewWithClassModel:(ClassModel *)meetModel isEnable:(BOOL)isEnable{
-    if ([[NSString stringWithFormat:@"%@",meetModel.signStatus] isEqualToString:@"1"]) {
+-(void)addThirdContentViewWithClassModel:(ClassModel *)classModel isEnable:(BOOL)isEnable{
+    if ([[NSString stringWithFormat:@"%@",classModel.signStatus] isEqualToString:@"1"]) {
         [_signBtn setTitle:@"一键签到" forState:UIControlStateNormal];
         [_code setTitle:@"扫码签到" forState:UIControlStateNormal];
         [_signBtn setEnabled:YES];
@@ -240,7 +264,7 @@
             [_code setBackgroundColor:[UIColor colorWithHexString:@"#29a7e1"]];
         }
         
-    }else if([[NSString stringWithFormat:@"%@",meetModel.signStatus] isEqualToString:@"2"]){
+    }else if([[NSString stringWithFormat:@"%@",classModel.signStatus] isEqualToString:@"2"]){
         [_signBtn setTitle:@"签到状态：已签到" forState:UIControlStateNormal];
         [_code setTitle:@"生成二维码" forState:UIControlStateNormal];
         [_signBtn setEnabled:YES];
@@ -252,8 +276,8 @@
             [_code setBackgroundColor:[UIColor colorWithHexString:@"#29a7e1"]];
         }
         
-    }else if ([[NSString stringWithFormat:@"%@",meetModel.signStatus] isEqualToString:@"3"]){
-        [_signBtn setTitle:@"签到状态：正在签到，请不要退出界面" forState:UIControlStateNormal];
+    }else if ([[NSString stringWithFormat:@"%@",classModel.signStatus] isEqualToString:@"300"]){
+        [_signBtn setTitle:@"正在签到，请不要退出界面" forState:UIControlStateNormal];
         [_code setTitle:@"扫码签到" forState:UIControlStateNormal];
         [_signBtn setEnabled:NO];
         if (!isEnable) {
@@ -263,8 +287,8 @@
             [_code setEnabled:YES];
             [_code setBackgroundColor:[UIColor colorWithHexString:@"#29a7e1"]];
         }
-    }else if ([[NSString stringWithFormat:@"%@",meetModel.signStatus] isEqualToString:@"4"]){
-        [_signBtn setTitle:@"签到状态：连接数据流量后再次点击" forState:UIControlStateNormal];
+    }else if ([[NSString stringWithFormat:@"%@",classModel.signStatus] isEqualToString:@"400"]){
+        [_signBtn setTitle:@"连接数据流量再点击" forState:UIControlStateNormal];
         [_code setTitle:@"扫码码签到" forState:UIControlStateNormal];
         [_signBtn setEnabled:YES];
         if (!isEnable) {
@@ -274,8 +298,30 @@
             [_code setEnabled:YES];
             [_code setBackgroundColor:[UIColor colorWithHexString:@"#29a7e1"]];
         }
-    }else if ([[NSString stringWithFormat:@"%@",meetModel.signStatus] isEqualToString:@"5"]){
+    }else if ([[NSString stringWithFormat:@"%@",classModel.signStatus] isEqualToString:@"3"]){
         [_signBtn setTitle:@"签到状态：请假" forState:UIControlStateNormal];
+        [_code setTitle:@"扫码签到" forState:UIControlStateNormal];
+        [_signBtn setEnabled:NO];
+        if (!isEnable) {
+            [_code setEnabled:NO];
+            [_code setBackgroundColor:[UIColor grayColor]];
+        }else{
+            [_code setEnabled:YES];
+            [_code setBackgroundColor:[UIColor colorWithHexString:@"#29a7e1"]];
+        }
+    }else if ([[NSString stringWithFormat:@"%@",classModel.signStatus] isEqualToString:@"4"]){
+        [_signBtn setTitle:@"签到状态：迟到" forState:UIControlStateNormal];
+        [_code setTitle:@"扫码签到" forState:UIControlStateNormal];
+        [_signBtn setEnabled:NO];
+        if (!isEnable) {
+            [_code setEnabled:NO];
+            [_code setBackgroundColor:[UIColor grayColor]];
+        }else{
+            [_code setEnabled:YES];
+            [_code setBackgroundColor:[UIColor colorWithHexString:@"#29a7e1"]];
+        }
+    }else if ([[NSString stringWithFormat:@"%@",classModel.signStatus] isEqualToString:@"5"]){
+        [_signBtn setTitle:@"签到状态：早退" forState:UIControlStateNormal];
         [_code setTitle:@"扫码签到" forState:UIControlStateNormal];
         [_signBtn setEnabled:NO];
         if (!isEnable) {

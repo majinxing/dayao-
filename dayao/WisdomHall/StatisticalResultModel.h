@@ -17,6 +17,9 @@
 @property (nonatomic,copy) NSString * lateNum;//迟到数
 @property (nonatomic,copy) NSString * totalNum;//应到人数
 @property (nonatomic,copy) NSString * actNum;//实到人数
+
+@property (nonatomic,copy) NSString * leaveEarlyNum;//早退人数
+
 @property (nonatomic,copy) NSString * teacherName;//老师名字
 -(void)setValueWithDict:(NSDictionary *)dict;
 //@property (nonatomic,copy) NSString *

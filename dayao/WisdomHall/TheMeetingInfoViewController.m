@@ -457,7 +457,7 @@
     [self.navigationController pushViewController:signListVC animated:YES];
 }
 -(void)viewWillAppear:(BOOL)animated{
-    if (![UIUtils validateWithStartTime:_meetingModel.meetingTime withExpireTime:nil]) {
+    if (![UIUtils validateWithStartTime:_meetingModel.signStartTime withExpireTime:nil]) {
         return;
     }else{
         if ([[NSString stringWithFormat:@"%@",_meetingModel.signStatus] isEqualToString:@"2"]) {
@@ -473,7 +473,7 @@
 }
 -(void)autoSign{
     
-    if (![UIUtils validateWithStartTime:_meetingModel.meetingTime withExpireTime:nil]) {
+    if (![UIUtils validateWithStartTime:_meetingModel.signStartTime withExpireTime:nil]) {
 
         return;
     }
@@ -529,7 +529,7 @@
     
     [self showHudInView:self.view hint:NSLocalizedString(@"正在加载数据", @"Load data...")];
     
-    if (![UIUtils validateWithStartTime:_meetingModel.meetingTime withExpireTime:nil]) {
+    if (![UIUtils validateWithStartTime:_meetingModel.signStartTime withExpireTime:nil]) {
         if ([[NSString stringWithFormat:@"%@",_meetingModel.signStatus] isEqualToString:@"2"]) {
             [UIUtils showInfoMessage:@"已签到,并已过签到时间不能上传照片" withVC:self];
         }else{
@@ -613,7 +613,7 @@
     }
 }
 -(void)signSendIng{
-    _meetingModel.signStatus = @"3";
+    _meetingModel.signStatus = @"300";
     [_tableView reloadData];
 }
 -(void)sendSignInfo{
@@ -641,7 +641,7 @@
         
         [self presentViewController:alertC animated:YES completion:nil];
         [self hideHud];
-        _meetingModel.signStatus = @"4";
+        _meetingModel.signStatus = @"400";
         [_tableView reloadData];
     }];
 }
@@ -683,7 +683,7 @@
 }
 -(void)codePressedDelegate:(UIButton *)btn{
     if ([btn.titleLabel.text isEqualToString:@"扫码签到"]) {
-        if (![UIUtils validateWithStartTime:_meetingModel.meetingTime withExpireTime:nil]) {
+        if (![UIUtils validateWithStartTime:_meetingModel.signStartTime withExpireTime:nil]) {
             [UIUtils showInfoMessage:@"会议开始之后一定时间范围内才可以签到" withVC:self];
             return;
         }

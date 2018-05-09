@@ -52,22 +52,39 @@
         cell = [[[NSBundle mainBundle] loadNibNamed:@"PersonalInfoTableViewCell" owner:self options:nil] objectAtIndex:index];
     }
     if (indexPath.section == 1) {
-        SignPeople * ss = ary[(int)indexPath.row];//[[SignPeople alloc] init];
-//        [ss setInfoWithDict:ary[(int)indexPath.row]];
+        SignPeople * ss = ary[(int)indexPath.row];
         
         cell.personalNameLabel.text = [NSString stringWithFormat:@"姓名 :%@",ss.name];
         cell.workNo.text = [NSString stringWithFormat:@"学号 :%@",ss.workNo];
+        
         if (![UIUtils isBlankString:[NSString stringWithFormat:@"%@",ss.pictureId]]) {
+            
             [cell.headImage sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@?resourceId=%@",BaseURL,FileDownload,ss.pictureId]] placeholderImage:[UIImage imageNamed:@"signa.png"]];
+            
         }else{
             cell.headImage.image = [UIImage imageNamed:@"headImage"];
         }
+        
+        cell.leave.backgroundColor = [UIColor whiteColor];
+        
+        cell.leave.textColor = [UIColor colorWithHexString:@"#29a7e1"];
+        
         if ([[NSString stringWithFormat:@"%@",ss.signStatus] isEqualToString:@"3"]) {
-            cell.leave.backgroundColor = [UIColor whiteColor];
-            cell.leave.textColor = [UIColor colorWithHexString:@"#29a7e1"];
+            cell.leave.text = @"请假";
+            
+        }if ([[NSString stringWithFormat:@"%@",ss.signStatus] isEqualToString:@"4"]) {
+            
+          cell.leave.text = @"迟到";
+            
+        }if ([[NSString stringWithFormat:@"%@",ss.signStatus] isEqualToString:@"5"]) {
+            
+           cell.leave.text = @"早退";
+            
         }else{
+            //mjx
             cell.leave.backgroundColor = [UIColor clearColor];
             cell.leave.textColor = [UIColor clearColor];
+            
         }
     }
     return cell;
