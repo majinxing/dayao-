@@ -23,7 +23,11 @@
     dispatch_once(&onceToken, ^{
         
         // baseURL 的目的，就是让后续的网络访问直接使用 相对路径即可，baseURL 的路径一定要有 / 结尾
-        NSURL *baseURL = [NSURL URLWithString:BaseURL];
+        UserModel * user = [[Appsetting sharedInstance] getUsetInfo];
+        
+        NSString * base = user.host;
+        
+        NSURL *baseURL = [NSURL URLWithString:user.host];;
         
         NSURLSessionConfiguration *config = [NSURLSessionConfiguration defaultSessionConfiguration];
         
@@ -171,7 +175,7 @@
     
     [manager POST:URLString parameters:dict constructingBodyWithBlock:^(id<AFMultipartFormData>  _Nonnull formData) {
         
-        NSData *imageData = UIImageJPEGRepresentation(uploadImage,0.5);
+        NSData *imageData = UIImageJPEGRepresentation(uploadImage,0.1);
         
         UserModel * user = [[Appsetting sharedInstance] getUsetInfo];
         

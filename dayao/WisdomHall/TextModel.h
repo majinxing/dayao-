@@ -23,6 +23,8 @@
 @property (nonatomic,copy) NSString * statusName;           //试卷发布状态
 @property (nonatomic,copy) NSString * score;                //试卷总分
 
+@property (nonatomic,copy) NSString * resultStatus;         //试卷的批阅状态
+
 -(BOOL)whetherIsEmpty;
 
 -(void)setSelfInfoWithDict:(NSDictionary *)dict;

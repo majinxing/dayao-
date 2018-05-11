@@ -8,9 +8,18 @@
 
 #import <UIKit/UIKit.h>
 #import "QuestionModel.h"
+@protocol AnswerEssayQuestionViewControllerDelegate<NSObject>
 
+-(void)handleSwipeFromDelegate:(UISwipeGestureRecognizer *)recognizer;
+
+@end
 @interface AnswerEssayQuestionViewController : UIViewController
+
+@property (nonatomic,weak)id<AnswerEssayQuestionViewControllerDelegate>delegate;
+
 @property (nonatomic,strong)QuestionModel * questionModel;
 
 @property (nonatomic,assign)BOOL editable;
+
+@property (nonatomic,assign)int titleNum;//题号
 @end

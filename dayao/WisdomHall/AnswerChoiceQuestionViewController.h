@@ -9,10 +9,18 @@
 #import <UIKit/UIKit.h>
 #import "QuestionModel.h"
 
+@protocol AnswerChoiceQuestionViewControllerDelegate<NSObject>
+-(void)handleSwipeFromDelegate:(UISwipeGestureRecognizer *)recognizer;
+@end
 @interface AnswerChoiceQuestionViewController : UIViewController
+
+@property (nonatomic,weak)id<AnswerChoiceQuestionViewControllerDelegate>delegate;
+
 @property (nonatomic,assign)BOOL selectMore;//是否多选
 
 @property (nonatomic,strong)QuestionModel * questionModel;
 
 @property (nonatomic,assign)BOOL editable;
+
+@property (nonatomic,assign)int titleNum;//题号
 @end

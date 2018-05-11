@@ -57,9 +57,13 @@
         cell.personalNameLabel.text = [NSString stringWithFormat:@"姓名 :%@",ss.name];
         cell.workNo.text = [NSString stringWithFormat:@"学号 :%@",ss.workNo];
         
+        UserModel * user = [[Appsetting sharedInstance] getUsetInfo];
+        
+        NSString * base = user.host;
+        
         if (![UIUtils isBlankString:[NSString stringWithFormat:@"%@",ss.pictureId]]) {
             
-            [cell.headImage sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@?resourceId=%@",BaseURL,FileDownload,ss.pictureId]] placeholderImage:[UIImage imageNamed:@"signa.png"]];
+            [cell.headImage sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@?resourceId=%@",base,FileDownload,ss.pictureId]] placeholderImage:[UIImage imageNamed:@"signa.png"]];
             
         }else{
             cell.headImage.image = [UIImage imageNamed:@"headImage"];

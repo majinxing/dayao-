@@ -17,6 +17,7 @@
 #import "GroupListViewController.h"
 #import "ChangeThemeInfoViewController.h"
 #import "AboutUSViewController.h"
+#import "HelpViewController.h"
 
 @interface PersonalCenterViewController ()<UITableViewDelegate,UITableViewDataSource>
 @property(nonatomic,strong)UITableView * tableview;
@@ -62,7 +63,7 @@
     if (section == 0) {
         return 1;
     }else if (section == 1){
-        return 6;
+        return 7;
     }
     return 0;
 }
@@ -105,6 +106,11 @@
             self.hidesBottomBarWhenPushed = NO;
         }else if (indexPath.row == 5){
             FeedbackViewController * f = [[FeedbackViewController alloc] init];
+            [self.navigationController pushViewController:f animated:YES];
+            self.hidesBottomBarWhenPushed = NO;
+        }else if (indexPath.row == 6){
+            HelpViewController * f = [[HelpViewController alloc] init];
+            self.hidesBottomBarWhenPushed = YES;
             [self.navigationController pushViewController:f animated:YES];
             self.hidesBottomBarWhenPushed = NO;
         }

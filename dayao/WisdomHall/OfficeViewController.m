@@ -58,6 +58,10 @@
     
     NSDictionary * d = [[NSDictionary alloc] initWithObjectsAndKeys:@"1",@"function", nil];
     
+    UserModel * user = [[Appsetting sharedInstance] getUsetInfo];
+    
+    NSString * base = user.host;
+    
     [[NetworkRequest sharedInstance] GET:QueryAdvertising dict:d succeed:^(id data) {
         NSArray * ary = [data objectForKey:@"body"];
         if (ary.count>0) {
@@ -65,18 +69,18 @@
             [[Appsetting sharedInstance] saveImage:str];
 
             dispatch_async(dispatch_get_main_queue(), ^{
-                [_bImage sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@?resourceId=%@",BaseURL,FileDownload,str]] placeholderImage:[UIImage imageNamed:@"placeholder.png"]];
+                [_bImage sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@?resourceId=%@",base,FileDownload,str]] placeholderImage:[UIImage imageNamed:@"placeholder.png"]];
             });
         }else{
             dispatch_async(dispatch_get_main_queue(), ^{
                 NSString * str = [[Appsetting sharedInstance] getImage];
-                [_bImage sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@?resourceId=%@",BaseURL,FileDownload,str]] placeholderImage:[UIImage imageNamed:@"placeholder.png"]];
+                [_bImage sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@?resourceId=%@",base,FileDownload,str]] placeholderImage:[UIImage imageNamed:@"placeholder.png"]];
             });
         }
     } failure:^(NSError *error) {
         dispatch_async(dispatch_get_main_queue(), ^{
             NSString * str = [[Appsetting sharedInstance] getImage];
-            [_bImage sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@?resourceId=%@",BaseURL,FileDownload,str]] placeholderImage:[UIImage imageNamed:@"placeholder.png"]];
+            [_bImage sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@?resourceId=%@",base,FileDownload,str]] placeholderImage:[UIImage imageNamed:@"placeholder.png"]];
         });
     }];
 }

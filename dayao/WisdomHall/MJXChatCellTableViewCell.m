@@ -122,9 +122,13 @@
         NSString * name = [dict objectForKey:@"name"];
         NSString * headimage = [dict objectForKey:@"headImage"];
         _firstNameLabel.text = [NSString stringWithFormat:@"%@",name];
+        UserModel * user = [[Appsetting sharedInstance] getUsetInfo];
+        
+        NSString * base = user.host;
+        
         if (![UIUtils isBlankString:headimage]) {
             
-            [_firstHeadImage sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@?resourceId=%@",BaseURL,FileDownload,headimage]] placeholderImage:[UIImage imageNamed:@"h"]];
+            [_firstHeadImage sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@?resourceId=%@",base,FileDownload,headimage]] placeholderImage:[UIImage imageNamed:@"h"]];
             
         }
         CGSize size = CGSizeMake(APPLICATION_WIDTH, CGFLOAT_MAX);
@@ -158,8 +162,13 @@
         NSString * name = [dict objectForKey:@"name"];
         NSString * headimage = [dict objectForKey:@"headImage"];
         _fifthNameLabel.text = [NSString stringWithFormat:@"%@",name];
+        
+        UserModel * user = [[Appsetting sharedInstance] getUsetInfo];
+        
+        NSString * base = user.host;
+        
         if (![UIUtils isBlankString:headimage]) {
-            [_fifthHeadImage sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@?resourceId=%@",BaseURL,FileDownload,headimage]] placeholderImage:[UIImage imageNamed:@"h"]];
+            [_fifthHeadImage sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@?resourceId=%@",base,FileDownload,headimage]] placeholderImage:[UIImage imageNamed:@"h"]];
         }
         float f = [self measureSinglelineStringWidth:textBody.text andFont:[UIFont systemFontOfSize:13]];
         if (f<30) {

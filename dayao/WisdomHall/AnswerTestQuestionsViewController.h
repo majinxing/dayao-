@@ -19,4 +19,7 @@
 @property (nonatomic,strong)ClassModel *classModel;
 
 @property (nonatomic,assign)BOOL editable;
+
+@property (nonatomic,copy) NSString * titleStr;//标题名称
+
 @end

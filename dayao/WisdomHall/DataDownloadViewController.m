@@ -15,11 +15,13 @@
 #import "MJRefresh.h"
 
 @interface DataDownloadViewController ()<UITableViewDelegate,UITableViewDataSource,UIDocumentInteractionControllerDelegate,DataDownloadTableViewCellDelegate,NSURLSessionDelegate,UINavigationControllerDelegate,UIImagePickerControllerDelegate>
+
 @property (nonatomic,strong)UITableView * tableView;
 @property  (nonatomic,strong)NSMutableArray * fileAry;
 @property (nonatomic,strong)FileModel * f;
-@property (nonatomic,strong)UIWebView * webView;
 @property (nonatomic,strong)UIImage * image;
+
+
 @end
 
 @implementation DataDownloadViewController
@@ -37,12 +39,7 @@
     
     [self addTableView];
     
-    if (!_webView) {
-        _webView = [[UIWebView alloc] initWithFrame:self.view.bounds];
-        _webView.dataDetectorTypes = UIDataDetectorTypeAll;
-    }
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(sendImage) name:@"sendImage" object:nil];
-
     // Do any additional setup after loading the view from its nib.
 }
 -(void)sendImage{
@@ -86,7 +83,7 @@
     
     if ([_type isEqualToString:@"meeting"]) {
         
-        NSDictionary * dict;// = [[NSDictionary alloc] initWithObjectsAndKeys:@"2",@"relType",_meeting.meetingId,@"relId",@"2",@"function",nil];
+        NSDictionary * dict ;//= [[NSDictionary alloc] initWithObjectsAndKeys:@"2",@"relType",_meeting.meetingId,@"relId",@"2",@"function",nil];
         if ([_function isEqualToString:@"5"]) {
             dict = [[NSDictionary alloc] initWithObjectsAndKeys:@"2",@"relType",_meeting.meetingId,@"relId",@"5",@"function",nil];
         }else{
@@ -115,7 +112,7 @@
             
         } failure:^(NSError *error) {
             
-            [UIUtils showInfoMessage:@"暂无数据" withVC:self];
+            [UIUtils showInfoMessage:@"获取数据失败，请检查网络" withVC:self];
             
             [self hideHud];
         }];
@@ -123,13 +120,13 @@
         
         NSDictionary * dict;// = [[NSDictionary alloc] initWithObjectsAndKeys:@"1",@"relType",_classModel.sclassId,@"relId",@"3",@"function",nil];
         if ([_function isEqualToString:@"6"]) {
-            dict = [[NSDictionary alloc] initWithObjectsAndKeys:@"1",@"relType",_classModel.courseDetailId,@"relId",@"6",@"function",nil];;
+            dict = [[NSDictionary alloc] initWithObjectsAndKeys:@"1",@"relType",_classModel.sclassId,@"relId",@"6",@"function",nil];;
         }else{
             dict = [[NSDictionary alloc] initWithObjectsAndKeys:@"1",@"relType",_classModel.sclassId,@"relId",@"3",@"function",nil];;
             
         }
         [[NetworkRequest sharedInstance] GET:FileList dict:dict succeed:^(id data) {
-//            NSLog(@"%@",data);
+            NSLog(@"%@",data);
             [_fileAry removeAllObjects];
             
             NSArray * ary = [data objectForKey:@"body"];
@@ -150,6 +147,8 @@
             }
             
         } failure:^(NSError *error) {
+            [UIUtils showInfoMessage:@"获取数据失败，请检查网络" withVC:self];
+            
             [self hideHud];
         }];
     }
@@ -161,6 +160,7 @@
  **/
 -(void)setNavigationTitle{
     [UIApplication sharedApplication].statusBarStyle = UIStatusBarStyleLightContent;
+    
     if ([UIUtils isBlankString:_function]) {
         self.title = @"文件";
         UserModel * user = [[Appsetting sharedInstance] getUsetInfo];
@@ -168,8 +168,7 @@
         if ([[NSString stringWithFormat:@"%@",_meeting.meetingHostId] isEqualToString:[NSString stringWithFormat:@"%@",user.peopleId]]) {
             
             UIBarButtonItem * createMeeting = [[UIBarButtonItem alloc] initWithTitle:@"上传资料" style:UIBarButtonItemStylePlain target:self action:@selector(uploadLocalFile)];
-            [createMeeting setTintColor:[UIColor whiteColor]];
-
+            
             self.navigationItem.rightBarButtonItem = createMeeting;
             
         }
@@ -177,33 +176,37 @@
             
             UIBarButtonItem * createMeeting = [[UIBarButtonItem alloc] initWithTitle:@"上传资料" style:UIBarButtonItemStylePlain target:self action:@selector(uploadLocalFile)];
             
-            [createMeeting setTintColor:[UIColor whiteColor]];
-
             self.navigationItem.rightBarButtonItem = createMeeting;
         }
     }else{
         self.title = @"问答";
-        UIBarButtonItem * createMeeting = [[UIBarButtonItem alloc] initWithTitle:@"上传解答" style:UIBarButtonItemStylePlain target:self action:@selector(selectImage)];
+        UIBarButtonItem * createMeeting = [[UIBarButtonItem alloc] initWithTitle:@"上传解答" style:UIBarButtonItemStylePlain target:self action:@selector(selectImageee)];
         
-        [createMeeting setTintColor:[UIColor whiteColor]];
-
         self.navigationItem.rightBarButtonItem = createMeeting;
+        
+        UIButton * allStudents = [UIButton buttonWithType:UIButtonTypeCustom];
+        allStudents.frame = CGRectMake(APPLICATION_WIDTH/2-100, 30, 100, 30);
+        [allStudents setTitle:@"全部答案" forState:UIControlStateNormal];
     }
 }
 //实现button点击事件的回调方法
-- (void)selectImage{
+- (void)selectImageee{
     
+    //实现button点事件的回调方法
     //调用系统相册的类
     UIImagePickerController *pickerController = [[UIImagePickerController alloc]init];
     
     //设置选取的照片是否可编辑
-    pickerController.allowsEditing = YES;
-    //设置相册呈现的样式
     
+    //   pickerController.allowsEditing = YES;
+    
+    //    //设置相册呈现的样式
+    //
     //    UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"提示" message:nil preferredStyle:  UIAlertControllerStyleActionSheet];
     //    //分别按顺序放入每个按钮；
     //    [alert addAction:[UIAlertAction actionWithTitle:@"拍照" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
     pickerController.sourceType =  UIImagePickerControllerSourceTypeCamera;//图片分组列表样式
+    pickerController.cameraDevice = UIImagePickerControllerCameraDeviceRear;
     
     //选择完成图片或者点击取消按钮都是通过代理来操作我们所需要的逻辑过程
     pickerController.delegate = self;
@@ -211,19 +214,36 @@
     [self.navigationController presentViewController:pickerController animated:YES completion:^{
         
     }];
+    //    }]];
     
+    //    [alert addAction:[UIAlertAction actionWithTitle:@"从相册选择" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+    //
+    //        pickerController.sourceType =  UIImagePickerControllerSourceTypeSavedPhotosAlbum;//图片分组列表样式
+    //        //照片的选取样式还有以下两种
+    //        //UIImagePickerControllerSourceTypePhotoLibrary,直接全部呈现系统相册UIImagePickerControllerSourceTypeSavedPhotosAlbum
+    //        //UIImagePickerControllerSourceTypeCamera//调取摄像头
+    //
+    //        //选择完成图片或者点击取消按钮都是通过代理来操作我们所需要的逻辑过程
+    //        pickerController.delegate = self;
+    //        //使用模态呈现相册
+    //        [self.navigationController presentViewController:pickerController animated:YES completion:^{
+    //
+    //        }];
+    //
+    //    }]];
+    //
+    //
+    //    [alert addAction:[UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleDestructive handler:^(UIAlertAction * _Nonnull action) {
+    //        //点击按钮的响应事件；
+    //    }]];
+    //
+    //    //弹出提示框；
+    //    [self presentViewController:alert animated:true completion:nil];
     
 }
 //选择照片完成之后的代理方法
 
 -(void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary<NSString *,id> *)info{
-    
-    //info是所选择照片的信息
-    
-    //    UIImagePickerControllerEditedImage//编辑过的图片
-    //    UIImagePickerControllerOriginalImage//原图
-    
-    //刚才已经看了info中的键值对，可以从info中取出一个UIImage对象，将取出的对象赋给按钮的image
     
     UIImage *resultImage = [info objectForKey:@"UIImagePickerControllerEditedImage"];
     
@@ -233,11 +253,9 @@
     NSNotification *notification =[NSNotification notificationWithName:@"sendImage" object:nil userInfo:nil];
     
     [[NSNotificationCenter defaultCenter] postNotification:notification];
-
+    
     
     [self.navigationController dismissViewControllerAnimated:YES completion:nil];
-        
-    
 }
 -(void)uploadLocalFile{
     UploadFileViewController * upload = [[UploadFileViewController alloc] init];
@@ -253,11 +271,10 @@
     
 }
 -(void)addTableView{
-    
     _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0,64, APPLICATION_WIDTH, APPLICATION_HEIGHT-64) style:UITableViewStylePlain];
-//    if (![UIUtils isBlankString:_function]) {
-//        _tableView.frame = CGRectMake(0,0, APPLICATION_WIDTH, APPLICATION_HEIGHT-64-40);
-//    }
+    if (![UIUtils isBlankString:_function]) {
+        _tableView.frame = CGRectMake(0,0, APPLICATION_WIDTH, APPLICATION_HEIGHT-64-40);
+    }
     _tableView.delegate = self;
     _tableView.dataSource = self;
     self.automaticallyAdjustsScrollViewInsets = NO;
@@ -297,7 +314,7 @@
     myDirectoryEnumerator=[myFileManager enumeratorAtPath:path];
     
     //列举目录内容，可以遍历子目录
-   // NSLog(@"用enumeratorAtPath:显示目录%@的内容：",path);
+    NSLog(@"用enumeratorAtPath:显示目录%@的内容：",path);
     
     while((path=[myDirectoryEnumerator nextObject])!=nil)
     {
@@ -308,7 +325,7 @@
             }
         }
         
-//        NSLog(@"%@",path);
+        NSLog(@"%@",path);
         
     }
     [self hideHud];
@@ -319,9 +336,11 @@
 
 /** 打开文件 @param filePath 文件路径 */
 -(void)openDocxWithPath:(NSString *)filePath {
+    
     UIDocumentInteractionController *doc= [UIDocumentInteractionController interactionControllerWithURL:[NSURL fileURLWithPath:filePath]];
-        
+    
     doc.delegate = self;
+    
     [doc presentPreviewAnimated:YES];
     
 }
@@ -396,7 +415,7 @@
     
     NSString *documentsDirectory = [paths lastObject];
     
-    //NSLog(@"app_home_doc: %@",documentsDirectory);
+    NSLog(@"app_home_doc: %@",documentsDirectory);
     
     //    NSFileManager *fileManager = [NSFileManager defaultManager];
     
@@ -404,8 +423,11 @@
     
     [self showHudInView:self.view hint:NSLocalizedString(@"正在下载数据", @"Load data...")];
     
+    UserModel * user = [[Appsetting sharedInstance] getUsetInfo];
     
-    NSString *urlString = [NSString stringWithFormat:@"%@%@?",BaseURL,FileDownload];
+    NSString * baseURL = user.host;
+    
+    NSString *urlString = [NSString stringWithFormat:@"%@/%@?",baseURL,FileDownload];
     
     urlString = [urlString stringByAppendingString:[NSString stringWithFormat:@"resourceId=%@",f.fileId]];
     
@@ -441,7 +463,7 @@
     FileModel * f = _fileAry[indexPath.row];
     
     _f = _fileAry[indexPath.row];
-
+    
     NSString *documentsDirectory = [paths lastObject];
     
     //    NSLog(@"app_home_doc: %@",documentsDirectory);
@@ -452,8 +474,11 @@
     
     if (![fileManager fileExistsAtPath:filePath]) {
         if (![UIUtils isBlankString:f.fileName]) {
+            UserModel * user = [[Appsetting sharedInstance] getUsetInfo];
             
-            NSString *urlString = [NSString stringWithFormat:@"%@%@?",BaseURL,FileDownload];
+            NSString * baseUrl = user.host;
+            
+            NSString *urlString = [NSString stringWithFormat:@"%@/%@?",baseUrl,FileDownload];
             
             urlString = [urlString stringByAppendingString:[NSString stringWithFormat:@"resourceId=%@",f.fileId]];
             
@@ -495,6 +520,7 @@
         [[NetworkRequest sharedInstance] POST:FileDelegate dict:dict succeed:^(id data) {
             
         } failure:^(NSError *error) {
+            [UIUtils showInfoMessage:@"删除失败，请检查网络" withVC:self];
             
         }];
     }
@@ -504,6 +530,7 @@
         [[NetworkRequest sharedInstance] POST:FileDelegate dict:dict succeed:^(id data) {
             
         } failure:^(NSError *error) {
+            [UIUtils showInfoMessage:@"删除失败，请检查网络" withVC:self];
             
         }];
     }
@@ -550,7 +577,7 @@
     
     if (!saveError) {
         
-       // NSLog(@"save success");
+        NSLog(@"save success");
         
         [self checkTheLocalFile:_fileAry];
         
@@ -560,7 +587,7 @@
         
     }else{
         
-        //NSLog(@"save error:%@",saveError.localizedDescription);
+        NSLog(@"save error:%@",saveError.localizedDescription);
         
     }
     [self hideHud];
@@ -570,13 +597,13 @@
 /** * 写数据 * * @param session 会话对象 * @param downloadTask 下载任务 * @param bytesWritten 本次写入的数据大小 * @param totalBytesWritten 下载的数据总大小 * @param totalBytesExpectedToWrite 文件的总大小 */
 -(void)URLSession:(NSURLSession *)session downloadTask:(NSURLSessionDownloadTask *)downloadTask didWriteData:(int64_t)bytesWritten totalBytesWritten:(int64_t)totalBytesWritten totalBytesExpectedToWrite:(int64_t)totalBytesExpectedToWrite {
     //获得文件的下载进度
-   // NSLog(@"%f",1.0 * totalBytesWritten/totalBytesExpectedToWrite);
+    //    NSLog(@"%f",1.0 * totalBytesWritten/totalBytesExpectedToWrite);
     
 }
 
 /** * 当恢复下载的时候调用该方法 * * @param fileOffset 从什么地方下载 * @param expectedTotalBytes 文件的总大小 */
 -(void)URLSession:(NSURLSession *)session downloadTask:(NSURLSessionDownloadTask *)downloadTask didResumeAtOffset:(int64_t)fileOffset expectedTotalBytes:(int64_t)expectedTotalBytes {
-
+    
 }
 ///** * 当下载完成的时候调用 * * @param location 文件的临时存储路径 */
 //-(void)URLSession:(NSURLSession *)session downloadTask:(NSURLSessionDownloadTask *)downloadTask didFinishDownloadingToURL:(NSURL *)location {
@@ -609,3 +636,4 @@
  */
 
 @end
+

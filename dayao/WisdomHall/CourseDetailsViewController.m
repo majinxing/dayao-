@@ -35,6 +35,7 @@
 #import "AllOrPersonalDataViewController.h"
 #import "HomeWorkViewController.h"
 #import "PersonalUploadDataViewController.h"
+#import "PictureQuizViewController.h"
 
 @interface CourseDetailsViewController ()<UIActionSheetDelegate,ShareViewDelegate,UIAlertViewDelegate,UITableViewDelegate,UITableViewDataSource,MeetingTableViewCellDelegate,UINavigationControllerDelegate,UIImagePickerControllerDelegate,AlterViewDelegate>
 
@@ -491,11 +492,8 @@
         [self.navigationController pushViewController:d animated:YES];
         NSLog(@"讨论");
     }else if ([platform isEqualToString:InteractionType_Picture]){
-        PersonalUploadDataViewController * d = [[PersonalUploadDataViewController alloc] init];
+        PictureQuizViewController * d = [[PictureQuizViewController alloc] init];
         d.classModel = _c;
-        d.type = @"classModel";
-        d.function = @"6";
-        _pictureType = @"QAPicture";
         self.hidesBottomBarWhenPushed = YES;
         [self.navigationController pushViewController: d animated:YES];
     }else if ([platform isEqualToString:InteractionType_Sit]){

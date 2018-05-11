@@ -19,7 +19,7 @@
 
 #import "ChooseTopicView.h"
 
-@interface AnswerTestQuestionsViewController ()<UITextViewDelegate,ChooseTopicViewDelegate>
+@interface AnswerTestQuestionsViewController ()<UITextViewDelegate,ChooseTopicViewDelegate,AnswerTOFQuestionViewControllerDelegate,AnswerEssayQuestionViewControllerDelegate,AnswerChoiceQuestionViewControllerDelegate>
 @property (nonatomic,strong)UITableView *tableView;
 
 @property (nonatomic,strong)UserModel * user;
@@ -37,6 +37,9 @@
 @property (strong, nonatomic) IBOutlet UIButton *addTitleBtn;//增加题目按钮
 
 @property (nonatomic,strong)AnswerTOFQuestionViewController * tOFQVC;
+
+@property (nonatomic,assign) int temp;//标志位 标明所在的题目
+
 @end
 
 @implementation AnswerTestQuestionsViewController
@@ -49,6 +52,8 @@
     
     _user = [[Appsetting sharedInstance] getUsetInfo];
     
+    _temp = 0;
+
     //    if (!_allQuestionAry) {
     _allQuestionAry = [NSMutableArray arrayWithCapacity:1];
     //    }else{
@@ -70,7 +75,15 @@
     
     // Do any additional setup after loading the view from its nib.
 }
+-(void)viewDidAppear:(BOOL)animated{
+    if ([self.navigationController respondsToSelector:@selector(interactivePopGestureRecognizer)]) {
+        self.navigationController.interactivePopGestureRecognizer.enabled = NO;
+    }
+}
 
+-(void)viewWillDisappear:(BOOL)animated{
+    self.navigationController.interactivePopGestureRecognizer.enabled = YES;
+}  
 -(void)getData{
     NSDictionary * dict = [[NSDictionary alloc] initWithObjectsAndKeys:[NSString stringWithFormat:@"%@",_t.textId],@"examId",[NSString stringWithFormat:@"%@",_user.peopleId],@"userId",nil];
     
@@ -137,9 +150,9 @@
 -(void)setNavigationTitle{
     [UIApplication sharedApplication].statusBarStyle = UIStatusBarStyleLightContent;
     
-    self.title = @"试题";
-    
-    UIBarButtonItem *myButton = [[UIBarButtonItem alloc] initWithTitle:@"交卷" style:UIBarButtonItemStylePlain target:self action:@selector(more)];
+    self.title = _titleStr;
+
+    UIBarButtonItem *myButton = [[UIBarButtonItem alloc] initWithTitle:@"提交" style:UIBarButtonItemStylePlain target:self action:@selector(more)];
     
     [myButton setTintColor:[UIColor whiteColor]];
     
@@ -230,6 +243,10 @@
     
     [self.view endEditing:YES];
     
+    int num  = (int)btn.tag;
+    
+    _temp = (int)btn.tag;
+
     if (btn.tag-1<_allQuestionAry.count) {
         QuestionModel * q = _allQuestionAry[btn.tag-1];
         if ([q.titleType isEqualToString:@"1"]||[q.titleType isEqualToString:@"2"]) {
@@ -244,6 +261,8 @@
             _choiceQVC.selectMore = q.selectMore;
             
             _choiceQVC.questionModel = q;
+            
+            _choiceQVC.titleNum = num;
             
             [_choiceQVC viewDidLoad];
             
@@ -267,6 +286,8 @@
             
             [_tOFQVC viewDidLoad];
             
+            _tOFQVC.titleNum = num;
+
             [self addChildViewController:_tOFQVC];
             
             _tOFQVC.view.frame = CGRectMake(0, 104, APPLICATION_WIDTH, APPLICATION_HEIGHT-104);
@@ -288,6 +309,8 @@
             
             _essayQVC.questionModel = q;
             
+            _essayQVC.titleNum = num;
+
             [self addChildViewController:_essayQVC];
             
             _essayQVC.view.frame = CGRectMake(0, 104, APPLICATION_WIDTH, APPLICATION_HEIGHT-104);
@@ -297,11 +320,50 @@
             [self.view sendSubviewToBack:_essayQVC.view];
         }
     }
-    
+    _choiceQVC.delegate = self;
+    _essayQVC.delegate = self;
+    _tOFQVC.delegate = self;
 }
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+#pragma mark 问题代理方法
+-(void)handleSwipeFromDelegate:(UISwipeGestureRecognizer *)recognizer{
+    if(recognizer.direction == UISwipeGestureRecognizerDirectionDown) {
+        NSLog(@"swipe down");
+        
+    } if(recognizer.direction == UISwipeGestureRecognizerDirectionUp) {
+        NSLog(@"swipe up");
+        
+    } if(recognizer.direction == UISwipeGestureRecognizerDirectionLeft) {
+        NSLog(@"swipe left");
+            if (_temp<_allQuestionAry.count) {
+                UIButton * btn = [[UIButton alloc] init];
+                
+                btn.tag = _temp +1;
+                
+                [self titleClick:btn];
+            }
+//        }
+    } if(recognizer.direction == UISwipeGestureRecognizerDirectionRight) {
+        
+        if (_temp>1) {
+            UIButton * btn = [[UIButton alloc] init];
+            
+            btn.tag = _temp -1;
+            
+            [self titleClick:btn];
+        }
+    }
+    
+    //    if (_temp>3) {
+    
+    [_scrollView setContentOffset:CGPointMake(APPLICATION_WIDTH*((_temp-1)/3),0) animated:YES];
+    
+    //    }
+    
+    //    [_scrollView];
 }
 #pragma mark ChooseTopicDelegate
 -(void)chooseDelegateOutOfChooseTopicView{

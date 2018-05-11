@@ -233,6 +233,10 @@
 		8B45D3871F7CF6A700A00677 /* libsms-lib.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8B45D3861F7CF6A700A00677 /* libsms-lib.a */; };
 		8B47AB831F96DC6A00DB1B9A /* ClassTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B47AB811F96DC6A00DB1B9A /* ClassTableViewCell.m */; };
 		8B47AB841F96DC6A00DB1B9A /* ClassTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8B47AB821F96DC6A00DB1B9A /* ClassTableViewCell.xib */; };
+		8B48004B20A3F40600038B47 /* HelpViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8B48004820A3F40400038B47 /* HelpViewController.xib */; };
+		8B48004C20A3F40600038B47 /* HelpViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B48004A20A3F40500038B47 /* HelpViewController.m */; };
+		8B48009920A4534800038B47 /* PictureQuizViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B48009620A4534700038B47 /* PictureQuizViewController.m */; };
+		8B48009A20A4534800038B47 /* PictureQuizViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8B48009820A4534800038B47 /* PictureQuizViewController.xib */; };
 		8B4D91141EBDAB1000A4BE34 /* SignListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B4D91121EBDAB1000A4BE34 /* SignListViewController.m */; };
 		8B4D91151EBDAB1000A4BE34 /* SignListViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8B4D91131EBDAB1000A4BE34 /* SignListViewController.xib */; };
 		8B4E5CD4206091C500C12EAD /* SchoolList.plist in Resources */ = {isa = PBXBuildFile; fileRef = 8B4E5CD3206091C500C12EAD /* SchoolList.plist */; };
@@ -994,6 +998,12 @@
 		8B47AB801F96DC6A00DB1B9A /* ClassTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ClassTableViewCell.h; sourceTree = "<group>"; };
 		8B47AB811F96DC6A00DB1B9A /* ClassTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ClassTableViewCell.m; sourceTree = "<group>"; };
 		8B47AB821F96DC6A00DB1B9A /* ClassTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ClassTableViewCell.xib; sourceTree = "<group>"; };
+		8B48004820A3F40400038B47 /* HelpViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HelpViewController.xib; sourceTree = "<group>"; };
+		8B48004920A3F40500038B47 /* HelpViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HelpViewController.h; sourceTree = "<group>"; };
+		8B48004A20A3F40500038B47 /* HelpViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HelpViewController.m; sourceTree = "<group>"; };
+		8B48009620A4534700038B47 /* PictureQuizViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PictureQuizViewController.m; sourceTree = "<group>"; };
+		8B48009720A4534800038B47 /* PictureQuizViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PictureQuizViewController.h; sourceTree = "<group>"; };
+		8B48009820A4534800038B47 /* PictureQuizViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PictureQuizViewController.xib; sourceTree = "<group>"; };
 		8B4D91111EBDAB1000A4BE34 /* SignListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SignListViewController.h; sourceTree = "<group>"; };
 		8B4D91121EBDAB1000A4BE34 /* SignListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SignListViewController.m; sourceTree = "<group>"; };
 		8B4D91131EBDAB1000A4BE34 /* SignListViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SignListViewController.xib; sourceTree = "<group>"; };
@@ -1761,6 +1771,9 @@
 				8B0E5363209C0B7600327823 /* AnswerTestQuestionsViewController.h */,
 				8B0E5364209C0B7600327823 /* AnswerTestQuestionsViewController.m */,
 				8B0E5365209C0B7600327823 /* AnswerTestQuestionsViewController.xib */,
+				8B48009720A4534800038B47 /* PictureQuizViewController.h */,
+				8B48009620A4534700038B47 /* PictureQuizViewController.m */,
+				8B48009820A4534800038B47 /* PictureQuizViewController.xib */,
 			);
 			name = "New Group";
 			sourceTree = "<group>";
@@ -2198,6 +2211,9 @@
 				8B396B16208F1C3E00F20060 /* AboutUSViewController.h */,
 				8B396B14208F1C3C00F20060 /* AboutUSViewController.m */,
 				8B396B15208F1C3D00F20060 /* AboutUSViewController.xib */,
+				8B48004920A3F40500038B47 /* HelpViewController.h */,
+				8B48004A20A3F40500038B47 /* HelpViewController.m */,
+				8B48004820A3F40400038B47 /* HelpViewController.xib */,
 				8B05CB721EC06FD60063EC20 /* Cell */,
 				8B0207121F8DA4DA00CE3B8C /* WisdomHall-Bridging-Header.h */,
 			);
@@ -2903,6 +2919,7 @@
 				8B081DE21F06238E00493B81 /* DefinitionPersonalTableViewCell.xib in Resources */,
 				8B027A251EFA5FF200600E18 /* DataDownloadViewController.xib in Resources */,
 				8B0E5358209C073000327823 /* AnswerChoiceQuestionViewController.xib in Resources */,
+				8B48009A20A4534800038B47 /* PictureQuizViewController.xib in Resources */,
 				8B0502EA20214CB60030CF75 /* StatisticalDetailsViewController.xib in Resources */,
 				8BB56D881EB2E2820023DAFF /* RedefineThePasswordViewController.xib in Resources */,
 				8B0439FD2020691C0039195F /* StatisticalResultViewController.xib in Resources */,
@@ -2944,6 +2961,7 @@
 				8B043A0220206DAF0039195F /* StatisticalResultTableViewCell.xib in Resources */,
 				8B2E16E91EBAD9AF008B7C57 /* AllTheMeetingViewController.xib in Resources */,
 				8BB47BAA20896EBD005407D9 /* called.mp3 in Resources */,
+				8B48004B20A3F40600038B47 /* HelpViewController.xib in Resources */,
 				8B40E12320591BE8000E6C2F /* ChangeThemeInfoViewController.xib in Resources */,
 				8B6E61CC1EE292B10040FDC1 /* CreateVoteTableViewCell.xib in Resources */,
 				8BED4EF3209947B4004DF322 /* EssayQuestionViewController.xib in Resources */,
@@ -3258,6 +3276,7 @@
 				8BF82D721EDEC50E00D33473 /* DiscussViewController.m in Sources */,
 				8B078434205BA559004E826B /* UIImage+ClipperExtends.m in Sources */,
 				8BF864BE1ECAD97300B7EED4 /* SDImageCache.m in Sources */,
+				8B48004C20A3F40600038B47 /* HelpViewController.m in Sources */,
 				8BED4EF7209947E4004DF322 /* TOFQuestionViewController.m in Sources */,
 				8BE913A41EEFB80000000282 /* MBProgressHUD.m in Sources */,
 				8B01482F206650D70037A107 /* imageBigView.m in Sources */,
@@ -3308,6 +3327,7 @@
 				8BCE7CAD1F033AE100FE261B /* HYDelegate.m in Sources */,
 				8BB56D6A1EB037410023DAFF /* UIUtils.m in Sources */,
 				8B0CD5A3201F01DA00A2270D /* StatisticalViewController.m in Sources */,
+				8B48009920A4534800038B47 /* PictureQuizViewController.m in Sources */,
 				8B8C3D171ECD7A6700E9FB56 /* TextModel.m in Sources */,
 				8B64EB561F1A162F00BF7D0F /* CreateTemporaryCourseViewController.m in Sources */,
 				8B8C3D111ECC336500E9FB56 /* ConversationVC.m in Sources */,

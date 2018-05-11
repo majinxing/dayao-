@@ -25,7 +25,7 @@
 - (void)awakeFromNib {
     [super awakeFromNib];
     if (!_textAry) {
-      _textAry = [NSArray arrayWithObjects:@"个人资料",@"群组",@"主题",@"系统设置",@"关于我们",@"意见反馈",nil];
+      _textAry = [NSArray arrayWithObjects:@"个人资料",@"群组",@"主题",@"系统设置",@"关于我们",@"意见反馈",@"帮助",nil];
     }
     _user = [[Appsetting sharedInstance] getUsetInfo];
     _headImage.layer.masksToBounds = YES;

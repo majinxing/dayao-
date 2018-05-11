@@ -56,6 +56,18 @@
     _tableView.delegate = self;
     _tableView.dataSource = self;
     [self.view addSubview:_tableView];
+    
+    UISwipeGestureRecognizer * priv = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(handleSwipeFrom:)];
+    [priv setDirection:(UISwipeGestureRecognizerDirectionRight)];
+    [_tableView addGestureRecognizer:priv];
+    UISwipeGestureRecognizer * recognizer = [[UISwipeGestureRecognizer alloc]initWithTarget:self action:@selector(handleSwipeFrom:)];
+    [recognizer setDirection:(UISwipeGestureRecognizerDirectionLeft)];
+    [_tableView addGestureRecognizer:recognizer];
+}
+-(void)handleSwipeFrom:(UISwipeGestureRecognizer *)recognizer{
+    if (self.delegate&&[self.delegate respondsToSelector:@selector(handleSwipeFromDelegate:)]) {
+        [self.delegate handleSwipeFromDelegate:recognizer];
+    }
 }
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
@@ -406,7 +418,7 @@
     return 30;
 }
 -(UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section{
-    NSArray * ary = @[@"题目内容",@"答案"];
+    NSArray * ary = @[[NSString stringWithFormat:@"第%d题 题目内容",_titleNum],@"答案"];
     UIView * view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, APPLICATION_WIDTH, 30)];
     view.backgroundColor = RGBA_COLOR(236, 236, 236, 1);
     UILabel * l = [[UILabel alloc] initWithFrame:CGRectMake(10, 5, 200, 20)];
@@ -490,7 +502,7 @@
     
     __weak AnswerEssayQuestionViewController * weakSelf = self;
 
-    NSData *imageData = UIImageJPEGRepresentation(image,0.5);
+    NSData *imageData = UIImageJPEGRepresentation(image,0.1);
     
     NSArray * ary = [NSArray arrayWithObject:imageData];
     

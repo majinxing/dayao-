@@ -72,8 +72,13 @@
     _meetPlace.text = [NSString stringWithFormat:@"教室：%@",classModel.typeRoom];
     _meetHost.text = [NSString stringWithFormat:@"老师：%@",classModel.teacherName];
     _meetCode.text = [NSString stringWithFormat:@"邀请码：%@",classModel.sclassId];
+    
+    UserModel * user = [[Appsetting sharedInstance] getUsetInfo];
+    
+    NSString * base = user.host;
+    
     if (![UIUtils isBlankString:classModel.teacherPictureId]) {
-        [_teacherPicture sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@?resourceId=%@",BaseURL,FileDownload,classModel.teacherPictureId]] placeholderImage:[UIImage imageNamed:@"placeholder.png"]];
+        [_teacherPicture sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@?resourceId=%@",base,FileDownload,classModel.teacherPictureId]] placeholderImage:[UIImage imageNamed:@"placeholder.png"]];
     }else{
         _teacherPicture.image = [UIImage imageNamed:@"course"];
     }
@@ -131,10 +136,10 @@
 -(void)addFourthContentViewWithClassModel:(ClassModel *)classModel{
     NSArray * array = @[
                               InteractionType_Data,
-                              InteractionType_Vote,
-                              InteractionType_Responder,
                               InteractionType_Test,
                               InteractionType_Picture,
+                              InteractionType_Vote,
+                              InteractionType_Responder,                              
                               InteractionType_Sit,
                               InteractionType_Homework
                               ];
