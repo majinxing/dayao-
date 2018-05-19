@@ -65,6 +65,12 @@
 
 @property (nonatomic,strong) NSMutableArray * deleImageBtnAry;
 
+
+@property (weak, nonatomic) IBOutlet UILabel *titleType;
+@property (weak, nonatomic) IBOutlet UILabel *titleScore;
+@property (strong, nonatomic) IBOutlet UIImageView *eighthImage;
+@property (strong, nonatomic) IBOutlet UIButton *eigthSelectBtn;
+
 @end
 
 
@@ -269,6 +275,57 @@
         }
     }
 }
+-(void)addOptionWithModel:(optionsModel *)optionsM withIndexRow:(int)row withISelected:(BOOL)isSelected{
+    
+    _orderNumber.text = [NSString stringWithFormat:@"%c、",65+row];
+    
+    
+    _thirdOptionText.text = optionsM.optionsTitle;
+
+    [_thirdImage removeFromSuperview];
+    
+    if (isSelected) {
+        _orderNumber.textColor = RGBA_COLOR(0, 113, 113, 1);
+        
+        _thirdOptionText.textColor = RGBA_COLOR(0, 113, 113, 1);
+    }
+    
+    _thirdSelectEdBtn.tag = 65+row;//选中按钮的tag
+    
+    
+    _thirdBtnA.tag = (row+1)*1000+1;
+    _thirdBtnB.tag = (row+1)*1000+2;
+    _thirdBtnC.tag = (row+1)*1000+3;
+    
+    
+        [_thirdOptionText setEditable:NO];
+        
+        
+        if (optionsM.optionsImageIdAry.count>0) {
+            
+        }else{
+            [_thirdBtnA removeFromSuperview];
+        }
+        
+        for (int i=0; i<optionsM.optionsImageIdAry.count; i++) {
+            UIImageView * image = _optionsImageAry[i];
+            
+            UserModel * user = [[Appsetting sharedInstance] getUsetInfo];
+            
+            NSString * baseUrl = user.host;
+            
+            [image sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@/%@?resourceId=%@",baseUrl,FileDownload,optionsM.optionsImageIdAry[i]]] placeholderImage:[UIImage imageNamed:@"placeholder.png"]];
+            
+            
+            UIButton *btn1 = [self viewWithTag:i+(row+1)*1000+1];
+            
+            [btn1 setBackgroundImage:[UIImage imageNamed:@""] forState:UIControlStateNormal];
+            
+            [btn1 setEnabled:YES];
+            
+            [btn1 addSubview:image];
+        }
+}
 -(void)addSeventhTextViewWithStr:(NSString *)str{
     if (![UIUtils isBlankString:str]) {
         _seventhTextView.text = str;
@@ -310,6 +367,23 @@
 - (IBAction)thirthSelectOption:(UIButton *)sender {
     if (self.delegate&&[self.delegate respondsToSelector:@selector(thirthSelectOptionDelegate:)]) {
         [self.delegate thirthSelectOptionDelegate:sender];
+    }
+}
+-(void)eigthTitleType:(NSString *)titleType withScore:(NSString *)score isSelect:(BOOL)select btnTag:(int)index{
+    _titleType.text = titleType;
+    _titleScore.text = score;
+    
+    _eigthSelectBtn.tag = index;
+    
+    if (select) {
+        _eighthImage.image = [UIImage imageNamed:@"方形选中-fill"];
+    }else{
+        _eighthImage.image = [UIImage imageNamed:@"方形未选中"];
+    }
+}
+- (IBAction)eighthSelectTitle:(UIButton *)sender {
+    if (self.delegate&&[self.delegate respondsToSelector:@selector(eighthSelectTitleDelegate:)]) {
+        [self.delegate eighthSelectTitleDelegate:sender];
     }
 }
 #pragma mark UITextViewDelegate

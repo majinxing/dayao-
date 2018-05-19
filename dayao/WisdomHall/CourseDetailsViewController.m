@@ -503,8 +503,7 @@
         self.hidesBottomBarWhenPushed = YES;
         vc.c = _c;
         [self.navigationController pushViewController:vc animated:YES];
-    }
-    else if ([platform isEqualToString:InteractionType_Add]){
+    }else if ([platform isEqualToString:InteractionType_Add]){
         NSLog(@"更多");
     }
 }
@@ -522,7 +521,12 @@
             z.classModel = _c;
             z.seat = _seatNo;
             self.hidesBottomBarWhenPushed = YES;
-            [self.navigationController pushViewController:z animated:YES];
+            if (![UIUtils isBlankString:z.seatTable]) {
+                [self.navigationController pushViewController:z animated:YES];
+            }else{
+                [UIUtils showInfoMessage:@"会场拉取失败，请稍微在操作" withVC:self];
+            }
+
         }else{
             [UIUtils showInfoMessage:@"获取信息缺失请重新获取" withVC:self];
         }

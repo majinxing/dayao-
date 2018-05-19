@@ -1,54 +1,35 @@
 //
-//  AboutUSViewController.m
+//  QuestionBankListViewController.m
 //  WisdomHall
 //
-//  Created by XTU-TI on 2018/4/24.
+//  Created by XTU-TI on 2018/5/17.
 //  Copyright © 2018年 majinxing. All rights reserved.
 //
 
-#import "AboutUSViewController.h"
+#import "QuestionBankListViewController.h"
 #import "DYHeader.h"
-#import "CompanyProfileViewController.h"
+#import "QuestionBank.h"
 
-@interface AboutUSViewController ()<UITableViewDelegate,UITableViewDataSource>
+@interface QuestionBankListViewController ()<UITableViewDelegate,UITableViewDataSource>
 @property (nonatomic,strong)UITableView * tableView;
-
 @end
 
-@implementation AboutUSViewController
+@implementation QuestionBankListViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    [self addTableView];
     
-    
-    [self setNavigationTitle];
     // Do any additional setup after loading the view from its nib.
 }
-/**
- *  显示navigation的标题
- **/
--(void)setNavigationTitle{
-    [UIApplication sharedApplication].statusBarStyle = UIStatusBarStyleLightContent;
-    
-    self.title = @"关于我们";
-}
 -(void)addTableView{
-    _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 64,APPLICATION_WIDTH , APPLICATION_HEIGHT-64) style:UITableViewStylePlain];
+    _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0,APPLICATION_WIDTH, 300) style:UITableViewStylePlain];
     _tableView.delegate = self;
     _tableView.dataSource = self;
     [self.view addSubview:_tableView];
 }
-- (IBAction)toScore:(id)sender {
-    NSString *itunesurl = @"itms-apps://itunes.apple.com/cn/app/id1257637653?mt=8&action=write-review";
-    
-    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:itunesurl]];
-}
-- (IBAction)companyProfile:(id)sender {
-    CompanyProfileViewController * vc = [[CompanyProfileViewController alloc] init];
-    self.hidesBottomBarWhenPushed = YES;
-    [self.navigationController pushViewController:vc animated:YES];
-}
+
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
@@ -58,21 +39,38 @@
     return 1;
 }
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
-    return 10;
+    return _bankListAry.count;
 }
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
-    UITableViewCell * cell = [[UITableViewCell alloc] init];
+    UITableViewCell * cell = [tableView dequeueReusableCellWithIdentifier:@"cell"];
+    if (!cell) {
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:@"cell"];
+    }
+    
+    QuestionBank * q = _bankListAry[indexPath.row];
+    
+    cell.textLabel.text = [NSString stringWithFormat:@"题库：%@",q.libName];
     return cell;
 }
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    
+    QuestionBank * q = _bankListAry[indexPath.row];
+
+    [self returnBankModel:q];
 }
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
-    return 60;
+    return 40;
 }
 -(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
     return 10;
+}
+#pragma mark QuestionBankListViewControllerDelegate
+-(void)returnBankModel:(QuestionBank *)q{
+    if (self.delegate&&[self.delegate respondsToSelector:@selector(returnBankModelDelegate:)]) {
+        [self.delegate returnBankModelDelegate:q];
+    }
 }
 /*
 #pragma mark - Navigation

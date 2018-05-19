@@ -323,7 +323,7 @@
     
     [_selectSchoolBtn setTitle:s.schoolName forState:UIControlStateNormal];
     
-//    s.schoolHost = @"http://192.168.1.100:8080";
+    s.schoolHost = @"http://192.168.1.100:8080";
 
     [[Appsetting sharedInstance] saveUserSchool:s];
     

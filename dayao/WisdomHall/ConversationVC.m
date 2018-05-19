@@ -23,6 +23,7 @@
 @property (nonatomic,strong)UIButton * hangupBtn;
 @property (nonatomic,strong)UIButton * receiveBtn;
 
+@property (nonatomic,strong)UserModel * user;
 
 
 @property (nonatomic,strong)UILabel * typeLab;
@@ -51,7 +52,7 @@
 
 -(void)viewWillAppear:(BOOL)animated{
     [self.navigationController setNavigationBarHidden:YES animated:YES];
-    
+    _user = [[Appsetting sharedInstance] getUsetInfo];
     if (!_callSession) {
         [self playMusic:@"call"];
         
@@ -360,7 +361,15 @@
     }
     
 }
-
+//抢答收集
+-(void)sentNumberResponderWithDetid:(NSString *)detid withSOF:(NSString *)sOf post:(NSString *)responder{
+    NSDictionary * dict = [[NSDictionary alloc] initWithObjectsAndKeys:detid,@"detailId",_user.peopleId,@"userId",@"1",@"type",@"1",@"successNum",nil];
+    [[NetworkRequest sharedInstance] POST:responder dict:dict succeed:^(id data) {
+        
+    } failure:^(NSError *error) {
+        
+    }];
+}
 /*!
  *  \~chinese
  *  用户B同意用户A拨打的通话后，用户A会收到这个回调
@@ -373,7 +382,11 @@
     _typeLab.text = @"正在通话中";
     [_audioPlayer stop];
     
-    
+    if (_c) {
+        [self sentNumberResponderWithDetid:_c.courseDetailId withSOF:@"1" post:ClassResponder];
+    }else if(_meetingModel){
+        [self sentNumberResponderWithDetid:_meetingModel.meetingDetailId withSOF:@"1" post:MeetingResponder];
+    }
 }
 
 /*!

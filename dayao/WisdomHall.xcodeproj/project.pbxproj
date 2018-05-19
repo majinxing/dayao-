@@ -240,6 +240,8 @@
 		8B4D91141EBDAB1000A4BE34 /* SignListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B4D91121EBDAB1000A4BE34 /* SignListViewController.m */; };
 		8B4D91151EBDAB1000A4BE34 /* SignListViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8B4D91131EBDAB1000A4BE34 /* SignListViewController.xib */; };
 		8B4E5CD4206091C500C12EAD /* SchoolList.plist in Resources */ = {isa = PBXBuildFile; fileRef = 8B4E5CD3206091C500C12EAD /* SchoolList.plist */; };
+		8B5141B920AD6CB100549C7A /* QuestionBankListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B5141B720AD6CB100549C7A /* QuestionBankListViewController.m */; };
+		8B5141BA20AD6CB100549C7A /* QuestionBankListViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8B5141B820AD6CB100549C7A /* QuestionBankListViewController.xib */; };
 		8B51AAA31F3EE71900AE034E /* MeetingChooseSeatViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B51AAA11F3EE71900AE034E /* MeetingChooseSeatViewController.m */; };
 		8B51AAA41F3EE71900AE034E /* MeetingChooseSeatViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8B51AAA21F3EE71900AE034E /* MeetingChooseSeatViewController.xib */; };
 		8B63EFF41F58F3F500888425 /* Bugly.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8B63EFF31F58F3F500888425 /* Bugly.framework */; };
@@ -1008,6 +1010,9 @@
 		8B4D91121EBDAB1000A4BE34 /* SignListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SignListViewController.m; sourceTree = "<group>"; };
 		8B4D91131EBDAB1000A4BE34 /* SignListViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SignListViewController.xib; sourceTree = "<group>"; };
 		8B4E5CD3206091C500C12EAD /* SchoolList.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = SchoolList.plist; sourceTree = "<group>"; };
+		8B5141B620AD6CB100549C7A /* QuestionBankListViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QuestionBankListViewController.h; sourceTree = "<group>"; };
+		8B5141B720AD6CB100549C7A /* QuestionBankListViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QuestionBankListViewController.m; sourceTree = "<group>"; };
+		8B5141B820AD6CB100549C7A /* QuestionBankListViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = QuestionBankListViewController.xib; sourceTree = "<group>"; };
 		8B51AAA01F3EE71900AE034E /* MeetingChooseSeatViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MeetingChooseSeatViewController.h; path = Model/MeetingChooseSeatViewController.h; sourceTree = "<group>"; };
 		8B51AAA11F3EE71900AE034E /* MeetingChooseSeatViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MeetingChooseSeatViewController.m; path = Model/MeetingChooseSeatViewController.m; sourceTree = "<group>"; };
 		8B51AAA21F3EE71900AE034E /* MeetingChooseSeatViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = MeetingChooseSeatViewController.xib; path = Model/MeetingChooseSeatViewController.xib; sourceTree = "<group>"; };
@@ -2496,6 +2501,9 @@
 				8B0DB1381ED6CA4E0042DF0D /* ImportTextViewController.h */,
 				8B0DB1391ED6CA4E0042DF0D /* ImportTextViewController.m */,
 				8B0DB13A1ED6CA4E0042DF0D /* ImportTextViewController.xib */,
+				8B5141B620AD6CB100549C7A /* QuestionBankListViewController.h */,
+				8B5141B720AD6CB100549C7A /* QuestionBankListViewController.m */,
+				8B5141B820AD6CB100549C7A /* QuestionBankListViewController.xib */,
 			);
 			name = TextViewController;
 			sourceTree = "<group>";
@@ -2985,6 +2993,7 @@
 				8B4E5CD4206091C500C12EAD /* SchoolList.plist in Resources */,
 				8BE877911EBD69C000866A34 /* CreateTestViewController.xib in Resources */,
 				8B2F14561F5E9BD600438374 /* StudentScoreTableViewCell.xib in Resources */,
+				8B5141BA20AD6CB100549C7A /* QuestionBankListViewController.xib in Resources */,
 				8B027A2A1EFB4E0000600E18 /* DataDownloadTableViewCell.xib in Resources */,
 				8B084DD22064DBB3004B9C7C /* HomeworkCreateTableViewCell.xib in Resources */,
 				8BF82D821EE001D600D33473 /* VoteTableViewCell.xib in Resources */,
@@ -3293,6 +3302,7 @@
 				8B40E11B2058B3C3000E6C2F /* ThemeTool.m in Sources */,
 				8BE3F3CD2099908A00C22678 /* QuestionModel.m in Sources */,
 				8BE877801EBC2DE000866A34 /* InTheTestViewController.m in Sources */,
+				8B5141B920AD6CB100549C7A /* QuestionBankListViewController.m in Sources */,
 				8B1A502C1F75EB7000A11CB2 /* TheMessageViewController.m in Sources */,
 				8B045B751F3458820021699B /* NSObject+MJClass.m in Sources */,
 				8B0333F31F8C50950021D495 /* GroupListTableViewCell.m in Sources */,

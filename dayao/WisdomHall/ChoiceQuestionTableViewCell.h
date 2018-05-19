@@ -20,6 +20,8 @@
 -(void)textViewDidChangeDelegate:(UITextView *)textView;
 
 -(void)deleAnswerImageDelegate:(UIButton *)sender;
+
+-(void)eighthSelectTitleDelegate:(UIButton *)btn;
 @end
 
 @interface ChoiceQuestionTableViewCell : UITableViewCell
@@ -33,4 +35,8 @@
 -(void)addOptionWithModel:(optionsModel *)optionsModel withEdit:(BOOL)edit withIndexRow:(int)row withISelected:(BOOL)isSelected;
 
 -(void)addSeventhTextViewWithStr:(NSString *)str;
+
+-(void)eigthTitleType:(NSString *)titleType withScore:(NSString *)score isSelect:(BOOL)select btnTag:(int)index;
+
+-(void)addOptionWithModel:(optionsModel *)optionsM withIndexRow:(int)row withISelected:(BOOL)isSelected;//题库
 @end

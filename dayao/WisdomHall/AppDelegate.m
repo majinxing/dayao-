@@ -216,6 +216,9 @@ performFetchWithCompletionHandler:(void (^)(UIBackgroundFetchResult))completionH
     }
     else {
         NSLog(@"Home.");
+        //目的是为了停止inApp的时钟
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"stopTime" object:nil];
+        
         [[NSNotificationCenter defaultCenter] postNotificationName:OutApp object:nil];
     };
     //user pressed home button }

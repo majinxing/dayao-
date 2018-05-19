@@ -202,9 +202,13 @@
     ZFSeatModel * m = z.seatmodel;
 //    ZFSeatsModel * n = z.seatsmodel;
     NSArray * a = [m.seatNo componentsSeparatedByString:@","];
+    
     NSString * seat = [NSString stringWithFormat:@"%d排%d座",[a[0] intValue],[a[1] intValue]];
+    
     UserModel * user = [[Appsetting sharedInstance] getUsetInfo];
+    
     NSDictionary * dict = [[NSDictionary alloc] initWithObjectsAndKeys:[NSString stringWithFormat:@"%@",_classModel.courseDetailId],@"id",user.peopleId,@"studentId",seat,@"seat",_classModel.roomId,@"roomId", nil];
+    
     [[NetworkRequest sharedInstance] POST:UpdateSeat dict:dict succeed:^(id data) {
         NSLog(@"%@",data);
         NSString * str = [NSString stringWithFormat:@"%@",[[data objectForKey:@"header"] objectForKey:@"code"]];

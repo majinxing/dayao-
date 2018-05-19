@@ -54,19 +54,9 @@
     
     _temp = 0;
 
-    //    if (!_allQuestionAry) {
+    
     _allQuestionAry = [NSMutableArray arrayWithCapacity:1];
-    //    }else{
-    //        if (_allQuestionAry.count == 1) {
-    //            [self addQidScrollView];
-    //        }else if(_allQuestionAry.count>1){
-    //            [self addQidScrollView];
-    //            for (int i = 1 ; i<_allQuestionAry.count; i++) {
-    //
-    //                [self addScrollViewBtn:i+1];
-    //            }
-    //        }
-    //    }
+   
     if (!_editable) {
         [_addTitleBtn removeFromSuperview];
         
@@ -119,7 +109,10 @@
             btn.tag = 1;
             
             [self titleClick:btn];
+        }else{
+            [UIUtils showInfoMessage:[NSString stringWithFormat:@"%@",[[data objectForKey:@"header"] objectForKey:@"message"]] withVC:self];
         }
+        
     } failure:^(NSError *error) {
         
     }];
@@ -165,7 +158,7 @@
 //    self.navigationItem.leftBarButtonItem = backItem;
 }
 -(void)back{
-    UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"提示" message:@"返回后将不保存答题信息，若想保存请交卷保存" preferredStyle:  UIAlertControllerStyleActionSheet];
+    UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"提示" message:@"返回后将不保存答题信息，若想保存请提交保存" preferredStyle:  UIAlertControllerStyleActionSheet];
     //分别按顺序放入每个按钮；
     [alert addAction:[UIAlertAction actionWithTitle:@"退出页面" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
         [self.navigationController popViewControllerAnimated: YES];

@@ -49,8 +49,24 @@
     _questionTitle = [dict objectForKey:@"content"];
     
     _titleType = [NSString stringWithFormat:@"%@",[dict objectForKey:@"type"]];
+    
+
+    if ([_titleType isEqualToString:@"1"]) {
+        _titleTypeName = @"单选";
+    }else if ([_titleType isEqualToString:@"2"]) {
+        _titleTypeName = @"多选";
+    }else if ([_titleType isEqualToString:@"3"]) {
+        _titleTypeName = @"判断";
+    }else if ([_titleType isEqualToString:@"4"]) {
+        _titleTypeName = @"填空";
+    }else if ([_titleType isEqualToString:@"5"]) {
+        _titleTypeName = @"问答";
+    }
     if ([UIUtils isBlankString:[NSString stringWithFormat:@"%@",[dict objectForKey:@"studentAnswer"]]]) {
         _questionAnswer  = [[NSString alloc] init];
+        if (![UIUtils isBlankString:[NSString stringWithFormat:@"%@",[dict objectForKey:@"answer"]]]) {
+            _questionAnswer = [NSString stringWithFormat:@"%@",[dict objectForKey:@"answer"]];
+        }
     }else{
        _questionAnswer  = [NSString stringWithFormat:@"%@",[dict objectForKey:@"studentAnswer"]];
     }
@@ -93,6 +109,24 @@
         }
     }
     return 0;
+}
+
+-(float)returnAnswerHeightZone{
+    float  text ;
+    if ([UIUtils isBlankString:_questionAnswer]) {
+        text = 0;
+    }else{
+        text = [self returnTextHeight:_questionAnswer];
+    }
+    
+    float image = 0;
+    if (_questionAnswerImageAry.count>0&&_questionAnswerImageAry.count<=3) {
+        image = (APPLICATION_WIDTH/3)+40;
+    }else if(_questionAnswerImageAry.count>3){
+        image = (APPLICATION_WIDTH/3*2)+40;
+    }
+    return text+image;
+
 }
 -(float)returnAnswerHeight{
     

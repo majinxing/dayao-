@@ -9,5 +9,6 @@
 #import <UIKit/UIKit.h>
 
 @interface NavBarNavigationController : UINavigationController
-
+@property (nonatomic,strong)NSTimer *showTimer;
++(NavBarNavigationController *)sharedInstance;
 @end

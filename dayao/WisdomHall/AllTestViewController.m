@@ -61,14 +61,23 @@
     self.title = @"测验";
     _userModel = [[Appsetting sharedInstance] getUsetInfo];
     if ([[NSString stringWithFormat:@"%@",_classModel.teacherId] isEqualToString:[NSString stringWithFormat:@"%@",_userModel.peopleId]]) {
+        
         UIBarButtonItem *myButton = [[UIBarButtonItem alloc] initWithTitle:@"创建测验" style:UIBarButtonItemStylePlain target:self action:@selector(createText)];
+        
         [myButton setTintColor:[UIColor whiteColor]];
 
-//        self.navigationItem.rightBarButtonItem = myButton;
+        self.navigationItem.rightBarButtonItem = myButton;
     }
     
 }
 -(void)createText{
+    
+    UIBarButtonItem *myButton = [[UIBarButtonItem alloc] initWithTitle:@"创建测验" style:UIBarButtonItemStylePlain target:self action:@selector(createText)];
+    
+    [myButton setTintColor:[UIColor whiteColor]];
+    
+    self.navigationItem.rightBarButtonItem = myButton;
+    
     CreateTestViewController * c = [[CreateTestViewController alloc] init];
     self.hidesBottomBarWhenPushed = YES;
     c.classModel  = _classModel;
@@ -83,6 +92,7 @@
     _tableView.backgroundColor = [UIColor clearColor];
     self.automaticallyAdjustsScrollViewInsets = NO;
     [self.view addSubview:_tableView];
+    
     __weak AllTestViewController * weakSelf = self;
     [self.tableView addHeaderWithCallback:^{
         [weakSelf getData];

@@ -291,10 +291,11 @@
 
 #define UploadTemp              @"course/resource/uploadTemp"       //上传临时文件
 
+#define ClassResponder          @"course/course/collect"             //课堂抢答统计
 
+#define MeetingResponder        @"course/meeting/collect"            //会议抢答统计
 
-
-
+#define SMSSend                 @"course/sms/send"                   //发送短信
 
 
 

@@ -1,15 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="12121" systemVersion="16E195" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="13771" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12089"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
+        <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="ImportTextViewController">
             <connections>
+                <outlet property="selectAllQuestionBtn" destination="z6r-le-lDv" id="uOn-7j-jCP"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
@@ -17,7 +19,58 @@
         <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT">
             <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="mN8-Up-mtw">
+                    <rect key="frame" x="0.0" y="64" width="187.5" height="40"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="40" id="9Ng-mT-TNz"/>
+                    </constraints>
+                    <state key="normal" title="选择题库  ∨"/>
+                    <connections>
+                        <action selector="chooseBank:" destination="-1" eventType="touchUpInside" id="KVb-O3-wK6"/>
+                    </connections>
+                </button>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="z6r-le-lDv">
+                    <rect key="frame" x="187.5" y="64" width="187.5" height="40"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="40" id="64i-GU-xHu"/>
+                    </constraints>
+                    <state key="normal" title="全选"/>
+                    <connections>
+                        <action selector="allselectQuestionBtn:" destination="-1" eventType="touchUpInside" id="twR-1t-w1r"/>
+                    </connections>
+                </button>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="LBc-FF-iob">
+                    <rect key="frame" x="186.5" y="64" width="1" height="40"/>
+                    <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="40" id="4Ob-eR-GYm"/>
+                        <constraint firstAttribute="width" constant="1" id="tqg-sY-lQA"/>
+                    </constraints>
+                </view>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="AOP-sj-k4M">
+                    <rect key="frame" x="0.0" y="103" width="375" height="1"/>
+                    <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="1" id="2cP-X7-kZk"/>
+                    </constraints>
+                </view>
+            </subviews>
             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <constraints>
+                <constraint firstItem="mN8-Up-mtw" firstAttribute="width" secondItem="i5M-Pr-FkT" secondAttribute="width" multiplier="1/2" id="1nQ-qf-7US"/>
+                <constraint firstItem="z6r-le-lDv" firstAttribute="leading" secondItem="LBc-FF-iob" secondAttribute="trailing" id="4Xg-qn-rqA"/>
+                <constraint firstItem="mN8-Up-mtw" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="64" id="56A-8P-mn6"/>
+                <constraint firstAttribute="trailing" secondItem="z6r-le-lDv" secondAttribute="trailing" id="B7H-ej-0EW"/>
+                <constraint firstItem="AOP-sj-k4M" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="FY2-c0-6ou"/>
+                <constraint firstItem="LBc-FF-iob" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="64" id="LHu-uR-GgU"/>
+                <constraint firstAttribute="trailing" secondItem="AOP-sj-k4M" secondAttribute="trailing" id="g55-Bi-TUd"/>
+                <constraint firstItem="AOP-sj-k4M" firstAttribute="top" secondItem="mN8-Up-mtw" secondAttribute="bottom" constant="-1" id="i9k-cG-Uea"/>
+                <constraint firstItem="z6r-le-lDv" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="64" id="kLe-X5-pqS"/>
+                <constraint firstItem="z6r-le-lDv" firstAttribute="width" secondItem="mN8-Up-mtw" secondAttribute="width" id="qie-Kg-ymJ"/>
+                <constraint firstItem="mN8-Up-mtw" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="x8L-cX-suK"/>
+            </constraints>
+            <point key="canvasLocation" x="35.5" y="76.5"/>
         </view>
     </objects>
 </document>

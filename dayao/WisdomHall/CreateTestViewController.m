@@ -12,7 +12,11 @@
 #import "DYHeader.h"
 
 #import "QuestionBank.h"
+
 #import "TestQuestionsViewController.h"
+
+#import "ImportTextViewController.h"
+
 
 @interface CreateTestViewController ()
 @property(nonatomic,strong)TextModel * textModel;
@@ -29,9 +33,24 @@
     
     [self setNavigationTitle];
     
+    [self addBtn];
+    
     // Do any additional setup after loading the view from its nib.
 }
-
+-(void)addBtn{
+    UIButton * btn = [UIButton buttonWithType:UIButtonTypeSystem];
+    btn.frame = CGRectMake(APPLICATION_WIDTH-50, APPLICATION_HEIGHT-50, 40, 40);
+    [btn setTitle:@"+" forState:UIControlStateNormal];
+    [btn setTintColor:[UIColor whiteColor]];
+    [btn setBackgroundColor:[UIColor colorWithHexString:@"#29a7e1"]];
+    [self.view addSubview:btn];
+    [btn addTarget:self action:@selector(addTitle) forControlEvents:UIControlEventTouchUpInside];
+}
+-(void)addTitle{
+    ImportTextViewController * vc = [[ImportTextViewController alloc] init];
+    self.hidesBottomBarWhenPushed = YES;
+    [self.navigationController pushViewController:vc animated:YES];
+}
 /**
  *  显示navigation的标题
  **/
@@ -39,81 +58,16 @@
     [UIApplication sharedApplication].statusBarStyle = UIStatusBarStyleLightContent;
     
     self.title = @"创建测验";
-    UIBarButtonItem *myButton = [[UIBarButtonItem alloc] initWithTitle:@"下一步" style:UIBarButtonItemStylePlain target:self action:@selector(createText)];
+    
+    UIBarButtonItem *myButton = [[UIBarButtonItem alloc] initWithTitle:@"发布试卷" style:UIBarButtonItemStylePlain target:self action:@selector(createText)];
     [myButton setTintColor:[UIColor whiteColor]];
-
+    
     self.navigationItem.rightBarButtonItem = myButton;
 }
 -(void)createText{
-    if ([UIUtils isBlankString:_titleTextFile.text]) {
-        [UIUtils showInfoMessage:@"请填写测验名字" withVC:self];
-    }else{
-        
-        NSDictionary * dict = [[NSDictionary alloc] initWithObjectsAndKeys:_titleTextFile.text,@"name",@"1",@"status", nil];
-        [[NetworkRequest sharedInstance] POST:CreateLib dict:dict succeed:^(id data) {
-            NSString * str = [NSString stringWithFormat:@"%@",[[data objectForKey:@"header"] objectForKey:@"code"]];
-            if ([str isEqualToString:@"0000"]) {
-                NSString * str = [NSString stringWithFormat:@"%@",[data objectForKey:@"body"]];
-                _questionModel = [[QuestionBank alloc] init];
-                _questionModel.libId = str;
-                TextModel * t = [[TextModel alloc] init];
-                t.title = _titleTextFile.text;
-                TestQuestionsViewController * tQVC = [[TestQuestionsViewController alloc] init];
-                tQVC.t = t;
-                tQVC.qBank = _questionModel;
-                tQVC.classModel = _classModel;
-                tQVC.editable = YES;
-                self.hidesBottomBarWhenPushed = YES;
-                
-                [self.navigationController pushViewController:tQVC animated:YES];
-            }else if ([str isEqualToString:@"6682"]){
-                [UIUtils showInfoMessage:@"试卷名字重名，请重新写试卷名字" withVC:self];
-            }
-            else{
-                [UIUtils showInfoMessage:@"创建失败" withVC:self];
-            }
-        } failure:^(NSError *error) {
-            NSLog(@"%@",error);
-        }];
-    }
-}
--(void)queryLibList{
     
-    NSDictionary * dict = [[NSDictionary alloc] initWithObjectsAndKeys:@"1",@"start",@"1000",@"length",nil];
-    
-    [[NetworkRequest sharedInstance] GET:QueryLibList dict:dict succeed:^(id data) {
-        NSLog(@"%@",data);
-        NSString * str = [NSString stringWithFormat:@"%@",[[data objectForKey:@"header"] objectForKey:@"code"]];
-        if ([str isEqualToString:@"0000"]) {
-            NSArray * ary = [data objectForKey:@"body"];
-            _questionModel = [self seleCreateLib:ary];
-            TextModel * t = [[TextModel alloc] init];
-            t.title = _titleTextFile.text;
-            TestQuestionsViewController * tQVC = [[TestQuestionsViewController alloc] init];
-            tQVC.t = t;
-            tQVC.qBank = _questionModel;
-            tQVC.classModel = _classModel;
-            self.hidesBottomBarWhenPushed = YES;
-            [self.navigationController pushViewController:tQVC animated:YES];
-        }else{
-            [UIUtils showInfoMessage:@"创建失败" withVC:self];
-        }
-    } failure:^(NSError *error) {
-        [UIUtils showInfoMessage:@"创建失败，请检查网络" withVC:self];
-    }];
 }
--(QuestionBank *)seleCreateLib:(NSArray *)ary{
-    QuestionBank * question;
-    for (int i = 0; i<ary.count; i++) {
-        QuestionBank * q = [[QuestionBank alloc] init];
-        [q setSelfInfoWithDict:ary[i]];
-        if ([_titleTextFile.text isEqualToString:q.libName]) {
-            question = q;
-            break;
-        }
-    }
-    return question;
-}
+
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.

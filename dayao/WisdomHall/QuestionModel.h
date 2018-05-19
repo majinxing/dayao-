@@ -34,6 +34,8 @@
 
 @property (nonatomic,copy) NSString * titleType;//题目类型
 
+@property (nonatomic,copy) NSString * titleTypeName;
+
 @property (nonatomic,copy)NSString * questionId;//题目id
 
 @property (nonatomic,strong) NSMutableArray *  answerOptions;//判断题用
@@ -47,4 +49,6 @@
 -(float)returnOptionHeight:(int)index;//返回选项高度
 
 -(float)returnAnswerHeight;
+
+-(float)returnAnswerHeightZone;//答案真实高度
 @end

@@ -11,7 +11,7 @@
 @implementation QuestionBank
 -(void)setSelfInfoWithDict:(NSDictionary *)dict{
     _statues = [dict objectForKey:@"status"];
-    _libId = [dict objectForKey:@"id"];
+    _libId = [NSString stringWithFormat:@"%@",[dict objectForKey:@"id"]];
     _libName = [dict objectForKey:@"name"];
 }
 

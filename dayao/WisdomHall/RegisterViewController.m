@@ -80,6 +80,7 @@
         }
     }];
     
+    
     [_getVerificationCodeBtn setEnabled:NO];
     //时间间隔
     NSTimeInterval timeInterval = 1.0 ;
@@ -109,8 +110,7 @@
     [_getVerificationCodeBtn setTitleColor:[UIColor colorWithHexString:@"#999999"] forState:UIControlStateNormal];
     _getVerificationCodeBtn.layer.borderColor=[[UIColor colorWithHexString:@"#999999"] CGColor];
     
-    //_sendVerification.titleLabel.text = str;// @"60秒";
-    //    _sendVerification.backgroundColor=[UIColor grayColor];
+
     if(count <= 0)
     {
         [_getVerificationCodeBtn setTitle:@"获取验证码" forState:UIControlStateNormal];
