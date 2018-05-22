@@ -36,13 +36,14 @@
     
     _user = [[Appsetting sharedInstance] getUsetInfo];
     
-    _scoreAry = @[@"1",@"2",@"3",@"4",@"5",@"6",@"7"];
+    _scoreAry = @[@"1",@"2",@"3",@"4",@"5"];
     
     self.view.backgroundColor = [UIColor whiteColor];
     
 //    [self setQuestionModel];
     
     [self addTableView];
+    
     
     // Do any additional setup after loading the view from its nib.
 }
@@ -58,8 +59,22 @@
     self.automaticallyAdjustsScrollViewInsets = NO;
     
     [self.view addSubview:_tableView];
+    
+    UISwipeGestureRecognizer * priv = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(handleSwipeFrom:)];
+    [priv setDirection:(UISwipeGestureRecognizerDirectionRight)];
+    
+    [_tableView addGestureRecognizer:priv];
+    
+    UISwipeGestureRecognizer * recognizer = [[UISwipeGestureRecognizer alloc]initWithTarget:self action:@selector(handleSwipeFrom:)];
+    [recognizer setDirection:(UISwipeGestureRecognizerDirectionLeft)];
+    
+    [_tableView addGestureRecognizer:recognizer];
 }
-
+-(void)handleSwipeFrom:(UISwipeGestureRecognizer *)recognizer{
+    if (self.delegate&&[self.delegate respondsToSelector:@selector(handleSwipeFromDelegate:)]) {
+        [self.delegate handleSwipeFromDelegate:recognizer];
+    }
+}
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
@@ -265,9 +280,7 @@
 
         }
     }else if (section ==3){
-        if (_editable) {
-            return 2;
-        }
+        
         return 1;
     }
     return 10;
@@ -302,18 +315,14 @@
             }
             
         }else if (indexPath.section == 3){
-            if (indexPath.row ==1) {
-                cell = [tableView dequeueReusableCellWithIdentifier:@"ChoiceQuestionTableViewCellSixth"];
+            
+            cell = [tableView dequeueReusableCellWithIdentifier:@"ChoiceQuestionTableViewCellSeventh"];
                 
-                cell = [[[NSBundle mainBundle] loadNibNamed:@"ChoiceQuestionTableViewCell" owner:nil options:nil] objectAtIndex:5];
-            }else{
-                cell = [tableView dequeueReusableCellWithIdentifier:@"ChoiceQuestionTableViewCellFourth"];
-                
-                cell = [[[NSBundle mainBundle] loadNibNamed:@"ChoiceQuestionTableViewCell" owner:nil options:nil] objectAtIndex:3];
-            }
-
+            cell = [[[NSBundle mainBundle] loadNibNamed:@"ChoiceQuestionTableViewCell" owner:nil options:nil] objectAtIndex:6];
+            
         }
     }
+    
     cell.delegate = self;
     
     [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
@@ -327,14 +336,17 @@
         }
     }else if(indexPath.section == 1){
     
-        [cell setScoreAndDifficult:_questionModel.qustionScore withDifficult:_questionModel.questionDifficulty withEdit:_editable];
+        [cell setScoreAndDifficult:_questionModel.qustionScore withDifficult:_questionModel.questionDifficulty withEdit:YES];
         
     }else if (indexPath.section == 2){
         if (indexPath.row==_questionModel.qustionOptionsAry.count) {
             
         }else{
-            [cell addOptionWithModel:_questionModel.qustionOptionsAry[indexPath.row] withEdit:_editable withIndexRow:(int)indexPath.row withISelected:NO];
+            [cell addOptionWithModel:_questionModel.qustionOptionsAry[indexPath.row] withIndexRow:(int)indexPath.row withISelected:NO];
         }
+    }else if (indexPath.section ==3){
+        [cell addSeventhTextViewWithStrEndEditor:_questionModel.questionAnswer];
+
     }
     
     return cell;
@@ -351,6 +363,8 @@
         return 110;
     }else if (indexPath.section == 2){
         return [_questionModel returnOptionHeight:(int)indexPath.row];
+    }else if (indexPath.section==3){
+        return [_questionModel returnAnswerHeightZone];
     }
     return 60;
 }
@@ -428,7 +442,6 @@
         }
         [_tableView reloadData];
     });
-    
     
     //使用模态返回到软件界面
     [self.navigationController dismissViewControllerAnimated:YES completion:nil];

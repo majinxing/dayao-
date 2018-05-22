@@ -334,6 +334,15 @@
         
     }
 }
+-(void)addSeventhTextViewWithStrEndEditor:(NSString *)str{
+    if (![UIUtils isBlankString:str]) {
+        _seventhTextView.text = str;
+        _seventhApllabel.text = @"";
+    }else{
+        
+    }
+    [_seventhTextView setEditable: NO];
+}
 - (IBAction)addOption:(UIButton *)sender {
     if (self.delegate&&[self.delegate respondsToSelector:@selector(addOptionsDelegate:)]) {
         [self.delegate addOptionsDelegate:sender];

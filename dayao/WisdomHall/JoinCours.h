@@ -17,5 +17,6 @@
 @interface JoinCours : UIView
 @property (nonatomic,weak)id<JoinCoursDelegate>delegate;
 @property (nonatomic,strong)UITextField * courseNumber;
+-(void)addContentView:(NSString *)title;
 @end
 

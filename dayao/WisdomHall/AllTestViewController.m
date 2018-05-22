@@ -24,14 +24,16 @@
 
 #import "AnswerTestQuestionsViewController.h"
 
-@interface AllTestViewController ()<UITableViewDelegate,UITableViewDataSource,TextsTableViewCellDelegate,ShareViewDelegate>
+#import "JoinCours.h"
+
+@interface AllTestViewController ()<UITableViewDelegate,UITableViewDataSource,TextsTableViewCellDelegate,ShareViewDelegate,JoinCoursDelegate>
 @property (nonatomic,strong)UITableView * tableView;
 @property (nonatomic,strong)FMDatabase *db;
 @property (nonatomic,strong)NSMutableArray * dataAry;//数据源
 @property (nonatomic,assign)int temp;//标志位防止数据重复
 @property (nonatomic,strong)ShareView * vote;
 @property (nonatomic,strong)TextModel * t;
-
+@property (nonatomic,strong)JoinCours * join;
 @end
 
 @implementation AllTestViewController
@@ -72,17 +74,24 @@
 }
 -(void)createText{
     
-    UIBarButtonItem *myButton = [[UIBarButtonItem alloc] initWithTitle:@"创建测验" style:UIBarButtonItemStylePlain target:self action:@selector(createText)];
     
-    [myButton setTintColor:[UIColor whiteColor]];
+    [self joinCourse];
     
-    self.navigationItem.rightBarButtonItem = myButton;
     
-    CreateTestViewController * c = [[CreateTestViewController alloc] init];
-    self.hidesBottomBarWhenPushed = YES;
-    c.classModel  = _classModel;
-    [self.navigationController pushViewController:c animated:YES];
 }
+/**
+ *
+ **/
+-(void)joinCourse{
+    if (_join==nil) {
+        _join = [[JoinCours alloc] init];
+        _join.delegate = self;
+        _join.frame = CGRectMake(0, 0, APPLICATION_WIDTH, APPLICATION_HEIGHT);
+        [_join addContentView:@"请输入试卷的名字"];
+        [self.view addSubview:_join];
+    }
+}
+
 -(void)addTableView{
     
     _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0,64, APPLICATION_WIDTH, APPLICATION_HEIGHT-64) style:UITableViewStylePlain];
@@ -141,6 +150,41 @@
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+#pragma mark JoinCoursDelegate
+-(void)joinCourseDelegete:(UIButton *)btn{
+    [self.view endEditing:YES];
+    if (btn.tag == 1) {
+        [_join removeFromSuperview];
+        _join = nil;
+    }else if (btn.tag == 2){
+        if (![UIUtils isBlankString:_join.courseNumber.text]) {
+            UIBarButtonItem *myButton = [[UIBarButtonItem alloc] initWithTitle:@"创建测验" style:UIBarButtonItemStylePlain target:self action:@selector(createText)];
+            
+            [myButton setTintColor:[UIColor whiteColor]];
+            
+            self.navigationItem.rightBarButtonItem = myButton;
+            
+            TestQuestionsViewController * c = [[TestQuestionsViewController alloc] init];
+            
+            self.hidesBottomBarWhenPushed = YES;
+            
+            c.classModel  = _classModel;
+            
+            c.textName = _join.courseNumber.text;
+            
+            [_join removeFromSuperview];
+            
+            _join = nil;
+            
+            [self.navigationController pushViewController:c animated:YES];
+            
+        }else{
+            [UIUtils showInfoMessage:@"试卷名字不能为空" withVC:self];
+        }
+        
+    }
+    
 }
 #pragma mark TextsTableViewCellDelegate
 -(void)moreBtnPressedDelegate:(UIButton *)btn{
@@ -266,11 +310,14 @@
     }
     TextModel * t = _dataAry[indexPath.row];
     [cell addContentView:t withIndex:(int)indexPath.row+1];
+    
     if (![[NSString stringWithFormat:@"%@",_classModel.teacherId] isEqualToString:[NSString stringWithFormat:@"%@",_userModel.peopleId]]) {
         cell.moreImage.image = [UIImage imageNamed:@""];
         [cell.moreBtn setEnabled:NO];
     }
+    
     cell.delegate = self;
+    
     return cell;
     
 }

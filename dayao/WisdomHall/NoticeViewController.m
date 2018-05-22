@@ -52,7 +52,8 @@
     [self headerRereshing];
 }
 -(void)viewWillAppear:(BOOL)animated{
-        self.navigationController.navigationBarHidden = NO; //设置隐藏
+//        self.navigationController.navigationBarHidden = NO; //设置隐藏
+    [self.navigationController setNavigationBarHidden:YES];
 
 }
 -(void)headerRereshing{
@@ -67,13 +68,33 @@
  *  显示navigation的标题
  **/
 -(void)setNavigationTitle{
-    [UIApplication sharedApplication].statusBarStyle = UIStatusBarStyleLightContent;
-
-    self.title = @"通知";
-    UIBarButtonItem * myButton = [[UIBarButtonItem alloc] initWithTitle:@"< 返回" style:UIBarButtonItemStylePlain target:self action:@selector(back)];
-    [myButton setTintColor:[UIColor whiteColor]];
-
-    self.navigationItem.leftBarButtonItem = myButton;
+    UIView * navigationBar = [[UIView alloc] initWithFrame:CGRectMake(0, 0, APPLICATION_WIDTH, 64)];
+    navigationBar.backgroundColor = [[Appsetting sharedInstance] getThemeColor];
+    
+    [self.view addSubview:navigationBar];
+    
+    UILabel * titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(APPLICATION_WIDTH/2-40, 30, 80, 20)];
+    titleLabel.text = @"通知";
+    titleLabel.textAlignment = NSTextAlignmentCenter;
+    titleLabel.textColor = [UIColor whiteColor];
+    titleLabel.font = [UIFont systemFontOfSize:18];
+    [self.view addSubview:titleLabel];
+    
+    
+    UIImageView * b = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"ic_arrow_left"]];
+    b.frame = CGRectMake(3, 30, 25, 20);
+    [self.view addSubview:b];
+    
+    UIButton * backBtn = [UIButton buttonWithType:UIButtonTypeSystem];
+    backBtn.frame = CGRectMake(13,18, 60, 44);
+    [backBtn setTitle:@"返回" forState:UIControlStateNormal];
+    [backBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    
+    backBtn.titleLabel.font = [UIFont systemFontOfSize:17];//[UIFont fontWithName:@"Helvetica-Bold" size:17];
+    
+    backBtn.titleLabel.textAlignment = NSTextAlignmentLeft;
+    [self.view addSubview:backBtn];
+    [backBtn addTarget:self action:@selector(back) forControlEvents:UIControlEventTouchUpInside];
 }
 -(void)back{
     if ([_backType isEqualToString:@"TabBar"]) {

@@ -38,7 +38,7 @@
     
     _user = [[Appsetting sharedInstance] getUsetInfo];
     
-    _scoreAry = @[@"1",@"2",@"3",@"4",@"5",@"6",@"7"];
+    _scoreAry = @[@"1",@"2",@"3",@"4",@"5"];
     
     self.view.backgroundColor = [UIColor whiteColor];
     
@@ -50,7 +50,23 @@
     _tableView.delegate = self;
     _tableView.dataSource = self;
     [self.view addSubview:_tableView];
+    UISwipeGestureRecognizer * priv = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(handleSwipeFrom:)];
+    [priv setDirection:(UISwipeGestureRecognizerDirectionRight)];
+    
+    [_tableView addGestureRecognizer:priv];
+    
+    UISwipeGestureRecognizer * recognizer = [[UISwipeGestureRecognizer alloc]initWithTarget:self action:@selector(handleSwipeFrom:)];
+    [recognizer setDirection:(UISwipeGestureRecognizerDirectionLeft)];
+    
+    [_tableView addGestureRecognizer:recognizer];
 }
+
+-(void)handleSwipeFrom:(UISwipeGestureRecognizer *)recognizer{
+    if (self.delegate&&[self.delegate respondsToSelector:@selector(handleSwipeFromDelegate:)]) {
+        [self.delegate handleSwipeFromDelegate:recognizer];
+    }
+}
+
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
@@ -225,18 +241,7 @@
     }else if (section == 1){
         return 1;
     }else if (section == 2){
-        if ([_questionModel.titleType isEqualToString:@"4"]) {
-            if (_editable) {
-                return _questionModel.blankAry.count+3;
-            }else{
-                return _questionModel.blankAry.count;
-            }
-        }else{
-            if (_editable) {
-                return 2;
-            }
-            return 1;
-        }
+        return 1;
     }
     return 0;
 }
@@ -260,33 +265,18 @@
             
         }else if (indexPath.section == 2){
             
-            if ([_questionModel.titleType  isEqualToString:@"4"]) {
-                if(indexPath.row == _questionModel.blankAry.count+3-2){
-                    cell = [tableView dequeueReusableCellWithIdentifier:@"ChoiceQuestionTableViewCellFifth"];
-                    
-                    cell = [[[NSBundle mainBundle] loadNibNamed:@"ChoiceQuestionTableViewCell" owner:nil options:nil] objectAtIndex:4];
-                    
-                    
-                }else if (indexPath.row == _questionModel.blankAry.count+3-1) {
-                    cell = [tableView dequeueReusableCellWithIdentifier:@"ChoiceQuestionTableViewCellSixth"];
-                    
-                    cell = [[[NSBundle mainBundle] loadNibNamed:@"ChoiceQuestionTableViewCell" owner:nil options:nil] objectAtIndex:5];
-                }else{
+//            if ([_questionModel.titleType  isEqualToString:@"4"]) {
+            
                     cell = [tableView dequeueReusableCellWithIdentifier:@"ChoiceQuestionTableViewCellSeventh"];
                     
                     cell = [[[NSBundle mainBundle] loadNibNamed:@"ChoiceQuestionTableViewCell" owner:nil options:nil] objectAtIndex:6];
-                }
-            }else{
-                if (indexPath.row ==1) {
-                    cell = [tableView dequeueReusableCellWithIdentifier:@"ChoiceQuestionTableViewCellSixth"];
-                    
-                    cell = [[[NSBundle mainBundle] loadNibNamed:@"ChoiceQuestionTableViewCell" owner:nil options:nil] objectAtIndex:5];
-                }else{
-                    cell = [tableView dequeueReusableCellWithIdentifier:@"ChoiceQuestionTableViewCellFourth"];
-                    
-                    cell = [[[NSBundle mainBundle] loadNibNamed:@"ChoiceQuestionTableViewCell" owner:nil options:nil] objectAtIndex:3];
-                }
-            }
+//            }else{
+//
+//                    cell = [tableView dequeueReusableCellWithIdentifier:@"ChoiceQuestionTableViewCellFirst"];
+//
+//                    cell = [[[NSBundle mainBundle] loadNibNamed:@"ChoiceQuestionTableViewCell" owner:nil options:nil] objectAtIndex:0];
+//
+//            }
             
         }
     }
@@ -302,7 +292,15 @@
             [cell addFirstTitleTextView:_questionModel.questionTitle withImageAry:_questionModel.questionTitleImageIdAry withIsEdit:_editable];
         }
     }else if(indexPath.section == 1){
-        [cell setScoreAndDifficult:_questionModel.qustionScore withDifficult:_questionModel.questionDifficulty withEdit:_editable];
+        [cell setScoreAndDifficult:_questionModel.qustionScore withDifficult:_questionModel.questionDifficulty withEdit:YES];
+    }else if (indexPath.section == 2){
+        if ([_questionModel.titleType  isEqualToString:@"4"]) {
+            [cell addSeventhTextViewWithStrEndEditor:_questionModel.questionAnswer];
+
+        }else{
+            [cell addSeventhTextViewWithStrEndEditor:_questionModel.questionAnswer];
+
+        }
     }
     return cell;
 }
@@ -321,6 +319,8 @@
         }
     }else if (indexPath.section == 1){
         return 110;
+    }else if (indexPath.section==2){
+        return [_questionModel returnAnswerHeightZone];
     }
     return 60;
 }

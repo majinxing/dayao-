@@ -297,5 +297,7 @@
 
 #define SMSSend                 @"course/sms/send"                   //发送短信
 
+#define SmsSend                 @"course/sms/send"                   //发送短信
 
+#define SmsValidate             @"course/sms/validate"               //验证短信
 

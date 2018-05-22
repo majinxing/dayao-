@@ -13,11 +13,11 @@
 -(instancetype)init{
     self = [super init];
     if (self) {
-        [self addContentView];
+    
     }
     return self;
 }
--(void)addContentView{
+-(void)addContentView:(NSString *)title{
     UIView * v = [[UIView alloc] initWithFrame:CGRectMake(0, 0, APPLICATION_WIDTH, APPLICATION_HEIGHT)];
     
     v.backgroundColor = [UIColor blackColor];
@@ -34,14 +34,16 @@
     
     UILabel * label = [[UILabel alloc] initWithFrame:CGRectMake(10,5, 200-40, 20)];
     label.textColor = [UIColor blackColor];
-    label.text = @"请输入邀请码:";
+    label.text = title;
     label.font = [UIFont systemFontOfSize:12];
     [father addSubview:label];
     
     _courseNumber = [[UITextField alloc] initWithFrame:CGRectMake(10,30, 200-20, 30)];
     _courseNumber.font = [UIFont systemFontOfSize:14];
-    _courseNumber.placeholder = @"请输入邀请码";
-    _courseNumber.keyboardType = UIKeyboardTypeNumberPad;
+    _courseNumber.placeholder = title;
+    if ([title isEqualToString:@"请输入邀请码"]) {
+        _courseNumber.keyboardType = UIKeyboardTypeNumberPad;
+    }
     _courseNumber.textColor = [UIColor colorWithHexString:@"#29a7e1"];
     [father addSubview:_courseNumber];
     
@@ -60,7 +62,7 @@
     UIButton * determine = [UIButton buttonWithType:UIButtonTypeCustom];
     determine.frame = CGRectMake(160, 65, 100, 30);
     [determine setTitleColor:[UIColor colorWithHexString:@"#29a7e1"] forState:UIControlStateNormal];
-    [determine setTitle:@"加入" forState:UIControlStateNormal];
+    [determine setTitle:@"确定" forState:UIControlStateNormal];
     determine.titleLabel.font = [UIFont systemFontOfSize:12];
     determine.layer.masksToBounds = YES;
     determine.layer.borderWidth = 1;

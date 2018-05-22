@@ -35,7 +35,7 @@
     [super viewDidLoad];
     _user = [[Appsetting sharedInstance] getUsetInfo];
     
-    _scoreAry = @[@"1",@"2",@"3",@"4",@"5",@"6",@"7"];
+    _scoreAry = @[@"1",@"2",@"3",@"4",@"5"];
     
     self.view.backgroundColor = [UIColor whiteColor];
     
@@ -52,8 +52,21 @@
     self.automaticallyAdjustsScrollViewInsets = NO;
     
     [self.view addSubview:_tableView];
+    UISwipeGestureRecognizer * priv = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(handleSwipeFrom:)];
+    [priv setDirection:(UISwipeGestureRecognizerDirectionRight)];
+    
+    [_tableView addGestureRecognizer:priv];
+    
+    UISwipeGestureRecognizer * recognizer = [[UISwipeGestureRecognizer alloc]initWithTarget:self action:@selector(handleSwipeFrom:)];
+    [recognizer setDirection:(UISwipeGestureRecognizerDirectionLeft)];
+    
+    [_tableView addGestureRecognizer:recognizer];
 }
-
+-(void)handleSwipeFrom:(UISwipeGestureRecognizer *)recognizer{
+    if (self.delegate&&[self.delegate respondsToSelector:@selector(handleSwipeFromDelegate:)]) {
+        [self.delegate handleSwipeFromDelegate:recognizer];
+    }
+}
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
@@ -228,7 +241,7 @@
     }else if (section == 1){
         return 1;
     }else if (section == 2){
-          return 2;
+          return 1;
     }
     return 0;
 }
@@ -251,16 +264,9 @@
             
             
         }else if (indexPath.section == 2){
-            if (indexPath.row ==1) {
-                cell = [tableView dequeueReusableCellWithIdentifier:@"ChoiceQuestionTableViewCellSixth"];
-                
-                cell = [[[NSBundle mainBundle] loadNibNamed:@"ChoiceQuestionTableViewCell" owner:nil options:nil] objectAtIndex:5];
-            }else{
-                cell = [tableView dequeueReusableCellWithIdentifier:@"ChoiceQuestionTableViewCellFourth"];
-                
-                cell = [[[NSBundle mainBundle] loadNibNamed:@"ChoiceQuestionTableViewCell" owner:nil options:nil] objectAtIndex:3];
-            }
+            cell = [tableView dequeueReusableCellWithIdentifier:@"ChoiceQuestionTableViewCellSeventh"];
             
+            cell = [[[NSBundle mainBundle] loadNibNamed:@"ChoiceQuestionTableViewCell" owner:nil options:nil] objectAtIndex:6];
         }
     }
     cell.delegate = self;
@@ -270,7 +276,9 @@
     if (indexPath.section == 0) {
         [cell addFirstTitleTextView:_questionModel.questionTitle withImageAry:_questionModel.questionTitleImageAry withIsEdit:_editable];
     }else if(indexPath.section == 1){
-        [cell setScoreAndDifficult:_questionModel.qustionScore withDifficult:_questionModel.questionDifficulty withEdit:_editable];
+        [cell setScoreAndDifficult:_questionModel.qustionScore withDifficult:_questionModel.questionDifficulty withEdit:YES];
+    }else if (indexPath.section == 2){
+        [cell addSeventhTextViewWithStrEndEditor:_questionModel.questionAnswer];
     }
     return cell;
 }
@@ -289,6 +297,8 @@
         }
     }else if (indexPath.section == 1){
         return 110;
+    }else if (indexPath.section == 2){
+        return [_questionModel returnAnswerHeightZone];
     }
     return 60;
 }
@@ -296,7 +306,7 @@
     return 30;
 }
 -(UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section{
-    NSArray * ary = @[@"题目内容",@"选择分值与难易程度",@"参考答案:请按照填空的顺序添加答案"];
+    NSArray * ary = @[@"题目内容",@"选择分值与难易程度",@"参考答案:"];
     UIView * view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, APPLICATION_WIDTH, 30)];
     view.backgroundColor = RGBA_COLOR(236, 236, 236, 1);
     UILabel * l = [[UILabel alloc] initWithFrame:CGRectMake(10, 5, 300, 20)];

@@ -14,13 +14,13 @@
 
 #import "QuestionsTableViewCell.h"
 
-
-
 #import "ImportTextViewController.h"
+
 #import "AllTestViewController.h"
 #import "ChoiceQuestionViewController.h"
 #import "EssayQuestionViewController.h"
 #import "TOFQuestionViewController.h"
+
 #import "ChooseTopicView.h"
 
 @interface TestQuestionsViewController ()<UITextViewDelegate,ChooseTopicViewDelegate>
@@ -41,6 +41,7 @@
 
 @property (nonatomic,strong)TOFQuestionViewController * tOFQVC;
 
+@property (nonatomic,assign) int temp;
 @end
 
 @implementation TestQuestionsViewController
@@ -52,70 +53,57 @@
     
     _user = [[Appsetting sharedInstance] getUsetInfo];
     
-    //    if (!_allQuestionAry) {
     _allQuestionAry = [NSMutableArray arrayWithCapacity:1];
-    //    }else{
-    //        if (_allQuestionAry.count == 1) {
-    //            [self addQidScrollView];
-    //        }else if(_allQuestionAry.count>1){
-    //            [self addQidScrollView];
-    //            for (int i = 1 ; i<_allQuestionAry.count; i++) {
-    //
-    //                [self addScrollViewBtn:i+1];
-    //            }
-    //        }
-    //    }
+
     if (!_editable) {
         [_addTitleBtn removeFromSuperview];
         
         [self getData];
     }
+
+    [self addBtn];
     
-    
-    
-    //    // 1.注册通知
-    //
-    //    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(selectQuestion:) name:@"selectQuestion" object:nil];
-    
+   
     // Do any additional setup after loading the view from its nib.
 }
 -(void)getData{
-    NSDictionary * dict = [[NSDictionary alloc] initWithObjectsAndKeys:[NSString stringWithFormat:@"%@",_t.textId],@"examId",[NSString stringWithFormat:@"%@",_user.peopleId],@"userId",nil];
-    [[NetworkRequest sharedInstance] GET:QueryQuestionList dict:dict succeed:^(id data) {
-        NSLog(@"%@",data);
-        NSString * str = [NSString stringWithFormat:@"%@",[[data objectForKey:@"header"] objectForKey:@"code"]];
-        if ([str isEqualToString:@"0000"]) {
-            NSArray * ary = [data objectForKey:@"body"];
-            for (int i = 0; i<ary.count; i++) {
-                QuestionModel * q = [[QuestionModel alloc] init];
-                
-                [q addContenWithDict:ary[i]];
-                
-                q.edit = NO;
-                
-                [_allQuestionAry addObject:q];
-            }
-            
-            if (_allQuestionAry.count == 1) {
-                [self addQidScrollView];
-            }else if(_allQuestionAry.count>1){
-                [self addQidScrollView];
-                for (int i = 1 ; i<_allQuestionAry.count; i++) {
-                    
-                    [self addScrollViewBtn:i+1];
-                }
-            }
-            
-            [_scrollView setContentOffset:CGPointMake(0,0) animated:NO];
-            
-            UIButton * btn = [[UIButton alloc] init];
-            
-            btn.tag = 1;
-            
-            [self titleClick:btn];
-        }
-    } failure:^(NSError *error) {
+  
+}
+-(void)addBtn{
+    UIButton * btn = [UIButton buttonWithType:UIButtonTypeSystem];
+    btn.frame = CGRectMake(APPLICATION_WIDTH-70, APPLICATION_HEIGHT-100, 40, 40);
+    [btn setTitle:@"+" forState:UIControlStateNormal];
+    [btn setTintColor:[UIColor whiteColor]];
+    [btn setBackgroundColor:[UIColor colorWithHexString:@"#29a7e1"]];
+    [self.view addSubview:btn];
+    [btn addTarget:self action:@selector(addTitle) forControlEvents:UIControlEventTouchUpInside];
+}
+-(void)addTitle{
+    ImportTextViewController * vc = [[ImportTextViewController alloc] init];
+    self.hidesBottomBarWhenPushed = YES;
+    vc.selectQuestionAry = [NSMutableArray arrayWithArray:_allQuestionAry];
+    
+    [self.navigationController pushViewController:vc animated:YES];
+    
+    [vc returnAry:^(NSMutableArray *allAry) {
+        _allQuestionAry = [NSMutableArray arrayWithArray:allAry];
         
+        if (_allQuestionAry.count == 1) {
+            [self addQidScrollView];
+        }else if(_allQuestionAry.count>1){
+            [self addQidScrollView];
+            for (int i = 1 ; i<_allQuestionAry.count; i++) {
+                
+                [self addScrollViewBtn:i+1];
+            }
+        }
+        [_scrollView setContentOffset:CGPointMake(0,0) animated:NO];
+
+        UIButton * btn = [[UIButton alloc] init];
+        
+        btn.tag = 1;
+        
+        [self titleClick:btn];
     }];
 }
 -(void)addQidScrollView{
@@ -146,13 +134,36 @@
     
     self.title = @"试题";
     
-    UIBarButtonItem *myButton = [[UIBarButtonItem alloc] initWithTitle:@"更多" style:UIBarButtonItemStylePlain target:self action:@selector(more)];
+    UIBarButtonItem *myButton = [[UIBarButtonItem alloc] initWithTitle:@"发布试卷" style:UIBarButtonItemStylePlain target:self action:@selector(more)];
     
     [myButton setTintColor:[UIColor whiteColor]];
     
     self.navigationItem.rightBarButtonItem = myButton;
 }
 -(void)more{
+    NSMutableArray * ary = [NSMutableArray arrayWithCapacity:1];
+    
+    for (int i = 0; i<_allQuestionAry.count; i++) {
+        QuestionModel * q = _allQuestionAry[i];
+        NSDictionary * d = [[NSDictionary alloc] initWithObjectsAndKeys: q.qustionScore,@"score",q.questionId,@"questionId",[NSString stringWithFormat:@"%d",i+1],@"order",q.questionDifficulty,@"difficulty",nil];
+        [ary addObject:d];
+    }
+    if (ary.count>0) {
+         NSDictionary * dict = [[NSDictionary alloc] initWithObjectsAndKeys:_textName,@"name",@"2",@"status",_classModel.sclassId,@"relId",@"1",@"relType",@"2",@"autoCorrecting",ary,@"examQuestionList",[UIUtils getTime],@"startTime",nil];
+        [[NetworkRequest sharedInstance] POST:CreateText dict:dict succeed:^(id data) {
+            NSString * str = [NSString stringWithFormat:@"%@",[[data objectForKey:@"header"] objectForKey:@"message"]];
+            if ([str isEqualToString:@"成功"]) {
+                [self.navigationController popViewControllerAnimated:YES];
+            }else{
+                [UIUtils showInfoMessage:str withVC:self];
+            }
+        } failure:^(NSError *error) {
+            [UIUtils showInfoMessage:@"网络连接失败，请检查网络" withVC:self];
+        }];
+    }else{
+        [UIUtils showInfoMessage:@"发布试卷题目不能为空" withVC:self];
+    }
+   
     
 }
 - (IBAction)addQuestion:(UIButton *)sender {
@@ -191,6 +202,12 @@
 }
 //顶部滑框选择试题
 -(void)titleClick:(UIButton *)btn{
+    [self.view endEditing:YES];
+    
+    int num  = (int)btn.tag;
+    
+    _temp = (int)btn.tag;
+    
     if (btn.tag-1<_allQuestionAry.count) {
         QuestionModel * q = _allQuestionAry[btn.tag-1];
         if ([q.titleType isEqualToString:@"1"]||[q.titleType isEqualToString:@"2"]) {
@@ -205,6 +222,8 @@
             _choiceQVC.selectMore = q.selectMore;
             
             _choiceQVC.questionModel = q;
+            
+            _choiceQVC.titleNum = num;
             
             [_choiceQVC viewDidLoad];
             
@@ -228,6 +247,8 @@
             
             [_tOFQVC viewDidLoad];
             
+            _tOFQVC.titleNum = num;
+            
             [self addChildViewController:_tOFQVC];
             
             _tOFQVC.view.frame = CGRectMake(0, 104, APPLICATION_WIDTH, APPLICATION_HEIGHT-104);
@@ -249,6 +270,8 @@
             
             _essayQVC.questionModel = q;
             
+            _essayQVC.titleNum = num;
+            
             [self addChildViewController:_essayQVC];
             
             _essayQVC.view.frame = CGRectMake(0, 104, APPLICATION_WIDTH, APPLICATION_HEIGHT-104);
@@ -258,116 +281,57 @@
             [self.view sendSubviewToBack:_essayQVC.view];
         }
     }
+    _choiceQVC.delegate = self;
+    _essayQVC.delegate = self;
+    _tOFQVC.delegate = self;
 }
+
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+#pragma mark 问题代理方法
+-(void)handleSwipeFromDelegate:(UISwipeGestureRecognizer *)recognizer{
+    if(recognizer.direction == UISwipeGestureRecognizerDirectionDown) {
+        NSLog(@"swipe down");
+        
+    } if(recognizer.direction == UISwipeGestureRecognizerDirectionUp) {
+        NSLog(@"swipe up");
+        
+    } if(recognizer.direction == UISwipeGestureRecognizerDirectionLeft) {
+        NSLog(@"swipe left");
+        if (_temp<_allQuestionAry.count) {
+            UIButton * btn = [[UIButton alloc] init];
+            
+            btn.tag = _temp +1;
+            
+            [self titleClick:btn];
+        }
+        //        }
+    } if(recognizer.direction == UISwipeGestureRecognizerDirectionRight) {
+        
+        if (_temp>1) {
+            UIButton * btn = [[UIButton alloc] init];
+            
+            btn.tag = _temp -1;
+            
+            [self titleClick:btn];
+        }
+    }
+    
+    //    if (_temp>3) {
+    
+    [_scrollView setContentOffset:CGPointMake(APPLICATION_WIDTH*((_temp-1)/3),0) animated:YES];
+    
+    //    }
+    
+    //    [_scrollView];
 }
 #pragma mark ChooseTopicDelegate
 -(void)chooseDelegateOutOfChooseTopicView{
     [_chooseTopic removeFromSuperview];
 }
--(void)chooseDelegateSelectTopic:(UIButton *)btn{
-    
-    //     1.单选 2.多选 3.判断 4.填空 5.问答
-    
-    QuestionModel * q = [[QuestionModel alloc] init];
-    
-    if (!_scrollView) {
-        
-        [_allQuestionAry addObject:q];
-        
-        [self addQidScrollView];
-    }else{
-        
-        [_allQuestionAry addObject:q];
-        
-        [self addScrollViewBtn:(int)_allQuestionAry.count];
-    }
-    
-    [_chooseTopic removeFromSuperview];
-    
-    if (btn.tag == 100||btn.tag == 101) {
-        [_essayQVC.view removeFromSuperview];
-        [_tOFQVC.view removeFromSuperview];
-        
-        if (!_choiceQVC) {
-            _choiceQVC = [[ChoiceQuestionViewController alloc] init];
-        }
-        _choiceQVC.editable = _editable;
-        
-        _choiceQVC.selectMore = NO;
-        
-        q.selectMore = NO;
-        if (btn.tag == 100) {
-            q.titleType = @"1";
-            
-        }else{
-            q.titleType = @"2";
-            
-        }
-        
-        _choiceQVC.questionModel = q;
-        
-        [_choiceQVC viewDidLoad];
-        
-        [self addChildViewController:_choiceQVC];
-        
-        _choiceQVC.view.frame = CGRectMake(0, 104, APPLICATION_WIDTH, APPLICATION_HEIGHT-104);
-        
-        [self.view addSubview:_choiceQVC.view];
-        
-        [self.view sendSubviewToBack:_choiceQVC.view];
-        
-    }else if (btn.tag == 102){
-        [_choiceQVC.view removeFromSuperview];
-        
-        [_essayQVC.view removeFromSuperview];
-        
-        if (!_tOFQVC) {
-            _tOFQVC = [[TOFQuestionViewController alloc] init];
-        }
-        _tOFQVC.editable = _editable;
-        
-        q.titleType = @"3";
-        
-        _tOFQVC.questionModel = q;
-        
-        [self addChildViewController:_tOFQVC];
-        
-        _tOFQVC.view.frame = CGRectMake(0, 104, APPLICATION_WIDTH, APPLICATION_HEIGHT-104);
-        
-        [self.view addSubview:_tOFQVC.view];
-        
-        [self.view sendSubviewToBack:_tOFQVC.view];
-        
-    }else if (btn.tag == 103||btn.tag == 104){
-        [_choiceQVC.view removeFromSuperview];
-        [_tOFQVC.view removeFromSuperview];
-        if (!_essayQVC) {
-            _essayQVC = [[EssayQuestionViewController alloc] init];
-        }
-        
-        _essayQVC.editable = _editable;
-        if (btn.tag == 103) {
-            q.titleType = @"5";
-        }else{
-            q.titleType = @"4";
-        }
-        _essayQVC.questionModel = q;
-        
-        [_essayQVC viewDidLoad];
-        
-        [self addChildViewController:_essayQVC];
-        
-        _essayQVC.view.frame = CGRectMake(0, 104, APPLICATION_WIDTH, APPLICATION_HEIGHT-104);
-        
-        [self.view addSubview:_essayQVC.view];
-        
-        [self.view sendSubviewToBack:_essayQVC.view];
-    }
-    
-}
+
 
 /*
  #pragma mark - Navigation

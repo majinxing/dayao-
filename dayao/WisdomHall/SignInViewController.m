@@ -353,6 +353,7 @@ static NSString *cellIdentifier = @"cellIdentifier";
         _join = [[JoinCours alloc] init];
         _join.delegate = self;
         _join.frame = CGRectMake(0, 0, APPLICATION_WIDTH, APPLICATION_HEIGHT);
+        [_join addContentView:@"请输入邀请码"];
         [self.view addSubview:_join];
     }
 }

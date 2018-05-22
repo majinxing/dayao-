@@ -9,7 +9,15 @@
 #import <UIKit/UIKit.h>
 #import "QuestionModel.h"
 
+@protocol TOFQuestionViewControllerDelegate<NSObject>
+-(void)handleSwipeFromDelegate:(UISwipeGestureRecognizer *)recognizer;
+@end
+
 @interface TOFQuestionViewController : UIViewController
+
+@property(nonatomic,weak)id<TOFQuestionViewControllerDelegate>delegate;
+
+@property (nonatomic,assign)int titleNum;//题号
 
 @property (nonatomic,strong)QuestionModel * questionModel;
 

@@ -7,10 +7,20 @@
 //
 
 #import <UIKit/UIKit.h>
+
+#import "TextModel.h"
+#import "QuestionBank.h"
 #import "ClassModel.h"
 
 @interface CreateTestViewController : UIViewController
 
-@property (nonatomic,strong)ClassModel * classModel;
 
+
+@property (nonatomic,strong)TextModel *t;
+
+@property (nonatomic,strong)QuestionBank * qBank;
+
+@property (nonatomic,strong)ClassModel *classModel;
+
+@property (nonatomic,assign)BOOL editable;
 @end

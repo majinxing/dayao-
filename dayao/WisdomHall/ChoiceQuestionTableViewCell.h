@@ -39,4 +39,6 @@
 -(void)eigthTitleType:(NSString *)titleType withScore:(NSString *)score isSelect:(BOOL)select btnTag:(int)index;
 
 -(void)addOptionWithModel:(optionsModel *)optionsM withIndexRow:(int)row withISelected:(BOOL)isSelected;//题库
+
+-(void)addSeventhTextViewWithStrEndEditor:(NSString *)str;
 @end

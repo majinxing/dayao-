@@ -30,7 +30,6 @@
 
 @property (nonatomic,strong)NSMutableArray * allQuestionAry;//该题库所有题
 
-@property (nonatomic,strong)NSMutableArray * selectQuestionAry;
 
 @property (nonatomic,strong)FMDatabase * db;
 
@@ -60,7 +59,6 @@
     
     _allQuestionAry = [NSMutableArray arrayWithCapacity:1];
     
-    _selectQuestionAry = [NSMutableArray arrayWithCapacity:1];
     
     [self getData];
     
@@ -107,6 +105,14 @@
     }];
 }
 
+-(void)returnAry:(returnSelectedQustion)block{
+    _returnBlock = block;
+}
+-(void)viewWillDisappear:(BOOL)animated{
+    if (self.returnBlock!=nil) {
+        self.returnBlock(_selectQuestionAry);
+    }
+}
 -(void)addTableView{
     _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 104, APPLICATION_WIDTH, APPLICATION_HEIGHT-104) style:UITableViewStylePlain];
     _tableView.delegate = self;
@@ -175,7 +181,8 @@
 }
 -(void)getQuestionBanK:(NSString *)bankId WithPage:(NSInteger)page{
     
-    NSDictionary * dict = [[NSDictionary alloc] initWithObjectsAndKeys:bankId,@"libId",[NSString stringWithFormat:@"%ld",(long)page],@"start",@"50",@"length",nil];
+//    [self showHudInView:self.view hint:NSLocalizedString(@"正在加载数据", @"Load data...")];
+    NSDictionary * dict = [[NSDictionary alloc] initWithObjectsAndKeys:bankId,@"libId",[NSString stringWithFormat:@"% ld",(long)page],@"start",@"50",@"length",nil];
     [_allQuestionAry removeAllObjects];
     [[NetworkRequest sharedInstance] GET:QuertyBankQuestionList dict:dict succeed:^(id data) {
         NSString *message = [NSString stringWithFormat:@"%@",[[data objectForKey:@"header"] objectForKey:@"message"]];
@@ -194,12 +201,18 @@
         }else{
             [UIUtils showInfoMessage:message withVC:self];
         }
-        [_tableView reloadData];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [self hideHud];
+            [_tableView reloadData];
+        });
         
     } failure:^(NSError *error) {
+        [self hideHud];
         [_tableView reloadData];
+        [UIUtils showInfoMessage:@"网络连接失败，请检查网络" withVC:self];
+
     }];
-    [self hideHud];
+    
 }
 - (IBAction)chooseBank:(UIButton *)sender {
     

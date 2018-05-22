@@ -8,19 +8,47 @@
 
 #import "CreateTestViewController.h"
 
-#import "TextModel.h"
+
 #import "DYHeader.h"
 
-#import "QuestionBank.h"
+#import "contactTool.h"
 
-#import "TestQuestionsViewController.h"
+#import "QuestionsTableViewCell.h"
 
 #import "ImportTextViewController.h"
 
+#import "AllTestViewController.h"
+#import "ChoiceQuestionViewController.h"
+#import "EssayQuestionViewController.h"
+#import "TOFQuestionViewController.h"
+
+#import "ChooseTopicView.h"
+
+
+#import "QuestionBank.h"
 
 @interface CreateTestViewController ()
 @property(nonatomic,strong)TextModel * textModel;
 @property(nonatomic,strong)QuestionBank * questionModel;
+
+@property (nonatomic,strong)UITableView *tableView;
+
+@property (nonatomic,strong)UserModel * user;
+
+@property (nonatomic,strong)NSMutableArray * allQuestionAry;//存储所有试题
+
+@property (nonatomic,strong)UIScrollView * scrollView;
+
+@property (nonatomic,strong)ChooseTopicView * chooseTopic;
+
+@property (nonatomic,strong)ChoiceQuestionViewController * choiceQVC;
+
+@property (nonatomic,strong)EssayQuestionViewController * essayQVC;
+
+@property (strong, nonatomic) IBOutlet UIButton *addTitleBtn;//增加题目按钮
+
+@property (nonatomic,strong)TOFQuestionViewController * tOFQVC;
+
 @end
 
 @implementation CreateTestViewController
@@ -49,7 +77,14 @@
 -(void)addTitle{
     ImportTextViewController * vc = [[ImportTextViewController alloc] init];
     self.hidesBottomBarWhenPushed = YES;
+    
+    vc.selectQuestionAry = [NSMutableArray arrayWithArray:_allQuestionAry];
+    
     [self.navigationController pushViewController:vc animated:YES];
+    
+    [vc returnAry:^(NSMutableArray *allAry) {
+        _allQuestionAry = [NSMutableArray arrayWithArray:allAry];
+    }];
 }
 /**
  *  显示navigation的标题

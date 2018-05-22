@@ -25,10 +25,6 @@
         
         _answerOptions = [NSMutableArray arrayWithCapacity:1];
         
-        _qustionScore = @"5";
-        
-        _questionDifficulty = @"5";
-        
         _blankAry = [NSMutableArray arrayWithCapacity:1];
         
         [self addOptions];
@@ -45,7 +41,14 @@
     
 }
 -(void)addContenWithDict:(NSDictionary *)dict{
-//    _questionId = [NSString stringWithFormat:@"%@",[dict objectForKey:@""]];
+    
+    _qustionScore = [NSString stringWithFormat:@"%@",[dict objectForKey:@"score"]];
+    
+    _questionDifficulty = [NSString stringWithFormat:@"%@",[dict objectForKey:@"defaultDifficulty"]];
+    if ([UIUtils isBlankString:_questionDifficulty]) {
+        _questionDifficulty = [NSString stringWithFormat:@"%@",[dict objectForKey:@"difficulty"]];
+    }
+
     _questionTitle = [dict objectForKey:@"content"];
     
     _titleType = [NSString stringWithFormat:@"%@",[dict objectForKey:@"type"]];
@@ -137,8 +140,10 @@
     return 0;
 }
 -(float)returnOptionHeight:(int)index{
+    
     optionsModel * o = _qustionOptionsAry[index];
     return [o returnOptionHeight];
+    
 }
 -(void)setAnswerImage{
     UserModel * user = [[Appsetting sharedInstance] getUsetInfo];
