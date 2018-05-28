@@ -358,21 +358,13 @@
         }else if (component == 2){
             _m3 = (int)row;
         }
-    }else if (_temp == 6){
+    }else if (_temp == 5){
         if (component == 0) {
             _week = (int) row;
         }else if (component == 1){
             _class1 = (int)row;
         }else if (component == 2){
             _class2 = (int)row;
-        }
-    }else if (_temp == 5){
-        if (component == 0) {
-            _year = (int)row;
-        }else if (component == 1){
-            _month = (int)row;
-        }else if (component == 2){
-            _day = (int)row;
         }
     }
     

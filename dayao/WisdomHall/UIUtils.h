@@ -127,8 +127,18 @@
 +(BOOL)didUserPressLockButton;
 //时间加10分钟
 +(NSString *)timeAddTenMin:(NSString *)time;
+//减10分钟
++(NSString *)timeSubtractTenMin:(NSString *)time;
 //对缓存的wifi进行判断
 +(BOOL)determineWifiAndtimeCorrect:(NSMutableArray *)macAry;
+
+/**
+ 
+ * 距离签到时间的差值
+ 
+ */
+
++(NSString *)dateTimeDifferenceWithStartTime:(NSString *)startTime;
 @end
 
 

@@ -18,4 +18,5 @@ static dispatch_once_t onceToken;
 @property (nonatomic,weak)id<CollectionHeadViewDelegate>delegate;
 +(CollectionHeadView *)sharedInstance;
 -(void)onceSetNil;
+-(void)getData;
 @end

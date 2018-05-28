@@ -134,6 +134,8 @@
     
     _collectionHeadView.frame = CGRectMake(10,APPLICATION_HEIGHT-20-100-140-100, ScrollViewW,ScrollViewH);
     
+    [_collectionHeadView getData];
+
     [self.contentView addSubview:_collectionHeadView];
 }
 - (void)shareButtonClicked:(UIButton *)button

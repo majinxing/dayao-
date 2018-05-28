@@ -23,7 +23,7 @@
 
 #import "ChooseTopicView.h"
 
-@interface TestQuestionsViewController ()<UITextViewDelegate,ChooseTopicViewDelegate>
+@interface TestQuestionsViewController ()<UITextViewDelegate,ChooseTopicViewDelegate,ChoiceQuestionViewControllerDelegate,EssayQuestionViewControllerDelegate,TOFQuestionViewControllerDelegate>
 @property (nonatomic,strong)UITableView *tableView;
 
 @property (nonatomic,strong)UserModel * user;
@@ -71,10 +71,14 @@
 }
 -(void)addBtn{
     UIButton * btn = [UIButton buttonWithType:UIButtonTypeSystem];
-    btn.frame = CGRectMake(APPLICATION_WIDTH-70, APPLICATION_HEIGHT-100, 40, 40);
+    btn.frame = CGRectMake(APPLICATION_WIDTH-70, APPLICATION_HEIGHT-100, 50, 50);
     [btn setTitle:@"+" forState:UIControlStateNormal];
     [btn setTintColor:[UIColor whiteColor]];
+    btn.titleLabel.font = [UIFont systemFontOfSize:30];
+    btn.layer.masksToBounds = YES;
+    btn.layer.cornerRadius = 25;
     [btn setBackgroundColor:[UIColor colorWithHexString:@"#29a7e1"]];
+    
     [self.view addSubview:btn];
     [btn addTarget:self action:@selector(addTitle) forControlEvents:UIControlEventTouchUpInside];
 }

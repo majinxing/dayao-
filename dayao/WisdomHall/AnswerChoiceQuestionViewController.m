@@ -84,6 +84,7 @@
 #pragma mark imageBigViewDelegate
 -(void)outViewDelegate{
     [_v removeFromSuperview];
+    _v = nil;
 }
 #pragma mark ChoiceQuestionTableViewCellDelegate
 -(void)firstSelectImageBtnDelegate:(UIButton *)sender{

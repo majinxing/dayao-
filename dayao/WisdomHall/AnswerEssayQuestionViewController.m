@@ -167,6 +167,7 @@
 #pragma mark imageBigViewDelegate
 -(void)outViewDelegate{
     [_v removeFromSuperview];
+    _v = nil;
 }
 #pragma mark EditPageViewDelegate
 -(void)saveTextStrDelegate:(UIButton *)btn{

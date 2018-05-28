@@ -40,6 +40,8 @@
 /** @brief 当前加载的页数 */
 @property (nonatomic,assign) int page;
 
+@property (nonatomic,assign) int TopPage;//分页最多
+
 @property (nonatomic,copy) NSString * bankId;//当前题库id
 @property (strong, nonatomic) IBOutlet UIButton *selectAllQuestionBtn;
 
@@ -149,6 +151,7 @@
 }
 -(void)headerRereshing{
     self.page = 1;
+    _TopPage = 1;
     [self fetchChatRoomsWithPage:self.page isHeader:YES];
 }
 -(void)footerRereshing{
@@ -163,12 +166,14 @@
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         if (weakSelf) {
             ImportTextViewController * strongSelf = weakSelf;
-            if (aIsHeader) {
-                
-            }
+            
             dispatch_async(dispatch_get_main_queue(), ^{
-                //                [strongSelf hideHud];
-                [strongSelf getQuestionBanK:_bankId WithPage:aPage];
+                
+                if (aPage>_TopPage) {
+                    [strongSelf hideHud];
+                }else{
+                    [strongSelf getQuestionBanK:_bankId WithPage:aPage];
+                }
             });
             
             if (aIsHeader) {
@@ -183,9 +188,16 @@
     
 //    [self showHudInView:self.view hint:NSLocalizedString(@"正在加载数据", @"Load data...")];
     NSDictionary * dict = [[NSDictionary alloc] initWithObjectsAndKeys:bankId,@"libId",[NSString stringWithFormat:@"% ld",(long)page],@"start",@"50",@"length",nil];
-    [_allQuestionAry removeAllObjects];
     [[NetworkRequest sharedInstance] GET:QuertyBankQuestionList dict:dict succeed:^(id data) {
         NSString *message = [NSString stringWithFormat:@"%@",[[data objectForKey:@"header"] objectForKey:@"message"]];
+        
+        NSString * pages = [NSString stringWithFormat:@"%@",[[data objectForKey:@"body"] objectForKey:@"pages"]];
+                            
+        _TopPage = [pages intValue];
+        
+        if (_page == 1) {
+            [_allQuestionAry removeAllObjects];
+        }
         
         if ([message isEqualToString:@"成功"]){
             NSArray * ary = [[data objectForKey:@"body"] objectForKey:@"list"];
@@ -276,21 +288,26 @@
 }
 #pragma mark --UITableViewdelegate
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
-    
-    return _allQuestionAry.count;
+    if (_allQuestionAry>0) {
+        return _allQuestionAry.count;
+    }
+    return 0;
 }
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
-    //1.单选 2.多选 3.判断 4.填空 5.问答
-    QuestionModel * q = _allQuestionAry[section];
-    if ([q.titleType isEqualToString:@"1"]||[q.titleType isEqualToString:@"2"]) {
-        return 2+q.qustionOptionsAry.count;
+    if (_allQuestionAry>0) {
+        //1.单选 2.多选 3.判断 4.填空 5.问答
+        QuestionModel * q = _allQuestionAry[section];
+        if ([q.titleType isEqualToString:@"1"]||[q.titleType isEqualToString:@"2"]) {
+            return 2+q.qustionOptionsAry.count;
+        }
+        return 3;
     }
-    return 3;
+    return 0;
 }
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     ChoiceQuestionTableViewCell * cell ;
-    
+  
     QuestionModel * q = _allQuestionAry[indexPath.section];
     
     if (!cell) {
@@ -326,7 +343,7 @@
         
     }else if (indexPath.row == 2+q.qustionOptionsAry.count){
         
-        [cell addSeventhTextViewWithStr:[NSString stringWithFormat:@"答案：%@",q.questionAnswer]];
+        [cell addSeventhTextViewWithStrEndEditor:[NSString stringWithFormat:@"答案：%@",q.questionAnswer]];
         
     }else if(indexPath.row>1&&indexPath.row<2+q.qustionOptionsAry.count) {
         NSString *string = [NSString stringWithFormat:@"%@",q.questionAnswer];
@@ -355,24 +372,28 @@
     
 }
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
-    QuestionModel * q = _allQuestionAry[indexPath.section];
-    
-    if (indexPath.row == 0) {
-        return 50;
-    }else if(indexPath.row == 1){
+    if (_allQuestionAry.count>0) {
+        QuestionModel * q = _allQuestionAry[indexPath.section];
         
-        return [q returnTitleHeight];
-        
-    }else if (indexPath.row == 2+q.qustionOptionsAry.count){
-        
-        return [q returnAnswerHeightZone];
-        
-    }else{
-        return [q returnOptionHeight:(int)indexPath.row-2];
+        if (indexPath.row == 0) {
+            return 50;
+        }else if(indexPath.row == 1){
+            
+            return [q returnTitleHeight];
+            
+        }else if (indexPath.row == 2+q.qustionOptionsAry.count){
+            
+            return [q returnAnswerHeightZone];
+            
+        }else{
+            return [q returnOptionHeight:(int)indexPath.row-2];
+        }
+        return 60;
     }
-    return 60;
+    return 0;
 }
 -(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
+
     return 10;
 }
 -(BOOL)questionIsSelect:(int)index{

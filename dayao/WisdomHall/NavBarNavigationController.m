@@ -80,7 +80,7 @@
 -(void)handleMaxShowTimer:(NSTimer *)theTimer{
    
     UserModel * user = [[Appsetting sharedInstance] getUsetInfo];
-    if (user.peopleId) {
+    if (![UIUtils isBlankString:user.peopleId]) {
         NSDictionary * dict = @{@"appState":@"1",@"id":[NSString stringWithFormat:@"%@",user.peopleId]};
         [[NetworkRequest sharedInstance] POST:ChangeAppState dict:dict succeed:^(id data) {
 //            NSLog(@"%@",data);
@@ -97,7 +97,7 @@
     
     [NavBarNavigationController sharedInstance].showTimer = nil;
 
-    if (user.peopleId) {
+    if (![UIUtils isBlankString:user.peopleId]) {
         NSDictionary * dict = @{@"appState":@"3",@"id":[NSString stringWithFormat:@"%@",user.peopleId]};
         [[NetworkRequest sharedInstance] POST:ChangeAppState dict:dict succeed:^(id data) {
 //            NSLog(@"%@",data);

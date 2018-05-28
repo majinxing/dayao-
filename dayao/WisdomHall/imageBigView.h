@@ -15,6 +15,7 @@
 
 @property (nonatomic,strong) UIImageView * imageview;
 
+@property (nonatomic,strong) UIView * backView;
 
 @property (nonatomic,copy) NSString * number;
 @property (nonatomic,weak)id<imageBigViewDelegate>delegate;

@@ -273,11 +273,7 @@ performFetchWithCompletionHandler:(void (^)(UIBackgroundFetchResult))completionH
     if ([UIUtils didUserPressLockButton]) {
             NSLog(@"%s",__func__);
     }
-//        if (backgroundTimeRemaining == DBL_MAX){
-//            NSLog(@"Background Time Remaining = Undetermined");
-//        } else {
-//            NSLog(@"Background Time Remaining = %.02f Seconds", backgroundTimeRemaining);
-//        }
+
     
 }
 

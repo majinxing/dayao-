@@ -86,6 +86,7 @@
 }
 -(void)viewWillAppear:(BOOL)animated{
     self.navigationController.navigationBarHidden = YES; //设置隐藏
+    [_tableView reloadData];
 }
 -(void)viewWillDisappear:(BOOL)animated{
 //    self.navigationController.navigationBarHidden = NO; //设置隐藏
@@ -177,10 +178,10 @@
     cell = [tableView dequeueReusableCellWithIdentifier:@"OfficeTableViewCellSecond"];
     if (!cell) {
         cell = [[[NSBundle mainBundle] loadNibNamed:@"OfficeTableViewCell" owner:self options:nil] objectAtIndex:1];
-        [cell addSecondContentView];
     }
     
-    //    }
+    [cell addSecondContentView];
+
     cell.delegate = self;
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     return cell;
