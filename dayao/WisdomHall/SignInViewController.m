@@ -307,7 +307,7 @@ static NSString *cellIdentifier = @"cellIdentifier";
     [UIApplication sharedApplication].statusBarStyle = UIStatusBarStyleLightContent;
     //[self.navigationController.navigationBar setBarTintColor:[UIColor blackColor]];
 
-    self.title = @"本周课程";
+//    self.title = @"本周课程";
     if ([[NSString stringWithFormat:@"%@",_userModel.identity] isEqualToString:@"1"]) {
         UIBarButtonItem *myButton = [[UIBarButtonItem alloc] initWithTitle:@"更多" style:UIBarButtonItemStylePlain target:self action:@selector(createAcourse)];
         [myButton setTintColor:[UIColor whiteColor]];

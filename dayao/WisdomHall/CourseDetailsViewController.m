@@ -699,7 +699,7 @@
         
         _c.courseSignId = [NSString stringWithFormat:@"%@",[[data objectForKey:@"body"] objectForKey:@"id"]];
         
-        if (![_c.signStatus isEqualToString:@"1"]) {
+        if (![_c.signStatus isEqualToString:@"1"]&&![UIUtils isBlankString:_c.signStatus]) {
             [self signPictureUpdate];
             // 2.创建通知
             NSNotification *notification =[NSNotification notificationWithName:@"UpdateTheClassPage" object:nil userInfo:nil];

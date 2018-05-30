@@ -89,7 +89,7 @@
 #pragma mark ChoiceQuestionTableViewCellDelegate
 -(void)firstSelectImageBtnDelegate:(UIButton *)sender{
     if (!_v) {
-        _v = [[imageBigView alloc] initWithFrame:CGRectMake(0, 0, APPLICATION_WIDTH, APPLICATION_HEIGHT-104)];
+        _v = [[imageBigView alloc] initWithFrame:CGRectMake(0, 0, APPLICATION_WIDTH, APPLICATION_HEIGHT)];
     }
     _v.delegate = self;
     
@@ -157,7 +157,7 @@
         [self selectPicture];
     }else{
         if (!_v) {
-            _v = [[imageBigView alloc] initWithFrame:CGRectMake(0, 0, APPLICATION_WIDTH, APPLICATION_HEIGHT-104)];
+            _v = [[imageBigView alloc] initWithFrame:CGRectMake(0, 0, APPLICATION_WIDTH, APPLICATION_HEIGHT)];
         }
         _v.delegate = self;
         

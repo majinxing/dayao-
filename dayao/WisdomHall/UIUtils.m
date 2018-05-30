@@ -311,15 +311,15 @@
     
     expireTime = [NSString stringWithFormat:@"%@ %@:%@",ary[0],ary1[0],ary1[1]];
     
-//    NSDate *today = [UIUtils getInternetDate];
-//    if (today == nil) {
+    //    NSDate *today = [UIUtils getInternetDate];
+    //    if (today == nil) {
     
     NSDate * today = [NSDate date];
-
+    
     NSDateFormatter *dateFormat = [[NSDateFormatter alloc] init];
     // 时间格式,此处遇到过坑,建议时间HH大写,手机24小时进制和12小时禁止都可以完美格式化
     [dateFormat setDateFormat:@"yyyy-MM-dd HH:mm"];
-//    dateFormat.timeZone = [NSTimeZone timeZoneWithName:@"Asia/Shanghai"];//东八区时间
+    //    dateFormat.timeZone = [NSTimeZone timeZoneWithName:@"Asia/Shanghai"];//东八区时间
     NSDate *start = [dateFormat dateFromString:startTime];// dateByAddingTimeInterval:60*60*8];
     NSDate *expire = [dateFormat dateFromString:expireTime];// dateByAddingTimeInterval:60*60*8];
     
@@ -439,9 +439,9 @@
     
     [dict setObject:[NSString stringWithFormat:@"%@",users.peopleId] forKey:@"teacherId"];
     
-//    [dict setObject:@"1" forKey:@"signWay"];
+    //    [dict setObject:@"1" forKey:@"signWay"];
     
-//    [dict setObject:[NSString stringWithFormat:@"%@",c.classRoomId] forKey:@"roomId"];
+    //    [dict setObject:[NSString stringWithFormat:@"%@",c.classRoomId] forKey:@"roomId"];
     
     NSMutableArray * userList = [NSMutableArray arrayWithCapacity:1];
     for (int i = 0; i<joinPeopleAry.count; i++) {
@@ -459,9 +459,9 @@
     
     [dict setObject:ary[4] forKey:@"startTime"];
     
-//    [dict setObject:[NSString stringWithFormat:@"%d",class1+1] forKey:@"startTh"];
+    //    [dict setObject:[NSString stringWithFormat:@"%d",class1+1] forKey:@"startTh"];
     
-//    [dict setObject:[NSString stringWithFormat:@"%d",class2+1] forKey:@"endTh"];
+    //    [dict setObject:[NSString stringWithFormat:@"%d",class2+1] forKey:@"endTh"];
     
     NSDictionary * w = [[NSDictionary alloc] initWithObjectsAndKeys:[NSString stringWithFormat:@"%d",class1+1],@"startTh",[NSString stringWithFormat:@"%d",class2+1],@"endTh",@"1",@"signWay",[NSString stringWithFormat:@"%@",c.classRoomId],@"roomId",nil];
     
@@ -545,9 +545,9 @@
         week = week + 2;
     }
     
-//    [dict setObject:@"1" forKey:@"signWay"];
-//    [dict setObject:[NSString stringWithFormat:@"%@",c.classRoomId] forKey:@"roomId"];
-//    NSDictionary * w = [[NSDictionary alloc] initWithObjectsAndKeys:[NSString stringWithFormat:@"%d",week],@"weekDay",[NSString stringWithFormat:@"%d",class1+1],@"startTh",[NSString stringWithFormat:@"%d",class2+1],@"endTh",nil];
+    //    [dict setObject:@"1" forKey:@"signWay"];
+    //    [dict setObject:[NSString stringWithFormat:@"%@",c.classRoomId] forKey:@"roomId"];
+    //    NSDictionary * w = [[NSDictionary alloc] initWithObjectsAndKeys:[NSString stringWithFormat:@"%d",week],@"weekDay",[NSString stringWithFormat:@"%d",class1+1],@"startTh",[NSString stringWithFormat:@"%d",class2+1],@"endTh",nil];
     
     NSDictionary * w = [[NSDictionary alloc] initWithObjectsAndKeys:[NSString stringWithFormat:@"%d",week],@"weekDay",[NSString stringWithFormat:@"%d",class1+1],@"startTh",[NSString stringWithFormat:@"%d",class2+1],@"endTh",@"1",@"signWay",[NSString stringWithFormat:@"%@",c.classRoomId],@"roomId",nil];
     
@@ -716,8 +716,8 @@
     
     [UIApplication sharedApplication].keyWindow.rootViewController =[[UINavigationController alloc] initWithRootViewController:userLogin];
     [UIUtils showInfoMessage:@"账号在另一台设备登录，请重新登录或修改密码" withVC:userLogin];
-//    UIAlertView * alter = [[UIAlertView alloc] initWithTitle:nil message:@"账号在另一台设备登录，请重新登录或修改密码" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil];
-//    [alter show];
+    //    UIAlertView * alter = [[UIAlertView alloc] initWithTitle:nil message:@"账号在另一台设备登录，请重新登录或修改密码" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil];
+    //    [alter show];
     
     return ;
     
@@ -1120,7 +1120,7 @@
             BOOL rs = [FMDBTool insertWithDB:db tableName:DAILYCHECK_TABLE_NAME withSqlStr:sql];
             
             if (!rs) {
-               // NSLog(@"失败");
+                // NSLog(@"失败");
             }
         }else if ([str isEqualToString:@"签退早退"]){
             NSString * sql = [NSString stringWithFormat:@"insert into %@ (userID,signBack,signBackState,date) values ('%@','%@','%@','%@')",DAILYCHECK_TABLE_NAME,[NSString stringWithFormat:@"%@",user.peopleId],[UIUtils getCurrentDate],[NSString stringWithFormat:@"早退"],[UIUtils getTime]];
@@ -1185,7 +1185,7 @@
     NSInteger weekDay = [comp weekday];
     // 获取几天是几号
     NSInteger day = [comp day];
-   // NSLog(@"%d----%d",weekDay,day);
+    // NSLog(@"%d----%d",weekDay,day);
     
     // 计算当前日期和本周的星期一和星期天相差天数
     long firstDiff,lastDiff;
@@ -1200,7 +1200,7 @@
         firstDiff = [calendar firstWeekday] - weekDay + 1;
         lastDiff = 8 - weekDay;
     }
-   // NSLog(@"firstDiff: %ld   lastDiff: %ld",firstDiff,lastDiff);
+    // NSLog(@"firstDiff: %ld   lastDiff: %ld",firstDiff,lastDiff);
     
     // 在当前日期(去掉时分秒)基础上加上差的天数
     NSDateComponents *firstDayComp = [calendar components:NSYearCalendarUnit | NSMonthCalendarUnit | NSDayCalendarUnit  fromDate:nowDate];
@@ -1219,9 +1219,9 @@
     
     NSString *firstDay = [formatter stringFromDate:firstDayOfWeek];
     NSString *lastDay = [formatter stringFromDate:lastDayOfWeek];
-//    NSLog(@"%@=======%@",firstDay,lastDay);
+    //    NSLog(@"%@=======%@",firstDay,lastDay);
     
-//    NSString *dateStr = [NSString stringWithFormat:@"%@-%@",firstDay,lastDay];
+    //    NSString *dateStr = [NSString stringWithFormat:@"%@-%@",firstDay,lastDay];
     NSDictionary * dict = [[NSDictionary alloc] initWithObjectsAndKeys:[NSString stringWithFormat:@"%@",firstDay],@"firstDay",[NSString stringWithFormat:@"%@",lastDay],@"lastDay", nil];
     return dict;
 }
@@ -1443,14 +1443,14 @@
     [date setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
     
     NSDate *startD  = [date dateFromString:startTime];
-
+    
     NSDate *endD = [NSDate date];//[date dateFromString:endTime];
     
-//    NSTimeInterval start = [startD timeIntervalSince1970]*1;
-//
-//    NSTimeInterval end = [endD timeIntervalSince1970]*60*60*8;
-//
-//    NSTimeInterval value = end - start;
+    //    NSTimeInterval start = [startD timeIntervalSince1970]*1;
+    //
+    //    NSTimeInterval end = [endD timeIntervalSince1970]*60*60*8;
+    //
+    //    NSTimeInterval value = end - start;
     // 当前日历
     NSCalendar *calendar = [NSCalendar currentCalendar];
     // 需要对比的时间数据
@@ -1535,7 +1535,7 @@
     UserModel * user = [[Appsetting sharedInstance] getUsetInfo];
     
     NSMutableArray * ary = [NSMutableArray arrayWithCapacity:1];
-//
+    //
     NSArray * a1 = @[@{@"userId":[NSString stringWithFormat:@"%@",user.peopleId],@"dsec":@"老师"}];
     
     if ([mRw isEqualToString:@""]) {
@@ -1549,12 +1549,12 @@
     }else if([mRw isEqualToString:@"week"]){
         
         NSString * newT = [NSString stringWithFormat:@"%@:00",startTime];
-
+        
         NSDictionary * dict = [[NSDictionary alloc] initWithObjectsAndKeys:newT,@"actStartTime",newT,@"actEndTime",newT,@"signStartTime",newT,@"signEndTime",roomId,@"roomId",a1,@"meetingsFacilitatorList",nil];
         
         [ary addObject:dict];
         
-
+        
         endTime = [NSString stringWithFormat:@"%@ 23:59:59",endTime];
         
         while (![[UIUtils compareTimeStartTime:[UIUtils returnStartTime:startTime withWeek:1] withExpireTime:endTime] isEqualToString:@"-1"]) {
@@ -1573,7 +1573,7 @@
     }else if ([mRw isEqualToString:@"month"]){
         
         NSString * newT = [NSString stringWithFormat:@"%@:00",startTime];
-
+        
         NSDictionary * dict = [[NSDictionary alloc] initWithObjectsAndKeys:newT,@"actStartTime",newT,@"actEndTime",newT,@"signStartTime",newT,@"signEndTime",roomId,@"roomId",a1,@"meetingsFacilitatorList",nil];
         
         [ary addObject:dict];
@@ -1617,13 +1617,13 @@
     NSDate *date = [dateFormatter dateFromString:startTime];
     
     NSDateComponents *comps = [[NSDateComponents alloc] init];
-
+    
     [comps setMonth:month];
-
+    
     NSCalendar *calender = [[NSCalendar alloc] initWithCalendarIdentifier:NSCalendarIdentifierGregorian];
     
     NSDate *mDate = [calender dateByAddingComponents:comps toDate:date options:0];
-   
+    
     return [dateFormatter stringFromDate:mDate];
 }
 //修改屏幕亮度
@@ -1641,14 +1641,14 @@
         return YES;
     }
     return NO;
-//    //获取屏幕亮度
-//    CGFloat oldBrightness = [UIScreen mainScreen].brightness;
-//    //以较小的数量改变屏幕亮度
-//    [UIScreen mainScreen].brightness = oldBrightness + (oldBrightness <= 0.01 ? (0.01) : (-0.01)); CGFloat newBrightness = [UIScreen mainScreen].brightness;
-//    //恢复屏幕亮度
-//    [UIScreen mainScreen].brightness = oldBrightness;
-//    //判断屏幕亮度是否能够被改变
-//    return oldBrightness != newBrightness;
+    //    //获取屏幕亮度
+    //    CGFloat oldBrightness = [UIScreen mainScreen].brightness;
+    //    //以较小的数量改变屏幕亮度
+    //    [UIScreen mainScreen].brightness = oldBrightness + (oldBrightness <= 0.01 ? (0.01) : (-0.01)); CGFloat newBrightness = [UIScreen mainScreen].brightness;
+    //    //恢复屏幕亮度
+    //    [UIScreen mainScreen].brightness = oldBrightness;
+    //    //判断屏幕亮度是否能够被改变
+    //    return oldBrightness != newBrightness;
     
 }
 +(NSString *)timeAddTenMin:(NSString *)time{
@@ -1706,7 +1706,7 @@
     long m = [mm integerValue];
     
     
-    if (m<=10) {
+    if (m<10) {
         if (n == 0) {
             n = 23;
             m = m - 10 + 60;
@@ -1824,11 +1824,11 @@
             str = [str stringByAppendingString:[NSString stringWithFormat:@"%d分钟",(int)dateCom.minute+(int)minute]];
         }
     }
-    //    if (abs((int)dateCom.second+(int)second)>0) {
-    //        if (((int)dateCom.second+(int)second)>0) {
-    //            str = [str stringByAppendingString:[NSString stringWithFormat:@"-%d秒",(int)dateCom.second+(int)second]];
-    //        }
-    //    }
+    if (abs((int)dateCom.second+(int)second)>0) {
+        if (((int)dateCom.second+(int)second)>0) {
+            str = [str stringByAppendingString:[NSString stringWithFormat:@"®%d秒",(int)dateCom.second+(int)second]];
+        }
+    }
     return str;
 }
 @end
