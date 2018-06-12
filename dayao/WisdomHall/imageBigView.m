@@ -40,9 +40,16 @@
         
         [_backView addGestureRecognizer:panGestureRecognizer];
         
+        UITapGestureRecognizer *singleTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(singleTapGesture:)];
+        [_backView addGestureRecognizer:singleTap];
         
     }
     return self;
+}
+// 单击手势
+- (void)singleTapGesture:(UITapGestureRecognizer *)gesture {
+    
+    [self outView];
 }
 // 处理缩放手势
 
@@ -115,7 +122,7 @@
     
     //    _imageview = [[UIImageView alloc] init];//WithFrame:CGRectMake(10,40, APPLICATION_WIDTH-20, self.frame.size.height- 80)];
     
-    [_imageview sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@/%@?resourceId=%@",baseUrl,FileDownload,str]] placeholderImage:[UIImage imageNamed:@"placeholder.png"]];
+    [_imageview sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@/%@?resourceId=%@",baseUrl,FileDownload,str]] placeholderImage:[UIImage imageNamed:@"addImage"]];
     
     double n = (double)_imageview.image.size.height/(double)_imageview.image.size.width;
     if (n<1) {
@@ -137,13 +144,17 @@
     
     [_backView addSubview:_imageview];
     
-    [self addSubview:btn];
+//    [self addSubview:btn];
 }
 -(void)addImageViewWithImage:(UIImage  *)image1{
     
     //    _imageview = [[UIImageView alloc] init];//WithFrame:CGRectMake(10,40, APPLICATION_WIDTH-20, self.frame.size.height- 80)];
     
-    _imageview.image = image1;
+    if (!image1) {
+        _imageview.image = [UIImage imageNamed:@"addImage"];
+    }else{
+        _imageview.image = image1;
+    }
     
     double n = _imageview.image.size.height/_imageview.image.size.width;
     if (n<1) {
@@ -168,7 +179,7 @@
     
     [btn setTitleColor:[UIColor redColor] forState:UIControlStateNormal];
     
-    [self addSubview:btn];
+//    [self addSubview:btn];
 }
 -(void)outView{
     if (self.delegate&&[self.delegate respondsToSelector:@selector(outViewDelegate)]) {

@@ -13,6 +13,7 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="WorkingLoginViewController">
             <connections>
                 <outlet property="password" destination="bkL-SI-ogz" id="vW9-Du-i4m"/>
+                <outlet property="registerB" destination="9G1-U6-jTR" id="NWi-2w-mXl"/>
                 <outlet property="selectImage" destination="uNG-cR-jiT" id="70R-ij-njs"/>
                 <outlet property="selectSchoolBtn" destination="Zig-y7-B0j" id="7iy-K3-Pce"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
@@ -144,11 +145,22 @@
                     <constraints>
                         <constraint firstAttribute="height" constant="40" id="KCZ-FA-Gl6"/>
                     </constraints>
+                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
                     <state key="normal" title="忘记密码">
                         <color key="titleColor" red="0.22499465939999999" green="0.68172186609999996" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     </state>
                     <connections>
                         <action selector="forgetPassword:" destination="-1" eventType="touchUpInside" id="wxy-g0-6Bp"/>
+                    </connections>
+                </button>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9G1-U6-jTR">
+                    <rect key="frame" x="0.0" y="627" width="187.5" height="40"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                    <state key="normal" title="注册">
+                        <color key="titleColor" red="0.22499465939999999" green="0.68172186609999996" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    </state>
+                    <connections>
+                        <action selector="registerBtn:" destination="-1" eventType="touchUpInside" id="wmL-iO-zdZ"/>
                     </connections>
                 </button>
             </subviews>
@@ -164,6 +176,7 @@
                 <constraint firstItem="tcQ-Lk-skX" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="70" id="D6K-Z8-2W2"/>
                 <constraint firstItem="7nS-05-YSq" firstAttribute="top" secondItem="AZ0-N4-ZzG" secondAttribute="bottom" constant="12.5" id="DYi-8T-cRz"/>
                 <constraint firstAttribute="trailing" secondItem="qGf-rL-oI5" secondAttribute="trailing" constant="30" id="EKw-kD-8n1"/>
+                <constraint firstItem="9G1-U6-jTR" firstAttribute="height" secondItem="j9A-3T-LKp" secondAttribute="height" id="EMF-Rf-kVY"/>
                 <constraint firstItem="bkL-SI-ogz" firstAttribute="top" secondItem="3Dy-oS-flA" secondAttribute="bottom" constant="13" id="ETJ-aM-H5c"/>
                 <constraint firstItem="uNG-cR-jiT" firstAttribute="centerY" secondItem="Zig-y7-B0j" secondAttribute="centerY" id="Ee0-56-Emu"/>
                 <constraint firstItem="tcQ-Lk-skX" firstAttribute="centerX" secondItem="Y2T-i6-A69" secondAttribute="centerX" id="ILO-IR-c46"/>
@@ -178,6 +191,7 @@
                 <constraint firstItem="3Dy-oS-flA" firstAttribute="top" secondItem="OkK-Vt-WYw" secondAttribute="bottom" constant="12" id="WDA-sl-vzX"/>
                 <constraint firstItem="Y2T-i6-A69" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="Wo6-0x-a8U"/>
                 <constraint firstAttribute="trailing" secondItem="7nS-05-YSq" secondAttribute="trailing" constant="30" id="XOv-2Z-QdS"/>
+                <constraint firstAttribute="bottom" secondItem="9G1-U6-jTR" secondAttribute="bottom" id="XRU-ng-6Wg"/>
                 <constraint firstItem="qGf-rL-oI5" firstAttribute="top" secondItem="hlk-vb-4Lk" secondAttribute="bottom" constant="13" id="XyC-X4-WTZ"/>
                 <constraint firstAttribute="trailing" secondItem="KGi-J9-wnQ" secondAttribute="trailing" constant="30" id="bgX-ad-7hU"/>
                 <constraint firstItem="Zig-y7-B0j" firstAttribute="leading" secondItem="hlk-vb-4Lk" secondAttribute="trailing" constant="10" id="dNs-ab-mi9"/>
@@ -188,6 +202,8 @@
                 <constraint firstItem="qGf-rL-oI5" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="30" id="o3s-K1-uha"/>
                 <constraint firstItem="7nS-05-YSq" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="30" id="pr5-pw-ihy"/>
                 <constraint firstItem="hlk-vb-4Lk" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="30" id="rjN-CD-FWL"/>
+                <constraint firstItem="9G1-U6-jTR" firstAttribute="width" secondItem="j9A-3T-LKp" secondAttribute="width" id="usd-MZ-EnM"/>
+                <constraint firstItem="9G1-U6-jTR" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="xec-6Z-ulk"/>
                 <constraint firstItem="Zig-y7-B0j" firstAttribute="top" secondItem="hlk-vb-4Lk" secondAttribute="top" constant="-5" id="zVX-D5-sxV"/>
             </constraints>
             <point key="canvasLocation" x="33.5" y="54.5"/>

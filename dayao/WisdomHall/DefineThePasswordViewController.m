@@ -33,7 +33,13 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     _n = 0;
+    
     _m = 9;
+    
+    _s = [[SchoolModel alloc] init];
+    
+    _s.schoolId = _schoolId;
+
     self.view.backgroundColor = [UIColor whiteColor];
     
     [self setNavigationTitle];
@@ -52,59 +58,53 @@
    
     self.title = @"创建用户";
     UIBarButtonItem * selection = [[UIBarButtonItem alloc] initWithTitle:@"提交" style:UIBarButtonItemStylePlain target:self action:@selector(saveBtnPressed)];
-    [selection setTintColor:[UIColor whiteColor]];
+    
+//    [selection setTintColor:[UIColor whiteColor]];0
 
     self.navigationItem.rightBarButtonItem = selection;
 }
 -(void)saveBtnPressed{
     NSMutableDictionary * dict = [[NSMutableDictionary alloc] init];
-    NSArray * ary = [[NSArray alloc] initWithObjects:@"name",@"password",@"p",@"type",@"workNo",@"universityId",@"facultyId",@"majorId",@"classId",nil];
-    for (int i = 0 ; i<ary.count; i++) {
-        if ([_textFileAry[i] isEqualToString:@""]) {
-            if ([_textFileAry[3] isEqualToString:@"老师"]) {
-                if (i<=6) {
-                    [UIUtils showInfoMessage:@"请填写完整" withVC:self];
-                    
-                    return;
-                }
-            }else{
-                [UIUtils showInfoMessage:@"请填写完整" withVC:self];
-
-                return;
-            }
-        }
-        
-        if (i == 2){
-            [dict setObject:[NSString stringWithFormat:@"%@",_phoneNumber] forKey:@"phone"];
-        }else if(i == 5){
-            [dict setObject:_s.schoolId forKey:@"universityId"];
-        }else if (i == 3){
-            if ([_textFileAry[3] isEqualToString:@"老师"]) {
-                [dict setObject:[NSString stringWithFormat:@"1"] forKey:@"type"];
-            }else{
-                [dict setObject:[NSString stringWithFormat:@"2"] forKey:@"type"];
-            }
-            
-            
-        }else if(i == 6){
-            [dict setObject:[NSString stringWithFormat:@"%@",_s.departmentId] forKey:@"facultyId"];
-        }else if (i == 7){
-            if ([UIUtils isBlankString:[NSString stringWithFormat:@"%@",_s.majorId]]) {
-                [dict setObject:[NSString stringWithFormat:@"0"] forKey:@"majorId"];
-            }else{
-                [dict setObject:[NSString stringWithFormat:@"%@",_s.majorId] forKey:@"majorId"];
-            }
-        }else if (i == 8){
-            if ([UIUtils isBlankString:[NSString stringWithFormat:@"%@",_s.sclassId]]) {
-                [dict setObject:[NSString stringWithFormat:@"0"] forKey:@"classId"];
-            }else{
-                [dict setObject:[NSString stringWithFormat:@"%@",_s.sclassId] forKey:@"classId"];
-            }
-        } else{
-            [dict setObject:_textFileAry[i] forKey:ary[i]];
-        }
+//    NSArray * ary = [[NSArray alloc] initWithObjects:@"name",@"password",@"p",@"type",@"workNo",@"universityId",@"facultyId",@"majorId",@"classId",nil];
+    
+    [dict setObject:_textFileAry[0] forKey:@"name"];//0
+    
+    [dict setObject:_textFileAry[1] forKey:@"password"];//1
+    
+    [dict setObject:[NSString stringWithFormat:@"%@",_phoneNumber] forKey:@"phone"];//2
+    
+    if ([_textFileAry[3] isEqualToString:@"老师"]) {//3
+        [dict setObject:[NSString stringWithFormat:@"1"] forKey:@"type"];
+    }else{
+        [dict setObject:[NSString stringWithFormat:@"2"] forKey:@"type"];
     }
-    [dict setObject:_textFileAry[4] forKey:@"imPswd"];
+    
+    [dict setObject:_textFileAry[4] forKey:@"imPswd"];//4
+    
+    [dict setObject:_textFileAry[4] forKey:@"workNo"];
+    
+    [dict setObject:_s.schoolId forKey:@"universityId"];//5
+    
+    if ([UIUtils isBlankString:[NSString stringWithFormat:@"%@",_s.majorId]]) {
+        [dict setObject:[NSString stringWithFormat:@"0"] forKey:@"majorId"];
+    }else{
+        [dict setObject:[NSString stringWithFormat:@"%@",_s.majorId] forKey:@"majorId"];
+    }
+    
+    if ([UIUtils isBlankString:[NSString stringWithFormat:@"%@",_s.majorId]]) {
+        [dict setObject:[NSString stringWithFormat:@"0"] forKey:@"majorId"];
+    }else{
+        [dict setObject:[NSString stringWithFormat:@"%@",_s.majorId] forKey:@"majorId"];
+    }
+    
+    [dict setObject:[NSString stringWithFormat:@"%@",_s.departmentId] forKey:@"facultyId"];
+    
+    if ([UIUtils isBlankString:[NSString stringWithFormat:@"%@",_s.sclassId]]) {
+        [dict setObject:[NSString stringWithFormat:@"0"] forKey:@"classId"];
+    }else{
+        [dict setObject:[NSString stringWithFormat:@"%@",_s.sclassId] forKey:@"classId"];
+    }
+    
     
     [[NetworkRequest sharedInstance] POST:Register dict:dict succeed:^(id data) {
         NSLog(@"succeed:%@",data);
@@ -117,12 +117,8 @@
                     }];
                 }
             }
-        }else if ([[[data objectForKey:@"header"] objectForKey:@"code"] isEqualToString:@"1009"]){
-            
-            [UIUtils showInfoMessage:@"手机号码已经注册" withVC:self];
-            
         }else{
-            [UIUtils showInfoMessage:@"注册失败" withVC:self];
+            [UIUtils showInfoMessage:[[data objectForKey:@"header"] objectForKey:@"message"] withVC:self];
         }
         
     } failure:^(NSError *error) {
@@ -135,7 +131,7 @@
     [self.navigationController setNavigationBarHidden:NO animated:YES];
 }
 -(void)addTableView{
-    _labelAry = [[NSMutableArray alloc] initWithObjects:@"用  户  名",@"密      码",@"确认密码",@"身      份",@"工号/学号",@"学      校",@"院      系",@"专      业",@"班      级", nil];
+    _labelAry = [[NSMutableArray alloc] initWithObjects:@"用  户  名",@"密      码",@"确认密码",@"身      份",@"工      号",@"院      系",@"专      业",@"班      级", nil];
     _textFileAry = [NSMutableArray arrayWithCapacity:4];
     for (int i = 0 ; i<10; i++) {
         if (i == 3) {
@@ -281,7 +277,7 @@
 //        _temp = 4;
 //        [self addPickView];
 //        [self.view endEditing:YES];
-    }else if (btn.tag == 5){
+    }else if (btn.tag == 5000){
         SelectSchoolViewController * s = [[SelectSchoolViewController alloc] init];
         s.selectType = SelectSchool;
         self.hidesBottomBarWhenPushed = YES;
@@ -297,7 +293,7 @@
                 
             }
         }];
-    }else if (btn.tag == 6){
+    }else if (btn.tag == 5){
         if ([UIUtils isBlankString:[NSString stringWithFormat:@"%@",_s.schoolId]]) {
             [UIUtils showInfoMessage:@"请选择学校" withVC:self];
         }else{
@@ -319,7 +315,7 @@
                 }
             }];
         }
-    }else if (btn.tag == 7){
+    }else if (btn.tag == 6){
         if ([UIUtils isBlankString:[NSString stringWithFormat:@"%@",_s.departmentId]]) {
             
             [UIUtils showInfoMessage:@"请选择院系" withVC:self];
@@ -349,7 +345,7 @@
             }];
         }
 
-    }else if (btn.tag == 8){
+    }else if (btn.tag == 7){
         if ([UIUtils isBlankString:[NSString stringWithFormat:@"%@",_s.majorId]]) {
             
             [UIUtils showInfoMessage:@"请选择专业" withVC:self];

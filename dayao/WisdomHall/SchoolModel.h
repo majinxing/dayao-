@@ -20,6 +20,9 @@
 @property (nonatomic,copy) NSString * sclass;//班级
 @property (nonatomic,copy) NSString * sclassId;//班级id
 @property (nonatomic,copy) NSString * schoolHost;//服务器地址
+@property (nonatomic,copy) NSString * allowregister;//网络地址;
+
 @property (nonatomic,strong) NSMutableArray * allIdAry;
+
 -(void)setInfoWithDict:(NSDictionary *)dict;
 @end

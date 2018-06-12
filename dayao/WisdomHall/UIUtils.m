@@ -612,6 +612,8 @@
             [ary addObject:[NSString stringWithFormat:@"男"]];
         }else if([[NSString stringWithFormat:@"%@",user.sex] isEqualToString:@"2"]){
             [ary addObject:[NSString stringWithFormat:@"女"]];
+        }else{
+            [ary addObject:[NSString stringWithFormat:@""]];
         }
         
     }
@@ -1826,7 +1828,7 @@
     }
     if (abs((int)dateCom.second+(int)second)>0) {
         if (((int)dateCom.second+(int)second)>0) {
-            str = [str stringByAppendingString:[NSString stringWithFormat:@"®%d秒",(int)dateCom.second+(int)second]];
+            str = [str stringByAppendingString:[NSString stringWithFormat:@"%d秒",(int)dateCom.second+(int)second]];
         }
     }
     return str;

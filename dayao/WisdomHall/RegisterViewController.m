@@ -40,6 +40,12 @@
     [self.phoneTextFile addTarget:self action:@selector(passConTextChange:) forControlEvents:UIControlEventEditingChanged];
     [self.vTextFile addTarget:self action:@selector(passConTextChange:) forControlEvents:UIControlEventEditingChanged];
     [self setNavigationTitle];
+    
+    if ([_type isEqualToString:@"bindPhone"]) {
+        _sendSmsType = [NSString stringWithFormat:@"1"];
+    }else{
+        _sendSmsType = [NSString stringWithFormat:@"2"];
+    }
     // Do any additional setup after loading the view from its nib.
 }
 -(void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event{
@@ -131,12 +137,14 @@
     }
 }
 - (IBAction)registerButtonPressed:(id)sender {
-//    if ([[NSString stringWithFormat:@"%@",_Verification] isEqualToString:@"0"]) {
-//        DefineThePasswordViewController * definePWVC = [[DefineThePasswordViewController alloc] init];
-//        definePWVC.phoneNumber = _phoneNumber;
-//        [self.navigationController pushViewController:definePWVC animated:YES];
-//        return;
-//    }
+    if ([[NSString stringWithFormat:@"%@",_Verification] isEqualToString:@"0"]) {
+        DefineThePasswordViewController * definePWVC = [[DefineThePasswordViewController alloc] init];
+        definePWVC.phoneNumber = _phoneNumber;
+        definePWVC.schoolId = _schoolId;
+
+        [self.navigationController pushViewController:definePWVC animated:YES];
+        return;
+    }
     NSDictionary * dict = [[NSDictionary alloc] initWithObjectsAndKeys:_phoneNumber,@"phone",_sendSmsType,@"type",_Verification,@"code",nil];
     
     [[NetworkRequest sharedInstance] POST:SmsValidate dict:dict succeed:^(id data) {
@@ -148,6 +156,8 @@
                 // 验证成功
                 DefineThePasswordViewController * definePWVC = [[DefineThePasswordViewController alloc] init];
                 definePWVC.phoneNumber = _phoneNumber;
+                definePWVC.schoolId = _schoolId;
+
                 [self.navigationController pushViewController:definePWVC animated:YES];
             }
         }else{

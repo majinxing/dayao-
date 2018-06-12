@@ -258,16 +258,18 @@
     [self.navigationController dismissViewControllerAnimated:YES completion:nil];
 }
 -(void)uploadLocalFile{
-    UploadFileViewController * upload = [[UploadFileViewController alloc] init];
-    self.hidesBottomBarWhenPushed = YES;
-    if ([_type isEqualToString:@"meeting"]) {
-        upload.type = @"meeting";
-        upload.meeting = _meeting;
-    }else{
-        upload.type = @"classModel";
-        upload.classModel = _classModel;
-    }
-    [self.navigationController pushViewController:upload animated:YES];
+    [UIUtils showInfoMessage:@"苹果系统暂不支持，请在PC端上传文件" withVC:self];
+    
+//    UploadFileViewController * upload = [[UploadFileViewController alloc] init];
+//    self.hidesBottomBarWhenPushed = YES;
+//    if ([_type isEqualToString:@"meeting"]) {
+//        upload.type = @"meeting";
+//        upload.meeting = _meeting;
+//    }else{
+//        upload.type = @"classModel";
+//        upload.classModel = _classModel;
+//    }
+//    [self.navigationController pushViewController:upload animated:YES];
     
 }
 -(void)addTableView{

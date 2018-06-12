@@ -17,6 +17,8 @@
 #import "RegisterViewController.h"
 #import "SchoolModel.h"
 #import "ForgotPasswordViewController.h"
+#import "RegisterViewController.h"
+
 
 #define AnimateTime 0.25f   // 下拉动画时间
 
@@ -39,6 +41,7 @@
 @property (strong, nonatomic) IBOutlet UIButton *OutSchool;
 @property (strong, nonatomic) IBOutlet UIImageView *inSchoolImage;
 @property (strong, nonatomic) IBOutlet UIImageView *outSchoolImage;
+@property (strong, nonatomic) IBOutlet UIButton *registerB;
 
 @property (nonatomic,strong) UIView * listView;//下拉列表背景视图
 @property (nonatomic,strong) UITableView * tableView;//下拉列表
@@ -64,6 +67,7 @@
     
     _selectSchoolBtnStatus = NO;
     
+    [_registerB setHidden:YES];
     
 //    _selectSchoolBtn.backgroundColor = [UIColor clearColor];
     
@@ -203,6 +207,16 @@
     TheLoginViewController * login = [[TheLoginViewController alloc] init];
     [self.navigationController pushViewController:login animated:YES];
 }
+- (IBAction)registerBtn:(id)sender {
+    _user = [[Appsetting sharedInstance] getUsetInfo];
+    
+    RegisterViewController * registerVC = [[RegisterViewController alloc] init];
+    UIBarButtonItem * backButtonItem = [[UIBarButtonItem alloc] init];
+    backButtonItem.title = @"取消";
+    registerVC.schoolId = _user.school;
+    self.navigationItem.backBarButtonItem = backButtonItem;
+    [self.navigationController pushViewController:registerVC animated:YES];
+}
 - (IBAction)selectBtnPressed:(UIButton *)sender {
     [self.view addSubview:_listView]; // 将下拉视图添加到控件的俯视图上
     
@@ -323,11 +337,17 @@
     
     [_selectSchoolBtn setTitle:s.schoolName forState:UIControlStateNormal];
     
-    s.schoolHost = @"http://192.168.1.100:8080";
+//    s.schoolHost = @"http://192.168.1.81:8080";
 
     [[Appsetting sharedInstance] saveUserSchool:s];
     
     [self hideDropDown];
+    
+    if ([[NSString stringWithFormat:@"%@",s.allowregister] isEqualToString:@"true"]||[[NSString stringWithFormat:@"%@",s.allowregister] isEqualToString:@"1"]) {
+        [_registerB setHidden:NO];
+    }else{
+        [_registerB setHidden:YES];
+    }
 }
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
     return 40;

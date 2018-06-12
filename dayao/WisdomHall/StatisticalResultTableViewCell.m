@@ -48,10 +48,22 @@
 }
 -(void)addContentView:(StatisticalResultModel *)s{
     _nameLabel.text = [NSString stringWithFormat:@"名        称：   %@",s.resultName];
+    
+    int actInt = [[NSString stringWithFormat:@"%@",s.actNum] intValue]+[[NSString stringWithFormat:@"%@",s.leaveEarlyNum] intValue]+[[NSString stringWithFormat:@"%@",s.lateNum] intValue];
+    
     _totalLabel.text = [NSString stringWithFormat:@"应到人数：   %@人",s.totalNum];
-    _actLabel.text = [NSString stringWithFormat:@"实到人数：   %@人",s.actNum];
-    _colorView.frame = CGRectMake(0, 0, self.bView.frame.size.width*[s.attendanceRate doubleValue]/100, 21);
+    
+    _actLabel.text = [NSString stringWithFormat:@"实到人数：   %d人",actInt];
+    
+    
+    
+    double n = [s.actNum doubleValue] + [s.lateNum doubleValue] + [s.leaveEarlyNum doubleValue];
+    
+    s.attendanceRate = [NSString stringWithFormat:@"%lf",n/([s.totalNum doubleValue] + [s.leaveNum doubleValue])*100];
+    
     _attendanceLabel.text = [NSString stringWithFormat:@"%.0f%%",[s.attendanceRate doubleValue]];
+    
+    _colorView.frame = CGRectMake(0, 0, self.bView.frame.size.width*[s.attendanceRate doubleValue]/100, 21);
     
     if (0<=[s.attendanceRate doubleValue]&&[s.attendanceRate doubleValue]<=20) {
         _colorView.backgroundColor = [UIColor colorWithHexString:@"#e51c23"];
@@ -72,11 +84,13 @@
 }
 -(void)addSecContentView:(StatisticalResultModel *)s{
     _nameSecLabel.text = [NSString stringWithFormat:@"名        称：   %@",s.resultName];
+    
     _totalSecLabel.text = [NSString stringWithFormat:@"应到人数：   %@人",s.totalNum];
     
     int actInt = [[NSString stringWithFormat:@"%@",s.actNum] intValue]+[[NSString stringWithFormat:@"%@",s.leaveEarlyNum] intValue]+[[NSString stringWithFormat:@"%@",s.lateNum] intValue];
     
     _actSecLabel.text = [NSString stringWithFormat:@"实到人数：   %d人",actInt];
+    
     _leaveSecLabel.text = [NSString stringWithFormat:@"请假人数：   %@人",s.leaveNum];
     
     int absenceInt = [[NSString stringWithFormat:@"%@",s.totalNum] intValue] - actInt;
