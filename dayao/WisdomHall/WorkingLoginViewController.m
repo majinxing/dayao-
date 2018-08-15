@@ -10,7 +10,6 @@
 #import "TheLoginViewController.h"
 #import "DYHeader.h"
 #import "BindPhone.h"
-#import "ChatHelper.h"
 #import "DYTabBarViewController.h"
 #import "JSMSConstant.h"
 #import "JSMSSDK.h"
@@ -176,7 +175,6 @@
                 }else{
                     [[Appsetting sharedInstance] sevaUserInfoWithDict:dict withStr:_password.text];
                     
-                    ChatHelper * c =[ChatHelper shareHelper];
                     
                     [self saveInfo];
                     
@@ -337,8 +335,12 @@
     
     [_selectSchoolBtn setTitle:s.schoolName forState:UIControlStateNormal];
     
-//    s.schoolHost = @"http://192.168.1.81:8080";
-
+//    s.schoolHost = @"http://192.168.1.100:8080";
+//    if (indexPath.row == 1) {
+//        s.schoolHost = @"http://192.168.1.100:8080";
+//    }else if (indexPath.row == 0){
+//        s.schoolHost = @"http://192.168.1.110:8080";
+//    }
     [[Appsetting sharedInstance] saveUserSchool:s];
     
     [self hideDropDown];

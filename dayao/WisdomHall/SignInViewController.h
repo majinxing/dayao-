@@ -9,5 +9,11 @@
 #import <UIKit/UIKit.h>
 
 @interface SignInViewController : UIViewController
+@property (nonatomic,strong)UIViewController * selfNavigationVC;
 
+@property (nonatomic,copy)NSString * monthStr;
+
+@property (nonatomic,strong)NSDictionary * dictDay;
+
+@property (nonatomic,strong)NSMutableArray * weekDayTime;
 @end

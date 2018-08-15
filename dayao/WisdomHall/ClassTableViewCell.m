@@ -41,10 +41,10 @@
     _friday.tag = 5;
     _saturday.tag = 6;
     _sunday.tag = 7;
-    _h.backgroundColor = RGBA_COLOR(184, 216, 248, 1);
-    _s.backgroundColor = RGBA_COLOR(184, 216, 248, 1);
-    _weekDay.textColor = RGBA_COLOR(57, 114, 172, 1);
-    _sclass.textColor = RGBA_COLOR(57, 114, 172, 1);
+//    _h.backgroundColor = RGBA_COLOR(184, 216, 248, 1);
+//    _s.backgroundColor = RGBA_COLOR(184, 216, 248, 1);
+//    _weekDay.textColor = RGBA_COLOR(57, 114, 172, 1);
+//    _sclass.textColor = RGBA_COLOR(57, 114, 172, 1);
     _dictAry = [[NSMutableDictionary alloc] init];
     for (int i = 1; i<=7; i++) {
         NSMutableArray *ary = [NSMutableArray arrayWithCapacity:1];
@@ -87,11 +87,11 @@
             if (ary.count>0) {
                 n = [ary[0] intValue];
             }
-            ClassModel * c = classAry[n];
+//            ClassModel * c = classAry[n];
             [btn setTitle:ss forState:UIControlStateNormal];
-            [btn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+            [btn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
             [btn setEnabled:YES];
-            btn.backgroundColor  = c.backColock;//YELLOW;//RGBA_COLOR(80, 172, 224, 1);
+            btn.backgroundColor  = [UIColor whiteColor];//YELLOW;//RGBA_COLOR(80, 172, 224, 1);
             btn.layer.masksToBounds = YES;
             btn.layer.cornerRadius = 5;
             btn.titleLabel.lineBreakMode = 0;//这句话很重要，不加这句话加上换行符也没用

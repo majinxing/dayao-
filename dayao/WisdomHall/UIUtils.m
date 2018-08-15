@@ -13,7 +13,6 @@
 #import "SignPeople.h"
 #import "FMDBTool.h"
 #import "DYTabBarViewController.h"
-#import "ChatHelper.h"
 #import "TheLoginViewController.h"
 #import <UIKit/UIKit.h>
 #import <arpa/inet.h>
@@ -457,13 +456,13 @@
     
     [dict setObject:users.school forKey:@"universityId"];
     
-    [dict setObject:ary[4] forKey:@"startTime"];
+//    [dict setObject:ary[4] forKey:@"startTime"];
     
     //    [dict setObject:[NSString stringWithFormat:@"%d",class1+1] forKey:@"startTh"];
     
     //    [dict setObject:[NSString stringWithFormat:@"%d",class2+1] forKey:@"endTh"];
     
-    NSDictionary * w = [[NSDictionary alloc] initWithObjectsAndKeys:[NSString stringWithFormat:@"%d",class1+1],@"startTh",[NSString stringWithFormat:@"%d",class2+1],@"endTh",@"1",@"signWay",[NSString stringWithFormat:@"%@",c.classRoomId],@"roomId",nil];
+    NSDictionary * w = [[NSDictionary alloc] initWithObjectsAndKeys:[NSString stringWithFormat:@"%d",class1+1],@"startTh",[NSString stringWithFormat:@"%d",class2+1],@"endTh",@"1",@"signWay",[NSString stringWithFormat:@"%@",c.classRoomId],@"roomId",ary[4],@"startTime",nil];
     
     
     NSArray * aa = [[NSArray alloc] initWithObjects:w, nil];
@@ -695,8 +694,7 @@
                 [[Appsetting sharedInstance] getOut];
                 DYTabBarViewController *rootVC = [DYTabBarViewController sharedInstance];
                 rootVC = nil;
-                ChatHelper * c =[ChatHelper shareHelper];
-                [c getOut];
+               
                 WorkingLoginViewController * userLogin = [[WorkingLoginViewController alloc] init];
                 [UIApplication sharedApplication].keyWindow.rootViewController =[[UINavigationController alloc] initWithRootViewController:userLogin];
                 UIAlertView * alter = [[UIAlertView alloc] initWithTitle:nil message:@"登录过期请重新登录" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil];
@@ -712,8 +710,6 @@
     [[Appsetting sharedInstance] getOut];
     DYTabBarViewController *rootVC = [DYTabBarViewController sharedInstance];
     rootVC = nil;
-    ChatHelper * c =[ChatHelper shareHelper];
-    [c getOut];
     WorkingLoginViewController * userLogin = [[WorkingLoginViewController alloc] init];
     
     [UIApplication sharedApplication].keyWindow.rootViewController =[[UINavigationController alloc] initWithRootViewController:userLogin];
@@ -823,20 +819,7 @@
 }
 +(void)sendMeetingInfo:(NSDictionary *)dict{
     
-    NSMutableArray * seatAry = [dict objectForKey:@"seatPeople"];
     
-    ChatHelper * c = [ChatHelper shareHelper];
-    
-    UserModel * user = [[Appsetting sharedInstance] getUsetInfo];
-    
-    for (int i = 0; i<seatAry.count; i++) {
-        
-        SignPeople * s = seatAry[i];
-        
-        NSString * str = [NSString stringWithFormat:@"{\"Project\":\"LvDongKeTang\",\"MessageType\":\"Notification\",\"From\":\"Admin\",\"Content\":\"会议通知：主题：%@，地址：%@，时间：%@，您的座次：%@\"}",[dict objectForKey:@"name"],[dict objectForKey:@"address"],[dict objectForKey:@"time"],s.seat];
-        
-        [c sendTextMessageToPeople:str withReceiver:[NSString stringWithFormat:@"%@%@",user.school,s.workNo]];
-    }
     
 }
 
@@ -1180,7 +1163,16 @@
 }
 +(NSDictionary *)getWeekTimeWithType:(NSString *)type
 {
-    NSDate *nowDate = [NSDate date];
+    NSString *birthdayStr = type;
+    
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+    
+    [dateFormatter setDateFormat:@"yyyy-MM-dd"];
+    
+    [dateFormatter setTimeZone:[NSTimeZone timeZoneForSecondsFromGMT:8]];//解决8小时时间差问题
+    
+    NSDate *nowDate = [dateFormatter dateFromString:birthdayStr];
+    
     NSCalendar *calendar = [NSCalendar currentCalendar];
     NSDateComponents *comp = [calendar components:NSYearCalendarUnit | NSMonthCalendarUnit | NSDayCalendarUnit | NSWeekdayCalendarUnit | NSDayCalendarUnit fromDate:nowDate];
     // 获取今天是周几
@@ -1221,7 +1213,7 @@
     
     NSString *firstDay = [formatter stringFromDate:firstDayOfWeek];
     NSString *lastDay = [formatter stringFromDate:lastDayOfWeek];
-    //    NSLog(@"%@=======%@",firstDay,lastDay);
+    NSLog(@"%@=======%@",firstDay,lastDay);
     
     //    NSString *dateStr = [NSString stringWithFormat:@"%@-%@",firstDay,lastDay];
     NSDictionary * dict = [[NSDictionary alloc] initWithObjectsAndKeys:[NSString stringWithFormat:@"%@",firstDay],@"firstDay",[NSString stringWithFormat:@"%@",lastDay],@"lastDay", nil];
@@ -1229,9 +1221,22 @@
 }
 +(NSArray *)getWeekAllTimeWithType:(NSString *)type
 {
-    NSDate *nowDate = [NSDate date];
+    NSString *birthdayStr = type;
+    
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+    
+    [dateFormatter setDateFormat:@"yyyy-MM-dd"];
+    
+    [dateFormatter setTimeZone:[NSTimeZone timeZoneForSecondsFromGMT:8]];//解决8小时时间差问题
+    
+    NSDate *nowDate = [dateFormatter dateFromString:birthdayStr];
+    
+    //    NSDate *nowDate = [NSDate date];
+    
     NSCalendar *calendar = [NSCalendar currentCalendar];
+    
     NSDateComponents *comp = [calendar components:NSYearCalendarUnit | NSMonthCalendarUnit | NSDayCalendarUnit | NSWeekdayCalendarUnit | NSDayCalendarUnit fromDate:nowDate];
+    
     // 获取今天是周几
     NSInteger weekDay = [comp weekday];
     // 获取几天是几号
@@ -1268,6 +1273,7 @@
     }
     for (int i = 0; i<=labs(lastDiff); i++) {
         NSDateComponents *lastDayComp = [calendar components:NSYearCalendarUnit | NSMonthCalendarUnit | NSDayCalendarUnit   fromDate:nowDate];
+        
         [lastDayComp setDay:day + i];
         
         NSDate *lastDayOfWeek = [calendar dateFromComponents:lastDayComp];
@@ -1276,8 +1282,52 @@
         [formatter setDateFormat:@"dd"];
         
         NSString *lastDay = [formatter stringFromDate:lastDayOfWeek];
+        
         [ary addObject:lastDay];
     }
+    
+    NSDateComponents *firstDayComp = [calendar components:NSYearCalendarUnit | NSMonthCalendarUnit | NSDayCalendarUnit  fromDate:nowDate];
+    
+    [firstDayComp setDay:day + firstDiff-1];
+    
+    NSDate *firstDayOfWeek = [calendar dateFromComponents:firstDayComp];
+    
+    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+    [formatter setDateFormat:@"yyyy-MM-dd"];
+    
+    NSString *firstDay = [formatter stringFromDate:firstDayOfWeek];
+    
+    [ary addObject:firstDay];
+    
+    NSDateFormatter *formatterf = [[NSDateFormatter alloc] init];
+    [formatterf setDateFormat:@"MM"];//前面的月
+    
+    NSString *firstDayf = [formatterf stringFromDate:firstDayOfWeek];
+    
+    [ary addObject:firstDayf];
+    
+    NSDateComponents *lastDayComp = [calendar components:NSYearCalendarUnit | NSMonthCalendarUnit | NSDayCalendarUnit   fromDate:nowDate];
+    
+    [lastDayComp setDay:day + labs(lastDiff)+1];
+    
+    NSDate *lastDayOfWeek = [calendar dateFromComponents:lastDayComp];
+    
+    NSDateFormatter *formatter1 = [[NSDateFormatter alloc] init];
+    
+    [formatter1 setDateFormat:@"yyyy-MM-dd"];
+    
+    NSString *lastDay = [formatter1 stringFromDate:lastDayOfWeek];
+    
+    [ary addObject:lastDay];
+    
+    NSDateFormatter *formatterl = [[NSDateFormatter alloc] init];
+    
+    [formatterl setDateFormat:@"MM"];//前面的月
+    
+    NSString *firstDayl = [formatterl stringFromDate:lastDayOfWeek];
+    
+    [ary addObject:firstDayl];
+    
     return ary;
 }
 +(NSMutableDictionary *)CurriculumGroup:(NSMutableArray *)classAry{
@@ -1832,6 +1882,113 @@
         }
     }
     return str;
+}
+
++(NSString *)returnFileType:(NSString *)typeStr{
+    //    [string rangeOfString:opt.index].location == NSNotFound
+    
+    NSString * str = @"xls,xlsx,xlsm,xlt,xltx,xltm";
+    NSString * wordStr = @"doc,docx";
+    NSString * pngStr = @"png,jpg";
+    if ([str rangeOfString:typeStr].location != NSNotFound) {
+        return @"excel";
+    }else if ([typeStr isEqualToString:@"ai"]){
+        return @"ai";
+    }else if([wordStr rangeOfString:typeStr].location != NSNotFound){
+        return @"word";
+    }else if ([typeStr isEqualToString:@"fla"]){
+        return @"fla";
+    }else if ([typeStr isEqualToString:@"html"]){
+        return @"html";
+    }else if ([typeStr isEqualToString:@"mp3"]){
+        return @"mp3";
+    }else if ([typeStr isEqualToString:@"pdf"]){
+        return @"pdf";
+    }else if ([pngStr rangeOfString:typeStr].location != NSNotFound){
+        return @"png";
+    }else if ([typeStr isEqualToString:@"ppt"]){
+        return @"ppt";
+    }else if ([typeStr isEqualToString:@"psd"]){
+        return @"psd";
+    }else if ([typeStr isEqualToString:@"txt"]){
+        return @"txt";
+    }else if ([typeStr isEqualToString:@"xd"]){
+        return @"xd";
+    }else if ([typeStr isEqualToString:@"zip"]){
+        return @"zip";
+    }else{
+        return @"other";
+    }
+    return @"s";
+}
++(void)getGroupData{
+    UserModel * user = [[Appsetting sharedInstance] getUsetInfo];
+    
+    NSDictionary * d = [[NSDictionary alloc] initWithObjectsAndKeys:user.peopleId,@"userId", nil];
+    
+    [[NetworkRequest sharedInstance] POST:QueryGroupList dict:d succeed:^(id data) {
+        NSString * str = [[data objectForKey:@"header"] objectForKey:@"code"];
+        if ([str isEqualToString:@"0000"]) {
+            NSArray * ary = [data objectForKey:@"body"];
+            [[Appsetting sharedInstance] delectAllGroup];
+            for (int i = 0; i<ary.count; i++) {
+                GroupModel * g = [[GroupModel alloc] init];
+                [g setSelfWithDict:ary[i]];
+                [[Appsetting sharedInstance] saveGroupId:[NSString stringWithFormat:@"%@",g.groupId] withGroupName:[NSString stringWithFormat:@"%@",g.groupName]];
+            }
+        }
+    } failure:^(NSError *error) {
+        
+    }];
+}
++(NSString *)getPeopleNameWithPeopleId:(NSString *)peopleId{
+    NSDictionary * dict = [[NSDictionary alloc] initWithObjectsAndKeys:peopleId,@"id", nil];
+    [[NetworkRequest sharedInstance] GET:QuerySelfInfo dict:dict succeed:^(id data) {
+        
+    } failure:^(NSError *error) {
+        
+    }];
+    return @"";
+}
++(NSString *)getGroupName:(NSString *)groupId{
+    
+    NSMutableArray * ary = [NSMutableArray arrayWithArray:[[Appsetting sharedInstance] getGroupId_Name]];
+    
+    for (int i = 0; i<ary.count; i++) {
+        NSDictionary * dict = ary[i];
+        NSString * str = [NSString stringWithFormat:@"%@",[dict objectForKey:@"groupId"]];
+        if ([str isEqualToString:[NSString stringWithFormat:@"%@",groupId]]) {
+            return [NSString stringWithFormat:@"%@",[dict objectForKey:@"groupName"]];
+        }
+    }
+    return @"";
+}
+
++(NSString *)getGPeopleName:(NSString *)peopleId{
+    
+    NSMutableArray * ary = [NSMutableArray arrayWithArray:[[Appsetting sharedInstance] getPeopleId_Name]];
+    
+    for (int i = 0; i<ary.count; i++) {
+        NSDictionary * dict = ary[i];
+        NSString * str = [NSString stringWithFormat:@"%@",[dict objectForKey:@"peopleId"]];
+        if ([str isEqualToString:[NSString stringWithFormat:@"%@",peopleId]]) {
+            return [NSString stringWithFormat:@"%@",[dict objectForKey:@"peopleName"]];
+        }
+    }
+    return @"";
+}
++(NSString *)getGPeoplePictureId:(NSString *)peopleId{
+    
+    NSMutableArray * ary = [NSMutableArray arrayWithArray:[[Appsetting sharedInstance] getPeopleId_Name]];
+    
+    for (int i = 0; i<ary.count; i++) {
+        NSDictionary * dict = ary[i];
+        NSString * str = [NSString stringWithFormat:@"%@",[dict objectForKey:@"peopleId"]];
+        if ([str isEqualToString:[NSString stringWithFormat:@"%@",peopleId]]) {
+            return [NSString stringWithFormat:@"%@",[dict objectForKey:@"peoplePictureId"]];
+        }
+    }
+    return @"";
 }
 @end
 

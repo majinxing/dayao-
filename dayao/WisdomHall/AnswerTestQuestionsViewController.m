@@ -46,7 +46,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    [super viewDidLoad];
+    
     
     [self setNavigationTitle];
     

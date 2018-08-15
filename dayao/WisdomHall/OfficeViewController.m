@@ -41,13 +41,14 @@
     [self addTableView];
     
     //    [self setNavigationTitle];
+    //设置别名
     UserModel * user = [[Appsetting sharedInstance] getUsetInfo];
-#pragma mark - 推送别名设置
     
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.0f * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-        [JPUSHService setTags:nil alias:[NSString stringWithFormat:@"%@%@",user.school,user.studentId] fetchCompletionHandle:^(int iResCode, NSSet *iTags, NSString *iAlias) {
-            NSLog(@"%d-------------%@,-------------%@",iResCode,iTags,iAlias);
-        }];
+        [JPUSHService setAlias:[NSString stringWithFormat:@"%@%@",user.school,user.studentId] completion:^(NSInteger iResCode, NSString *iAlias, NSInteger seq) {
+            
+        } seq:1];
+        
     });
     [UIApplication sharedApplication].statusBarStyle = UIStatusBarStyleLightContent;
 

@@ -234,6 +234,7 @@
 }
 
 -(UIImage*)grayscale:(UIImage*)anImage{
+    return anImage;
     if (!anImage) {
         return nil;
     }
@@ -372,6 +373,82 @@
     [dict setValue:[_mySettingData objectForKey:@"WIFI_mac"] forKey:@"WIFI_mac"];
     [dict setValue:[_mySettingData objectForKey:@"WIFI_time"] forKey:@"WIFI_time"];
     return dict;
+}
+-(void)delectAllGroup{
+    NSMutableArray * ary =  [NSMutableArray arrayWithArray:[_mySettingData objectForKey:@"GroupId_Name"]];
+    [ary removeAllObjects];
+    [_mySettingData setObject:ary forKey:@"GroupId_Name"];
+}
+//对群组id和响应昵称进行存储
+-(void)saveGroupId:(NSString *)groupID withGroupName:(NSString *)groupName{
+    
+    NSMutableArray * ary = [NSMutableArray arrayWithArray:[_mySettingData objectForKey:@"GroupId_Name"]];
+    
+    if (!ary) {
+        ary = [NSMutableArray arrayWithCapacity:1];
+    }
+    
+    for (int i = 0; i<ary.count; i++) {
+        NSDictionary * d = ary[i];
+        if ([[d objectForKey:@"groupId"] isEqualToString:groupID]) {
+            [ary removeObjectAtIndex:i];
+            break;
+        }
+    }
+    NSDictionary * dict = [[NSDictionary alloc] initWithObjectsAndKeys:[NSString stringWithFormat:@"%@",groupID],@"groupId",[NSString stringWithFormat:@"%@",groupName],@"groupName", nil];
+    [ary addObject:dict];
+    
+    [_mySettingData setValue:ary forKey:@"GroupId_Name"];
+    
+    [_mySettingData synchronize];
+    
+}
+-(NSMutableArray *)getGroupId_Name{
+    NSMutableArray * ary = [NSMutableArray arrayWithArray:[_mySettingData objectForKey:@"GroupId_Name"]];
+    return ary;
+}
+-(void)delectGroupID:(NSString *)groupId{
+    NSMutableArray * ary = [NSMutableArray arrayWithArray:[_mySettingData objectForKey:@"GroupId_Name"]];
+    for (int i = 0; i<ary.count; i++) {
+        NSDictionary * dict = ary[i];
+        if ([[NSString stringWithFormat:@"%@",groupId] isEqualToString:[dict objectForKey:@"groupId"]]) {
+            [ary removeObjectAtIndex:i];
+            [_mySettingData setValue:ary forKey:@"GroupId_Name"];
+            break;
+        }
+    }
+}
+//对个人id和昵称进行存储
+-(void)sevePeopleId:(NSString *)peopleId withPeopleName:(NSString *)peopleName withPeoplePictureId:(NSString *)pictureId{
+    NSMutableArray * ary = [NSMutableArray arrayWithArray:[_mySettingData objectForKey:@"peopleId_Name"]];
+    
+    if (!ary) {
+        ary = [NSMutableArray arrayWithCapacity:1];
+    }
+    
+    for (int i = 0; i<ary.count; i++) {
+        NSDictionary * d = ary[i];
+        if ([[d objectForKey:@"peopleId"] isEqualToString:peopleId]) {
+            [ary removeObjectAtIndex:i];
+            break;
+        }
+    }
+    NSDictionary * dict = [[NSDictionary alloc] initWithObjectsAndKeys:[NSString stringWithFormat:@"%@",peopleId],@"peopleId",[NSString stringWithFormat:@"%@",peopleName],@"peopleName",[NSString stringWithFormat:@"%@",pictureId],@"peoplePictureId",nil];
+    [ary addObject:dict];
+    
+    [_mySettingData setValue:ary forKey:@"peopleId_Name"];
+    
+    [_mySettingData synchronize];
+}
+-(NSMutableArray *)getPeopleId_Name{
+    NSMutableArray * ary = [NSMutableArray arrayWithArray:[_mySettingData objectForKey:@"peopleId_Name"]];
+    return ary;
+}
+-(void)saveIMToken:(NSString *)IM_Token{
+    
+    [_mySettingData setValue:IM_Token forKey:@"IM_Token"];
+    
+    [_mySettingData synchronize];
 }
 @end
 

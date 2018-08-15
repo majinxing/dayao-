@@ -13,9 +13,7 @@
 #import "ShareView.h"
 #import "TextViewController.h"
 #import "SignListViewController.h"
-#import <Hyphenate/Hyphenate.h>
 #import "ConversationVC.h"
-#import "DiscussViewController.h"
 #import "VoteViewController.h"
 #import "DataDownloadViewController.h"
 #import "SignPeople.h"
@@ -43,7 +41,6 @@
 @property (nonatomic,strong) ShareView * shareView;
 @property (nonatomic,strong) ShareView * interaction;
 
-@property (strong, nonatomic, readonly) EMCallSession *callSession;
 @property (nonatomic,assign)BOOL isEnable;
 
 
@@ -94,16 +91,7 @@
     // Do any additional setup after loading the view from its nib.
 }
 -(void)voiceCalls:(NSNotification *)dict{
-    EMCallSession * aSession = [dict.userInfo objectForKey:@"session"];
-    ConversationVC * c  = [[ConversationVC alloc] init];
-    c.callSession = aSession;
-    int n = (int)[NSString stringWithFormat:@"%@",_user.school].length;
-    NSMutableString * str = [NSMutableString stringWithFormat:@"%@",aSession.remoteName];
-    [str deleteCharactersInRange:NSMakeRange(0,n)];
-    c.teacherName = str;
-    c.call = CALLED;
-    self.hidesBottomBarWhenPushed = YES;
-    [self.navigationController pushViewController:c animated:YES];
+    
     //    调用:
 }
 -(void)addTableView{
@@ -153,10 +141,10 @@
             }
             [_signAry addObject:s];
         }
-        if ([[NSString stringWithFormat:@"%@",_c.teacherWorkNo] isEqualToString:[NSString stringWithFormat:@"%@",_user.studentId]]) {
+//        if ([[NSString stringWithFormat:@"%@",_c.teacherWorkNo] isEqualToString:[NSString stringWithFormat:@"%@",_user.studentId]]) {
             _c.n = (int)_n;
             _c.m = (int)_m;
-        }
+//        }
         [self hideHud];
         [_tableView reloadData];
     } failure:^(NSError *error) {
@@ -379,7 +367,7 @@
             cell = [[[NSBundle mainBundle] loadNibNamed:@"MeetingTableViewCell" owner:self options:nil] objectAtIndex:0];
         }
         [cell addFirstCOntentViewWithClassModel:_c];
-    }else if (indexPath.section == 1){
+    }else if (indexPath.section == 2){
         if ([[NSString stringWithFormat:@"%@",_user.peopleId] isEqualToString:[NSString stringWithFormat:@"%@",_c.teacherId]]) {
             cell = [tableView dequeueReusableCellWithIdentifier:@"MeetingTableViewCellSecond"];
             if (!cell) {
@@ -394,7 +382,7 @@
             [cell addThirdContentViewWithClassModel:_c isEnable:_isEnable];
         }
         
-    }else if (indexPath.section==2){
+    }else if (indexPath.section==1){
         cell = [tableView dequeueReusableCellWithIdentifier:@"MeetingTableViewCellFourth"];
         if (!cell) {
             cell = [[[NSBundle mainBundle] loadNibNamed:@"MeetingTableViewCell" owner:self options:nil] objectAtIndex:3];
@@ -410,31 +398,18 @@
 }
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
     if (indexPath.section==0) {
-        return 150;
+        return 300;
     }else if (indexPath.section==1){
-        return 60;
+        return 220;
     }else if (indexPath.section==2){
-        return 200;
+        return 60;
     }
     return 0;
 }
 -(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
-    return 20;
+    return 10;
 }
--(UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section{
-    UIView * view = [[UIView alloc] init];
-    view.backgroundColor = RGBA_COLOR(231, 231, 231, 1);
-    UILabel * label = [[UILabel alloc] initWithFrame:CGRectMake(10, 2, 80, 20)];
-    label.font = [UIFont systemFontOfSize:14];
-    label.textColor = [UIColor blackColor];
-    [view addSubview:label];
-    if (section == 1) {
-        label.text = @"签到";
-    }else if(section == 2){
-        label.text = @"互动";
-    }
-    return view;
-}
+
 #pragma mark alterViewDelegate
 -(void)alterViewDeleageRemove{
     [_alterView removeFromSuperview];
@@ -458,27 +433,7 @@
         self.hidesBottomBarWhenPushed = YES;
         [self.navigationController pushViewController: d animated:YES];
     }else if ([platform isEqualToString:InteractionType_Responder]){
-        NSLog(@"抢答");
-        ConversationVC * c =[[ConversationVC alloc] init];
-        self.hidesBottomBarWhenPushed = YES;
-        UserModel * s = [[Appsetting sharedInstance] getUsetInfo];
-        c.HyNumaber = [NSString stringWithFormat:@"%@%@",s.school,_c.teacherWorkNo];
-        c.call = CALLING;
-        c.teacherName = _c.teacherName;
-        [self presentViewController:c animated:YES completion:^{
-            
-        }];
-        [c returnReason:^(EMCallEndReason reason) {
-            if (reason == EMCallEndReasonRemoteOffline) {
-                [UIUtils showInfoMessage:@"抢答还没开始呢，不要太心急哦~" withVC:self];
-            }else if (reason == EMCallEndReasonBusy){
-                [UIUtils showInfoMessage:@"已有人抢答成功，下次手速要更快哦~" withVC:self];
-            }else if (reason == EMCallEndReasonHangup){
-                
-            }else {
-                [UIUtils showInfoMessage:@"抢答貌似失败了呢~" withVC:self];
-            }
-        }];
+        
     }
     else if ([platform isEqualToString:InteractionType_Test]){
         NSLog(@"测试");
@@ -487,9 +442,7 @@
         textVC.classModel = _c;
         [self.navigationController pushViewController:textVC animated:YES];
     }else if ([platform isEqualToString:InteractionType_Discuss]){
-        DiscussViewController * d = [[DiscussViewController alloc] init];
-        self.hidesBottomBarWhenPushed = YES;
-        [self.navigationController pushViewController:d animated:YES];
+   
         NSLog(@"讨论");
     }else if ([platform isEqualToString:InteractionType_Picture]){
         PictureQuizViewController * d = [[PictureQuizViewController alloc] init];

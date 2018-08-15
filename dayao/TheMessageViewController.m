@@ -13,7 +13,6 @@
 #import <Hyphenate/EMCursorResult.h>
 #import <Hyphenate/Hyphenate.h>
 #import "MJRefresh.h"
-#import "MJXChatViewController.h"
 #import "CreateChatViewController.h"
 #import "JoinMessageGroupViewController.h"
 #define FetchChatroomPageSize   20
@@ -186,11 +185,7 @@
         [self.navigationController pushViewController:j animated:YES];
         self.hidesBottomBarWhenPushed = NO;
     }else if(indexPath.row>1){
-        MJXChatViewController *chat = [[MJXChatViewController alloc] init];
-        self.hidesBottomBarWhenPushed = YES;
-        chat.chatroom = _dataArray[indexPath.row - 2];
-        [self.navigationController pushViewController:chat animated:YES];
-        self.hidesBottomBarWhenPushed = NO;
+        
     }
     
 }

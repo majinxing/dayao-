@@ -83,7 +83,7 @@ static NSString * cellIdentifier = @"cellIdentifier";
     //    self.navigationItem.leftBarButtonItem = selection;
     UIBarButtonItem * createMeeting = [[UIBarButtonItem alloc] initWithTitle:@"更多" style:UIBarButtonItemStylePlain target:self action:@selector(createMeeting)];
     
-    [createMeeting setTintColor:[UIColor whiteColor]];
+    [createMeeting setTintColor:[UIColor blackColor]];
 
     self.navigationItem.rightBarButtonItem = createMeeting;
 }

@@ -9,7 +9,6 @@
 #import "MJXChatViewController.h"
 #import "MJXChatCellTableViewCell.h"
 #import <Hyphenate/Hyphenate.h>
-#import "ChatHelper.h"
 #import "DYHeader.h"
 #import "RecorderView.h"
 

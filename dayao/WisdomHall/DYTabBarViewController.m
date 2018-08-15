@@ -12,18 +12,58 @@
 #import "PersonalCenterViewController.h"
 #import "AllTheMeetingViewController.h"
 #import "DYHeader.h"
-#import "TheMessageViewController.h"
+
 #import "OfficeViewController.h"
-#import "DiscussViewController.h"
+
 #import "UIImageView+WebCache.h"
 #import "NavBarNavigationController.h"
-#import <Hyphenate/Hyphenate.h>
-#import "ConversationVC.h"
-#import "ChatHelper.h"
+
+#import "AFNetworking/AFNetworking.h"
+
+#import "MainViewController.h"
+
+#import "MessageListViewController.h"
+
+#import "GroupLoginViewController.h"
+
+#import "IMTool.h"
+
+#import "VoiceViewController.h"
+#import "JPUSHService.h"
+
+#import "IMHttpAPI.h"
+
+
+#import "PeerMessageHandler.h"
+
+#import "GroupMessageHandler.h"
+
+#import "CustomerMessageHandler.h"
+
+#import "CustomerMessageDB.h"
+
+#import "CustomerOutbox.h"
+
+#import "IMService.h"
+
+#include <netdb.h>
+
+#include <arpa/inet.h>
+
+#include <netinet/in.h>
+
+//#ifdef TEST_ROOM
+#import "RoomLoginViewController.h"
+//#elif defined TEST_GROUP
+#import "GroupLoginViewController.h"
+//#elif defined TEST_CUSTOMER
+#import "CustomerViewController.h"
+#import "CustomerManager.h"
+#import "HomePageViewController.h"
 
 @interface DYTabBarViewController ()<UIAlertViewDelegate>
 @property (nonatomic,copy)NSString * url;
-@property (nonatomic,strong) ChatHelper * chat;
+@property (nonatomic,strong)UserModel *user;
 
 @end
 
@@ -45,51 +85,139 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    [self addChildViewControllerWithClassname:[OfficeViewController description] imagename:@"办公_normal" title:@"办公" withSelectImageName:@"办公"];
+    [self addChildViewControllerWithClassname:[HomePageViewController description] imagename:@"home2" title:@"首页" withSelectImageName:@"home"];
+
+    [self addChildViewControllerWithClassname:[MessageListViewController description] imagename:@"chat" title:@"消息" withSelectImageName:@"chat2"];
+
     
-    [self addChildViewControllerWithClassname:[SignInViewController description] imagename:@"课程(1)" title:@"课程" withSelectImageName:@"课程"];
-    
-    [self addChildViewControllerWithClassname:[TheMessageViewController description] imagename:@"消息(1)" title:@"消息" withSelectImageName:@"消息"];
-    
-    [self addChildViewControllerWithClassname:[PersonalCenterViewController description] imagename:@"我的(1)" title:@"我的" withSelectImageName:@"我的"];
-    
+    [self addChildViewControllerWithClassname:[PersonalCenterViewController description] imagename:@"my" title:@"我的" withSelectImageName:@"my2"];
+
     [self selectApp];
     
     [UIUtils getInternetDate];
     
     // 1.注册通知
     
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(voiceCalls:) name:@"VoiceCalls" object:nil];
-    
     [[NSNotificationCenter defaultCenter] postNotificationName:InApp object:nil];
 
+    [self IM:nil];
+    
+    _user = [[Appsetting sharedInstance] getUsetInfo];
+    //
+    [IMTool IMLogin:[NSString stringWithFormat:@"%@",_user.peopleId]];
+    
     // Do any additional setup after loading the view from its nib.
 }
 -(void)viewWillAppear:(BOOL)animated{
-    _chat = [ChatHelper shareHelper];
     
-    [_chat getOut];
-    
-    _chat = [ChatHelper shareHelper];
 }
--(void)voiceCalls:(NSNotification *)dict{
-    EMCallSession * aSession = [dict.userInfo objectForKey:@"session"];
-    ConversationVC * c  = [[ConversationVC alloc] init];
-    c.callSession = aSession;
-    UserModel * user = [[Appsetting sharedInstance] getUsetInfo];
+-(void)IM:(UIApplication *)application{
     
-    int n = (int)[NSString stringWithFormat:@"%@",user.school].length;
     
-    NSMutableString * str = [NSMutableString stringWithFormat:@"%@",aSession.remoteName];
-    [str deleteCharactersInRange:NSMakeRange(0,n)];
-    c.teacherName = str;
-    c.call = CALLED;
-    self.hidesBottomBarWhenPushed = YES;
-    [self presentViewController:c animated:YES completion:^{
+    _user = [[Appsetting sharedInstance] getUsetInfo];
+    
+    
+    //app可以单独部署服务器，给予第三方应用更多的灵活性
+    [IMHttpAPI instance].apiURL =  [NSString stringWithFormat:@"%@",_user.host];
+    
+    NSMutableString * strHost = [NSMutableString stringWithFormat:@"%@",_user.host];
+    
+    
+    [strHost deleteCharactersInRange:NSMakeRange(0, 7)];
+    
+    NSArray * ary = [strHost componentsSeparatedByString:@":"];
+    
+    [IMService instance].host = ary[0];
+    
+    
+    //    //app可以单独部署服务器，给予第三方应用更多的灵活性
+    //        [IMHttpAPI instance].apiURL = @"http://api.gobelieve.io";
+    //        [IMService instance].host = @"imnode2.gobelieve.io";
+    
+    //
+    
+#if TARGET_IPHONE_SIMULATOR
+    NSString *deviceID = @"7C8A8F5B-E5F4-4797-8758-05367D2A4D61";
+#else
+    NSString *deviceID = [[[UIDevice currentDevice] identifierForVendor] UUIDString];
+#endif
+    [IMService instance].deviceID = deviceID;
+    NSLog(@"device id:%@", deviceID);
+    
+    [IMService instance].peerMessageHandler = [PeerMessageHandler instance];
+    [IMService instance].groupMessageHandler = [GroupMessageHandler instance];
+    [IMService instance].customerMessageHandler = [CustomerMessageHandler instance];
+    
+    [[IMService instance] startRechabilityNotifier];
+    
+    //    UIUserNotificationSettings *settings = [UIUserNotificationSettings settingsForTypes:(UIUserNotificationTypeAlert
+    //                                                                                         | UIUserNotificationTypeBadge
+    //                                                                                         | UIUserNotificationTypeSound) categories:nil];
+    //    [application registerUserNotificationSettings:settings];
+    
+    
+    [self refreshHost];
+}
+-(NSString*)IP2String:(struct in_addr)addr {
+    char buf[64] = {0};
+    const char *p = inet_ntop(AF_INET, &addr, buf, 64);
+    if (p) {
+        return [NSString stringWithUTF8String:p];
+    }
+    return nil;
+    
+}
+
+-(NSString*)resolveIP:(NSString*)host {
+    struct addrinfo hints;
+    struct addrinfo *result, *rp;
+    int s;
+    
+    char buf[32];
+    snprintf(buf, 32, "%d", 0);
+    
+    memset(&hints, 0, sizeof(struct addrinfo));
+    hints.ai_family = AF_INET;
+    hints.ai_socktype = SOCK_STREAM;
+    hints.ai_protocol = IPPROTO_TCP;
+    hints.ai_flags = 0;
+    
+    s = getaddrinfo([host UTF8String], buf, &hints, &result);
+    if (s != 0) {
+        NSLog(@"get addr info error:%s", gai_strerror(s));
+        return nil;
+    }
+    NSString *ip = nil;
+    rp = result;
+    if (rp != NULL) {
+        struct sockaddr_in *addr = (struct sockaddr_in*)rp->ai_addr;
+        ip = [self IP2String:addr->sin_addr];
+    }
+    freeaddrinfo(result);
+    return ip;
+}
+-(void)refreshHost {
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_LOW, 0), ^{
+        NSLog(@"refresh host ip...");
         
-    }];
-    //    [self.navigationController pushViewController:c animated:YES];
-    //    调用:
+        for (int i = 0; i < 10; i++) {
+            NSString *host = @"imnode.gobelieve.io";
+            NSString *ip = [self resolveIP:host];
+            
+            NSString *apiHost = @"api.gobelieve.io";
+            NSString *apiIP = [self resolveIP:apiHost];
+            
+            
+            NSLog(@"host:%@ ip:%@", host, ip);
+            NSLog(@"api host:%@ ip:%@", apiHost, apiIP);
+            
+            if (ip.length == 0 || apiIP.length == 0) {
+                continue;
+            } else {
+                break;
+            }
+        }
+    });
 }
 -(void)selectApp{
     
@@ -187,7 +315,7 @@
     
     nav.tabBarItem.selectedImage = [i imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
     
-    UIColor * selectColor = [[Appsetting sharedInstance] getThemeColor];
+    UIColor * selectColor = [UIColor blackColor];;
 
     //设置字体颜色（选中类型）
     [nav.tabBarItem setTitleTextAttributes:@{NSForegroundColorAttributeName:selectColor} forState:UIControlStateSelected];

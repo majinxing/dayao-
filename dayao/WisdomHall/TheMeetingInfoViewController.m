@@ -12,7 +12,7 @@
 #import "ShareView.h"
 #import "VoteViewController.h"
 #import "ConversationVC.h"
-#import "DiscussViewController.h"
+
 #import "ClassManagementViewController.h"
 #import "SignListViewController.h"
 #import "DataDownloadViewController.h"
@@ -30,6 +30,8 @@
 #import "QrCodeViewController.h"
 #import "PhotoPromptBox.h"
 #import "AlterView.h"
+#import "VoiceViewController.h"
+#import "MessageListViewController.h"
 
 #define kScreenWidth [UIScreen mainScreen].bounds.size.width
 
@@ -37,7 +39,7 @@
 
 #define RGBA_COLOR(R, G, B, A) [UIColor colorWithRed:((R) / 255.0f) green:((G) / 255.0f) blue:((B) / 255.0f) alpha:A]
 
-@interface TheMeetingInfoViewController ()<UINavigationControllerDelegate, UIVideoEditorControllerDelegate,UIAlertViewDelegate,UITableViewDelegate,UITableViewDataSource,MeetingTableViewCellDelegate,AlterViewDelegate>
+@interface TheMeetingInfoViewController ()<UINavigationControllerDelegate, UIVideoEditorControllerDelegate,UIAlertViewDelegate,UITableViewDelegate,UITableViewDataSource,MeetingTableViewCellDelegate,AlterViewDelegate,MessageViewControllerUserDelegate>
 @property (nonatomic,strong) ShareView * interaction;
 @property (nonatomic,strong)UserModel * user;
 @property (nonatomic,assign)int temp;
@@ -86,16 +88,7 @@
     // Do any additional setup after loading the view from its nib.
 }
 -(void)voiceCalls:(NSNotification *)dict{
-    EMCallSession * aSession = [dict.userInfo objectForKey:@"session"];
-    ConversationVC * c  = [[ConversationVC alloc] init];
-    c.callSession = aSession;
-    int n = (int)[NSString stringWithFormat:@"%@",_user.school].length;
-    NSMutableString * str = [NSMutableString stringWithFormat:@"%@",aSession.remoteName];
-    [str deleteCharactersInRange:NSMakeRange(0,n)];
-    c.teacherName = str;
-    c.call = CALLED;
-    self.hidesBottomBarWhenPushed = YES;
-    [self.navigationController pushViewController:c animated:YES];
+    
 }
 -(void)getData{
     _seatModel = [[SeatIngModel alloc] init];
@@ -284,7 +277,7 @@
             cell = [[[NSBundle mainBundle] loadNibNamed:@"MeetingTableViewCell" owner:self options:nil] objectAtIndex:0];
         }
         [cell addFirstContentView:_meetingModel];
-    }else if (indexPath.section == 1){
+    }else if (indexPath.section == 2){
         if ([[NSString stringWithFormat:@"%@",_user.peopleId] isEqualToString:[NSString stringWithFormat:@"%@",_meetingModel.meetingHostId]]) {
             cell = [tableView dequeueReusableCellWithIdentifier:@"MeetingTableViewCellSecond"];
             if (!cell) {
@@ -299,7 +292,7 @@
             [cell addThirdContentView:_meetingModel isEnable:_isEnable];
         }
         
-    }else if (indexPath.section == 2){
+    }else if (indexPath.section == 1){
         cell = [tableView dequeueReusableCellWithIdentifier:@"MeetingTableViewCellFourth"];
         if (!cell) {
             cell = [[[NSBundle mainBundle] loadNibNamed:@"MeetingTableViewCell" owner:self options:nil] objectAtIndex:3];
@@ -315,35 +308,40 @@
 }
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
     if (indexPath.section ==0) {
-        return 150;
+        return 300;
     }else if (indexPath.section ==1){
-        return 60;
+        return 180;
     }else if (indexPath.section == 2){
-        return 200;
+        return 60;
     }
     return 0;
 }
 -(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
-    if (section == 1) {
-        return 25;
-    }else if(section == 2){
-        return 25;
-    }
+    
     return 10;
 }
--(UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section{
-    UIView * view = [[UIView alloc] init];
-    view.backgroundColor = RGBA_COLOR(231, 231, 231, 1);
-    UILabel * label = [[UILabel alloc] initWithFrame:CGRectMake(10, 2, 80, 20)];
-    label.font = [UIFont systemFontOfSize:14];
-    label.textColor = [UIColor blackColor];
-    [view addSubview:label];
-    if (section == 1) {
-        label.text = @"签到";
-    }else if(section == 2){
-        label.text = @"互动";
-    }
-    return view;
+#pragma mark - MessageViewControllerUserDelegate
+//从本地获取用户信息, IUser的name字段为空时，显示identifier字段
+- (IUser*)getUser:(int64_t)uid {
+    IUser *u = [[IUser alloc] init];
+    u.uid = uid;
+    u.name = @"";
+    u.avatarURL = @"http://api.gobelieve.io/images/e837c4c84f706a7988d43d62d190e2a1.png";
+    u.identifier = [NSString stringWithFormat:@"uid:%lld", uid];
+    return u;
+}
+//从服务器获取用户信息
+- (void)asyncGetUser:(int64_t)uid cb:(void(^)(IUser*))cb {
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        IUser *u = [[IUser alloc] init];
+        u.uid = uid;
+        u.name = [NSString stringWithFormat:@"name:%lld", uid];
+        u.avatarURL = @"http://api.gobelieve.io/images/e837c4c84f706a7988d43d62d190e2a1.png";
+        u.identifier = [NSString stringWithFormat:@"uid:%lld", uid];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            cb(u);
+        });
+    });
 }
 #pragma mark MeetingCellDelegate
 -(void)shareButtonClickedDelegate:(NSString *)platform{
@@ -351,33 +349,37 @@
         NSLog(@"抢答");
         if (_meetingModel.workNo.length>0) {
             
-            ConversationVC * c =[[ConversationVC alloc] init];
+            NSLog(@"抢答");
+            [self showHudInView:self.view hint:NSLocalizedString(@"正在加载数据", @"Load data...")];
             
-            c.HyNumaber = [NSString stringWithFormat:@"%@%@",_user.school,_meetingModel.workNo];
-            
-            c.call = CALLING;
-            
-            c.meetingModel = _meetingModel;
-            
-            c.teacherName = _meetingModel.meetingHost;
-
-            self.hidesBottomBarWhenPushed = YES;
-            
-            [self presentViewController:c animated:YES completion:^{
-                
-            }];
-            [c returnReason:^(EMCallEndReason reason) {
-                if (reason == EMCallEndReasonRemoteOffline) {
-                    [UIUtils showInfoMessage:@"抢答还没开始呢，不要太心急哦~" withVC:self];
-                }else if (reason == EMCallEndReasonBusy){
-                    [UIUtils showInfoMessage:@"已有人抢答成功，下次手速要更快哦~" withVC:self];
-                    [self sentNumberResponder];
-                }else if (reason == EMCallEndReasonHangup){
+            NSDictionary * dict = [[NSDictionary alloc] initWithObjectsAndKeys:@"1",@"relType", [NSString stringWithFormat:@"%@",_meetingModel.meetingDetailId],@"relDetailId",nil];
+            [[NetworkRequest sharedInstance] POST:StudentGointo dict:dict succeed:^(id data) {
+                NSString * code = [NSString stringWithFormat:@"%@",[[data objectForKey:@"header"] objectForKey:@"message"]];
+                if ([code isEqualToString:@"成功"]||[code isEqualToString:@"该用户已经进入互动"]) {
+                    VoiceViewController* msgController = [[VoiceViewController alloc] init];
+                    msgController.userDelegate = self;
                     
-                }else {
-                    [UIUtils showInfoMessage:@"抢答貌似失败了呢~" withVC:self];
+                    NSString * str = [NSString stringWithFormat:@"%@%@",_user.school,_meetingModel.workNo];
+                    NSString * str1 = [NSString stringWithFormat:@"%@%@",_user.school,_user.studentId];
+                    
+                    msgController.peerUID = [str integerValue];//con.cid;
+                    
+                    msgController.peerName = _meetingModel.meetingName;//con.name;
+                    
+                    msgController.currentUID = [str1 integerValue];
+                    
+                    msgController.hidesBottomBarWhenPushed = YES;
+                    
+                    [self.navigationController pushViewController:msgController animated:YES];
+                }else{
+                    [UIUtils showInfoMessage:code withVC:self];
                 }
+                [self hideHud];
+            } failure:^(NSError *error) {
+                [UIUtils showInfoMessage:@"抢答失败" withVC:self];
+                [self hideHud];
             }];
+            
         }else{
             [UIUtils showInfoMessage:@"不能呼叫自己" withVC:self];
         }
@@ -397,16 +399,18 @@
         self.hidesBottomBarWhenPushed = YES;
         [self.navigationController pushViewController: d animated:YES];
     }else if ([platform isEqualToString:InteractionType_Discuss]){
-        DiscussViewController * d = [[DiscussViewController alloc] init];
+        MessageListViewController * d = [[MessageListViewController alloc] init];
         self.hidesBottomBarWhenPushed = YES;
+        d.type = @"enableCreate";
+        d.peopleAry = [NSMutableArray arrayWithArray:_meetingModel.signAry];
         [self.navigationController pushViewController:d animated:YES];
         NSLog(@"讨论");
+        
     }else if([platform isEqualToString:InteractionType_Sit]){
         if (![UIUtils isBlankString:_seatModel.seatTable]) {
             ZFSeatViewController * z = [[ZFSeatViewController alloc] init];
             z.seatTable = _seatModel.seatTable;
             z.seat = _meetingModel.userSeat;
-            
             if (![UIUtils isBlankString:z.seatTable]) {
                 [self.navigationController pushViewController:z animated:YES];
                 self.hidesBottomBarWhenPushed = YES;
@@ -417,9 +421,10 @@
             [UIUtils showInfoMessage:@"未获取会场信息，请刷新会场页面信息获取" withVC:self];
         }
     }else {
-        [UIUtils showInfoMessage:@"正在加紧步伐开发中，敬请期待" withVC:self];
+        [UIUtils showInfoMessage:@"未完待续" withVC:self];
         return;
     }
+
     
 }
 //课程抢答收集
@@ -842,31 +847,7 @@
     [self.navigationController presentViewController:pickerController animated:YES completion:^{
         
     }];
-    //    }]];
-    
-    //    [alert addAction:[UIAlertAction actionWithTitle:@"从相册选择" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-    //
-    //        pickerController.sourceType =  UIImagePickerControllerSourceTypeSavedPhotosAlbum;//图片分组列表样式
-    //        //照片的选取样式还有以下两种
-    //        //UIImagePickerControllerSourceTypePhotoLibrary,直接全部呈现系统相册UIImagePickerControllerSourceTypeSavedPhotosAlbum
-    //        //UIImagePickerControllerSourceTypeCamera//调取摄像头
-    //
-    //        //选择完成图片或者点击取消按钮都是通过代理来操作我们所需要的逻辑过程
-    //        pickerController.delegate = self;
-    //        //使用模态呈现相册
-    //        [self.navigationController presentViewController:pickerController animated:YES completion:^{
-    //
-    //        }];
-    //
-    //    }]];
-    //
-    //
-    //    [alert addAction:[UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleDestructive handler:^(UIAlertAction * _Nonnull action) {
-    //        //点击按钮的响应事件；
-    //    }]];
-    //
-    //    //弹出提示框；
-    //    [self presentViewController:alert animated:true completion:nil];
+   
     
 }
 //选择照片完成之后的代理方法

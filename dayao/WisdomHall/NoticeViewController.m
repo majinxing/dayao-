@@ -12,7 +12,6 @@
 #import "FMDBTool.h"
 #import "NoticeModel.h"
 #import "DYTabBarViewController.h"
-#import "ChatHelper.h"
 #import "MJRefresh.h"
 #import "NoticeDetailsViewController.h"
 
@@ -32,7 +31,8 @@
     
     [self addTableView];
     
-    [self setNavigationTitle];
+    self.title = @"通知";
+//    [self setNavigationTitle];
     // Do any additional setup after loading the view from its nib.
 }
 -(void)addTableView{
@@ -53,7 +53,7 @@
 }
 -(void)viewWillAppear:(BOOL)animated{
 //        self.navigationController.navigationBarHidden = NO; //设置隐藏
-    [self.navigationController setNavigationBarHidden:YES];
+//    [self.navigationController setNavigationBarHidden:YES];
 
 }
 -(void)headerRereshing{
@@ -99,7 +99,6 @@
 -(void)back{
     if ([_backType isEqualToString:@"TabBar"]) {
         
-        ChatHelper * c =[ChatHelper shareHelper];
         
         DYTabBarViewController *rootVC = [[DYTabBarViewController alloc] init];
         

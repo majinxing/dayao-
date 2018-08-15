@@ -10,6 +10,8 @@
 #import "DYHeader.h"
 #import "ClassRoomModel.h"
 #import "UserModel.h"
+#import "GroupModel.h"
+
 @interface UIUtils : NSObject
 +(void)addNavigationWithView:(UIView *)view withTitle:(NSString *)str;
 //判断电话号码是否正确
@@ -139,6 +141,19 @@
  */
 
 +(NSString *)dateTimeDifferenceWithStartTime:(NSString *)startTime;
+
+/**
+ * 返回文件类型对应的图片
+ **/
++(NSString *)returnFileType:(NSString *)typeStr;
+
++(void)getGroupData;
+//根据id获取groupname
++(NSString *)getGroupName:(NSString *)groupId;
+//根据id获取名字
++(NSString *)getGPeopleName:(NSString *)peopleId;
+//获取缓存的头像数据
++(NSString *)getGPeoplePictureId:(NSString *)peopleId;
 @end
 
 

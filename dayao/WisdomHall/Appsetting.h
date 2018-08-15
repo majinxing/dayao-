@@ -41,4 +41,20 @@
 -(void)saveWiFiMac:(NSString *)wifiMac;
 //获取缓存的wifi
 -(NSDictionary *)getWifiMacAndTime;
+
+//存储IM的token
+-(void)saveIMToken:(NSString *)IM_Token;
+
+//对群组id和响应昵称进行存储
+-(void)saveGroupId:(NSString *)groupID withGroupName:(NSString *)groupName;
+//对个人id和昵称进行存储
+-(void)sevePeopleId:(NSString *)peopleId withPeopleName:(NSString *)peopleName withPeoplePictureId:(NSString *)pictureId;
+
+-(NSMutableArray *)getGroupId_Name;
+
+-(NSMutableArray *)getPeopleId_Name;
+//删除退群的组
+-(void)delectGroupID:(NSString *)groupId;
+//删除全部缓存
+-(void)delectAllGroup;
 @end

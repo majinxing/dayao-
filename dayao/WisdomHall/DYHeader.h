@@ -111,10 +111,16 @@
 #define Lotus                       @"审批"
 #define Group                       @"群组"
 #define Statistical                 @"统计"
+#define Classroom                   @"课堂"
+#define LostANDFound                @"失物"
 
 #define CourseCloud                 @"课程云"
 #define SecondHand                  @"二手市场"
-#define CampusLife                  @"校园生活"
+#define CampusLife                  @"生活"
+#define SchoolCommunity             @"校圈"
+#define AroundSchool                @"学校周边"
+#define Community                   @"社团"
+#define SchoolRun                   @"校办"
 
 #define ThemeColorChangeNotification @"ThemeColorChangeNotification"//更改主题的通知
 
@@ -139,7 +145,15 @@
 
 //#define BaseURL                 @"http://api.dayaokeji.com/"
 
-#define SchoolList              @"http://www.dayaokeji.com/ldxy_serverlist.html" //   获取学校数据
+#define IMToken                 @"course/auth/grant"                        //IM token
+
+#define IMImages                @"course/images"                            //IM图片上传
+
+#define IMAudios                @"course/audios"                            //IM 音频上传
+
+#define Login                   @"course/user/login"                //登录
+
+#define SchoolList              @"http://api.jiantuokeji.com/course/sysParameter/loginAddress?" //   获取学校数据
 
 #define Login                   @"course/user/login"                //登录
 
@@ -300,4 +314,27 @@
 #define SmsSend                 @"course/sms/send"                   //发送短信
 
 #define SmsValidate             @"course/sms/validate"               //验证短信
+
+#define StudentGointo           @"course/communication/gointo"       //学生发起抢答
+
+#define StudentReply            @"course/call/reply"                 //学生响应抢答
+
+#define StudentLeave            @"course/course/leave"               //学生请假
+
+#define CourseStatistic         @"course/course/student/statistic/detail" //每一堂课的到课率
+
+#define SelectGroupById         @"course/group/selectGroupById"       //通过id查询群组
+
+#define SelectCourseById        @"course/course/query/byStudent"      //查询课程
+
+#define OutGroup                @"course/group/existGroup"          //退出群组
+
+
+
+
+
+
+
+
+
 

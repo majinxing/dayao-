@@ -13,7 +13,6 @@
 #import "JSMSConstant.h"
 #import "JSMSSDK.h"
 #import "DYTabBarViewController.h"
-#import "ChatHelper.h"
 
 @interface RegisterViewController ()<UITextFieldDelegate>
 @property (strong, nonatomic) IBOutlet UIButton *getVerificationCodeBtn;
@@ -199,7 +198,6 @@
             }else{
                 [[Appsetting sharedInstance] sevaUserInfoWithDict:dict withStr:_password];
                 
-                ChatHelper * c =[ChatHelper shareHelper];
                 
                 [self saveInfo];
                 

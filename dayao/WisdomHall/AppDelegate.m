@@ -9,9 +9,6 @@
 #import "AppDelegate.h"
 #import "DYTabBarViewController.h"
 #import "TheLoginViewController.h"
-#import <Hyphenate/Hyphenate.h>
-#import "ChatHelper.h"
-#import "ConversationVC.h"
 #import <SystemConfiguration/CaptiveNetwork.h>
 #import "DYHeader.h"
 #import "NoticeViewController.h"
@@ -36,8 +33,42 @@
 #import <AdSupport/AdSupport.h>
 
 
-@interface AppDelegate ()<EMCallManagerDelegate,EMChatManagerDelegate,EMChatroomManagerDelegate,JPUSHRegisterDelegate>
-@property(nonatomic,strong)ChatHelper * chat;
+
+//#ifdef TEST_ROOM
+#import "RoomLoginViewController.h"
+//#elif defined TEST_GROUP
+#import "GroupLoginViewController.h"
+//#elif defined TEST_CUSTOMER
+#import "CustomerViewController.h"
+#import "CustomerManager.h"
+//#else
+#import "MainViewController.h"
+//#endif
+
+//#import <gobelieve/IMService.h>
+#import "IMService.h"
+//#import <gobelieve/PeerMessageHandler.h>
+#import "PeerMessageHandler.h"
+//#import <gobelieve/GroupMessageHandler.h>
+#import "GroupMessageHandler.h"
+//#import <gobelieve/CustomerMessageHandler.h>
+#import "CustomerMessageHandler.h"
+//#import <gobelieve/CustomerMessageDB.h>
+#import "CustomerMessageDB.h"
+//#import <gobelieve/CustomerOutbox.h>
+#import "CustomerOutbox.h"
+//#import <gobelieve/IMHttpAPI.H>
+#import "IMHttpAPI.h"
+
+#import "IMTool.h"
+
+#include <netdb.h>
+#include <arpa/inet.h>
+#include <netinet/in.h>
+
+#import "VoiceViewController.h"
+
+@interface AppDelegate ()<JPUSHRegisterDelegate>
 @property (nonatomic,strong)FMDatabase * db;
 @property (nonatomic,assign)UIBackgroundTaskIdentifier backgroundTaskIdentifier;
 @property (nonatomic,strong) NSTimer *  myTimer;
@@ -48,7 +79,9 @@
 -(void)dealloc{
     
     //移除消息回调
-    [[EMClient sharedClient].chatManager removeDelegate:self];
+}
++(AppDelegate*)instance {
+    return (AppDelegate*)[UIApplication sharedApplication].delegate;
 }
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     
@@ -62,7 +95,6 @@
     
     
     if ([[Appsetting sharedInstance] isLogin]) {
-        _chat = [ChatHelper shareHelper];
         DYTabBarViewController * tab = [[DYTabBarViewController alloc] init];
         self.window.rootViewController = tab;
     }else{
@@ -105,12 +137,6 @@
     
     [JSMSSDK registerWithAppKey:@"03501087af85ae095660e55e"];//极光短信注册
     
-    [[NSNotificationCenter defaultCenter]
-     addObserver:self
-     selector:@selector(setColor)
-     name:ThemeColorChangeNotification object:nil];
-    
-    
     //可以通过以下方式禁用
     
     if (@available(iOS 11.0, *)) {
@@ -123,12 +149,6 @@
     
     return YES;
 }
--(void)setColor{
-    DYTabBarViewController * tab = [[DYTabBarViewController alloc] init];
-    self.window.rootViewController = tab;
-}
-
-
 
 - (void)application:(UIApplication *)application
 performFetchWithCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler
@@ -153,7 +173,6 @@ performFetchWithCompletionHandler:(void (^)(UIBackgroundFetchResult))completionH
 -(void)application:(UIApplication *)application didReceiveLocalNotification:(UILocalNotification *)notification{
     
     NoticeViewController * n = [[NoticeViewController alloc] init];
-    _chat = [ChatHelper shareHelper];
     n.backType = @"TabBar";
     self.window.rootViewController = [[UINavigationController alloc]initWithRootViewController:n];
     
@@ -184,8 +203,8 @@ performFetchWithCompletionHandler:(void (^)(UIBackgroundFetchResult))completionH
 //    [[EMClient sharedClient] applicationDidEnterBackground:application];
 //    _chat.outOrIn = @"out";
     
-    [_chat getOut];
-   
+    [[IMService instance] enterBackground];
+
     [[CollectionHeadView sharedInstance] onceSetNil];
     
     if ([UIUtils didUserPressLockButton]) {
@@ -279,12 +298,11 @@ performFetchWithCompletionHandler:(void (^)(UIBackgroundFetchResult))completionH
 
 - (void)applicationWillEnterForeground:(UIApplication *)application {
     // Called as part of the transition from the background to the active state; here you can undo many of the changes made on entering the background.
-    [[EMClient sharedClient] applicationWillEnterForeground:application];
     
-    [_chat getOut];
     
-    _chat = [ChatHelper shareHelper];
+    [[IMService instance] enterForeground];
     
+    [self refreshHost];
     
     CollectionHeadView * v = [CollectionHeadView sharedInstance];
     
@@ -357,7 +375,6 @@ performFetchWithCompletionHandler:(void (^)(UIBackgroundFetchResult))completionH
         NSLog(@"iOS10 收到本地通知:{\nbody:%@，\ntitle:%@,\nsubtitle:%@,\nbadge：%@，\nsound：%@，\nuserInfo：%@\n}",body,title,subtitle,badge,sound,userInfo);
     }
     NoticeViewController * n = [[NoticeViewController alloc] init];
-    _chat = [ChatHelper shareHelper];
     n.backType = @"TabBar";
     self.window.rootViewController = [[UINavigationController alloc]initWithRootViewController:n];
     completionHandler();  // 系统要求执行这个方法
@@ -409,5 +426,66 @@ fetchCompletionHandler:
                                      errorDescription:NULL];
     return str;
 }
+-(void)refreshHost {
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_LOW, 0), ^{
+        NSLog(@"refresh host ip...");
+        
+        for (int i = 0; i < 10; i++) {
+            NSString *host = @"imnode.gobelieve.io";
+            NSString *ip = [self resolveIP:host];
+            
+            NSString *apiHost = @"api.gobelieve.io";
+            NSString *apiIP = [self resolveIP:apiHost];
+            
+            
+            NSLog(@"host:%@ ip:%@", host, ip);
+            NSLog(@"api host:%@ ip:%@", apiHost, apiIP);
+            
+            if (ip.length == 0 || apiIP.length == 0) {
+                continue;
+            } else {
+                break;
+            }
+        }
+    });
+}
 
+-(NSString*)IP2String:(struct in_addr)addr {
+    char buf[64] = {0};
+    const char *p = inet_ntop(AF_INET, &addr, buf, 64);
+    if (p) {
+        return [NSString stringWithUTF8String:p];
+    }
+    return nil;
+    
+}
+
+-(NSString*)resolveIP:(NSString*)host {
+    struct addrinfo hints;
+    struct addrinfo *result, *rp;
+    int s;
+    
+    char buf[32];
+    snprintf(buf, 32, "%d", 0);
+    
+    memset(&hints, 0, sizeof(struct addrinfo));
+    hints.ai_family = AF_INET;
+    hints.ai_socktype = SOCK_STREAM;
+    hints.ai_protocol = IPPROTO_TCP;
+    hints.ai_flags = 0;
+    
+    s = getaddrinfo([host UTF8String], buf, &hints, &result);
+    if (s != 0) {
+        NSLog(@"get addr info error:%s", gai_strerror(s));
+        return nil;
+    }
+    NSString *ip = nil;
+    rp = result;
+    if (rp != NULL) {
+        struct sockaddr_in *addr = (struct sockaddr_in*)rp->ai_addr;
+        ip = [self IP2String:addr->sin_addr];
+    }
+    freeaddrinfo(result);
+    return ip;
+}
 @end

@@ -6,9 +6,9 @@
 //  Copyright © 2017年 majinxing. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
-#import <Hyphenate/Hyphenate.h>
-
-@interface MJXChatCellTableViewCell : UITableViewCell
-+ (instancetype)tempTableViewCellWith:(UITableView *)tableView EMMessage:(EMMessage *)message;
-@end
+//#import <UIKit/UIKit.h>
+//#import <Hyphenate/Hyphenate.h>
+//
+//@interface MJXChatCellTableViewCell : UITableViewCell
+//+ (instancetype)tempTableViewCellWith:(UITableView *)tableView EMMessage:(EMMessage *)message;
+//@end

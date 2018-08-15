@@ -7,9 +7,8 @@
 //collect 的头部视图
 
 #import <UIKit/UIKit.h>
-#import "NoticeModel.h"
 
-static dispatch_once_t onceToken;
+#import "NoticeModel.h"
 
 @protocol CollectionHeadViewDelegate <NSObject>
 -(void)noticeBtnPressedDelegate:(NoticeModel *)notice;
@@ -17,6 +16,7 @@ static dispatch_once_t onceToken;
 @interface CollectionHeadView : UIView
 @property (nonatomic,weak)id<CollectionHeadViewDelegate>delegate;
 +(CollectionHeadView *)sharedInstance;
--(void)onceSetNil;
+-(void)getBananerViewData;
 -(void)getData;
+-(void)onceSetNil;
 @end

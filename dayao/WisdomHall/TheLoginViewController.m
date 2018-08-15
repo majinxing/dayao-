@@ -12,7 +12,7 @@
 #import "RegisterViewController.h"
 #import "ForgotPasswordViewController.h"
 #import "NetworkRequest.h"
-#import "ChatHelper.h"
+
 
 @interface TheLoginViewController ()<UITextFieldDelegate>
 @property (strong, nonatomic) IBOutlet UITextField *personalAccount;
@@ -82,7 +82,6 @@
                 }else{
                     [[Appsetting sharedInstance] sevaUserInfoWithDict:dict withStr:str];
                     
-                    ChatHelper * c =[ChatHelper shareHelper];
                     
                     [self saveInfo];
                     
