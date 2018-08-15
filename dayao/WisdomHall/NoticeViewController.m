@@ -32,7 +32,6 @@
     [self addTableView];
     
     self.title = @"通知";
-//    [self setNavigationTitle];
     // Do any additional setup after loading the view from its nib.
 }
 -(void)addTableView{
