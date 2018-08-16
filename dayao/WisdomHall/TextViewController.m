@@ -44,7 +44,6 @@
     self.title = @"测验";
     
     UIBarButtonItem *myButton = [[UIBarButtonItem alloc] initWithTitle:@"添加" style:UIBarButtonItemStylePlain target:self action:@selector(theImportQuestionBank)];
-    [myButton setTintColor:[UIColor whiteColor]];
 
     self.navigationItem.rightBarButtonItem = myButton;
 //    UIBarButtonItem * selection = [[UIBarButtonItem alloc] initWithTitle:@"搜索" style:UIBarButtonItemStylePlain target:self action:@selector(selectionBtnPressed)];

@@ -17,6 +17,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *downFileName;
 @property (strong, nonatomic) IBOutlet UIButton *secondDownload;
 
+@property (strong, nonatomic) IBOutlet UIImageView *fileType;
 
 @end
 
@@ -27,12 +28,20 @@
     // Initialization code
 }
 -(void)addContentView:(FileModel *)f withIndex:(int)n{
-    _fileName.text = f.fileName;
+    NSArray * ary = [f.fileName componentsSeparatedByString:@"."];
+    if (ary.count>0) {
+        _fileName.text = ary[0];
+    }else{
+        _fileName.text = f.fileName;
+    }
+    _fileType.image = [UIImage imageNamed:[UIUtils returnFileType:ary[1]]];
+    
     if (f.isLocal) {
-        _downloadImage.image = [UIImage imageNamed:@"ww"];
+        _downloadImage.image = [UIImage imageNamed:@""];
         [_downloadBtn setEnabled:NO];
     }
     _downloadBtn.tag = n;
+    
     _createTime.text = f.fileCreatTime;
 }
 -(void)addDownLoadContentView:(FileModel *)f withIndex:(int)n withIsSelect:(NSString *)b{

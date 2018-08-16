@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="13771" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14113" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -20,7 +20,7 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="资料 1" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DFG-w4-DYM">
-                        <rect key="frame" x="20" y="5" width="622" height="48.5"/>
+                        <rect key="frame" x="70" y="5" width="572" height="48.5"/>
                         <fontDescription key="fontDescription" type="system" pointSize="13"/>
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
@@ -43,7 +43,7 @@
                         </connections>
                     </button>
                     <label opaque="NO" userInteractionEnabled="NO" alpha="0.5" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="i2J-3u-iE2">
-                        <rect key="frame" x="20" y="58.5" width="200" height="20"/>
+                        <rect key="frame" x="70" y="58.5" width="200" height="20"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="20" id="isG-01-zAy"/>
                             <constraint firstAttribute="width" constant="200" id="ldh-gM-kNr"/>
@@ -52,14 +52,23 @@
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
                     </label>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Ypn-yX-AWR">
+                        <rect key="frame" x="24" y="22.5" width="34" height="34"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="34" id="JXU-q1-uNA"/>
+                            <constraint firstAttribute="width" constant="34" id="fmg-p6-Vj3"/>
+                        </constraints>
+                    </imageView>
                 </subviews>
                 <constraints>
-                    <constraint firstItem="DFG-w4-DYM" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="20" id="6Ps-Fl-YWE"/>
+                    <constraint firstItem="DFG-w4-DYM" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="70" id="6Ps-Fl-YWE"/>
                     <constraint firstItem="V9a-1G-pcC" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="20" id="7F9-2a-dzh"/>
                     <constraint firstAttribute="trailing" secondItem="V9a-1G-pcC" secondAttribute="trailing" constant="20" id="QDH-BN-1Vo"/>
                     <constraint firstItem="Hhd-yG-cby" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" id="W3k-2V-DZf"/>
                     <constraint firstItem="Hhd-yG-cby" firstAttribute="leading" secondItem="DFG-w4-DYM" secondAttribute="trailing" id="Z7h-lw-3U6"/>
-                    <constraint firstItem="i2J-3u-iE2" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="20" id="ajd-HA-MbQ"/>
+                    <constraint firstItem="i2J-3u-iE2" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="70" id="ajd-HA-MbQ"/>
+                    <constraint firstItem="Ypn-yX-AWR" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="cGO-uV-7yd"/>
+                    <constraint firstItem="Ypn-yX-AWR" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="24" id="g1l-xI-2OV"/>
                     <constraint firstAttribute="trailing" secondItem="Hhd-yG-cby" secondAttribute="trailing" id="gQt-Jj-jae"/>
                     <constraint firstAttribute="bottom" secondItem="DFG-w4-DYM" secondAttribute="bottom" constant="25" id="mKQ-uj-gYc"/>
                     <constraint firstItem="DFG-w4-DYM" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="5" id="shy-1L-JhU"/>
@@ -71,6 +80,7 @@
                 <outlet property="downloadBtn" destination="Hhd-yG-cby" id="wPg-OB-qbC"/>
                 <outlet property="downloadImage" destination="V9a-1G-pcC" id="ygC-G4-ks2"/>
                 <outlet property="fileName" destination="DFG-w4-DYM" id="ddR-Zm-LW4"/>
+                <outlet property="fileType" destination="Ypn-yX-AWR" id="1bc-AS-XwZ"/>
             </connections>
             <point key="canvasLocation" x="115" y="-101.5"/>
         </tableViewCell>

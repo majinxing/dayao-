@@ -26,7 +26,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-//    [self.view addSubview:self.drawView];
+    //    [self.view addSubview:self.drawView];
     _n = 0;
     
     _dataAry = [NSMutableArray arrayWithCapacity:1];
@@ -34,12 +34,12 @@
     _x_arr = [NSMutableArray arrayWithCapacity:1];
     
     _y_arr = [NSMutableArray arrayWithCapacity:1];
-
+    
     
     [self getData];
     
     [self addTableView];
-
+    
 }
 -(void)addTableView{
     _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 64,APPLICATION_WIDTH, APPLICATION_HEIGHT-64) style:UITableViewStylePlain];
@@ -47,7 +47,7 @@
     _tableView.dataSource = self;
     //    _tableView.backgroundColor = [UIColor clearColor];
     _tableView.estimatedRowHeight = 50;
-//    _tableView.rowHeight = UITableViewAutomaticDimension;
+    //    _tableView.rowHeight = UITableViewAutomaticDimension;
     _tableView.separatorStyle = NO;
     self.automaticallyAdjustsScrollViewInsets = NO;
     [self.view addSubview:_tableView];
@@ -55,7 +55,7 @@
 -(void)getData{
     NSDictionary * dict = [[NSDictionary alloc] initWithObjectsAndKeys:_voteModel.voteId,@"themeId",@"1",@"start",@"1000",@"length",nil];
     [[NetworkRequest sharedInstance] GET:QueryVoteResult dict:dict succeed:^(id data) {
-//        NSLog(@"%@",data);
+        //        NSLog(@"%@",data);
         NSArray * ary = [[data objectForKey:@"body"] objectForKey:@"list"];
         for (int i = 0; i<ary.count; i++) {
             VoteOption * v = [[VoteOption alloc] init];
@@ -85,32 +85,26 @@
 }
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
     if (_dataAry.count>0) {
-        return _dataAry.count+1;
+        return _dataAry.count;
     }
     return 0;
 }
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     VoteResultTableViewCell * cell;
-    if (indexPath.row==0) {
-        cell = [tableView dequeueReusableCellWithIdentifier:@"VoteResultTableViewCellSecond"];
-        if (!cell) {
-            cell = [[[NSBundle mainBundle] loadNibNamed:@"VoteResultTableViewCell" owner:nil options:nil] objectAtIndex:1];;
-        }
-        [cell addSecondContentView:[NSString stringWithFormat:@"%d",_n]];
-    }else{
-        cell = [tableView dequeueReusableCellWithIdentifier:@"VoteResultTableViewCellFirst"];
-        if (!cell) {
-            cell = [[[NSBundle mainBundle] loadNibNamed:@"VoteResultTableViewCell" owner:nil options:nil] objectAtIndex:0];;
-        }
-        VoteOption * v = _dataAry[indexPath.row-1];
-        
-        [cell addContentViewWith:v withAllVotes:[NSString stringWithFormat:@"%d",_n] withIndex:(int)indexPath.row];
-        
-    }
-   
     
-  
+    cell = [tableView dequeueReusableCellWithIdentifier:@"VoteResultTableViewCellFirst"];
+    if (!cell) {
+        cell = [[[NSBundle mainBundle] loadNibNamed:@"VoteResultTableViewCell" owner:nil options:nil] objectAtIndex:0];;
+    }
+    VoteOption * v = _dataAry[indexPath.row];
+    
+    [cell addContentViewWith:v withAllVotes:[NSString stringWithFormat:@"%d",_n] withIndex:(int)indexPath.row];
+    
+    
+    
+    
+    
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     return cell;
 }
@@ -122,13 +116,13 @@
     return 10;
 }
 /*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
+ #pragma mark - Navigation
+ 
+ // In a storyboard-based application, you will often want to do a little preparation before navigation
+ - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+ // Get the new view controller using [segue destinationViewController].
+ // Pass the selected object to the new view controller.
+ }
+ */
 
 @end

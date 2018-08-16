@@ -182,7 +182,6 @@
     NSArray * array = @[
                         InteractionType_Data,
                         InteractionType_Vote,
-                        InteractionType_Responder,
                         InteractionType_Sit,
                         InteractionType_Homework,
                         InteractionType_Picture,
@@ -195,7 +194,7 @@
     int marginWidth = (APPLICATION_WIDTH - buttonW * columns) / (columns + 1);
     //起始XY坐标
     int oneX = marginWidth;
-    int oneY = marginHeight;
+    int oneY = 20;
     
     for (int i = 0; i < array.count; i++)
     {

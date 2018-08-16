@@ -17,7 +17,9 @@
 @property (nonatomic,strong)NSMutableArray * voteAnswer;
 @property (nonatomic,strong)NSMutableArray * selectAry;
 @property (nonatomic,assign)int temp;//记录投票数目
+@property (strong, nonatomic) IBOutlet UIButton *seeResult;
 @property (nonatomic,strong)UIAlertView * alter;
+@property (strong, nonatomic) IBOutlet UIButton *voteSubmit;
 @end
 
 @implementation JoinVoteViewController
@@ -41,6 +43,16 @@
     [self setNavigationTitle];
     
     [self addTableView];
+    
+    _seeResult.layer.masksToBounds = YES;
+    _seeResult.layer.cornerRadius = 20;
+    _seeResult.layer.borderWidth = 1;
+    _seeResult.layer.borderColor = [UIColor colorWithHexString:@"#0076FD"].CGColor;
+    _seeResult.titleLabel.font = [UIFont fontWithName:@"PingFangSC-Regular" size:15];
+    [_seeResult setTitleColor:[UIColor colorWithRed:0/255.0 green:118/255.0 blue:253/255.0 alpha:1/1.0] forState:UIControlStateNormal];
+    
+    _voteSubmit.layer.masksToBounds = YES;
+    _voteSubmit.layer.cornerRadius = 20;
     // Do any additional setup after loading the view from its nib.
 }
 -(void)getData{
@@ -90,6 +102,7 @@
             NSString * str = [[data objectForKey:@"header"] objectForKey:@"message"];
             if ([str isEqualToString:@"成功"]) {
                 [UIUtils showInfoMessage:@"投票成功" withVC:self];
+                [self.navigationController popViewControllerAnimated:YES];
             }else if ([str isEqualToString:@"用户投票出错,已经投票"]){
                 [UIUtils showInfoMessage:@"已投票" withVC:self];
             }else if ([str isEqualToString:@"用户投票出错,必须在处理中状态"]){
@@ -163,7 +176,7 @@
         }
     }
     if (indexPath.row == 0) {
-        [cell setTileOrdescribe:[NSString stringWithFormat:@"%@(最多选%@票)",_vote.title,_vote.largestNumbe] withLableText:_vote.time];
+        [cell setTileOrdescribe:[NSString stringWithFormat:@"%@(最多选%@票)",_vote.title,_vote.largestNumbe] withLableText:_vote.time withVoteState:_vote.voteState selfState:_vote.selfVoteStatus];
     }else{
         VoteOption * v = _vote.selectAry[indexPath.row-1];
         [cell setSelectText:v.content withTag:(int)indexPath.row withSelect:_selectAry[indexPath.row-1]];

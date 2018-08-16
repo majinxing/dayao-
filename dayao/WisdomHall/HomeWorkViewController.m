@@ -71,7 +71,6 @@
     self.title = @"作业";
     
     UIBarButtonItem *myButton = [[UIBarButtonItem alloc] initWithTitle:@"创建作业" style:UIBarButtonItemStylePlain target:self action:@selector(createHomework)];
-    [myButton setTintColor:[UIColor whiteColor]];
     
     if ([[NSString stringWithFormat:@"%@",_c.teacherWorkNo] isEqualToString:[NSString stringWithFormat:@"%@",_user.studentId]]) {
         self.navigationItem.rightBarButtonItem = myButton;
@@ -174,7 +173,7 @@
     [self.navigationController pushViewController:vc animated:YES];
 }
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
-    return 120;
+    return 60;
 }
 -(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
     return 10;

@@ -9,6 +9,8 @@
 #import "SystemSetingTableViewCell.h"
 #import "DYHeader.h"
 #import "UIImageView+WebCache.h"
+#import "DYTabBarViewController.h"
+#import "WorkingLoginViewController.h"
 
 @interface SystemSetingTableViewCell ()
 
@@ -25,12 +27,22 @@
 - (void)awakeFromNib {
     [super awakeFromNib];
     if (!_textAry) {
-      _textAry = [NSArray arrayWithObjects:@"个人资料",@"群组",@"主题",@"系统设置",@"关于我们",@"意见反馈",@"帮助",nil];
+      _textAry = [NSArray arrayWithObjects:@"个人资料",@"关于我们",@"意见反馈",@"帮助",nil];
     }
     _user = [[Appsetting sharedInstance] getUsetInfo];
     _headImage.layer.masksToBounds = YES;
-    _headImage.layer.cornerRadius = 55;
-    _outBtn.backgroundColor = [[Appsetting sharedInstance] getThemeColor];
+    _headImage.layer.cornerRadius = 8;
+    _userName.font = [UIFont fontWithName:@"PingFangSC-Semibold" size:15];
+    _userName.textColor = [UIColor colorWithRed:69/255.0 green:69/255.0 blue:83/255.0 alpha:1/1.0];
+    _workNo.font = [UIFont fontWithName:@"PingFangSC-Regular" size:14];
+    
+    _workNo.textColor = [UIColor colorWithRed:128/255.0 green:128/255.0 blue:128/255.0 alpha:1/1.0];
+    
+    _setingLabel.font = [UIFont fontWithName:@"PingFangSC-Regular" size:14];
+    _setingLabel.textColor = [UIColor colorWithRed:51/255.0 green:51/255.0 blue:51/255.0 alpha:1/1.0];
+    
+    _outBtn.layer.masksToBounds = YES;
+    _outBtn.layer.cornerRadius = 20;
     // Initialization code
 }
 + (instancetype)tempTableViewCellWith:(UITableView *)tableView indexPath:(NSIndexPath *)indexPath {
@@ -44,6 +56,10 @@
         case 1:
             identifier = @"SystemSetingTableViewCellThird";
             index = 2;
+            break;
+        case 2:
+            identifier = @"SystemSetingTableViewCellFifth";
+            index = 4;
         default:
             break;
     }
@@ -57,8 +73,7 @@
         
     }else if (indexPath.section == 0){
         cell.userName.text = cell.user.userName;
-        cell.workNo.text = cell.user.studentId;
-        cell.workNo.textColor = [UIColor blackColor];
+        
         UserModel * user = [[Appsetting sharedInstance] getUsetInfo];
         if (![UIUtils isBlankString:[NSString stringWithFormat:@"%@",user.userHeadImageId]]) {
             UserModel * user = [[Appsetting sharedInstance] getUsetInfo];
@@ -68,15 +83,41 @@
         }
         
         if ([[NSString stringWithFormat:@"%@",user.identity] isEqualToString:@"1"]) {
-            cell.workNumber.text = @"工号";
+            cell.workNo.text = [NSString stringWithFormat:@"工号%@",cell.user.studentId];
+        }else{
+            cell.workNo.text = [NSString stringWithFormat:@"%@",cell.user.studentId];
         }
     }
     return cell;
 }
 - (IBAction)outAppBtn:(UIButton *)sender {
-    if (self.delegate&&[self.delegate respondsToSelector:@selector(outAPPBtnPressedDelegate)]) {
-        [self.delegate outAPPBtnPressedDelegate];
-    }
+    
+    dispatch_async(dispatch_get_main_queue(), ^{
+        
+        //i++
+        NSNotification *notification =[NSNotification notificationWithName:@"OutOfApp" object:nil userInfo:nil];
+        // 3.通过 通知中心 发送 通知
+        
+        [[NSNotificationCenter defaultCenter] postNotification:notification];
+        
+        [[Appsetting sharedInstance] getOut];
+        
+        DYTabBarViewController *rootVC = [DYTabBarViewController sharedInstance];
+        
+        [rootVC attempDealloc];
+        
+        rootVC = nil;
+        
+        
+        WorkingLoginViewController * userLogin = [[WorkingLoginViewController alloc] init];
+        //    TheLoginViewController * userLogin = [[TheLoginViewController alloc] init];
+        
+        [UIApplication sharedApplication].keyWindow.rootViewController =[[UINavigationController alloc] initWithRootViewController:userLogin];
+        
+    });
+//    if (self.delegate&&[self.delegate respondsToSelector:@selector(outAPPBtnPressedDelegate)]) {
+//        [self.delegate outAPPBtnPressedDelegate];
+//    }
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {

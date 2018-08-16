@@ -34,6 +34,7 @@
 #import "HomeWorkViewController.h"
 #import "PersonalUploadDataViewController.h"
 #import "PictureQuizViewController.h"
+#import "MessageListViewController.h"
 
 @interface CourseDetailsViewController ()<UIActionSheetDelegate,ShareViewDelegate,UIAlertViewDelegate,UITableViewDelegate,UITableViewDataSource,MeetingTableViewCellDelegate,UINavigationControllerDelegate,UIImagePickerControllerDelegate,AlterViewDelegate>
 
@@ -107,9 +108,16 @@
     [[NetworkRequest sharedInstance] GET:QueryCourseMemBer dict:dict succeed:^(id data) {
         //        NSLog(@"成功%@",data);
         NSArray *ary = [data objectForKey:@"body"];
+        
+        [_c.signAry removeAllObjects];
+
         for (int i = 0; i<ary.count;i++) {
             SignPeople * s = [[SignPeople alloc] init];
+            
             [s setInfoWithDict:ary[i]];
+            
+            [_c.signAry addObject:s];
+
             if ([[NSString stringWithFormat:@"%@",s.signStatus] isEqualToString:@"1"]||[[NSString stringWithFormat:@"%@",s.signStatus] isEqualToString:@"3"]) {
                 _m = _m + 1;
                 [_notSignAry addObject:s];
@@ -161,7 +169,6 @@
     self.title = @"课程详情";
     
     UIBarButtonItem *myButton = [[UIBarButtonItem alloc] initWithTitle:@"删除课程" style:UIBarButtonItemStylePlain target:self action:@selector(delecateCourse)];
-    [myButton setTintColor:[UIColor whiteColor]];
 
     if ([[NSString stringWithFormat:@"%@",_c.teacherWorkNo] isEqualToString:[NSString stringWithFormat:@"%@",_user.studentId]]) {
         self.navigationItem.rightBarButtonItem = myButton;
@@ -367,7 +374,7 @@
             cell = [[[NSBundle mainBundle] loadNibNamed:@"MeetingTableViewCell" owner:self options:nil] objectAtIndex:0];
         }
         [cell addFirstCOntentViewWithClassModel:_c];
-    }else if (indexPath.section == 2){
+    }else if (indexPath.section == 1){
         if ([[NSString stringWithFormat:@"%@",_user.peopleId] isEqualToString:[NSString stringWithFormat:@"%@",_c.teacherId]]) {
             cell = [tableView dequeueReusableCellWithIdentifier:@"MeetingTableViewCellSecond"];
             if (!cell) {
@@ -382,7 +389,7 @@
             [cell addThirdContentViewWithClassModel:_c isEnable:_isEnable];
         }
         
-    }else if (indexPath.section==1){
+    }else if (indexPath.section == 2){
         cell = [tableView dequeueReusableCellWithIdentifier:@"MeetingTableViewCellFourth"];
         if (!cell) {
             cell = [[[NSBundle mainBundle] loadNibNamed:@"MeetingTableViewCell" owner:self options:nil] objectAtIndex:3];
@@ -400,9 +407,9 @@
     if (indexPath.section==0) {
         return 300;
     }else if (indexPath.section==1){
-        return 220;
-    }else if (indexPath.section==2){
         return 60;
+    }else if (indexPath.section==2){
+        return 220;
     }
     return 0;
 }
@@ -442,7 +449,12 @@
         textVC.classModel = _c;
         [self.navigationController pushViewController:textVC animated:YES];
     }else if ([platform isEqualToString:InteractionType_Discuss]){
-   
+        MessageListViewController * d = [[MessageListViewController alloc] init];
+        self.hidesBottomBarWhenPushed = YES;
+        d.type = @"enableCreate";
+        d.peopleAry = [NSMutableArray arrayWithArray:_c.signAry];
+        [self.navigationController pushViewController:d animated:YES];
+        
         NSLog(@"讨论");
     }else if ([platform isEqualToString:InteractionType_Picture]){
         PictureQuizViewController * d = [[PictureQuizViewController alloc] init];

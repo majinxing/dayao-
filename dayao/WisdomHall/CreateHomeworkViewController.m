@@ -73,7 +73,6 @@
     self.title = @"创建作业";
     
     UIBarButtonItem *myButton = [[UIBarButtonItem alloc] initWithTitle:@"发布作业" style:UIBarButtonItemStylePlain target:self action:@selector(sendHomeworkPressedDelegate:)];
-    [myButton setTintColor:[UIColor whiteColor]];
     
     if ([[NSString stringWithFormat:@"%@",_c.teacherWorkNo] isEqualToString:[NSString stringWithFormat:@"%@",_user.studentId]]) {
         if (_edit) {

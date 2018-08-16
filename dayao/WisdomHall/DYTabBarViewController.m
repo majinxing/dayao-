@@ -69,6 +69,11 @@
 
 @implementation DYTabBarViewController
 -(void)dealloc{
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+
+}
+-(void)attempDealloc{
+    predicate = 0;
     
 }
 /**
@@ -76,7 +81,7 @@
  */
 +(DYTabBarViewController *)sharedInstance{
     static DYTabBarViewController * sharedDYTabBarViewControllerInstance = nil;
-    static dispatch_once_t predicate;
+//    static dispatch_once_t predicate;
     dispatch_once(&predicate, ^{
         sharedDYTabBarViewControllerInstance = [[self alloc] init];
     });
@@ -84,6 +89,9 @@
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    NavBarNavigationController * n = [NavBarNavigationController sharedInstance];
+
     
     [self addChildViewControllerWithClassname:[HomePageViewController description] imagename:@"home2" title:@"首页" withSelectImageName:@"home"];
 

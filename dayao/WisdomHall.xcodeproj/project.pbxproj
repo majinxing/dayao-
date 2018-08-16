@@ -444,6 +444,8 @@
 		8BD2BCA82122C34C004315AA /* CourseListALLViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8BD2BCA52122C347004315AA /* CourseListALLViewController.xib */; };
 		8BD2BCA92122C34C004315AA /* CourseListALLViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BD2BCA72122C34B004315AA /* CourseListALLViewController.m */; };
 		8BD2BCAC212401AD004315AA /* DetailsButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BD2BCAB212401AD004315AA /* DetailsButton.m */; };
+		8BD2BCB0212525EF004315AA /* FileSizeViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8BD2BCAD212525ED004315AA /* FileSizeViewController.xib */; };
+		8BD2BCB1212525EF004315AA /* FileSizeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BD2BCAE212525EE004315AA /* FileSizeViewController.m */; };
 		8BE00D6020731165001FE812 /* EditerTextViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BE00D5E20731165001FE812 /* EditerTextViewController.m */; };
 		8BE00D6120731165001FE812 /* EditerTextViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8BE00D5F20731165001FE812 /* EditerTextViewController.xib */; };
 		8BE24D601F8B488E00621055 /* GroupListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BE24D5E1F8B488E00621055 /* GroupListViewController.m */; };
@@ -1507,6 +1509,9 @@
 		8BD2BCA72122C34B004315AA /* CourseListALLViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CourseListALLViewController.m; sourceTree = "<group>"; };
 		8BD2BCAA212401AD004315AA /* DetailsButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DetailsButton.h; sourceTree = "<group>"; };
 		8BD2BCAB212401AD004315AA /* DetailsButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DetailsButton.m; sourceTree = "<group>"; };
+		8BD2BCAD212525ED004315AA /* FileSizeViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FileSizeViewController.xib; sourceTree = "<group>"; };
+		8BD2BCAE212525EE004315AA /* FileSizeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FileSizeViewController.m; sourceTree = "<group>"; };
+		8BD2BCAF212525EF004315AA /* FileSizeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FileSizeViewController.h; sourceTree = "<group>"; };
 		8BE00D5D20731165001FE812 /* EditerTextViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = EditerTextViewController.h; sourceTree = "<group>"; };
 		8BE00D5E20731165001FE812 /* EditerTextViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = EditerTextViewController.m; sourceTree = "<group>"; };
 		8BE00D5F20731165001FE812 /* EditerTextViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = EditerTextViewController.xib; sourceTree = "<group>"; };
@@ -1792,6 +1797,9 @@
 				8B0502EB20219CEC0030CF75 /* PersonalUploadDataViewController.h */,
 				8B0502EC20219CEC0030CF75 /* PersonalUploadDataViewController.m */,
 				8B0502ED20219CEC0030CF75 /* PersonalUploadDataViewController.xib */,
+				8BD2BCAF212525EF004315AA /* FileSizeViewController.h */,
+				8BD2BCAE212525EE004315AA /* FileSizeViewController.m */,
+				8BD2BCAD212525ED004315AA /* FileSizeViewController.xib */,
 			);
 			name = DataDownload;
 			sourceTree = "<group>";
@@ -3736,6 +3744,7 @@
 				8B2E16EE1EBAD9F3008B7C57 /* InTheMeetingViewController.xib in Resources */,
 				8B05CB711EC015DB0063EC20 /* PersonalInfoTableViewCell.xib in Resources */,
 				8BF7D3661F3D7D700087D35D /* CreateMeetingViewController.xib in Resources */,
+				8BD2BCB0212525EF004315AA /* FileSizeViewController.xib in Resources */,
 				8B396B18208F1C3E00F20060 /* AboutUSViewController.xib in Resources */,
 				8B2E16D61EB9C1EA008B7C57 /* CourseDetailsViewController.xib in Resources */,
 				8B0333F41F8C50950021D495 /* GroupListTableViewCell.xib in Resources */,
@@ -4079,6 +4088,7 @@
 				8BD2A4122122AD20004315AA /* GroupMessageViewController.m in Sources */,
 				8BE24D601F8B488E00621055 /* GroupListViewController.m in Sources */,
 				8BD2A43F2122AD20004315AA /* TriangleView.m in Sources */,
+				8BD2BCB1212525EF004315AA /* FileSizeViewController.m in Sources */,
 				8BED4EED20994782004DF322 /* ChoiceQuestionViewController.m in Sources */,
 				8BF82D811EE001D600D33473 /* VoteTableViewCell.m in Sources */,
 				8BD2A4272122AD20004315AA /* SQLCustomerMessageDB.m in Sources */,

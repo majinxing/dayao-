@@ -128,12 +128,12 @@
     self.title = @"投票";
     if ([[NSString stringWithFormat:@"%@",_meetModel.meetingHostId] isEqualToString:[NSString stringWithFormat:@"%@",_user.peopleId]]) {
         UIBarButtonItem *myButton = [[UIBarButtonItem alloc] initWithTitle:@"新建投票" style:UIBarButtonItemStylePlain target:self action:@selector(createVote)];
-        [myButton setTintColor:[UIColor whiteColor]];
+        
 
         self.navigationItem.rightBarButtonItem = myButton;
     }else if ([[NSString stringWithFormat:@"%@",_classModel.teacherWorkNo] isEqualToString:[NSString stringWithFormat:@"%@",_user.studentId]]) {
         UIBarButtonItem *myButton = [[UIBarButtonItem alloc] initWithTitle:@"新建投票" style:UIBarButtonItemStylePlain target:self action:@selector(createVote)];
-        [myButton setTintColor:[UIColor whiteColor]];
+        
         
         
         self.navigationItem.rightBarButtonItem = myButton;
@@ -266,9 +266,9 @@
     
     [self.navigationController pushViewController:j animated:YES];
 }
-//-(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
-//    return 70;
-//}
+-(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
+    return 80;
+}
 -(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
     return 10;
 }

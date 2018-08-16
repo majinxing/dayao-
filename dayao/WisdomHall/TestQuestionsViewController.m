@@ -140,7 +140,6 @@
     
     UIBarButtonItem *myButton = [[UIBarButtonItem alloc] initWithTitle:@"发布试卷" style:UIBarButtonItemStylePlain target:self action:@selector(more)];
     
-    [myButton setTintColor:[UIColor whiteColor]];
     
     self.navigationItem.rightBarButtonItem = myButton;
 }

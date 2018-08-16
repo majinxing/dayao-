@@ -10,6 +10,8 @@
 #import "UserModel.h"
 #import "FMDBTool.h"
 #import "DYHeader.h"
+#import "IMHttpAPI.h"
+#import "IMService.h"
 
 @interface Appsetting()
 @property (nonatomic,strong)FMDatabase * db;
@@ -179,6 +181,11 @@
     [_mySettingData setValue:@"0" forKey:@"is_Login"];
     [_mySettingData synchronize];
     
+    [IMService instance].token = @"";
+    
+    [IMHttpAPI instance].accessToken = @"";
+    
+    [[IMService instance] stop];
 }
 -(void)setAppState{
     [_mySettingData setValue:@"0" forKey:@"appState"];

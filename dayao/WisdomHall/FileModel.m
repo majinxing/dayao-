@@ -22,6 +22,6 @@
     _fileDescription = [dict objectForKey:@"description"];
     _fileId = [dict objectForKey:@"id"];
     _fileCreatTime = [dict objectForKey:@"createTime"];
-    
+    _fileSize = [NSString stringWithFormat:@"%@",[dict objectForKey:@"size"]];
 }
 @end

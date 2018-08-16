@@ -33,8 +33,8 @@
     
 }
 -(void)voteTitle:(NSString *)title withCreateTime:(NSString *)time withState:(NSString *)state withIndex:(int)n withVoteStatus:(NSString *)voteStatus{
-    _voteTitle.text = [NSString stringWithFormat:@"投票主题：%@",title];
-    _voteCreateTime.text = [NSString stringWithFormat:@"创建时间：%@",time];
+    _voteTitle.text = [NSString stringWithFormat:@"%@",title];
+    _voteCreateTime.text = [NSString stringWithFormat:@"%@",time];
     _voteState.text = [NSString stringWithFormat:@"%@:%@",voteStatus,state];
     _temp = n;
     

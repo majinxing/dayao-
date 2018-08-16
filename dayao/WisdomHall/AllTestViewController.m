@@ -66,7 +66,6 @@
         
         UIBarButtonItem *myButton = [[UIBarButtonItem alloc] initWithTitle:@"创建测验" style:UIBarButtonItemStylePlain target:self action:@selector(createText)];
         
-        [myButton setTintColor:[UIColor whiteColor]];
 
         self.navigationItem.rightBarButtonItem = myButton;
     }
@@ -161,7 +160,6 @@
         if (![UIUtils isBlankString:_join.courseNumber.text]) {
             UIBarButtonItem *myButton = [[UIBarButtonItem alloc] initWithTitle:@"创建测验" style:UIBarButtonItemStylePlain target:self action:@selector(createText)];
             
-            [myButton setTintColor:[UIColor whiteColor]];
             
             self.navigationItem.rightBarButtonItem = myButton;
             

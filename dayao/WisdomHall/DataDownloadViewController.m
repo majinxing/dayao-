@@ -13,6 +13,7 @@
 #import "FileModel.h"
 #import "UploadFileViewController.h"
 #import "MJRefresh.h"
+#import "FileSizeViewController.h"
 
 @interface DataDownloadViewController ()<UITableViewDelegate,UITableViewDataSource,UIDocumentInteractionControllerDelegate,DataDownloadTableViewCellDelegate,NSURLSessionDelegate,UINavigationControllerDelegate,UIImagePickerControllerDelegate>
 
@@ -178,15 +179,6 @@
             
             self.navigationItem.rightBarButtonItem = createMeeting;
         }
-    }else{
-        self.title = @"问答";
-        UIBarButtonItem * createMeeting = [[UIBarButtonItem alloc] initWithTitle:@"上传解答" style:UIBarButtonItemStylePlain target:self action:@selector(selectImageee)];
-        
-        self.navigationItem.rightBarButtonItem = createMeeting;
-        
-        UIButton * allStudents = [UIButton buttonWithType:UIButtonTypeCustom];
-        allStudents.frame = CGRectMake(APPLICATION_WIDTH/2-100, 30, 100, 30);
-        [allStudents setTitle:@"全部答案" forState:UIControlStateNormal];
     }
 }
 //实现button点击事件的回调方法
@@ -484,7 +476,13 @@
             
             urlString = [urlString stringByAppendingString:[NSString stringWithFormat:@"resourceId=%@",f.fileId]];
             
-            [self downloadFileWithURL:urlString];
+            FileSizeViewController * vc = [[FileSizeViewController alloc] init];
+            vc.fileModel = f;
+            vc.urlStr = urlString;
+            
+            self.hidesBottomBarWhenPushed = YES;
+            [self.navigationController pushViewController:vc animated:YES];
+//            [self downloadFileWithURL:urlString];
             
         }else{
             [UIUtils showInfoMessage:@"请先确定文件的准确性" withVC:self];

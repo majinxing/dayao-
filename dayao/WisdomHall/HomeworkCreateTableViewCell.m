@@ -102,7 +102,7 @@
             
             [btn1 setEnabled:YES];
             
-            [btn1 setBackgroundImage:[UIImage imageNamed:@"addImage"] forState:UIControlStateNormal];
+            [btn1 setBackgroundImage:[UIImage imageNamed:@"Add Photo"] forState:UIControlStateNormal];
             
         }
     }

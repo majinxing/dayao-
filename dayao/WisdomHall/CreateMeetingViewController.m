@@ -80,7 +80,6 @@
     self.title = @"创建会议";
     
     UIBarButtonItem *myButton = [[UIBarButtonItem alloc] initWithTitle:@"保存" style:UIBarButtonItemStylePlain target:self action:@selector(saveMeeting)];
-    [myButton setTintColor:[UIColor whiteColor]];
 
     self.navigationItem.rightBarButtonItem = myButton;
     

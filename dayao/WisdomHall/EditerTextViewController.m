@@ -53,7 +53,7 @@
     
     self.title = @"编辑";
     UIBarButtonItem *myButton = [[UIBarButtonItem alloc] initWithTitle:@"完成" style:UIBarButtonItemStylePlain target:self action:@selector(saveText)];
-    [myButton setTintColor:[UIColor whiteColor]];
+    
     
     self.navigationItem.rightBarButtonItem = myButton;
    

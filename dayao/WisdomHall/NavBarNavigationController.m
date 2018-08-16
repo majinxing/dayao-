@@ -23,6 +23,20 @@
     static NavBarNavigationController * sharedDYTabBarViewControllerInstance = nil;
     dispatch_once(&predicate, ^{
         sharedDYTabBarViewControllerInstance = [[self alloc] init];
+        [[NSNotificationCenter defaultCenter]
+         addObserver:sharedDYTabBarViewControllerInstance
+         selector:@selector(inApp)
+         name:InApp object:nil];
+        
+        [[NSNotificationCenter defaultCenter]
+         addObserver:sharedDYTabBarViewControllerInstance
+         selector:@selector(outApp)
+         name:OutApp object:nil];
+        
+        [[NSNotificationCenter defaultCenter]
+         addObserver:sharedDYTabBarViewControllerInstance
+         selector:@selector(stopTime)
+         name:@"stopTime" object:nil];
     });
     return sharedDYTabBarViewControllerInstance;
 }
@@ -38,25 +52,9 @@
     
     [self.navigationBar setTitleTextAttributes:@{NSFontAttributeName:[UIFont systemFontOfSize:17],NSForegroundColorAttributeName:[UIColor blackColor]}];
     
-    [[NSNotificationCenter defaultCenter]
-     addObserver:self
-     selector:@selector(setColor)
-     name:ThemeColorChangeNotification object:nil];
+
     
-    [[NSNotificationCenter defaultCenter]
-     addObserver:self
-     selector:@selector(inApp)
-     name:InApp object:nil];
     
-    [[NSNotificationCenter defaultCenter]
-     addObserver:self
-     selector:@selector(outApp)
-     name:OutApp object:nil];
-    
-    [[NSNotificationCenter defaultCenter]
-     addObserver:self
-     selector:@selector(stopTime)
-     name:@"stopTime" object:nil];
 //    NSDictionary * dict = [NSDictionary alloc] initWithObjectsAndKeys:<#(nonnull id), ...#>, nil;
 }
 -(void)stopTime{

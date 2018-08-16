@@ -49,7 +49,6 @@
     
     self.title = @"投票";
     UIBarButtonItem *myButton = [[UIBarButtonItem alloc] initWithTitle:@"提交" style:UIBarButtonItemStylePlain target:self action:@selector(saveVote)];
-    [myButton setTintColor:[UIColor whiteColor]];
     
     self.navigationItem.rightBarButtonItem = myButton;
     
