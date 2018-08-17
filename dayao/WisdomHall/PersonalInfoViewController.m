@@ -86,7 +86,6 @@
     
     self.title = @"个人资料";
     _myButton = [[UIBarButtonItem alloc] initWithTitle:@"修改" style:UIBarButtonItemStylePlain target:self action:@selector(changeInfo:)];
-    [_myButton setTintColor:[UIColor whiteColor]];
 
     self.navigationItem.rightBarButtonItem = _myButton;
 }

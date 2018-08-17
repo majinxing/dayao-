@@ -350,7 +350,7 @@
 }
 - (void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component
 {
-    if (_temp == 4){
+    if (_temp == 3){
         if (component == 0) {
             _m1 = (int) row;
         }else if (component == 1){

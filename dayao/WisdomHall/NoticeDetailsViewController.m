@@ -13,6 +13,7 @@
 @property (strong, nonatomic) IBOutlet UILabel *noticeTitle;
 @property (strong, nonatomic) IBOutlet UITextView *noticeInfo;
 @property (strong, nonatomic) IBOutlet UIImageView *revetImage;
+@property (strong, nonatomic) IBOutlet UILabel *noticeTime;
 @property (nonatomic,copy) void (^actionBlock)(NSString *);
 @end
 
@@ -46,6 +47,12 @@
 -(void)addContentView{
     _noticeTitle.text = _notice.noticeTitle;
     _noticeInfo.text = _notice.noticeContent;
+    NSMutableString * str = [NSMutableString stringWithFormat:@"%@",_notice.noticeTime];
+    if (![UIUtils isBlankString:str]) {
+        [str deleteCharactersInRange:NSMakeRange(0, 5)];
+        _noticeTime.text = str;
+    }
+
 }
 -(void)sendRevert{
     if ([[NSString stringWithFormat:@"%@",_notice.revert] isEqualToString:@"2"]) {

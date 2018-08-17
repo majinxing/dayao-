@@ -276,7 +276,7 @@
             cell = [[[NSBundle mainBundle] loadNibNamed:@"MeetingTableViewCell" owner:self options:nil] objectAtIndex:0];
         }
         [cell addFirstContentView:_meetingModel];
-    }else if (indexPath.section == 2){
+    }else if (indexPath.section == 1){
         if ([[NSString stringWithFormat:@"%@",_user.peopleId] isEqualToString:[NSString stringWithFormat:@"%@",_meetingModel.meetingHostId]]) {
             cell = [tableView dequeueReusableCellWithIdentifier:@"MeetingTableViewCellSecond"];
             if (!cell) {
@@ -291,7 +291,7 @@
             [cell addThirdContentView:_meetingModel isEnable:_isEnable];
         }
         
-    }else if (indexPath.section == 1){
+    }else if (indexPath.section == 2){
         cell = [tableView dequeueReusableCellWithIdentifier:@"MeetingTableViewCellFourth"];
         if (!cell) {
             cell = [[[NSBundle mainBundle] loadNibNamed:@"MeetingTableViewCell" owner:self options:nil] objectAtIndex:3];
@@ -309,9 +309,9 @@
     if (indexPath.section ==0) {
         return 300;
     }else if (indexPath.section ==1){
-        return 180;
-    }else if (indexPath.section == 2){
         return 60;
+    }else if (indexPath.section == 2){
+        return 180;
     }
     return 0;
 }

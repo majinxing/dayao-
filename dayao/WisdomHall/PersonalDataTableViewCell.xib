@@ -70,6 +70,8 @@
             <connections>
                 <outlet property="changeImage" destination="RqR-uZ-I6b" id="o1n-sF-Mt1"/>
                 <outlet property="headImage" destination="0bS-p4-Bf6" id="AzT-cZ-7eu"/>
+                <outlet property="userName" destination="VeW-ue-orU" id="Hbq-sl-gux"/>
+                <outlet property="workNum" destination="4gh-WF-xG1" id="Yzo-2L-9WE"/>
             </connections>
             <point key="canvasLocation" x="53.5" y="107"/>
         </tableViewCell>
