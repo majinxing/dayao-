@@ -15,11 +15,17 @@
 
 @property (nonatomic,strong)NSMutableArray * questionTitleImageIdAry;//题目图片id
 
+@property (nonatomic,copy) NSString * titleTypeName;
+
 @property (nonatomic,copy) NSString * qustionScore;//分值
+
+@property (nonatomic,copy)NSString * getScore;
 
 @property (nonatomic,copy) NSString * questionDifficulty;//难度
 
 @property (nonatomic,copy) NSString * questionAnswer;//题目答案
+
+@property (nonatomic,copy) NSString * correctAnswer;//正确答案
 
 @property (nonatomic,strong) NSMutableArray * questionAnswerImageAry;//题目答案图片数组
 
@@ -33,8 +39,6 @@
 @property (nonatomic,assign) BOOL selectMore;//是否多选
 
 @property (nonatomic,copy) NSString * titleType;//题目类型
-
-@property (nonatomic,copy) NSString * titleTypeName;
 
 @property (nonatomic,copy)NSString * questionId;//题目id
 

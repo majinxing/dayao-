@@ -13,27 +13,30 @@
 #import "FMDatabase.h"
 #import "DYHeader.h"
 #import "TextModel.h"
-
+//#import "TextListViewController.h"
 #import "CreateTestViewController.h"
 #import "MJRefresh.h"
 #import "ShareView.h"
 #import "StudentSorce.h"
 #import "StudentScoreViewController.h"
 
-#import "TestQuestionsViewController.h"
-
 #import "AnswerTestQuestionsViewController.h"
 
-#import "JoinCours.h"
+#import "NewAnswerViewController.h"
 
-@interface AllTestViewController ()<UITableViewDelegate,UITableViewDataSource,TextsTableViewCellDelegate,ShareViewDelegate,JoinCoursDelegate>
+#import "SelfAnswerViewController.h"
+
+#import "TestCompletedViewController.h"
+
+@interface AllTestViewController ()<UITableViewDelegate,UITableViewDataSource,TextsTableViewCellDelegate,ShareViewDelegate>
 @property (nonatomic,strong)UITableView * tableView;
 @property (nonatomic,strong)FMDatabase *db;
 @property (nonatomic,strong)NSMutableArray * dataAry;//数据源
 @property (nonatomic,assign)int temp;//标志位防止数据重复
 @property (nonatomic,strong)ShareView * vote;
 @property (nonatomic,strong)TextModel * t;
-@property (nonatomic,strong)JoinCours * join;
+
+
 @end
 
 @implementation AllTestViewController
@@ -41,7 +44,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    self.view.backgroundColor = [UIColor whiteColor];
+    self.view.backgroundColor = [UIColor colorWithHexString:@"#FAFAFA"];
     
     _userModel = [[Appsetting sharedInstance] getUsetInfo];
     
@@ -51,56 +54,19 @@
     
     [self addTableView];
     
-    [self setNavigationTitle];
     // Do any additional setup after loading the view from its nib.
 }
-/**
- *  显示navigation的标题
- **/
--(void)setNavigationTitle{
-    [UIApplication sharedApplication].statusBarStyle = UIStatusBarStyleLightContent;
-    
-    self.title = @"测验";
-    _userModel = [[Appsetting sharedInstance] getUsetInfo];
-    if ([[NSString stringWithFormat:@"%@",_classModel.teacherId] isEqualToString:[NSString stringWithFormat:@"%@",_userModel.peopleId]]) {
-        
-        UIBarButtonItem *myButton = [[UIBarButtonItem alloc] initWithTitle:@"创建测验" style:UIBarButtonItemStylePlain target:self action:@selector(createText)];
-        
 
-        self.navigationItem.rightBarButtonItem = myButton;
-    }
-    
-}
--(void)createText{
-    
-    
-    [self joinCourse];
-    
-    
-}
-/**
- *
- **/
--(void)joinCourse{
-    if (_join==nil) {
-        _join = [[JoinCours alloc] init];
-        _join.delegate = self;
-        _join.frame = CGRectMake(0, 0, APPLICATION_WIDTH, APPLICATION_HEIGHT);
-        [_join addContentView:@"请输入试卷的名字"];
-        [self.view addSubview:_join];
-    }
-}
 
 -(void)addTableView{
     
-    _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0,64, APPLICATION_WIDTH, APPLICATION_HEIGHT-64) style:UITableViewStylePlain];
+    _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0,0, APPLICATION_WIDTH, APPLICATION_HEIGHT-64-50) style:UITableViewStylePlain];
     _tableView.delegate = self;
     _tableView.dataSource = self;
     _tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     _tableView.backgroundColor = [UIColor clearColor];
     self.automaticallyAdjustsScrollViewInsets = NO;
     [self.view addSubview:_tableView];
-    
     __weak AllTestViewController * weakSelf = self;
     [self.tableView addHeaderWithCallback:^{
         [weakSelf getData];
@@ -126,19 +92,26 @@
         for (int i = 0; i<ary.count; i++) {
             TextModel * text = [[TextModel alloc] init];
             [text setSelfInfoWithDict:ary[i]];
+            
             if ([text.title rangeOfString:@"【拍照问答】"].location!=NSNotFound) {
-              //  [_dataAry addObject:text];
+                //  [_dataAry addObject:text];
+            }else if ([_typeText isEqualToString:@"HaveTest"]){
+                if ([text.statusName isEqualToString:@"已完成"]) {
+                    [_dataAry addObject:text];
+                }
             }else{
-                [_dataAry addObject:text];
+                if (![text.statusName isEqualToString:@"已完成"]) {
+                    [_dataAry addObject:text];
+                }
             }
         }
         [_tableView reloadData];
         [self hideHud];
     } failure:^(NSError *error) {
-        NSLog(@"%@",error);
+        
         [self hideHud];
         
-        [UIUtils showInfoMessage:@"请求失败" withVC:self];
+        [UIUtils showInfoMessage:@"获取数据失败，请检查网络" withVC:self];
     }];
     [_tableView headerEndRefreshing];
     [_tableView footerEndRefreshing];
@@ -149,40 +122,6 @@
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
-}
-#pragma mark JoinCoursDelegate
--(void)joinCourseDelegete:(UIButton *)btn{
-    [self.view endEditing:YES];
-    if (btn.tag == 1) {
-        [_join removeFromSuperview];
-        _join = nil;
-    }else if (btn.tag == 2){
-        if (![UIUtils isBlankString:_join.courseNumber.text]) {
-            UIBarButtonItem *myButton = [[UIBarButtonItem alloc] initWithTitle:@"创建测验" style:UIBarButtonItemStylePlain target:self action:@selector(createText)];
-            
-            
-            self.navigationItem.rightBarButtonItem = myButton;
-            
-            TestQuestionsViewController * c = [[TestQuestionsViewController alloc] init];
-            
-            self.hidesBottomBarWhenPushed = YES;
-            
-            c.classModel  = _classModel;
-            
-            c.textName = _join.courseNumber.text;
-            
-            [_join removeFromSuperview];
-            
-            _join = nil;
-            
-            [self.navigationController pushViewController:c animated:YES];
-            
-        }else{
-            [UIUtils showInfoMessage:@"试卷名字不能为空" withVC:self];
-        }
-        
-    }
-    
 }
 #pragma mark TextsTableViewCellDelegate
 -(void)moreBtnPressedDelegate:(UIButton *)btn{
@@ -204,17 +143,14 @@
         NSDictionary * dict = [[NSDictionary alloc] initWithObjectsAndKeys:_t.textId,@"id", nil];
         [[NetworkRequest sharedInstance] POST:DelecateText dict:dict succeed:^(id data) {
             NSString * str = [NSString stringWithFormat:@"%@",[[data objectForKey:@"header"] objectForKey:@"code"]];
-            NSString * s = [NSString stringWithFormat:@"%@",[[data objectForKey:@"header"] objectForKey:@"message"]];
-
-            if ([str isEqualToString:@"0000"]) {
-                [self getData];
-
+            if ([str isEqualToString:@"6676"]) {
+                [UIUtils showInfoMessage:@"删除考试失败，只有考试结束之后才能删除" withVC:self];
             }else{
-                [UIUtils showInfoMessage:s withVC:self];
-
+                [self getData];
             }
             [_vote hide];
         } failure:^(NSError *error) {
+            [UIUtils showInfoMessage:@"发送数据失败，请检查网络" withVC:self];
             
         }];
         //
@@ -225,15 +161,14 @@
         [[NetworkRequest sharedInstance] POST:StopText dict:dict succeed:^(id data) {
             NSLog(@"%@",data);
             NSString * str = [NSString stringWithFormat:@"%@",[[data objectForKey:@"header"] objectForKey:@"code"]];
-            NSString * s = [NSString stringWithFormat:@"%@",[[data objectForKey:@"header"] objectForKey:@"message"]];
-            if ([str isEqualToString:@"0000"]) {
-                [self getData];
-
+            if ([str isEqualToString:@"6676"]) {
+                [UIUtils showInfoMessage:@"考试已结束" withVC:self];
             }else{
-                [UIUtils showInfoMessage:s withVC:self];
+                [self getData];
             }
             [_vote hide];
         } failure:^(NSError *error) {
+            [UIUtils showInfoMessage:@"发送数据失败，请检查网络" withVC:self];
             
         }];
         
@@ -243,20 +178,15 @@
         [[NetworkRequest sharedInstance] POST:StartText dict:dict succeed:^(id data) {
             NSLog(@"%@",data);
             NSString * str = [NSString stringWithFormat:@"%@",[[data objectForKey:@"header"] objectForKey:@"code"]];
-            
-            NSString * s = [NSString stringWithFormat:@"%@",[[data objectForKey:@"header"] objectForKey:@"message"]];
-
-            if ([str isEqualToString:@"0000"]) {
-                [self getData];
-
+            if ([str isEqualToString:@"6676"]) {
+                [UIUtils showInfoMessage:@"考试已结束" withVC:self];
             }else{
-                [UIUtils showInfoMessage:s withVC:self];
-
+                [self getData];
             }
             [_vote hide];
             
         } failure:^(NSError *error) {
-            [UIUtils showInfoMessage:@"开始失败，请检查网络" withVC:self];
+            [UIUtils showInfoMessage:@"发送数据失败，请检查网络" withVC:self];
         }];
         
     }else if ([platform isEqualToString:Test_Scores_Query]){
@@ -264,7 +194,6 @@
         [[NetworkRequest sharedInstance] GET:QuertyTestScores dict:dict succeed:^(id data) {
             NSLog(@"%@",data);
             NSString * str = [NSString stringWithFormat:@"%@",[[data objectForKey:@"header"] objectForKey:@"code"]];
-            
             if ([str isEqualToString:@"0000"]) {
                 NSMutableArray * ary = [NSMutableArray arrayWithCapacity:1];
                 NSArray * a = [data objectForKey:@"body"];
@@ -282,7 +211,7 @@
                 [UIUtils showInfoMessage:@"暂无数据" withVC:self];
             }
         } failure:^(NSError *error) {
-            [UIUtils showInfoMessage:@"请求失败，请检查网络" withVC:self];
+            [UIUtils showInfoMessage:@"获取数据失败，请检查网络" withVC:self];
         }];
     }
 }
@@ -308,32 +237,67 @@
     }
     TextModel * t = _dataAry[indexPath.row];
     [cell addContentView:t withIndex:(int)indexPath.row+1];
-    
     if (![[NSString stringWithFormat:@"%@",_classModel.teacherId] isEqualToString:[NSString stringWithFormat:@"%@",_userModel.peopleId]]) {
         cell.moreImage.image = [UIImage imageNamed:@""];
         [cell.moreBtn setEnabled:NO];
     }
-    
     cell.delegate = self;
-    
     return cell;
     
 }
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
-    AnswerTestQuestionsViewController * vc = [[AnswerTestQuestionsViewController alloc] init];
-    vc.t = _dataAry[indexPath.row];
-    vc.editable = NO;
-    vc.titleStr = @"试题";
-    self.hidesBottomBarWhenPushed = YES;
-    [self.navigationController pushViewController: vc animated:YES];
+    
+    TextModel * text = _dataAry[indexPath.row];
+    if ([text.statusName isEqualToString:@"进行中"]) {
+        NewAnswerViewController * vc= [[NewAnswerViewController alloc] init];
+        
+        vc.t = _dataAry[indexPath.row];
+//        if ([vc.t.statusName isEqualToString:@"已完成"]) {
+            vc.isAbleAnswer = NO;
+//        }else{
+//            vc.isAbleAnswer = YES;
+//        }
+        vc.editable = NO;
+        
+        vc.typeStr = @"测试";
+        
+        if ([vc.t.statusName isEqualToString:@"未进行"]) {
+            [UIUtils showInfoMessage:@"考试未进行，不能查看" withVC:self];
+        }else{
+            self.hidesBottomBarWhenPushed = YES;
+            
+            [self.navigationController pushViewController:vc animated:YES];
+        }
+    }else{
+        TestCompletedViewController * vc= [[TestCompletedViewController alloc] init];
+        
+        vc.t = _dataAry[indexPath.row];
+        if ([vc.t.statusName isEqualToString:@"已完成"]) {
+            vc.isAbleAnswer = NO;
+        }else{
+            vc.isAbleAnswer = YES;
+        }
+        vc.editable = NO;
+        
+        vc.titleStr = @"试题";
+        
+        if ([vc.t.statusName isEqualToString:@"未进行"]) {
+            [UIUtils showInfoMessage:@"考试未进行，不能查看" withVC:self];
+        }else{
+            self.hidesBottomBarWhenPushed = YES;
+            
+            [self.navigationController pushViewController:vc animated:YES];
+        }
+    }
+    
     
 }
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
     return 65;
 }
 -(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
-    return 10;
+    return 0;
 }
 
 /*

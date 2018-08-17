@@ -27,6 +27,10 @@
         
         _blankAry = [NSMutableArray arrayWithCapacity:1];
         
+        _qustionScore = @"5";
+        
+        _questionDifficulty = @"5";
+        
         [self addOptions];
     }
     return self;
@@ -42,18 +46,9 @@
 }
 -(void)addContenWithDict:(NSDictionary *)dict{
     
-    _qustionScore = [NSString stringWithFormat:@"%@",[dict objectForKey:@"score"]];
-    
-    _questionDifficulty = [NSString stringWithFormat:@"%@",[dict objectForKey:@"defaultDifficulty"]];
-    if ([UIUtils isBlankString:_questionDifficulty]) {
-        _questionDifficulty = [NSString stringWithFormat:@"%@",[dict objectForKey:@"difficulty"]];
-    }
-
     _questionTitle = [dict objectForKey:@"content"];
     
     _titleType = [NSString stringWithFormat:@"%@",[dict objectForKey:@"type"]];
-    
-
     if ([_titleType isEqualToString:@"1"]) {
         _titleTypeName = @"单选";
     }else if ([_titleType isEqualToString:@"2"]) {
@@ -67,11 +62,8 @@
     }
     if ([UIUtils isBlankString:[NSString stringWithFormat:@"%@",[dict objectForKey:@"studentAnswer"]]]) {
         _questionAnswer  = [[NSString alloc] init];
-        if (![UIUtils isBlankString:[NSString stringWithFormat:@"%@",[dict objectForKey:@"answer"]]]) {
-            _questionAnswer = [NSString stringWithFormat:@"%@",[dict objectForKey:@"answer"]];
-        }
     }else{
-       _questionAnswer  = [NSString stringWithFormat:@"%@",[dict objectForKey:@"studentAnswer"]];
+        _questionAnswer  = [NSString stringWithFormat:@"%@",[dict objectForKey:@"studentAnswer"]];
     }
     
     _questionAnswerImageIdAry = [NSMutableArray arrayWithArray:[dict objectForKey:@"answerResourceList"]];
@@ -90,6 +82,16 @@
     NSArray * ary = [dict objectForKey:@"choiceInfoList"];
     
     [_qustionOptionsAry removeAllObjects];
+    
+    _correctAnswer = [NSString stringWithFormat:@"%@",[dict objectForKey:@"correctAnswer"]];
+    
+    _qustionScore = [NSString stringWithFormat:@"%@",[dict objectForKey:@"score"]];
+    
+    if ([UIUtils isBlankString:[NSString stringWithFormat:@"%@",[dict objectForKey:@"getScore"]]]) {
+        _getScore = @"0";
+    }else{
+        _getScore = [NSString stringWithFormat:@"%@",[dict objectForKey:@"getScore"]];
+    }
     
     for (int i = 0; i<ary.count; i++) {
         optionsModel * opt = [[optionsModel alloc] init];

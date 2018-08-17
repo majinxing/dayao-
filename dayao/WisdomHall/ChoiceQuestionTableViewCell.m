@@ -114,11 +114,13 @@
     // Initialization code
 }
 
--(void)addFirstTitleTextView:(NSString *)textStr withImageAry:(NSMutableArray *)ary withIsEdit:(BOOL)edit{
+-(void)addFirstTitleTextView:(NSString *)textStr withImageAry:(NSMutableArray *)ary withIsEdit:(BOOL)edit withIndexRow:(int)indexRow{
     
     _firstTitleTextView.text = textStr;
-    
-    _firstLabel.text = @"";
+    if (![UIUtils isBlankString:textStr]) {
+        _firstLabel.text = @"";
+        
+    }
     
     if (!edit) {
         
@@ -131,7 +133,7 @@
         if (ary.count>0) {
             
         }else{
-            _firstBtnEWith.constant -= (APPLICATION_WIDTH/3-10);
+            _firstBtnEWith.constant -= (APPLICATION_WIDTH/3-20);
             
             [_Firstline removeFromSuperview];
         }
@@ -141,6 +143,10 @@
             UserModel * user = [[Appsetting sharedInstance] getUsetInfo];
             
             NSString * baseUrl = user.host;
+            
+            if ([UIUtils isBlankString:[NSString stringWithFormat:@"%@",ary[i]]]) {
+                ary[i] = @"0";
+            }
             
             [image sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@/%@?resourceId=%@",baseUrl,FileDownload,ary[i]]] placeholderImage:[UIImage imageNamed:@"placeholder.png"]];
             
@@ -152,11 +158,12 @@
             [btn1 setEnabled:YES];
             
             [btn1 addSubview:image];
-
+            
+            [btn1 setTitle:[NSString stringWithFormat:@"%d",indexRow] forState:UIControlStateNormal];
+            
+            [btn1 setTitleColor:[UIColor clearColor] forState:UIControlStateNormal];
         }
     }else{
-        
-        
         
         for (int i = 0; i<ary.count; i++) {
             UIButton *btn = (UIButton *)[self.contentView viewWithTag:i+101];
@@ -165,13 +172,21 @@
             
             [btn setEnabled:YES];
             
+            [btn setTitle:[NSString stringWithFormat:@"%d",indexRow] forState:UIControlStateNormal];
+            
+            [btn setTitleColor:[UIColor clearColor] forState:UIControlStateNormal];
+            
+            
             UIImageView * im = (UIImageView *)[self.contentView viewWithTag:i+2001];
             
             im.image = [UIImage imageNamed:@"close"];
-
+            
             UIButton *btn1 = (UIButton *)[self.contentView viewWithTag:i+1001];
             
             [btn1 setEnabled:YES];
+            
+            [btn1 setTitle:[NSString stringWithFormat:@"%d",indexRow] forState:UIControlStateNormal];
+            [btn1 setTitleColor:[UIColor clearColor] forState:UIControlStateNormal];
             
         }
         
@@ -182,6 +197,10 @@
             [btn1 setEnabled:YES];
             
             [btn1 setBackgroundImage:[UIImage imageNamed:@"addImage"] forState:UIControlStateNormal];
+            
+            [btn1 setTitle:[NSString stringWithFormat:@"%d",indexRow] forState:UIControlStateNormal];
+            [btn1 setTitleColor:[UIColor clearColor] forState:UIControlStateNormal];
+            
         }
     }
 }
@@ -208,6 +227,16 @@
 
     // Configure the view for the selected state
 }
+-(void)setThirdImagee:(NSString *)str{
+    _thirdImage.image = [UIImage imageNamed:str];
+    
+}
+-(void)addCorrectImage:(NSString *)str{
+//    _correctImage.image = [UIImage imageNamed:str];
+}
+-(void)changeFirstTitleTextColor{
+    _firstTitleTextView.textColor = [UIColor colorWithRed:16/255.0 green:157/255.0 blue:73/255.0 alpha:1/1.0];
+}
 
 -(void)addOptionWithModel:(optionsModel *) optionsM withEdit:(BOOL)edit withIndexRow:(int)row withISelected:(BOOL)isSelected{
     
@@ -217,9 +246,9 @@
     _thirdOptionText.text = optionsM.optionsTitle;
     
     if (isSelected) {
-        _thirdImage.image = [UIImage imageNamed:@"方形选中-fill"];
+        _thirdImage.image = [UIImage imageNamed:@"Oval"];
     }else{
-        _thirdImage.image = [UIImage imageNamed:@"方形未选中"];
+        _thirdImage.image = [UIImage imageNamed:@"Oval3"];
     }
     _thirdSelectEdBtn.tag = 65+row;//选中按钮的tag
     
@@ -326,6 +355,16 @@
             [btn1 addSubview:image];
         }
 }
+-(void)addSeventhTextViewWithStr:(NSString *)str withIndexRow:(int)row{
+    _seventhTextView.tag = row;
+    
+    if (![UIUtils isBlankString:str]) {
+        _seventhTextView.text = str;
+        _seventhApllabel.text = @"";
+    }else{
+        
+    }
+}
 -(void)addSeventhTextViewWithStr:(NSString *)str{
     if (![UIUtils isBlankString:str]) {
         _seventhTextView.text = str;
@@ -333,6 +372,10 @@
     }else{
         
     }
+}
+-(void)changeSeventhTextColor{
+    _seventhTextView.textColor = [UIColor colorWithRed:16/255.0 green:157/255.0 blue:73/255.0 alpha:1/1.0];
+    
 }
 -(void)addSeventhTextViewWithStrEndEditor:(NSString *)str{
     if (![UIUtils isBlankString:str]) {
@@ -379,6 +422,7 @@
     }
 }
 -(void)eigthTitleType:(NSString *)titleType withScore:(NSString *)score isSelect:(BOOL)select btnTag:(int)index{
+    
     _titleType.text = titleType;
     _titleScore.text = score;
     

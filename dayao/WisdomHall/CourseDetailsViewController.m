@@ -18,7 +18,7 @@
 #import "DataDownloadViewController.h"
 #import "SignPeople.h"
 #import "AFHTTPSessionManager.h"
-#import "AllTestViewController.h"
+#import "TestAllViewController.h"
 #import "MeetingTableViewCell.h"
 #import "QRCodeGenerateVC.h"
 #import "SGQRCodeScanningVC.h"
@@ -445,7 +445,7 @@
     else if ([platform isEqualToString:InteractionType_Test]){
         NSLog(@"测试");
         self.hidesBottomBarWhenPushed = YES;
-        AllTestViewController * textVC = [[AllTestViewController alloc] init];
+        TestAllViewController * textVC = [[TestAllViewController alloc] init];
         textVC.classModel = _c;
         [self.navigationController pushViewController:textVC animated:YES];
     }else if ([platform isEqualToString:InteractionType_Discuss]){

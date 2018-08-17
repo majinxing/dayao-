@@ -41,4 +41,16 @@
 -(void)addOptionWithModel:(optionsModel *)optionsM withIndexRow:(int)row withISelected:(BOOL)isSelected;//题库
 
 -(void)addSeventhTextViewWithStrEndEditor:(NSString *)str;
+
+-(void)addFirstTitleTextView:(NSString *)textStr withImageAry:(NSMutableArray *)ary withIsEdit:(BOOL)edit withIndexRow:(int)indexRow;
+-(void)setThirdImagee:(NSString *)str;
+
+-(void)addCorrectImage:(NSString *)str;
+
+-(void)changeFirstTitleTextColor;
+
+-(void)addSeventhTextViewWithStr:(NSString *)str withIndexRow:(int)row;
+
+-(void)changeSeventhTextColor;
+
 @end

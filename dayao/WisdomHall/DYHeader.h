@@ -329,6 +329,7 @@
 
 #define OutGroup                @"course/group/existGroup"          //退出群组
 
+#define QueryStudentAnswer      @"course/exam/queryStudentAnswerInfo"//查询作答详情
 
 
 

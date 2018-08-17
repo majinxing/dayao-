@@ -446,6 +446,16 @@
 		8BD2BCAC212401AD004315AA /* DetailsButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BD2BCAB212401AD004315AA /* DetailsButton.m */; };
 		8BD2BCB0212525EF004315AA /* FileSizeViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8BD2BCAD212525ED004315AA /* FileSizeViewController.xib */; };
 		8BD2BCB1212525EF004315AA /* FileSizeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BD2BCAE212525EE004315AA /* FileSizeViewController.m */; };
+		8BD2BCBF21266552004315AA /* CorrectAnswerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BD2BCB42126654B004315AA /* CorrectAnswerViewController.m */; };
+		8BD2BCC021266552004315AA /* NewAnswerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BD2BCB52126654B004315AA /* NewAnswerViewController.m */; };
+		8BD2BCC121266552004315AA /* NewAnswerViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8BD2BCB62126654C004315AA /* NewAnswerViewController.xib */; };
+		8BD2BCC221266552004315AA /* CorrectAnswerViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8BD2BCB72126654D004315AA /* CorrectAnswerViewController.xib */; };
+		8BD2BCC321266552004315AA /* SelfAnswerViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8BD2BCB82126654E004315AA /* SelfAnswerViewController.xib */; };
+		8BD2BCC421266552004315AA /* SelfAnswerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BD2BCB92126654F004315AA /* SelfAnswerViewController.m */; };
+		8BD2BCC521266552004315AA /* TestCompletedViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8BD2BCBA2126654F004315AA /* TestCompletedViewController.xib */; };
+		8BD2BCC621266552004315AA /* TestCompletedViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BD2BCBD21266551004315AA /* TestCompletedViewController.m */; };
+		8BD2BCC92126A2DD004315AA /* TestAllViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BD2BCC82126A2DC004315AA /* TestAllViewController.m */; };
+		8BD2BCCB2126A2E5004315AA /* TestAllViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8BD2BCCA2126A2E5004315AA /* TestAllViewController.xib */; };
 		8BE00D6020731165001FE812 /* EditerTextViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BE00D5E20731165001FE812 /* EditerTextViewController.m */; };
 		8BE00D6120731165001FE812 /* EditerTextViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8BE00D5F20731165001FE812 /* EditerTextViewController.xib */; };
 		8BE24D601F8B488E00621055 /* GroupListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BE24D5E1F8B488E00621055 /* GroupListViewController.m */; };
@@ -1512,6 +1522,21 @@
 		8BD2BCAD212525ED004315AA /* FileSizeViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FileSizeViewController.xib; sourceTree = "<group>"; };
 		8BD2BCAE212525EE004315AA /* FileSizeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FileSizeViewController.m; sourceTree = "<group>"; };
 		8BD2BCAF212525EF004315AA /* FileSizeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FileSizeViewController.h; sourceTree = "<group>"; };
+		8BD2BCB32126654A004315AA /* CorrectAnswerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CorrectAnswerViewController.h; sourceTree = "<group>"; };
+		8BD2BCB42126654B004315AA /* CorrectAnswerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CorrectAnswerViewController.m; sourceTree = "<group>"; };
+		8BD2BCB52126654B004315AA /* NewAnswerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NewAnswerViewController.m; sourceTree = "<group>"; };
+		8BD2BCB62126654C004315AA /* NewAnswerViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = NewAnswerViewController.xib; sourceTree = "<group>"; };
+		8BD2BCB72126654D004315AA /* CorrectAnswerViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CorrectAnswerViewController.xib; sourceTree = "<group>"; };
+		8BD2BCB82126654E004315AA /* SelfAnswerViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SelfAnswerViewController.xib; sourceTree = "<group>"; };
+		8BD2BCB92126654F004315AA /* SelfAnswerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SelfAnswerViewController.m; sourceTree = "<group>"; };
+		8BD2BCBA2126654F004315AA /* TestCompletedViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TestCompletedViewController.xib; sourceTree = "<group>"; };
+		8BD2BCBB21266550004315AA /* NewAnswerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NewAnswerViewController.h; sourceTree = "<group>"; };
+		8BD2BCBC21266551004315AA /* TestCompletedViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestCompletedViewController.h; sourceTree = "<group>"; };
+		8BD2BCBD21266551004315AA /* TestCompletedViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TestCompletedViewController.m; sourceTree = "<group>"; };
+		8BD2BCBE21266552004315AA /* SelfAnswerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SelfAnswerViewController.h; sourceTree = "<group>"; };
+		8BD2BCC72126A2DC004315AA /* TestAllViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestAllViewController.h; sourceTree = "<group>"; };
+		8BD2BCC82126A2DC004315AA /* TestAllViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TestAllViewController.m; sourceTree = "<group>"; };
+		8BD2BCCA2126A2E5004315AA /* TestAllViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TestAllViewController.xib; sourceTree = "<group>"; };
 		8BE00D5D20731165001FE812 /* EditerTextViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = EditerTextViewController.h; sourceTree = "<group>"; };
 		8BE00D5E20731165001FE812 /* EditerTextViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = EditerTextViewController.m; sourceTree = "<group>"; };
 		8BE00D5F20731165001FE812 /* EditerTextViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = EditerTextViewController.xib; sourceTree = "<group>"; };
@@ -3267,6 +3292,25 @@
 			name = view;
 			sourceTree = "<group>";
 		};
+		8BD2BCB221266526004315AA /* NewAnswer */ = {
+			isa = PBXGroup;
+			children = (
+				8BD2BCB32126654A004315AA /* CorrectAnswerViewController.h */,
+				8BD2BCB42126654B004315AA /* CorrectAnswerViewController.m */,
+				8BD2BCB72126654D004315AA /* CorrectAnswerViewController.xib */,
+				8BD2BCBB21266550004315AA /* NewAnswerViewController.h */,
+				8BD2BCB52126654B004315AA /* NewAnswerViewController.m */,
+				8BD2BCB62126654C004315AA /* NewAnswerViewController.xib */,
+				8BD2BCBE21266552004315AA /* SelfAnswerViewController.h */,
+				8BD2BCB92126654F004315AA /* SelfAnswerViewController.m */,
+				8BD2BCB82126654E004315AA /* SelfAnswerViewController.xib */,
+				8BD2BCBC21266551004315AA /* TestCompletedViewController.h */,
+				8BD2BCBD21266551004315AA /* TestCompletedViewController.m */,
+				8BD2BCBA2126654F004315AA /* TestCompletedViewController.xib */,
+			);
+			name = NewAnswer;
+			sourceTree = "<group>";
+		};
 		8BE24D5C1F8B487400621055 /* Group */ = {
 			isa = PBXGroup;
 			children = (
@@ -3296,11 +3340,15 @@
 		8BE877721EBC1CB200866A34 /* TextViewController */ = {
 			isa = PBXGroup;
 			children = (
+				8BD2BCB221266526004315AA /* NewAnswer */,
 				8B0E5353209C061700327823 /* Answer */,
 				8BED4EE92099462E004DF322 /* TextVC */,
 				8B2F144B1F5D2C4900438374 /* View */,
 				8BF3ADB51F56B9C3002BD6DA /* delectVC */,
 				8BE877871EBD579C00866A34 /* TextVCCell */,
+				8BD2BCC72126A2DC004315AA /* TestAllViewController.h */,
+				8BD2BCC82126A2DC004315AA /* TestAllViewController.m */,
+				8BD2BCCA2126A2E5004315AA /* TestAllViewController.xib */,
 				8BE877731EBC2D6B00866A34 /* AllTestViewController.h */,
 				8BE877741EBC2D6B00866A34 /* AllTestViewController.m */,
 				8BE877751EBC2D6B00866A34 /* AllTestViewController.xib */,
@@ -3691,6 +3739,7 @@
 			files = (
 				8BF82D7C1EDFFC6200D33473 /* VoteViewController.xib in Resources */,
 				8BF864BB1ECAD97300B7EED4 /* LICENSE in Resources */,
+				8BD2BCC221266552004315AA /* CorrectAnswerViewController.xib in Resources */,
 				8BD2A33A2122AD0F004315AA /* MessageConversationCell.xib in Resources */,
 				8B084DBF2064AAA4004B9C7C /* HomeWorkViewController.xib in Resources */,
 				8B7725071F3029CE00D1B521 /* FeedbackViewController.xib in Resources */,
@@ -3698,6 +3747,7 @@
 				8BD2A4982122AD7E004315AA /* readme.markdown in Resources */,
 				8B05CB771EC070060063EC20 /* SystemSetingTableViewCell.xib in Resources */,
 				8B027A151EF8F30100600E18 /* TheMeetingInfoViewController.xib in Resources */,
+				8BD2BCCB2126A2E5004315AA /* TestAllViewController.xib in Resources */,
 				8B0857981F7E3A30009D5AC9 /* WorkingLoginViewController.xib in Resources */,
 				8BD2A41C2122AD20004315AA /* images.xcassets in Resources */,
 				8BD2A4A32122AD8C004315AA /* SelectGroupPeopleViewController.xib in Resources */,
@@ -3730,6 +3780,8 @@
 				8B027A251EFA5FF200600E18 /* DataDownloadViewController.xib in Resources */,
 				8B0E5358209C073000327823 /* AnswerChoiceQuestionViewController.xib in Resources */,
 				8B48009A20A4534800038B47 /* PictureQuizViewController.xib in Resources */,
+				8BD2BCC321266552004315AA /* SelfAnswerViewController.xib in Resources */,
+				8BD2BCC521266552004315AA /* TestCompletedViewController.xib in Resources */,
 				8BD2A48E2122AD75004315AA /* README.md in Resources */,
 				8B0502EA20214CB60030CF75 /* StatisticalDetailsViewController.xib in Resources */,
 				8BB56D881EB2E2820023DAFF /* RedefineThePasswordViewController.xib in Resources */,
@@ -3766,6 +3818,7 @@
 				8BB56D6F1EB05C760023DAFF /* DefineThePasswordViewController.xib in Resources */,
 				8BF82D871EE1573200D33473 /* CreateVoteViewController.xib in Resources */,
 				8B3516BF1FE90600009F42AF /* NoticeTableViewCell.xib in Resources */,
+				8BD2BCC121266552004315AA /* NewAnswerViewController.xib in Resources */,
 				8B429C201FA8488700084A99 /* SGQRCode.bundle in Resources */,
 				8B043A0220206DAF0039195F /* StatisticalResultTableViewCell.xib in Resources */,
 				8B2E16E91EBAD9AF008B7C57 /* AllTheMeetingViewController.xib in Resources */,
@@ -3901,6 +3954,7 @@
 				8B078B3B200F2C0100336ADB /* DAYCalendarView.m in Sources */,
 				8BF864C31ECAD97300B7EED4 /* SDWebImageManager.m in Sources */,
 				8B045B9B1F3458E40021699B /* ZFIndicatorView.m in Sources */,
+				8BD2BCBF21266552004315AA /* CorrectAnswerViewController.m in Sources */,
 				8B429C1C1FA8488700084A99 /* QRCodeGenerateVC.m in Sources */,
 				8BB56D871EB2E2820023DAFF /* RedefineThePasswordViewController.m in Sources */,
 				8B081DFF1F06524000493B81 /* PinyinHelper.m in Sources */,
@@ -4069,6 +4123,7 @@
 				8BD2A4302122AD20004315AA /* IPeerMessageDB.m in Sources */,
 				8B087E371FEA564500649094 /* ZFSeatsView.m in Sources */,
 				8B40E11E2058D176000E6C2F /* NavBarNavigationController.m in Sources */,
+				8BD2BCC621266552004315AA /* TestCompletedViewController.m in Sources */,
 				8BD2A43E2122AD20004315AA /* MessageAudioView.m in Sources */,
 				8B078B3E200F2C0100336ADB /* DAYNavigationBar.m in Sources */,
 				8B07843F205BA563004E826B /* HKViewController.m in Sources */,
@@ -4080,7 +4135,9 @@
 				8B1737131EC2F6A700BE3C8F /* NoticeViewController.m in Sources */,
 				8B045B741F3458820021699B /* MJPropertyType.m in Sources */,
 				8B078441205BA563004E826B /* UIImage+Extends.m in Sources */,
+				8BD2BCC92126A2DD004315AA /* TestAllViewController.m in Sources */,
 				8BD2A4042122AD20004315AA /* UIViewController+HUD.m in Sources */,
+				8BD2BCC021266552004315AA /* NewAnswerViewController.m in Sources */,
 				8BD2A44E2122AD20004315AA /* Outbox.m in Sources */,
 				8BF8648A1ECAD21200B7EED4 /* MJRefreshFooterView.m in Sources */,
 				8BD2A4152122AD20004315AA /* VoiceViewController.m in Sources */,
@@ -4180,6 +4237,7 @@
 				8B045B731F3458820021699B /* MJPropertyKey.m in Sources */,
 				8BD2A40E2122AD20004315AA /* LocationPickerController.m in Sources */,
 				8BD2A4622122AD42004315AA /* TCPConnection.m in Sources */,
+				8BD2BCC421266552004315AA /* SelfAnswerViewController.m in Sources */,
 				8BF864711ECACAE800B7EED4 /* FMDatabaseQueue.m in Sources */,
 				8B0439FC2020691C0039195F /* StatisticalResultViewController.m in Sources */,
 				8BE877691EBAF7A800866A34 /* ShareView.m in Sources */,

@@ -339,7 +339,8 @@
     if (indexPath.row==1) {
         
         
-        [cell addFirstTitleTextView:q.questionTitle withImageAry:q.questionTitleImageIdAry withIsEdit:NO];
+//        [cell addFirstTitleTextView:q.questionTitle withImageAry:q.questionTitleImageIdAry withIsEdit:NO];
+        [cell addFirstTitleTextView:q.questionTitle withImageAry:q.questionTitleImageIdAry withIsEdit:NO withIndexRow:(int)indexPath.section];
         
     }else if (indexPath.row == 2+q.qustionOptionsAry.count){
         
@@ -352,9 +353,9 @@
         
         //字条串是否包含有某字符串
         if ([string rangeOfString:opt.index].location == NSNotFound) {
-            [cell addOptionWithModel:q.qustionOptionsAry[indexPath.row-2] withIndexRow:(int)indexPath.row-2 withISelected:NO];
+            [cell addOptionWithModel:q.qustionOptionsAry[indexPath.row-2] withEdit:NO withIndexRow:(int)indexPath.row-2 withISelected:NO];
         }else{
-            [cell addOptionWithModel:q.qustionOptionsAry[indexPath.row-2] withIndexRow:(int)indexPath.row-2 withISelected:YES];
+            [cell addOptionWithModel:q.qustionOptionsAry[indexPath.row-2] withEdit:NO withIndexRow:(int)indexPath.row-2 withISelected:YES];
         }
         
     }

@@ -67,10 +67,14 @@
 }
 -(void)addBtn{
     UIButton * btn = [UIButton buttonWithType:UIButtonTypeSystem];
-    btn.frame = CGRectMake(APPLICATION_WIDTH-50, APPLICATION_HEIGHT-50, 40, 40);
+    btn.frame = CGRectMake(APPLICATION_WIDTH-100, APPLICATION_HEIGHT-120, 60, 60);
     [btn setTitle:@"+" forState:UIControlStateNormal];
+    btn.titleLabel.font = [UIFont systemFontOfSize:40];
     [btn setTintColor:[UIColor whiteColor]];
     [btn setBackgroundColor:[UIColor colorWithHexString:@"#29a7e1"]];
+    [btn setBackgroundImage:[UIImage imageNamed:@"Rectangle3"] forState:UIControlStateNormal];
+    btn.layer.masksToBounds = YES;
+    btn.layer.cornerRadius = 30;
     [self.view addSubview:btn];
     [btn addTarget:self action:@selector(addTitle) forControlEvents:UIControlEventTouchUpInside];
 }

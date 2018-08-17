@@ -13,4 +13,6 @@
 @interface AllTestViewController : UIViewController
 @property (nonatomic,strong) UserModel * userModel;
 @property (nonatomic,strong) ClassModel * classModel;
+@property (nonatomic,strong) NSString * typeText;
+
 @end
