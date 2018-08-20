@@ -36,7 +36,8 @@
 }
 -(NSMutableDictionary *)returnDict{
     NSMutableDictionary * dict = [[NSMutableDictionary alloc] init];
-    [dict setObject:@"500" forKey:@"universityId"];
+    UserModel * user = [[Appsetting sharedInstance] getUsetInfo];
+    [dict setObject:[NSString stringWithFormat:@"%@",user.school] forKey:@"universityId"];
     if (self.departmentsAry.count>0) {
 
         [dict setObject:self.departmentsAry forKey:@"facultyIdList"];

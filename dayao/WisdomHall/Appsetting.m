@@ -457,6 +457,16 @@
     
     [_mySettingData synchronize];
 }
+
+-(void)saveBananerFirstImage:(NSString *)imageUrl{
+    
+    [_mySettingData setValue:imageUrl forKey:@"bananerImage"];
+    
+    [_mySettingData synchronize];
+}
+-(NSString *)getBananerFitstImage{
+    return [_mySettingData objectForKey:@"bananerImage"];
+}
 @end
 
 

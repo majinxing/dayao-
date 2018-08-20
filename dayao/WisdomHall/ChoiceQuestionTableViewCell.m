@@ -421,7 +421,7 @@
         [self.delegate thirthSelectOptionDelegate:sender];
     }
 }
--(void)eigthTitleType:(NSString *)titleType withScore:(NSString *)score isSelect:(BOOL)select btnTag:(int)index{
+-(void)eigthTitleType:(NSString *)titleType withScore:(NSString *)score isSelect:(BOOL)select isEnableSelect:(BOOL)isSelect btnTag:(int)index{
     
     _titleType.text = titleType;
     _titleScore.text = score;
@@ -432,6 +432,9 @@
         _eighthImage.image = [UIImage imageNamed:@"方形选中-fill"];
     }else{
         _eighthImage.image = [UIImage imageNamed:@"方形未选中"];
+    }
+    if (!isSelect) {
+        _eighthImage.image = nil;
     }
 }
 - (IBAction)eighthSelectTitle:(UIButton *)sender {

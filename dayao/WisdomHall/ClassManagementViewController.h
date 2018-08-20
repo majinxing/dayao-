@@ -18,5 +18,5 @@ typedef enum {
 @property (nonatomic,strong)NSMutableArray * signAry;
 @property (nonatomic,assign)ManageType manage;
 @property (nonatomic,copy)NSString * groupId;
-
+@property (nonatomic,copy)NSString * isEnableOutGroup;
 @end

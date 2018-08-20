@@ -98,10 +98,12 @@
         [_myButton setTitle:@"修改"];
         _isEdictor = NO;
         [_tableView reloadData];
-        
+        _user = [[Appsetting sharedInstance] getUsetInfo];
         NSDictionary * dict = [[NSDictionary alloc] initWithObjectsAndKeys:_user.peopleId,@"id",_textAry[6],@"email",_textAry[7],@"region",_sex,@"sex",_textAry[9],@"birthday",_textAry[10],@"sign",nil];
         [[NetworkRequest sharedInstance] POST:ChangeSelfInfo dict:dict succeed:^(id data) {
+            //            NSLog(@"%@",data);
             NSString * str = [NSString stringWithFormat:@"%@",[[data objectForKey:@"header"] objectForKey:@"code"]];
+            
             if ([str isEqualToString:@"0000"]) {
                 [UIUtils showInfoMessage:@"修改成功" withVC:self];
             }
@@ -109,11 +111,9 @@
             
         }];
         
-        NSDictionary * dict1 = [[NSDictionary alloc] initWithObjectsAndKeys:@"1",@"type",@"www",@"description",@"4",@"function",[NSString stringWithFormat:@"%@",_user.peopleId],@"relId",@"true",@"deleteOld",nil];
-        
+        NSDictionary * dict1 = [[NSDictionary alloc] initWithObjectsAndKeys:@"1",@"type",@"www",@"description",[NSString stringWithFormat:@"%@",_user.peopleId],@"relId",@"4",@"function",@"true",@"deleteOld",nil];
         if (_headImage) {
             [[NetworkRequest sharedInstance] POSTImage:FileUpload image:_headImage dict:dict1 succeed:^(id data) {
-                //            NSLog(@"%@",data);
                 NSString * code = [NSString stringWithFormat:@"%@",[[data objectForKey:@"header"] objectForKey:@"code"]];
                 if ([code isEqualToString:@"0000"]) {
                     
@@ -121,6 +121,8 @@
                     [[Appsetting sharedInstance].mySettingData setValue:ary[0] forKey:@"user_pictureId"];
                 }
             } failure:^(NSError *error) {
+                
+                [UIUtils showInfoMessage:@"发送数据失败，请检查网络" withVC:self];
                 
             }];
         }

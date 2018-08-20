@@ -42,8 +42,11 @@
     
     self.title = @"群组成员";
     //
-    UIBarButtonItem * selection = [[UIBarButtonItem alloc] initWithTitle:@"退出群组" style:UIBarButtonItemStylePlain target:self action:@selector(outGroup)];
-    self.navigationItem.rightBarButtonItem = selection;
+    if (!_isEnableOutGroup) {
+        UIBarButtonItem * selection = [[UIBarButtonItem alloc] initWithTitle:@"退出群组" style:UIBarButtonItemStylePlain target:self action:@selector(outGroup)];
+        self.navigationItem.rightBarButtonItem = selection;
+    }
+    
 }
 -(void)outGroup{
     NSDictionary * dict = [[NSDictionary alloc] initWithObjectsAndKeys:_groupId,@"id", nil];

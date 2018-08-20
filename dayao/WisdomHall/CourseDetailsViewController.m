@@ -509,6 +509,7 @@
     classManegeVC.manage = ClassManageType;
     classManegeVC.signAry = [NSMutableArray arrayWithCapacity:1];
     classManegeVC.signAry = _signAry;
+    classManegeVC.isEnableOutGroup = @"no";
     [self.navigationController pushViewController:classManegeVC animated:YES];
 }
 -(void)signNOPeopleDelegate{

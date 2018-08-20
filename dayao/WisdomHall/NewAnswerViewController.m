@@ -765,7 +765,7 @@
     }
     if (indexPath.row == 0) {
         
-        [cell eigthTitleType:q.titleTypeName withScore:q.qustionScore isSelect:NO btnTag:(int)indexPath.section+1];
+        [cell eigthTitleType:q.titleTypeName withScore:q.qustionScore isSelect:NO isEnableSelect:NO  btnTag:(int)indexPath.section+1];
         
     }
     if (indexPath.row==1) {

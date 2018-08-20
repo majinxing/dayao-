@@ -44,6 +44,7 @@ static dispatch_once_t onceToken;
 -(void)getBananerViewData{
     UserModel * user = [[Appsetting sharedInstance] getUsetInfo];
     NSDictionary * dict = [[NSDictionary alloc] initWithObjectsAndKeys:@"26",@"function",[NSString stringWithFormat:@"%@",user.school],@"universityId",nil];
+    
     [[NetworkRequest sharedInstance] GET:QueryAdvertising dict:dict succeed:^(id data) {
         NSArray * ary = [data objectForKey:@"body"];
         [_aryBananer removeAllObjects];
@@ -112,7 +113,7 @@ static dispatch_once_t onceToken;
     self.backgroundColor = [UIColor clearColor];
     if (!_s) {
         _s = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 0,APPLICATION_WIDTH, APPLICATION_HEIGHT/4)];
-        
+        [self addSubview:_s];
     }
     
     _s.backgroundColor = [UIColor clearColor];
@@ -124,7 +125,7 @@ static dispatch_once_t onceToken;
     _s.showsHorizontalScrollIndicator = NO;
     _s.bounces = NO;
     _s.tag = 1000;
-    [self addSubview:_s];
+    
     
     for (int i = 0; i<_temp; i++) {
         
@@ -142,7 +143,7 @@ static dispatch_once_t onceToken;
     //    }
     
     [imageview sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@/%@?resourceId=%@",user.host,FileDownload,_aryBananer[0]]] placeholderImage:[UIImage imageNamed:@"banner"]];
-    
+    [[Appsetting sharedInstance] saveBananerFirstImage:[NSString stringWithFormat:@"%@/%@?resourceId=%@",user.host,FileDownload,_aryBananer[0]]];
     [_s addSubview:imageview];
     
     //    [self addSubview:_myPageControl];
@@ -168,12 +169,12 @@ static dispatch_once_t onceToken;
     }
     self.backgroundColor = [UIColor clearColor];
     if (!_s) {
-        _s = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 0,ScrollViewW, 70)];
+        _s = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 0,ScrollViewW-60, 70)];
         
     }
     _s.backgroundColor = [UIColor clearColor];
     
-    _s.contentSize = CGSizeMake(ScrollViewW, 70*_temp);
+    _s.contentSize = CGSizeMake(ScrollViewW-60, 70*_temp);
     _s.scrollEnabled = YES;//是否可以滚动
     _s.pagingEnabled = YES;//是否整页滚动
     _s.showsVerticalScrollIndicator = NO;//水平方向的滚动条
@@ -191,29 +192,18 @@ static dispatch_once_t onceToken;
     }
     
     
-    UIView * v = [[UIView alloc] initWithFrame:CGRectMake(0, 70*_temp, APPLICATION_WIDTH-20, 70)];
+    UIView * v = [[UIView alloc] initWithFrame:CGRectMake(0, 70*_temp, ScrollViewW-60, 70)];
     
     v.backgroundColor = [UIColor clearColor];
     
     _s.tag = 1000;
+
     
-    for (int i = 0; i<3; i++) {
-        
-        UIImageView * ii = [[UIImageView alloc] initWithFrame:CGRectMake(10+13*i, 10, 10, 10)];
-        ii.image = [UIImage imageNamed:@"星 copy 2"];
-        [v addSubview:ii];
-    }
-    UILabel * newNotic = [[UILabel alloc] initWithFrame:CGRectMake(0, 25, 56, 20)];
-    newNotic.font = [UIFont fontWithName:@"PingFangSC-Regular" size:14];
-    newNotic.textColor = [UIColor colorWithRed:51/255.0 green:51/255.0 blue:51/255.0 alpha:1/1.0];
-    newNotic.text = @"最新通知";
-    [v addSubview:newNotic];
+//    UIView * line = [[UIView alloc] initWithFrame:CGRectMake(10, 10, 1, 30)];
+//    line.backgroundColor = [UIColor colorWithHexString:@"#f1f1f1"];
+//    [v addSubview:line];
     
-    UIView * line = [[UIView alloc] initWithFrame:CGRectMake(CGRectGetMaxX(newNotic.frame)+9, 10, 1, 30)];
-    line.backgroundColor = [UIColor colorWithHexString:@"#f1f1f1"];
-    [v addSubview:line];
-    
-    UILabel * textLabel = [[UILabel alloc] initWithFrame:CGRectMake(80, 0, APPLICATION_WIDTH-80-20, 50)];
+    UILabel * textLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, ScrollViewW-60-20, 50)];
     
     textLabel.numberOfLines = 0;
     
@@ -234,7 +224,7 @@ static dispatch_once_t onceToken;
     
     UIButton * noticeBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     
-    noticeBtn.frame = CGRectMake(0, 0, APPLICATION_WIDTH-20, 50);
+    noticeBtn.frame = CGRectMake(0, 0, ScrollViewW-60, 50);
     
     noticeBtn.tag = 100;
     
@@ -270,26 +260,12 @@ static dispatch_once_t onceToken;
     
 }
 -(UIView *)scrollViewWithInt:(int)i{
-    UIView * v = [[UIView alloc] initWithFrame:CGRectMake(0, 70*i, APPLICATION_WIDTH-20, 70)];
+    UIView * v = [[UIView alloc] initWithFrame:CGRectMake(0, 70*i, ScrollViewW-60, 70)];
     v.backgroundColor = [UIColor clearColor];
     
-    for (int i = 0; i<3; i++) {
-        
-        UIImageView * ii = [[UIImageView alloc] initWithFrame:CGRectMake(10+13*i, 10, 10, 10)];
-        ii.image = [UIImage imageNamed:@"星 copy 2"];
-        [v addSubview:ii];
-    }
-    UILabel * newNotic = [[UILabel alloc] initWithFrame:CGRectMake(0, 25, 56, 20)];
-    newNotic.font = [UIFont fontWithName:@"PingFangSC-Regular" size:14];
-    newNotic.textColor = [UIColor colorWithRed:51/255.0 green:51/255.0 blue:51/255.0 alpha:1/1.0];
-    newNotic.text = @"最新通知";
-    [v addSubview:newNotic];
+ 
     
-    UIView * line = [[UIView alloc] initWithFrame:CGRectMake(CGRectGetMaxX(newNotic.frame)+9, 10, 1, 30)];
-    line.backgroundColor = [UIColor colorWithHexString:@"#f1f1f1"];
-    [v addSubview:line];
-    
-    UILabel * textLabel = [[UILabel alloc] initWithFrame:CGRectMake(80, 0, APPLICATION_WIDTH-80-20, 50)];
+    UILabel * textLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, ScrollViewW-60-20, 50)];
     textLabel.numberOfLines = 0;
     textLabel.font = [UIFont systemFontOfSize:12];
     textLabel.textColor = [UIColor colorWithRed:51/255.0 green:51/255.0 blue:51/255.0 alpha:1/1.0];
@@ -303,7 +279,7 @@ static dispatch_once_t onceToken;
     //    [v addSubview:nextImage];
     
     UIButton * noticeBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    noticeBtn.frame = CGRectMake(0, 0, APPLICATION_WIDTH-20, 50);
+    noticeBtn.frame = CGRectMake(0, 0, ScrollViewW-60, 50);
     noticeBtn.tag = 100+i;
     [noticeBtn addTarget:self action:@selector(noticeBtnPressed:) forControlEvents:UIControlEventTouchUpInside];
     [v addSubview:noticeBtn];

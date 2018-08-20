@@ -46,9 +46,9 @@
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4gh-WF-xG1">
-                        <rect key="frame" x="130" y="75" width="100" height="20"/>
+                        <rect key="frame" x="130" y="75" width="250" height="20"/>
                         <constraints>
-                            <constraint firstAttribute="width" constant="100" id="fWG-16-DWu"/>
+                            <constraint firstAttribute="width" constant="250" id="fWG-16-DWu"/>
                             <constraint firstAttribute="height" constant="20" id="rnx-6V-cj3"/>
                         </constraints>
                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
@@ -73,7 +73,7 @@
                 <outlet property="userName" destination="VeW-ue-orU" id="Hbq-sl-gux"/>
                 <outlet property="workNum" destination="4gh-WF-xG1" id="Yzo-2L-9WE"/>
             </connections>
-            <point key="canvasLocation" x="53.5" y="107"/>
+            <point key="canvasLocation" x="-15" y="95"/>
         </tableViewCell>
         <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="PersonalDataTableViewCellSecond" rowHeight="60" id="Cg7-m7-r2X" customClass="PersonalDataTableViewCell">
             <rect key="frame" x="0.0" y="0.0" width="350" height="60"/>

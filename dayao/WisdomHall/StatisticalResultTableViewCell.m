@@ -44,6 +44,16 @@
     _bSecView.layer.masksToBounds = YES;
     _bSecView.layer.borderColor = RGBA_COLOR(231, 231, 231, 0.7).CGColor;
     _bSecView.layer.borderWidth = 1;
+    
+    _nameSecLabel.font = [UIFont fontWithName:@"PingFangSC-Semibold" size:15];
+    _totalSecLabel.font = [UIFont fontWithName:@"PingFangSC-Semibold" size:15];
+    _absenceSecLabel.font = [UIFont fontWithName:@"PingFangSC-Semibold" size:15];
+    _leaveSecLabel.font = [UIFont fontWithName:@"PingFangSC-Semibold" size:15];
+    _actSecLabel.font = [UIFont fontWithName:@"PingFangSC-Semibold" size:15];
+    _attendanceRateSecLabel.font = [UIFont fontWithName:@"PingFangSC-Semibold" size:15];
+    _rateSecLabel.font = [UIFont fontWithName:@"PingFangSC-Semibold" size:15];
+    _leaveEarlyLab.font = [UIFont fontWithName:@"PingFangSC-Semibold" size:15];
+    _lateLab.font = [UIFont fontWithName:@"PingFangSC-Semibold" size:15];
     // Initialization code
 }
 -(void)addContentView:(StatisticalResultModel *)s{
@@ -83,7 +93,7 @@
     [self.bView addSubview:_colorView];
 }
 -(void)addSecContentView:(StatisticalResultModel *)s{
-    _nameSecLabel.text = [NSString stringWithFormat:@"名        称：   %@",s.resultName];
+    _nameSecLabel.text = [NSString stringWithFormat:@"名      称：   %@",s.resultName];
     
     _totalSecLabel.text = [NSString stringWithFormat:@"应到人数：   %@人",s.totalNum];
     

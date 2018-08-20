@@ -333,7 +333,7 @@
         
         BOOL b = [self questionIsSelect:(int)indexPath.section];
         
-        [cell eigthTitleType:q.titleTypeName withScore:q.qustionScore isSelect:b btnTag:(int)indexPath.section+1];
+        [cell eigthTitleType:q.titleTypeName withScore:q.qustionScore isSelect:b isEnableSelect:YES btnTag:(int)indexPath.section+1];
         
     }
     if (indexPath.row==1) {

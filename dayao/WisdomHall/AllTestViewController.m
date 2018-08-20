@@ -248,49 +248,49 @@
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     
-    TextModel * text = _dataAry[indexPath.row];
-    if ([text.statusName isEqualToString:@"进行中"]) {
-        NewAnswerViewController * vc= [[NewAnswerViewController alloc] init];
-        
-        vc.t = _dataAry[indexPath.row];
+//    TextModel * text = _dataAry[indexPath.row];
+//    if ([text.statusName isEqualToString:@"进行中"]) {
+//        NewAnswerViewController * vc= [[NewAnswerViewController alloc] init];
+//        
+//        vc.t = _dataAry[indexPath.row];
+////        if ([vc.t.statusName isEqualToString:@"已完成"]) {
+//            vc.isAbleAnswer = NO;
+////        }else{
+////            vc.isAbleAnswer = YES;
+////        }
+//        vc.editable = NO;
+//        
+//        vc.typeStr = @"测试";
+//        
+//        if ([vc.t.statusName isEqualToString:@"未进行"]) {
+//            [UIUtils showInfoMessage:@"考试未进行，不能查看" withVC:self];
+//        }else{
+//            self.hidesBottomBarWhenPushed = YES;
+//            
+//            [self.navigationController pushViewController:vc animated:YES];
+//        }
+//    }else{
+//        TestCompletedViewController * vc= [[TestCompletedViewController alloc] init];
+//        
+//        vc.t = _dataAry[indexPath.row];
 //        if ([vc.t.statusName isEqualToString:@"已完成"]) {
-            vc.isAbleAnswer = NO;
+//            vc.isAbleAnswer = NO;
 //        }else{
 //            vc.isAbleAnswer = YES;
 //        }
-        vc.editable = NO;
-        
-        vc.typeStr = @"测试";
-        
-        if ([vc.t.statusName isEqualToString:@"未进行"]) {
-            [UIUtils showInfoMessage:@"考试未进行，不能查看" withVC:self];
-        }else{
-            self.hidesBottomBarWhenPushed = YES;
-            
-            [self.navigationController pushViewController:vc animated:YES];
-        }
-    }else{
-        TestCompletedViewController * vc= [[TestCompletedViewController alloc] init];
-        
-        vc.t = _dataAry[indexPath.row];
-        if ([vc.t.statusName isEqualToString:@"已完成"]) {
-            vc.isAbleAnswer = NO;
-        }else{
-            vc.isAbleAnswer = YES;
-        }
-        vc.editable = NO;
-        
-        vc.titleStr = @"试题";
-        
-        if ([vc.t.statusName isEqualToString:@"未进行"]) {
-            [UIUtils showInfoMessage:@"考试未进行，不能查看" withVC:self];
-        }else{
-            self.hidesBottomBarWhenPushed = YES;
-            
-            [self.navigationController pushViewController:vc animated:YES];
-        }
-    }
-    
+//        vc.editable = NO;
+//        
+//        vc.titleStr = @"试题";
+//        
+//        if ([vc.t.statusName isEqualToString:@"未进行"]) {
+//            [UIUtils showInfoMessage:@"考试未进行，不能查看" withVC:self];
+//        }else{
+//            self.hidesBottomBarWhenPushed = YES;
+//            
+//            [self.navigationController pushViewController:vc animated:YES];
+//        }
+//    }
+//    
     
 }
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{

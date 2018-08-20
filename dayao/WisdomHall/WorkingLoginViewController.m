@@ -80,6 +80,9 @@
     
     if (![UIUtils isBlankString:_user.schoolName]&&![UIUtils isBlankString:_user.host]) {
         [_selectSchoolBtn setTitle:_user.schoolName forState:UIControlStateNormal];
+    }else{
+        [_selectSchoolBtn setTitle:@"请选择" forState:UIControlStateNormal];
+
     }
     
     [self setTableView];

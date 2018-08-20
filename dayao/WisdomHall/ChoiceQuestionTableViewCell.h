@@ -36,13 +36,14 @@
 
 -(void)addSeventhTextViewWithStr:(NSString *)str;
 
--(void)eigthTitleType:(NSString *)titleType withScore:(NSString *)score isSelect:(BOOL)select btnTag:(int)index;
+-(void)eigthTitleType:(NSString *)titleType withScore:(NSString *)score isSelect:(BOOL)select isEnableSelect:(BOOL)isSelect btnTag:(int)index;
 
 -(void)addOptionWithModel:(optionsModel *)optionsM withIndexRow:(int)row withISelected:(BOOL)isSelected;//题库
 
 -(void)addSeventhTextViewWithStrEndEditor:(NSString *)str;
 
 -(void)addFirstTitleTextView:(NSString *)textStr withImageAry:(NSMutableArray *)ary withIsEdit:(BOOL)edit withIndexRow:(int)indexRow;
+
 -(void)setThirdImagee:(NSString *)str;
 
 -(void)addCorrectImage:(NSString *)str;

@@ -241,6 +241,8 @@
 		8B64EB5C1F1A2BA900BF7D0F /* SelectClassViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8B64EB5A1F1A2BA900BF7D0F /* SelectClassViewController.xib */; };
 		8B6E61CB1EE292B10040FDC1 /* CreateVoteTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B6E61C91EE292B10040FDC1 /* CreateVoteTableViewCell.m */; };
 		8B6E61CC1EE292B10040FDC1 /* CreateVoteTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8B6E61CA1EE292B10040FDC1 /* CreateVoteTableViewCell.xib */; };
+		8B6F9FAA212A4DD200BAA476 /* MoreImportViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B6F9FA8212A4DD200BAA476 /* MoreImportViewController.m */; };
+		8B6F9FAB212A4DD200BAA476 /* MoreImportViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8B6F9FA9212A4DD200BAA476 /* MoreImportViewController.xib */; };
 		8B7725061F3029CE00D1B521 /* FeedbackViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B7725041F3029CE00D1B521 /* FeedbackViewController.m */; };
 		8B7725071F3029CE00D1B521 /* FeedbackViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8B7725051F3029CE00D1B521 /* FeedbackViewController.xib */; };
 		8B77250B1F302E6200D1B521 /* FeedBackTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B7725091F302E6200D1B521 /* FeedBackTableViewCell.m */; };
@@ -1137,6 +1139,9 @@
 		8B6E61C81EE292B10040FDC1 /* CreateVoteTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CreateVoteTableViewCell.h; sourceTree = "<group>"; };
 		8B6E61C91EE292B10040FDC1 /* CreateVoteTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CreateVoteTableViewCell.m; sourceTree = "<group>"; };
 		8B6E61CA1EE292B10040FDC1 /* CreateVoteTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CreateVoteTableViewCell.xib; sourceTree = "<group>"; };
+		8B6F9FA7212A4DD200BAA476 /* MoreImportViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MoreImportViewController.h; sourceTree = "<group>"; };
+		8B6F9FA8212A4DD200BAA476 /* MoreImportViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MoreImportViewController.m; sourceTree = "<group>"; };
+		8B6F9FA9212A4DD200BAA476 /* MoreImportViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MoreImportViewController.xib; sourceTree = "<group>"; };
 		8B7725031F3029CE00D1B521 /* FeedbackViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FeedbackViewController.h; sourceTree = "<group>"; };
 		8B7725041F3029CE00D1B521 /* FeedbackViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FeedbackViewController.m; sourceTree = "<group>"; };
 		8B7725051F3029CE00D1B521 /* FeedbackViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FeedbackViewController.xib; sourceTree = "<group>"; };
@@ -2252,6 +2257,9 @@
 				8BD2BC942122BFA3004315AA /* HomePageViewController.h */,
 				8BD2BC932122BF9F004315AA /* HomePageViewController.m */,
 				8BD2BC952122BFA5004315AA /* HomePageViewController.xib */,
+				8B6F9FA7212A4DD200BAA476 /* MoreImportViewController.h */,
+				8B6F9FA8212A4DD200BAA476 /* MoreImportViewController.m */,
+				8B6F9FA9212A4DD200BAA476 /* MoreImportViewController.xib */,
 				8B1A502E1F75F83400A11CB2 /* Cell */,
 				8BE24D5C1F8B487400621055 /* Group */,
 				8B0CD5A0201F01DA00A2270D /* StatisticalViewController.h */,
@@ -3768,6 +3776,7 @@
 				8BD2A4832122AD75004315AA /* LICENSE in Resources */,
 				8BA2249E1EADFFA400627A1B /* SignInViewController.xib in Resources */,
 				8B64EB5C1F1A2BA900BF7D0F /* SelectClassViewController.xib in Resources */,
+				8B6F9FAB212A4DD200BAA476 /* MoreImportViewController.xib in Resources */,
 				8BD2A33D2122AD0F004315AA /* Localizable.strings in Resources */,
 				8B7D5D831EB961260068058E /* CreateCourseViewController.xib in Resources */,
 				8BE00D6120731165001FE812 /* EditerTextViewController.xib in Resources */,
@@ -3968,6 +3977,7 @@
 				8BD2A4432122AD20004315AA /* MessageUnknownView.m in Sources */,
 				8B429C231FA8488700084A99 /* SGQRCodeHelperTool.m in Sources */,
 				8B429C1D1FA8488700084A99 /* ScanSuccessJumpVC.m in Sources */,
+				8B6F9FAA212A4DD200BAA476 /* MoreImportViewController.m in Sources */,
 				8B084DBE2064AAA4004B9C7C /* HomeWorkViewController.m in Sources */,
 				8BD2BCA32122C16E004315AA /* HomeButtonView.m in Sources */,
 				8B090D61202008F400F260FC /* StatisticalModel.m in Sources */,

@@ -61,10 +61,10 @@
                         </constraints>
                     </view>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="1234567890" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="oVy-OO-iVK">
-                        <rect key="frame" x="100" y="71.5" width="99.5" height="20"/>
+                        <rect key="frame" x="100" y="71.5" width="250" height="20"/>
                         <color key="backgroundColor" red="0.98260989490946116" green="0.99930038168799429" blue="1" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                         <constraints>
-                            <constraint firstAttribute="width" constant="100" id="mwK-jm-s4p"/>
+                            <constraint firstAttribute="width" constant="250" id="mwK-jm-s4p"/>
                             <constraint firstAttribute="height" constant="20" id="sjR-Ge-M8u"/>
                         </constraints>
                         <fontDescription key="fontDescription" type="system" pointSize="17"/>

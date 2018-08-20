@@ -59,24 +59,34 @@
 }
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
-    StatisticalResultTableViewCell * cell ;//= [[UITableViewCell alloc] init];
-    cell = [tableView dequeueReusableCellWithIdentifier:@"StatisticalResultTableViewCellFirst"];
+    
+    StatisticalResultTableViewCell * cell;
+    cell = [tableView dequeueReusableCellWithIdentifier:@"StatisticalResultTableViewCellSecond"];
     if (!cell) {
-        cell = [[[NSBundle mainBundle] loadNibNamed:@"StatisticalResultTableViewCell" owner:self options:nil] objectAtIndex:0];
+        cell = [[[NSBundle mainBundle] loadNibNamed:@"StatisticalResultTableViewCell" owner:self options:nil] objectAtIndex:1];
     }
-    [cell addContentView:_statisticalResultAry[indexPath.row]];
+    [cell addSecContentView:_statisticalResultAry[indexPath.row]];
     
     return cell;
+    
+//    StatisticalResultTableViewCell * cell ;//= [[UITableViewCell alloc] init];
+//    cell = [tableView dequeueReusableCellWithIdentifier:@"StatisticalResultTableViewCellFirst"];
+//    if (!cell) {
+//        cell = [[[NSBundle mainBundle] loadNibNamed:@"StatisticalResultTableViewCell" owner:self options:nil] objectAtIndex:0];
+//    }
+//    [cell addContentView:_statisticalResultAry[indexPath.row]];
+//
+//    return cell;
 }
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
-    StatisticalDetailsViewController * vc = [[StatisticalDetailsViewController alloc] init];
-    vc.statist = _statisticalResultAry[indexPath.row];
-    self.hidesBottomBarWhenPushed = YES;
-    [self.navigationController pushViewController:vc animated:YES];
+//    StatisticalDetailsViewController * vc = [[StatisticalDetailsViewController alloc] init];
+//    vc.statist = _statisticalResultAry[indexPath.row];
+//    self.hidesBottomBarWhenPushed = YES;
+//    [self.navigationController pushViewController:vc animated:YES];
 }
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
-    return 120;
+    return 360;
 }
 -(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
     return 10;

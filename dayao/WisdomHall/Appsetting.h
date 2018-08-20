@@ -57,4 +57,7 @@
 -(void)delectGroupID:(NSString *)groupId;
 //删除全部缓存
 -(void)delectAllGroup;
+//缓存第一张图
+-(void)saveBananerFirstImage:(NSString *)imageUrl;
+-(NSString *)getBananerFitstImage;
 @end
