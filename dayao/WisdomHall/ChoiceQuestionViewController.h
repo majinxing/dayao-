@@ -11,6 +11,7 @@
 
 @protocol ChoiceQuestionViewControllerDelegate<NSObject>
 -(void)handleSwipeFromDelegate:(UISwipeGestureRecognizer *)recognizer;
+-(void)removeTitleBtnPressedCQVCDelegate:(UIButton *)btn;
 @end
 
 @interface ChoiceQuestionViewController : UIViewController

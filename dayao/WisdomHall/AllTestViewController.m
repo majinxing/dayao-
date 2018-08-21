@@ -118,41 +118,84 @@
     
 }
 -(void)viewWillAppear:(BOOL)animated{
+    
 }
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
+-(void)delectText:(TextModel *)t{
+    NSDictionary * dict = [[NSDictionary alloc] initWithObjectsAndKeys:_t.textId,@"id", nil];
+    [[NetworkRequest sharedInstance] POST:DelecateText dict:dict succeed:^(id data) {
+        NSString * str = [NSString stringWithFormat:@"%@",[[data objectForKey:@"header"] objectForKey:@"code"]];
+        if ([str isEqualToString:@"0000"]) {
+            [self getData];
+        
+        }else{
+            [UIUtils showInfoMessage:[NSString stringWithFormat:@"%@",[[data objectForKey:@"header"] objectForKey:@"message"]] withVC:self];
+        }
+        [_vote hide];
+
+    } failure:^(NSError *error) {
+        [UIUtils showInfoMessage:@"发送数据失败，请检查网络" withVC:self];
+        
+    }];
+}
+-(void)closeText:(TextModel *)t{
+    NSDictionary * dict = [[NSDictionary alloc] initWithObjectsAndKeys:_t.textId,@"id", nil];
+    [[NetworkRequest sharedInstance] POST:CloseText dict:dict succeed:^(id data) {
+        NSString * str = [NSString stringWithFormat:@"%@",[[data objectForKey:@"header"] objectForKey:@"code"]];
+        if ([str isEqualToString:@"0000"]) {
+            [self delectText:nil];
+        }else{
+            [UIUtils showInfoMessage:[NSString stringWithFormat:@"%@",[[data objectForKey:@"header"] objectForKey:@"message"]] withVC:self];
+            [_vote hide];
+        }
+    } failure:^(NSError *error) {
+        [UIUtils showInfoMessage:@"发送数据失败，请检查网络" withVC:self];
+        
+    }];
+}
 #pragma mark TextsTableViewCellDelegate
 -(void)moreBtnPressedDelegate:(UIButton *)btn{
-    _t = _dataAry[btn.tag - 1];
-    
-    if (!_vote)
-    {
-        _vote = [[ShareView alloc] initWithFrame:self.navigationController.view.bounds withType:@"text"];
-        _vote.delegate = self;
+    if ([_typeText isEqualToString:@"HaveTest"]) {
+        _t = _dataAry[btn.tag-1];
+        [self alterDelectBtn];
+    }else{
+        _t = _dataAry[btn.tag - 1];
+        
+        if (!_vote)
+        {
+            _vote = [[ShareView alloc] initWithFrame:self.navigationController.view.bounds withType:@"text"];
+            _vote.delegate = self;
+        }
+        
+        [_vote showInView:self.navigationController.view];
     }
-    
-    [_vote showInView:self.navigationController.view];
+}
+-(void)alterDelectBtn{
+    UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"提示" message:nil preferredStyle:  UIAlertControllerStyleActionSheet];
+
+    //分别按顺序放入每个按钮；
+    [alert addAction:[UIAlertAction actionWithTitle:@"删除测试" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        //点击按钮的响应事件；
+        [self closeText:nil];
+
+    }]];
+  
+    [alert addAction:[UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleDestructive handler:^(UIAlertAction * _Nonnull action) {
+        //点击按钮的响应事件；
+        
+    }]];
+    //弹出提示框；
+    [self presentViewController:alert animated:true completion:nil];
 }
 #pragma mark ShareDelegate
 - (void)shareViewButtonClick:(NSString *)platform
 {
     if ([platform isEqualToString:Vote_delecate]){
         
-        NSDictionary * dict = [[NSDictionary alloc] initWithObjectsAndKeys:_t.textId,@"id", nil];
-        [[NetworkRequest sharedInstance] POST:DelecateText dict:dict succeed:^(id data) {
-            NSString * str = [NSString stringWithFormat:@"%@",[[data objectForKey:@"header"] objectForKey:@"code"]];
-            if ([str isEqualToString:@"6676"]) {
-                [UIUtils showInfoMessage:@"删除考试失败，只有考试结束之后才能删除" withVC:self];
-            }else{
-                [self getData];
-            }
-            [_vote hide];
-        } failure:^(NSError *error) {
-            [UIUtils showInfoMessage:@"发送数据失败，请检查网络" withVC:self];
-            
-        }];
+        [self closeText:nil];
         //
     }else if ([platform isEqualToString:Vote_Stop]){
         

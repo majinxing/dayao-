@@ -22,6 +22,9 @@
 -(void)deleAnswerImageDelegate:(UIButton *)sender;
 
 -(void)eighthSelectTitleDelegate:(UIButton *)btn;
+
+-(void)removeTitleBtnPressedDelegate:(UIButton * )btn;
+
 @end
 
 @interface ChoiceQuestionTableViewCell : UITableViewCell
@@ -54,4 +57,5 @@
 
 -(void)changeSeventhTextColor;
 
+-(void)addRemoveBtnTag:(int)n;
 @end

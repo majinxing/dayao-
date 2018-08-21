@@ -22,5 +22,6 @@
 
 @property (nonatomic,strong)ClassModel *classModel;
 
+@property (nonatomic,copy)NSString * textName;
 @property (nonatomic,assign)BOOL editable;
 @end

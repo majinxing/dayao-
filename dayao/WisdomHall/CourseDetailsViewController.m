@@ -35,6 +35,7 @@
 #import "PersonalUploadDataViewController.h"
 #import "PictureQuizViewController.h"
 #import "MessageListViewController.h"
+#import "AskForLeaveViewController.h"
 
 @interface CourseDetailsViewController ()<UIActionSheetDelegate,ShareViewDelegate,UIAlertViewDelegate,UITableViewDelegate,UITableViewDataSource,MeetingTableViewCellDelegate,UINavigationControllerDelegate,UIImagePickerControllerDelegate,AlterViewDelegate>
 
@@ -439,8 +440,11 @@
         d.type = @"classModel";
         self.hidesBottomBarWhenPushed = YES;
         [self.navigationController pushViewController: d animated:YES];
-    }else if ([platform isEqualToString:InteractionType_Responder]){
-        
+    }else if ([platform isEqualToString:Leave]){
+        AskForLeaveViewController * vc = [[AskForLeaveViewController alloc] init];
+        vc.c = _c;
+        self.hidesBottomBarWhenPushed = YES;
+        [self.navigationController pushViewController:vc animated:YES];
     }
     else if ([platform isEqualToString:InteractionType_Test]){
         NSLog(@"测试");

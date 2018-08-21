@@ -122,6 +122,7 @@
 #define Community                   @"社团"
 #define SchoolRun                   @"校办"
 
+
 #define ThemeColorChangeNotification @"ThemeColorChangeNotification"//更改主题的通知
 
 #define InApp                  @"InApp"                            //app是否在前台通知
@@ -253,6 +254,8 @@
 
 #define StopText                @"course/exam/ExamCompleted"        //结束考试
 
+#define CloseText               @"course/exam/closeExam"            //关闭考试
+
 #define DelecateText            @"course/exam/deleteExam"           //删除考试
 
 #define QuertyTestScores        @"course/exam/queryExamGradeTeacher"//查询考试成绩
@@ -327,11 +330,11 @@
 
 #define SelectCourseById        @"course/course/query/byStudent"      //查询课程
 
-#define OutGroup                @"course/group/existGroup"          //退出群组
+#define OutGroup                @"course/group/existGroup"            //退出群组
 
-#define QueryStudentAnswer      @"course/exam/queryStudentAnswerInfo"//查询作答详情
+#define QueryStudentAnswer      @"course/exam/queryStudentAnswerInfo" //查询作答详情
 
-
+#define QueryLeaveTeacher       @"course/course/leave/query/byTeacher" //老师查询请假
 
 
 

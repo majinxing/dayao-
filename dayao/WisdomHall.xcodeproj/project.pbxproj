@@ -243,6 +243,14 @@
 		8B6E61CC1EE292B10040FDC1 /* CreateVoteTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8B6E61CA1EE292B10040FDC1 /* CreateVoteTableViewCell.xib */; };
 		8B6F9FAA212A4DD200BAA476 /* MoreImportViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B6F9FA8212A4DD200BAA476 /* MoreImportViewController.m */; };
 		8B6F9FAB212A4DD200BAA476 /* MoreImportViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8B6F9FA9212A4DD200BAA476 /* MoreImportViewController.xib */; };
+		8B6F9FB0212C0F2600BAA476 /* AskForLeaveViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B6F9FAE212C0F2600BAA476 /* AskForLeaveViewController.m */; };
+		8B6F9FB1212C0F2600BAA476 /* AskForLeaveViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8B6F9FAF212C0F2600BAA476 /* AskForLeaveViewController.xib */; };
+		8B6F9FB6212C14EB00BAA476 /* AskForLeaveTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B6F9FB4212C14EB00BAA476 /* AskForLeaveTableViewCell.m */; };
+		8B6F9FB7212C14EB00BAA476 /* AskForLeaveTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8B6F9FB5212C14EB00BAA476 /* AskForLeaveTableViewCell.xib */; };
+		8B6F9FBA212C162800BAA476 /* AskForLeaveModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B6F9FB9212C162800BAA476 /* AskForLeaveModel.m */; };
+		8B6F9FBE212C213D00BAA476 /* AskForLeaveDetailsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B6F9FBC212C213D00BAA476 /* AskForLeaveDetailsViewController.m */; };
+		8B6F9FBF212C213D00BAA476 /* AskForLeaveDetailsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8B6F9FBD212C213D00BAA476 /* AskForLeaveDetailsViewController.xib */; };
+		8B6F9FC2212C28BB00BAA476 /* AskForLeaveView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B6F9FC1212C28BB00BAA476 /* AskForLeaveView.m */; };
 		8B7725061F3029CE00D1B521 /* FeedbackViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B7725041F3029CE00D1B521 /* FeedbackViewController.m */; };
 		8B7725071F3029CE00D1B521 /* FeedbackViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8B7725051F3029CE00D1B521 /* FeedbackViewController.xib */; };
 		8B77250B1F302E6200D1B521 /* FeedBackTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B7725091F302E6200D1B521 /* FeedBackTableViewCell.m */; };
@@ -1142,6 +1150,19 @@
 		8B6F9FA7212A4DD200BAA476 /* MoreImportViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MoreImportViewController.h; sourceTree = "<group>"; };
 		8B6F9FA8212A4DD200BAA476 /* MoreImportViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MoreImportViewController.m; sourceTree = "<group>"; };
 		8B6F9FA9212A4DD200BAA476 /* MoreImportViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MoreImportViewController.xib; sourceTree = "<group>"; };
+		8B6F9FAD212C0F2600BAA476 /* AskForLeaveViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AskForLeaveViewController.h; sourceTree = "<group>"; };
+		8B6F9FAE212C0F2600BAA476 /* AskForLeaveViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AskForLeaveViewController.m; sourceTree = "<group>"; };
+		8B6F9FAF212C0F2600BAA476 /* AskForLeaveViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AskForLeaveViewController.xib; sourceTree = "<group>"; };
+		8B6F9FB3212C14EB00BAA476 /* AskForLeaveTableViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AskForLeaveTableViewCell.h; sourceTree = "<group>"; };
+		8B6F9FB4212C14EB00BAA476 /* AskForLeaveTableViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AskForLeaveTableViewCell.m; sourceTree = "<group>"; };
+		8B6F9FB5212C14EB00BAA476 /* AskForLeaveTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AskForLeaveTableViewCell.xib; sourceTree = "<group>"; };
+		8B6F9FB8212C162800BAA476 /* AskForLeaveModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AskForLeaveModel.h; sourceTree = "<group>"; };
+		8B6F9FB9212C162800BAA476 /* AskForLeaveModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AskForLeaveModel.m; sourceTree = "<group>"; };
+		8B6F9FBB212C213D00BAA476 /* AskForLeaveDetailsViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AskForLeaveDetailsViewController.h; sourceTree = "<group>"; };
+		8B6F9FBC212C213D00BAA476 /* AskForLeaveDetailsViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AskForLeaveDetailsViewController.m; sourceTree = "<group>"; };
+		8B6F9FBD212C213D00BAA476 /* AskForLeaveDetailsViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AskForLeaveDetailsViewController.xib; sourceTree = "<group>"; };
+		8B6F9FC0212C28BA00BAA476 /* AskForLeaveView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AskForLeaveView.h; sourceTree = "<group>"; };
+		8B6F9FC1212C28BB00BAA476 /* AskForLeaveView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AskForLeaveView.m; sourceTree = "<group>"; };
 		8B7725031F3029CE00D1B521 /* FeedbackViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FeedbackViewController.h; sourceTree = "<group>"; };
 		8B7725041F3029CE00D1B521 /* FeedbackViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FeedbackViewController.m; sourceTree = "<group>"; };
 		8B7725051F3029CE00D1B521 /* FeedbackViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FeedbackViewController.xib; sourceTree = "<group>"; };
@@ -2344,6 +2365,32 @@
 			path = include;
 			sourceTree = "<group>";
 		};
+		8B6F9FAC212C00E700BAA476 /* AskForLeave */ = {
+			isa = PBXGroup;
+			children = (
+				8B6F9FB2212C14C800BAA476 /* VIew */,
+				8B6F9FAD212C0F2600BAA476 /* AskForLeaveViewController.h */,
+				8B6F9FAE212C0F2600BAA476 /* AskForLeaveViewController.m */,
+				8B6F9FAF212C0F2600BAA476 /* AskForLeaveViewController.xib */,
+				8B6F9FBB212C213D00BAA476 /* AskForLeaveDetailsViewController.h */,
+				8B6F9FBC212C213D00BAA476 /* AskForLeaveDetailsViewController.m */,
+				8B6F9FBD212C213D00BAA476 /* AskForLeaveDetailsViewController.xib */,
+			);
+			name = AskForLeave;
+			sourceTree = "<group>";
+		};
+		8B6F9FB2212C14C800BAA476 /* VIew */ = {
+			isa = PBXGroup;
+			children = (
+				8B6F9FC0212C28BA00BAA476 /* AskForLeaveView.h */,
+				8B6F9FC1212C28BB00BAA476 /* AskForLeaveView.m */,
+				8B6F9FB3212C14EB00BAA476 /* AskForLeaveTableViewCell.h */,
+				8B6F9FB4212C14EB00BAA476 /* AskForLeaveTableViewCell.m */,
+				8B6F9FB5212C14EB00BAA476 /* AskForLeaveTableViewCell.xib */,
+			);
+			name = VIew;
+			sourceTree = "<group>";
+		};
 		8B7D5D841EB969B70068058E /* Collection */ = {
 			isa = PBXGroup;
 			children = (
@@ -2513,6 +2560,7 @@
 		8BA224921EADFE9500627A1B /* Course */ = {
 			isa = PBXGroup;
 			children = (
+				8B6F9FAC212C00E700BAA476 /* AskForLeave */,
 				8B084DBA2064AA8B004B9C7C /* HomeWork */,
 				8B9CCC8E1F16FEAB001833FD /* CreateCourse */,
 				8B0F412C1EF51EF9001AF4DF /* Chat */,
@@ -2657,6 +2705,8 @@
 				8BD2A4AC2122B0A1004315AA /* CourseStatisticalModel.m */,
 				8BE24D621F8B528600621055 /* GroupModel.h */,
 				8BE24D631F8B528600621055 /* GroupModel.m */,
+				8B6F9FB8212C162800BAA476 /* AskForLeaveModel.h */,
+				8B6F9FB9212C162800BAA476 /* AskForLeaveModel.m */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -3807,6 +3857,7 @@
 				8BF7D3661F3D7D700087D35D /* CreateMeetingViewController.xib in Resources */,
 				8BD2BCB0212525EF004315AA /* FileSizeViewController.xib in Resources */,
 				8B396B18208F1C3E00F20060 /* AboutUSViewController.xib in Resources */,
+				8B6F9FB7212C14EB00BAA476 /* AskForLeaveTableViewCell.xib in Resources */,
 				8B2E16D61EB9C1EA008B7C57 /* CourseDetailsViewController.xib in Resources */,
 				8B0333F41F8C50950021D495 /* GroupListTableViewCell.xib in Resources */,
 				8B0E5362209C076800327823 /* AnswerTOFQuestionViewController.xib in Resources */,
@@ -3821,6 +3872,7 @@
 				8B0D960C1F1893A2006796E3 /* CreateCouresTableViewCell.xib in Resources */,
 				8BA41B771F9F0D6B00B9886E /* MeetingTableViewCell.xib in Resources */,
 				8BA224A31EADFFE500627A1B /* InteractiveViewController.xib in Resources */,
+				8B6F9FBF212C213D00BAA476 /* AskForLeaveDetailsViewController.xib in Resources */,
 				8BE3F3D5209996D600C22678 /* ChoiceQuestionTableViewCell.xib in Resources */,
 				8B1737141EC2F6A700BE3C8F /* NoticeViewController.xib in Resources */,
 				8BA224D01EAF258B00627A1B /* ForgotPasswordViewController.xib in Resources */,
@@ -3865,6 +3917,7 @@
 				8BA2246C1EADF68500627A1B /* LaunchScreen.storyboard in Resources */,
 				8BEE94491F2C780500488651 /* CompanyProfileViewController.xib in Resources */,
 				8B1A50331F75F85C00A11CB2 /* OfficeTableViewCell.xib in Resources */,
+				8B6F9FB1212C0F2600BAA476 /* AskForLeaveViewController.xib in Resources */,
 				8B081E0F1F0B766D00493B81 /* SelectMeetingOrClassViewController.xib in Resources */,
 				8B05CB6C1EC0056B0063EC20 /* TextsTableViewCell.xib in Resources */,
 				8BFB946C1EE7F7F1004BB963 /* ResultsOfVoteViewController.xib in Resources */,
@@ -4008,6 +4061,7 @@
 				8B7725061F3029CE00D1B521 /* FeedbackViewController.m in Sources */,
 				8B078B43200F2EA000336ADB /* CalendarViewController.m in Sources */,
 				8B045B701F3458820021699B /* MJExtensionConst.m in Sources */,
+				8B6F9FC2212C28BB00BAA476 /* AskForLeaveView.m in Sources */,
 				8BD2A4642122AD42004315AA /* AsyncTCP.m in Sources */,
 				8BD2A4202122AD20004315AA /* SQLGroupMessageDB.m in Sources */,
 				8BD2A42F2122AD20004315AA /* IMessageIterator.m in Sources */,
@@ -4074,6 +4128,7 @@
 				8B045BA31F34595D0021699B /* UIView+Extension.m in Sources */,
 				8BD2A44D2122AD20004315AA /* CustomerOutbox.m in Sources */,
 				8B0E5361209C076800327823 /* AnswerTOFQuestionViewController.m in Sources */,
+				8B6F9FB6212C14EB00BAA476 /* AskForLeaveTableViewCell.m in Sources */,
 				8BD2A4972122AD7E004315AA /* UIView+Toast.m in Sources */,
 				8B0AF7591F4FAF53003858A4 /* UploadFileViewController.m in Sources */,
 				8BCE7CCE1F04F07600FE261B /* AFSecurityPolicy.m in Sources */,
@@ -4130,6 +4185,7 @@
 				8BD2A42E2122AD20004315AA /* FileCache.m in Sources */,
 				8BD2A40D2122AD20004315AA /* MessageViewController.m in Sources */,
 				8BD2A41E2122AD20004315AA /* FileCustomerMessageDB.m in Sources */,
+				8B6F9FBA212C162800BAA476 /* AskForLeaveModel.m in Sources */,
 				8BD2A4302122AD20004315AA /* IPeerMessageDB.m in Sources */,
 				8B087E371FEA564500649094 /* ZFSeatsView.m in Sources */,
 				8B40E11E2058D176000E6C2F /* NavBarNavigationController.m in Sources */,
@@ -4157,6 +4213,7 @@
 				8BD2A43F2122AD20004315AA /* TriangleView.m in Sources */,
 				8BD2BCB1212525EF004315AA /* FileSizeViewController.m in Sources */,
 				8BED4EED20994782004DF322 /* ChoiceQuestionViewController.m in Sources */,
+				8B6F9FBE212C213D00BAA476 /* AskForLeaveDetailsViewController.m in Sources */,
 				8BF82D811EE001D600D33473 /* VoteTableViewCell.m in Sources */,
 				8BD2A4272122AD20004315AA /* SQLCustomerMessageDB.m in Sources */,
 				8B429C2B1FA84B0600084A99 /* QrCodeViewController.m in Sources */,
@@ -4300,6 +4357,7 @@
 				8BE24D681F8B6E2200621055 /* GroupPeopleViewController.m in Sources */,
 				8B429C221FA8488700084A99 /* SGQRCodeGenerateManager.m in Sources */,
 				8BD2A4012122AD20004315AA /* wavreader.c in Sources */,
+				8B6F9FB0212C0F2600BAA476 /* AskForLeaveViewController.m in Sources */,
 				8BB56D8C1EB31C110023DAFF /* SystemSettingsViewController.m in Sources */,
 				8BFC79741F457E760052C088 /* JoinCours.m in Sources */,
 				8B045B9A1F3458E40021699B /* ZFHallLogoView.m in Sources */,

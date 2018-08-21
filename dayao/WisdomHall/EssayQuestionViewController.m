@@ -49,6 +49,7 @@
     _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0,0, APPLICATION_WIDTH, APPLICATION_HEIGHT-104) style:UITableViewStylePlain];
     _tableView.delegate = self;
     _tableView.dataSource = self;
+    _tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     [self.view addSubview:_tableView];
     UISwipeGestureRecognizer * priv = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(handleSwipeFrom:)];
     [priv setDirection:(UISwipeGestureRecognizerDirectionRight)];
@@ -141,7 +142,11 @@
 
 
 #pragma mark UIPickViewDelegate
-
+-(void)removeTitleBtnPressedDelegate:(UIButton *)btn{
+    if (self.delegate&&[self.delegate respondsToSelector:@selector(removeTitleBtnPressedEQVCDelegate:)]) {
+        [self.delegate removeTitleBtnPressedEQVCDelegate:btn];
+    }
+}
 -(NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView{
     
     return 1;
@@ -233,7 +238,7 @@
 }
 #pragma mark UITableViewdelegate
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
-    return 3;
+    return 4;
 }
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
     if (section ==0) {
@@ -241,6 +246,8 @@
     }else if (section == 1){
         return 1;
     }else if (section == 2){
+        return 1;
+    }else if (section == 3){
         return 1;
     }
     return 0;
@@ -278,6 +285,10 @@
 //
 //            }
             
+        }else if (indexPath.section == 3){
+            cell = [tableView dequeueReusableCellWithIdentifier:@"ChoiceQuestionTableViewCellNinth"];
+            
+            cell = [[[NSBundle mainBundle] loadNibNamed:@"ChoiceQuestionTableViewCell" owner:nil options:nil] objectAtIndex:8];
         }
     }
     cell.delegate = self;
@@ -286,21 +297,24 @@
     
     if (indexPath.section == 0) {
         if (_editable) {
-            [cell addFirstTitleTextView:_questionModel.questionTitle withImageAry:_questionModel.questionTitleImageAry withIsEdit:_editable];
+            [cell addFirstTitleTextView:_questionModel.questionTitle withImageAry:_questionModel.questionTitleImageAry withIsEdit:_editable withIndexRow:(int)indexPath.section];
 
         }else{
-            [cell addFirstTitleTextView:_questionModel.questionTitle withImageAry:_questionModel.questionTitleImageIdAry withIsEdit:_editable];
+            [cell addFirstTitleTextView:_questionModel.questionTitle withImageAry:_questionModel.questionTitleImageIdAry withIsEdit:_editable withIndexRow:(int)indexPath.section];
         }
     }else if(indexPath.section == 1){
         [cell setScoreAndDifficult:_questionModel.qustionScore withDifficult:_questionModel.questionDifficulty withEdit:YES];
     }else if (indexPath.section == 2){
         if ([_questionModel.titleType  isEqualToString:@"4"]) {
-            [cell addSeventhTextViewWithStrEndEditor:_questionModel.questionAnswer];
+            [cell addSeventhTextViewWithStrEndEditor:_questionModel.qustionBankAnswer];
 
         }else{
-            [cell addSeventhTextViewWithStrEndEditor:_questionModel.questionAnswer];
+            [cell addSeventhTextViewWithStrEndEditor:_questionModel.qustionBankAnswer];
 
         }
+    }else if (indexPath.section == 3){
+        [cell addRemoveBtnTag:_titleNum];
+
     }
     return cell;
 }
@@ -320,15 +334,20 @@
     }else if (indexPath.section == 1){
         return 110;
     }else if (indexPath.section==2){
-        return [_questionModel returnAnswerHeightZone];
+        return [_questionModel returnBankAnswerHeight];
+    }else if (indexPath.section == 3){
+        return 80;
     }
     return 60;
 }
 -(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
+    if (section == 3) {
+        return 0;
+    }
     return 30;
 }
 -(UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section{
-    NSArray * ary = @[@"题目内容",@"选择分值与难易程度",@"参考答案"];
+    NSArray * ary = @[@"题目内容",@"选择分值与难易程度",@"参考答案",@" "];
     UIView * view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, APPLICATION_WIDTH, 30)];
     view.backgroundColor = RGBA_COLOR(236, 236, 236, 1);
     UILabel * l = [[UILabel alloc] initWithFrame:CGRectMake(10, 5, 200, 20)];

@@ -29,7 +29,7 @@
 
 #import "ChoiceQuestionTableViewCell.h"
 
-@interface CreateTestViewController ()<UITableViewDelegate,UITableViewDataSource>
+@interface CreateTestViewController ()<UITableViewDelegate,UITableViewDataSource,ChoiceQuestionViewControllerDelegate,EssayQuestionViewControllerDelegate,TOFQuestionViewControllerDelegate>
 @property(nonatomic,strong)TextModel * textModel;
 @property(nonatomic,strong)QuestionBank * questionModel;
 
@@ -57,7 +57,7 @@
 
 @property (nonatomic,assign)int questionNumber;//问题编号
 
-@property (nonatomic,copy)NSString *textName;
+
 @end
 
 @implementation CreateTestViewController
@@ -73,8 +73,18 @@
     
     [self setNavigationTitle];
     
+    _user = [[Appsetting sharedInstance] getUsetInfo];
     
-    [self addTableView];
+    _allQuestionAry = [NSMutableArray arrayWithCapacity:1];
+    
+    if (!_editable) {
+        [_addTitleBtn removeFromSuperview];
+        
+    }
+    
+    [self addBtn];
+    
+//    [self addTableView];
     
     [self addBtn];
 
@@ -102,15 +112,42 @@
 -(void)addTitle{
     ImportTextViewController * vc = [[ImportTextViewController alloc] init];
     self.hidesBottomBarWhenPushed = YES;
-    
     vc.selectQuestionAry = [NSMutableArray arrayWithArray:_allQuestionAry];
     
     [self.navigationController pushViewController:vc animated:YES];
     
     [vc returnAry:^(NSMutableArray *allAry) {
         _allQuestionAry = [NSMutableArray arrayWithArray:allAry];
-        [_tableView reloadData];
+        
+        if (_allQuestionAry.count == 1) {
+            [self addQidScrollView];
+        }else if(_allQuestionAry.count>1){
+            [self addQidScrollView];
+            for (int i = 1 ; i<_allQuestionAry.count; i++) {
+                
+                [self addScrollViewBtn:i+1];
+            }
+        }
+        [_scrollView setContentOffset:CGPointMake(0,0) animated:NO];
+        
+        UIButton * btn = [[UIButton alloc] init];
+        
+        btn.tag = 1;
+        
+        [self titleClick:btn];
     }];
+    
+//    ImportTextViewController * vc = [[ImportTextViewController alloc] init];
+//    self.hidesBottomBarWhenPushed = YES;
+//
+//    vc.selectQuestionAry = [NSMutableArray arrayWithArray:_allQuestionAry];
+//
+//    [self.navigationController pushViewController:vc animated:YES];
+//
+//    [vc returnAry:^(NSMutableArray *allAry) {
+//        _allQuestionAry = [NSMutableArray arrayWithArray:allAry];
+//        [_tableView reloadData];
+//    }];
 }
 /**
  *  显示navigation的标题
@@ -124,6 +161,7 @@
     
     self.navigationItem.rightBarButtonItem = myButton;
 }
+
 -(void)createText{
     NSMutableArray * ary = [NSMutableArray arrayWithCapacity:1];
     
@@ -148,187 +186,420 @@
         [UIUtils showInfoMessage:@"发布试卷题目不能为空" withVC:self];
     }
 }
+-(void)addScrollViewBtn:(int)tag{
+    UIButton *button = [UIButton buttonWithType:UIButtonTypeSystem];
+    
+    //        button.backgroundColor = [UIColor greenColor];
+    
+    button.frame = CGRectMake(APPLICATION_WIDTH/3*(tag-1),0,APPLICATION_WIDTH/3,40);
+    
+    _scrollView.contentSize = CGSizeMake(APPLICATION_WIDTH/3*tag, 40);
+    if (tag>3) {
+        [_scrollView setContentOffset:CGPointMake(APPLICATION_WIDTH/3*(tag-3),0) animated:YES];
+    }
+    
+    [button setTitle:[NSString stringWithFormat:@"第%d题",tag] forState:UIControlStateNormal];
+    
+    [button setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    
+    button.titleLabel.font = [UIFont systemFontOfSize:15];
+    
+    button.tag = tag;
+    //设置点击事件
+    [button addTarget:self action:@selector(titleClick:) forControlEvents:UIControlEventTouchUpInside];
+    
+    [_scrollView addSubview:button];
+}
+//顶部滑框选择试题
+-(void)titleClick:(UIButton *)btn{
+    [self.view endEditing:YES];
+    
+    int num  = (int)btn.tag;
+    
+    _temp = (int)btn.tag;
+    
+    if (btn.tag-1<_allQuestionAry.count) {
+        QuestionModel * q = _allQuestionAry[btn.tag-1];
+        if ([q.titleType isEqualToString:@"1"]||[q.titleType isEqualToString:@"2"]) {
+            [_essayQVC.view removeFromSuperview];
+            [_tOFQVC.view removeFromSuperview];
+            
+            if (!_choiceQVC) {
+                _choiceQVC = [[ChoiceQuestionViewController alloc] init];
+            }
+            _choiceQVC.editable = _editable;
+            
+            _choiceQVC.selectMore = q.selectMore;
+            
+            _choiceQVC.questionModel = q;
+            
+            _choiceQVC.titleNum = num;
+            
+            [_choiceQVC viewDidLoad];
+            
+            [self addChildViewController:_choiceQVC];
+            
+            _choiceQVC.view.frame = CGRectMake(0, 104, APPLICATION_WIDTH, APPLICATION_HEIGHT-104);
+            
+            [self.view addSubview:_choiceQVC.view];
+            
+            [self.view sendSubviewToBack:_choiceQVC.view];
+            
+        }else if ([q.titleType isEqualToString:@"3"]){
+            [_choiceQVC.view removeFromSuperview];
+            [_essayQVC.view removeFromSuperview];
+            if (!_tOFQVC) {
+                _tOFQVC = [[TOFQuestionViewController alloc] init];
+            }
+            _tOFQVC.editing = _editable;
+            
+            _tOFQVC.questionModel = q;
+            
+            [_tOFQVC viewDidLoad];
+            
+            _tOFQVC.titleNum = num;
+            
+            [self addChildViewController:_tOFQVC];
+            
+            _tOFQVC.view.frame = CGRectMake(0, 104, APPLICATION_WIDTH, APPLICATION_HEIGHT-104);
+            
+            [self.view addSubview:_tOFQVC.view];
+            
+            [self.view sendSubviewToBack:_tOFQVC.view];
+        }else if ([q.titleType isEqualToString:@"5"]||[q.titleType isEqualToString:@"4"]){
+            
+            [_choiceQVC.view removeFromSuperview];
+            [_tOFQVC.view removeFromSuperview];
+            if (!_essayQVC) {
+                _essayQVC = [[EssayQuestionViewController alloc] init];
+            }
+            
+            _essayQVC.editable = _editable;
+            
+            [_essayQVC viewDidLoad];
+            
+            _essayQVC.questionModel = q;
+            
+            _essayQVC.titleNum = num;
+            
+            [self addChildViewController:_essayQVC];
+            
+            _essayQVC.view.frame = CGRectMake(0, 104, APPLICATION_WIDTH, APPLICATION_HEIGHT-104);
+            
+            [self.view addSubview:_essayQVC.view];
+            
+            [self.view sendSubviewToBack:_essayQVC.view];
+        }
+    }
+    _choiceQVC.delegate = self;
+    _essayQVC.delegate = self;
+    _tOFQVC.delegate = self;
+}
+-(void)addQidScrollView{
+  
+        [_scrollView removeFromSuperview];
 
+        _scrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 64, APPLICATION_WIDTH, 40)];
+        
+        
+        _scrollView.backgroundColor = [UIColor colorWithHexString:@"#29a7e1"];
+        
+        self.scrollView.bounces = YES;
+        
+        [self.view addSubview:_scrollView];
+        
+        _scrollView.showsVerticalScrollIndicator = NO;
+        
+        self.automaticallyAdjustsScrollViewInsets = YES;
+    
+    [self addScrollViewBtn:1];
+}
+-(void)touchesBegan:(NSSet *)touches withEvent:(UIEvent
+                                                *)event{
+    [self.view endEditing:YES];
+}
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
-#pragma mark UITableViewdelegate
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
-    if ([_testType isEqualToString:@"single"]) {
-        return 1;
+#pragma mark 问题代理方法
+-(void)removeTitleBtnPressedTOFQVCDelegate:(UIButton *)btn{
+    [self removeTitleBtnPressed:btn];
+}
+-(void)removeTitleBtnPressedEQVCDelegate:(UIButton *)btn{
+    [self removeTitleBtnPressed:btn];
+
+}
+-(void)removeTitleBtnPressedCQVCDelegate:(UIButton *)btn{
+    [self removeTitleBtnPressed:btn];
+
+}
+-(void)removeTitleBtnPressed:(UIButton *)btn{
+    int n = 0;
+    if ((btn.tag-1)<_allQuestionAry.count) {
+        
+        [_choiceQVC.view removeFromSuperview];
+        
+        [_tOFQVC.view removeFromSuperview];
+        
+        [_essayQVC.view removeFromSuperview];
+        
+        if (btn.tag == _allQuestionAry.count) {
+            if (btn.tag == 1) {
+                [_scrollView removeFromSuperview];
+                [_allQuestionAry removeObjectAtIndex:btn.tag-1];
+
+                return;
+            }else{
+                n = (int)btn.tag - 1;
+            }
+        }else{
+            n = (int)btn.tag;
+        }
+        [_allQuestionAry removeObjectAtIndex:btn.tag-1];
+        
     }else{
-        if (_allQuestionAry>0) {
-            return _allQuestionAry.count;
+        return;
+    }
+    
+    
+    
+    if (_allQuestionAry.count == 1) {
+        [self addQidScrollView];
+    }else if(_allQuestionAry.count>1){
+        [self addQidScrollView];
+        for (int i = 1 ; i<_allQuestionAry.count; i++) {
+            
+            [self addScrollViewBtn:i+1];
         }
     }
-    return 0;
+//    [_scrollView setContentOffset:CGPointMake(0,0) animated:NO];
+
+    UIButton * btna = [UIButton buttonWithType:UIButtonTypeCustom];
+    
+    btna.tag = n;
+    
+    [self titleClick:btna];
+    
+    [_scrollView setContentOffset:CGPointMake(APPLICATION_WIDTH*((btna.tag-1)/3),0) animated:NO];
 }
--(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
-    if ([_testType isEqualToString:@"single"]) {
-        if (_allQuestionAry.count>0) {
-            //1.单选 2.多选 3.判断 4.填空 5.问答
-            QuestionModel * q = _allQuestionAry[_temp];
-            if ([q.titleType isEqualToString:@"1"]||[q.titleType isEqualToString:@"2"]) {
-                return 2+q.qustionOptionsAry.count;
-            }
-            return 3;
+-(void)handleSwipeFromDelegate:(UISwipeGestureRecognizer *)recognizer{
+    if(recognizer.direction == UISwipeGestureRecognizerDirectionDown) {
+        NSLog(@"swipe down");
+        
+    } if(recognizer.direction == UISwipeGestureRecognizerDirectionUp) {
+        NSLog(@"swipe up");
+        
+    } if(recognizer.direction == UISwipeGestureRecognizerDirectionLeft) {
+        NSLog(@"swipe left");
+        if (_temp<_allQuestionAry.count) {
+            UIButton * btn = [[UIButton alloc] init];
+            
+            btn.tag = _temp +1;
+            
+            [self titleClick:btn];
         }
-    }else{
-        if (_allQuestionAry>0) {
-            //1.单选 2.多选 3.判断 4.填空 5.问答
-            QuestionModel * q = _allQuestionAry[section];
-            if ([q.titleType isEqualToString:@"1"]||[q.titleType isEqualToString:@"2"]) {
-                return 2+q.qustionOptionsAry.count;
-            }
-            return 3;
+        //        }
+    } if(recognizer.direction == UISwipeGestureRecognizerDirectionRight) {
+        
+        if (_temp>1) {
+            UIButton * btn = [[UIButton alloc] init];
+            
+            btn.tag = _temp -1;
+            
+            [self titleClick:btn];
         }
     }
     
-    return 0;
+    //    if (_temp>3) {
+    
+    [_scrollView setContentOffset:CGPointMake(APPLICATION_WIDTH*((_temp-1)/3),0) animated:YES];
+    
+    //    }
+    
+    //    [_scrollView];
+}
+#pragma mark ChooseTopicDelegate
+-(void)chooseDelegateOutOfChooseTopicView{
+    [_chooseTopic removeFromSuperview];
 }
 
--(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
-    ChoiceQuestionTableViewCell * cell ;
-    
-    QuestionModel * q;
-    
-    if ([_testType isEqualToString:@"single"]) {
-        q = _allQuestionAry[_temp];
-    }else{
-        q = _allQuestionAry[indexPath.section];
-    }
-    
-    
-    if (!cell) {
-        if (indexPath.row == 0) {
-            cell = [tableView dequeueReusableCellWithIdentifier:@"ChoiceQuestionTableViewCellEighth"];
-            cell = [[[NSBundle mainBundle] loadNibNamed:@"ChoiceQuestionTableViewCell" owner:nil options:nil] objectAtIndex:7];
-            
-        }else if (indexPath.row == 1){
-            
-            cell = [tableView dequeueReusableCellWithIdentifier:@"ChoiceQuestionTableViewCellFirst"];
-            
-            cell = [[[NSBundle mainBundle] loadNibNamed:@"ChoiceQuestionTableViewCell" owner:nil options:nil] objectAtIndex:0];
-        }
-        else if (indexPath.row == 2+q.qustionOptionsAry.count){
-            if ([q.titleType  isEqualToString:@"5"]) {
-                cell = [tableView dequeueReusableCellWithIdentifier:@"ChoiceQuestionTableViewCellFirst"];
-                
-                cell = [[[NSBundle mainBundle] loadNibNamed:@"ChoiceQuestionTableViewCell" owner:nil options:nil] objectAtIndex:0];
-            }else{
-                cell = [tableView dequeueReusableCellWithIdentifier:@"ChoiceQuestionTableViewCellSeventh"];
-                
-                cell = [[[NSBundle mainBundle] loadNibNamed:@"ChoiceQuestionTableViewCell" owner:nil options:nil] objectAtIndex:6];
-            }
-        }else{
-            cell = [tableView dequeueReusableCellWithIdentifier:@"ChoiceQuestionTableViewCellThird"];
-            
-            cell = [[[NSBundle mainBundle] loadNibNamed:@"ChoiceQuestionTableViewCell" owner:nil options:nil] objectAtIndex:2];
-        }
-    }
-    if (indexPath.row == 0) {
-        
-        [cell eigthTitleType:q.titleTypeName withScore:q.qustionScore isSelect:NO isEnableSelect:NO btnTag:(int)indexPath.section+1];
-        
-    }
-    if (indexPath.row==1) {
-        
-        [cell addFirstTitleTextView:q.questionTitle withImageAry:q.questionTitleImageIdAry withIsEdit:NO withIndexRow:(int)indexPath.section];
-        
-    }else if(indexPath.row>1&&indexPath.row<2+q.qustionOptionsAry.count) {
-        NSString *string = [NSString stringWithFormat:@"%@",q.questionAnswer];
-        
-        optionsModel * opt = q.qustionOptionsAry[indexPath.row-2];
-        
-        if (![_testType isEqualToString:@"single"]) {
-            _questionNumber = (int)(indexPath.section*1000+indexPath.row-2);
-        }else{
-            _questionNumber = (int)indexPath.row-2;
-        }
-        //字条串是否包含有某字符串
-        if ([string rangeOfString:opt.index].location == NSNotFound) {
-            
-            [cell addOptionWithModel:q.qustionOptionsAry[indexPath.row-2] withEdit:_editable withIndexRow:_questionNumber withISelected:NO];
-            
-        }else{
-            
-            [cell addOptionWithModel:q.qustionOptionsAry[indexPath.row-2] withEdit:_editable withIndexRow:_questionNumber withISelected:YES];
-        }
-    }else if (indexPath.row == 2+q.qustionOptionsAry.count){
-        if ([q.titleType  isEqualToString:@"5"]) {
-            //问答。可上传图片
-            if (NO) {
-                [cell addFirstTitleTextView:q.questionAnswer withImageAry:q.questionAnswerImageAry withIsEdit:YES withIndexRow:(int)indexPath.section];
-            }else{
-                
-                [cell addFirstTitleTextView:q.questionAnswer withImageAry:q.questionAnswerImageIdAry withIsEdit:NO withIndexRow:(int)indexPath.section];
-                
-            }
-            //
-        }else{
-            if (![_testType isEqualToString:@"single"]) {
-                _questionNumber = (int)(indexPath.section);
-            }else{
-                _questionNumber = _temp;
-            }
-            
-            [cell addSeventhTextViewWithStr:q.questionAnswer withIndexRow:_questionNumber];
-        }
-        
-    }
-    
-    cell.delegate = self;
-    
-    [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
-    
-    return cell;
-}
--(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-    [tableView deselectRowAtIndexPath:indexPath animated:YES];
-}
--(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
-    if (_allQuestionAry.count>0) {
-        
-        QuestionModel * q ;//= _allQuestionAry[indexPath.section];
-        if ([_testType isEqualToString:@"single"]) {
-            q = _allQuestionAry[_temp];
-        }else{
-            q = _allQuestionAry[indexPath.section];
-        }
-        if (indexPath.row == 0) {
-            return 60;
-        }else if(indexPath.row == 1){
-            
-            return [q returnTitleHeight];
-            
-        }else if (indexPath.row == 2+q.qustionOptionsAry.count){
-            if ([q.titleType isEqualToString:@"5"]) {
-                float h = [q returnAnswerHeight];
-                if (h<400) {
-                    return 400;
-                }else{
-                    return h;
-                }
-            }else{
-                float h = [q returnAnswerHeightZone];
-                
-                if (h<60) {
-                    return 60;
-                }else{
-                    return h;
-                }
-            }
-        }else{
-            return [q returnOptionHeight:(int)indexPath.row-2];
-        }
-        return 60;
-    }
-    return 0;
-}
--(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
-    return 10;
-}
+//#pragma mark UITableViewdelegate
+//- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
+//    if ([_testType isEqualToString:@"single"]) {
+//        return 1;
+//    }else{
+//        if (_allQuestionAry>0) {
+//            return _allQuestionAry.count;
+//        }
+//    }
+//    return 0;
+//}
+//-(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
+//    if ([_testType isEqualToString:@"single"]) {
+//        if (_allQuestionAry.count>0) {
+//            //1.单选 2.多选 3.判断 4.填空 5.问答
+//            QuestionModel * q = _allQuestionAry[_temp];
+//            if ([q.titleType isEqualToString:@"1"]||[q.titleType isEqualToString:@"2"]) {
+//                return 2+q.qustionOptionsAry.count;
+//            }
+//            return 3;
+//        }
+//    }else{
+//        if (_allQuestionAry>0) {
+//            //1.单选 2.多选 3.判断 4.填空 5.问答
+//            QuestionModel * q = _allQuestionAry[section];
+//            if ([q.titleType isEqualToString:@"1"]||[q.titleType isEqualToString:@"2"]) {
+//                return 2+q.qustionOptionsAry.count;
+//            }
+//            return 3;
+//        }
+//    }
+//
+//    return 0;
+//}
+//
+//-(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
+//    ChoiceQuestionTableViewCell * cell ;
+//
+//    QuestionModel * q;
+//
+//    if ([_testType isEqualToString:@"single"]) {
+//        q = _allQuestionAry[_temp];
+//    }else{
+//        q = _allQuestionAry[indexPath.section];
+//    }
+//
+//
+//    if (!cell) {
+//        if (indexPath.row == 0) {
+//            cell = [tableView dequeueReusableCellWithIdentifier:@"ChoiceQuestionTableViewCellEighth"];
+//            cell = [[[NSBundle mainBundle] loadNibNamed:@"ChoiceQuestionTableViewCell" owner:nil options:nil] objectAtIndex:7];
+//
+//        }else if (indexPath.row == 1){
+//
+//            cell = [tableView dequeueReusableCellWithIdentifier:@"ChoiceQuestionTableViewCellFirst"];
+//
+//            cell = [[[NSBundle mainBundle] loadNibNamed:@"ChoiceQuestionTableViewCell" owner:nil options:nil] objectAtIndex:0];
+//        }
+//        else if (indexPath.row == 2+q.qustionOptionsAry.count){
+//            if ([q.titleType  isEqualToString:@"5"]) {
+//                cell = [tableView dequeueReusableCellWithIdentifier:@"ChoiceQuestionTableViewCellFirst"];
+//
+//                cell = [[[NSBundle mainBundle] loadNibNamed:@"ChoiceQuestionTableViewCell" owner:nil options:nil] objectAtIndex:0];
+//            }else{
+//                cell = [tableView dequeueReusableCellWithIdentifier:@"ChoiceQuestionTableViewCellSeventh"];
+//
+//                cell = [[[NSBundle mainBundle] loadNibNamed:@"ChoiceQuestionTableViewCell" owner:nil options:nil] objectAtIndex:6];
+//            }
+//        }else{
+//            cell = [tableView dequeueReusableCellWithIdentifier:@"ChoiceQuestionTableViewCellThird"];
+//
+//            cell = [[[NSBundle mainBundle] loadNibNamed:@"ChoiceQuestionTableViewCell" owner:nil options:nil] objectAtIndex:2];
+//        }
+//    }
+//    if (indexPath.row == 0) {
+//
+//        [cell eigthTitleType:q.titleTypeName withScore:q.qustionScore isSelect:NO isEnableSelect:NO btnTag:(int)indexPath.section+1];
+//
+//    }
+//    if (indexPath.row==1) {
+//
+//        [cell addFirstTitleTextView:q.questionTitle withImageAry:q.questionTitleImageIdAry withIsEdit:NO withIndexRow:(int)indexPath.section];
+//
+//    }else if(indexPath.row>1&&indexPath.row<2+q.qustionOptionsAry.count) {
+//        NSString *string = [NSString stringWithFormat:@"%@",q.questionAnswer];
+//
+//        optionsModel * opt = q.qustionOptionsAry[indexPath.row-2];
+//
+//        if (![_testType isEqualToString:@"single"]) {
+//            _questionNumber = (int)(indexPath.section*1000+indexPath.row-2);
+//        }else{
+//            _questionNumber = (int)indexPath.row-2;
+//        }
+//        //字条串是否包含有某字符串
+//        if ([string rangeOfString:opt.index].location == NSNotFound) {
+//
+//            [cell addOptionWithModel:q.qustionOptionsAry[indexPath.row-2] withEdit:_editable withIndexRow:_questionNumber withISelected:NO];
+//
+//        }else{
+//
+//            [cell addOptionWithModel:q.qustionOptionsAry[indexPath.row-2] withEdit:_editable withIndexRow:_questionNumber withISelected:YES];
+//        }
+//    }else if (indexPath.row == 2+q.qustionOptionsAry.count){
+//        if ([q.titleType  isEqualToString:@"5"]) {
+//            //问答。可上传图片
+//            if (NO) {
+//                [cell addFirstTitleTextView:q.questionAnswer withImageAry:q.questionAnswerImageAry withIsEdit:YES withIndexRow:(int)indexPath.section];
+//            }else{
+//
+//                [cell addFirstTitleTextView:q.questionAnswer withImageAry:q.questionAnswerImageIdAry withIsEdit:NO withIndexRow:(int)indexPath.section];
+//
+//            }
+//            //
+//        }else{
+//            if (![_testType isEqualToString:@"single"]) {
+//                _questionNumber = (int)(indexPath.section);
+//            }else{
+//                _questionNumber = _temp;
+//            }
+//
+//            [cell addSeventhTextViewWithStr:q.questionAnswer withIndexRow:_questionNumber];
+//        }
+//
+//    }
+//
+//    cell.delegate = self;
+//
+//    [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
+//
+//    return cell;
+//}
+//-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+//    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+//}
+//-(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
+//    if (_allQuestionAry.count>0) {
+//
+//        QuestionModel * q ;//= _allQuestionAry[indexPath.section];
+//        if ([_testType isEqualToString:@"single"]) {
+//            q = _allQuestionAry[_temp];
+//        }else{
+//            q = _allQuestionAry[indexPath.section];
+//        }
+//        if (indexPath.row == 0) {
+//            return 60;
+//        }else if(indexPath.row == 1){
+//
+//            return [q returnTitleHeight];
+//
+//        }else if (indexPath.row == 2+q.qustionOptionsAry.count){
+//            if ([q.titleType isEqualToString:@"5"]) {
+//                float h = [q returnAnswerHeight];
+//                if (h<400) {
+//                    return 400;
+//                }else{
+//                    return h;
+//                }
+//            }else{
+//                float h = [q returnAnswerHeightZone];
+//
+//                if (h<60) {
+//                    return 60;
+//                }else{
+//                    return h;
+//                }
+//            }
+//        }else{
+//            return [q returnOptionHeight:(int)indexPath.row-2];
+//        }
+//        return 60;
+//    }
+//    return 0;
+//}
+//-(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
+//    return 10;
+//}
 /*
 #pragma mark - Navigation
 

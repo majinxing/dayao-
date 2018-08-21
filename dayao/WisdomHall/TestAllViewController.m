@@ -9,14 +9,15 @@
 #import "TestAllViewController.h"
 #import "AllTestViewController.h"
 #import "CreateTestViewController.h"
+#import "JoinCours.h"
 
-
-@interface TestAllViewController ()<UIScrollViewDelegate>
+@interface TestAllViewController ()<UIScrollViewDelegate,JoinCoursDelegate>
 @property (strong, nonatomic)  UIButton *NOTest;
 @property (strong, nonatomic)  UIButton *HaveTest;
 
 @property (nonatomic,strong)UIScrollView * btnScrollView;
 @property (nonatomic,strong)UIScrollView * textScrollView;
+@property (nonatomic,strong)JoinCours * join;
 
 @property (nonatomic,strong)NSMutableArray * vcAry;
 @end
@@ -29,7 +30,7 @@
     self.view.backgroundColor = [UIColor whiteColor];
     
     [self addBtn];
-
+    
     [self addScrollView];
     
     [self setNavigationTitle];
@@ -51,10 +52,14 @@
     }
 }
 -(void)createText{
-    CreateTestViewController * c = [[CreateTestViewController alloc] init];
-    self.hidesBottomBarWhenPushed = YES;
-    c.classModel  = _classModel;
-    [self.navigationController pushViewController:c animated:YES];
+    if (_join==nil) {
+        _join = [[JoinCours alloc] init];
+        _join.delegate = self;
+        _join.frame = CGRectMake(0, 0, APPLICATION_WIDTH, APPLICATION_HEIGHT);
+        [_join addContentView:@"请输入试卷的名字"];
+        [self.view addSubview:_join];
+    }
+    
 }
 -(void)addBtn{
     _NOTest = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -110,7 +115,7 @@
         
         [_vcAry addObject:vc];
     }
- 
+    
     _textScrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(_HaveTest.frame), APPLICATION_WIDTH, APPLICATION_HEIGHT-CGRectGetMaxY(_HaveTest.frame))];
     _textScrollView.contentOffset = CGPointMake(0, 0);
     _textScrollView.bounces= YES;
@@ -134,6 +139,31 @@
 -(void)titleClick:(UIButton *)button{
     
     [_textScrollView setContentOffset:CGPointMake((button.tag-1)*APPLICATION_WIDTH, 0) animated:YES];
+}
+#pragma mark JoinCoursDelegate
+-(void)joinCourseDelegete:(UIButton *)btn{
+    [self.view endEditing:YES];
+    if (btn.tag == 1) {
+        [_join removeFromSuperview];
+        _join = nil;
+    }else if (btn.tag == 2){
+        if (![UIUtils isBlankString:_join.courseNumber.text]) {
+            CreateTestViewController * c = [[CreateTestViewController alloc] init];
+            self.hidesBottomBarWhenPushed = YES;
+            c.classModel  = _classModel;
+            c.textName = _join.courseNumber.text;
+            [self.navigationController pushViewController:c animated:YES];
+            
+            [_join removeFromSuperview];
+            
+            _join = nil;
+                        
+        }else{
+            [UIUtils showInfoMessage:@"试卷名字不能为空" withVC:self];
+        }
+        
+    }
+    
 }
 #pragma mark UIScrollViewDelegate
 -(void)scrollViewDidScroll:(UIScrollView *)scrollView{
@@ -175,18 +205,18 @@
             
             
             
-//            [button setTitleColor:[UIColor colorWithHexString:@"#29a7e1"] forState:UIControlStateNormal];
+            //            [button setTitleColor:[UIColor colorWithHexString:@"#29a7e1"] forState:UIControlStateNormal];
         }
     }
 }
 /*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
+ #pragma mark - Navigation
+ 
+ // In a storyboard-based application, you will often want to do a little preparation before navigation
+ - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+ // Get the new view controller using [segue destinationViewController].
+ // Pass the selected object to the new view controller.
+ }
+ */
 
 @end

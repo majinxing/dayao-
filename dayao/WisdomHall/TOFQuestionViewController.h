@@ -11,6 +11,8 @@
 
 @protocol TOFQuestionViewControllerDelegate<NSObject>
 -(void)handleSwipeFromDelegate:(UISwipeGestureRecognizer *)recognizer;
+-(void)removeTitleBtnPressedTOFQVCDelegate:(UIButton *)btn;
+
 @end
 
 @interface TOFQuestionViewController : UIViewController

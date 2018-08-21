@@ -55,7 +55,7 @@
     _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0,0, APPLICATION_WIDTH, APPLICATION_HEIGHT-104) style:UITableViewStylePlain];
     _tableView.delegate = self;
     _tableView.dataSource = self;
-    
+    _tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     self.automaticallyAdjustsScrollViewInsets = NO;
     
     [self.view addSubview:_tableView];
@@ -171,6 +171,11 @@
     
 }
 #pragma mark ChoiceQuestionTableViewCellDelegate
+-(void)removeTitleBtnPressedDelegate:(UIButton *)btn{
+    if (self.delegate&&[self.delegate respondsToSelector:@selector(removeTitleBtnPressedCQVCDelegate:)]) {
+        [self.delegate removeTitleBtnPressedCQVCDelegate:btn];
+    }
+}
 -(void)addOptionsDelegate:(UIButton *)sender{
     
     optionsModel * option = [[optionsModel alloc] init];
@@ -265,7 +270,7 @@
 }
 #pragma mark UITableViewdelegate
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
-    return 4;
+    return 5;
 }
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
     if (section ==0) {
@@ -282,8 +287,10 @@
     }else if (section ==3){
         
         return 1;
+    }else if (section == 4){
+        return 1;
     }
-    return 10;
+    return 0;
 }
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
@@ -320,6 +327,10 @@
                 
             cell = [[[NSBundle mainBundle] loadNibNamed:@"ChoiceQuestionTableViewCell" owner:nil options:nil] objectAtIndex:6];
             
+        }else if (indexPath.section == 4){
+            cell = [tableView dequeueReusableCellWithIdentifier:@"ChoiceQuestionTableViewCellNinth"];
+            
+            cell = [[[NSBundle mainBundle] loadNibNamed:@"ChoiceQuestionTableViewCell" owner:nil options:nil] objectAtIndex:8];
         }
     }
     
@@ -329,10 +340,10 @@
     
     if (indexPath.section == 0) {
         if (_editable) {
-            [cell addFirstTitleTextView:_questionModel.questionTitle withImageAry:_questionModel.questionTitleImageAry withIsEdit:_editable];
+            [cell addFirstTitleTextView:_questionModel.questionTitle withImageAry:_questionModel.questionTitleImageAry withIsEdit:_editable withIndexRow:(int)indexPath.section];
 
         }else{
-            [cell addFirstTitleTextView:_questionModel.questionTitle withImageAry:_questionModel.questionTitleImageIdAry withIsEdit:_editable];
+            [cell addFirstTitleTextView:_questionModel.questionTitle withImageAry:_questionModel.questionTitleImageIdAry withIsEdit:_editable withIndexRow:(int)indexPath.section];
         }
     }else if(indexPath.section == 1){
     
@@ -342,11 +353,13 @@
         if (indexPath.row==_questionModel.qustionOptionsAry.count) {
             
         }else{
-            [cell addOptionWithModel:_questionModel.qustionOptionsAry[indexPath.row] withIndexRow:(int)indexPath.row withISelected:NO];
+            [cell addOptionWithModel:_questionModel.qustionOptionsAry[indexPath.row] withEdit:_editable withIndexRow:(int)indexPath.row withISelected:NO];
         }
     }else if (indexPath.section ==3){
-        [cell addSeventhTextViewWithStrEndEditor:_questionModel.questionAnswer];
+        [cell addSeventhTextViewWithStrEndEditor:_questionModel.qustionBankAnswer];
 
+    }else if (indexPath.section ==4){
+        [cell addRemoveBtnTag:_titleNum];
     }
     
     return cell;
@@ -364,17 +377,22 @@
     }else if (indexPath.section == 2){
         return [_questionModel returnOptionHeight:(int)indexPath.row];
     }else if (indexPath.section==3){
-        return [_questionModel returnAnswerHeightZone];
+        return [_questionModel returnBankAnswerHeight];
+    }else if(indexPath.section == 4){
+        return 80;
     }
     return 60;
 }
 -(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
+    if (section == 4) {
+        return 0;
+    }
     return 30;
 }
 -(UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section{
-    NSArray * ary = @[@"题目内容",@"选择分值与难易程度",@"选项",@"参考答案"];
+    NSArray * ary = @[@"题目内容",@"选择分值与难易程度",@"选项",@"参考答案",@" "];
     UIView * view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, APPLICATION_WIDTH, 30)];
-    view.backgroundColor = RGBA_COLOR(236, 236, 236, 1);
+    view.backgroundColor = [UIColor colorWithHexString:@"#f1f1f1"];
     UILabel * l = [[UILabel alloc] initWithFrame:CGRectMake(10, 5, 200, 20)];
     l.font = [UIFont systemFontOfSize:15];
     

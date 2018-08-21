@@ -48,6 +48,8 @@
     
     _questionTitle = [dict objectForKey:@"content"];
     
+    _qustionBankAnswer = [dict objectForKey:@"answer"];
+    
     _titleType = [NSString stringWithFormat:@"%@",[dict objectForKey:@"type"]];
     if ([_titleType isEqualToString:@"1"]) {
         _titleTypeName = @"单选";
@@ -132,6 +134,22 @@
     }
     return text+image;
 
+}
+-(float)returnBankAnswerHeight{
+    float  text ;
+    if ([UIUtils isBlankString:_qustionBankAnswer]) {
+        text = 0;
+    }else{
+        text = [self returnTextHeight:_qustionBankAnswer];
+    }
+    
+    float image = 0;
+    if (_questionAnswerImageAry.count>0&&_questionAnswerImageAry.count<=3) {
+        image = (APPLICATION_WIDTH/3)+40;
+    }else if(_questionAnswerImageAry.count>3){
+        image = (APPLICATION_WIDTH/3*2)+40;
+    }
+    return text+image;
 }
 -(float)returnAnswerHeight{
     

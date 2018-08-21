@@ -27,6 +27,8 @@
 
 @property (nonatomic,copy) NSString * correctAnswer;//正确答案
 
+@property (nonatomic,copy) NSString * qustionBankAnswer;//题库答案
+
 @property (nonatomic,strong) NSMutableArray * questionAnswerImageAry;//题目答案图片数组
 
 @property (nonatomic,strong) NSMutableArray * questionAnswerImageIdAry;//题目答案图片数组Id
@@ -55,4 +57,6 @@
 -(float)returnAnswerHeight;
 
 -(float)returnAnswerHeightZone;//答案真实高度
+
+-(float)returnBankAnswerHeight;
 @end

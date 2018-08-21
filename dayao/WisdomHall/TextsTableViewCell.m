@@ -14,6 +14,8 @@
 @property (strong, nonatomic) IBOutlet UILabel *score;
 @property (strong, nonatomic) IBOutlet UILabel *textState;
 
+@property (weak, nonatomic) IBOutlet UILabel *delectLabel;
+
 
 @end
 
@@ -24,6 +26,12 @@
     
     
     _textState.text = [NSString stringWithFormat:@"%@",t.statusName];
+    
+    if ([t.statusName isEqualToString:@"已完成"]) {
+        _delectLabel.backgroundColor = RGBA_COLOR(222, 30, 30, 1);
+        _delectLabel.text = @"删除";
+        _moreImage.image = [UIImage imageNamed:@""];
+    }
     
 //    if (![t.statusName isEqualToString:@"进行中"]) {
 //
@@ -41,6 +49,23 @@
     [super awakeFromNib];
     _textState.layer.masksToBounds = YES;
     _textState.layer.cornerRadius = 10;
+    
+    CGRect rect = CGRectMake(0, 0, 70, 30);
+    
+    CGSize radio = CGSizeMake(15, 15);//圆角尺寸
+    
+    UIRectCorner corner = UIRectCornerTopLeft|UIRectCornerBottomLeft;//这只圆角位置
+    
+    UIBezierPath *path = [UIBezierPath bezierPathWithRoundedRect:rect byRoundingCorners:corner cornerRadii:radio];
+    
+    CAShapeLayer *masklayer = [[CAShapeLayer alloc]init];
+    
+    //创建shapelayer
+    masklayer.frame = _score.bounds;
+    masklayer.path = path.CGPath;
+    //设置路径
+    _delectLabel.layer.mask = masklayer;
+    
     
     // Initialization code
 }

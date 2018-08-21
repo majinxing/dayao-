@@ -50,18 +50,32 @@
                             <action selector="moreBtnPressed:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="j0J-np-FBZ"/>
                         </connections>
                     </button>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7bY-zY-CQf">
+                        <rect key="frame" x="286" y="20.5" width="70" height="30"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="70" id="i7k-2U-uVM"/>
+                            <constraint firstAttribute="height" constant="30" id="kFH-Eb-O49"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                        <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <nil key="highlightedColor"/>
+                    </label>
                 </subviews>
                 <constraints>
                     <constraint firstItem="CAZ-jO-iOR" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" id="EBF-GF-mj6"/>
+                    <constraint firstItem="7bY-zY-CQf" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="Ha4-Pe-Igz"/>
                     <constraint firstAttribute="trailing" secondItem="XBJ-53-Q46" secondAttribute="trailing" constant="20" id="SZI-cI-oQY"/>
                     <constraint firstItem="hIW-nr-z6y" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="Xce-Bp-nOj"/>
                     <constraint firstItem="XBJ-53-Q46" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="a7S-bu-kwW"/>
                     <constraint firstItem="hIW-nr-z6y" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="20" id="csq-MP-gN2"/>
                     <constraint firstAttribute="trailing" secondItem="CAZ-jO-iOR" secondAttribute="trailing" id="rw2-Rx-Yyh"/>
                     <constraint firstAttribute="bottom" secondItem="CAZ-jO-iOR" secondAttribute="bottom" id="sly-gZ-ke0"/>
+                    <constraint firstAttribute="trailing" secondItem="7bY-zY-CQf" secondAttribute="trailing" id="th3-mU-Kv7"/>
+                    <constraint firstItem="CAZ-jO-iOR" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="zCt-rc-xLL"/>
                 </constraints>
             </tableViewCellContentView>
             <connections>
+                <outlet property="delectLabel" destination="7bY-zY-CQf" id="KNr-YF-hTL"/>
                 <outlet property="moreBtn" destination="CAZ-jO-iOR" id="JTc-n4-HBj"/>
                 <outlet property="moreImage" destination="XBJ-53-Q46" id="uHP-ct-BJX"/>
                 <outlet property="score" destination="ybN-8q-2qU" id="8bv-hz-Pp3"/>

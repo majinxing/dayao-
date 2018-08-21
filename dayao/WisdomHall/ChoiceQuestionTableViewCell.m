@@ -70,6 +70,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *titleScore;
 @property (strong, nonatomic) IBOutlet UIImageView *eighthImage;
 @property (strong, nonatomic) IBOutlet UIButton *eigthSelectBtn;
+@property (weak, nonatomic) IBOutlet UIButton *removeTitle;
 
 @end
 
@@ -111,6 +112,12 @@
         
         [_optionsImageAry addObject:image];
     }
+    
+    _removeTitle.layer.masksToBounds = YES;
+    _removeTitle.layer.borderWidth = 1;
+    _removeTitle.layer.borderColor = [UIColor redColor].CGColor;
+    [_removeTitle setTitleColor:[UIColor redColor] forState:UIControlStateNormal];
+    _removeTitle.layer.cornerRadius = 15;
     // Initialization code
 }
 
@@ -210,7 +217,9 @@
     }
 }
 
-
+-(void)addRemoveBtnTag:(int)n{
+    _removeTitle.tag = n;
+}
 -(void)setScoreAndDifficult:(NSString *)score withDifficult:(NSString *)difficult withEdit:(BOOL)edit{
     if (edit) {
         [_secondDifficultBtn setEnabled:YES];
@@ -419,6 +428,11 @@
 - (IBAction)thirthSelectOption:(UIButton *)sender {
     if (self.delegate&&[self.delegate respondsToSelector:@selector(thirthSelectOptionDelegate:)]) {
         [self.delegate thirthSelectOptionDelegate:sender];
+    }
+}
+- (IBAction)removeTitleBtnPressed:(id)sender {
+    if (self.delegate&&[self.delegate respondsToSelector:@selector(removeTitleBtnPressedDelegate:)]) {
+        [self.delegate removeTitleBtnPressedDelegate:sender];
     }
 }
 -(void)eigthTitleType:(NSString *)titleType withScore:(NSString *)score isSelect:(BOOL)select isEnableSelect:(BOOL)isSelect btnTag:(int)index{

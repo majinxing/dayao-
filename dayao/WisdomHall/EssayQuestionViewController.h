@@ -12,6 +12,8 @@
 
 @protocol EssayQuestionViewControllerDelegate<NSObject>
 -(void)handleSwipeFromDelegate:(UISwipeGestureRecognizer *)recognizer;
+-(void)removeTitleBtnPressedEQVCDelegate:(UIButton *)btn;
+
 @end
 
 @interface EssayQuestionViewController : UIViewController
