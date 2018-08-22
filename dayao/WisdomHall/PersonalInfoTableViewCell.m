@@ -63,10 +63,10 @@
         
         if (![UIUtils isBlankString:[NSString stringWithFormat:@"%@",ss.pictureId]]) {
             
-            [cell.headImage sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@?resourceId=%@",base,FileDownload,ss.pictureId]] placeholderImage:[UIImage imageNamed:@"signa.png"]];
+            [cell.headImage sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@/%@?resourceId=%@",base,FileDownload,ss.pictureId]] placeholderImage:[UIImage imageNamed:@"PersonalChat"]];
             
         }else{
-            cell.headImage.image = [UIImage imageNamed:@"headImage"];
+            cell.headImage.image = [UIImage imageNamed:@"PersonalChat"];
         }
         
         cell.leave.backgroundColor = [UIColor whiteColor];

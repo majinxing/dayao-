@@ -9,7 +9,9 @@
 #import <UIKit/UIKit.h>
 #import "AskForLeaveView.h"
 #import "AskForLeaveModel.h"
+#import "ClassModel.h"
+
 @interface AskForLeaveDetailsViewController : UIViewController
 @property (nonatomic,strong)AskForLeaveModel * askModel;
-
+@property (nonatomic,strong)ClassModel * c;
 @end

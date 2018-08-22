@@ -18,6 +18,7 @@
 
 -(void)askForLeaveWithReationDelegate:(NSString *)reasionStr;
 -(void)picturebtnPressedDelegate:(UIButton *)btn;
+-(void)whetherOrNotApproveDelegate:(UIButton*)btn;
 @end
 @interface AskForLeaveView : UIView
 @property (nonatomic,strong)peopleListView * peopleListView;

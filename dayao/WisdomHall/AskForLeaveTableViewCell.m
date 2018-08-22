@@ -13,6 +13,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *askTime;
 @property (weak, nonatomic) IBOutlet UILabel *askTextLabel;
 @property (weak, nonatomic) IBOutlet UILabel *askState;
+@property (weak, nonatomic) IBOutlet UIView *backView;
 
 @end
 
@@ -39,6 +40,11 @@
     
     _askTime.font = [UIFont fontWithName:@"PingFangSC-Regular" size:14];
     _askTime.textColor = [UIColor colorWithRed:128/255.0 green:128/255.0 blue:128/255.0 alpha:1/1.0];
+    
+    _backView.layer.masksToBounds = YES;
+    _backView.layer.cornerRadius = 15;
+    
+
     // Initialization code
 }
 -(void)addContentView:(AskForLeaveModel *)ask{
@@ -46,8 +52,8 @@
     _askTime.text = ask.askTime;
     _askTextLabel.text = ask.askText;
     if ([ask.askState isEqualToString:@"2"]) {
-        _askState.text = @"已审核";
-        _askState.backgroundColor = [UIColor greenColor];
+        _askState.text = @"已审批";
+        _askState.backgroundColor = RGBA_COLOR(30, 143, 78, 1);
     }else if ([ask.askState isEqualToString:@"3"]){
         _askState.text = @"未批准";
         _askState.backgroundColor = [UIColor redColor];

@@ -307,7 +307,7 @@
 }
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
     if (indexPath.section ==0) {
-        return 300;
+        return 260;
     }else if (indexPath.section ==1){
         return 60;
     }else if (indexPath.section == 2){
@@ -358,8 +358,9 @@
                     VoiceViewController* msgController = [[VoiceViewController alloc] init];
                     msgController.userDelegate = self;
                     
-                    NSString * str = [NSString stringWithFormat:@"%@%@",_user.school,_meetingModel.workNo];
-                    NSString * str1 = [NSString stringWithFormat:@"%@%@",_user.school,_user.studentId];
+                    NSString * str = [NSString stringWithFormat:@"%@",_meetingModel.meetingHostId];
+                    
+                    NSString * str1 = [NSString stringWithFormat:@"%@",_user.peopleId];
                     
                     msgController.peerUID = [str integerValue];//con.cid;
                     

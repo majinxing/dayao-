@@ -8,10 +8,10 @@
 
 #import "NavBarNavigationController.h"
 #import "DYHeader.h"
+#import "VoiceViewController.h"
+#import "DYTabBarViewController.h"
 
-
-
-@interface NavBarNavigationController ()
+@interface NavBarNavigationController ()<MessageViewControllerUserDelegate>
 //@property (nonatomic,strong)NSTimer *showTimer;
 @property (nonatomic,strong)NSDictionary * dict;
 @end
@@ -37,6 +37,10 @@
          addObserver:sharedDYTabBarViewControllerInstance
          selector:@selector(stopTime)
          name:@"stopTime" object:nil];
+        [[NSNotificationCenter defaultCenter]
+         addObserver:sharedDYTabBarViewControllerInstance
+         selector:@selector(networkDidReceiveMessage:)
+         name:@"kJPFNetworkDidReceiveMessageNotification" object:nil];
     });
     return sharedDYTabBarViewControllerInstance;
 }
@@ -56,6 +60,66 @@
     
     
 //    NSDictionary * dict = [NSDictionary alloc] initWithObjectsAndKeys:<#(nonnull id), ...#>, nil;
+}
+
+- (void)networkDidReceiveMessage:(NSNotification *)notification {
+    
+    NSDictionary * userInfo = [notification object];
+    
+    NSString * strIM = [userInfo objectForKey:@"content_type"];
+    
+    if ([strIM isEqualToString:@"im"]) {
+        
+        
+        UserModel * user = [[Appsetting sharedInstance] getUsetInfo];
+        
+        VoiceViewController* msgController = [[VoiceViewController alloc] init];
+        
+        
+        NSDictionary * dic = [userInfo objectForKey:@"msg_content"];
+        
+        msgController.userDelegate = self;
+        
+        NSString * str = [NSString stringWithFormat:@"%@",[dic objectForKey:@"teacherIM"]];
+        
+        NSString * str1 = [NSString stringWithFormat:@"%@",user.peopleId];
+        
+        msgController.peerUID = [str integerValue];//con.cid;@"5012012551319";//
+        
+        msgController.peerName = [NSString stringWithFormat:@"%@",[dic objectForKey:@"teacherName"]];//con.name;
+        
+        msgController.currentUID = [str1 integerValue];
+        
+        //        msgController.backType = @"TabBar";
+        
+        msgController.hidesBottomBarWhenPushed = YES;
+        NSArray * ary = [dic objectForKey:@"recvUsers"];
+        NSString * str11 = [ary componentsJoinedByString:@","];
+        
+        if ([UIUtils isBlankString:msgController.type]) {
+            msgController.type = @"1";
+            if ([str11 rangeOfString:[NSString stringWithFormat:@"%@%@",user.school,user.studentId]].location != NSNotFound) {
+                DYTabBarViewController * root = (DYTabBarViewController *)[UIApplication sharedApplication].keyWindow.rootViewController;
+                
+                if ([root isKindOfClass:[UITabBarController class]]) {//判断是否是当前根视图
+                    
+                    UINavigationController *nav = root.selectedViewController;//获取到当前视图的导航视图
+                    
+                    [nav.topViewController.navigationController pushViewController:msgController animated:YES];//获取当前跟视图push到的最高视图层,然后进行push到目的页面
+                    
+                }
+            }
+        }
+        
+        
+        NSDictionary * dict = [[NSDictionary alloc] initWithObjectsAndKeys:[NSString stringWithFormat:@"%@",[dic objectForKey:@"relObjectDetailID"]],@"relDetailId",[NSString stringWithFormat:@"%@",[dic objectForKey:@"relObjectType"]],@"relType",nil];
+        
+        [[NetworkRequest sharedInstance] POST:StudentReply dict:dict succeed:^(id data) {
+            
+        } failure:^(NSError *error) {
+            
+        }];
+    }
 }
 -(void)stopTime{
     
@@ -103,5 +167,28 @@
             
         }];
     }
+}
+#pragma mark - MessageViewControllerUserDelegate
+//从本地获取用户信息, IUser的name字段为空时，显示identifier字段
+- (IUser*)getUser:(int64_t)uid {
+    IUser *u = [[IUser alloc] init];
+    u.uid = uid;
+    u.name = @"";
+    u.avatarURL = @"http://api.gobelieve.io/images/e837c4c84f706a7988d43d62d190e2a1.png";
+    u.identifier = [NSString stringWithFormat:@"uid:%lld", uid];
+    return u;
+}
+//从服务器获取用户信息
+- (void)asyncGetUser:(int64_t)uid cb:(void(^)(IUser*))cb {
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        IUser *u = [[IUser alloc] init];
+        u.uid = uid;
+        u.name = [NSString stringWithFormat:@"name:%lld", uid];
+        u.avatarURL = @"http://api.gobelieve.io/images/e837c4c84f706a7988d43d62d190e2a1.png";
+        u.identifier = [NSString stringWithFormat:@"uid:%lld", uid];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            cb(u);
+        });
+    });
 }
 @end

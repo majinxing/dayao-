@@ -208,30 +208,40 @@ performFetchWithCompletionHandler:(void (^)(UIBackgroundFetchResult))completionH
     [[CollectionHeadView sharedInstance] onceSetNil];
     
     if ([UIUtils didUserPressLockButton]) {
-        //目的是为了停止inApp的时钟
-        [[NSNotificationCenter defaultCenter] postNotificationName:@"stopTime" object:nil];
+        UserModel * user = [[Appsetting sharedInstance] getUsetInfo];
         
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"stopTime" object:nil];
 
-        NSLog(@"Lock screen.");
-        // 标记一个长时间运行的后台任务将开始
-        // 通过调试，发现，iOS给了我们额外的10分钟（600s）来执行这个任务。
-        self.backgroundTaskIdentifier =[application beginBackgroundTaskWithExpirationHandler:^(void) {
+        NSDictionary * dict = @{@"appState":@"2",@"id":[NSString stringWithFormat:@"%@",user.peopleId]};
+        [[NetworkRequest sharedInstance] POST:ChangeAppState dict:dict succeed:^(id data) {
             
-            // 当应用程序留给后台的时间快要到结束时（应用程序留给后台执行的时间是有限的）， 这个Block块将被执行
-            // 我们需要在次Block块中执行一些清理工作。
-            // 如果清理工作失败了，那么将导致程序挂掉
+        } failure:^(NSError *error) {
             
-            // 清理工作需要在主线程中用同步的方式来进行
-            
-            
-            [self endBackgroundTask];
         }];
-        // 模拟一个Long-Running Task
-        self.myTimer =[NSTimer scheduledTimerWithTimeInterval:10
-                                                       target:self
-                                                     selector:@selector(timerMethod:)     userInfo:nil
-                                                      repeats:YES];
-        [_myTimer fire];
+//        //目的是为了停止inApp的时钟
+//        [[NSNotificationCenter defaultCenter] postNotificationName:@"stopTime" object:nil];
+//
+//
+//        NSLog(@"Lock screen.");
+//        // 标记一个长时间运行的后台任务将开始
+//        // 通过调试，发现，iOS给了我们额外的10分钟（600s）来执行这个任务。
+//        self.backgroundTaskIdentifier =[application beginBackgroundTaskWithExpirationHandler:^(void) {
+//
+//            // 当应用程序留给后台的时间快要到结束时（应用程序留给后台执行的时间是有限的）， 这个Block块将被执行
+//            // 我们需要在次Block块中执行一些清理工作。
+//            // 如果清理工作失败了，那么将导致程序挂掉
+//
+//            // 清理工作需要在主线程中用同步的方式来进行
+//
+//
+//            [self endBackgroundTask];
+//        }];
+//        // 模拟一个Long-Running Task
+//        self.myTimer =[NSTimer scheduledTimerWithTimeInterval:10
+//                                                       target:self
+//                                                     selector:@selector(timerMethod:)     userInfo:nil
+//                                                      repeats:YES];
+//        [_myTimer fire];
     }
     else {
         NSLog(@"Home.");

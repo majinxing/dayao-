@@ -10,6 +10,7 @@
 #import "AskForLeaveModel.h"
 #import "AskForLeaveTableViewCell.h"
 #import "AskForLeaveDetailsViewController.h"
+#import "MJRefresh.h"
 
 @interface AskForLeaveViewController ()<UITableViewDelegate,UITableViewDataSource>
 @property (nonatomic,strong)UITableView * tableView;
@@ -32,11 +33,15 @@
     [self getData];
     // Do any additional setup after loading the view from its nib.
 }
+-(void)viewWillAppear:(BOOL)animated{
+    [self getData];
+}
 -(void)getData{
     NSDictionary * dict = [[NSDictionary alloc] initWithObjectsAndKeys:[NSString stringWithFormat:@"%@",_c.sclassId],@"courseId",[NSString stringWithFormat:@"%@",_c.courseDetailId],@"detailId", nil];
     [[NetworkRequest sharedInstance] POST:QueryLeaveTeacher dict:dict succeed:^(id data) {
             NSLog(@"%s",__func__);
         NSString * str = [NSString stringWithFormat:@"%@",[[data objectForKey:@"header"] objectForKey:@"message"]];
+        [_dataAry removeAllObjects];
         if ([str isEqualToString:@"成功"]) {
             NSArray * ary = [data objectForKey:@"body"];
             for (int i = 0; i<ary.count; i++) {
@@ -48,16 +53,26 @@
         }else{
             [UIUtils showInfoMessage:str withVC:self];
         }
+        [_tableView headerEndRefreshing];
     } failure:^(NSError *error) {
-        
+        [_tableView headerEndRefreshing];
+
     }];
 }
 -(void)addTableView{
     _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 64, APPLICATION_WIDTH, APPLICATION_HEIGHT-64) style:UITableViewStylePlain];
     _tableView.delegate = self;
     _tableView.dataSource = self;
+    _tableView.separatorStyle = UITableViewScrollPositionNone;
+    _tableView.backgroundColor = [UIColor colorWithHexString:@"#fafafa"];
     [self.view addSubview:_tableView];
+    __weak AskForLeaveViewController * weakSelf = self;
+    [_tableView addHeaderWithCallback:^{
+        [weakSelf getData];
+        
+    }];
 }
+
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
@@ -78,13 +93,15 @@
     AskForLeaveModel * a = _dataAry[indexPath.row];
     
     [cell addContentView:a];
-    
+    cell.backgroundColor = [UIColor colorWithHexString:@"#fafafa"];
     return cell;
 }
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     AskForLeaveDetailsViewController * vc = [[AskForLeaveDetailsViewController alloc] init];
     vc.askModel =_dataAry[indexPath.row];
+    vc.c = _c;
+    
     self.hidesBottomBarWhenPushed = YES;
     [self.navigationController pushViewController:vc animated:YES];
 }

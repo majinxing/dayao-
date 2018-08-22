@@ -84,7 +84,8 @@
     
     UIButton * btn = [UIButton buttonWithType:UIButtonTypeCustom];
     btn.frame = CGRectMake(20, CGRectGetMaxY(line2.frame)+20, view1.frame.size.width-40, 40);
-    btn.backgroundColor = [[Appsetting sharedInstance] getThemeColor];
+    [btn setBackgroundImage:[UIImage imageNamed:@"Rectangle3"] forState:UIControlStateNormal];
+    
     [btn setTitle:@"提交" forState:UIControlStateNormal];
     [btn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [btn addTarget:self action:@selector(submit) forControlEvents:UIControlEventTouchUpInside];

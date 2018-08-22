@@ -283,6 +283,9 @@
             if ([code isEqualToString:@"0000"]) {
                 [_nVC viewDidLoad];
                 [_synCourseView removeFromSuperview];
+            }else{
+                [UIUtils showInfoMessage:[NSString stringWithFormat:@"%@",[[data objectForKey:@"header"] objectForKey:@"message"]] withVC:self];
+
             }
         }else{
             [UIUtils showInfoMessage:@"同步课程失败，请稍后再试" withVC:self];

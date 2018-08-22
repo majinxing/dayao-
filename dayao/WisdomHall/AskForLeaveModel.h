@@ -15,5 +15,6 @@
 @property (nonatomic,copy)NSString * askState;
 @property (nonatomic,copy)NSString * image;
 @property (nonatomic,copy)NSString * askId;
+@property (nonatomic,copy)NSString * userId;
 -(void)setValueWithDict:(NSDictionary *)dict;
 @end

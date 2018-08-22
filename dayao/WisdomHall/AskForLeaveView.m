@@ -8,8 +8,9 @@
 
 #import "AskForLeaveView.h"
 #import "UIImageView+WebCache.h"
+#import "imageBigView.h"
 
-@interface AskForLeaveView()
+@interface AskForLeaveView()<imageBigViewDelegate>
 @property (nonatomic,strong)UIButton * addPeopleBtn;
 
 @property (nonatomic,strong)IMGroupModel * imGroupModel;
@@ -19,6 +20,8 @@
 @property (nonatomic,strong)UITextView * introductionView;
 
 @property (nonatomic,strong)UILabel * askState;
+
+@property (nonatomic,strong)imageBigView * v;
 
 @end
 @implementation AskForLeaveView
@@ -74,6 +77,7 @@
 //    blackView.alpha = 0.5;
 //    [blackView addTarget:self action:@selector(outSelfView) forControlEvents:UIControlEventTouchUpInside];
 //    [self addSubview:blackView];
+    _askModel = askModel;
     
     UIButton * whiteView = [UIButton buttonWithType:UIButtonTypeCustom];
     
@@ -107,8 +111,9 @@
     
     _inputName.font = [UIFont systemFontOfSize:15];
     
-    [_inputName endEditing:NO];
+//    [_inputName endEditing:NO];
     
+    [_inputName endEditing:YES];
     [whiteView addSubview:_inputName];
     
     [self addMask];
@@ -157,50 +162,73 @@
     
     [whiteView addSubview:groupIntroduction];
     
-    _introductionView = [[UITextView alloc] initWithFrame:CGRectMake(25, CGRectGetMaxY(groupIntroduction.frame)+10, APPLICATION_WIDTH-50, 160)];
+    _introductionView = [[UITextView alloc] initWithFrame:CGRectMake(25, CGRectGetMaxY(groupIntroduction.frame)+10, APPLICATION_WIDTH-50, 200)];
     _introductionView.backgroundColor =  [UIColor colorWithRed:250/255.0 green:250/255.0 blue:250/255.0 alpha:1/1.0];
     _introductionView.text = askModel.askText;
     [_introductionView setEditable:NO];
+    _introductionView.font = [UIFont systemFontOfSize:16];
     [whiteView addSubview:_introductionView];
     
 
     UILabel * pictureLable = [[UILabel alloc] initWithFrame:CGRectMake(25, CGRectGetMaxY(_introductionView.frame)+10, 100, 20)];
-    pictureLable.text = @"照片证明";
+//    pictureLable.text = @"照片证明";
     pictureLable.font = [UIFont fontWithName:@"PingFangSC-Regular" size:15];
 
-    [whiteView addSubview:pictureLable];
     
     _picturebtn = [UIButton buttonWithType:UIButtonTypeCustom];
     
     _picturebtn.frame = CGRectMake(25, CGRectGetMaxY(pictureLable.frame)+10, 70, 70);
     
     [_picturebtn addTarget:self action:@selector(picturebtnPressed:) forControlEvents:UIControlEventTouchUpInside];
-    UIImageView * imag = [[UIImageView alloc] init];
+//    UIImageView * imag = [[UIImageView alloc] init];
     
     if (![UIUtils isBlankString:askModel.image]) {
         
-        [imag  sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@/%@?resourceId=%@",user.host,FileDownload,askModel.image]] placeholderImage:[UIImage imageNamed:@"placeholder.png"]];
+//        [imag  sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@/%@?resourceId=%@",user.host,FileDownload,askModel.image]] placeholderImage:[UIImage imageNamed:@"placeholder.png"]];
         
+        UIImage *result;
+        
+        NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@/%@?resourceId=%@",user.host,FileDownload,askModel.image]]];
+        
+        result = [UIImage imageWithData:data];
+        
+        [_picturebtn setBackgroundImage:result forState:UIControlStateNormal];
+
+        [whiteView addSubview:pictureLable];
+
         [whiteView addSubview:_picturebtn];
+        
     }
     
-    if ([askModel.askState isEqualToString:@"1"]) {
-        UIButton * refusedBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-        refusedBtn.frame = CGRectMake(20,whiteView.frame.size.height-80, APPLICATION_WIDTH/2-25, 50);
+//    if ([askModel.askState isEqualToString:@"1"]) {
+        UIButton * refusedBtn = [UIButton buttonWithType:UIButtonTypeSystem];
+        refusedBtn.frame = CGRectMake(20,CGRectGetMaxY(_picturebtn.frame)+40, APPLICATION_WIDTH/2-25, 50);
         refusedBtn.backgroundColor = RGBA_COLOR(249, 0, 7, 1);
+        [refusedBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
         [refusedBtn setTitle:@"不批准" forState:UIControlStateNormal];
         [whiteView addSubview:refusedBtn];
         
         [self btnMask:refusedBtn withRectCorner:UIRectCornerTopLeft|UIRectCornerBottomLeft];
-        UIButton * agreed = [UIButton buttonWithType:UIButtonTypeCustom];
-        agreed.frame = CGRectMake(APPLICATION_WIDTH/2+5,whiteView.frame.size.height-80, APPLICATION_WIDTH/2-25, 50);
+        UIButton * agreed = [UIButton buttonWithType:UIButtonTypeSystem];
+        agreed.frame = CGRectMake(APPLICATION_WIDTH/2+5,CGRectGetMaxY(_picturebtn.frame)+40, APPLICATION_WIDTH/2-25, 50);
         [agreed setTitle:@"批准" forState:UIControlStateNormal];
 
         agreed.backgroundColor = RGBA_COLOR(30, 143, 78, 1);
+        [agreed setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
         [whiteView addSubview:agreed];
         [self btnMask:agreed withRectCorner:UIRectCornerTopRight|UIRectCornerBottomRight];
-    }
+        
+        [refusedBtn addTarget:self action:@selector(whetherOrNotApprove:) forControlEvents:UIControlEventTouchUpInside];
+        
+        [agreed addTarget:self action:@selector(whetherOrNotApprove:) forControlEvents:UIControlEventTouchUpInside];
+//    }
     
+}
+-(void)whetherOrNotApprove:(UIButton *)btn{
+    if (self.delegate&&[self.delegate respondsToSelector:@selector(whetherOrNotApproveDelegate:)]) {
+        btn.tag = [_askModel.askId intValue];
+        [self.delegate whetherOrNotApproveDelegate:btn];
+    }
 }
 -(void)btnMask:(UIButton *) btn withRectCorner:(UIRectCorner )a{
     CGRect rect = CGRectMake(0, 0, btn.frame.size.width, btn.frame.size.height);
@@ -222,9 +250,23 @@
 
 }
 -(void)picturebtnPressed:(UIButton *)btn{
-    if (self.delegate&&[self.delegate respondsToSelector:@selector(picturebtnPressedDelegate:)]) {
-        [self.delegate picturebtnPressedDelegate:btn];
+    if (!_v) {
+        _v = [[imageBigView alloc] initWithFrame:CGRectMake(0, 0, APPLICATION_WIDTH, APPLICATION_HEIGHT)];
+        _v.delegate = self;
+        
     }
+    UserModel * user = [[Appsetting sharedInstance] getUsetInfo];
+    UIImage *result;
+    
+    NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@/%@?resourceId=%@",user.host,FileDownload,_askModel.image]]];
+    
+    result = [UIImage imageWithData:data];
+    
+    [_v addImageViewWithImage:result];
+    [self addSubview:_v];
+//    if (self.delegate&&[self.delegate respondsToSelector:@selector(picturebtnPressedDelegate:)]) {
+//        [self.delegate picturebtnPressedDelegate:btn];
+//    }
 }
 -(void)addPeopleBtnPressed{
     if (self.delegate&&[self.delegate respondsToSelector:@selector(addPeopleBtnPressedDelegae)]) {
@@ -246,6 +288,12 @@
     if (self.delegate&&[self.delegate respondsToSelector:@selector(askForLeaveWithReationDelegate:)]) {
         [self.delegate askForLeaveWithReationDelegate:_introductionView.text];
     }
+}
+#pragma mark imageBigViewDelegate
+-(void)outViewDelegate{
+    [_v removeFromSuperview];
+    _v = nil;
+    
 }
 /*
 // Only override drawRect: if you perform custom drawing.

@@ -207,7 +207,7 @@ static dispatch_once_t onceToken;
     
     textLabel.numberOfLines = 0;
     
-    textLabel.font = [UIFont systemFontOfSize:12];
+    textLabel.font = [UIFont systemFontOfSize:16];
     
     textLabel.textColor = [UIColor colorWithRed:51/255.0 green:51/255.0 blue:51/255.0 alpha:1/1.0];
     
@@ -267,7 +267,7 @@ static dispatch_once_t onceToken;
     
     UILabel * textLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, ScrollViewW-60-20, 50)];
     textLabel.numberOfLines = 0;
-    textLabel.font = [UIFont systemFontOfSize:12];
+    textLabel.font = [UIFont systemFontOfSize:16];
     textLabel.textColor = [UIColor colorWithRed:51/255.0 green:51/255.0 blue:51/255.0 alpha:1/1.0];
     NoticeModel * notice = _ary[i];
     textLabel.text = [NSString stringWithFormat:@"通知:%@",notice.noticeContent];

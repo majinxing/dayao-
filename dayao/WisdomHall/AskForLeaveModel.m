@@ -16,6 +16,7 @@
     _askText = [dict objectForKey:@"reason"];
     _askId = [NSString stringWithFormat:@"%@",[dict objectForKey:@"id"]];
     _image = [NSString stringWithFormat:@"%@",[dict objectForKey:@"resourceId"]];
+    _userId = [NSString stringWithFormat:@"%@",[dict objectForKey:@"userId"]];
 }
 
 @end

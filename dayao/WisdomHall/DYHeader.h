@@ -336,7 +336,7 @@
 
 #define QueryLeaveTeacher       @"course/course/leave/query/byTeacher" //老师查询请假
 
-
+#define AuditLeave              @"course/course/leave/audit"           //老师审核请假
 
 
 

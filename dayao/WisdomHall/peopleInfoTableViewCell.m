@@ -7,6 +7,8 @@
 //
 
 #import "peopleInfoTableViewCell.h"
+#import "UIImageView+WebCache.h"
+
 
 @interface peopleInfoTableViewCell()
 @property (strong, nonatomic) IBOutlet UIImageView *headImageView;
@@ -23,6 +25,13 @@
 }
 -(void)addContViewWith:(SignPeople *)s{
     _peopleName.text = s.name;
+    if (![UIUtils isBlankString:[NSString stringWithFormat:@"%@",s.pictureId]]) {
+        UserModel * user = [[Appsetting sharedInstance] getUsetInfo];
+        [_headImageView sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@/%@?resourceId=%@",user.host,FileDownload,s.pictureId]] placeholderImage:[UIImage imageNamed:@"PersonalChat"]];
+        
+    }else{
+        _headImageView.image = [UIImage imageNamed:@"PersonalChat"];
+    }
 }
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
     [super setSelected:selected animated:animated];

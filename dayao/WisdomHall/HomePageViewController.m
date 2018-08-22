@@ -178,7 +178,7 @@
     
     _collectionHeadView = [[CollectionHeadView alloc] init];
 
-    _collectionHeadView.frame = CGRectMake(90,CGRectGetMaxY(_bannerView.frame), ScrollViewW-90,ScrollViewH);
+    _collectionHeadView.frame = CGRectMake(90,CGRectGetMaxY(_bannerView.frame)+10, ScrollViewW-90,ScrollViewH);
     _collectionHeadView.delegate = self;
 
     [_bottomScrollView addSubview:_collectionHeadView];
@@ -219,6 +219,8 @@
     CourseDetailsViewController * cdetailVC = [[CourseDetailsViewController alloc] init];
     cdetailVC.c = classModel;
     [self.navigationController pushViewController:cdetailVC animated:YES];
+    self.hidesBottomBarWhenPushed = NO;
+
 }
 -(void)intoMeetingBtnPressedDelegate:(MeetingModel *)meetingModel{
     TheMeetingInfoViewController * mInfo = [[TheMeetingInfoViewController alloc] init];

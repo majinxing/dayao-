@@ -92,12 +92,13 @@
     UIButton * saveBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     saveBtn.frame = CGRectMake(0, APPLICATION_HEIGHT-44, APPLICATION_WIDTH, 44);
     
-    [saveBtn setBackgroundImage:[UIImage imageNamed:@"Rectangle3"] forState:UIControlStateNormal];
+//    [saveBtn setBackgroundImage:[UIImage imageNamed:@"Rectangle3"] forState:UIControlStateNormal];
     
     [saveBtn addTarget:self action:@selector(more) forControlEvents:UIControlEventTouchUpInside];
+    saveBtn.backgroundColor = [UIColor whiteColor];
+//    [saveBtn setTitle:@"提交" forState:UIControlStateNormal];
     
-    [saveBtn setTitle:@"提交" forState:UIControlStateNormal];
-    
+    [saveBtn setEnabled:NO];
     [self.view addSubview:saveBtn];
 }
 -(void)addTableView{

@@ -53,7 +53,7 @@
     [self addSubview:newNotic];
     
     UIView * line = [[UIView alloc] init];
-    line.frame = CGRectMake(CGRectGetMaxX(newNotic.frame)+10, 10, 1, 30);
+    line.frame = CGRectMake(CGRectGetMaxX(newNotic.frame)+10, 20, 1, 30);
     line.backgroundColor = [UIColor colorWithHexString:@"#f1f1f1"];
     [self addSubview:line];
     //    _collectionHeadView.frame = CGRectMake(70,APPLICATION_HEIGHT-20-100-140-100, ScrollViewW-70,ScrollViewH);
