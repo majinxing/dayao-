@@ -28,7 +28,8 @@
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.view.backgroundColor = [UIColor whiteColor];
+    
+    self.view.backgroundColor = RGBA_COLOR(249, 249, 249, 1);
     
     _voteAnswer = [NSMutableArray arrayWithCapacity:4];
     
@@ -133,6 +134,7 @@
     _tableView.estimatedRowHeight = 50;
     _tableView.rowHeight = UITableViewAutomaticDimension;
     _tableView.separatorStyle = NO;
+    _tableView.backgroundColor = [UIColor clearColor];
     self.automaticallyAdjustsScrollViewInsets = NO;
     [self.view addSubview:_tableView];
 }
@@ -183,6 +185,7 @@
     }
     cell.delegate = self;
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
+    cell.backgroundColor = [UIColor clearColor];
     return cell;
 }
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{

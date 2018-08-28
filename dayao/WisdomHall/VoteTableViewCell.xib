@@ -17,6 +17,10 @@
                 <rect key="frame" x="0.0" y="0.0" width="376" height="86.5"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="otr-9M-oDZ">
+                        <rect key="frame" x="10" y="5" width="356" height="76.5"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    </view>
                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="arrow-down" translatesAutoresizingMaskIntoConstraints="NO" id="owd-Vz-WAi">
                         <rect key="frame" x="336" y="36" width="15" height="15"/>
                         <constraints>
@@ -46,15 +50,20 @@
                 </subviews>
                 <constraints>
                     <constraint firstItem="9wh-hU-Epo" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="20" id="CJg-5L-QOe"/>
+                    <constraint firstAttribute="bottom" secondItem="otr-9M-oDZ" secondAttribute="bottom" constant="5" id="Hsf-HH-9n7"/>
+                    <constraint firstItem="otr-9M-oDZ" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="10" id="Qaw-D9-2Mo"/>
                     <constraint firstItem="9wh-hU-Epo" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="Qip-A4-jMw"/>
                     <constraint firstItem="owd-Vz-WAi" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="WGF-Qz-gTg"/>
                     <constraint firstAttribute="bottom" secondItem="Hwk-Xl-MIR" secondAttribute="bottom" id="dgV-vU-bwA"/>
+                    <constraint firstItem="otr-9M-oDZ" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="5" id="jU5-HE-toj"/>
                     <constraint firstAttribute="trailing" secondItem="Hwk-Xl-MIR" secondAttribute="trailing" id="jhn-fT-Am3"/>
                     <constraint firstItem="Hwk-Xl-MIR" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" id="kAq-LH-sMc"/>
+                    <constraint firstAttribute="trailing" secondItem="otr-9M-oDZ" secondAttribute="trailing" constant="10" id="vkR-JJ-gaK"/>
                     <constraint firstAttribute="trailing" secondItem="owd-Vz-WAi" secondAttribute="trailing" constant="25" id="wEQ-WK-6en"/>
                 </constraints>
             </tableViewCellContentView>
             <connections>
+                <outlet property="backView" destination="otr-9M-oDZ" id="MhJ-s0-2fq"/>
                 <outlet property="moreBtn" destination="Hwk-Xl-MIR" id="kti-kh-BBr"/>
                 <outlet property="moreImage" destination="owd-Vz-WAi" id="AsA-SQ-S3F"/>
                 <outlet property="voteTitle" destination="9wh-hU-Epo" id="dSE-xY-H88"/>

@@ -52,6 +52,10 @@
 @property (nonatomic,copy) NSString * pictureType;//标明是问答还是签到照片
 @property (nonatomic,strong)AlterView * alterView;
 @property (nonatomic,strong) NSTimer * t;
+
+@property (nonatomic,strong)UIButton * signBtn;
+
+@property (nonatomic,strong)UIButton * codeBtn;
 @end
 
 @implementation TheMeetingInfoViewController
@@ -64,8 +68,8 @@
     
     _user = [[Appsetting sharedInstance] getUsetInfo];
     
-    self.view.backgroundColor = [UIColor whiteColor];
-    
+    self.view.backgroundColor = [UIColor colorWithHexString:@"#f1f1f1"];
+
     _mac = 0;
     
     _isEnable = NO;
@@ -76,19 +80,114 @@
     [self getData];
     
     [self addTableView];
+    if (![[NSString stringWithFormat:@"%@",_user.peopleId] isEqualToString:[NSString stringWithFormat:@"%@",_meetingModel.meetingHostId]]) {
+        [self addSignBtn];
+    }
     
     [self setNavigationTitle];
     
-    // 1.注册通知
     
-    //    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(changeSignNumber) name:@"SignSucceed" object:nil];
     
-
+    
     
     // Do any additional setup after loading the view from its nib.
 }
--(void)voiceCalls:(NSNotification *)dict{
+-(void)addSignBtn{
+    _codeBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    _codeBtn.frame = CGRectMake(25, APPLICATION_HEIGHT-16-40, APPLICATION_WIDTH/2-50, 40);
+    _codeBtn.backgroundColor = [UIColor whiteColor];
+    _codeBtn.layer.masksToBounds = YES;
+    _codeBtn.layer.cornerRadius = 20;
+    _codeBtn.layer.borderColor = [UIColor colorWithHexString:@"#29a7e1"].CGColor;
+    _codeBtn.layer.borderWidth = 1;
+    [_codeBtn setTitle:@"扫码签到" forState:UIControlStateNormal];
+    [_codeBtn setTitleColor:[UIColor colorWithHexString:@"#29a7e1"] forState:UIControlStateNormal];
+    [self.view addSubview:_codeBtn];
+    [_codeBtn addTarget:self action:@selector(codePressedDelegate:) forControlEvents:UIControlEventTouchUpInside];
     
+    _signBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    _signBtn.frame = CGRectMake(APPLICATION_WIDTH/2+25, APPLICATION_HEIGHT-16-40, APPLICATION_WIDTH/2-50, 40);
+    _signBtn.layer.masksToBounds = YES;
+    _signBtn.layer.cornerRadius = 20;
+    //    _signBtn.layer.borderColor = [UIColor colorWithHexString:@"#29a7e1"].CGColor;
+    //    _signBtn.layer.borderWidth = 1;
+    [_signBtn setTitle:@"一键签到" forState:UIControlStateNormal];
+    [_signBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [_signBtn setBackgroundImage:[UIImage imageNamed:@"Rectangle3"] forState:UIControlStateNormal];
+    [self.view addSubview:_signBtn];
+    [_signBtn addTarget:self action:@selector(signBtnPressedDelegate:) forControlEvents:UIControlEventTouchUpInside];
+    
+    [self changeSignBtnState:_meetingModel];
+}
+-(void)changeSignBtnState:(MeetingModel *)m{
+    if ([[NSString stringWithFormat:@"%@",m.signStatus] isEqualToString:@"1"]) {
+        [_signBtn setTitle:@"一键签到" forState:UIControlStateNormal];
+        [_codeBtn setTitle:@"扫码签到" forState:UIControlStateNormal];
+        [_signBtn setEnabled:YES];
+        
+        [_codeBtn setEnabled:YES];
+        
+    }else if([[NSString stringWithFormat:@"%@",m.signStatus] isEqualToString:@"2"]){
+        [_signBtn setTitle:@"已签到" forState:UIControlStateNormal];
+        [_codeBtn setTitle:@"生成二维码" forState:UIControlStateNormal];
+        [_signBtn setBackgroundColor:[UIColor grayColor]];
+        
+        [_signBtn setEnabled:NO];
+        
+        [_codeBtn setEnabled:YES];
+        //            [_codeBtn setBackgroundColor:[UIColor colorWithHexString:@"#29a7e1"]];
+        //        }
+    }else if ([[NSString stringWithFormat:@"%@",m.signStatus] isEqualToString:@"300"]){
+        [_signBtn setTitle:@"正在签到，请不要退出界面" forState:UIControlStateNormal];
+        [_codeBtn setTitle:@"扫码签到" forState:UIControlStateNormal];
+        
+        [_signBtn setEnabled:NO];
+        
+        [_codeBtn setEnabled:YES];
+        
+    }else if ([[NSString stringWithFormat:@"%@",m.signStatus] isEqualToString:@"400"]){
+        [_signBtn setTitle:@"连接数据流量后再次点击" forState:UIControlStateNormal];
+        [_codeBtn setTitle:@"扫码签到" forState:UIControlStateNormal];
+        [_signBtn setEnabled:YES];
+        
+        [_codeBtn setEnabled:YES];
+        
+    }else if ([[NSString stringWithFormat:@"%@",m.signStatus] isEqualToString:@"3"]){
+        [_signBtn setTitle:@"请假" forState:UIControlStateNormal];
+        [_codeBtn setTitle:@"生成二维码" forState:UIControlStateNormal];
+        [_signBtn setEnabled:NO];
+        [_signBtn setBackgroundColor:[UIColor grayColor]];
+        
+        
+        [_codeBtn setEnabled:NO];
+        [_codeBtn setBackgroundColor:[UIColor grayColor]];
+        
+    }else if ([[NSString stringWithFormat:@"%@",m.signStatus] isEqualToString:@"4"]){
+        [_signBtn setTitle:@"迟到" forState:UIControlStateNormal];
+        [_signBtn setBackgroundColor:[UIColor grayColor]];
+        
+        [_codeBtn setTitle:@"生成二维码" forState:UIControlStateNormal];
+        [_signBtn setEnabled:NO];
+        
+        [_codeBtn setEnabled:YES];
+        
+    }else if ([[NSString stringWithFormat:@"%@",m.signStatus] isEqualToString:@"5"]){
+        [_signBtn setTitle:@"早退" forState:UIControlStateNormal];
+        [_signBtn setBackgroundColor:[UIColor grayColor]];
+        
+        [_codeBtn setTitle:@"生成二维码" forState:UIControlStateNormal];
+        [_signBtn setEnabled:NO];
+        
+        [_codeBtn setEnabled:YES];
+        
+    }else{
+        [_signBtn setTitle:@"一键签到" forState:UIControlStateNormal];
+        [_codeBtn setTitle:@"生成二维码" forState:UIControlStateNormal];
+        [_signBtn setEnabled:YES];
+        
+        [_codeBtn setEnabled:YES];
+        
+    }
 }
 -(void)getData{
     _seatModel = [[SeatIngModel alloc] init];
@@ -111,11 +210,16 @@
     }];
 }
 -(void)addTableView{
-    _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 64, APPLICATION_WIDTH, APPLICATION_HEIGHT-64) style:UITableViewStylePlain];
+    int n = 0;
+    if (_codeBtn.frame.size.height) {
+        n= _codeBtn.frame.size.height+16;
+    }
+    _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 64, APPLICATION_WIDTH, APPLICATION_HEIGHT-64-n) style:UITableViewStylePlain];
     _tableView.delegate = self;
     _tableView.dataSource = self;
     _tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     self.automaticallyAdjustsScrollViewInsets = NO;
+    _tableView.backgroundColor = [UIColor clearColor];
     [self.view addSubview:_tableView];
 }
 
@@ -124,23 +228,23 @@
  **/
 -(void)setNavigationTitle{
     [UIApplication sharedApplication].statusBarStyle = UIStatusBarStyleLightContent;
-
+    
     self.title = @"会议详情";
     
     if ([[NSString stringWithFormat:@"%@",_user.peopleId] isEqualToString:[NSString stringWithFormat:@"%@",_meetingModel.meetingHostId]]) {
         UIBarButtonItem *myButton = [[UIBarButtonItem alloc] initWithTitle:@"删除会议" style:UIBarButtonItemStylePlain target:self action:@selector(deleteMeeting)];
-
+        
         self.navigationItem.rightBarButtonItem = myButton;
     }
 }
 -(void)deleteMeeting{
-
+    
     UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"提示" message:nil preferredStyle:  UIAlertControllerStyleActionSheet];
     //分别按顺序放入每个按钮；
     [alert addAction:[UIAlertAction actionWithTitle:@"删除周期会议" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
         
         [self showHudInView:self.view hint:NSLocalizedString(@"正在提交数据", @"Load data...")];
-
+        
         NSDictionary * dict = [[NSDictionary alloc] initWithObjectsAndKeys:_meetingModel.meetingId,@"id", nil];
         [[NetworkRequest sharedInstance] POST:MeetingDelect dict:dict succeed:^(id data) {
             NSLog(@"%@",data);
@@ -157,16 +261,16 @@
                 
             }else{
                 [UIUtils showInfoMessage:@"删除会议失败" withVC:self];
-
+                
                 [self hideHud];
             }
         } failure:^(NSError *error) {
             [UIUtils showInfoMessage:@"请检查网络连接状态" withVC:self];
-
+            
             [self hideHud];
             
         }];
-      
+        
     }]];
     
     [alert addAction:[UIAlertAction actionWithTitle:@"删除当前会议" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
@@ -188,12 +292,12 @@
                 
             }else{
                 [UIUtils showInfoMessage:@"删除会议失败" withVC:self];
-
+                
                 [self hideHud];
             }
         } failure:^(NSError *error) {
             [UIUtils showInfoMessage:@"请检查网络连接状态" withVC:self];
-
+            
             [self hideHud];
             
         }];
@@ -262,7 +366,10 @@
 }
 #pragma mark UITableViewdelegate
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
-    return 3;
+    if ([[NSString stringWithFormat:@"%@",_user.peopleId] isEqualToString:[NSString stringWithFormat:@"%@",_meetingModel.meetingHostId]]) {
+        return 3;
+    }
+    return 2;
 }
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
     return 1;
@@ -276,28 +383,34 @@
             cell = [[[NSBundle mainBundle] loadNibNamed:@"MeetingTableViewCell" owner:self options:nil] objectAtIndex:0];
         }
         [cell addFirstContentView:_meetingModel];
-    }else if (indexPath.section == 1){
-        if ([[NSString stringWithFormat:@"%@",_user.peopleId] isEqualToString:[NSString stringWithFormat:@"%@",_meetingModel.meetingHostId]]) {
+    }
+    if ([[NSString stringWithFormat:@"%@",_user.peopleId] isEqualToString:[NSString stringWithFormat:@"%@",_meetingModel.meetingHostId]]) {
+        if (indexPath.section == 1){
             cell = [tableView dequeueReusableCellWithIdentifier:@"MeetingTableViewCellSecond"];
             if (!cell) {
                 cell = [[[NSBundle mainBundle] loadNibNamed:@"MeetingTableViewCell" owner:self options:nil] objectAtIndex:1];
             }
             [cell addSecondContentView:_meetingModel];
-        }else{
-            cell = [tableView dequeueReusableCellWithIdentifier:@"MeetingTableViewCellThird"];
+            
+        }else if (indexPath.section == 2){
+            cell = [tableView dequeueReusableCellWithIdentifier:@"MeetingTableViewCellFourth"];
             if (!cell) {
-                cell = [[[NSBundle mainBundle] loadNibNamed:@"MeetingTableViewCell" owner:self options:nil] objectAtIndex:2];
+                cell = [[[NSBundle mainBundle] loadNibNamed:@"MeetingTableViewCell" owner:self options:nil] objectAtIndex:3];
             }
-            [cell addThirdContentView:_meetingModel isEnable:_isEnable];
+            [cell addFourthContentView:_meetingModel];
+        }
+    }else{
+        if (indexPath.section == 1){
+            cell = [tableView dequeueReusableCellWithIdentifier:@"MeetingTableViewCellFourth"];
+            if (!cell) {
+                cell = [[[NSBundle mainBundle] loadNibNamed:@"MeetingTableViewCell" owner:self options:nil] objectAtIndex:3];
+            }
+            [cell addFourthContentView:_meetingModel];
         }
         
-    }else if (indexPath.section == 2){
-        cell = [tableView dequeueReusableCellWithIdentifier:@"MeetingTableViewCellFourth"];
-        if (!cell) {
-            cell = [[[NSBundle mainBundle] loadNibNamed:@"MeetingTableViewCell" owner:self options:nil] objectAtIndex:3];
-        }
-        [cell addFourthContentView:_meetingModel];
     }
+    
+    cell.backgroundColor = [UIColor clearColor];
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     cell.delegate = self;
     return cell;
@@ -306,13 +419,22 @@
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
-    if (indexPath.section ==0) {
-        return 260;
-    }else if (indexPath.section ==1){
-        return 60;
-    }else if (indexPath.section == 2){
-        return 180;
+    if ([[NSString stringWithFormat:@"%@",_user.peopleId] isEqualToString:[NSString stringWithFormat:@"%@",_meetingModel.meetingHostId]]) {
+        if (indexPath.section ==0) {
+            return 260;
+        }else if (indexPath.section ==1){
+            return 60;
+        }else if (indexPath.section == 2){
+            return ((APPLICATION_WIDTH - 120 * 3) / 4+60)*2+20;;
+        }
+    }else{
+        if (indexPath.section ==0) {
+            return 260;
+        }else if (indexPath.section == 1){
+            return ((APPLICATION_WIDTH - 120 * 3) / 4+60)*2+20;;
+        }
     }
+    
     return 0;
 }
 -(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
@@ -424,7 +546,7 @@
         [UIUtils showInfoMessage:@"未完待续" withVC:self];
         return;
     }
-
+    
     
 }
 //课程抢答收集
@@ -441,6 +563,7 @@
     self.hidesBottomBarWhenPushed = YES;
     classManegeVC.manage = MeetingManageType;
     classManegeVC.meeting = _meetingModel;
+    classManegeVC.isEnableOutGroup = @"no";
     [self.navigationController pushViewController:classManegeVC animated:YES];
 }
 -(void)signNOPeopleDelegate{
@@ -468,7 +591,7 @@
 -(void)autoSign{
     
     if (![UIUtils validateWithStartTime:_meetingModel.signStartTime withExpireTime:nil]) {
-
+        
         return;
     }
     _isEnable = YES;
@@ -495,11 +618,11 @@
             self.alterView.delegate = self;
             [self.view addSubview:self.alterView];
             [self removeView];
-//            [UIView animateWithDuration:3 animations:^{
-////                _alterView.alpha = 0.99;
-//            } completion:^(BOOL finished) {
-//                [_alterView removeFromSuperview];
-//            }];
+            //            [UIView animateWithDuration:3 animations:^{
+            ////                _alterView.alpha = 0.99;
+            //            } completion:^(BOOL finished) {
+            //                [_alterView removeFromSuperview];
+            //            }];
         }
     }else if (_mac == 1){
         
@@ -511,11 +634,11 @@
         self.alterView.delegate = self;
         [self.view addSubview:self.alterView];
         [self removeView];
-//        [UIView animateWithDuration:3 animations:^{
-//            _alterView.alpha = 0.99;
-//        } completion:^(BOOL finished) {
-//            [_alterView removeFromSuperview];
-//        }];
+        //        [UIView animateWithDuration:3 animations:^{
+        //            _alterView.alpha = 0.99;
+        //        } completion:^(BOOL finished) {
+        //            [_alterView removeFromSuperview];
+        //        }];
     }
 }
 
@@ -568,7 +691,7 @@
             [self sendSignInfo];
         }else{
             
-//            NSString * s = [UIUtils returnMac:_meetingModel.mck];
+            //            NSString * s = [UIUtils returnMac:_meetingModel.mck];
             NSString * str = [NSString stringWithFormat:@"请到WiFi列表连接指定的DAYAO或XTU开头的WiFi，若不能跳转请主动在WiFi页面连接无线信号再返回app进行签到，点击签到按钮若网络情况不好，请断开WiFi连接数据流量再次点击签到"];
             
             UIAlertController *alertC = [UIAlertController alertControllerWithTitle:@"温馨提示" message:str preferredStyle:(UIAlertControllerStyleAlert)];
@@ -592,7 +715,7 @@
         [self sendSignInfo];
         
     }else{
-//        NSString * s = [UIUtils returnMac:_meetingModel.mck];
+        //        NSString * s = [UIUtils returnMac:_meetingModel.mck];
         
         NSString * str = [NSString stringWithFormat:@"请到WiFi列表连接指定的DAYAO或XTU开头的WiFi，若不能跳转请主动在WiFi页面连接无线信号再返回app进行签到，点击签到按钮若网络情况不好，请断开WiFi连接数据流量再次点击签到"];
         
@@ -612,7 +735,7 @@
 }
 -(void)signSendIng{
     _meetingModel.signStatus = @"300";
-    [_tableView reloadData];
+    [self changeSignBtnState:_meetingModel];
 }
 -(void)sendSignInfo{
     
@@ -620,12 +743,29 @@
     NSDictionary * dict = [[NSDictionary alloc] initWithObjectsAndKeys:_meetingModel.meetingDetailId,@"detailId",_user.peopleId,@"userId" ,idfv,@"mck",@"2",@"status",_meetingModel.meetingId,@"meetingId",nil];
     
     [[NetworkRequest sharedInstance] POST:MeetingSign dict:dict succeed:^(id data) {
-//        NSLog(@"succedd:%@",data);
-        [self alter:[[data objectForKey:@"header"] objectForKey:@"code"]];
+        NSString *message = [NSString stringWithFormat:@"%@",[[data objectForKey:@"header"] objectForKey:@"message"]];
+        
+        _meetingModel.signStatus = [NSString stringWithFormat:@"%@",[[data objectForKey:@"body"] objectForKey:@"status"]];
+        
+        _meetingModel.meetingSignId = [NSString stringWithFormat:@"%@",[[data objectForKey:@"body"] objectForKey:@"id"]];
+        
+        if (![_meetingModel.signStatus isEqualToString:@"1"]&&![UIUtils isBlankString:_meetingModel.signStatus]) {
+            [self signPictureUpdate];
+            // 2.创建通知
+            NSNotification *notification =[NSNotification notificationWithName:@"UpdateTheClassPage" object:nil userInfo:nil];
+            // 3.通过 通知中心 发送 通知
+            
+            [[NSNotificationCenter defaultCenter] postNotification:notification];
+        }else{
+            [UIUtils showInfoMessage:message withVC:self];
+        }
+        
         [self hideHud];
         
+        [self changeSignBtnState:_meetingModel];
+        
     } failure:^(NSError *error) {
-         NSString * str = [NSString stringWithFormat:@"签到失败请重新签到，请保证数据流量的连接"];
+        NSString * str = [NSString stringWithFormat:@"签到失败请重新签到，请保证数据流量的连接"];
         
         UIAlertController *alertC = [UIAlertController alertControllerWithTitle:@"温馨提示" message:str preferredStyle:(UIAlertControllerStyleAlert)];
         
@@ -640,45 +780,10 @@
         [self presentViewController:alertC animated:YES completion:nil];
         [self hideHud];
         _meetingModel.signStatus = @"400";
-        [_tableView reloadData];
+        [self changeSignBtnState:_meetingModel];
     }];
 }
--(void)alter:(NSString *) str{
-    if ([str isEqualToString:@"1002"]) {
-        [UIUtils showInfoMessage:@"暂时不能签到" withVC:self];
-        _meetingModel.signStatus = @"1";
-        
-    }else if ([str isEqualToString:@"1003"]){
-        [UIUtils showInfoMessage:@"已签到" withVC:self];
-        _meetingModel.signStatus = @"2";
-    }else if ([str isEqualToString:@"1004"]){
-        [UIUtils showInfoMessage:@"未参加课程" withVC:self];
-        _meetingModel.signStatus = @"1";
-    }else if ([str isEqualToString:@"0000"]){
-        
-        _meetingModel.signStatus = @"2";
-        
-//        [UIUtils showInfoMessage:@"签到成功" withVC:self];
-        
-        [_tableView reloadData];
-        [self signPictureUpdate];
-        // 2.创建通知
-        NSNotification *notification =[NSNotification notificationWithName:@"UpdateTheMeetingPage" object:nil userInfo:nil];
-        // 3.通过 通知中心 发送 通知
-        
-        [[NSNotificationCenter defaultCenter] postNotification:notification];
-    }else if ([str isEqualToString:@"5000"]){
-        [UIUtils showInfoMessage:@"签到失败" withVC:self];
-        _meetingModel.signStatus = @"1";
-    }else if ([str isEqualToString:@"1008"]){
-        [UIUtils showInfoMessage:@"这台手机已经签到一次了，不能重复使用签到，谢谢" withVC:self];
-        _meetingModel.signStatus =@"1";
-    }else if ([str isEqualToString:@"9999"]){
-        _meetingModel.signStatus = @"1";
-        [UIUtils showInfoMessage:@"系统错误" withVC:self];
-    }
-    [_tableView reloadData];
-}
+
 -(void)codePressedDelegate:(UIButton *)btn{
     if ([btn.titleLabel.text isEqualToString:@"扫码签到"]) {
         if (![UIUtils validateWithStartTime:_meetingModel.signStartTime withExpireTime:nil]) {
@@ -811,7 +916,7 @@
 -(void)signPictureUpdate{
     if (![[NSString stringWithFormat:@"%@",_meetingModel.signWay] isEqualToString:@"9"]) {
         [UIUtils showInfoMessage:@"已签到" withVC:self];
-
+        
         return;
     }
     if (!_photoView) {
@@ -847,7 +952,7 @@
     [self.navigationController presentViewController:pickerController animated:YES completion:^{
         
     }];
-   
+    
     
 }
 //选择照片完成之后的代理方法
@@ -884,7 +989,7 @@
             [UIUtils showInfoMessage:@"上传失败" withVC:self];
         }];
     });
-   
+    
     //使用模态返回到软件界面
     [self.navigationController dismissViewControllerAnimated:YES completion:nil];
 }

@@ -12,7 +12,7 @@
 -(void)setValueWithDict:(NSDictionary *)dict{
     _name = [dict objectForKey:@"userName"];
     _askState = [NSString stringWithFormat:@"%@",[dict objectForKey:@"status"]];
-    _askTime = [UIUtils getTheTimeStamp:[NSString stringWithFormat:@"%@",[dict objectForKey:@"createTime"]]];
+    _askTime = [UIUtils getTheTimeStampSS:[NSString stringWithFormat:@"%@",[dict objectForKey:@"createTime"]]];
     _askText = [dict objectForKey:@"reason"];
     _askId = [NSString stringWithFormat:@"%@",[dict objectForKey:@"id"]];
     _image = [NSString stringWithFormat:@"%@",[dict objectForKey:@"resourceId"]];

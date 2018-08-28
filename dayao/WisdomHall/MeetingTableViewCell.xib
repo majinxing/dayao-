@@ -20,6 +20,10 @@
                 <rect key="frame" x="0.0" y="0.0" width="407" height="307.5"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="MMT-kK-E8X">
+                        <rect key="frame" x="10" y="0.0" width="387" height="307.5"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    </view>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="名字" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3NP-Ut-6fl">
                         <rect key="frame" x="20" y="10" width="227" height="20"/>
                         <constraints>
@@ -137,6 +141,7 @@
                     <constraint firstItem="VwQ-Tb-rgD" firstAttribute="leading" secondItem="tDO-j7-dkk" secondAttribute="trailing" id="HxI-HY-ZOb"/>
                     <constraint firstAttribute="trailing" secondItem="3NP-Ut-6fl" secondAttribute="trailing" constant="160" id="Lcw-UF-Am9"/>
                     <constraint firstItem="8G7-ml-amI" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="20" id="OYa-Tg-fS4"/>
+                    <constraint firstAttribute="bottom" secondItem="MMT-kK-E8X" secondAttribute="bottom" id="PLs-Yw-2fL"/>
                     <constraint firstItem="3o6-vb-S5O" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="10" id="QNr-VV-Vzu"/>
                     <constraint firstAttribute="trailing" secondItem="FeB-U2-bTJ" secondAttribute="trailing" constant="20" id="WFo-rM-QVf"/>
                     <constraint firstItem="o3J-v4-eya" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="20" id="X65-5e-T7o"/>
@@ -152,15 +157,19 @@
                     <constraint firstItem="TE4-cQ-8va" firstAttribute="top" secondItem="3NP-Ut-6fl" secondAttribute="bottom" constant="20" id="kcy-ZP-xtI"/>
                     <constraint firstItem="BbY-Lu-ug1" firstAttribute="top" secondItem="o3J-v4-eya" secondAttribute="bottom" constant="10" id="kgv-Pq-Kbg"/>
                     <constraint firstItem="TE4-cQ-8va" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="20" id="mNV-VF-JuP"/>
+                    <constraint firstItem="MMT-kK-E8X" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" id="p5z-4Q-Sl5"/>
                     <constraint firstItem="7Po-3m-d0j" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="20" id="p80-YJ-0fy"/>
+                    <constraint firstAttribute="trailing" secondItem="MMT-kK-E8X" secondAttribute="trailing" constant="10" id="sPX-z0-qqz"/>
                     <constraint firstAttribute="trailing" secondItem="rZ5-zI-QCc" secondAttribute="trailing" constant="20" id="tKN-Ul-P7k"/>
                     <constraint firstItem="tDO-j7-dkk" firstAttribute="top" secondItem="7Po-3m-d0j" secondAttribute="bottom" constant="10" id="vif-ne-0p4"/>
+                    <constraint firstItem="MMT-kK-E8X" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="10" id="wNQ-D6-HoF"/>
                     <constraint firstAttribute="trailing" secondItem="7Po-3m-d0j" secondAttribute="trailing" constant="20" id="y0R-DM-6BZ"/>
                     <constraint firstAttribute="trailing" secondItem="BbY-Lu-ug1" secondAttribute="trailing" constant="20" id="yGf-v3-IiI"/>
                     <constraint firstItem="FeB-U2-bTJ" firstAttribute="top" secondItem="BbY-Lu-ug1" secondAttribute="bottom" constant="10" id="zty-he-2r3"/>
                 </constraints>
             </tableViewCellContentView>
             <connections>
+                <outlet property="fristBackView" destination="MMT-kK-E8X" id="7nK-5d-VdQ"/>
                 <outlet property="joinPeopleLable" destination="tDO-j7-dkk" id="iVB-x6-Yv0"/>
                 <outlet property="meetAttention" destination="TE4-cQ-8va" id="ea1-bd-wWY"/>
                 <outlet property="meetCode" destination="FeB-U2-bTJ" id="4KU-o5-ZyG"/>
@@ -179,6 +188,10 @@
                 <rect key="frame" x="0.0" y="0.0" width="375" height="133.5"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="VPX-Wq-kII">
+                        <rect key="frame" x="10" y="0.0" width="355" height="133.5"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    </view>
                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="P2k-9a-82D">
                         <rect key="frame" x="18" y="13" width="177.5" height="108"/>
                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
@@ -203,20 +216,25 @@
                     </view>
                 </subviews>
                 <constraints>
+                    <constraint firstAttribute="trailing" secondItem="VPX-Wq-kII" secondAttribute="trailing" constant="10" id="99L-1L-q4w"/>
                     <constraint firstItem="h7i-XS-aSy" firstAttribute="leading" secondItem="P2k-9a-82D" secondAttribute="trailing" constant="1" id="B7v-i6-0Su"/>
                     <constraint firstAttribute="bottom" secondItem="h7i-XS-aSy" secondAttribute="bottom" constant="10" id="EWE-zb-Zux"/>
+                    <constraint firstItem="VPX-Wq-kII" firstAttribute="leading" secondItem="DBX-73-vOk" secondAttribute="leading" constant="10" id="ImG-lD-Wr8"/>
                     <constraint firstAttribute="bottomMargin" secondItem="P2k-9a-82D" secondAttribute="bottom" constant="2" id="N0N-NJ-sTf"/>
                     <constraint firstAttribute="trailing" secondItem="h7i-XS-aSy" secondAttribute="trailing" constant="10" id="Xbh-qP-iuM"/>
                     <constraint firstAttribute="bottom" secondItem="Xps-2n-DEw" secondAttribute="bottom" constant="10" id="eeJ-Tm-OrS"/>
                     <constraint firstItem="P2k-9a-82D" firstAttribute="width" secondItem="DBX-73-vOk" secondAttribute="width" multiplier="1/2" constant="-10" id="fyH-V4-sOu"/>
+                    <constraint firstItem="VPX-Wq-kII" firstAttribute="top" secondItem="DBX-73-vOk" secondAttribute="top" id="odR-fO-euA"/>
                     <constraint firstItem="Xps-2n-DEw" firstAttribute="leading" secondItem="P2k-9a-82D" secondAttribute="trailing" id="u5g-f1-nt7"/>
                     <constraint firstItem="P2k-9a-82D" firstAttribute="top" secondItem="DBX-73-vOk" secondAttribute="topMargin" constant="2" id="uGe-ia-HNs"/>
                     <constraint firstItem="P2k-9a-82D" firstAttribute="leading" secondItem="DBX-73-vOk" secondAttribute="leadingMargin" constant="2" id="vLo-8S-VKg"/>
+                    <constraint firstAttribute="bottom" secondItem="VPX-Wq-kII" secondAttribute="bottom" id="xDv-YE-lvf"/>
                     <constraint firstItem="h7i-XS-aSy" firstAttribute="top" secondItem="DBX-73-vOk" secondAttribute="top" constant="10" id="y6l-cK-9hf"/>
                     <constraint firstItem="Xps-2n-DEw" firstAttribute="top" secondItem="DBX-73-vOk" secondAttribute="top" constant="10" id="zAe-1M-eAb"/>
                 </constraints>
             </tableViewCellContentView>
             <connections>
+                <outlet property="secondBackView" destination="VPX-Wq-kII" id="9Hi-tA-WSz"/>
                 <outlet property="singNumber" destination="h7i-XS-aSy" id="gAS-7L-Pa7"/>
             </connections>
             <point key="canvasLocation" x="61.5" y="332"/>
@@ -272,7 +290,22 @@
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="YrO-XN-Aq9" id="bst-Uv-wYp">
                 <rect key="frame" x="0.0" y="0.0" width="375" height="160.5"/>
                 <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Zb4-QM-uK1">
+                        <rect key="frame" x="10" y="0.0" width="355" height="160.5"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    </view>
+                </subviews>
+                <constraints>
+                    <constraint firstAttribute="trailing" secondItem="Zb4-QM-uK1" secondAttribute="trailing" constant="10" id="545-W1-p4W"/>
+                    <constraint firstItem="Zb4-QM-uK1" firstAttribute="leading" secondItem="bst-Uv-wYp" secondAttribute="leading" constant="10" id="Jdb-iO-dLx"/>
+                    <constraint firstItem="Zb4-QM-uK1" firstAttribute="top" secondItem="bst-Uv-wYp" secondAttribute="top" id="UGH-yr-wYB"/>
+                    <constraint firstAttribute="bottom" secondItem="Zb4-QM-uK1" secondAttribute="bottom" id="krU-yr-LI7"/>
+                </constraints>
             </tableViewCellContentView>
+            <connections>
+                <outlet property="forthBackView" destination="Zb4-QM-uK1" id="5sn-1P-fYk"/>
+            </connections>
             <point key="canvasLocation" x="61.5" y="749.5"/>
         </tableViewCell>
     </objects>

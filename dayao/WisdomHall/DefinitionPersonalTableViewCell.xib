@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="13771" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14113" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
     <device id="retina4_0" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -98,8 +98,10 @@
                 <subviews>
                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="sYw-H1-lQf">
                         <rect key="frame" x="20" y="10" width="360" height="56.5"/>
-                        <color key="backgroundColor" red="0.49281876045629647" green="0.91311861668161887" blue="1" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
-                        <state key="normal" title="查看座次安排"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <state key="normal" title="查看座次安排" backgroundImage="Rectangle3">
+                            <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        </state>
                         <connections>
                             <action selector="seeSeatPressed:" destination="CdW-Wn-H1g" eventType="touchUpInside" id="wgd-xd-JO6"/>
                         </connections>
@@ -140,7 +142,7 @@
                         <nil key="highlightedColor"/>
                     </label>
                     <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Rkq-xQ-dR9">
-                        <rect key="frame" x="274" y="29" width="62" height="30"/>
+                        <rect key="frame" x="274" y="29.5" width="62" height="30"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="60" id="VcF-ed-kFR"/>
                             <constraint firstAttribute="height" constant="30" id="sD9-kH-TQY"/>
@@ -168,6 +170,7 @@
         </tableViewCell>
     </objects>
     <resources>
+        <image name="Rectangle3" width="238" height="76"/>
         <image name="index_user_left" width="1200" height="800"/>
     </resources>
 </document>

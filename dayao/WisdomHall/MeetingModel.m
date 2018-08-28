@@ -55,6 +55,8 @@
     
     self.meetingHostId = [dict objectForKey:@"createUser"];
 
+    self.meetingSignId = [NSString stringWithFormat:@"%@",[dict objectForKey:@"meetingSignId"]];
+
     if (a.count>0) {
         self.workNo = [a[0] objectForKey:@"workNo"];
         self.meetingHost = [a[0] objectForKey:@"userName"];

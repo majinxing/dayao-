@@ -73,9 +73,16 @@
             }];
         }
     }
+    self.navigationController.interactivePopGestureRecognizer.delaysTouchesBegan=NO;
+
 }
-
-
+-(void)viewWillAppear:(BOOL)animated{
+//    self.tableView.delaysContentTouches = NO;
+//    self.tableView.canCancelContentTouches = NO;
+}
+- (UIRectEdge)preferredScreenEdgesDeferringSystemGestures {
+    return UIRectEdgeBottom;
+}
 -(void)addObserver {
     [super addObserver];
     [[PeerOutbox instance] addBoxObserver:self];

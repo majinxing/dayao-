@@ -40,6 +40,7 @@
 @property (nonatomic,strong) NSMutableArray * signNo;//未签到
 @property (nonatomic,assign)NSInteger n;//签到人数
 @property (nonatomic,assign)NSInteger m;//未签到人数
+@property (nonatomic,copy) NSString *meetingSignId;//拍照上传id
 
 
 -(void)setMeetingInfoWithDict:(NSDictionary *)dict;

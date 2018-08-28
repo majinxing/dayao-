@@ -33,10 +33,10 @@
     return self;
 }
 -(void)addMask{
-    _askState = [[UILabel alloc] initWithFrame:CGRectMake(APPLICATION_WIDTH-90, 10, 70, 40)];
+    _askState = [[UILabel alloc] initWithFrame:CGRectMake(APPLICATION_WIDTH-80, 10, 70, 40)];
     if ([_askModel.askState isEqualToString:@"2"]) {
         _askState.text = @"已审核";
-        _askState.backgroundColor = [UIColor greenColor];
+        _askState.backgroundColor = RGBA_COLOR(30, 143, 78, 1);
     }else if ([_askModel.askState isEqualToString:@"3"]){
         _askState.text = @"未批准";
         _askState.backgroundColor = [UIColor redColor];
@@ -83,10 +83,18 @@
     
     whiteView.frame = CGRectMake(0, 0, APPLICATION_WIDTH, APPLICATION_HEIGHT-(NaviHeight));
     
-    whiteView.backgroundColor = [UIColor whiteColor];
+    whiteView.backgroundColor = [UIColor colorWithHexString:@"#fafafa"];
+    
+//    whiteView.backgroundColor = [UIColor whiteColor];
     [whiteView addTarget:self action:@selector(endEdite) forControlEvents:UIControlEventTouchUpInside];
     
     [self addSubview:whiteView];
+    
+    UIView * back = [[UIView alloc] init];
+    
+    back.backgroundColor = [UIColor whiteColor];
+    
+    [whiteView addSubview:back];
     
     whiteView.layer.masksToBounds = YES;
     
@@ -114,6 +122,7 @@
 //    [_inputName endEditing:NO];
     
     [_inputName endEditing:YES];
+    
     [whiteView addSubview:_inputName];
     
     [self addMask];
@@ -150,7 +159,7 @@
     
     [whiteView addSubview:viewLine2];
     
-    UILabel * groupIntroduction = [[UILabel alloc] initWithFrame:CGRectMake(25, CGRectGetMaxY(viewLine2.frame)+20, 60, 20)];
+    UILabel * groupIntroduction = [[UILabel alloc] initWithFrame:CGRectMake(25, CGRectGetMaxY(viewLine2.frame)+20, 80, 20)];
     
     groupIntroduction.font = [UIFont fontWithName:@"PingFangSC-Regular" size:15];
     
@@ -158,7 +167,7 @@
     
     [whiteView addSubview:groupIntroduction];
     
-    groupIntroduction.text = @"请假原因";
+    groupIntroduction.text = @"请假原因:";
     
     [whiteView addSubview:groupIntroduction];
     
@@ -180,7 +189,10 @@
     _picturebtn.frame = CGRectMake(25, CGRectGetMaxY(pictureLable.frame)+10, 70, 70);
     
     [_picturebtn addTarget:self action:@selector(picturebtnPressed:) forControlEvents:UIControlEventTouchUpInside];
-//    UIImageView * imag = [[UIImageView alloc] init];
+
+    back.frame = CGRectMake(10, _askState.frame.origin.y, APPLICATION_WIDTH-20, CGRectGetMaxY(_picturebtn.frame)+20);
+    back.layer.masksToBounds = YES;
+    back.layer.cornerRadius = 15;
     
     if (![UIUtils isBlankString:askModel.image]) {
         
@@ -216,6 +228,7 @@
         agreed.backgroundColor = RGBA_COLOR(30, 143, 78, 1);
         [agreed setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
         [whiteView addSubview:agreed];
+    
         [self btnMask:agreed withRectCorner:UIRectCornerTopRight|UIRectCornerBottomRight];
         
         [refusedBtn addTarget:self action:@selector(whetherOrNotApprove:) forControlEvents:UIControlEventTouchUpInside];

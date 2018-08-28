@@ -18,6 +18,10 @@
                 <rect key="frame" x="0.0" y="0.0" width="406" height="146.5"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3l8-J3-GQW">
+                        <rect key="frame" x="10" y="10" width="386" height="141.5"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    </view>
                     <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" scrollEnabled="NO" editable="NO" textAlignment="natural" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qNe-gh-oeg">
                         <rect key="frame" x="10" y="50" width="296" height="81.5"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -45,10 +49,14 @@
                     </label>
                 </subviews>
                 <constraints>
+                    <constraint firstAttribute="trailing" secondItem="3l8-J3-GQW" secondAttribute="trailing" constant="10" id="643-Ob-DxM"/>
+                    <constraint firstItem="3l8-J3-GQW" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="10" id="9Qc-UH-zBP"/>
+                    <constraint firstItem="3l8-J3-GQW" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="10" id="Jhd-FY-I27"/>
                     <constraint firstAttribute="trailing" secondItem="vFb-nm-KY9" secondAttribute="trailing" constant="20" id="Q4R-V7-ohN"/>
                     <constraint firstItem="qNe-gh-oeg" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="50" id="Rhf-4v-xgG"/>
                     <constraint firstItem="7xr-ea-zFJ" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="15" id="Txt-vn-eAm"/>
                     <constraint firstItem="qNe-gh-oeg" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="10" id="cRy-H5-onR"/>
+                    <constraint firstAttribute="bottom" secondItem="3l8-J3-GQW" secondAttribute="bottom" constant="-5" id="fM5-Ex-KcU"/>
                     <constraint firstItem="vFb-nm-KY9" firstAttribute="top" secondItem="qNe-gh-oeg" secondAttribute="top" constant="5" id="uAO-82-rEh"/>
                     <constraint firstItem="vFb-nm-KY9" firstAttribute="leading" secondItem="qNe-gh-oeg" secondAttribute="trailing" id="vXb-4v-yAi"/>
                     <constraint firstAttribute="bottom" secondItem="qNe-gh-oeg" secondAttribute="bottom" constant="15" id="wdy-Dq-ArE"/>
@@ -57,6 +65,7 @@
                 </constraints>
             </tableViewCellContentView>
             <connections>
+                <outlet property="firstBackView" destination="3l8-J3-GQW" id="LSA-z2-DT7"/>
                 <outlet property="firstTextView" destination="qNe-gh-oeg" id="oQh-7Z-PDW"/>
                 <outlet property="firstTimeLabel" destination="vFb-nm-KY9" id="FIg-1B-9RP"/>
                 <outlet property="voteStateLabel" destination="7xr-ea-zFJ" id="Yz4-5O-EAc"/>
@@ -70,6 +79,10 @@
                 <rect key="frame" x="0.0" y="0.0" width="406" height="136.5"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="lPu-3w-p73">
+                        <rect key="frame" x="10" y="0.0" width="386" height="141.5"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    </view>
                     <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" scrollEnabled="NO" editable="NO" textAlignment="natural" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vks-K9-0vZ">
                         <rect key="frame" x="50" y="7" width="341" height="34"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -95,14 +108,19 @@
                     </button>
                 </subviews>
                 <constraints>
+                    <constraint firstItem="lPu-3w-p73" firstAttribute="leading" secondItem="zcG-wP-i4R" secondAttribute="leading" constant="10" id="20r-Fr-Zu7"/>
+                    <constraint firstItem="lPu-3w-p73" firstAttribute="top" secondItem="zcG-wP-i4R" secondAttribute="top" id="MM4-Pn-diW"/>
                     <constraint firstItem="vks-K9-0vZ" firstAttribute="top" secondItem="zcG-wP-i4R" secondAttribute="top" constant="7" id="Mm2-pV-2P6"/>
                     <constraint firstItem="CT8-3f-I2d" firstAttribute="top" secondItem="zcG-wP-i4R" secondAttribute="top" id="Zsh-UY-fDo"/>
                     <constraint firstAttribute="trailing" secondItem="vks-K9-0vZ" secondAttribute="trailing" constant="15" id="c99-Ik-1iL"/>
+                    <constraint firstAttribute="trailing" secondItem="lPu-3w-p73" secondAttribute="trailing" constant="10" id="eor-LS-kE1"/>
                     <constraint firstItem="CT8-3f-I2d" firstAttribute="leading" secondItem="zcG-wP-i4R" secondAttribute="leading" id="rPi-Sl-qLP"/>
+                    <constraint firstAttribute="bottom" secondItem="lPu-3w-p73" secondAttribute="bottom" constant="-5" id="wPM-X0-6tY"/>
                     <constraint firstItem="vks-K9-0vZ" firstAttribute="leading" secondItem="CT8-3f-I2d" secondAttribute="trailing" constant="10" id="x36-m2-a2V"/>
                 </constraints>
             </tableViewCellContentView>
             <connections>
+                <outlet property="secBackView" destination="lPu-3w-p73" id="e1P-Hx-ivf"/>
                 <outlet property="secondTextVIew" destination="vks-K9-0vZ" id="Kzw-mS-pX3"/>
                 <outlet property="selecdImage" destination="I55-NY-VyY" id="91t-ue-5vV"/>
                 <outlet property="voteBtn" destination="CT8-3f-I2d" id="9xx-SE-HOx"/>

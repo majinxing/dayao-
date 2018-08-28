@@ -15,6 +15,7 @@
 @property (strong, nonatomic) IBOutlet UILabel *voteTitle;
 
 @property (strong, nonatomic) IBOutlet UILabel *voteCreateTime;
+@property (strong, nonatomic) IBOutlet UIView *backView;
 
 @property (assign,nonatomic) int temp;
 
@@ -25,6 +26,10 @@
     [super awakeFromNib];
     
     [_voteTitle endEditing:NO];
+    
+    _backView.layer.masksToBounds = YES;
+    _backView.layer.cornerRadius = 5;
+    
     // Initialization code
 }
 -(void)addContentView{

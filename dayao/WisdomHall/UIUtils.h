@@ -13,6 +13,8 @@
 #import "GroupModel.h"
 
 @interface UIUtils : NSObject
++(id)shareInstance;
+
 +(void)addNavigationWithView:(UIView *)view withTitle:(NSString *)str;
 //判断电话号码是否正确
 +(BOOL)testCellPhoneNumber:(NSString *)mobileNum;
@@ -154,6 +156,9 @@
 +(NSString *)getGPeopleName:(NSString *)peopleId;
 //获取缓存的头像数据
 +(NSString *)getGPeoplePictureId:(NSString *)peopleId;
+
+//时间戳化时间
++(NSString *)getTheTimeStampSS:(NSString *)time;
 @end
 
 

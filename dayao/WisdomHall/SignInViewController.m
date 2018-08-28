@@ -174,7 +174,7 @@ static NSString *cellIdentifier = @"cellIdentifier";
                 [_classAry addObject:c];
             }
         
-            [self getSelfJoinClass:page];
+            [self getSelfCreateClassType:page];
 
         }else if ([str isEqualToString:@"无效token"]){
             [self hideHud];
@@ -194,52 +194,13 @@ static NSString *cellIdentifier = @"cellIdentifier";
         [UIUtils showInfoMessage:@"请求失败，请检查网络" withVC:self];
     }];
 }
--(void)getSelfJoinClass:(NSInteger)page{
-    NSDictionary * dict = [[NSDictionary alloc] initWithObjectsAndKeys:[NSString stringWithFormat:@"%ld",(long)page],@"start",_userModel.peopleId,@"studentId",[NSString stringWithFormat:@"%@ 00:00:00",_dictDay[@"firstDay"]],@"actStartTime",[NSString stringWithFormat:@"%@ 23:59:59",_dictDay[@"lastDay"]],@"actEndTime",@"1000",@"length",_userModel.school,@"universityId",@"1",@"type",[NSString stringWithFormat:@"%d",[UIUtils getTermId]],@"termId",@"1",@"courseType",nil];
-    
-    [[NetworkRequest sharedInstance] GET:QueryCourse dict:dict succeed:^(id data) {
-        NSString * str = [[data objectForKey:@"header"] objectForKey:@"message"];
-        if ([str isEqualToString:@"成功"]) {
-            NSArray * ary = [[data objectForKey:@"body"] objectForKey:@"list"];
-            for (int i = 0; i<ary.count; i++) {
-                ClassModel * c = [[ClassModel alloc] init];
-                [c setInfoWithDict:ary[i]];
-                [_classAry addObject:c];
-            }
-        }
-        [self getSelfCreateClassType:page];
-    } failure:^(NSError *error) {
-        [self hideHud];
-        [_tableView reloadData];
-    }];
-}
+
 //临时
 -(void)getSelfCreateClassType:(NSInteger)page{
     
     NSDictionary * dict = [[NSDictionary alloc] initWithObjectsAndKeys:[NSString stringWithFormat:@"%ld",(long)page],@"start",_userModel.peopleId,@"teacherId",[NSString stringWithFormat:@"%@ 00:00:00",_dictDay[@"firstDay"]],@"actStartTime",[NSString stringWithFormat:@"%@ 23:59:59",_dictDay[@"lastDay"]],@"actEndTime",@"1000",@"length",_userModel.school,@"universityId",@"2",@"type",@"2",@"courseType",nil];
     
     [[NetworkRequest sharedInstance] GET:QueryCourse dict:dict succeed:^(id data) {
-        NSString * str = [[data objectForKey:@"header"] objectForKey:@"message"];
-        if ([str isEqualToString:@"成功"]) {
-            NSArray * ary = [[data objectForKey:@"body"] objectForKey:@"list"];
-            for (int i = 0; i<ary.count; i++) {
-                ClassModel * c = [[ClassModel alloc] init];
-                [c setInfoWithDict:ary[i]];
-                [_classAry addObject:c];
-            }
-        }
-        [self getSelfJoinClassType:page];
-    } failure:^(NSError *error) {
-        [self hideHud];
-        [_tableView reloadData];
-    }];
-}
-//临时
--(void)getSelfJoinClassType:(NSInteger)page{
-    NSDictionary * dict = [[NSDictionary alloc] initWithObjectsAndKeys:[NSString stringWithFormat:@"%ld",(long)page],@"start",_userModel.peopleId,@"studentId",[NSString stringWithFormat:@"%@ 00:00:00",_dictDay[@"firstDay"]],@"actStartTime",[NSString stringWithFormat:@"%@ 23:59:59",_dictDay[@"lastDay"]],@"actEndTime",@"1000",@"length",_userModel.school,@"universityId",@"1",@"type",@"2",@"courseType",nil];
-    [[NetworkRequest sharedInstance] GET:QueryCourse dict:dict succeed:^(id data) {
-        //        NSLog(@"4");
-        [self hideHud];
         NSString * str = [[data objectForKey:@"header"] objectForKey:@"message"];
         if ([str isEqualToString:@"成功"]) {
             NSArray * ary = [[data objectForKey:@"body"] objectForKey:@"list"];
@@ -267,16 +228,15 @@ static NSString *cellIdentifier = @"cellIdentifier";
         }
         
         _dict = [[NSMutableDictionary alloc] initWithDictionary:[UIUtils CurriculumGroup:_classAry]];
-        
+        [self hideHud];
         [_tableView reloadData];
-
         
     } failure:^(NSError *error) {
         [self hideHud];
         [_tableView reloadData];
     }];
-    
 }
+
 -(void)deleteTheDuplicateData{
     for (int i = 0; i<_classAry.count; i++) {
         ClassModel * c = _classAry[i];

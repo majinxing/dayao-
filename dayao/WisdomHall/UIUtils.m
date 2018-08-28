@@ -41,6 +41,14 @@
     //    [view addSubview:line];
     //    [view addSubview:title];
 }
++(id)shareInstance{
+    static dispatch_once_t onceToken;
+    static UIUtils *obj = nil;
+    dispatch_once(&onceToken, ^{
+        obj = [[UIUtils alloc] init];
+    });
+    return obj;
+}
 /**
  *  获取当地日期
  */
@@ -163,7 +171,7 @@
     }else{
         month = [NSString stringWithFormat:@"%ld",(long)nowCmps.month];
     }
-    NSString *nowDate = [NSString stringWithFormat:@"%@月",month];
+    NSString *nowDate = [NSString stringWithFormat:@"%@",month];
     
     return nowDate;
 }
@@ -706,13 +714,20 @@
     [db close];
 }
 +(void)accountWasUnderTheRoof{
+    //i++
+    NSNotification *notification =[NSNotification notificationWithName:@"OutOfApp" object:nil userInfo:nil];
     
+    [[NSNotificationCenter defaultCenter] postNotification:notification];
+
     [[Appsetting sharedInstance] getOut];
+    
     DYTabBarViewController *rootVC = [DYTabBarViewController sharedInstance];
     rootVC = nil;
+    
     WorkingLoginViewController * userLogin = [[WorkingLoginViewController alloc] init];
     
     [UIApplication sharedApplication].keyWindow.rootViewController =[[UINavigationController alloc] initWithRootViewController:userLogin];
+    
     [UIUtils showInfoMessage:@"账号在另一台设备登录，请重新登录或修改密码" withVC:userLogin];
     //    UIAlertView * alter = [[UIAlertView alloc] initWithTitle:nil message:@"账号在另一台设备登录，请重新登录或修改密码" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil];
     //    [alter show];
@@ -828,22 +843,30 @@
     //过时
     //    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Title" message:@"message" delegate:self cancelButtonTitle:@"cancel" otherButtonTitles:@"ok", nil];
     //    [alert show];
-    UIAlertController* alert = [UIAlertController alertControllerWithTitle:@"提示"
+    UIAlertController* alert = [UIAlertController alertControllerWithTitle:nil
                                                                    message:str
                                                             preferredStyle:UIAlertControllerStyleAlert];
     
     
-    UIAlertAction* cancelAction = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault
-                                                         handler:^(UIAlertAction * action) {
-                                                             //响应事件
-                                                         }];
+//    UIAlertAction* cancelAction = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault
+//                                                         handler:^(UIAlertAction * action) {
+//                                                             //响应事件
+//                                                         }];
     
-    [alert addAction:cancelAction];
-    
+//    [alert addAction:cancelAction];
     [vc presentViewController:alert animated:YES completion:nil];
+
+    [NSTimer scheduledTimerWithTimeInterval:1.5 target:[UIUtils shareInstance] selector:@selector(hideUIAlter:) userInfo:alert repeats:NO];
     
 }
 
+-(void)hideUIAlter:(NSTimer *)timer{
+    UIAlertController *alert = [timer userInfo];
+    
+    [alert dismissViewControllerAnimated:YES completion:nil];
+    
+    alert = nil;
+}
 
 //时间戳转化为时间NSDate
 
@@ -1552,6 +1575,26 @@
     NSTimeZone* timeZone = [NSTimeZone timeZoneWithName:@"Asia/Shanghai"];
     [formatter setTimeZone:timeZone];
     NSDate *confromTimesp = [NSDate dateWithTimeIntervalSince1970:[time doubleValue]];
+    
+    NSString *dateTime = [formatter stringFromDate:confromTimesp];
+    return dateTime;
+}
+//时间戳化时间
++(NSString *)getTheTimeStampSS:(NSString *)time{
+    
+    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+    [formatter setDateStyle:NSDateFormatterMediumStyle];
+    [formatter setTimeStyle:NSDateFormatterShortStyle];
+    [formatter setDateFormat:@"yyyy-MM-dd HH:mm:ss"]; // ----------设置你想要的格式,hh与      HH的区别:分别表示12小时制,24小时制
+    
+    //设置时区,这个对于时间的处理有时很重要
+    //例如你在国内发布信息,用户在国外的另一个时区,你想让用户看到正确的发布时间就得注意时区设置,时间的换算.
+    //例如你发布的时间为2010-01-26 17:40:50,那么在英国爱尔兰那边用户看到的时间应该是多少呢?
+    //他们与我们有7个小时的时差,所以他们那还没到这个时间呢...那就是把未来的事做了
+    
+    NSTimeZone* timeZone = [NSTimeZone timeZoneWithName:@"Asia/Shanghai"];
+    [formatter setTimeZone:timeZone];
+    NSDate *confromTimesp = [NSDate dateWithTimeIntervalSince1970:[time doubleValue]/1000];
     
     NSString *dateTime = [formatter stringFromDate:confromTimesp];
     return dateTime;

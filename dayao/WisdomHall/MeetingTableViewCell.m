@@ -33,6 +33,9 @@
 @property (strong, nonatomic) IBOutlet UILabel *peopleNum;
 @property (strong, nonatomic) IBOutlet UILabel *joinPeopleLable;
 @property (strong, nonatomic) IBOutlet UILabel *meetAttention;
+@property (strong, nonatomic) IBOutlet UIView *fristBackView;
+@property (strong, nonatomic) IBOutlet UIView *secondBackView;
+@property (strong, nonatomic) IBOutlet UIView *forthBackView;
 
 @property (strong,nonatomic) UIImageView * signCode;
 
@@ -79,6 +82,13 @@
     _peopleNum.layer.cornerRadius = 8;
     _peopleNum.backgroundColor = [UIColor colorWithRed:128/255.0 green:128/255.0 blue:128/255.0 alpha:1/1.0];
     _peopleNum.textColor = [UIColor whiteColor];    // Initialization code
+    
+    _forthBackView.layer.masksToBounds = YES;
+    _forthBackView.layer.cornerRadius = 5;
+    _secondBackView.layer.masksToBounds = YES;
+    _secondBackView.layer.cornerRadius = 5;
+    _forthBackView.layer.masksToBounds = YES;
+    _forthBackView.layer.cornerRadius = 5;
 }
 -(void)addFirstContentView:(MeetingModel *)meetModel{
     if ([UIUtils isBlankString:meetModel.meetingName]) {
@@ -97,8 +107,8 @@
     _teacherPicture.image = [UIImage imageNamed:@"meet"];
     
     if (![UIUtils isBlankString:[NSString stringWithFormat:@"%@",meetModel.signStatus]]) {
-        if ([[NSString stringWithFormat:@"%@",meetModel.signStatus] isEqualToString:@"2"]) {
-            _signCode.frame = CGRectMake(APPLICATION_WIDTH/2, 20, 80, 80);
+        if (![[NSString stringWithFormat:@"%@",meetModel.signStatus] isEqualToString:@"1"]&&![[NSString stringWithFormat:@"%@",meetModel.signStatus] isEqualToString:@"300"]) {
+            _signCode.frame = CGRectMake(APPLICATION_WIDTH/2, CGRectGetMaxY(_meetPlace.frame)+10, 120, 80);
             _signCode.image = [UIImage imageNamed:@"ic_sgin_success"];
             [self.contentView addSubview:_signCode];
         }
@@ -125,7 +135,7 @@
     
     
     if (![UIUtils isBlankString:[NSString stringWithFormat:@"%@",classModel.signStatus]]) {
-        if (![[NSString stringWithFormat:@"%@",classModel.signStatus] isEqualToString:@"1"]) {
+        if (![[NSString stringWithFormat:@"%@",classModel.signStatus] isEqualToString:@"1"]&&![[NSString stringWithFormat:@"%@",classModel.signStatus] isEqualToString:@"300"]) {
             _signCode.frame = CGRectMake(APPLICATION_WIDTH/2, CGRectGetMaxY(_meetPlace.frame)+10, 120, 80);
             _signCode.image = [UIImage imageNamed:@"ic_sgin_success"];
             [self.contentView addSubview:_signCode];
@@ -161,7 +171,7 @@
     int marginWidth = (APPLICATION_WIDTH - buttonW * columns) / (columns + 1);
     //起始XY坐标
     int oneX = marginWidth;
-    int oneY = marginHeight;
+    int oneY = 10;
     
     for (int i = 0; i < array.count; i++)
     {

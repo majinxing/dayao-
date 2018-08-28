@@ -142,7 +142,7 @@
 //    NSIndexSet *indexSet=[[NSIndexSet alloc]initWithIndex:1];
 //
 //    [_tableView reloadSections:indexSet withRowAnimation:UITableViewRowAnimationNone];
-    NSIndexPath *indexPath=[NSIndexPath indexPathForRow:0 inSection:1];
+    NSIndexPath *indexPath=[NSIndexPath indexPathForRow:0 inSection:2];
     
     [_tableView reloadRowsAtIndexPaths:[NSArray arrayWithObjects:indexPath,nil] withRowAnimation:UITableViewRowAnimationNone];
 }
@@ -275,9 +275,9 @@
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
     if (section ==0) {
         return 1;
-    }else if (section == 1){
-        return 1;
     }else if (section == 2){
+        return 1;
+    }else if (section == 1){
         if (_editable) {
             return _questionModel.qustionOptionsAry.count+1;
         }else{
@@ -303,14 +303,14 @@
 
             cell = [[[NSBundle mainBundle] loadNibNamed:@"ChoiceQuestionTableViewCell" owner:nil options:nil] objectAtIndex:0];
             
-        }else if (indexPath.section == 1){
+        }else if (indexPath.section == 2){
             
                 cell = [tableView dequeueReusableCellWithIdentifier:@"ChoiceQuestionTableViewCellSecond"];
                 
                 cell = [[[NSBundle mainBundle] loadNibNamed:@"ChoiceQuestionTableViewCell" owner:nil options:nil] objectAtIndex:1];
             
             
-        }else if (indexPath.section == 2){
+        }else if (indexPath.section == 1){
             if (indexPath.row==_questionModel.qustionOptionsAry.count) {
                 cell = [tableView dequeueReusableCellWithIdentifier:@"ChoiceQuestionTableViewCellFifth"];
                 
@@ -345,11 +345,11 @@
         }else{
             [cell addFirstTitleTextView:_questionModel.questionTitle withImageAry:_questionModel.questionTitleImageIdAry withIsEdit:_editable withIndexRow:(int)indexPath.section];
         }
-    }else if(indexPath.section == 1){
+    }else if(indexPath.section == 2){
     
         [cell setScoreAndDifficult:_questionModel.qustionScore withDifficult:_questionModel.questionDifficulty withEdit:YES];
         
-    }else if (indexPath.section == 2){
+    }else if (indexPath.section == 1){
         if (indexPath.row==_questionModel.qustionOptionsAry.count) {
             
         }else{
@@ -372,9 +372,9 @@
 
         return [_questionModel returnTitleHeight];
         
-    }else if (indexPath.section == 1){
-        return 110;
     }else if (indexPath.section == 2){
+        return 110;
+    }else if (indexPath.section == 1){
         return [_questionModel returnOptionHeight:(int)indexPath.row];
     }else if (indexPath.section==3){
         return [_questionModel returnBankAnswerHeight];

@@ -30,16 +30,15 @@
     
     _dataAry = [NSMutableArray arrayWithCapacity:1];
     
-    [self getData];
+//    [self getData];
     // Do any additional setup after loading the view from its nib.
 }
 -(void)viewWillAppear:(BOOL)animated{
     [self getData];
 }
 -(void)getData{
-    NSDictionary * dict = [[NSDictionary alloc] initWithObjectsAndKeys:[NSString stringWithFormat:@"%@",_c.sclassId],@"courseId",[NSString stringWithFormat:@"%@",_c.courseDetailId],@"detailId", nil];
-    [[NetworkRequest sharedInstance] POST:QueryLeaveTeacher dict:dict succeed:^(id data) {
-            NSLog(@"%s",__func__);
+    NSDictionary * dict = [[NSDictionary alloc] initWithObjectsAndKeys:[NSString stringWithFormat:@"%@",_c.courseDetailId],@"detailId", nil];
+    [[NetworkRequest sharedInstance] GET:QueryLeaveTeacher dict:dict succeed:^(id data) {
         NSString * str = [NSString stringWithFormat:@"%@",[[data objectForKey:@"header"] objectForKey:@"message"]];
         [_dataAry removeAllObjects];
         if ([str isEqualToString:@"成功"]) {
@@ -55,9 +54,9 @@
         }
         [_tableView headerEndRefreshing];
     } failure:^(NSError *error) {
-        [_tableView headerEndRefreshing];
-
+        [UIUtils showInfoMessage:@"查询失败，请检查网络" withVC:self];
     }];
+    
 }
 -(void)addTableView{
     _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 64, APPLICATION_WIDTH, APPLICATION_HEIGHT-64) style:UITableViewStylePlain];

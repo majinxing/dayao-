@@ -29,7 +29,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.view.backgroundColor = [UIColor whiteColor];
+    self.view.backgroundColor = [UIColor colorWithHexString:@"#f1f1f1"];
     
     _dataAry = [NSMutableArray arrayWithCapacity:1];
     
@@ -88,6 +88,8 @@
     _tableView.delegate = self;
     _tableView.dataSource = self;
     __weak HomeWorkViewController * weakSelf = self;
+    _tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+    _tableView.backgroundColor = [UIColor clearColor];
     [_tableView addHeaderWithCallback:^{
         [weakSelf headerRereshing];
     }];
@@ -160,7 +162,7 @@
         Homework * h = _dataAry[indexPath.row];
         [cell addContentViewWith:h];
     }
-    
+    cell.backgroundColor = [UIColor clearColor];
     return cell;
 }
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{

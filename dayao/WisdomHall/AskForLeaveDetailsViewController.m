@@ -41,7 +41,12 @@
         NSString * message = [NSString stringWithFormat:@"%@",[[data objectForKey:@"header"] objectForKey:@"message"]];
         if ([message isEqualToString:@"成功"]) {
             if ([btn.titleLabel.text isEqualToString:@"批准"]) {
-                [self changeStudentSignState];
+//                [self changeStudentSignState];
+                [UIUtils showInfoMessage:@"批准" withVC:self];
+                [self.navigationController dismissViewControllerAnimated:YES completion:^{
+                    [self.navigationController popViewControllerAnimated:YES];
+                    
+                }];
             }else{
                 [UIUtils showInfoMessage:@"已审批" withVC:self];
                 [self.navigationController dismissViewControllerAnimated:YES completion:^{

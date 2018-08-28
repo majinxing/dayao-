@@ -30,6 +30,8 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    self.view.backgroundColor = [UIColor colorWithHexString:@"#f1f1f1"];
+    
     _user = [[Appsetting sharedInstance] getUsetInfo];
     
     _dataAry = [NSMutableArray arrayWithCapacity:1];
@@ -108,6 +110,7 @@
     _tableview.estimatedRowHeight = 70;
     _tableview.rowHeight = UITableViewAutomaticDimension;
     _tableview.separatorStyle = UITableViewCellSeparatorStyleNone;
+    _tableview.backgroundColor = [UIColor clearColor];
     [self.view addSubview:_tableview];
     
     __weak VoteViewController * weakSelf = self;
@@ -253,7 +256,7 @@
         cell.moreImage.image = [UIImage imageNamed:@""];
         [cell.moreBtn setEnabled:NO];
     }
-    
+    cell.backgroundColor = [UIColor clearColor];
     return cell;
     
 }

@@ -45,7 +45,8 @@
     
     
     self.tableView.frame = CGRectMake(0, 64, APPLICATION_WIDTH, APPLICATION_HEIGHT-64- [EaseChatToolbar defaultHeight]);
-    
+    self.navigationController.interactivePopGestureRecognizer.delaysTouchesBegan=NO;
+
 //    self.navigationItem.title = [UIUtils getGroupName:str1];
 }
 
@@ -125,6 +126,9 @@
     
     
     
+}
+- (UIRectEdge)preferredScreenEdgesDeferringSystemGestures {
+    return UIRectEdgeBottom;
 }
 -(void)queryGroupPeople{
     [self getDataWithGruop:[NSString stringWithFormat:@"%lld",self.groupID]];
