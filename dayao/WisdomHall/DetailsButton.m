@@ -184,12 +184,12 @@
 }
 - (CGRect)imageRectForContentRect:(CGRect)contentRect
 {
-    return CGRectMake(self.bounds.size.width/2-40, 10, IMAGE_WH, IMAGE_WH);
+    return CGRectMake(20, 10, IMAGE_WH, IMAGE_WH);
 }
 
 - (CGRect)titleRectForContentRect:(CGRect)contentRect
 {
-    return CGRectMake(self.bounds.size.width/2, self.bounds.size.height/2-10, self.bounds.size.width/2, 20);
+    return CGRectMake(70, self.bounds.size.height/2-10, self.bounds.size.width/2, 20);
 }
 
 /*

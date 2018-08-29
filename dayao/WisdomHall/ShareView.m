@@ -9,6 +9,7 @@
 #import "ShareView.h"
 #import "DYHeader.h"
 #import "ShareButton.h"
+#import "DetailsButton.h"
 
 #define CONTENT_VIEW_HEIGHT 250
 
@@ -48,6 +49,7 @@
     
     UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(hide)];
     [self addGestureRecognizer:tapGesture];
+    
     if ([type isEqualToString:@"share"]) {
         //添加分享按钮
         [self addShareButton];
@@ -61,9 +63,7 @@
     }else if ([type isEqualToString:@"text"]){
         [self addText];
     }
-    
-    //添加取消按钮
-    [self addCancleButton];
+
 }
 -(void)addMeeting{
     _interactionTypeArray = @[
@@ -160,27 +160,27 @@
 //投票
 -(void)addVote{
     _shareTypeArray = @[Vote_delecate,
-                        Vote_Modify,
                         Vote_Stare,
                         Vote_Stop];
     //水平间距
     int marginWidth = (APPLICATION_WIDTH - buttonWH * columns) / (columns + 1);
     //起始XY坐标
-    int oneX = marginWidth;
-    int oneY = marginHeight;
+    int oneX = 0;
+    int oneY = 50;
     
     for (int i = 0; i < _shareTypeArray.count; i++)
     {
         //行
-        int row = i / columns;
+//        int row = i / columns;
         //列
-        int column = i % columns;
+//        int column = i % columns;
         
-        int x = oneX + (buttonWH + marginWidth) * column;
-        int y = oneY + (buttonWH + marginWidth) * row;
+        int x = oneX;
+        int y = oneY + buttonWH * i;
         
-        ShareButton * button = [[ShareButton alloc] initWithFrame:CGRectMake(x, y, buttonWH, buttonWH) andType:_shareTypeArray[i]];
+        DetailsButton * button = [[DetailsButton alloc] initWithFrame:CGRectMake(x, y,APPLICATION_WIDTH - 20, buttonWH) andType:_shareTypeArray[i]];
         [button addTarget:self action:@selector(shareButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
+        button.titleLabel.textAlignment = NSTextAlignmentLeft;
         [_contentView addSubview:button];
     }
 }
@@ -189,46 +189,44 @@
     _shareTypeArray = @[Vote_delecate,
                         Vote_Stare,
                         Vote_Stop,
-                        Test_Scores_Query];
+                        ];
     //水平间距
-    int marginWidth = (APPLICATION_WIDTH - buttonWH * columns) / (columns + 1);
+    
     //起始XY坐标
-    int oneX = marginWidth;
-    int oneY = marginHeight;
+    int oneX = 0;
+    int oneY = 50;
     
     for (int i = 0; i < _shareTypeArray.count; i++)
     {
-        //行
-        int row = i / columns;
-        //列
-        int column = i % columns;
+        int x = oneX;
+        int y = oneY + buttonWH * i;
         
-        int x = oneX + (buttonWH + marginWidth) * column;
-        int y = oneY + (buttonWH + marginWidth) * row;
+        DetailsButton * button = [[DetailsButton alloc] initWithFrame:CGRectMake(x, y,APPLICATION_WIDTH - 20, buttonWH) andType:_shareTypeArray[i]];
         
-        ShareButton * button = [[ShareButton alloc] initWithFrame:CGRectMake(x, y, buttonWH, buttonWH) andType:_shareTypeArray[i]];
         [button addTarget:self action:@selector(shareButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
+        
+        button.titleLabel.textAlignment = NSTextAlignmentLeft;
+
         [_contentView addSubview:button];
     }
 }
-- (void)addCancleButton
+- (void)addCancleButtonWith:(NSString *)str
 {
-    UIImage *footerImage = [UIImage imageNamed:@"ShareMenuFooter_light"];
-    UIImageView *footerImageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, CONTENT_VIEW_HEIGHT - footerImage.size.height, APPLICATION_WIDTH, footerImage.size.height)];
-    [footerImageView setImage:footerImage];
-    [footerImageView setUserInteractionEnabled:YES];
-    [_contentView addSubview:footerImageView];
+    UILabel * title = [[UILabel alloc] initWithFrame:CGRectMake(20, 15, 150, 20)];
+    title.text = str;
+    [_contentView addSubview:title];
+    
+    UIView * line = [[UIView alloc] initWithFrame:CGRectMake(20, 50, APPLICATION_WIDTH-40, 1)];
+    line.backgroundColor = [UIColor colorWithHexString:@"#f1f1f1"];
+    [_contentView addSubview:line];
     
     UIButton *cancleButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    UIImage *cancleImageNormal = [[UIImage imageNamed:@"ShareMenuCancel_light_normal"] stretchableImageWithLeftCapWidth:10 topCapHeight:0];
-    UIImage *cancleImageHighLight = [[UIImage imageNamed:@"ShareMenuCancel_light_selected"] stretchableImageWithLeftCapWidth:10 topCapHeight:0];
-    [cancleButton setFrame:CGRectMake(10, 10, APPLICATION_WIDTH - 2 * 10, footerImageView.bounds.size.height - 2 * 10)];
-    [cancleButton setBackgroundImage:cancleImageNormal forState:UIControlStateNormal];
-    [cancleButton setBackgroundImage:cancleImageHighLight forState:UIControlStateHighlighted];
-    [cancleButton setTitle:@"取消" forState:UIControlStateNormal];
-    [cancleButton setTitleColor:[UIColor darkGrayColor] forState:UIControlStateNormal];
+ 
+    [cancleButton setFrame:CGRectMake(APPLICATION_WIDTH-40, 15, 20,20)];
+    [cancleButton setBackgroundImage:[UIImage imageNamed:@"close"] forState:UIControlStateNormal];
     [cancleButton addTarget:self action:@selector(hide) forControlEvents:UIControlEventTouchUpInside];
-    [footerImageView addSubview:cancleButton];
+    
+    [_contentView addSubview:cancleButton];
 }
 
 - (void)showInView:(UIView *)view
@@ -236,6 +234,9 @@
     [view addSubview:self];
     [UIView animateWithDuration:0.3 animations:^{
         [self setBackgroundColor:[UIColor colorWithWhite:0.0f alpha:0.4]];
+        
+        [self addCancleButtonWith:_name];
+
         [_contentView setFrame:CGRectMake(0, APPLICATION_HEIGHT - CONTENT_VIEW_HEIGHT, APPLICATION_WIDTH, CONTENT_VIEW_HEIGHT)];
     } completion:^(BOOL finished) {
         

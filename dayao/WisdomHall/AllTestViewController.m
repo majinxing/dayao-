@@ -167,9 +167,10 @@
         if (!_vote)
         {
             _vote = [[ShareView alloc] initWithFrame:self.navigationController.view.bounds withType:@"text"];
+            _vote.name = _t.title;
+
             _vote.delegate = self;
         }
-        
         [_vote showInView:self.navigationController.view];
     }
 }

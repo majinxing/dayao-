@@ -86,7 +86,7 @@ SystemMessageObserver, RTMessageObserver, MessageViewControllerUserDelegate,Mess
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    
+    self.view.backgroundColor = [UIColor whiteColor];
     
     _user = [[Appsetting sharedInstance] getUsetInfo];//i++
     
@@ -108,7 +108,7 @@ SystemMessageObserver, RTMessageObserver, MessageViewControllerUserDelegate,Mess
     self.tableview.scrollEnabled = YES;
     self.tableview.showsVerticalScrollIndicator = NO;
     self.tableview.separatorStyle = UITableViewCellSeparatorStyleNone;
-    self.tableview.backgroundColor = RGBACOLOR(235, 235, 237, 1);
+    self.tableview.backgroundColor = [UIColor whiteColor];
     self.tableview.separatorColor = RGBCOLOR(208, 208, 208);
     [self.view addSubview:self.tableview];
     

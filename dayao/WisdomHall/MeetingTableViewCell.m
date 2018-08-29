@@ -130,7 +130,7 @@
     _meetPlace.text = [NSString stringWithFormat:@"%@",classModel.typeRoom];
     _meetHost.text = [NSString stringWithFormat:@"老师：%@",classModel.teacherName];
     _meetCode.text = [NSString stringWithFormat:@"邀请码：%@",classModel.sclassId];
-    
+    _meetAttention.text = @"请准时到达并签到，带上笔纸等有关材料";
     _joinPeopleLable.text = @"同窗好友";
     
     

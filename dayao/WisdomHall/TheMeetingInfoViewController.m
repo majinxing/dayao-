@@ -564,6 +564,7 @@
     classManegeVC.manage = MeetingManageType;
     classManegeVC.meeting = _meetingModel;
     classManegeVC.isEnableOutGroup = @"no";
+    classManegeVC.signAry = _meetingModel.signAry;
     [self.navigationController pushViewController:classManegeVC animated:YES];
 }
 -(void)signNOPeopleDelegate{
